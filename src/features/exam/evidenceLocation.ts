@@ -7,24 +7,28 @@ export type EvidenceLocation = { ranges: Record<string, EvidenceRange[]>; status
 type Block = { id: string; text: string; offset?: number };
 
 // Keep a source-offset map: normalising typography must not move saved annotation anchors.
-function indexed(text: string) {
+function indexed(text: string, omitCurrency = false) {
   let value = ''; const starts: number[] = []; const ends: number[] = [];
   for (let offset = 0; offset < text.length;) {
     const char = String.fromCodePoint(text.codePointAt(offset)!);
     const next = offset + char.length;
-    const normalized = char.normalize('NFKC').toLowerCase().replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/\s/g, ' ');
+    const normalized = omitCurrency && /\p{Sc}/u.test(char) && /^\d/u.test(text.slice(next)) ? '' : char.normalize('NFKC').toLowerCase().replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/\s/g, ' ');
     for (const part of normalized) {
       if (part === ' ' && value.endsWith(' ')) { ends[ends.length - 1] = next; continue; }
-      value += part; starts.push(offset); ends.push(next);
+      const start = omitCurrency && /^\d/u.test(part) && /\p{Sc}/u.test(text[offset - 1] || '') ? offset - 1 : offset;
+      value += part; starts.push(start); ends.push(next);
     }
     offset = next;
   }
   return { value, starts, ends };
 }
 
-function matchQuote(blocks: Block[], quote: string) {
-  const text = blocks.map(block => block.text).join(' '); const source = indexed(text);
-  const needle = indexed(quote).value.trim();
+function matchQuote(blocks: Block[], quote: string, allowOmittedCurrency = false) {
+  // Some imported quotes omit the currency symbol before an amount. Keep the
+  // full wording/uniqueness check and original offsets, including that symbol.
+  const omitCurrency = allowOmittedCurrency && !/\p{Sc}/u.test(quote);
+  const text = blocks.map(block => block.text).join(' '); const source = indexed(text, omitCurrency);
+  const needle = indexed(quote, omitCurrency).value.trim();
   if (!needle) return;
   const first = source.value.indexOf(needle);
   if (first < 0 || source.value.indexOf(needle, first + 1) >= 0) return;
@@ -53,14 +57,26 @@ export function locateQuestionEvidence(question: ExamQuestion, passages: ExamPas
   const importedQuote = evidence.replace(/^\s*\[[A-Z]\]\s*/i, '').trim();
   const quote = question.skill === 'listening' ? importedQuote.replace(/(?:^|\n)[A-Z][A-Z \t]{0,24}:\s*/g, ' ').trim() : importedQuote;
   if (quote && !/^Paragraph\s+[A-Z]$/i.test(quote)) {
-    const full = matchQuote(blocks, quote);
+    const full = matchQuote(blocks, quote, question.skill === 'listening');
     if (full) return { ranges: full, status: 'exact' };
+    // A source may explicitly list separate quotations for a pooled answer.
+    // Require every complete fragment to match uniquely before calling it exact.
+    const lines = quote.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+    const bullet = /^[·•●]\s*/;
+    if (question.skill === 'listening' && lines.length > 1 && lines.every(line => bullet.test(line))) {
+      const fragments = lines.map(line => matchQuote(blocks, line.replace(bullet, ''), true));
+      if (fragments.every(Boolean)) {
+        const ranges: Record<string, EvidenceRange[]> = {};
+        for (const fragment of fragments) for (const [id, matches] of Object.entries(fragment!)) (ranges[id] ||= []).push(...matches);
+        return { ranges, status: 'exact' };
+      }
+    }
     // Imported explanations sometimes contain typos. Mark only complete wording
     // that actually occurs in the source, never a guessed answer or sentence.
     const candidates = [...quote.split(/(?<=[.!?])\s+/), ...quote.split(/[,;]\s*/)].filter(text => text.trim().split(/\s+/).length >= 6);
     const partial: Record<string, EvidenceRange[]> = {};
     for (const candidate of candidates) {
-      const found = matchQuote(blocks, candidate.trim());
+      const found = matchQuote(blocks, candidate.trim(), question.skill === 'listening');
       for (const [id, ranges] of Object.entries(found || {})) (partial[id] ||= []).push(...ranges);
     }
     if (Object.keys(partial).length) return { ranges: partial, status: 'partial' };
@@ -73,8 +89,20 @@ export function locateQuestionEvidence(question: ExamQuestion, passages: ExamPas
 /** Some imports retain obsolete sentence IDs after transcript realignment. */
 export function evidenceSentenceId(question: ExamQuestion, section?: ExamSection) {
   if (!section) return undefined;
-  const direct = section.sentences.find(sentence => sentence.id === question.evidence?.sentenceId || sentence.questionIds?.includes(question.id));
+  const location = locateQuestionEvidence(question, [], section);
+  const matching = section.sentences.filter(sentence => location.ranges[`sentence:${sentence.id}`]);
+  const direct = section.sentences.find(sentence => sentence.id === question.evidence?.sentenceId) || section.sentences.find(sentence => sentence.questionIds?.includes(question.id));
+  if (location.status === 'exact' || location.status === 'partial') {
+    // A source quote can span several transcript sentences. Practise the one
+    // containing the answer, while Locate evidence still highlights the whole quote.
+    const answer = typeof question.answer === 'string' && ['gap','summary','flow'].includes(question.type) ? question.answer.trim() : '';
+    const escaped = answer.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const pattern = answer ? new RegExp(`(?<![\\p{L}\\p{N}])${escaped}(?![\\p{L}\\p{N}])`, 'iu') : null;
+    const answerSentences = matching.filter(sentence => pattern && location.ranges[`sentence:${sentence.id}`].some(range => pattern.test(sentence.text.slice(range.start, range.end))));
+    if (answerSentences.length === 1) return answerSentences[0].id;
+    if (direct && matching.some(sentence => sentence.id === direct.id)) return direct.id;
+    if (matching.length) return matching[0].id;
+  }
   if (direct) return direct.id;
-  const block = Object.keys(locateQuestionEvidence(question, [], section).ranges).find(id => id.startsWith('sentence:'));
-  return block?.slice('sentence:'.length);
+  return matching[0]?.id;
 }

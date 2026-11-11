@@ -3,18 +3,8 @@ import { ArrowLeft } from 'lucide-react';
 import { Link, useLocation, useNavigate, useSearchParams, type LinkProps } from 'react-router-dom';
 import { accountId } from '../../storage/remote';
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
-
-/** Return addresses travel with a study URL, so refreshes and new tabs keep them. */
-export function safeExamReturn(value: unknown, fallback = ''): string {
-  if (typeof value !== 'string' || value.length > 12000 || /[\s\\]/.test(value)) return fallback;
-  try {
-    const url = new URL(value, 'https://fieldbook.local');
-    if (url.origin !== 'https://fieldbook.local' || url.pathname + url.search + url.hash !== value) return fallback;
-    const path = decodeURIComponent(url.pathname);
-    if (/[\s\\]/.test(path) || path.split('/').some(segment => segment === '.' || segment === '..')) return fallback;
-    return /^\/(?:listening|reading)(?:\/(?:review|source|intensive|mock)\/[^/?#]+|\/[^/?#]+)?$/.test(path) ? value : fallback;
-  } catch { return fallback; }
-}
+import { safeExamReturn } from '../../lib/examNavigation';
+export { safeExamReturn } from '../../lib/examNavigation';
 
 export function ExamStudyLink({ to, returnHash, ...props }: Omit<LinkProps, 'to'> & { to: string; returnHash?: string }) {
   const location = useLocation();
@@ -37,7 +27,7 @@ export function ExamBackLink({ fallback, fallbackLabel = 'Back to practice' }: {
   const requested = safeExamReturn(params.get('returnTo'));
   const to = requested && requested !== current ? requested : fallback;
   const path = to.split(/[?#]/)[0];
-  const label = to === fallback ? fallbackLabel : /\/review\//.test(path) ? 'Back to review' : /\/source\//.test(path) ? 'Back to source' : /\/intensive\//.test(path) ? 'Back to intensive listening' : 'Back to practice';
+  const label = to === fallback ? fallbackLabel : path === '/planning' ? 'Back to Planning' : path === '/' || path === '/today' ? 'Back to Today' : /\/review\//.test(path) ? 'Back to review' : /\/source\//.test(path) ? 'Back to source' : /\/intensive\//.test(path) ? 'Back to intensive listening' : 'Back to practice';
   const goBack = () => {
     if (accountId() !== owner) return;
     const origin = location.state?.examReturn;

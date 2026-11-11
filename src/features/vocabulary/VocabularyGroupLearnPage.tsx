@@ -210,6 +210,7 @@ export function VocabularyGroupLearnPage() {
   const publicEntry = word ? catalogVocabularyEntry(word.entry.id) : undefined;
   const publicSense = publicEntry && selectedSense ? resolveVocabularyLearningContext(publicEntry, { bookId, unitId, senseId:selectedSense.id }).sense : undefined;
   const reviewedNotes = Boolean(word && selectedSense && hasVocabularyReadinessNotes(word.entry.id, selectedSense));
+  const allMeaningsUrl = word ? `${entryUrl(word.entry.id,{bookId,unitId,senseId:selectedSense?.id},origin)}&meanings=all#vocabulary-dictionary` : undefined;
   const reliableCollocations = reviewedNotes || activeResolved?.contentReviewed || selectedSense?.source === 'Personal note' || Boolean(state.vocabulary.some(entry=>entry.id===word?.entry.id) && publicSense && selectedSense && hasVocabularySenseEdits(selectedSense,[publicSense]));
   const meaningSource = selectedSense?.source === 'Personal note'
     ? 'Your personal notes.'
@@ -259,6 +260,7 @@ export function VocabularyGroupLearnPage() {
           {selectedSense ? <VocabularyMeaningNotes entryId={word.entry.id} sense={selectedSense} showDistinctions={reviewedNotes} /> : null}
           {visualPresentation === 'supplementary' && activeResolved ? <VocabularyLearningVisual resolved={activeResolved} /> : null}
           <details className="vocabulary-learning-provenance" key={`${word.entry.id}:${selectedSense?.id}`}><summary>Meaning source</summary><p>{meaningSource} See Word details for references and other meanings.</p></details>
+          <div className="vocabulary-learning-meaning-scope"><p>This card shows one selected meaning.</p><Link className="btn text" to={allMeaningsUrl!} onClick={()=>rememberVocabularyPosition(origin,'learning-word')}>Browse all meanings<ArrowRight size={14}/></Link></div>
           <Link className="btn text" to={entryUrl(word.entry.id,{bookId,unitId,senseId:selectedSense?.id},origin)} onClick={()=>rememberVocabularyPosition(origin,'learning-word')}>Word details<ArrowRight size={14}/></Link>
           {word.resolved.curriculum?.basis==='multiple' ? <div className="vocabulary-learning-selected-practice"><Link className="btn primary" to={practiceUrl(word.entry.id,selectedSense?.id,{bookId,unitId},origin,'definition')}>Practise this meaning<ArrowRight size={14}/></Link><p className="vocabulary-muted">This checks the selected meaning and keeps its own review progress. The whole-group assessment uses the first learning meaning for each word.</p></div> : null}
           </div></div></div> : null}

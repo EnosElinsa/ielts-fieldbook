@@ -5,6 +5,15 @@ import { emptyState } from '../domain/state';
 import { addVocabularyItem } from '../domain/vocabulary';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 
+test('Writing plan labels identify the skill and retain IELTS task numbers without changing custom titles', () => {
+  const target = { type: 'question', skill: 'writing', questionId: 'q', mode: 'outline' } as const;
+  expect(studyPlanTitle({ title: 'Task 2 - Position and support', target })).toBe('Writing · Task 2 · Position and support');
+  expect(studyPlanTitle({ title: 'Task 1 - Chart overview', target })).toBe('Writing · Task 1 · Chart overview');
+  expect(studyPlanTitle({ title: 'Task 2 · Timed', target })).toBe('Writing · Task 2 · Timed');
+  expect(studyPlanTitle({ title: 'Task 2 - My essay notes', target })).toBe('Task 2 - My essay notes');
+  expect(studyPlanTitle({ title: 'My personal writing plan', target })).toBe('My personal writing plan');
+});
+
 test('binds concrete source targets before starting, limits question quantity and preserves protected work',async()=>{
   const state={plans:[
     {id:'write',status:'pending',kind:'1',rotationIndex:0,target:{type:'question',skill:'writing',questionId:null}},

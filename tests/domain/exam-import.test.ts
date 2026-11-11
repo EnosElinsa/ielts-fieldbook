@@ -3,6 +3,11 @@ import { expect, test } from 'vitest';
 import { normalizeSourceSection, validateCatalog, htmlText } from '../../scripts/lib/exam-import.mjs';
 const job={id:'1',paperId:'p',classify:1,book:21,test:1,part:1,url:'https://www.ieltscb.com/Paper/part/?id=p',types:'填空'};
 
+test.each(['Q解析', ' Q25解析', ' Q25-26解析'])('transcript ingestion removes the source analysis control %s', marker => {
+ const result=normalizeSourceSection({job,detail:{0:{pages:[{sections:[{type:'10',questions:[{id:'q',sort:'1',title:'1',option_names:'coat'}]}]}]}},report:{data:{content:{list:[{id:'sentence',content:`WOMAN: Wear a coat.${marker}`,begin_time:'1000',end_time:'3000'}]}}}});
+ expect(result.sections[0].sentences[0]).toMatchObject({id:'source:sentence',text:'Wear a coat.',start:1,end:3});
+});
+
 test('reading import recognises letter markers followed by heading question numbers', () => {
  const result=normalizeSourceSection({job:{...job,classify:2},detail:{0:{content:'<p>Source title</p><p>A 14</p><p>First sentence.</p><p>Second sentence.</p><p>B 15</p><p>Another paragraph.</p>',pages:[{desc:'Choose the correct heading.',sections:[{type:'1',questions:[{id:'q',sort:'14',title:'14',option_ids:'a',option_names:'I. Opening'}],options:[{id:'a',title:'I. Opening'}]}]}]}},report:{data:{content_title:'Source title'}}});
  expect(result.passages[0].paragraphs.map(row=>({id:row.id,text:row.text}))).toEqual([{id:'A',text:'First sentence. Second sentence.'},{id:'B',text:'Another paragraph.'}]);

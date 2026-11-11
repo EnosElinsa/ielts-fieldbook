@@ -1,10 +1,11 @@
-import { ExamStudyLink } from './ExamNavigation';
+import { ExamBackLink, ExamStudyLink } from './ExamNavigation';
+import { withExamReturn } from '../../lib/examNavigation';
 import { questionEndNumber, questionLabel, questionNumberLabel, questionSlotCount } from '../../domain/exam/questionSlots';
 import { SelectField } from '../../components/SelectField';
 import { PageLoadingState, StateMessage } from '../../components/AsyncState';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Link, useNavigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
-import { ArrowLeft, RotateCcw, Bookmark, Headphones, Save, LocateFixed } from 'lucide-react';
+import { RotateCcw, Bookmark, Headphones, Save, LocateFixed } from 'lucide-react';
 import type { ExamAttempt, ExamQuestion, ExamSkill } from '../../domain/exam/types';
 import { gradeQuestion } from '../../domain/exam';
 import { useFieldbook } from '../../context/FieldbookContext';
@@ -72,13 +73,11 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
     target?.scrollIntoView?.({ block: 'center' }); target?.focus({ preventScroll: true });
   }, [location.hash, catalog, selectedSection, filter]);
   if (!attempt) return <section className="view active">
-<Link className="btn text back-link" to={`/${skill}`}>
-<ArrowLeft size={15} />Back to bank</Link>
+<ExamBackLink fallback={`/${skill}`} fallbackLabel="Back to bank" />
 <StateMessage title="This attempt isn't in your account" message="It may have been discarded or saved under another account."><Link className="btn line" to={`/${skill}/review`}>Back to {skill} review</Link></StateMessage>
 </section>;
   if (attempt.status !== 'completed') return <section className="view active">
-<Link className="btn text back-link" to={`/${skill}`}>
-<ArrowLeft size={15} />Back to bank</Link>
+<ExamBackLink fallback={`/${skill}`} fallbackLabel="Back to bank" />
 <StateMessage message={attempt.status === 'discarded' ? 'This session was discarded without a score.' : 'Submit this attempt to view its results.'} />
 </section>;
   if (loading && !attempt.questionSnapshot) return <section className="view active">
@@ -123,12 +122,11 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
     if (!saved) setSaveError(`${feedback || 'Could not save review notes.'} Your edits remain here; retry saving.`);
     else { if (JSON.stringify(readExamRecovery(owner, recoveryKey)) === snapshot) clearExamRecovery(owner, recoveryKey); setAnnotations({}); setSavedThisVisit(true); }
   };
-  const retry = () => navigate(`/${skill}/${attempt.sectionIds[0]}?retry=${encodeURIComponent(attempt.id)}`);
+  const retry = () => navigate(withExamReturn(`/${skill}/${attempt.sectionIds[0]}?retry=${encodeURIComponent(attempt.id)}`, params.get('returnTo')));
   return <section className="view active exam-review">
 <div className="exam-review-head">
 <div className="exam-back-links">
-<Link className="btn text back-link" to={`/${skill}`}>
-<ArrowLeft size={15} />Bank</Link>
+<ExamBackLink fallback={`/${skill}`} fallbackLabel="Bank" />
 <Link className="btn text" to={`/${skill}/review`}>Review queue</Link>
 </div>
 <div className="exam-review-title">

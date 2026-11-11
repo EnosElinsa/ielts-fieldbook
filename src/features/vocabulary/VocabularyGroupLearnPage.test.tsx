@@ -31,6 +31,17 @@ vi.mock('./Pronunciation', async () => {
   } };
 });
 const original = structuredClone(VOCABULARY_CATALOG);
+
+test('a learning card gives a direct route to all dictionary meanings', async () => {
+  mount();
+  await screen.findByRole('heading', { name: 'Word 1' });
+  const link = screen.getByRole('link', { name: 'Browse all meanings' });
+  const url = new URL(link.getAttribute('href')!, 'https://local.test');
+  expect(url.pathname).toBe('/vocabulary/entry/word-1');
+  expect(url.searchParams.get('meanings')).toBe('all');
+  expect(url.hash).toBe('#vocabulary-dictionary');
+  expect(screen.getByText('This card shows one selected meaning.')).toBeInTheDocument();
+});
 test('planned learning retains its required fixed batch mode and whole-group assessments clear binding', async () => {
   const batch=buildLearningBatch(mocks.fb.state,'book','group',0,10,'definition');
   mocks.fb.state.plans=[{id:'planned',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',...batch.selection,cards:batch.selection.cards}}];

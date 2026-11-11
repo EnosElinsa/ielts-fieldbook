@@ -387,6 +387,13 @@
 .exam-choice-count { margin: 5px 0 10px; color: var(--muted); font-size: 12px; line-height: 1.6; }
 .exam-choice-count.is-complete { color: var(--blue); }
 .exam-multiple .exam-options { margin-top: 0; }
+.exam-options .exam-option-copy { display: flex; flex: 1; min-width: 0; gap: 12px; align-items: baseline; }
+.exam-option-code { flex: 0 0 1.25em; font-weight: 700; color: var(--muted); text-align: center; }
+.exam-option-description { min-width: 0; overflow-wrap: anywhere; }
+.exam-choice-instructions { display: grid; gap: 6px; margin: 6px 0 18px; padding: 14px 16px; border-left: 2px solid var(--rule); background: var(--surface-soft); font-size: 13px; line-height: 1.6; }
+.exam-choice-instructions strong { font-weight: 600; color: var(--ink); }
+.exam-choice-instructions p { margin: 0; color: var(--muted); }
+.exam-review-explanation blockquote > span { white-space: pre-line; }
 .exam-options label:has(input:disabled) { opacity: 1; }
 .exam-options label:has(input:disabled:not(:checked)) { color: var(--muted); cursor: default; }
 .exam-options input { flex-shrink: 0; margin-top: 3px; }
@@ -404,6 +411,16 @@
 .exam-stimulus td,.exam-stimulus th { padding: 12px 16px; }
 /* A paragraph nested inside emphasis is an imported inline fragment, not a new answer row. */
 .exam-stimulus :is(strong,b,span) > p { display: inline; margin: 0; }
+/* Imported table paragraphs are printed line fragments; empty ones separate notes. */
+.exam-stimulus table { min-width: calc(var(--exam-table-columns,1) * 11rem); overflow-wrap: normal; word-break: normal; }
+.exam-stimulus .exam-table-line { display: inline; margin: 0; }
+.exam-stimulus .exam-table-break { display: block; height: .7em; }
+.exam-stimulus .exam-table-break:last-child { display: none; }
+.exam-stimulus table:has(.exam-inline-answer) { min-width: calc(var(--exam-table-columns,1) * 14rem); }
+.exam-stimulus table:has(.exam-inline-answer) :is(td,th) { min-width: 11rem; }
+.exam-stimulus table .exam-inline-answer { width: min(11.5rem,calc(100% - 3em)); margin-inline: .15em; gap: 4px; }
+.exam-stimulus table .exam-inline-field { flex: 1; }
+.exam-stimulus table .exam-inline-answer .exam-gap { width: 100%; min-width: 0; }
 .exam-inline-answer .exam-gap { font-size: 16px; font-weight: 400; min-height: 44px; width: 160px; }
 .exam-inline-field { display: inline-grid; min-width: 0; max-width: 100%; }
 .exam-inline-field .exam-word-limit-error { max-width: 160px; white-space: normal; line-height: 1.5; font-weight: 400; }

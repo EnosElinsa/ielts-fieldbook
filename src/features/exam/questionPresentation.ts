@@ -28,8 +28,10 @@ export function questionPresentation(questions: ExamQuestion[]) {
     const hasSourceGap = [...examGapMatches(text)].some(match => examGapNumber(match) === question.number);
     const scaffold = question.prompt === `Question ${question.number} · Complete the marked gap in the ${question.type === 'map' ? 'map' : 'text above'}.`;
     const instructions = normalize(question.instructions || '');
+    const instructionOnly = ['single', 'multiple', 'true-false', 'yes-no'].includes(question.type) && Boolean(instructions) && normalize(text) === instructions && !/<(?:table|img|ul|ol)\b/i.test(source);
     return {
       group, groupStart: index === start,
+      instructionOnly,
       showPrompt: !(scaffold && hasSourceGap),
       showInstructions: Boolean(instructions) && !normalize(text).includes(instructions) && !questions.slice(start, index).some(row => normalize(row.instructions || '') === instructions),
       sharedType: group.length > 1 && group.every(row => row.type === question.type),

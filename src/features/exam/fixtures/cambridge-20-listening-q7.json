@@ -1,0 +1,567 @@
+{
+  "source": "Cached published exam corpus: Cambridge IELTS 20, Test 1, Listening Part 1, Questions 7 and 9",
+  "question": {
+    "id": "question:10795",
+    "type": "gap",
+    "skill": "listening",
+    "answer": "reviews",
+    "number": 7,
+    "prompt": "Question 7 · Complete the marked gap in the text above.",
+    "paperId": "cambridge:20:1",
+    "sectionId": "source:1230",
+    "evidence": {
+      "end": 320.149,
+      "text": "Anyway, it’s had excellent reviews from all the newspapers.",
+      "start": 316,
+      "sentenceId": "source:88906"
+    },
+    "provenance": {
+      "fetchedAt": "2026-10-11T16:04:19.949Z",
+      "sourceUrl": "https://www.ieltscb.com/Paper/part/?id=155&classify=1&chapters_id=1230&p_type=20&new_page=1",
+      "contentHash": "a47f236937890a3ce4c39acf8b93faafa22513398977218bfcd3e37a687760ca",
+      "authorization": "User confirmed authorized/internal use",
+      "sourceVersion": "ieltscb-2026-10"
+    }
+  },
+  "section": {
+    "id": "source:1230",
+    "part": 1,
+    "skill": "listening",
+    "title": "Part 1",
+    "status": "ready",
+    "assetId": "audio:1230",
+    "paperId": "cambridge:20:1",
+    "sentences": [
+      {
+        "id": "source:88857",
+        "end": 40.99,
+        "text": "PART 1",
+        "start": 0,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88858",
+        "end": 53.6,
+        "text": "I've been meaning to ask you for some advice about restaurants – I need to book somewhere to celebrate my sister's 30th birthday and I liked the sound of that place you went to for your mum's 50th.",
+        "start": 40.99,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88859",
+        "end": 58.289,
+        "text": "The Junction? Yeah, I'd definitely recommend that for a special occasion.",
+        "start": 53.6,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88860",
+        "end": 61.899,
+        "text": "We had a great time there. Everyone really enjoyed it.",
+        "start": 58.289,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88861",
+        "end": 64.9,
+        "text": "Where is it again? I can't remember.",
+        "start": 61.899,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88862",
+        "end": 69.7,
+        "text": "It's on Greyson Street, only about a two minute walk from the station.",
+        "start": 64.9,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88863",
+        "end": 74.14,
+        "text": "Oh, that's good. I'd prefer not to have to drive anywhere.",
+        "start": 69.7,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88864",
+        "end": 77.349,
+        "text": "But I don't want to have to walk too far either.",
+        "start": 74.14,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88865",
+        "end": 83.14,
+        "text": "Yes, the location's perfect but that's not necessarily why I'd recommend it.",
+        "start": 77.349,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88866",
+        "end": 91.23,
+        "text": "The food's amazing. If you like fish it's probably the best restaurant in town for that.",
+        "start": 83.14,
+        "alignment": "source",
+        "questionIds": [
+          "question:10789"
+        ]
+      },
+      {
+        "id": "source:88867",
+        "end": 96.849,
+        "text": "It's always really fresh and there are lots of interesting dishes to choose from.",
+        "start": 91.23,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88868",
+        "end": 99.25,
+        "text": "But all the food is good there.",
+        "start": 96.849,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88869",
+        "end": 101.7,
+        "text": "Is it really expensive?",
+        "start": 99.25,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88870",
+        "end": 107.29,
+        "text": "It's certainly not cheap but for a special occasion I think it's fine.",
+        "start": 101.7,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88871",
+        "end": 118.349,
+        "text": "It's got a great atmosphere and before dinner you can go up on the roof and have a drink – it's really nice up there but you need to book.",
+        "start": 107.29,
+        "alignment": "source",
+        "questionIds": [
+          "question:10790"
+        ]
+      },
+      {
+        "id": "source:88872",
+        "end": 121.89,
+        "text": "It's very popular as the views are spectacular.",
+        "start": 118.349,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88873",
+        "end": 126.9,
+        "text": "Sounds good. So that's definitely a possibility then.",
+        "start": 121.89,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88874",
+        "end": 129.599,
+        "text": "Is there anywhere else you can think of?",
+        "start": 126.9,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88875",
+        "end": 135.389,
+        "text": "If you want somewhere a bit less formal then you could try Paloma.",
+        "start": 129.599,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88876",
+        "end": 137.599,
+        "text": "Where's that? I haven't heard of it.",
+        "start": 135.389,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88877",
+        "end": 144.4,
+        "text": "No, it's quite new. It's only been open a few months but it's got a great reputation already.",
+        "start": 137.599,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88878",
+        "end": 148.289,
+        "text": "It's in a really beautiful old building on Bow Street.",
+        "start": 144.4,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88879",
+        "end": 153.34,
+        "text": "Oh, I think I know where you mean – right beside the cinema?",
+        "start": 148.289,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88880",
+        "end": 159.699,
+        "text": "Yes, that's it. I've only been there a couple of times but I was really impressed.",
+        "start": 153.34,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88881",
+        "end": 163.55,
+        "text": "The chef used to work at Don Felipe's, apparently.",
+        "start": 159.699,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88882",
+        "end": 166.219,
+        "text": "I was really sorry when that closed down.",
+        "start": 163.55,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88883",
+        "end": 169.349,
+        "text": "So is all the food they serve Spanish, then?",
+        "start": 166.219,
+        "alignment": "source",
+        "questionIds": [
+          "question:10791"
+        ]
+      },
+      {
+        "id": "source:88884",
+        "end": 176.09,
+        "text": "Yeah. You can get lots of small dishes to share – which always works really well if you're in a group.",
+        "start": 169.349,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88885",
+        "end": 178.289,
+        "text": "Mmm. Worth thinking about.",
+        "start": 176.09,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88886",
+        "end": 183.889,
+        "text": "Yeah. There's a lively atmosphere and the waiters are really friendly.",
+        "start": 178.289,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88887",
+        "end": 189,
+        "text": "The only thing is that you need to pay a £50 deposit to book a table.",
+        "start": 183.889,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88888",
+        "end": 191.99,
+        "text": "A lot of restaurants are doing that these days.",
+        "start": 189,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88889",
+        "end": 197.05,
+        "text": "I should have a look at the menu to check there's a good choice of vegetarian dishes.",
+        "start": 191.99,
+        "alignment": "source",
+        "questionIds": [
+          "question:10792"
+        ]
+      },
+      {
+        "id": "source:88890",
+        "end": 200.3,
+        "text": "A couple of my friends have stopped eating meat.",
+        "start": 197.05,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88891",
+        "end": 251.99,
+        "text": "Not sure. I'd say the selection of those would be quite limited.",
+        "start": 200.3,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88892",
+        "end": 254.289,
+        "text": "I've just thought of another idea.",
+        "start": 251.99,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88893",
+        "end": 256.238,
+        "text": "Have you been to The Audley?",
+        "start": 254.289,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88894",
+        "end": 260.798,
+        "text": "No, don't think I've heard of it. How's it spelt?",
+        "start": 256.238,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88895",
+        "end": 269.79,
+        "text": "A-U-D-L-E-Y. You must have heard of it – there's been a lot about it in the press.",
+        "start": 260.798,
+        "alignment": "source",
+        "questionIds": [
+          "question:10793"
+        ]
+      },
+      {
+        "id": "source:88896",
+        "end": 276.029,
+        "text": "I don't tend to pay much attention to that kind of thing. So where is it exactly?",
+        "start": 269.79,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88897",
+        "end": 280.689,
+        "text": "It's in that hotel near Baxter Bridge – on the top floor.",
+        "start": 276.029,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88898",
+        "end": 284.1,
+        "text": "Oh, the views would be incredible from up there.",
+        "start": 280.689,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88899",
+        "end": 286.579,
+        "text": "Yeah. I'd love to go.",
+        "start": 284.1,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88900",
+        "end": 293.189,
+        "text": "I can't think of the chef's name but she was a judge on that TV cookery show recently.",
+        "start": 286.579,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88901",
+        "end": 295.8,
+        "text": "And she's written a couple of cookery books.",
+        "start": 293.189,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88902",
+        "end": 298.16,
+        "text": "Oh, Angela Frayn.",
+        "start": 295.8,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88903",
+        "end": 304.389,
+        "text": "That's the one. Anyway, it's had excellent reviews from all the newspapers.",
+        "start": 298.16,
+        "alignment": "source",
+        "questionIds": [
+          "question:10794"
+        ]
+      },
+      {
+        "id": "source:88904",
+        "end": 308,
+        "text": "That would be a memorable place for a celebration.",
+        "start": 304.389,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88905",
+        "end": 316,
+        "text": "Definitely. Obviously it's worth going there just for the view but the food is supposed to be really special.",
+        "start": 308,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88906",
+        "end": 320.149,
+        "text": "She only likes cooking with local products, doesn't she?",
+        "start": 316,
+        "alignment": "source",
+        "questionIds": [
+          "question:10795",
+          "question:10796"
+        ]
+      },
+      {
+        "id": "source:88907",
+        "end": 329.3,
+        "text": "Yes. Everything at the restaurant has to be sourced within a short distance and absolutely nothing flown in from abroad.",
+        "start": 320.149,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88908",
+        "end": 332.5,
+        "text": "I imagine it's really expensive though.",
+        "start": 329.3,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88909",
+        "end": 335.55,
+        "text": "Well, you could go for the set lunch.",
+        "start": 332.5,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88910",
+        "end": 341.149,
+        "text": "That's quite reasonable for a top class restaurant: £30 a head.",
+        "start": 335.55,
+        "alignment": "source",
+        "questionIds": [
+          "question:10797"
+        ]
+      },
+      {
+        "id": "source:88911",
+        "end": 345.35,
+        "text": "In the evening I think it'd be more like £50.",
+        "start": 341.149,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88912",
+        "end": 350.72,
+        "text": "At least that, I should think. But I'm sure everyone would enjoy it.",
+        "start": 345.35,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88913",
+        "end": 356.459,
+        "text": "It's not the kind of place you leave feeling hungry though, is it? With tiny portions?",
+        "start": 350.72,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:88914",
+        "end": 362.54,
+        "text": "No, the reviews I've read didn't mention that. I imagine they'd be average.",
+        "start": 356.459,
+        "alignment": "source",
+        "questionIds": [
+          "question:10798"
+        ]
+      },
+      {
+        "id": "source:88915",
+        "end": 365.332,
+        "text": "Well, that's all great, thanks …",
+        "start": 362.69100000000003,
+        "alignment": "generated",
+        "questionIds": [],
+        "alignmentProvenance": {
+          "method": "whisperx-cpu",
+          "createdAt": "2026-10-11T16:34:34.726958+00:00",
+          "sourceContentHash": "a47f236937890a3ce4c39acf8b93faafa22513398977218bfcd3e37a687760ca"
+        }
+      }
+    ],
+    "provenance": {
+      "fetchedAt": "2026-10-11T16:04:19.949Z",
+      "sourceUrl": "https://www.ieltscb.com/Paper/part/?id=155&classify=1&chapters_id=1230&p_type=20&new_page=1",
+      "contentHash": "a47f236937890a3ce4c39acf8b93faafa22513398977218bfcd3e37a687760ca",
+      "authorization": "User confirmed authorized/internal use",
+      "sourceVersion": "ieltscb-2026-10"
+    },
+    "questionCount": 10,
+    "questionTypes": [
+      "gap"
+    ]
+  },
+  "question9": {
+    "id": "question:10797",
+    "type": "gap",
+    "skill": "listening",
+    "answer": "30",
+    "number": 9,
+    "prompt": "Question 9 · Complete the marked gap in the text above.",
+    "paperId": "cambridge:20:1",
+    "sectionId": "source:1230",
+    "evidence": {
+      "end": 341.149,
+      "text": "Well, you could go for the set lunch. That’s quite reasonable for a top class restaurant: 30 a head.",
+      "start": 335.55,
+      "sentenceId": "source:88910"
+    },
+    "provenance": {
+      "fetchedAt": "2026-10-11T16:04:19.949Z",
+      "sourceUrl": "https://www.ieltscb.com/Paper/part/?id=155&classify=1&chapters_id=1230&p_type=20&new_page=1",
+      "contentHash": "a47f236937890a3ce4c39acf8b93faafa22513398977218bfcd3e37a687760ca",
+      "authorization": "User confirmed authorized/internal use",
+      "sourceVersion": "ieltscb-2026-10"
+    }
+  }
+}

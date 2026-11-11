@@ -1,13 +1,13 @@
-import { ExamStudyLink } from './ExamNavigation';
+import { ExamBackLink, ExamStudyLink } from './ExamNavigation';
 import { SelectField } from '../../components/SelectField';
 import { SaveFailure } from '../../components/SaveFailure';
 import { ReadingPassage, readingQuestionPrompt, HeadingList, HeadingReference, QuestionReference } from './ReadingPassage';
 import { useWorkspacePageState } from '../../lib/workspacePageState';
 import { useEffect, useMemo, useRef, useState, type ReactNode, type KeyboardEvent } from 'react';
 import { InlineLoadingState, PageLoadingState, StateMessage } from '../../components/AsyncState';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { ArrowLeft, Pause, Play, Compass, Send, Columns2, Rows3, NotebookPen, Map as MapIcon, MoreHorizontal, FilePlus2, Headphones, Keyboard, Trash2 } from 'lucide-react';
+import { Pause, Play, Compass, Send, Columns2, Rows3, NotebookPen, Map as MapIcon, MoreHorizontal, FilePlus2, Headphones, Keyboard, Trash2 } from 'lucide-react';
 import { formatDateTime, plural } from '../../lib/format';
 import type { ExamAsset, ExamQuestion, ExamSkill } from '../../domain/exam/types';
 import { isQuestionAnswered, questionAnsweredSlots, questionEndNumber, questionLabel, questionNumberLabel, questionSlotCount, selectedExamChoices } from '../../domain/exam/questionSlots';
@@ -25,6 +25,7 @@ import { ExamMockAudio } from './ExamMockAudio';
 import { ModalFrame } from '../../components/ModalFrame';
 import { SourceAnnotations, AnnotatedText, type SourceSelection } from './SourceAnnotations';
 import { examGapMatches, examGapNumber, questionPresentation, questionNumberPrefixLength } from './questionPresentation';
+import { stimulusDocument } from './stimulusDocument';
 import '../../styles/exam.css';
 
 export function ExamImage({ asset, label, inline = false }: { asset?: ExamAsset; label: string; inline?: boolean }) {
@@ -38,7 +39,7 @@ export function ExamImage({ asset, label, inline = false }: { asset?: ExamAsset;
 }
 // Source HTML is converted into React nodes through a restricted tag/attribute list.
 export function examStimulusBlockIds(html: string, blockPrefix: string): string[] {
-  const parsed = new DOMParser().parseFromString(html, 'text/html');
+  const parsed = stimulusDocument(html);
   const blocks: string[] = [];
   const visit = (node: Node, key: string) => {
     if (node.nodeType === Node.TEXT_NODE) {
@@ -60,7 +61,7 @@ export function examStimulusBlockIds(html: string, blockPrefix: string): string[
 }
 export function ExamStimulus({ html, assets = [], renderGap, blockPrefix = 'stimulus', version = '' }: { html: string; assets?: ExamAsset[]; renderGap?: (number: number) => ReactNode; blockPrefix?: string; version?: string }) {
   const nodes = useMemo(() => {
-    const document = new DOMParser().parseFromString(html, 'text/html');
+    const document = stimulusDocument(html);
     const allowed = new Set(['p', 'div', 'span', 'strong', 'b', 'em', 'i', 'u', 'br', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'ul', 'ol', 'li', 'h3', 'h4', 'h5', 'blockquote', 'sup', 'sub']);
     const convert = (node: Node, key: string): ReactNode => {
       if (node.nodeType === Node.TEXT_NODE) {
@@ -75,12 +76,18 @@ export function ExamStimulus({ html, assets = [], renderGap, blockPrefix = 'stim
       }
       if (!(node instanceof Element)) return null;
       const tag = node.tagName.toLowerCase();
-      if (['p', 'div'].includes(tag) && !node.textContent?.trim() && !node.querySelector('img')) return null;
+      const tableLine = tag === 'p' && ['td', 'th'].includes(node.parentElement?.tagName.toLowerCase() || '');
+      if (['p', 'div'].includes(tag) && !node.textContent?.trim() && !node.querySelector('img')) return tableLine ? <span key={key} className="exam-table-break" aria-hidden="true"> </span> : null;
       if (tag === 'img') { const source = node.getAttribute('src') || ''; const asset = source.startsWith('exam-asset:') ? assets.find(row => row.id === source.slice('exam-asset:'.length) && row.kind === 'image') : undefined; return asset ? <ExamImage inline key={key} asset={asset} label={node.getAttribute('alt') || 'Source diagram'} /> : null; }
       if (['script', 'style', 'iframe', 'object', 'embed', 'svg', 'form', 'input'].includes(tag)) return null;
       const children = Array.from(node.childNodes).map((child, index) => convert(child, `${key}-${index}`));
       if (!allowed.has(tag)) return children;
       const props: Record<string, unknown> = {}; if (tag === 'td' || tag === 'th') { const span = Number(node.getAttribute('colspan')); if (span > 0 && span < 20) props.colSpan = span; const row = Number(node.getAttribute('rowspan')); if (row > 0 && row < 20) props.rowSpan = row; }
+      if (tag === 'table') {
+        const columns = Math.max(1, ...Array.from(node.querySelectorAll('tr')).map(row => Array.from(row.children).reduce((count, cell) => count + Math.max(1, Math.min(20, Number(cell.getAttribute('colspan')) || 1)), 0)));
+        props.style = { '--exam-table-columns': columns };
+      }
+      if (tableLine) { props.className = 'exam-table-line'; children.push(' '); }
       return <SourceTag key={key} tag={tag} props={props}>{children}</SourceTag>;
     };
     return Array.from(document.body.childNodes).map((node, index) => convert(node, String(index)));
@@ -88,6 +95,17 @@ export function ExamStimulus({ html, assets = [], renderGap, blockPrefix = 'stim
   return <div className="exam-stimulus">{nodes}</div>;
 }
 function SourceTag({ tag, props, children }: { tag: string; props: Record<string, unknown>; children: ReactNode }) { if (tag === 'br') return <br />; const Tag = tag as 'div'; return <Tag {...props}>{children}</Tag>; }
+function ExamOptionText({ option }: { option: string }) {
+  const parts = option.match(/^([A-Z])([.)]\s*|\s+)(\S[\s\S]*)$/);
+  return parts ? <span className="exam-option-copy"><span className="exam-option-code">{parts[1]}{parts[2].trim()}</span>{' '}<span className="exam-option-description">{parts[3]}</span></span> : <span>{option}</span>;
+}
+function ExamChoiceInstructions({ question, questions }: { question: ExamQuestion; questions: ExamQuestion[] }) {
+  const text = (question.instructions || '').replace(/\s+/g, ' ').trim();
+  const parts = text.match(/^(Questions?\s+\d+(?:\s*[-–—]\s*\d+)?)\s+(.+)$/i);
+  const start = questions[0].number; const end = questionEndNumber(questions.at(-1)!);
+  const title = start === end ? `Question ${start}` : `Questions ${start}–${end}`;
+  return <div className="exam-choice-instructions"><strong>{title}</strong><p>{parts?.[2] || text}</p></div>;
+}
 export function ExamAnswerInput({ question, value, onChange, disabled, describedBy, compactOptions = false }: { question: ExamQuestion; value: string | string[]; onChange: (value: string | string[]) => void; disabled: boolean; describedBy?: string; compactOptions?: boolean }) {
   const options = question.type === 'true-false' ? ['TRUE', 'FALSE', 'NOT GIVEN'] : question.type === 'yes-no' ? ['YES', 'NO', 'NOT GIVEN'] : question.options || [];
   if (question.type === 'multiple') {
@@ -97,10 +115,10 @@ export function ExamAnswerInput({ question, value, onChange, disabled, described
     return <fieldset className="exam-multiple" aria-describedby={selectionId}>
       <legend>{question.points ? `Choose ${limit} ${limit === 1 ? 'option' : 'options'}` : 'Choose the required options'}</legend>
       <p id={selectionId} className={`exam-choice-count${selected.length === limit ? ' is-complete' : ''}`} role="status" aria-label={`Selection for ${questionLabel(question).toLowerCase()}`}>{question.points ? `${selected.length} / ${limit} selected` : `${selected.length} selected`}{selected.length === limit ? ' · Deselect an option to change your choices.' : ''}</p>
-      <div className="exam-options">{options.map(option => <label key={option}><input type="checkbox" disabled={disabled || selected.length >= limit && !selected.includes(option)} aria-describedby={selectionId} checked={selected.includes(option)} onChange={event => onChange(event.target.checked ? [...selected, option] : selected.filter(item => item !== option))} /><span>{option}</span></label>)}</div>
+      <div className="exam-options">{options.map(option => <label key={option}><input type="checkbox" disabled={disabled || selected.length >= limit && !selected.includes(option)} aria-describedby={selectionId} checked={selected.includes(option)} onChange={event => onChange(event.target.checked ? [...selected, option] : selected.filter(item => item !== option))} /><ExamOptionText option={option} /></label>)}</div>
     </fieldset>;
   }
-  if (question.type === 'single' || question.type === 'true-false' || question.type === 'yes-no') return <div className="exam-options">{options.map(option => <label key={option}><input type="radio" name={question.id} disabled={disabled} checked={value === option} onChange={() => onChange(option)} /><span>{option}</span></label>)}</div>;
+  if (question.type === 'single' || question.type === 'true-false' || question.type === 'yes-no') return <div className="exam-options">{options.map(option => <label key={option}><input type="radio" name={question.id} disabled={disabled} checked={value === option} onChange={() => onChange(option)} /><ExamOptionText option={option} /></label>)}</div>;
   if (options.length) return <SelectField aria-label={`Answer ${question.number}`} title={typeof value === 'string' && value ? value : question.type === 'heading' ? 'Choose a heading' : undefined} value={typeof value === 'string' ? value : ''} onChange={event => onChange(event.target.value)} disabled={disabled}><option value="">{question.type === 'heading' || compactOptions ? '—' : 'Choose an answer'}</option>{options.map(option => {
     const code = (compactOptions || question.type === 'heading') && option.match(/^([A-Z]|[ivxlcdm]+)(?=$|[.)\s])/i)?.[1];
     return <option key={option} value={option}>{code ? <span className="exam-heading-choice"><span>{code}</span><span className="exam-heading-choice-title">{option.slice(code.length)}</span></span> : option}</option>;
@@ -139,6 +157,9 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   const controller = useExamAttempt(skill, sourceId, mode, scoped, params.get('attempt'), retryId, boundPlanId, params.get('new') === '1'); const { attempt, update } = controller;
   const { confirm, dialog: sessionDialog } = useConfirmationDialog(`${accountId()}:${attempt?.id}`);
   useEffect(() => {
+    // A different requested session is still restoring; do not put the previous
+    // attempt ID back into the URL while the controller swaps its state.
+    if (params.get('attempt') && params.get('attempt') !== attempt?.id) return;
     if (!attempt || params.get('attempt') === attempt.id && !params.has('new')) return;
     const next = new URLSearchParams(params); next.set('attempt', attempt.id); next.delete('new');
     setParams(next, { replace: true });
@@ -256,7 +277,7 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   };
   const groupHeading = (question: ExamQuestion, index: number) => {
     const info = presentation[index];
-    if (!info.groupStart || info.group.length < 2) return null;
+    if (!info.groupStart || info.group.length < 2 || info.instructionOnly) return null;
     return <div className="exam-question-group-heading"><strong>Questions {info.group[0].number}–{questionEndNumber(info.group.at(-1)!)}</strong>{info.sharedType && <span>{QUESTION_TYPE_NAMES[question.type]}</span>}{info.sharedLimit && <span id={limitId(question)}>{wordLimit(question)}</span>}</div>;
   };
   const renderGap = (number: number) => {
@@ -280,7 +301,7 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
     const info = presentation[index];
     const showStimulus = question.stimulusHtml && (!question.groupId || currentQuestions[index - 1]?.groupId !== question.groupId);
     const image = catalog.assets.find(asset => asset.id === question.assetId && asset.kind === 'image');
-    return <div key={question.id}>{info.showInstructions && <p className="exam-instruction">{question.instructions}</p>}{showStimulus && <ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />}{info.groupStart && headingList(question)}
+    return <div key={question.id}>{info.showInstructions && <p className="exam-instruction">{question.instructions}</p>}{showStimulus && (info.instructionOnly ? <ExamChoiceInstructions question={question} questions={info.group} /> : <ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />)}{info.groupStart && headingList(question)}
       {(info.showPrompt || image) && <article className="exam-question-material"><span className={`exam-number${questionSlotCount(question) > 1 ? " is-range" : ""}`}>{questionNumberLabel(question)}</span>{info.showPrompt && <p className="exam-prompt"><AnnotatedText blockId={`question:${question.id}`} text={headingPrompt(question)} hiddenPrefixLength={questionNumberPrefixLength(headingPrompt(question), question.number, questionEndNumber(question))} version={question.provenance.contentHash || question.provenance.sourceVersion} /></p>}<ExamImage asset={image} label={`${questionLabel(question)} diagram`} /></article>}</div>;
   };
   const renderAnswer = (question: ExamQuestion, index: number, grouped = false) => {
@@ -292,7 +313,7 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
     const headingAnswer = layout === 'integrated' && (grouped || question.type === 'heading');
     const notesOpen = openNotes.includes(question.id);
     const hasNotes = Boolean(attempt?.evidence[question.id]?.trim() || attempt?.keywords[question.id]?.trim());
-    return <div key={question.id}>{!grouped && <>{groupHeading(question, index)}{layout === 'integrated' && info.showInstructions && <p className="exam-instruction">{question.instructions}</p>}{showStimulus && <ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} renderGap={renderGap} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />}{layout === 'integrated' && info.groupStart && headingList(question)}</>}
+    return <div key={question.id}>{!grouped && <>{groupHeading(question, index)}{layout === 'integrated' && info.showInstructions && <p className="exam-instruction">{question.instructions}</p>}{showStimulus && (info.instructionOnly ? <ExamChoiceInstructions question={question} questions={info.group} /> : <ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} renderGap={renderGap} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />)}{layout === 'integrated' && info.groupStart && headingList(question)}</>}
       {showTools && <article id={`exam-question-${question.id}`} tabIndex={-1} aria-label={`${questionLabel(question)} details`} className={`exam-question${compact ? ' exam-question-compact' : ''}${headingAnswer ? ' exam-heading-answer' : ''}${grouped && question.type === 'map' ? ' exam-map-answer' : ''}`} onFocus={() => setFocusedQuestion(question.id)}>
         <div className="exam-question-heading"><span className={`exam-number${questionSlotCount(question) > 1 ? " is-range" : ""}`}>{questionNumberLabel(question)}</span>{!info.sharedType && !headingAnswer && <span className="exam-eyebrow">{QUESTION_TYPE_NAMES[question.type]}</span>}{mode === 'practice' && attempt && !inlineQuestions.has(question.id) && <button type="button" className="exam-notes-toggle" aria-label={`Evidence & paraphrase for ${questionLabel(question).toLowerCase()}`} aria-expanded={notesOpen} aria-controls={`exam-notes-${question.id}`} title={hasNotes ? 'Evidence & paraphrase · Notes added' : 'Evidence & paraphrase'} onClick={() => setOpenNotes(ids => notesOpen ? ids.filter(id => id !== question.id) : [...ids, question.id])}><NotebookPen size={16} aria-hidden="true" />{hasNotes && <span className="exam-note-dot" aria-label="Notes added" />}</button>}</div>
         {layout === 'integrated' && <>{info.showPrompt && <p className="exam-prompt"><AnnotatedText blockId={`question:${question.id}`} text={headingPrompt(question)} hiddenPrefixLength={questionNumberPrefixLength(headingPrompt(question), question.number, questionEndNumber(question))} version={question.provenance.contentHash || question.provenance.sourceVersion} /></p>}<ExamImage asset={catalog.assets.find(asset => asset.id === question.assetId && asset.kind === 'image')} label={`${questionLabel(question)} diagram`} /></>}
@@ -327,8 +348,8 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   });
   if (metadata.loading || source.loading) return <section className="view active"><PageLoadingState variant="workbench" message="Loading source material…" onRetry={() => { metadata.reload(); source.reload(); }} /></section>;
   if (metadata.error || source.error) return <section className="view active"><StateMessage kind="error" message={metadata.error || source.error} onRetry={() => { metadata.reload(); source.reload(); }} /></section>;
-  if (!valid) return <section className="view active"><Link to={`/${skill}`} className="btn text"><ArrowLeft size={15} />Back to bank</Link><StateMessage title={`This ${mode === 'mock' ? 'full test' : 'part'} is not ready.`} message="The source content, answer key or required parts are incomplete. Practice will open when the verified source is available." /></section>;
-  if (!attempt && controller.error) return <section className="view active"><Link className="btn line" to={`/${skill}`}>Back to bank</Link><StateMessage message={controller.error} /></section>;
+  if (!valid) return <section className="view active"><ExamBackLink fallback={`/${skill}`} fallbackLabel="Back to bank" /><StateMessage title={`This ${mode === 'mock' ? 'full test' : 'part'} is not ready.`} message="The source content, answer key or required parts are incomplete. Practice will open when the verified source is available." /></section>;
+  if (!attempt && controller.error) return <section className="view active"><ExamBackLink fallback={`/${skill}`} fallbackLabel="Back to bank" /><StateMessage message={controller.error} /></section>;
   if (mode === 'practice' && !attempt) return <section className="view active"><PageLoadingState variant="workbench" message="Restoring your practice…" /></section>;
   const sectionLabel = skill === 'reading' ? 'Passage' : 'Part';
   // A listening mock without recording lengths has no meaningful limit until the source is fixed.
@@ -344,7 +365,7 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
     event.preventDefault();
     items[event.key === 'Home' ? 0 : event.key === 'End' ? items.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + items.length) % items.length].focus();
   };
-  return <section className={`view active exam-workspace exam-workspace-${skill}`} onKeyDown={handleShortcut}><div className="exam-workspace-head"><Link className="btn text back-link" to={`/${skill}`}><ArrowLeft size={15} />Bank</Link><div className="exam-workspace-title"><span className="exam-eyebrow">{paper ? `Cambridge ${paper.book} · Test ${paper.test}` : skill} · {mode === 'mock' ? 'Full mock' : `${sectionLabel} practice`}</span><h2>{mode === 'mock' ? paper?.title || 'Full mock' : activeSection?.title}</h2>{sessionStatus && <p className="exam-session-status">{sessionStatus}</p>}</div><div className="exam-timer"><span>{mode === 'mock' ? 'Time remaining' : 'Practice time'}</span><strong role="timer">{mode === 'mock' ? timeLimit ? examClock(timeLimit - (attempt ? controller.elapsed : 0)) : '—' : examClock(controller.elapsed)}</strong></div></div>
+  return <section className={`view active exam-workspace exam-workspace-${skill}`} onKeyDown={handleShortcut}><div className="exam-workspace-head"><ExamBackLink fallback={`/${skill}`} fallbackLabel="Bank" /><div className="exam-workspace-title"><span className="exam-eyebrow">{paper ? `Cambridge ${paper.book} · Test ${paper.test}` : skill} · {mode === 'mock' ? 'Full mock' : `${sectionLabel} practice`}</span><h2>{mode === 'mock' ? paper?.title || 'Full mock' : activeSection?.title}</h2>{sessionStatus && <p className="exam-session-status">{sessionStatus}</p>}</div><div className="exam-timer"><span>{mode === 'mock' ? 'Time remaining' : 'Practice time'}</span><strong role="timer">{mode === 'mock' ? timeLimit ? examClock(timeLimit - (attempt ? controller.elapsed : 0)) : '—' : examClock(controller.elapsed)}</strong></div></div>
     <SaveFailure failed={Boolean(controller.error)} role="alert" message={controller.error} saving={controller.saving} onRetry={attempt?.status !== 'completed' ? () => void controller.retrySave() : () => void controller.submit()} />
     {mode === 'mock' && !attempt ? <div className="exam-start"><div className="exam-start-copy"><span className="exam-eyebrow">Exam conditions</span><h3>Settle in before you start.</h3><p>{skill === 'reading' ? 'You have 60 minutes for all three passages.' : 'The recording plays continuously, followed by two minutes to check your answers.'} The clock continues if you leave this page. Method notes and answer checks become available after submission.</p></div>
       <dl className="exam-start-summary"><div><dt>{sectionLabel}s</dt><dd>{sections.length}</dd></div><div><dt>Questions</dt><dd>{sections.reduce((sum, section) => sum + section.questionCount, 0)}</dd></div><div><dt>Time limit</dt><dd>{mockLimit ? examClock(mockLimit) : '—'}</dd></div></dl>

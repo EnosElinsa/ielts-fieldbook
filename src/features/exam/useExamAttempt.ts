@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { createExamAttempt, gradeAttempt } from '../../domain/exam';
 import type { ExamAsset, ExamAttempt, ExamCatalog, ExamSkill } from '../../domain/exam/types';
@@ -7,6 +7,7 @@ import { accountId } from '../../storage/remote';
 import { readExamRecoveries } from '../../storage/examRecovery';
 import { mergeExamSessions, unfinishedExamSession } from '../../domain/exam/sessions';
 import { checkpointExamSession, clearSessionCheckpoint } from './sessionRecovery';
+import { safeExamReturn, withExamReturn } from '../../lib/examNavigation';
 
 /** Reading mocks last an hour; listening mocks last the recordings plus two minutes to check answers. */
 export function mockTimeLimitSeconds(skill: ExamSkill, assets: ExamAsset[]) {
@@ -15,6 +16,8 @@ export function mockTimeLimitSeconds(skill: ExamSkill, assets: ExamAsset[]) {
 
 export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practice' | 'mock', catalog: ExamCatalog, requestedId?: string | null, retryId?: string | null, planId?: string | null, newSession = false) {
   const fb = useFieldbook(); const navigate = useNavigate(); const owner = accountId();
+  const [params] = useSearchParams();
+  const returnTo = safeExamReturn(params.get('returnTo'));
   const baseKey = `${skill}:${mode}:${sourceId}${retryId ? `:retry:${retryId}` : ''}`;
   const key = `${baseKey}${planId ? `:plan:${planId}` : ''}`;
   const [attempt, setAttempt] = useState<ExamAttempt | null>(null); const ref = useRef<ExamAttempt | null>(null);
@@ -61,10 +64,10 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
     const rows = mergeExamSessions((fb.stateRef.current.examAttempts || []).filter(matches), local);
     const recovered = newSession ? undefined : rows.find(row => requestedId || unfinishedExamSession(row) || row.status === 'completed' && local.some(item => item.id === row.id));
     if (requestedId && !newSession && (!recovered || recovered.status === 'discarded')) { setError('This session was discarded or is no longer available. Start a new session from the bank.'); return; }
-    if (recovered?.status === 'completed' && !local.some(row => row.id === recovered.id && row.status === 'completed')) { navigate(`/${skill}/review/${recovered.id}`, { replace: true }); return; }
+    if (recovered?.status === 'completed' && !local.some(row => row.id === recovered.id && row.status === 'completed')) { navigate(withExamReturn(`/${skill}/review/${recovered.id}`, returnTo), { replace: true }); return; }
     const next = recovered ? { ...recovered } : (mode === 'practice' ? { ...createExamAttempt(catalog.sections, catalog.questions, mode), sourceId, ...(retryId ? { retryOfAttemptId: retryId } : {}), ...(planId ? { planId, questionSnapshot: structuredClone(catalog.questions) } : {}) } : null);
     if (next) { if (mode === 'mock' && next.status === 'paused') next.status = 'active'; ref.current = next; setAttempt(next); setClock(next.elapsedSeconds); practiceTick.current = Date.now(); checkpointExamSession(owner, key, next); if (next.status === 'completed') setError('This completed session still needs to be saved. Retry submission.'); }
-  }, [owner, key, catalog, requestedId, retryId, sourceId, skill, mode, planId, newSession, fb.stateRef, navigate]);
+  }, [owner, key, catalog, requestedId, retryId, sourceId, skill, mode, planId, newSession, fb.stateRef, navigate, returnTo]);
   const start = () => {
     if (accountId() !== owner) return;
     const next = createExamAttempt(catalog.sections, catalog.questions, mode);
@@ -121,8 +124,8 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
     const completed = ref.current.status === 'completed' ? ref.current : gradeAttempt(ref.current, ref.current.questionSnapshot || catalog.questions);
     ref.current = completed; setAttempt(completed); checkpointExamSession(boundOwner.current, key, completed);
     const saved = await save(completed);
-    if (alive.current && accountId() === submissionOwner && boundOwner.current === submissionOwner && ref.current?.id === completed.id) { setSaving(false); if (saved) { clearSessionCheckpoint(submissionOwner, key, completed.id); navigate(`/${skill}/review/${completed.id}`); } else setError(`${saveFeedback.current || 'Could not save your completed attempt.'} Your answers are retained. Retry submission.`); lock.current = false; }
-  }, [catalog.questions, key, save, navigate, skill, retryId]);
+    if (alive.current && accountId() === submissionOwner && boundOwner.current === submissionOwner && ref.current?.id === completed.id) { setSaving(false); if (saved) { clearSessionCheckpoint(submissionOwner, key, completed.id); navigate(withExamReturn(`/${skill}/review/${completed.id}`, returnTo)); } else setError(`${saveFeedback.current || 'Could not save your completed attempt.'} Your answers are retained. Retry submission.`); lock.current = false; }
+  }, [catalog.questions, key, save, navigate, skill, retryId, returnTo]);
   useEffect(() => { if (attempt?.mode === 'mock' && attempt.status === 'active' && attempt.timeLimitSeconds && clock >= attempt.timeLimitSeconds) void submit(); }, [attempt?.status, attempt?.timeLimitSeconds, clock, submit]);
   const pause = () => { if (mode === 'mock' || !ref.current || !unfinishedExamSession(ref.current)) return; practiceTick.current = Date.now(); update({ status: ref.current.status === 'paused' ? 'active' : 'paused' }); };
   const keepSession = async () => {
@@ -138,7 +141,7 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
     if (!saved) setError(`${saveFeedback.current || 'Could not save this session.'} Your answers remain in this browser. Retry saving before leaving.`);
     return saved;
   };
-  const saveAndExit = async () => { if (await keepSession()) navigate(`/${skill}`); };
+  const saveAndExit = async () => { if (await keepSession()) navigate(returnTo || `/${skill}`); };
   useEffect(() => {
     const checkpoint = () => {
       if (accountId() !== boundOwner.current || !ref.current || !unfinishedExamSession(ref.current)) return;
@@ -159,7 +162,7 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
     const saved = await save(discarded);
     if (!alive.current || accountId() !== discardingOwner || boundOwner.current !== discardingOwner || ref.current?.id !== discarded.id) return;
     lock.current = false; setSaving(false);
-    if (saved) navigate(`/${skill}`);
+    if (saved) navigate(returnTo || `/${skill}`);
     else {
       const restored = { ...original, updatedAt: new Date(Math.max(Date.now(), Date.parse(discarded.updatedAt) + 1)).toISOString() };
       ref.current = restored; setAttempt(restored); checkpointExamSession(discardingOwner, key, restored);

@@ -1,0 +1,472 @@
+{
+  "source": "Cached published exam corpus: Cambridge IELTS 18, Test 2, Listening Part 3, Questions 23 and 25–26",
+  "question": {
+    "id": "question:9763",
+    "type": "multiple",
+    "skill": "listening",
+    "answer": [
+      "A how widespread the effects were",
+      "B how long-lasting the effects were"
+    ],
+    "number": 25,
+    "points": 2,
+    "prompt": "25-26.Which TWO issues following the Laki eruption surprised the students?",
+    "groupId": "source:1048:page:1",
+    "options": [
+      "A how widespread the effects were",
+      "B how long-lasting the effects were",
+      "C the number of deaths it caused",
+      "D the speed at which the volcanic ash cloud spread",
+      "E how people ignored the warning signs"
+    ],
+    "paperId": "cambridge:18:2",
+    "evidence": {
+      "end": 234.83,
+      "text": "·the effects would go on for so long\n·strange weather events were being reported as far away as North America and North Africa.",
+      "start": 225.3,
+      "sentenceId": "source:76796"
+    },
+    "sectionId": "source:1048",
+    "groupTitle": "Questions  25-26",
+    "provenance": {
+      "fetchedAt": "2026-10-11T16:04:17.536Z",
+      "sourceUrl": "https://www.ieltscb.com/Paper/part/?id=133&classify=1&chapters_id=1048&p_type=18&new_page=1",
+      "contentHash": "636c54b3e5c887666107dcef852646c6a29057eb4ea4fc6e3759e5eba32f737f",
+      "authorization": "User confirmed authorized/internal use",
+      "sourceVersion": "ieltscb-2026-10"
+    },
+    "explanation": "·the effects would go on for so long\n·strange weather events were being reported as far away as North America and North Africa.",
+    "instructions": "Choose TWO letters, A-E.",
+    "stimulusHtml": "<p><span>Choose</span><span> </span><span><strong>TWO</strong></span><span> </span><span>letters,</span><span> </span><span>A-E.</span><br></p><p>                                     <br></p><p>                                                           </p>",
+    "sourceExplanation": "long-lasting - go on for so long\nWidespread - North America and North Africa\n题干中首先用Laki eruption做定位，题干考点为两个学生都觉得惊讶的事，原文用effects产生定位，原文go on for so long替换题干long-lasting，原文North America and North Africa替换题干widespread，对应AB选项为男生表述，女生之后too产生同意表述，hard to believe替换题干surprised，故答案选AB。"
+  },
+  "question23": {
+    "id": "question:9756",
+    "type": "single",
+    "skill": "listening",
+    "answer": "B lt was associated with health issues.",
+    "number": 23,
+    "points": 1,
+    "prompt": "23.According to Michelle, what did the contemporary sources say about the Laki haze?",
+    "groupId": "source:1048:page:0",
+    "options": [
+      "A People thought it was similar to ordinary fog.",
+      "B lt was associated with health issues.",
+      "C lt completely blocked out the sun for weeks."
+    ],
+    "paperId": "cambridge:18:2",
+    "evidence": {
+      "end": 172.04,
+      "text": "blamed the haze for an increase in headaches, respiratory issues and asthma attacks.",
+      "start": 164.68,
+      "sentenceId": "source:76784"
+    },
+    "sectionId": "source:1048",
+    "groupTitle": "Questions 21-24",
+    "provenance": {
+      "fetchedAt": "2026-10-11T16:04:17.536Z",
+      "sourceUrl": "https://www.ieltscb.com/Paper/part/?id=133&classify=1&chapters_id=1048&p_type=18&new_page=1",
+      "contentHash": "636c54b3e5c887666107dcef852646c6a29057eb4ea4fc6e3759e5eba32f737f",
+      "authorization": "User confirmed authorized/internal use",
+      "sourceVersion": "ieltscb-2026-10"
+    },
+    "explanation": "blamed the haze for an increase in headaches, respiratory issues and asthma attacks.",
+    "instructions": "Questions 21-24\nChoose the correct letter, A, B or C.",
+    "stimulusHtml": "<p>Questions    21-24                                            </p><p>Choose  the  correct   letter,  A,   B  or  C.</p><p>   </p><p><br></p><p>                                                           </p>",
+    "sourceExplanation": "Associated - blamed\nHealth issues - headaches, respiratory issues and asthma attacks\n题干中首先用contemporary sources和Laki haze做定位，题干考点为女生观点，录音中定位到女生出题句，原文blamed替换题干associated，原文headaches, respiratory issues and asthma attacks替换题干health issues，故答案选B。"
+  },
+  "section": {
+    "id": "source:1048",
+    "part": 3,
+    "skill": "listening",
+    "title": "Part 3",
+    "status": "ready",
+    "assetId": "audio:1048",
+    "paperId": "cambridge:18:2",
+    "sentences": [
+      {
+        "id": "source:76768",
+        "end": 71.97,
+        "text": "So, Michelle, shall we make a start on our presentation? We haven't got that much time left.",
+        "start": 66,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76769",
+        "end": 81.56,
+        "text": "No, Adam. But at least we've done all the background reading. I found it really interesting - I'd never even heard of the Laki eruption before this.",
+        "start": 71.97,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76770",
+        "end": 86.17,
+        "text": "Me neither. I suppose 1783 is a long time ago.",
+        "start": 81.56,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76771",
+        "end": 91.47,
+        "text": "But it was a huge eruption and it had such devastating consequences.",
+        "start": 86.17,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76772",
+        "end": 101.3,
+        "text": "I know. It was great there were so many primary sources to look at. It really gives you a sense of how catastrophic the volcano was.",
+        "start": 91.47,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76773",
+        "end": 105.73,
+        "text": "People were really trying to make sense of the science for the first time.",
+        "start": 101.3,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76774",
+        "end": 113.55,
+        "text": "That's right. But what I found more significant was how it impacted directly and indirectly on political events,",
+        "start": 105.73,
+        "alignment": "source",
+        "questionIds": [
+          "question:9753"
+        ]
+      },
+      {
+        "id": "source:76775",
+        "end": 117.28,
+        "text": "as well as having massive social and economic consequences.",
+        "start": 113.55,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76776",
+        "end": 121.46,
+        "text": "I know. That should be the main focus of our presentation.",
+        "start": 117.28,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76777",
+        "end": 126.19,
+        "text": "The observations made by people at the time were interesting, weren't they?",
+        "start": 121.46,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76778",
+        "end": 134.48,
+        "text": "I mean, they all gave a pretty consistent account of what happened, even if they didn't always use the same terminology.",
+        "start": 126.19,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76779",
+        "end": 144.15,
+        "text": "Yeah. I was surprised there were so many weather stations established by that time - so, you know, you can see how the weather changed, often by the hour.",
+        "start": 134.48,
+        "alignment": "source",
+        "questionIds": [
+          "question:9754"
+        ]
+      },
+      {
+        "id": "source:76780",
+        "end": 152.31,
+        "text": "Right. Writers at the time talked about the Laki haze to describe the volcanic fog that spread across Europe.",
+        "start": 144.15,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76781",
+        "end": 156.66,
+        "text": "They all realised that this wasn't the sort of fog they were used to",
+        "start": 152.31,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76782",
+        "end": 163.41,
+        "text": "and of course this was in pre-industrial times - so they hadn't experienced sulphur-smelling fog before.",
+        "start": 156.66,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76783",
+        "end": 164.68,
+        "text": "No that's true.",
+        "start": 163.41,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76784",
+        "end": 172.04,
+        "text": "Reports from the period blamed the haze for an increase in headaches, respiratory issues and asthma attacks.",
+        "start": 164.68,
+        "alignment": "source",
+        "questionIds": [
+          "question:9756"
+        ]
+      },
+      {
+        "id": "source:76785",
+        "end": 177.84,
+        "text": "And they all describe how it covered the sun and made it look a strange red colour.",
+        "start": 172.04,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76786",
+        "end": 179.82,
+        "text": "Must have been very weird.",
+        "start": 177.84,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76787",
+        "end": 185.84,
+        "text": "It's interesting that Benjamin Franklin wrote about the haze. Did you read that?",
+        "start": 179.82,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76788",
+        "end": 190.43,
+        "text": "He was the American ambassador in Paris at the time.",
+        "start": 185.84,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76789",
+        "end": 195.61,
+        "text": "Yeah. At first no one realised that the haze was caused by the volcanic eruption in Iceland.",
+        "start": 190.43,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76790",
+        "end": 199.57,
+        "text": "It was Benjamin Franklin who realised that before anyone else.",
+        "start": 195.61,
+        "alignment": "source",
+        "questionIds": [
+          "question:9757"
+        ]
+      },
+      {
+        "id": "source:76791",
+        "end": 202.82,
+        "text": "He's often credited with that apparently.",
+        "start": 199.57,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76792",
+        "end": 209.65,
+        "text": "But a French naturalist beat him to it - I can't remember his name. I'd have to look it up. Then other naturalists had the",
+        "start": 202.82,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76793",
+        "end": 213.96,
+        "text": "same idea - all independently of each other.",
+        "start": 209.65,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76794",
+        "end": 220.24,
+        "text": "Oh right. We should talk about the immediate impact of the eruption, which was",
+        "start": 213.96,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76795",
+        "end": 225.3,
+        "text": "obviously enormous - especially in Iceland, where so many people died.",
+        "start": 220.24,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76796",
+        "end": 234.83,
+        "text": "Mmm. You'd expect that - and the fact that the volcanic ash drifted so swiftly- but not that the effects would go on for so long.Q解析",
+        "start": 225.3,
+        "alignment": "source",
+        "questionIds": [
+          "question:9763"
+        ]
+      },
+      {
+        "id": "source:76797",
+        "end": 242.55,
+        "text": "Or that two years after the eruption, strange weather events were being reported as far away as North America and North Africa.",
+        "start": 234.83,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76798",
+        "end": 252.26,
+        "text": "No. I found all that hard to believe too. It must have been terrible - and there was nothing anyone could do about it",
+        "start": 242.55,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76799",
+        "end": 259.74,
+        "text": "even if they knew the ash cloud was coming in their direction.",
+        "start": 252.26,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76801",
+        "end": 301.52,
+        "text": "We should run through some of the terrible consequences of the eruption experienced in different countries. There's quite a varied range.",
+        "start": 292.79,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76802",
+        "end": 305.93,
+        "text": "Starting with Iceland, where the impact on farming was devastating.",
+        "start": 301.52,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76803",
+        "end": 312.79,
+        "text": "Mmm. One of the most dramatic things there was the effect on livestock as they grazed in the fields. Q解析",
+        "start": 305.93,
+        "alignment": "source",
+        "questionIds": [
+          "question:9765"
+        ]
+      },
+      {
+        "id": "source:76804",
+        "end": 320.7,
+        "text": "They were poisoned because they ate vegetation that had been contaminated with fluorine as a result of the volcanic fallout.",
+        "start": 312.79,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76805",
+        "end": 332.29,
+        "text": "That was horrible. In Egypt, the bizarre weather patterns led to a severe drought and as a result the Nile didn't flood, which meant the crops all failed.",
+        "start": 320.7,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76806",
+        "end": 342.75,
+        "text": "It's so far from where the eruption happened and yet the famine there led to more people dyinq than any other country. It was worse than the plague.Q解析",
+        "start": 332.29,
+        "alignment": "source",
+        "questionIds": [
+          "question:9766"
+        ]
+      },
+      {
+        "id": "source:76807",
+        "end": 355.19,
+        "text": "OK. Then in the UK the mortality rate went up a lot - presumably from respiratory illnesses. According to one report it was about double the usual number andQ解析",
+        "start": 342.75,
+        "alignment": "source",
+        "questionIds": [
+          "question:9767"
+        ]
+      },
+      {
+        "id": "source:76808",
+        "end": 360.22,
+        "text": "included an unusually high percentage of people under the age of 25.",
+        "start": 355.19,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76809",
+        "end": 368.12,
+        "text": "Mmm. I think people will be surprised to hear that the weather in the USA was badly affected too.",
+        "start": 360.22,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76810",
+        "end": 377.68,
+        "text": "George Washington even makes a note in his diary that they were snowbound until March in Virginia. That was before he became president.Q解析",
+        "start": 368.12,
+        "alignment": "source",
+        "questionIds": [
+          "question:9768"
+        ]
+      },
+      {
+        "id": "source:76811",
+        "end": 383.07,
+        "text": "Yes, and there was ice floating down the Mississippi. which was unprecedented.",
+        "start": 377.68,
+        "alignment": "source",
+        "questionIds": []
+      },
+      {
+        "id": "source:76812",
+        "end": 393.07,
+        "text": "Astonishing, really. Anyway, what do you think ..",
+        "start": 383.07,
+        "alignment": "source",
+        "questionIds": []
+      }
+    ],
+    "provenance": {
+      "fetchedAt": "2026-10-11T16:04:17.536Z",
+      "sourceUrl": "https://www.ieltscb.com/Paper/part/?id=133&classify=1&chapters_id=1048&p_type=18&new_page=1",
+      "contentHash": "636c54b3e5c887666107dcef852646c6a29057eb4ea4fc6e3759e5eba32f737f",
+      "authorization": "User confirmed authorized/internal use",
+      "sourceVersion": "ieltscb-2026-10"
+    },
+    "questionCount": 10,
+    "questionTypes": [
+      "single",
+      "multiple",
+      "matching"
+    ]
+  }
+}

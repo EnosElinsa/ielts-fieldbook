@@ -13,6 +13,18 @@ beforeEach(()=>{vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date(20
 afterEach(()=>{cleanup();vi.useRealTimers();});
 const mount=()=>render(<MemoryRouter><PlanningPage/></MemoryRouter>);
 
+test('Writing tasks name their skill and IELTS task while retaining custom titles', () => {
+ mocks.state.plans=[
+  {...mocks.state.plans[0],kind:'2',title:'Task 2 - Position and support'},
+  {...mocks.state.plans[0],id:'task-one',kind:'1',title:'Task 1 - Chart overview'},
+  {...mocks.state.plans[0],id:'custom',kind:'2',title:'My essay notes'},
+ ];
+ mount();
+ expect(screen.getByRole('heading',{name:'Writing · Task 2 · Position and support'})).toBeInTheDocument();
+ expect(screen.getByRole('heading',{name:'Writing · Task 1 · Chart overview'})).toBeInTheDocument();
+ expect(screen.getByRole('heading',{name:'My essay notes'})).toBeInTheDocument();
+});
+
 test('day summary explains saved word selections and keeps configuration in Settings',async()=>{
  Object.assign(mocks.state.settings,{dailyMinutes:90,days:[1,2,3,4,5,6,7]});
  mocks.state.settings.planning.newWordsPerDay=15;

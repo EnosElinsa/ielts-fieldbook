@@ -34,7 +34,10 @@
 .settings-categories a:hover { color: var(--ink); background: var(--surface-hover); }
 .settings-categories a[aria-current="page"] { color: var(--blue); background: var(--soft-blue); font-weight: 700; }
 .settings-content { display: flex; flex-direction: column; }
-.settings-section-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+.settings-section-heading { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px 20px; margin-bottom: 24px; }
+.settings-heading-copy { flex: 1 1 280px; min-width: 0; }
+.settings-heading-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; }
+.settings-heading-actions .settings-return-link { justify-content: flex-start; min-height: 44px; padding: 8px 0; text-align: left; }
 .settings-section-heading h2 { margin: 0; }
 .settings-section-heading p { margin: 8px 0 0; max-width: 60ch; font-size: 13px; line-height: 1.6; color: var(--muted); }
 .settings-fields { display: grid; gap: 20px; }
@@ -55,6 +58,9 @@
 .settings-fields .date-field { width: 100%; }
 .settings-page :is(button, a, input, select, summary):focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 .settings-skills label, .settings-toggle { font-size: 13px; }
+.settings-fields .settings-toggle { align-self: end; justify-self: start; min-width: 0; min-height: 44px; margin: 0; padding: 8px 0; box-sizing: border-box; gap: 10px; color: var(--ink); font-weight: 500; line-height: 1.5; letter-spacing: normal; cursor: pointer; }
+.settings-toggle input[type="checkbox"] { flex: 0 0 18px; width: 18px; height: 18px; min-width: 18px; min-height: 18px; margin: 0; padding: 0; accent-color: var(--blue); cursor: inherit; }
+.settings-toggle:has(input:disabled), fieldset:disabled .settings-toggle { opacity: .65; cursor: not-allowed; }
 .settings-segment button { justify-content: center; min-height: 44px; font-size: 13px; }
 .settings-segment button[aria-pressed="true"] { background: var(--soft-blue); color: var(--blue); }
 .settings-time-controls { display: grid; gap: 18px; }

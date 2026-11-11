@@ -113,4 +113,7 @@
   .vocabulary-learning-secondary > :first-child { margin-top:0; }
 }
 .vocabulary-learning-provenance { margin:18px 0 8px; }
+.vocabulary-learning-meaning-scope { margin:12px 0 4px; }
+.vocabulary-learning-meaning-scope p { margin:0; color:var(--muted); font-size:12px; line-height:1.6; }
+.vocabulary-learning-meaning-scope .btn { padding-left:0; }
 @media(max-width:600px) { .vocabulary-learning-content.has-visual { display:flex; } }

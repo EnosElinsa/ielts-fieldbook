@@ -38,7 +38,7 @@ export function sourceType(section, instructions) {
   if(['4','5','9','11','12','13','14','18','19','20','21','22','24','26','28','29'].includes(type))return 'matching';
   throw new Error(`Unknown source question type ${type}`);
 }
-const sentenceText = text => htmlText(text).replace(/^(?:[A-Z][A-Z\s]{0,30}):\s*/, '').replace(/Q\d+解析/g, '').trim();
+const sentenceText = text => htmlText(text).replace(/^(?:[A-Z][A-Z\s]{0,30}):\s*/, '').replace(/\s*Q\s*(?:\d+(?:\s*[-–—,，]\s*\d+)*)?\s*解析/g, '').trim();
 export function normalizeSourceSection(raw) {
   const {job}=raw,detail=raw.detail?.[0]||raw.detail?.['0'];
   if(!detail?.pages?.length)throw new Error(`Section ${job.id} has no question pages`);

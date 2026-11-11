@@ -181,7 +181,7 @@ it('only the active step section is open and sentence rows use status words', as
   expect(screen.getByRole('button', { name: /^Sentence 1\s*Not started$/ })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /^Sentence 2\s*In progress$/ })).toBeInTheDocument();
   expect(container.querySelector('.intensive-sentences')).not.toHaveTextContent('%');
-  await user.click(screen.getByRole('button', { name: 'Play test sentence' }));
+  await user.click(await screen.findByRole('button', { name: 'Play test sentence' }));
   await waitFor(() => expect(sections().map(section => section.open)).toEqual([false, true, false, false]));
   expect(sections()[0]).toHaveTextContent('Done');
 });

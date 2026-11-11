@@ -2,6 +2,7 @@ import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import type { ExamAsset, ExamCatalog, ExamPaper, ExamSection, ExamSkill } from '../domain/exam/types';
 import { cachedRead, readCacheKey, type ReadOptions } from '../lib/readCache';
 import { accountGeneration, accountId } from './accountIdentity';
+import { cleanExamSection } from '../domain/exam/transcript';
 
 const contentVersion = 'exam-v1';
 const scopedKey = (resource: string, params: unknown) => readCacheKey(accountId(), contentVersion, resource, [accountGeneration(), import.meta.env.DEV, import.meta.env.BASE_URL, supabaseConfigured(), params]);
@@ -83,7 +84,10 @@ async function readExamCatalog(skill?: ExamSkill, book?: number): Promise<ExamCa
 
 export function loadExamSections(sectionIds: string[], options?: ReadOptions): Promise<ExamCatalog> {
   const ids = selectedIds(sectionIds);
-  return cachedRead(examSectionsKey(ids), () => readExamSections(ids), options);
+  return cachedRead(examSectionsKey(ids), async () => {
+    const catalog = await readExamSections(ids);
+    return { ...catalog, sections: catalog.sections.map(cleanExamSection) };
+  }, options);
 }
 
 async function readExamSections(ids: string[]): Promise<ExamCatalog> {

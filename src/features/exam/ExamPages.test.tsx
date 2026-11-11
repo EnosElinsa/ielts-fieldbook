@@ -12,6 +12,9 @@ import { IntensiveWorkbenchPage } from './IntensiveWorkbenchPage';
 import { HeadingReference } from './ReadingPassage';
 import { examCatalogKey, loadExamCatalog } from '../../storage/examCatalog';
 import { cachedRead, clearReadCache } from '../../lib/readCache';
+import cambridge20Evidence from './fixtures/cambridge-20-listening-q7.json';
+import laki from './fixtures/cambridge-18-listening-evidence.json';
+import { cleanExamSection } from '../../domain/exam/transcript';
 
 const mocks = vi.hoisted(() => ({ fb: null as any, owner: 'one', catalog: null as any, recovery: new Map<string, any>() }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mocks.fb }));
@@ -29,6 +32,132 @@ async function sessionAction(name: string, user = userEvent.setup()) { await ope
 function practice(path = '/reading/section') { return render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/reading" element={<ExamBankPage skill="reading" />} /><Route path="/reading/:sectionId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/mock/:paperId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/review/:attemptId" element={<ExamReviewPage skill="reading" />} /></Routes><Location /></MemoryRouter>); }
 beforeEach(() => { clearReadCache(); mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); sessionStorage.clear(); const state = { examAttempts: [], intensiveSessions: [], settings: { favoriteExamSectionIds: [] } }; mocks.fb = { state, stateRef: { current: state }, ensureAccountModule: vi.fn().mockResolvedValue(undefined), persistNow: vi.fn(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; }), toast: vi.fn() }; });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.useRealTimers(); });
+
+function plannedListening(path: string) {
+  vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+  mocks.catalog.sections[0].skill = 'listening';
+  mocks.catalog.sections[0].assetId = 'recording';
+  mocks.catalog.questions.forEach((question: any) => question.skill = 'listening');
+  mocks.catalog.assets = [{ id: 'recording', sectionId: 'section', paperId: 'paper', kind: 'audio', storagePath: 'recording.mp3', sourceUrl: '', duration: 100, provenance }];
+  return render(<MemoryRouter initialEntries={[path]}><Routes>
+    <Route path="/planning" element={<h2>Planning</h2>} />
+    <Route path="/listening/:sectionId" element={<ExamPracticePage skill="listening" />} />
+    <Route path="/listening/review/:attemptId" element={<ExamReviewPage skill="listening" />} />
+  </Routes><FullLocation /></MemoryRouter>);
+}
+
+test('planned listening practice keeps its Planning return address through a resumed session', async () => {
+  const origin = '/planning?week=next#task-listening-plan';
+  const view = plannedListening(`/listening/section?returnTo=${encodeURIComponent(origin)}`);
+  await screen.findByRole('textbox', { name: 'Answer 1' });
+  const id = mocks.recovery.get('one:listening:practice:section').id;
+  view.unmount();
+  plannedListening(`/listening/section?attempt=${id}&returnTo=${encodeURIComponent(origin)}`);
+  await screen.findByRole('textbox', { name: 'Answer 1' });
+  const back = screen.getByRole('link', { name: 'Back to Planning' });
+  expect(back).toHaveAttribute('href', origin);
+  await userEvent.setup().click(back);
+  expect(screen.getByLabelText('Full URL')).toHaveTextContent(origin);
+});
+
+test('planned listening Save & exit returns to Planning after saving the paused session', async () => {
+  const origin = '/planning?week=next#task-listening-plan';
+  plannedListening(`/listening/section?returnTo=${encodeURIComponent(origin)}`);
+  await userEvent.setup().type(await screen.findByRole('textbox', { name: 'Answer 1' }), '1990');
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Save & exit' }));
+  await waitFor(() => expect(screen.getByLabelText('Full URL')).toHaveTextContent(origin));
+  expect(mocks.fb.stateRef.current.examAttempts[0]).toMatchObject({ status: 'paused', responses: { q1: '1990' } });
+});
+
+test('submitting planned listening preserves Planning through results and a wrong-answer retry', async () => {
+  const origin = '/planning?week=next#task-listening-plan';
+  plannedListening(`/listening/section?returnTo=${encodeURIComponent(origin)}`);
+  const user = userEvent.setup();
+  await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), '1980');
+  await user.click(screen.getByRole('radio', { name: 'FALSE' }));
+  await user.click(screen.getByRole('button', { name: 'Submit answers' }));
+  await screen.findByRole('heading', { name: 'Practice results' });
+  expect(screen.getByRole('link', { name: 'Back to Planning' })).toHaveAttribute('href', origin);
+  await user.click(screen.getByRole('button', { name: 'Retry wrong answers' }));
+  expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue('');
+  expect(screen.getByRole('link', { name: 'Back to Planning' })).toHaveAttribute('href', origin);
+});
+
+test('session history preserves the active Planning origin when resuming a different session', async () => {
+  const origin = '/planning?view=waiting#task-listening-plan';
+  mocks.fb.state.examAttempts = [{ id: 'previous', skill: 'listening', mode: 'practice', status: 'paused', sourceId: 'section', sectionIds: ['section'], responses: { q1: 'older answer' }, evidence: {}, keywords: {}, errorReasons: {}, elapsedSeconds: 5, startedAt: '2026-01-01', updatedAt: '2026-01-01' }];
+  plannedListening(`/listening/section?new=1&returnTo=${encodeURIComponent(origin)}`);
+  await screen.findByRole('textbox', { name: 'Answer 1' });
+  await userEvent.setup().click(screen.getByText(/0 completed · .*unfinished session/));
+  const resume = screen.getByRole('link', { name: 'Resume session previous' });
+  expect(new URL(resume.getAttribute('href')!, 'https://fieldbook.local').searchParams.get('returnTo')).toBe(origin);
+  await userEvent.setup().click(resume);
+  await waitFor(() => expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('older answer'));
+  expect(screen.getByRole('link', { name: 'Back to Planning' })).toHaveAttribute('href', origin);
+});
+
+test.each([
+  { question: cambridge20Evidence.question, response: 'views', sentence: 47, id: 'source:88903', highlight: 'excellent reviews from all the newspapers' },
+  { question: cambridge20Evidence.question9, response: 'per', sentence: 54, id: 'source:88910', highlight: '£30 a head.' },
+])('Cambridge 20 Test 1 Q$question.number locates its real evidence and opens the answer sentence', async ({question, response, sentence, id, highlight}) => {
+  const section = cambridge20Evidence.section;
+  const returnTo = '/planning?view=history#task-listening-plan';
+  const reviewPath = `/listening/review/saved?returnTo=${encodeURIComponent(returnTo)}`;
+  mocks.catalog = { schemaVersion:1, sections:[section], questions:[question], passages:[], papers:[{id:section.paperId,book:20,test:1,title:'Cambridge 20 Test 1',provenance}], assets:[] };
+  mocks.fb.state.examAttempts = [{id:'saved',skill:'listening',mode:'practice',status:'completed',sourceId:section.id,sectionIds:[section.id],questionSnapshot:[question],responses:{[question.id]:response},results:{[question.id]:false},evidence:{},keywords:{},errorReasons:{},startedAt:'2026-11-01',updatedAt:'2026-11-01'}];
+  render(<MemoryRouter initialEntries={[reviewPath]}><Routes>
+    <Route path="/listening/review/:attemptId" element={<ExamReviewPage skill="listening" />} />
+    <Route path="/listening/intensive/:sectionId" element={<IntensiveWorkbenchPage />} />
+  </Routes><FullLocation /></MemoryRouter>);
+  const user = userEvent.setup();
+  await user.click(await screen.findByRole('button',{name:'Locate evidence'}));
+  const evidence = screen.getByRole('region',{name:`Source evidence for question ${question.number}`});
+  expect(evidence).toHaveTextContent('The evidence is highlighted in the original text.');
+  expect([...evidence.querySelectorAll('[data-evidence-highlight]')].map(mark=>mark.textContent).join(' ')).toContain(highlight);
+  await user.click(screen.getByRole('link',{name:'Practise this sentence'}));
+  expect(await screen.findByRole('heading',{name:`Sentence ${sentence} / ${section.sentences.length}`})).toBeVisible();
+  expect(screen.getByRole('button',{name:new RegExp(`^Sentence ${sentence} `)})).toHaveAttribute('aria-current','step');
+  expect(new URL(screen.getByLabelText('Full URL').textContent!, 'https://fieldbook.local').searchParams.get('sentence')).toBe(id);
+  expect(screen.getByRole('link',{name:'Back to review'})).toHaveAttribute('href',`${reviewPath}#exam-review-${question.id}`);
+  await user.click(screen.getByRole('link',{name:'Back to review'}));
+  expect(await screen.findByRole('link',{name:'Back to Planning'})).toHaveAttribute('href',returnTo);
+});
+
+test('Cambridge 18 review shows clean source text and highlights both pooled evidence fragments', async () => {
+  const section = cleanExamSection(laki.section as ExamCatalog['sections'][number]);
+  const question = laki.question;
+  mocks.catalog = { schemaVersion:1, sections:[section], questions:[question], passages:[], papers:[], assets:[] };
+  mocks.fb.state.examAttempts = [{id:'saved',skill:'listening',mode:'practice',status:'completed',sourceId:section.id,sectionIds:[section.id],questionSnapshot:[question],responses:{[question.id]:[question.options[1],question.options[4]]},results:{[question.id]:false},evidence:{},keywords:{},errorReasons:{},startedAt:'2026-11-01',updatedAt:'2026-11-01'}];
+  render(<MemoryRouter initialEntries={['/listening/review/saved']}><Routes><Route path="/listening/review/:attemptId" element={<ExamReviewPage skill="listening" />} /></Routes></MemoryRouter>);
+  await userEvent.setup().click(await screen.findByRole('button', {name:'Locate evidence'}));
+  const evidence = screen.getByRole('region', {name:'Source evidence for questions 25–26'});
+  expect(evidence).toHaveTextContent('The evidence is highlighted in the original text.');
+  expect(evidence).not.toHaveTextContent('Q解析');
+  expect([...evidence.querySelectorAll('[data-evidence-highlight]')].map(mark => mark.textContent)).toEqual([
+    'the effects would go on for so long', 'strange weather events were being reported as far away as North America and North Africa.',
+  ]);
+});
+
+test('Cambridge 18 choice instructions and option letters have separate readable presentation with unchanged answers', async () => {
+  mocks.catalog = { schemaVersion:1, sections:[structuredClone(laki.section)], questions:[structuredClone(laki.question23),structuredClone(laki.question)], passages:[], papers:[], assets:[] };
+  const {container} = plannedListening('/listening/source:1048');
+  const answer = await screen.findByRole('radio', {name:laki.question23.options[1]});
+  const instructions = container.querySelectorAll('.exam-choice-instructions');
+  expect(instructions).toHaveLength(2);
+  expect(instructions[0].querySelector('strong')).toHaveTextContent('Question 23');
+  expect(instructions[1].querySelector('strong')).toHaveTextContent('Questions 25–26');
+  expect(instructions[0].querySelector('p')).toHaveTextContent('Choose the correct letter, A, B or C.');
+  expect(container.querySelectorAll('.exam-stimulus')).toHaveLength(0);
+  const label = answer.closest('label')!;
+  expect(label.querySelector('.exam-option-code')).toHaveTextContent('B');
+  expect(label.querySelector('.exam-option-description')).toHaveTextContent('lt was associated with health issues.');
+  await userEvent.setup().click(answer);
+  await userEvent.setup().click(screen.getByRole('checkbox', {name:laki.question.options[0]}));
+  await userEvent.setup().click(screen.getByRole('checkbox', {name:laki.question.options[1]}));
+  const attempt = mocks.recovery.get('one:listening:practice:source:1048');
+  expect(attempt.responses[laki.question23.id]).toBe(laki.question23.answer);
+  expect(attempt.responses[laki.question.id]).toEqual(laki.question.answer);
+});
 
 test('legacy letter and question markers restore real paragraphs without changing annotation anchors', async () => {
   mocks.catalog.passages[0].paragraphs = [
