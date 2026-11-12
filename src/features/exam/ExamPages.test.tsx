@@ -589,32 +589,36 @@ test('an explicit resume keeps its saved plan scope even without a plan query',a
   expect(mocks.fb.stateRef.current.examAttempts[0]).toMatchObject({id:'saved',planId:'saved-plan',total:1,questionSnapshot:[{id:'q1'}]});
 });
 
-test('a truncated planned passage can add its missing questions while retaining answers and notes', async () => {
+test.each(['reading', 'listening'] as const)('a truncated planned %s section can add its missing questions while retaining answers and notes', async skill => {
   const timestamp = new Date().toISOString();
-  mocks.fb.state.plans = [{id:'saved-plan',status:'in_progress',quantity:1,target:{type:'section',skill:'reading',sectionId:'section',questionIds:['q1']}}];
-  mocks.fb.state.examAttempts = [{id:'saved',skill:'reading',mode:'practice',sourceId:'section',planId:'saved-plan',status:'paused',sectionIds:['section'],questionSnapshot:[catalog.questions[0]],questionTypes:{q1:'gap'},responses:{q1:'1990'},evidence:{q1:'The garden opened in 1990.'},keywords:{q1:'opened'},errorReasons:{},startedAt:timestamp,updatedAt:timestamp,elapsedSeconds:82}];
+  mocks.fb.state.plans = [{id:'saved-plan',status:'in_progress',quantity:1,target:{type:'section',skill,sectionId:'section',questionIds:['q1']}}];
+  mocks.fb.state.examAttempts = [{id:'saved',skill,mode:'practice',sourceId:'section',planId:'saved-plan',status:'paused',sectionIds:['section'],questionSnapshot:[{...catalog.questions[0],skill}],questionTypes:{q1:'gap'},responses:{q1:'1990'},evidence:{q1:'The garden opened in 1990.'},keywords:{q1:'opened'},errorReasons:{},startedAt:timestamp,updatedAt:timestamp,elapsedSeconds:82,audioPosition:25}];
   mocks.fb.commitExamSectionExpansion = vi.fn(async (expanded: any) => {
     mocks.fb.stateRef.current.examAttempts = [expanded];
-    Object.assign(mocks.fb.stateRef.current.plans[0],{quantity:2,target:{type:'section',skill:'reading',sectionId:'section',questionScope:'full-section',questionIds:['q1','q2']}});
+    Object.assign(mocks.fb.stateRef.current.plans[0],{quantity:2,target:{type:'section',skill,sectionId:'section',questionScope:'full-section',questionIds:['q1','q2']}});
     return true;
   });
-  practice('/reading/section?attempt=saved');
+  const view = skill === 'reading' ? practice('/reading/section?attempt=saved') : plannedListening('/listening/section?attempt=saved');
   await screen.findByRole('textbox',{name:'Answer 1'});
-  expect(screen.getByRole('status', {name:'Passage completeness'})).toHaveTextContent('1 of 2');
-  await userEvent.setup().click(screen.getByRole('button',{name:'Continue full passage'}));
+  const recording = view.container.querySelector('audio');
+  const continueLabel = skill === 'reading' ? 'Continue full passage' : 'Continue full part';
+  expect(screen.getByRole('status', {name:skill === 'reading' ? 'Passage completeness' : 'Part completeness'})).toHaveTextContent('1 of 2');
+  await userEvent.setup().click(screen.getByRole('button',{name:continueLabel}));
   expect(await screen.findByText('The garden opened in 2000.')).toBeInTheDocument();
   expect(screen.getByRole('textbox',{name:'Answer 1'})).toHaveValue('1990');
-  expect(mocks.fb.stateRef.current.examAttempts[0]).toMatchObject({id:'saved',status:'paused',responses:{q1:'1990'},evidence:{q1:'The garden opened in 1990.'},elapsedSeconds:82,questionSnapshot:[{id:'q1'},{id:'q2'}]});
+  expect(mocks.fb.stateRef.current.examAttempts[0]).toMatchObject({id:'saved',status:'paused',responses:{q1:'1990'},evidence:{q1:'The garden opened in 1990.'},elapsedSeconds:82,audioPosition:25,questionSnapshot:[{id:'q1'},{id:'q2'}]});
+  if (skill === 'listening') expect(view.container.querySelector('audio')).toBe(recording);
   expect(mocks.fb.stateRef.current.plans[0]).toMatchObject({quantity:2,target:{questionScope:'full-section',questionIds:['q1','q2']}});
-  expect(screen.queryByRole('button',{name:'Continue full passage'})).not.toBeInTheDocument();
+  expect(screen.queryByRole('button',{name:continueLabel})).not.toBeInTheDocument();
 });
 
-test('a failed passage expansion keeps the original recoverable session', async () => {
-  mocks.fb.state.plans = [{id:'short',status:'in_progress',target:{type:'section',skill:'reading',sectionId:'section',questionIds:['q1']}}];
-  practice('/reading/section?planId=short');
+test.each(['reading','listening'] as const)('a failed %s expansion keeps the original recoverable session', async skill => {
+  mocks.fb.state.plans = [{id:'short',status:'in_progress',target:{type:'section',skill,sectionId:'section',questionIds:['q1']}}];
+  if (skill === 'reading') practice('/reading/section?planId=short');
+  else plannedListening('/listening/section?planId=short');
   fireEvent.change(await screen.findByRole('textbox',{name:'Answer 1'}),{target:{value:'1990'}});
   mocks.fb.commitExamSectionExpansion = vi.fn().mockResolvedValue(false);
-  await userEvent.setup().click(screen.getByRole('button',{name:'Continue full passage'}));
+  await userEvent.setup().click(screen.getByRole('button',{name:skill === 'reading' ? 'Continue full passage' : 'Continue full part'}));
   expect(await screen.findByRole('alert')).toHaveTextContent('Could not add the missing questions');
   expect(screen.getByRole('textbox',{name:'Answer 1'})).toHaveValue('1990');
   expect(screen.queryByText('The garden opened in 2000.')).not.toBeInTheDocument();

@@ -3,7 +3,7 @@ import { SelectField } from '../../components/SelectField';
 import { SaveFailure } from '../../components/SaveFailure';
 import { ReadingPassage, readingQuestionPrompt, HeadingList, HeadingReference, QuestionReference } from './ReadingPassage';
 import { useWorkspacePageState } from '../../lib/workspacePageState';
-import { useEffect, useMemo, useRef, useState, type ReactNode, type KeyboardEvent } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type KeyboardEvent } from 'react';
 import { InlineLoadingState, PageLoadingState, StateMessage } from '../../components/AsyncState';
 import { useParams, useSearchParams } from 'react-router-dom';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
@@ -107,7 +107,26 @@ export function ExamStimulus({ html, assets = [], renderGap, blockPrefix = 'stim
   }, [html, assets, renderGap, blockPrefix, version]);
   return <div className="exam-stimulus">{nodes}</div>;
 }
-function SourceTag({ tag, props, children }: { tag: string; props: Record<string, unknown>; children: ReactNode }) { if (tag === 'br') return <br />; const Tag = tag as 'div'; return <Tag {...props}>{children}</Tag>; }
+function SourceTag({ tag, props, children }: { tag: string; props: Record<string, unknown>; children: ReactNode }) { if (tag === 'br') return <br />; if (tag === 'table') return <ExamTable props={props}>{children}</ExamTable>; const Tag = tag as 'div'; return <Tag {...props}>{children}</Tag>; }
+function ExamTable({ props, children }: { props: Record<string, unknown>; children: ReactNode }) {
+  const scroll = useRef<HTMLDivElement>(null);
+  const [overflow, setOverflow] = useState(false);
+  useLayoutEffect(() => {
+    const region = scroll.current;
+    if (!region) return;
+    const measure = () => setOverflow(region.scrollWidth > region.clientWidth + 1);
+    measure();
+    if (typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(measure);
+    observer.observe(region);
+    if (region.firstElementChild) observer.observe(region.firstElementChild);
+    return () => observer.disconnect();
+  }, [children]);
+  return <div className="exam-table-frame">
+    {overflow && <p className="exam-table-hint">Scroll horizontally to see all columns.</p>}
+    <div ref={scroll} className="exam-table-scroll" role={overflow ? 'region' : undefined} aria-label={overflow ? 'Question table' : undefined} tabIndex={overflow ? 0 : undefined}><table {...props}>{children}</table></div>
+  </div>;
+}
 function ExamOptionText({ option }: { option: string }) {
   const parts = option.match(/^([A-Z])([.)]\s*|\s+)(\S[\s\S]*)$/);
   return parts ? <span className="exam-option-copy"><span className="exam-option-code">{parts[1]}{parts[2].trim()}</span>{' '}<span className="exam-option-description">{parts[3]}</span></span> : <span>{option}</span>;
@@ -201,7 +220,7 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   const answerSlots = questions.reduce((sum, question) => sum + questionSlotCount(question), 0);
   const completeSectionQuestions = catalog.questions.filter(question => selectedIds.includes(question.sectionId) && question.skill === skill);
   const completeSectionSlots = completeSectionQuestions.reduce((sum, question) => sum + questionSlotCount(question), 0);
-  const truncatedPlan = mode === 'practice' && skill === 'reading' && !retryId && attempt?.planId && ['active', 'paused'].includes(attempt.status) && answerSlots < completeSectionSlots;
+  const truncatedPlan = mode === 'practice' && !retryId && attempt?.planId && ['active', 'paused'].includes(attempt.status) && answerSlots < completeSectionSlots;
   const answered = questions.reduce((sum, question) => sum + questionAnsweredSlots(question, attempt?.responses[question.id]), 0);
   const sourcePanel = useRef<HTMLDivElement>(null);
   const [sourceScroll, setSourceScroll] = useWorkspacePageState(`exam:${skill}:${mode}:${sourceId}:${retryId || ''}:${activeSection?.id || ''}:source-scroll`, 0, (value): value is number => typeof value === 'number' && Number.isFinite(value) && value >= 0);
@@ -408,7 +427,7 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
         </div>
       </div>
       {layoutError && <p className="exam-layout-feedback" role="status">{layoutError}</p>}
-      {truncatedPlan && <aside className="exam-completeness-notice" role="status" aria-label="Passage completeness"><div><strong>This saved task contains {answerSlots} of {completeSectionSlots} questions.</strong><p>Add the missing questions to continue the full passage. Your answers, notes and practice time are kept.</p></div><button className="btn primary" disabled={controller.saving} onClick={() => void controller.expandToFullSection(completeSectionQuestions)}>Continue full passage</button></aside>}
+      {truncatedPlan && <aside className="exam-completeness-notice" role="status" aria-label={skill === 'reading' ? 'Passage completeness' : 'Part completeness'}><div><strong>This saved task contains {answerSlots} of {completeSectionSlots} questions.</strong><p>Add the missing questions to continue the full {skill === 'reading' ? 'passage' : 'part'}. Your answers, notes and practice time are kept.</p></div><button className="btn primary" disabled={controller.saving} onClick={() => void controller.expandToFullSection(completeSectionQuestions)}>Continue full {skill === 'reading' ? 'passage' : 'part'}</button></aside>}
       {mode === 'practice' && skill === 'listening' && audioAsset && <div className="exam-practice-recording"><span className="exam-eyebrow">Part {activeSection?.part} · recording</span><SourceAudio key={`${attempt?.id}:${audioAsset.id}`} asset={audioAsset} mock={false} started={!!attempt} paused={attempt?.status === 'paused'} startPosition={attempt?.audioPosition || 0} onPosition={value => { if (Math.abs(value - (attempt?.audioPosition || 0)) >= 3) update({ audioPosition: value }); }} /></div>}
       {mode === 'practice' && attempt?.hintsEnabled && <MethodGuide skill={skill} types={activeSection?.questionTypes} onClose={() => update({ hintsEnabled: false })} />}
       {attempt?.status === 'paused' && <p className="exam-notice" role="status">Practice paused. Resume when you are ready.</p>}
