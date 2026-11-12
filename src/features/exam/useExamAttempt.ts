@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { createExamAttempt, gradeAttempt } from '../../domain/exam';
-import type { ExamAsset, ExamAttempt, ExamCatalog, ExamSkill } from '../../domain/exam/types';
+import type { ExamAsset, ExamAttempt, ExamCatalog, ExamQuestion, ExamSkill } from '../../domain/exam/types';
 import { accountId } from '../../storage/remote';
 import { readExamRecoveries } from '../../storage/examRecovery';
 import { mergeExamSessions, unfinishedExamSession } from '../../domain/exam/sessions';
@@ -106,6 +106,27 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
     saveQueue.current = request;
     return request;
   }, [fb.persistNow, fb.stateRef]);
+  const expandToFullSection = async (questions: ExamQuestion[]) => {
+    const previous = ref.current;
+    if (lock.current || mode !== 'practice' || retryId || !previous?.planId || !unfinishedExamSession(previous) || accountId() !== boundOwner.current) return;
+    const existing = previous.questionSnapshot || catalog.questions;
+    const missing = questions.filter(question => previous.sectionIds.includes(question.sectionId) && question.skill === skill && !existing.some(row => row.id === question.id));
+    if (!missing.length) return;
+    const expanded = [...existing, ...missing].sort((a, b) => a.number - b.number);
+    const next = { ...previous, questionSnapshot: structuredClone(expanded), questionTypes: Object.fromEntries(expanded.map(question => [question.id, question.type])), updatedAt: new Date().toISOString() };
+    const savingOwner = boundOwner.current;
+    const savingScope = scopeRef.current;
+    lock.current = true; setSaving(true); setError('');
+    if (timer.current) window.clearTimeout(timer.current);
+    const saved = await saveQueue.current.then(() => fb.commitExamSectionExpansion(next, {
+      expectedQuestionIds: existing.map(question => question.id),
+      onError: (message: string) => { saveFeedback.current = message; },
+    })).catch(() => false);
+    if (!alive.current || accountId() !== savingOwner || boundOwner.current !== savingOwner || scopeRef.current !== savingScope || ref.current?.id !== previous.id) return;
+    lock.current = false; setSaving(false);
+    if (saved) { const committed = (fb.stateRef.current.examAttempts as ExamAttempt[]).find(row => row.id === next.id) || next; ref.current = committed; setAttempt(committed); checkpointExamSession(savingOwner, key, committed); }
+    else setError('Could not add the missing questions. Your answers and original session are kept. Retry Continue full passage when the connection is available.');
+  };
   useEffect(() => {
     if (!attempt || !unfinishedExamSession(attempt) || saving) return;
     const savingOwner = boundOwner.current;
@@ -181,5 +202,5 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
       setSaving(false); lock.current = false;
     }
   };
-  return { attempt, elapsed: clock, update, start, pause, keepSession, saveAndExit, discard, submit, saving, error, retrySave };
+  return { attempt, elapsed: clock, update, start, pause, keepSession, saveAndExit, discard, submit, saving, error, retrySave, expandToFullSection };
 }

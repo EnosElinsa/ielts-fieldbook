@@ -597,7 +597,7 @@
   position: sticky;
   top: 0;
   background: var(--sheet);
-  z-index: 1;
+  z-index: 3;
 }
 @media (max-width: 760px) {
   .vocabulary-group-word-head {

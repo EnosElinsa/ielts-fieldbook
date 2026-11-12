@@ -652,6 +652,26 @@ test('paste learning card uses the existing complete reviewed meaning, example a
   expect(screen.queryByText('A soft moist mixture, in particular:')).not.toBeInTheDocument();
 });
 
+test('law-group teaching shows useful contrasts and opens practice for the exact displayed meaning', async () => {
+  const released=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8'));
+  Object.assign(VOCABULARY_CATALOG,released);
+  const controversy=released.entries.find((entry:any)=>entry.term==='controversy');
+  const url=`/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-17-group-01/learn?word=${controversy.id}`;
+  const before=structuredClone(mocks.fb.state);
+  mount(url);
+  await screen.findByRole('heading',{name:'controversy'});
+  expect(screen.getByText('Strong public disagreement about an issue.')).toBeVisible();
+  expect(screen.getByText('The proposed policy caused controversy among residents.')).toBeVisible();
+  expect(screen.getByRole('heading',{name:'Compare meanings'})).toBeVisible();
+  expect(screen.getByText(/A debate is an exchange of opposing arguments/)).toBeVisible();
+  const practice=new URL(screen.getByRole('link',{name:'Practise word distinctions'}).getAttribute('href')!,'https://local.test');
+  expect(practice.searchParams.get('mode')).toBe('distinction');
+  expect(practice.searchParams.get('entryId')).toBe(controversy.id);
+  expect(practice.searchParams.get('senseId')).toBe('kaikki:a8594b6a839efa92b7');
+  expect(practice.searchParams.get('bookId')).toBe('ielts-vocabulary');
+  expect(mocks.fb.state).toEqual(before);
+});
+
 test('planned learning ignores URL card substitutions and keeps the account batch',async()=>{
   const batch=buildLearningBatch(mocks.fb.state,'book','group',0,10,'definition');
   mocks.fb.state.plans=[{id:'account-learning',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',...batch.selection,cards:batch.selection.cards}}];

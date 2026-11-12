@@ -3,8 +3,8 @@ import { dictionaryDisplayText, vocabularySensePresentation } from '../../domain
 import { isVocabularyMeaningGroup, isVocabularyUsageReference } from '../../domain/vocabulary/readiness';
 import '../../styles/vocabulary-learning-notes.css';
 
-export function VocabularyMeaningNotes({ sense, entryId, example, showDistinctions = false }: {
-  sense: VocabularySense; entryId?: string; example?: string; showDistinctions?: boolean;
+export function VocabularyMeaningNotes({ sense, entryId, example, showDistinctions = false, expanded = false }: {
+  sense: VocabularySense; entryId?: string; example?: string; showDistinctions?: boolean; expanded?: boolean;
 }) {
   const content = vocabularySensePresentation(sense);
   const seen = new Set([content.definition, example || content.example, content.usage].filter(Boolean).map(value => value!.toLowerCase()));
@@ -15,7 +15,7 @@ export function VocabularyMeaningNotes({ sense, entryId, example, showDistinctio
   }) : [];
   if (!content.usage && !distinctions.length && !content.relations.length) return null;
   const reference = entryId && (isVocabularyMeaningGroup(entryId, sense) || isVocabularyUsageReference(entryId, sense));
-  return <details className="vocabulary-learning-notes" key={JSON.stringify([entryId, sense.id, sense.definition, sense.pos])}>
+  return <details className="vocabulary-learning-notes" open={expanded || undefined} key={JSON.stringify([entryId, sense.id, sense.definition, sense.pos])}>
     <summary>Usage and meaning notes</summary>
     {content.usage ? <div className="vocabulary-detail"><h4>Usage note</h4><p>{content.usage}</p></div> : null}
     {distinctions.length ? <div className="vocabulary-detail"><h4>{reference ? 'How to choose a meaning' : 'Compare meanings'}</h4>

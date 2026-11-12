@@ -13,7 +13,7 @@ import { useFieldbook } from '../../context/FieldbookContext';
 import { accountId } from '../../storage/remote';
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
-import { catalogVocabularyEntry, hasVocabularySenseEdits } from '../../domain/vocabulary/content';
+import { catalogVocabularyEntry, hasVocabularySenseEdits, learningTask } from '../../domain/vocabulary/content';
 import { vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
 import { getVocabularyVisualPresentation } from '../../domain/vocabulary/visualPresentation';
 import { VocabularyMeaningNotes } from './VocabularyMeaningNotes';
@@ -210,6 +210,8 @@ export function VocabularyGroupLearnPage() {
   const publicEntry = word ? catalogVocabularyEntry(word.entry.id) : undefined;
   const publicSense = publicEntry && selectedSense ? resolveVocabularyLearningContext(publicEntry, { bookId, unitId, senseId:selectedSense.id }).sense : undefined;
   const reviewedNotes = Boolean(word && selectedSense && hasVocabularyReadinessNotes(word.entry.id, selectedSense));
+  const groupTeachingNotes = Boolean(activeResolved?.curriculumCurrent && activeResolved.contentReviewed);
+  const distinctionTask = word && selectedSense ? learningTask(word.entry, selectedSense, 'distinction') : undefined;
   const allMeaningsUrl = word ? `${entryUrl(word.entry.id,{bookId,unitId,senseId:selectedSense?.id},origin)}&meanings=all#vocabulary-dictionary` : undefined;
   const reliableCollocations = reviewedNotes || activeResolved?.contentReviewed || selectedSense?.source === 'Personal note' || Boolean(state.vocabulary.some(entry=>entry.id===word?.entry.id) && publicSense && selectedSense && hasVocabularySenseEdits(selectedSense,[publicSense]));
   const meaningSource = selectedSense?.source === 'Personal note'
@@ -257,7 +259,8 @@ export function VocabularyGroupLearnPage() {
           {hasVisual && activeResolved ? <VocabularyLearningVisual resolved={activeResolved} /> : null}
           </div><div className="vocabulary-learning-secondary">
           {reliableCollocations && selectedSense?.collocations?.length ? <div className="vocabulary-learning-collocations"><h4>Common combinations</h4><ul>{selectedSense.collocations.map(item=><li key={item}>{item}</li>)}</ul></div> : null}
-          {selectedSense ? <VocabularyMeaningNotes entryId={word.entry.id} sense={selectedSense} showDistinctions={reviewedNotes} /> : null}
+          {selectedSense ? <VocabularyMeaningNotes entryId={word.entry.id} sense={selectedSense} showDistinctions={reviewedNotes || groupTeachingNotes} expanded={Boolean(distinctionTask && (reviewedNotes || groupTeachingNotes))} /> : null}
+          {distinctionTask ? <div className="vocabulary-learning-selected-practice"><Link className="btn line" to={practiceUrl(word.entry.id,selectedSense?.id,{bookId,unitId},origin,'distinction')}>Practise word distinctions<ArrowRight size={14}/></Link><p className="vocabulary-muted">Choose the meaning or construction that fits the context, then check the explanation.</p></div> : null}
           {visualPresentation === 'supplementary' && activeResolved ? <VocabularyLearningVisual resolved={activeResolved} /> : null}
           <details className="vocabulary-learning-provenance" key={`${word.entry.id}:${selectedSense?.id}`}><summary>Meaning source</summary><p>{meaningSource} See Word details for references and other meanings.</p></details>
           <div className="vocabulary-learning-meaning-scope"><p>This card shows one selected meaning.</p><Link className="btn text" to={allMeaningsUrl!} onClick={()=>rememberVocabularyPosition(origin,'learning-word')}>Browse all meanings<ArrowRight size={14}/></Link></div>

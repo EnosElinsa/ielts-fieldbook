@@ -287,6 +287,7 @@ export function VocabularyEntryPage() {
     : undefined;
   const groupMeaningParams = new URLSearchParams(params);
   if (groupMeaning) groupMeaningParams.set('senseId', groupMeaning.id);
+  const alternateGroupMeaning = Boolean(groupMeaning && primary && groupMeaning.id !== primary.id);
   const originalNotes = raw
     ? vocabularySensePresentation({
         id: 'original-notes',
@@ -398,7 +399,7 @@ export function VocabularyEntryPage() {
       >
         <div className="vocabulary-sense-head">
           <h3>
-            {isVocabularyMeaningGroup(entry!.id, sense) ? "Meaning group" : isVocabularyUsageReference(entry!.id, sense) ? "Usage reference" : main ? "Meaning" : sense.pos || "Other meaning"}
+            {isVocabularyMeaningGroup(entry!.id, sense) ? "Meaning group" : isVocabularyUsageReference(entry!.id, sense) ? "Usage reference" : main && alternateGroupMeaning ? personalNotes ? "Your selected meaning" : "Selected dictionary meaning" : main ? "Meaning" : sense.pos || "Other meaning"}
           </h3>
         </div>
         {sense.pos ? (
@@ -611,6 +612,13 @@ export function VocabularyEntryPage() {
             <div>
               {primary ? (
                 <>
+                  {alternateGroupMeaning && groupMeaning ? <aside className="vocabulary-group-recommendation" role="region" aria-label="Current group meaning">
+                    <h3>Current group meaning</h3>
+                    <VocabularySenseContent entryId={entry?.id} sense={groupMeaning} />
+                    <Link className="btn line vocabulary-group-meaning-link" to={`${location.pathname}?${groupMeaningParams}`}>
+                      View group meaning <ArrowRight size={14} aria-hidden="true" />
+                    </Link>
+                  </aside> : null}
                   {renderSense(primary, true)}
                   {visualPresentation === 'supplementary' && resolved ? <VocabularyLearningVisual resolved={resolved} /> : null}
                   <div className="vocabulary-meaning-meta">
@@ -622,9 +630,6 @@ export function VocabularyEntryPage() {
                         <VocabularySenseContent entryId={entry?.id} sense={groupMeaning} />
                       </div> : null}
                     </details> : null}
-                    {groupMeaning && groupMeaning.id !== primary.id ? <Link className="vocabulary-group-meaning-link" to={`${location.pathname}?${groupMeaningParams}`}>
-                      View group meaning <ArrowRight size={14} aria-hidden="true" />
-                    </Link> : null}
                   </div>
                 </>
               ) : (

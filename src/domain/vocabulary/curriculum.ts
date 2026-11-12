@@ -9,7 +9,7 @@ export type VocabularyCurriculum = {
   explanation: string;
   senses: VocabularySense[];
 };
-export type CurriculumRow = {bookId?:string;unitId?:string;entryId:string;term:string;sense:VocabularySense;originalSense?:VocabularySense;reason:string;sectionId?:string;sentenceIds?:string[]};
+export type CurriculumRow = {bookId?:string;unitId?:string;entryId:string;term:string;sense:VocabularySense;originalSense?:VocabularySense;previousSenses?:VocabularySense[];reason:string;sectionId?:string;sentenceIds?:string[]};
 const key = (bookId: string, unitId: string, entryId: string) => JSON.stringify([bookId,unitId,entryId]);
 const topics = new Map<string,CurriculumRow>();
 const sources = new Map<string,CurriculumRow>();
@@ -33,8 +33,11 @@ for (const row of common) {
   commonRows.set(row.entryId,rows);
 }
 for (const row of [...topicData,...sources.values(),...repairRows.values(),...modernRows.values(),...common]) {
-  const id=JSON.stringify([row.entryId,row.sense.id]);
-  baselines.set(id,[...(baselines.get(id)||[]),row.sense,...(row.originalSense?.id===row.sense.id?[row.originalSense]:[])]);
+  for (const sense of [row.sense,row.originalSense,...(row.previousSenses || [])]) {
+    if (!sense) continue;
+    const id=JSON.stringify([row.entryId,sense.id]);
+    baselines.set(id,[...(baselines.get(id)||[]),sense]);
+  }
 }
 }
 const unitIndexes=new WeakMap<object,Map<string,typeof VOCABULARY_CATALOG.units[number]>>();

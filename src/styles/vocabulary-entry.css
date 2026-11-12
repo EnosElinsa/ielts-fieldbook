@@ -92,8 +92,14 @@
   min-height: 44px;
   font-size: 13px;
   color: var(--blue);
+  text-decoration: none;
 }
 .vocabulary-group-meaning-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.vocabulary-group-recommendation { margin: 0 0 24px; padding: 18px 20px; border: 1px solid var(--rule); border-radius: 10px; background: var(--surface-soft); }
+.vocabulary-group-recommendation h3 { margin: 0 0 10px; font-size: 14px; }
+.vocabulary-group-recommendation .vocabulary-definition { margin: 0 0 10px; }
+.vocabulary-group-recommendation blockquote { margin: 10px 0 14px; padding: 0; border: 0; font-size: 14px; line-height: 1.7; color: var(--muted); }
+.vocabulary-group-recommendation .vocabulary-group-meaning-link { margin-top: 4px; }
 .vocabulary-example-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
 .vocabulary-group-comparison { padding: 12px 16px; border-left: 2px solid var(--rule); }
 .vocabulary-group-comparison h4 { margin: 0 0 12px; }

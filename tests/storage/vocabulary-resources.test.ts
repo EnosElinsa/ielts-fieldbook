@@ -12,6 +12,16 @@ let release: ReturnType<typeof buildVocabularyResources>;
 // retaining every source, content-hash and historical-byte assertion below.
 beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 45_000);
 
+test('the preceding term-index manifest and its complete resources survive a group teaching revision', () => {
+  const previousUrl = '/vocabulary-resources/manifest.423452d22bb3b576.json';
+  const bytes = release.resources.getBytes(previousUrl);
+  expect(bytes).toBeDefined();
+  expect(createHash('sha256').update(bytes!).digest('hex').slice(0,16)).toBe('423452d22bb3b576');
+  const previous = JSON.parse(bytes!.toString('utf8'));
+  expect(previous.termIndexUrl).toBeTruthy();
+  for (const url of [previous.termIndexUrl, ...Object.values(previous.entryResources), ...Object.values(previous.entryTeachingResources), ...previous.units.flatMap((unit: any) => [unit.resource, unit.teachingResource]).filter(Boolean)] as string[]) expect(release.resources.has(url), url).toBe(true);
+});
+
 test('learning priority is delivered in scoped teaching while the preceding complete release keeps its original bytes', () => {
   const baseline = JSON.parse(readFileSync('src/domain/vocabulary/resourceDictionaryRound19Baseline.json', 'utf8'));
   const before = JSON.parse(readFileSync('src/domain/vocabulary/resourceDictionaryRound18Baseline.json', 'utf8'));

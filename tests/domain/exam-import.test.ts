@@ -45,3 +45,23 @@ test('catalog audit flags source answer keys that contradict their word limit',(
  expect(warnings).not.toContain('Answer conflicts with word limit number');
  expect(warnings).not.toContain('Answer conflicts with word limit alternative');
 });
+
+test('a source declaring questions 1–6 and 7–13 cannot import seven rows as a complete passage',()=>{
+ const raw={job:{...job,id:'1238',classify:2},detail:{0:{content:'<p>Manatees</p><p>A source passage.</p>',pages:[{title:'Questions 1-6',desc:'Write ONE WORD ONLY in boxes 1-6.',sections:[{type:'10',questions:Array.from({length:6},(_,index)=>({id:`gap-${index+1}`,sort:String(index+1),title:String(index+1),option_names:'source-key'}))}]},{title:'Questions 7-13',desc:'In boxes 7-13, write TRUE, FALSE or NOT GIVEN.',sections:[{type:'2',options:[{id:'t',title:'TRUE'},{id:'f',title:'FALSE'},{id:'ng',title:'NOT GIVEN'}],questions:[{id:'statement-7',sort:'7',title:'Source statement.',option_ids:'t',option_names:'TRUE'}]}]}]}},report:{data:{}}};
+ const result=normalizeSourceSection(raw);
+ expect(result.questions).toHaveLength(7);
+ expect(result.sections[0]).toMatchObject({questionCount:13,status:'incomplete'});
+ expect(validateCatalog(result).errors).toContain('Question-count mismatch source:1238: expected 13, received 7');
+ expect(result.questions.map((question:any)=>question.id)).toEqual([...Array.from({length:6},(_,index)=>`question:gap-${index+1}`),'question:statement-7']);
+});
+
+test('catalog audit counts pooled answer slots and reports duplicated or invalid source numbers without rewriting them',()=>{
+ const questions=[{id:'choice',sectionId:'s',number:21,type:'multiple',points:2,answer:['A','C']},{id:'duplicate',sectionId:'s',number:22,type:'single',answer:'A'},{id:'typo',sectionId:'s',number:71,type:'gap',answer:'key'}];
+ const catalog={schemaVersion:1,papers:[],sections:[{id:'s',skill:'listening',questionCount:4,sentences:[]}],questions,passages:[],assets:[]};
+ const before=structuredClone(catalog);
+ const audit=validateCatalog(catalog);
+ expect(audit.errors).toEqual([]);
+ expect(audit.warnings).toContain('Duplicate question number s: 22');
+ expect(audit.warnings).toContain('Invalid question number typo: 71');
+ expect(catalog).toEqual(before);
+});

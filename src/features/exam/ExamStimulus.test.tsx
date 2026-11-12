@@ -6,6 +6,17 @@ import { ExamStimulus, examStimulusBlockIds } from './ExamPracticePage';
 
 afterEach(cleanup);
 
+test('flat imported notes have distinct section headings and answer rows while annotation anchors stay stable', () => {
+  const html = '<p><em>Complete the notes below.</em></p><div><span>Wildlife</span></div><p><span>Appearance</span><br>· a broad <strong>[1 ____]</strong><br><span>Movement</span><br>· use their <strong>[2 ____]</strong> to turn</p>';
+  const {container} = render(<ExamStimulus html={html} blockPrefix="notes" renderGap={number=><input aria-label={`Answer ${number}`}/>} />);
+  expect(container.querySelector('.exam-note-title')).toHaveTextContent('Wildlife');
+  expect([...container.querySelectorAll('.exam-note-section-title')].map(node=>node.textContent)).toEqual(['Appearance','Movement']);
+  expect(container.querySelectorAll('.exam-note-item')).toHaveLength(2);
+  expect(container.querySelector('.exam-note-item')).toContainElement(screen.getByRole('textbox',{name:'Answer 1'}));
+  const oldBlocks = examStimulusBlockIds(html,'notes');
+  for (const node of container.querySelectorAll('[data-source-block]')) expect(oldBlocks).toContain(node.getAttribute('data-source-block'));
+});
+
 test('imported table line fragments reflow as spaced sentences and keep their source block IDs', () => {
   const html = '<table><tbody><tr><td><p><span>At the top of</span></p><p><span>a</span> <strong>[6 ____]</strong></p><p><br></p><p>Another detail</p></td></tr></tbody></table>';
   const { container } = render(<ExamStimulus html={html} blockPrefix="table" />);

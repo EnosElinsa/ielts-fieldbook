@@ -62,6 +62,8 @@ export function examStimulusBlockIds(html: string, blockPrefix: string): string[
 export function ExamStimulus({ html, assets = [], renderGap, blockPrefix = 'stimulus', version = '' }: { html: string; assets?: ExamAsset[]; renderGap?: (number: number) => ReactNode; blockPrefix?: string; version?: string }) {
   const nodes = useMemo(() => {
     const document = stimulusDocument(html);
+    const noteParagraph = (node: Element) => node.tagName.toLowerCase() === 'p' && !node.closest('td,th') && /(?:^|[\n\r])\s*[·•]/.test((node.innerHTML || '').replace(/<br\s*\/?\s*>/gi, '\n').replace(/<[^>]+>/g, ''));
+    const hasNotes = Array.from(document.body.children).some(noteParagraph);
     const allowed = new Set(['p', 'div', 'span', 'strong', 'b', 'em', 'i', 'u', 'br', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'ul', 'ol', 'li', 'h3', 'h4', 'h5', 'blockquote', 'sup', 'sub']);
     const convert = (node: Node, key: string): ReactNode => {
       if (node.nodeType === Node.TEXT_NODE) {
@@ -80,9 +82,20 @@ export function ExamStimulus({ html, assets = [], renderGap, blockPrefix = 'stim
       if (['p', 'div'].includes(tag) && !node.textContent?.trim() && !node.querySelector('img')) return tableLine ? <span key={key} className="exam-table-break" aria-hidden="true"> </span> : null;
       if (tag === 'img') { const source = node.getAttribute('src') || ''; const asset = source.startsWith('exam-asset:') ? assets.find(row => row.id === source.slice('exam-asset:'.length) && row.kind === 'image') : undefined; return asset ? <ExamImage inline key={key} asset={asset} label={node.getAttribute('alt') || 'Source diagram'} /> : null; }
       if (['script', 'style', 'iframe', 'object', 'embed', 'svg', 'form', 'input'].includes(tag)) return null;
+      if (noteParagraph(node)) {
+        // Wrap printed note lines while keeping their original child-index keys:
+        // saved annotations still point to exactly the same source text blocks.
+        const lines: { nodes: ReactNode[]; text: string }[] = [{nodes: [], text: ''}];
+        Array.from(node.childNodes).forEach((child, index) => {
+          if (child instanceof Element && child.tagName.toLowerCase() === 'br') lines.push({nodes: [], text: ''});
+          else { const line = lines[lines.length - 1]; line.nodes.push(convert(child, `${key}-${index}`)); line.text += child.textContent || ''; }
+        });
+        return <p key={key} className="exam-note-lines">{lines.filter(line => line.text.trim()).map((line, index) => <span key={index} className={/^\s*[·•]/.test(line.text) ? 'exam-note-item' : 'exam-note-section-title'}>{line.nodes}</span>)}</p>;
+      }
       const children = Array.from(node.childNodes).map((child, index) => convert(child, `${key}-${index}`));
       if (!allowed.has(tag)) return children;
       const props: Record<string, unknown> = {}; if (tag === 'td' || tag === 'th') { const span = Number(node.getAttribute('colspan')); if (span > 0 && span < 20) props.colSpan = span; const row = Number(node.getAttribute('rowspan')); if (row > 0 && row < 20) props.rowSpan = row; }
+      if (hasNotes && node.parentElement === document.body && tag === 'div' && !node.querySelector('p,div,table,img,br') && node.textContent!.trim().length < 100) props.className = 'exam-note-title';
       if (tag === 'table') {
         const columns = Math.max(1, ...Array.from(node.querySelectorAll('tr')).map(row => Array.from(row.children).reduce((count, cell) => count + Math.max(1, Math.min(20, Number(cell.getAttribute('colspan')) || 1)), 0)));
         props.style = { '--exam-table-columns': columns };
@@ -104,7 +117,7 @@ function ExamChoiceInstructions({ question, questions }: { question: ExamQuestio
   const parts = text.match(/^(Questions?\s+\d+(?:\s*[-–—]\s*\d+)?)\s+(.+)$/i);
   const start = questions[0].number; const end = questionEndNumber(questions.at(-1)!);
   const title = start === end ? `Question ${start}` : `Questions ${start}–${end}`;
-  return <div className="exam-choice-instructions"><strong>{title}</strong><p>{parts?.[2] || text}</p></div>;
+  return <div className="exam-choice-instructions"><strong>{title}</strong>{['true-false','yes-no'].includes(question.type) && question.stimulusHtml ? <ExamStimulus html={question.stimulusHtml} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} /> : <p>{parts?.[2] || text}</p>}</div>;
 }
 export function ExamAnswerInput({ question, value, onChange, disabled, describedBy, compactOptions = false }: { question: ExamQuestion; value: string | string[]; onChange: (value: string | string[]) => void; disabled: boolean; describedBy?: string; compactOptions?: boolean }) {
   const options = question.type === 'true-false' ? ['TRUE', 'FALSE', 'NOT GIVEN'] : question.type === 'yes-no' ? ['YES', 'NO', 'NOT GIVEN'] : question.options || [];
@@ -186,6 +199,9 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   const activeSection = sections.find(section => section.id === activeSectionId) || sections[0]; const currentQuestions = questions.filter(question => question.sectionId === activeSection?.id); const passages = catalog.passages.filter(passage => passage.sectionId === activeSection?.id);
   const paper = metadata.catalog.papers.find(row => row.id === sections[0]?.paperId); const disabled = !attempt || attempt.status !== 'active' || controller.saving;
   const answerSlots = questions.reduce((sum, question) => sum + questionSlotCount(question), 0);
+  const completeSectionQuestions = catalog.questions.filter(question => selectedIds.includes(question.sectionId) && question.skill === skill);
+  const completeSectionSlots = completeSectionQuestions.reduce((sum, question) => sum + questionSlotCount(question), 0);
+  const truncatedPlan = mode === 'practice' && skill === 'reading' && !retryId && attempt?.planId && ['active', 'paused'].includes(attempt.status) && answerSlots < completeSectionSlots;
   const answered = questions.reduce((sum, question) => sum + questionAnsweredSlots(question, attempt?.responses[question.id]), 0);
   const sourcePanel = useRef<HTMLDivElement>(null);
   const [sourceScroll, setSourceScroll] = useWorkspacePageState(`exam:${skill}:${mode}:${sourceId}:${retryId || ''}:${activeSection?.id || ''}:source-scroll`, 0, (value): value is number => typeof value === 'number' && Number.isFinite(value) && value >= 0);
@@ -314,7 +330,7 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
     const notesOpen = openNotes.includes(question.id);
     const hasNotes = Boolean(attempt?.evidence[question.id]?.trim() || attempt?.keywords[question.id]?.trim());
     return <div key={question.id}>{!grouped && <>{groupHeading(question, index)}{layout === 'integrated' && info.showInstructions && <p className="exam-instruction">{question.instructions}</p>}{showStimulus && (info.instructionOnly ? <ExamChoiceInstructions question={question} questions={info.group} /> : <ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} renderGap={renderGap} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />)}{layout === 'integrated' && info.groupStart && headingList(question)}</>}
-      {showTools && <article id={`exam-question-${question.id}`} tabIndex={-1} aria-label={`${questionLabel(question)} details`} className={`exam-question${compact ? ' exam-question-compact' : ''}${headingAnswer ? ' exam-heading-answer' : ''}${grouped && question.type === 'map' ? ' exam-map-answer' : ''}`} onFocus={() => setFocusedQuestion(question.id)}>
+      {showTools && <article id={`exam-question-${question.id}`} tabIndex={-1} aria-label={`${questionLabel(question)} details`} className={`exam-question${['true-false','yes-no'].includes(question.type) ? ' exam-statement-question' : ''}${compact ? ' exam-question-compact' : ''}${headingAnswer ? ' exam-heading-answer' : ''}${grouped && question.type === 'map' ? ' exam-map-answer' : ''}`} onFocus={() => setFocusedQuestion(question.id)}>
         <div className="exam-question-heading"><span className={`exam-number${questionSlotCount(question) > 1 ? " is-range" : ""}`}>{questionNumberLabel(question)}</span>{!info.sharedType && !headingAnswer && <span className="exam-eyebrow">{QUESTION_TYPE_NAMES[question.type]}</span>}{mode === 'practice' && attempt && !inlineQuestions.has(question.id) && <button type="button" className="exam-notes-toggle" aria-label={`Evidence & paraphrase for ${questionLabel(question).toLowerCase()}`} aria-expanded={notesOpen} aria-controls={`exam-notes-${question.id}`} title={hasNotes ? 'Evidence & paraphrase · Notes added' : 'Evidence & paraphrase'} onClick={() => setOpenNotes(ids => notesOpen ? ids.filter(id => id !== question.id) : [...ids, question.id])}><NotebookPen size={16} aria-hidden="true" />{hasNotes && <span className="exam-note-dot" aria-label="Notes added" />}</button>}</div>
         {layout === 'integrated' && <>{info.showPrompt && <p className="exam-prompt"><AnnotatedText blockId={`question:${question.id}`} text={headingPrompt(question)} hiddenPrefixLength={questionNumberPrefixLength(headingPrompt(question), question.number, questionEndNumber(question))} version={question.provenance.contentHash || question.provenance.sourceVersion} /></p>}<ExamImage asset={catalog.assets.find(asset => asset.id === question.assetId && asset.kind === 'image')} label={`${questionLabel(question)} diagram`} /></>}
         {!inlineQuestions.has(question.id) && <ExamAnswerInput question={question} value={value} disabled={disabled} compactOptions={grouped} describedBy={limitId(question)} onChange={value => response(question, value)} />}
@@ -392,6 +408,7 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
         </div>
       </div>
       {layoutError && <p className="exam-layout-feedback" role="status">{layoutError}</p>}
+      {truncatedPlan && <aside className="exam-completeness-notice" role="status" aria-label="Passage completeness"><div><strong>This saved task contains {answerSlots} of {completeSectionSlots} questions.</strong><p>Add the missing questions to continue the full passage. Your answers, notes and practice time are kept.</p></div><button className="btn primary" disabled={controller.saving} onClick={() => void controller.expandToFullSection(completeSectionQuestions)}>Continue full passage</button></aside>}
       {mode === 'practice' && skill === 'listening' && audioAsset && <div className="exam-practice-recording"><span className="exam-eyebrow">Part {activeSection?.part} · recording</span><SourceAudio key={`${attempt?.id}:${audioAsset.id}`} asset={audioAsset} mock={false} started={!!attempt} paused={attempt?.status === 'paused'} startPosition={attempt?.audioPosition || 0} onPosition={value => { if (Math.abs(value - (attempt?.audioPosition || 0)) >= 3) update({ audioPosition: value }); }} /></div>}
       {mode === 'practice' && attempt?.hintsEnabled && <MethodGuide skill={skill} types={activeSection?.questionTypes} onClose={() => update({ hintsEnabled: false })} />}
       {attempt?.status === 'paused' && <p className="exam-notice" role="status">Practice paused. Resume when you are ready.</p>}

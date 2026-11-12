@@ -5,6 +5,7 @@ import type { ExamCatalog } from '../domain/exam/types';
 import { displayName } from './format';
 import { bindSpeakingPlan } from '../domain/plans';
 import { planningEvidenceView } from '../domain/planningEvidence';
+import { sectionQuestionCount, sectionQuestionsComplete } from '../domain/exam/integrity';
 
 type Sources = {
   bank: (skill: 'writing' | 'speaking') => Promise<any[]>;
@@ -13,11 +14,12 @@ type Sources = {
   vocabulary: (bookId: string, unitId: string) => Promise<unknown>;
 };
 
-export async function bindStudyPlanTargets(state: any, sources: Sources) {
+export async function bindStudyPlanTargets(state: any, sources: Sources, options: {planIds?: Set<string>} = {}) {
   const catalogs = new Map<string, ExamCatalog>();
   const banks = new Map<string, any[]>();
   const reserved = new Set(state.plans.map((plan: StudyPlan) => plan.target?.type === 'section' ? plan.target.sectionId : null).filter(Boolean));
   for (const plan of state.plans as StudyPlan[]) {
+    if (options.planIds && !options.planIds.has(plan.id)) continue;
     if (plan.status !== 'pending' || !plan.target) continue;
     const target = plan.target;
     if (target.type === 'question' && (!target.questionId || !plan.targetLabel || target.skill === 'speaking' && !target.prompts?.length)) {
@@ -35,7 +37,7 @@ export async function bindStudyPlanTargets(state: any, sources: Sources) {
       if (skill === 'speaking') bindSpeakingPlan(plan, selected, target.part || plan.kind.slice(-1), plan.targetPrompt, banks.get(skill));
       plan.targetLabel = selected.name || selected.title || selected.topic || `Question ${selected.id}`;
       plan.quantity = skill === 'speaking' ? plan.target.type === 'question' ? plan.target.prompts?.length || 1 : 1 : 1;
-    } else if (target.type === 'section' && (!target.sectionId || !target.questionIds?.length)) {
+    } else if (target.type === 'section' && !plan.startedAt && !plan.linkedSessionId && !(state.examAttempts || []).some((attempt: {planId?: string}) => attempt.planId === plan.id) && (!target.sectionId || !target.questionIds?.length || target.questionScope !== 'full-section')) {
       const skill = target.skill;
       if (!catalogs.has(skill)) catalogs.set(skill, await sources.catalog(skill));
       const catalog = catalogs.get(skill)!;
@@ -46,13 +48,13 @@ export async function bindStudyPlanTargets(state: any, sources: Sources) {
       const selected = target.sectionId ? candidates.find(row=>row.id===target.sectionId) : choices[Number(plan.rotationIndex || 0) % choices.length];
       if (!selected) throw new Error(`The ${skill} question bank is unavailable. Retry your plan.`);
       const scoped = await sources.section([selected.id]);
-      const maximum = Math.floor(plan.estimatedMinutes / (skill==='reading' ? 2 : 1));
-      const questions = scoped.questions.filter(question=>question.sectionId===selected.id).sort((a,b)=>a.number-b.number).slice(0,maximum);
-      if (!questions.length) throw new Error('The selected section is incomplete. Retry your plan.');
-      target.sectionId=selected.id;target.questionIds=questions.map(question=>question.id);plan.sectionId=selected.id;
+      // A passage/part is one source task. Its duration never cuts its questions.
+      const questions = scoped.questions.filter(question=>question.sectionId===selected.id).sort((a,b)=>a.number-b.number);
+      if (!sectionQuestionsComplete(selected, questions)) throw new Error('The selected section is incomplete. Retry your plan.');
+      target.sectionId=selected.id;target.questionIds=questions.map(question=>question.id);target.questionScope='full-section';plan.sectionId=selected.id;
       const paper=catalog.papers?.find(paper=>paper.id===selected.paperId);
       plan.targetLabel=`${paper?.title || selected.title} / ${skill==='reading'?'Passage':'Part'} ${selected.part}`;
-      plan.quantity=questions.length;reserved.add(selected.id);
+      plan.quantity=sectionQuestionCount(selected,questions);reserved.add(selected.id);
     } else if (target.type==='intensive') {
       const scoped=await sources.section([target.sectionId]);
       if(!scoped.sections.some(row=>row.skill==='listening'&&row.id===target.sectionId&&row.sentences?.some(sentence=>sentence.id===target.sentenceId)))throw new Error('The selected listening sentence is unavailable.');
@@ -107,7 +109,7 @@ export function studyTargetSummary(plan: any): string {
     const count = plan.kind === 'speaking-mock' && plan.speakingGroups ? Object.values(plan.speakingGroups).reduce((sum: number, group: any) => sum + (group.prompts?.length || 0), 0) : target.prompts?.length || 1;
     return `${displayName(plan.targetLabel || `Question ${target.questionId || ''}`)} · ${count} ${count === 1 ? 'response' : 'responses'}`;
   }
-  if (target.type==='section') return `${plan.targetLabel || target.sectionId || ''} · ${target.questionIds?.length || plan.quantity || 0} questions`;
+  if (target.type==='section') return `${plan.targetLabel || target.sectionId || ''} · ${target.questionScope === 'full-section' ? plan.quantity || target.questionIds?.length || 0 : target.questionIds?.length || plan.quantity || 0} questions`;
   if (target.type==='vocabulary') {
     const count=target.cards?.length || target.entryIds?.length || plan.quantity || target.batchSize || 0;
     if(target.mode==='learning-batch'&&!target.cards?.length&&!target.entryIds?.length&&!plan.quantity)return `Batch ${(target.batchIndex||0)+1} · Up to ${count} ${count===1?'word':'words'}`;

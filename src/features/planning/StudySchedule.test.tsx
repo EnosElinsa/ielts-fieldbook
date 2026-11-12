@@ -29,3 +29,14 @@ test('activity committed while a refresh is saving schedules a follow-up instead
  expect(mocks.refresh).toHaveBeenCalledTimes(1);
  await act(async()=>{finish(true);});expect(mocks.refresh).toHaveBeenCalledTimes(2);
 });
+
+test('a failed resource read clears updating and a deliberate retry can recover',async()=>{
+ mocks.refresh.mockRejectedValueOnce(new Error('Loading took too long. Check your connection and retry.'));
+ const view=renderHook(()=>useStudySchedule());await act(async()=>{});
+ expect(view.result.current.saving).toBe(false);
+ expect(view.result.current.error).toMatch(/took too long/);
+ await act(async()=>{await view.result.current.refresh();});
+ expect(view.result.current.saving).toBe(false);
+ expect(view.result.current.error).toBe('');
+ expect(mocks.refresh).toHaveBeenCalledTimes(2);
+});

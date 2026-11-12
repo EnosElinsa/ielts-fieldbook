@@ -1,6 +1,6 @@
 import type { MouseEvent } from 'react';
 import { ArrowLeft } from 'lucide-react';
-import { Link, useLocation, useNavigate, useSearchParams, type LinkProps, type Location } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useResolvedPath, useSearchParams, type LinkProps, type Location } from 'react-router-dom';
 import { accountId } from '../../storage/remote';
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { rememberVocabularyPosition, safeVocabularyReturn } from './vocabularyNavigation';
@@ -22,6 +22,18 @@ function readOrigin(value: unknown, depth = 0): ReturnOrigin | undefined {
     ...(Number.isInteger(row.index) && row.index! >= 0 ? {index: row.index} : {}),
     parent: readOrigin(row.parent, depth + 1),
   };
+}
+
+function sameWordDetails(left: string, right: string) {
+  const path = (url: string) => normalizeVocabularyRoute(url).split(/[?#]/)[0];
+  return /^\/vocabulary\/entry\/[^/]+$/.test(path(left)) && path(left) === path(right);
+}
+
+function returnOrigin(location: Location) {
+  const current = location.pathname + location.search + location.hash;
+  let origin = readOrigin(location.state?.vocabularyReturn);
+  while (origin && (origin.url === current || sameWordDetails(origin.url, current))) origin = origin.parent;
+  return origin;
 }
 
 /** Keep navigation provenance in the browser entry, separate from learner data. */
@@ -55,18 +67,20 @@ export function useVocabularyReturn(fallback = '/vocabulary') {
   const location = useLocation();
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const origin = readOrigin(location.state?.vocabularyReturn);
+  const origin = returnOrigin(location);
   const current = location.pathname + location.search + location.hash;
-  const to = origin?.url !== current && origin?.url || safeVocabularyReturn(params.get('returnTo'), fallback);
+  const requested = safeVocabularyReturn(params.get('returnTo'), fallback);
+  const to = origin?.url || (requested === current || sameWordDetails(requested, current) ? fallback : requested);
   const goBack = () => {
-    const latest = readOrigin(location.state?.vocabularyReturn);
+    const latest = returnOrigin(location);
+    const skippedMeaning = latest?.url !== readOrigin(location.state?.vocabularyReturn)?.url;
     const index = window.history.state?.idx;
     const restored = location.state?.workspaceModuleRestore;
     const resumedModule = restored?.owner === accountId() && Boolean(safeVocabularyReturn(restored?.url, '')) && latest?.index === undefined;
     if (!resumedModule && latest && latest.url !== current) {
       // Pop to the real source entry, including any intermediate practice replacements.
-      if (latest.index === undefined) { navigate(-1); return; }
-      if (Number.isInteger(index) && index > latest.index) { navigate(latest.index - index); return; }
+      if (latest.index === undefined && !skippedMeaning) { navigate(-1); return; }
+      if (Number.isInteger(index) && Number.isInteger(latest.index) && index > latest.index!) { navigate(latest.index! - index); return; }
     }
     // New tabs and direct URLs have no owned history entry to pop.
     navigate(to, {replace: true, state: {vocabularyReturn: latest?.parent, vocabularyRestore: true, ...(resumedModule ? {workspaceModuleRestore: {owner: accountId(), url: to}} : {})}});
@@ -77,7 +91,9 @@ export function useVocabularyReturn(fallback = '/vocabulary') {
 export function VocabularyLink({preserveReturn = false, ...props}: LinkProps & {preserveReturn?: boolean}) {
   const location = useLocation();
   const to = typeof props.to === 'string' ? normalizeVocabularyRoute(props.to) : props.to;
-  return <Link {...props} to={to} state={props.state ?? (preserveReturn ? location.state : vocabularyForwardState(location))} onClick={event=>{
+  const target = useResolvedPath(to);
+  const meaningChange = sameWordDetails(location.pathname, target.pathname);
+  return <Link {...props} to={to} state={props.state ?? (preserveReturn || meaningChange ? location.state : vocabularyForwardState(location))} onClick={event=>{
     rememberVocabularyPosition(location.pathname + location.search + location.hash, event.currentTarget.id);
     props.onClick?.(event);
   }}/>;
