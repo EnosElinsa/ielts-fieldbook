@@ -133,7 +133,7 @@ async function readExamSections(ids: string[]): Promise<ExamCatalog> {
 }
 
 export function resolveExamAsset(asset: ExamAsset, options?: ReadOptions): Promise<string> {
-  return cachedRead(examAssetKey(asset), () => readExamAsset(asset), { ...options, ttlMs: EXAM_ASSET_REFRESH_MS, staleWhileRevalidate: false });
+  return cachedRead(examAssetKey(asset), () => requestTimeout(readExamAsset(asset), 15_000), { ...options, ttlMs: EXAM_ASSET_REFRESH_MS, staleWhileRevalidate: false });
 }
 
 async function readExamAsset(asset: ExamAsset): Promise<string> {

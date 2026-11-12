@@ -15,7 +15,7 @@ export function ExamMockAudio({ assets, elapsedSeconds, startPosition, onPositio
   const prefix = assets.slice(0, index).reduce((sum, asset) => sum + (asset.duration || 0), 0); const current = assets[index];
   useEffect(() => {
     let alive = true; setUrl(''); if (!current || completed) { setStatus('complete'); return; }
-    setStatus('loading'); void resolveExamAsset(current).then(value => { if (alive) setUrl(value); }).catch(() => { if (alive) setStatus('error'); });
+    setStatus('loading'); void resolveExamAsset(current, { force: retry > 0 }).then(value => { if (alive) setUrl(value); }).catch(() => { if (alive) setStatus('error'); });
     return () => { alive = false; };
   }, [current?.id, retry, completed]);
   useEffect(() => { if (completed) audio.current?.pause(); }, [completed]);

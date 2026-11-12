@@ -55,6 +55,7 @@ export function VocabularyGroupLearnPage() {
   const words = useMemo(() => exactCards ? exactCards.flatMap(ref=>{const row=sourceWords.find(row=>row.entry.id===ref.entryId);return row?[row]:[];}) : sourceWords.filter(row=>!selectedIds||selectedIds.includes(row.entry.id)), [sourceWords, exactCards, selectedIds]);
   const wordIds = words.map(row => row.entry.id);
   const idsKey = wordIds.join('\n');
+  const batchScope = JSON.stringify([owner, bookId, unitId, BATCH_SIZE, idsKey]);
   const key = vocabularyLearningPendingKey(owner, bookId, unitId);
   const [currentId, setCurrentId] = useState<string>();
   const [viewed, setViewed] = useState<string[]>([]);
@@ -150,12 +151,19 @@ export function VocabularyGroupLearnPage() {
   const currentBatch = useMemo(() => {
     if (status !== 'ready' || !words.length) return null;
     try {
-      const identity = `${owner}:${bookId}:${unitId}:${BATCH_SIZE}:${batch}`;
-      const frozen = boundPlan ? boundPlan.target.cards : params.get('batchCards') && Number(params.get('batch')) === batch ? JSON.parse(params.get('batchCards')!) : frozenBatches.current.get(identity) || words.slice(batch * BATCH_SIZE, (batch + 1) * BATCH_SIZE).map(row => ({ entryId: row.entry.id, senseId: row.resolved.sense?.id || '' }));
+      const identity = `${batchScope}:${batch}`;
+      let frozen: {entryId:string;senseId:string}[] = boundPlan ? boundPlan.target.cards : params.get('batchCards') && Number(params.get('batch')) === batch ? JSON.parse(params.get('batchCards')!) : frozenBatches.current.get(identity) || words.slice(batch * BATCH_SIZE, (batch + 1) * BATCH_SIZE).map(row => ({ entryId: row.entry.id, senseId: row.resolved.sense?.id || '' }));
+      // A direct meaning link must teach and assess the same sense, just like
+      // choosing a meaning with the buttons. Assigned plans keep their scope.
+      const requestedSense = !boundPlan && params.get('sense');
+      if (requestedSense && word) {
+        const displayed = resolveVocabularyLearningContext(word.entry, { bookId, unitId, senseId: requestedSense }).sense;
+        if (displayed) frozen = frozen.map(ref => ref.entryId === word.entry.id ? { ...ref, senseId: displayed.id } : ref);
+      }
       frozenBatches.current.set(identity, frozen);
       return buildLearningBatch(state, bookId, unitId, boundPlan?.target.batchIndex ?? batch, boundPlan?.target.batchSize ?? BATCH_SIZE, boundPlan?.target?.assessmentMode || preferences.mode, frozen);
     } catch { return null; }
-  }, [state, bookId, unitId, batch, BATCH_SIZE, preferences.mode, status, words.length, params.toString(), boundPlan]);
+  }, [state, bookId, unitId, batch, BATCH_SIZE, batchScope, preferences.mode, status, words.length, word?.entry.id, params.toString(), boundPlan]);
   const boundBatch = Boolean(boundPlan && currentBatch && currentBatch.mode === boundPlan.target.assessmentMode && JSON.stringify(currentBatch.selection.cards) === JSON.stringify(boundPlan.target.cards));
   const batchAssessmentUrl = (mode = currentBatch?.mode) => {
     if (!currentBatch || !mode) return '#';
@@ -181,7 +189,7 @@ export function VocabularyGroupLearnPage() {
     if (nextId !== word.entry.id) setRevealedKey('');
     const next = new URLSearchParams(params); next.set('word', nextId); if(nextId!==word.entry.id) next.delete('sense');
     const nextBatch = Math.floor(index / BATCH_SIZE);
-    const nextRefs = exactCards || frozenBatches.current.get(`${owner}:${bookId}:${unitId}:${BATCH_SIZE}:${nextBatch}`) || words.slice(nextBatch * BATCH_SIZE, (nextBatch + 1) * BATCH_SIZE).map(row => ({entryId:row.entry.id,senseId:row.resolved.sense?.id || ''}));
+    const nextRefs = exactCards || frozenBatches.current.get(`${batchScope}:${nextBatch}`) || words.slice(nextBatch * BATCH_SIZE, (nextBatch + 1) * BATCH_SIZE).map(row => ({entryId:row.entry.id,senseId:row.resolved.sense?.id || ''}));
     next.set('batch', String(exactCards ? boundPlan!.target.batchIndex : nextBatch)); next.set('batchSize', String(exactCards ? boundPlan!.target.batchSize : BATCH_SIZE)); next.set('batchCards', JSON.stringify(nextRefs));
     if (nextBatch !== batch && !exactCards) next.delete('planId');
     setParams(next, { replace:true, state: location.state });

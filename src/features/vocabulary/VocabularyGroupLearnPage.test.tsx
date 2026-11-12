@@ -1,6 +1,6 @@
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { readFileSync } from 'node:fs';
@@ -610,6 +610,38 @@ test('a new account never flushes the previous account debounce draft',async()=>
   expect(JSON.parse(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-one:book:group')!)).toMatchObject({currentEntryId:'word-2',viewedEntryIds:['word-1']});
   expect(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-two:book:group')).toBeNull();
   vi.useRealTimers();
+});
+
+test('changing a selected word set cannot reuse another set’s assessment cards',async()=>{
+  vi.spyOn(window,'scrollTo').mockImplementation(()=>{});
+  const selected=(id:string)=>`${path}?selectedEntryIds=${encodeURIComponent(JSON.stringify([id]))}`;
+  render(<MemoryRouter initialEntries={[selected('word-1')]}><Routes><Route path="/vocabulary/wordbooks/:bookId/groups/:unitId/learn" element={<VocabularyGroupLearnPage/>}/></Routes><Link to={selected('word-3')}>Choose another word</Link></MemoryRouter>);
+  await screen.findByRole('heading',{name:'Word 1'});
+  const cards=()=>JSON.parse(new URL(screen.getByRole('link',{name:/^Start /}).getAttribute('href')!,'http://local.test').searchParams.get('batchCards')!);
+  expect(cards()).toEqual([{entryId:'word-1',senseId:'sense-1'}]);
+  await userEvent.setup().click(screen.getByRole('link',{name:'Choose another word'}));
+  await screen.findByRole('heading',{name:'Word 3'});
+  expect(cards()).toEqual([{entryId:'word-3',senseId:'sense-3'}]);
+  expect(mocks.fb.state.vocabularyEvidence).toHaveLength(0);
+});
+
+test('a direct learning link assesses the explicit meaning displayed on its card',async()=>{
+  const released=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8'));
+  Object.assign(VOCABULARY_CATALOG,released);
+  const entry=released.entries.find((row:any)=>row.term==='book');
+  const selected='kaikki:7d09dc41b99ae33c32';
+  mount(`/vocabulary/wordbooks/ielts-listening-essentials/groups/ielts-listening-essentials-chapter-04-group-01/learn?word=${entry.id}&sense=${encodeURIComponent(selected)}`);
+  await screen.findByRole('heading',{name:'book'});
+  expect(screen.getByRole('link',{name:'Word details'})).toHaveAttribute('href',expect.stringContaining(`senseId=${encodeURIComponent(selected)}`));
+  const assessment=new URL(screen.getByRole('link',{name:/^Start /}).getAttribute('href')!,'http://local.test');
+  expect(JSON.parse(assessment.searchParams.get('batchCards')!).find((ref:any)=>ref.entryId===entry.id)?.senseId).toBe(selected);
+});
+
+test('an unavailable meaning link keeps the displayed fallback available for assessment',async()=>{
+  mount(`${path}?word=word-1&sense=removed-meaning`);
+  await screen.findByRole('heading',{name:'Word 1'});
+  const assessment=new URL(screen.getByRole('link',{name:/^Start /}).getAttribute('href')!,'http://local.test');
+  expect(JSON.parse(assessment.searchParams.get('batchCards')!).find((ref:any)=>ref.entryId==='word-1')).toEqual({entryId:'word-1',senseId:'sense-1'});
 });
 
 test('multiple meanings preserve explicit selection in the details return link and clear it for the next word',async()=>{

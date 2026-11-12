@@ -125,7 +125,7 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
     if (!alive.current || accountId() !== savingOwner || boundOwner.current !== savingOwner || scopeRef.current !== savingScope || ref.current?.id !== previous.id) return;
     lock.current = false; setSaving(false);
     if (saved) { const committed = (fb.stateRef.current.examAttempts as ExamAttempt[]).find(row => row.id === next.id) || next; ref.current = committed; setAttempt(committed); checkpointExamSession(savingOwner, key, committed); }
-    else setError('Could not add the missing questions. Your answers and original session are kept. Retry Continue full passage when the connection is available.');
+    else setError(`Could not add the missing questions. Your answers and original session are kept. Retry Continue full ${skill === 'reading' ? 'passage' : 'part'} when the connection is available.`);
   };
   useEffect(() => {
     if (!attempt || !unfinishedExamSession(attempt) || saving) return;

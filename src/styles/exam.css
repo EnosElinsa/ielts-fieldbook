@@ -416,6 +416,10 @@
 .exam-stimulus .exam-table-line { display: inline; margin: 0; }
 .exam-stimulus .exam-table-break { display: block; height: .7em; }
 .exam-stimulus .exam-table-break:last-child { display: none; }
+.exam-table-frame { min-width: 0; max-width: 100%; }
+.exam-table-scroll { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
+.exam-table-scroll:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.exam-stimulus .exam-table-hint { margin: 0 0 8px; color: var(--muted); font: 12px/1.6 Manrope,Arial,sans-serif; }
 .exam-stimulus table:has(.exam-inline-answer) { min-width: calc(var(--exam-table-columns,1) * 14rem); }
 .exam-stimulus table:has(.exam-inline-answer) :is(td,th) { min-width: 11rem; }
 .exam-stimulus table .exam-inline-answer { width: min(11.5rem,calc(100% - 3em)); margin-inline: .15em; gap: 4px; }
@@ -450,7 +454,7 @@
   .exam-stimulus .exam-note-item .exam-inline-answer .exam-gap { width: 124px; }
   .exam-statement-question .exam-options { gap: 5px; }
   .exam-statement-question .exam-options label { padding-inline: 4px; font-size: 11px; gap: 5px; }
-  .exam-workspace-reading .exam-question-nav { flex-wrap: wrap; gap: 5px; padding-bottom: 12px; }
+  .exam-workspace .exam-question-nav { flex-wrap: wrap; gap: 5px; padding-bottom: 12px; }
   .exam-workspace-reading .exam-question-nav a { flex: 0 0 36px; min-width: 36px; min-height: 40px; }
 }
 .exam-inline-field .exam-word-limit-error { max-width: 160px; white-space: normal; line-height: 1.5; font-weight: 400; }

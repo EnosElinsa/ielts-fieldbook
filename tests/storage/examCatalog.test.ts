@@ -2,7 +2,7 @@ import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { clearReadCache } from '../../src/lib/readCache';
 import { resetAccountIdentity, setAccountIdentity } from '../../src/storage/accountIdentity';
 import laki from '../../src/features/exam/fixtures/cambridge-18-listening-evidence.json';
-const mock = vi.hoisted(() => ({ configured: false, calls: [] as string[], rows: {} as Record<string, { id: string; payload: Record<string, unknown> }[]>, fail: false, signedCalls: 0 }));
+const mock = vi.hoisted(() => ({ configured: false, calls: [] as string[], rows: {} as Record<string, { id: string; payload: Record<string, unknown> }[]>, fail: false, signedCalls: 0, stallSigning: false }));
 vi.mock('../../src/lib/supabase', () => ({ supabaseConfigured: () => mock.configured, getSupabase: () => ({
   from: (table: string) => ({ select: () => {
     let rows = mock.rows[table] || [];
@@ -11,9 +11,9 @@ vi.mock('../../src/lib/supabase', () => ({ supabaseConfigured: () => mock.config
       order: () => query, range: async (start: number, end: number) => { mock.calls.push(table); return { data: rows.slice(start, end + 1), error: mock.fail ? { message: 'offline' } : null }; } };
     return query;
   } }),
-  storage: { from: () => ({ createSignedUrl: async () => { mock.signedCalls++; return { data: { signedUrl: 'https://signed.example/audio' }, error: null }; } }) },
+  storage: { from: () => ({ createSignedUrl: async () => { mock.signedCalls++; if(mock.stallSigning) await new Promise(()=>{}); return { data: { signedUrl: 'https://signed.example/audio' }, error: null }; } }) },
 }) }));
-beforeEach(() => { clearReadCache(); resetAccountIdentity(); mock.configured = false; mock.calls = []; mock.rows = {}; mock.fail = false; mock.signedCalls = 0; vi.unstubAllGlobals(); vi.unstubAllEnvs(); });
+beforeEach(() => { clearReadCache(); resetAccountIdentity(); mock.configured = false; mock.calls = []; mock.rows = {}; mock.fail = false; mock.signedCalls = 0; mock.stallSigning = false; vi.unstubAllGlobals(); vi.unstubAllEnvs(); });
 afterEach(() => { vi.useRealTimers(); });
 const metadata = { schemaVersion: 1, papers: [{ id: 'p', book: 0, title: 'Original demo' }], sections: [{ id: 's', paperId: 'p', skill: 'reading', status: 'ready', sentences: [] }], passages: [], questions: [], assets: [] };
 
@@ -93,6 +93,18 @@ test('signed URLs are reused but re-signed before the expiry safety window', asy
   expect(mock.signedCalls).toBe(2);
   await resolveExamAsset(asset, { force: true });
   expect(mock.signedCalls).toBe(3);
+});
+
+test('a stalled recording URL times out so retry can obtain a fresh URL', async () => {
+  vi.useFakeTimers(); vi.stubEnv('DEV', false); mock.configured=true; mock.stallSigning=true;
+  const {resolveExamAsset}=await import('../../src/storage/examCatalog');
+  const asset={id:'audio',paperId:'p',kind:'audio',storagePath:'p/audio.mp3',sourceUrl:''} as never;
+  const rejected=expect(resolveExamAsset(asset)).rejects.toThrow(/too long/i);
+  await vi.advanceTimersByTimeAsync(15_001);
+  await rejected;
+  mock.stallSigning=false;
+  await expect(resolveExamAsset(asset)).resolves.toBe('https://signed.example/audio');
+  expect(mock.signedCalls).toBe(2);
 });
 
 test.each([false,true])('selected material rejects a truncated thirteen-question passage and remains retryable (remote: %s)', async configured => {
