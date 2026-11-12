@@ -3,6 +3,8 @@ import type { ExamAsset, ExamCatalog, ExamPaper, ExamSection, ExamSkill } from '
 import { cachedRead, readCacheKey, type ReadOptions } from '../lib/readCache';
 import { accountGeneration, accountId } from './accountIdentity';
 import { cleanExamSection } from '../domain/exam/transcript';
+import { sectionQuestionCount, sectionQuestionsComplete } from '../domain/exam/integrity';
+import { requestTimeout } from '../lib/requestTimeout';
 
 const contentVersion = 'exam-v1';
 const scopedKey = (resource: string, params: unknown) => readCacheKey(accountId(), contentVersion, resource, [accountGeneration(), import.meta.env.DEV, import.meta.env.BASE_URL, supabaseConfigured(), params]);
@@ -58,7 +60,7 @@ const sectionFields = 'id,paperId:payload->>paperId,skill:payload->>skill,part:p
 const payload = <T,>(rows: Row[]): T[] => rows.map(row => (row.payload ?? row) as T);
 
 export function loadExamCatalog(skill?: ExamSkill, book?: number, options?: ReadOptions): Promise<ExamCatalog> {
-  return cachedRead(examCatalogKey(skill, book), () => readExamCatalog(skill, book), options);
+  return cachedRead(examCatalogKey(skill, book), () => requestTimeout(readExamCatalog(skill, book), 15_000), options);
 }
 
 async function readExamCatalog(skill?: ExamSkill, book?: number): Promise<ExamCatalog> {
@@ -84,10 +86,15 @@ async function readExamCatalog(skill?: ExamSkill, book?: number): Promise<ExamCa
 
 export function loadExamSections(sectionIds: string[], options?: ReadOptions): Promise<ExamCatalog> {
   const ids = selectedIds(sectionIds);
-  return cachedRead(examSectionsKey(ids), async () => {
+  return cachedRead(examSectionsKey(ids), () => requestTimeout((async () => {
     const catalog = await readExamSections(ids);
+    for (const section of catalog.sections) {
+      if (Number.isInteger(section.questionCount) && section.questionCount > 0 && !sectionQuestionsComplete(section, catalog.questions)) {
+        throw new Error(`This section is incomplete: expected ${section.questionCount} questions, received ${sectionQuestionCount(section, catalog.questions)}. Retry loading the section.`);
+      }
+    }
     return { ...catalog, sections: catalog.sections.map(cleanExamSection) };
-  }, options);
+  })(), 15_000), options);
 }
 
 async function readExamSections(ids: string[]): Promise<ExamCatalog> {

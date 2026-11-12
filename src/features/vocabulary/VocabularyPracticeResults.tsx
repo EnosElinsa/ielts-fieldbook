@@ -94,7 +94,7 @@ export function VocabularyPracticeResults({ controller, results }: {
   const taskOutcome=controller.submissionOutcome||vocabularyTaskSubmissionOutcome(controller.state,results);
   return (
     <section className="practice-results">
-      <aside className="practice-task-outcome" role="status"><strong>{results.sourceSnapshot?.origin==='manual'?'User-arranged review':results.planId?'Planned review':'Self-directed review'}</strong><p>{taskOutcome.message}</p>{results.planId&&<Link to={`/planning#task-${encodeURIComponent(results.planId)}`}>View linked task</Link>}</aside>
+      <aside className="practice-task-outcome" role="status"><strong>{results.sourceSnapshot?.origin==='manual'?'User-arranged review':results.planId?'Planned review':'Self-directed review'}</strong><p>{taskOutcome.message}</p>{results.planId&&<Link className="btn line" to={`/planning#task-${encodeURIComponent(results.planId)}`}>View linked task<ArrowRight size={15} aria-hidden="true"/></Link>}</aside>
       <div className="practice-result-title">
         <div>
           <span>

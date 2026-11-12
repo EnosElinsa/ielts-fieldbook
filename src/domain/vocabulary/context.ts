@@ -6,7 +6,7 @@ import type { VocabularyEntry, VocabularySense } from './types';
 import { normalizeVocabularyScope } from './identities';
 
 const supplements = vocabularyTeaching.context;
-export const VOCABULARY_CONTEXT_VERSION = `${supplements.version}/curriculum-2026-10-12.1`;
+export const VOCABULARY_CONTEXT_VERSION = `${supplements.version}/curriculum-2026-11-12.1`;
 export type VocabularyContextStatus = 'reviewed' | 'unresolved' | 'unreviewed';
 /** Frozen identity and provenance of the content selected for a question. */
 export type VocabularyLearningContext = {

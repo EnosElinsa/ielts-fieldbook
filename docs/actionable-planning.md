@@ -16,7 +16,7 @@ Before saving, the preview shows affected tasks, the generated seven-day schedul
 
 Each calendar day has **Add task**. Each task offers replacement, duration editing, duplication, rescheduling, ordering and skip/restore actions as applicable to its status. Replacement and duration editing require an unstarted task.
 
-The shared editor supports module, practice, minutes and specific question/section/sentence/vocabulary group and batch. Recommended material remains available. Reading and listening question counts follow the selected time budget; full writing responses and mocks enforce their required duration.
+The shared editor supports module, practice, minutes and specific question/section/sentence/vocabulary group and batch. Recommended material remains available. Reading passages and listening parts retain every source question; the time budget never cuts a question group. Full writing responses and mocks enforce their required duration.
 
 The editor displays the destination day's existing load, resulting total and remaining or extra minutes. Over-budget changes require checking **Keep extra … minutes**. Failed saves retain the current inputs and allow retry. Manual changes are marked **Edited** and protected from future automatic rebuilds.
 

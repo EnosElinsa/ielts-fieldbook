@@ -37,7 +37,7 @@ export type StudyPlanAction =
   | {type:'reorder';direction:'up'|'down'};
 export type PlanTarget =
   | { type: 'question'; skill: 'writing' | 'speaking'; questionId: string | null; part?: string; mode: string; prompts?: { promptKey: string; promptText: string; promptIndex: number; part: string }[] }
-  | { type: 'section'; skill: 'reading' | 'listening'; sectionId: string | null; mode: 'practice' | 'mock'; questionIds?: string[] }
+  | { type: 'section'; skill: 'reading' | 'listening'; sectionId: string | null; mode: 'practice' | 'mock'; questionIds?: string[]; questionScope?: 'full-section' }
   | { type: 'exam-review'; skill: 'reading' | 'listening'; attemptId: string }
   | { type: 'intensive'; skill: 'listening'; sectionId: string; sentenceId: string; reviewMode?: 'listening-check' }
   | { type: 'error-review'; errorIds: string[] }

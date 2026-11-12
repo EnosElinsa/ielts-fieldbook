@@ -61,3 +61,21 @@ test('Planning and Today provenance receives a specific return label after refre
     view.unmount();
   }
 });
+
+test('switching meanings of one word retains the original word list return',()=>{
+ render(<MemoryRouter initialEntries={['/vocabulary',{pathname:'/vocabulary/entry/river?senseId=water',state:{vocabularyReturn:{owner:'one',url:'/vocabulary/words?search=river'}}}]} initialIndex={1}>
+  <VocabularyLink to='/vocabulary/entry/river?senseId=shore'>Shore meaning</VocabularyLink>
+  <VocabularyBackLink/>
+  <HistoryControls/>
+ </MemoryRouter>);
+ fireEvent.click(screen.getByRole('link',{name:'Shore meaning'}));
+ expect(screen.getByRole('link',{name:'Back to my words'})).toHaveAttribute('href','/vocabulary/words?search=river');
+});
+
+test('legacy same-word return chains skip meaning changes and return to the source list',()=>{
+ render(<MemoryRouter initialEntries={[{pathname:'/vocabulary/entry/river',search:'?senseId=shore',state:{vocabularyReturn:{owner:'one',url:'/vocabulary/entry/river?senseId=water',parent:{owner:'one',url:'/vocabulary/words?search=river'}}}}]}>
+  <VocabularyBackLink/><HistoryControls/>
+ </MemoryRouter>);
+ fireEvent.click(screen.getByRole('link',{name:'Back to my words'}));
+ expect(screen.getByText('/vocabulary/words?search=river')).toBeInTheDocument();
+});

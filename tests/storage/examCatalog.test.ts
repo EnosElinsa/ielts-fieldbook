@@ -19,10 +19,11 @@ const metadata = { schemaVersion: 1, papers: [{ id: 'p', book: 0, title: 'Origin
 
 test.each([false, true])('published transcripts remove imported analysis controls without changing IDs, timings or stored data (remote: %s)', async configured => {
   const section = structuredClone(laki.section);
+  const questions = Array.from({length:section.questionCount}, (_,index)=>({id:`q${index+1}`,sectionId:section.id,number:index+1,type:'gap'}));
   const before = structuredClone(section);
   mock.configured = configured;
-  mock.rows = { exam_sections: [{ id: section.id, payload: section }], exam_papers: [{ id: section.paperId, payload: { id: section.paperId } }] };
-  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({ ...metadata, sections: [section] }) }));
+  mock.rows = { exam_sections: [{ id: section.id, payload: section }], exam_papers: [{ id: section.paperId, payload: { id: section.paperId } }], exam_questions: questions.map(question=>({id:question.id,payload:question})) };
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({ ...metadata, sections: [section], questions }) }));
   const { loadExamSections } = await import('../../src/storage/examCatalog');
   const loaded = (await loadExamSections([section.id])).sections[0];
   expect(loaded.sentences.some(sentence => sentence.text.includes('Q解析'))).toBe(false);
@@ -92,4 +93,32 @@ test('signed URLs are reused but re-signed before the expiry safety window', asy
   expect(mock.signedCalls).toBe(2);
   await resolveExamAsset(asset, { force: true });
   expect(mock.signedCalls).toBe(3);
+});
+
+test.each([false,true])('selected material rejects a truncated thirteen-question passage and remains retryable (remote: %s)', async configured => {
+  const section={id:'source:1238',paperId:'p',skill:'reading',questionCount:13,sentences:[]};
+  const questions=Array.from({length:13},(_,index)=>({id:`q${index+1}`,sectionId:section.id,number:index+1,type:index<6?'gap':'true-false',points:1}));
+  mock.configured=configured;
+  mock.rows={exam_sections:[{id:section.id,payload:section}],exam_papers:[],exam_questions:questions.slice(0,7).map(question=>({id:question.id,payload:question}))};
+  const fetcher=vi.fn().mockImplementation(async()=>({ok:true,json:async()=>({...metadata,sections:[section],questions:questions.slice(0,7)})}));
+  vi.stubGlobal('fetch',fetcher);
+  const {loadExamSections}=await import('../../src/storage/examCatalog');
+  await expect(loadExamSections([section.id])).rejects.toThrow(/incomplete.*13.*7/i);
+  mock.rows.exam_questions=questions.map(question=>({id:question.id,payload:question}));
+  fetcher.mockImplementation(async()=>({ok:true,json:async()=>({...metadata,sections:[section],questions})}));
+  await expect(loadExamSections([section.id])).resolves.toHaveProperty('questions',questions);
+});
+
+test.each(['metadata','sections'])('a stalled %s request times out and a later read retries successfully', async resource => {
+  vi.useFakeTimers();
+  const fetcher=vi.fn().mockImplementationOnce(()=>new Promise(()=>{})).mockResolvedValue({ok:true,json:async()=>metadata});
+  vi.stubGlobal('fetch',fetcher);
+  const {loadExamCatalog,loadExamSections}=await import('../../src/storage/examCatalog');
+  const read=()=>resource==='metadata'?loadExamCatalog('reading'):loadExamSections(['s']);
+  const pending=read();
+  const rejected=expect(pending).rejects.toThrow(/too long/i);
+  await vi.advanceTimersByTimeAsync(15_001);
+  await rejected;
+  await expect(read()).resolves.toHaveProperty('schemaVersion',1);
+  expect(fetcher).toHaveBeenCalledTimes(2);
 });

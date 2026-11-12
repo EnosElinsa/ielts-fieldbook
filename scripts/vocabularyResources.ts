@@ -49,19 +49,23 @@ export function buildVocabularyResources(root: string) {
     learning: data('learningSenseOverlay'), tasks: data('taskSenseBindings'), context: data('contextSenseOverlay'),
   };
   const cache: ResourceBuildCache = { baselines: new WeakMap(), emissions: new Map(), serialized: new WeakMap() };
-  const catalog = (entries: Catalog, content: VocabularyTeachingData) => buildResourceCatalog(entries, content, cache);
+  // Reconstruct both manifest forms. Open clients may retain the newer manifest
+  // containing termIndexUrl as well as the earlier manifest without it.
+  const catalog = (entries: Catalog, content: VocabularyTeachingData) => buildResourceCatalog(entries, content, cache, true);
   const generated = buildResourceCatalog(source, teaching, cache, true);
   // Reverse each published correction batch in order to preserve its exact URLs and bytes.
   const retainedDictionaryCatalogs = [];
   let beforeDictionaryExpansion = teaching;
   for (const filename of data('resourceDictionaryRevisions') as string[]) {
-    const baseline = data(filename) as { removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections']; removeDefaults?: string[]; restoreDefaults?: VocabularyTeachingData['readiness']['defaults']; removeTopics?: {bookId:string;unitId:string;entryId:string;senseId:string}[]; removeCorrectionVariants?: {entryId:string;senseId:string;variantId:string}[]; restoreCorrectionVariants?: VocabularyTeachingData['readiness']['corrections']; restoreCorrectionsSnapshot?: VocabularyTeachingData['readiness']['corrections']; restoreDefaultsSnapshot?: VocabularyTeachingData['readiness']['defaults']; restoreTopics?: VocabularyTeachingData['curriculum']['topics']; restoreSources?: VocabularyTeachingData['curriculum']['source']; restoreContext?: VocabularyTeachingData['context'] };
+    const baseline = data(filename) as { removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections']; removeDefaults?: string[]; restoreDefaults?: VocabularyTeachingData['readiness']['defaults']; removeTopics?: {bookId:string;unitId:string;entryId:string;senseId:string}[]; restoreTopicRows?: VocabularyTeachingData['curriculum']['topics']; removeCorrectionVariants?: {entryId:string;senseId:string;variantId:string}[]; restoreCorrectionVariants?: VocabularyTeachingData['readiness']['corrections']; restoreCorrectionsSnapshot?: VocabularyTeachingData['readiness']['corrections']; restoreDefaultsSnapshot?: VocabularyTeachingData['readiness']['defaults']; restoreTopics?: VocabularyTeachingData['curriculum']['topics']; restoreSources?: VocabularyTeachingData['curriculum']['source']; restoreContext?: VocabularyTeachingData['context'] };
     const removed = new Set(baseline.removeCorrections.map(row => JSON.stringify([row.entryId,row.senseId])));
     const restored = new Map(baseline.restoreCorrections.map(row => [JSON.stringify([row.entryId,row.senseId]),row]));
     const removedDefaults = new Set(baseline.removeDefaults || []);
     const restoredDefaults = new Map((baseline.restoreDefaults || []).map(row => [row.entryId,row]));
     const topicIdentity = (row: VocabularyTeachingData['curriculum']['topics'][number]) => JSON.stringify([row.bookId,row.unitId,row.entryId,row.sense.id]);
     const removedTopics = new Set((baseline.removeTopics || []).map(row => JSON.stringify([row.bookId,row.unitId,row.entryId,row.senseId])));
+    const topicMembership = (row: VocabularyTeachingData['curriculum']['topics'][number]) => JSON.stringify([row.bookId,row.unitId,row.entryId]);
+    const restoredTopicRows = new Map((baseline.restoreTopicRows || []).map(row => [topicMembership(row),row]));
     const variantIdentity = (row: {entryId:string;senseId:string;variantId?:string}) => JSON.stringify([row.entryId,row.senseId,row.variantId]);
     const removedVariants = new Set((baseline.removeCorrectionVariants || []).map(variantIdentity));
     const restoredVariants = new Map((baseline.restoreCorrectionVariants || []).map(row => [variantIdentity(row),row]));
@@ -69,7 +73,7 @@ export function buildVocabularyResources(root: string) {
       corrections: baseline.restoreCorrectionsSnapshot ?? beforeDictionaryExpansion.readiness.corrections.filter(row => !removed.has(JSON.stringify([row.entryId,row.senseId])) && !(row.variantId && removedVariants.has(variantIdentity(row)))).map(row => (row.variantId ? restoredVariants.get(variantIdentity(row)) : undefined) || restored.get(JSON.stringify([row.entryId,row.senseId])) || row),
       defaults: baseline.restoreDefaultsSnapshot ?? beforeDictionaryExpansion.readiness.defaults.filter(row => !removedDefaults.has(row.entryId)).map(row => restoredDefaults.get(row.entryId) || row),
     }, curriculum: { ...beforeDictionaryExpansion.curriculum,
-      topics: baseline.restoreTopics ?? (removedTopics.size ? beforeDictionaryExpansion.curriculum.topics.filter(row => !removedTopics.has(topicIdentity(row))) : beforeDictionaryExpansion.curriculum.topics),
+      topics: baseline.restoreTopics ?? (removedTopics.size || restoredTopicRows.size ? beforeDictionaryExpansion.curriculum.topics.filter(row => !removedTopics.has(topicIdentity(row))).map(row => restoredTopicRows.get(topicMembership(row)) || row) : beforeDictionaryExpansion.curriculum.topics),
       source: baseline.restoreSources ?? beforeDictionaryExpansion.curriculum.source,
     }, context: baseline.restoreContext ?? beforeDictionaryExpansion.context };
     retainedDictionaryCatalogs.push(catalog(source, beforeDictionaryExpansion));

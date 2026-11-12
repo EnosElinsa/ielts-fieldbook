@@ -529,6 +529,10 @@ test('an explicit plant meaning keeps its identity and offers a direct route to 
   expect(screen.queryByText('Your selected meaning')).not.toBeInTheDocument();
   expect(screen.queryByRole('img', { name: /Green peas/ })).not.toBeInTheDocument();
   const target = screen.getByRole('link', { name: 'View group meaning' });
+  const comparison = screen.getByRole('region', { name: 'Current group meaning' });
+  expect(within(comparison).getByText('The small edible seed of the pea plant.')).toBeVisible();
+  expect(within(comparison).getByText('Add the peas to the soup near the end of cooking.')).toBeVisible();
+  expect(screen.getByRole('heading', { name: 'Selected dictionary meaning' })).toBeInTheDocument();
   expect(new URL(target.getAttribute('href')!, 'https://test.test').searchParams.get('returnTo')).toBe(origin);
   await userEvent.setup().click(target);
   expect(screen.getByText('The small edible seed of the pea plant.')).toBeInTheDocument();

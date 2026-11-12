@@ -14,7 +14,7 @@ test('Writing plan labels identify the skill and retain IELTS task numbers witho
   expect(studyPlanTitle({ title: 'My personal writing plan', target })).toBe('My personal writing plan');
 });
 
-test('binds concrete source targets before starting, limits question quantity and preserves protected work',async()=>{
+test('binds whole source sections before starting and preserves protected work',async()=>{
   const state={plans:[
     {id:'write',status:'pending',kind:'1',rotationIndex:0,target:{type:'question',skill:'writing',questionId:null}},
     {id:'read',status:'pending',estimatedMinutes:6,rotationIndex:0,target:{type:'section',skill:'reading',sectionId:null}},
@@ -24,10 +24,38 @@ test('binds concrete source targets before starting, limits question quantity an
   const sources={bank:vi.fn().mockResolvedValue([{id:'q',type:'1',name:'A real chart'}]),catalog:vi.fn().mockResolvedValue({papers:[{id:'paper',title:'Test 1'}],sections:[{id:'section',paperId:'paper',skill:'reading',status:'ready',part:2}]}),section:vi.fn().mockResolvedValue({questions:Array.from({length:10},(_,index)=>({id:`q${index}`,sectionId:'section',number:index+1}))}),vocabulary:vi.fn()};
   await bindStudyPlanTargets(state,sources as any);
   expect(state.plans[0]).toMatchObject({questionId:'q',target:{questionId:'q'}});
-  expect(state.plans[1]).toMatchObject({target:{sectionId:'section',questionIds:['q0','q1','q2']}});
+  expect(state.plans[1]).toMatchObject({quantity:10,target:{sectionId:'section',questionIds:Array.from({length:10},(_,index)=>`q${index}`)}});
   expect(state.plans[2]).toEqual(protectedPlan);
-  expect(studyTargetSummary(state.plans[1])).toBe('Test 1 / Passage 2 · 3 questions');
+  expect(studyTargetSummary(state.plans[1])).toBe('Test 1 / Passage 2 · 10 questions');
   await bindStudyPlanTargets(state,sources as any);expect(sources.section).toHaveBeenCalledTimes(1);
+});
+
+test('a fourteen-minute Manatees passage retains questions 1–13 and upgrades untouched legacy subsets', async () => {
+  const questions = Array.from({length:13}, (_,index) => ({id:`question:${index < 6 ? 10871 + index : 10864 + index - 6}`,sectionId:'source:1238',number:index+1,type:index < 6 ? 'gap' : 'true-false',points:1}));
+  const createPlan = (id: string, extra = {}) => ({id,status:'pending',title:'Reading · Timed passage',estimatedMinutes:14,target:{type:'section',skill:'reading',sectionId:'source:1238',questionIds:questions.slice(0,7).map(row=>row.id)},...extra});
+  const state = {plans:[createPlan('legacy'),createPlan('started',{startedAt:'2026-11-12T10:00:00Z'}),createPlan('linked'),createPlan('completed',{status:'completed'})],examAttempts:[{id:'saved',planId:'linked',status:'paused'}]};
+  const frozen = structuredClone(state.plans.slice(1));
+  const sources = {catalog:vi.fn().mockResolvedValue({papers:[{id:'cambridge:20:2',title:'Cambridge IELTS 20 · Test 2'}],sections:[{id:'source:1238',paperId:'cambridge:20:2',skill:'reading',part:1,status:'ready',questionCount:13}]}),section:vi.fn().mockResolvedValue({questions})};
+  await bindStudyPlanTargets(state,sources as any);
+  expect(state.plans[0]).toMatchObject({title:'Reading · Timed passage',estimatedMinutes:14,quantity:13,target:{questionScope:'full-section',questionIds:questions.map(row=>row.id)}});
+  expect(state.plans.slice(1)).toEqual(frozen);
+  await bindStudyPlanTargets(state,sources as any);
+  expect(sources.section).toHaveBeenCalledTimes(1);
+});
+
+test('whole listening parts count pooled answer slots without truncating a multiple-choice group', async () => {
+  const state = {plans:[{id:'listen',status:'pending',estimatedMinutes:1,target:{type:'section',skill:'listening',sectionId:null}}]};
+  const sources = {catalog:async()=>({papers:[],sections:[{id:'part',skill:'listening',status:'ready',part:3,questionCount:4}]}),section:async()=>({questions:[{id:'q21',sectionId:'part',number:21,type:'multiple',points:2},{id:'q23',sectionId:'part',number:23,type:'single',points:1},{id:'q24',sectionId:'part',number:24,type:'single',points:1}]})};
+  await bindStudyPlanTargets(state,sources as any);
+  expect(state.plans[0]).toMatchObject({quantity:4,target:{questionIds:['q21','q23','q24']}});
+  expect(studyTargetSummary(state.plans[0])).toContain('4 questions');
+});
+
+test('an incomplete fetched section cannot become a bound full-passage task', async () => {
+  const state = {plans:[{id:'read',status:'pending',estimatedMinutes:14,target:{type:'section',skill:'reading',sectionId:null}}]};
+  const sources = {catalog:async()=>({sections:[{id:'passage',skill:'reading',status:'ready',questionCount:13}]}),section:async()=>({questions:Array.from({length:7},(_,index)=>({id:`q${index}`,sectionId:'passage',number:index+1}))})};
+  await expect(bindStudyPlanTargets(state,sources as any)).rejects.toThrow(/incomplete/i);
+  expect(state.plans[0].target.sectionId).toBeNull();
 });
 
 test('unavailable sources fail visibly instead of saving an unbound future task',async()=>{

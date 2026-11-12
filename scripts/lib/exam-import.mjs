@@ -39,6 +39,16 @@ export function sourceType(section, instructions) {
   throw new Error(`Unknown source question type ${type}`);
 }
 const sentenceText = text => htmlText(text).replace(/^(?:[A-Z][A-Z\s]{0,30}):\s*/, '').replace(/\s*Q\s*(?:\d+(?:\s*[-–—,，]\s*\d+)*)?\s*解析/g, '').trim();
+const answerSlotCount = question => question.type==='multiple'&&Number.isInteger(question.points)&&question.points>0?question.points:1;
+export function declaredQuestionNumbers(...texts) {
+  const numbers=new Set();
+  for(const text of texts)for(const match of htmlText(text).matchAll(/\b(?:questions?|boxes?)\s*(\d{1,3})(?:\s*(?:[-–—−]|to)\s*(\d{1,3}))?\b/gi)) {
+    const first=Number(match[1]),last=Number(match[2]||match[1]);
+    if(first<1||last>40||last<first)continue;
+    for(let number=first;number<=last;number++)numbers.add(number);
+  }
+  return [...numbers].sort((a,b)=>a-b);
+}
 export function normalizeSourceSection(raw) {
   const {job}=raw,detail=raw.detail?.[0]||raw.detail?.['0'];
   if(!detail?.pages?.length)throw new Error(`Section ${job.id} has no question pages`);
@@ -101,7 +111,10 @@ export function normalizeSourceSection(raw) {
     }
     passages.push({id:`passage:${job.id}`,sectionId,title,paragraphs,provenance});
   }
-  const section={id:sectionId,paperId,skill,part:job.part,title:`${skill==='reading'?'Passage':'Part'} ${job.part}`,questionTypes:[...new Set(questions.map(q=>q.type))],questionCount:questions.reduce((n,q)=>n+(q.points||1),0),assetId:audioUrl?audioId:undefined,sentences,status:questions.length&&questions.every(q=>Array.isArray(q.answer)?q.answer.length:q.answer)?'ready':'incomplete',provenance};
+  const actualCount=questions.reduce((n,q)=>n+answerSlotCount(q),0);
+  const declaredCount=declaredQuestionNumbers(...detail.pages.flatMap(page=>[page.title,page.desc])).length;
+  const questionCount=Math.max(actualCount,declaredCount);
+  const section={id:sectionId,paperId,skill,part:job.part,title:`${skill==='reading'?'Passage':'Part'} ${job.part}`,questionTypes:[...new Set(questions.map(q=>q.type))],questionCount,assetId:audioUrl?audioId:undefined,sentences,status:questions.length&&actualCount===questionCount&&questions.every(q=>Array.isArray(q.answer)?q.answer.length:q.answer)?'ready':'incomplete',provenance};
   return {schemaVersion:1,papers:[paper],sections:[section],passages,questions,assets};
 }
 export function validateCatalog(catalog) {
@@ -121,6 +134,19 @@ export function validateCatalog(catalog) {
     }
   }
   for(const s of catalog.sections||[]) {
+    const questions=(catalog.questions||[]).filter(q=>q.sectionId===s.id);
+    const actualCount=questions.reduce((count,q)=>count+answerSlotCount(q),0);
+    if(Number.isInteger(s.questionCount)&&s.questionCount!==actualCount)errors.push(`Question-count mismatch ${s.id}: expected ${s.questionCount}, received ${actualCount}`);
+    const numbers=new Set();
+    for(const q of questions) {
+      if(!Number.isInteger(q.number)||q.number<1||q.number+answerSlotCount(q)-1>40) { warnings.push(`Invalid question number ${q.id}: ${q.number}`);continue; }
+      for(let number=q.number;number<q.number+answerSlotCount(q);number++) {
+        if(numbers.has(number))warnings.push(`Duplicate question number ${s.id}: ${number}`);
+        numbers.add(number);
+      }
+    }
+    const missing=declaredQuestionNumbers(...questions.flatMap(q=>[q.groupTitle,q.instructions])).filter(number=>!numbers.has(number));
+    if(missing.length)warnings.push(`Missing declared question numbers ${s.id}: ${missing.join(', ')}`);
     const audio=(catalog.assets||[]).find(a=>a.id===s.assetId);
     if(s.skill==='reading'&&!(catalog.passages||[]).some(p=>p.sectionId===s.id&&p.paragraphs?.some(p=>p.text?.trim())))errors.push(`Missing reading passage ${s.id}`);
     if(s.skill==='listening'&&!s.assetId)warnings.push(`Missing audio ${s.id}`);

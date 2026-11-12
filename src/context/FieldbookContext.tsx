@@ -67,6 +67,9 @@ import { bindSpeakingPlan } from '../domain/plans';
 import { speakingPrompts, speakingResponseDraft, updateSpeakingResponse } from '../domain/speaking';
 import { useConfirmationDialog } from '../components/useConfirmationDialog';
 import { loadExamCatalog, loadExamSections } from '../storage/examCatalog';
+import { sectionQuestionCount, sectionQuestionsComplete } from '../domain/exam/integrity';
+import { questionSlotCount } from '../domain/exam/questionSlots';
+import type { ExamAttempt } from '../domain/exam/types';
 import { getVocabularyReviewQueue } from '../domain/vocabulary';
 import { selectVocabularyPlanReview } from '../domain/vocabulary/planning';
 import { selectScheduledVocabularyReview } from '../domain/vocabulary/reviewPlanning';
@@ -174,6 +177,7 @@ function useFieldbookValue() {
   const committedVocabularyPreferences = useRef([]);
   const committedStudySettings = useRef([]);
   const committedPlanChanges = useRef([]);
+  const committedExamExpansions = useRef([]);
   const saveQueue = useRef(Promise.resolve());
   const pendingAutomaticSave = useRef(null);
   const acceptedPlanningRows = useRef(new Map());
@@ -648,7 +652,86 @@ function useFieldbookValue() {
       if (index < 0) rows.push(structuredClone(change.after));
       else if (JSON.stringify(rows[index]) === change.before) rows[index] = structuredClone(change.after);
     });
+    committedExamExpansions.current.filter(change => change.owner === owner && change.epoch === loadEpoch.current).forEach(change => applyExamExpansion(target, change));
   }
+
+  function examQuestionIds(attempt) {
+    return (attempt?.questionSnapshot?.map(question=>question.id) || Object.keys(attempt?.questionTypes || {})).slice().sort();
+  }
+
+  function applyExamExpansion(target, change) {
+    const rows = target.examAttempts || (target.examAttempts = []);
+    let attempt = rows.find(row=>row.id===change.after.id);
+    if (!attempt) { attempt=structuredClone(change.after); rows.push(attempt); }
+    if (attempt.planId!==change.after.planId || attempt.sourceId!==change.after.sourceId || attempt.skill!==change.after.skill) return;
+    if (!['active','paused'].includes(attempt.status)) return;
+    const scope=JSON.stringify(examQuestionIds(attempt));
+    if (scope!==change.beforeScope && scope!==change.afterScope) return;
+    // Rebase only expansion fields over older queued snapshots. A later answer,
+    // annotation, task edit, or terminal session state keeps its own value.
+    for (const field of ['responses','evidence','keywords','errorReasons']) {
+      const prior=change.before?.[field] || {}, values=change.after[field] || {};
+      const live=attempt[field] || (attempt[field]={});
+      for (const id of new Set([...Object.keys(prior),...Object.keys(values)])) {
+        if (JSON.stringify(live[id])!==JSON.stringify(prior[id])) continue;
+        if (Object.hasOwn(values,id)) live[id]=structuredClone(values[id]); else delete live[id];
+      }
+    }
+    attempt.questionSnapshot=structuredClone(change.after.questionSnapshot);
+    attempt.questionTypes=structuredClone(change.after.questionTypes);
+    attempt.elapsedSeconds=Math.max(Number(attempt.elapsedSeconds)||0,Number(change.after.elapsedSeconds)||0);
+    for (const field of ['status','hintsEnabled','answerRevealed','checkedQuestionIds','audioPosition','updatedAt']) {
+      if (JSON.stringify(attempt[field])===JSON.stringify(change.before?.[field])) attempt[field]=structuredClone(change.after[field]);
+    }
+    const plan=target.plans?.find(row=>row.id===change.planId);
+    if (plan?.target?.type!=='section' || plan.target.sectionId!==change.sectionId || ['completed','skipped'].includes(plan.status)) return;
+    const plannedScope=JSON.stringify([...(plan.target.questionIds || [])].sort());
+    if (plannedScope!==change.beforePlanScope && plannedScope!==change.afterScope) return;
+    plan.target={...plan.target,questionIds:change.after.questionSnapshot.map(question=>question.id),questionScope:'full-section'};
+    plan.quantity=change.quantity;
+  }
+
+  // Scope expansion must never expose new questions before the durable write.
+  // Other exam saves retain their existing optimistic behavior.
+  const commitExamSectionExpansion = useCallback((expanded: ExamAttempt, options?: {onError?: (message: string)=>void; expectedQuestionIds?: string[]}) => {
+    const owner=accountId(),epoch=loadEpoch.current,generation=++saveGeneration.current;
+    const frozen=structuredClone(expanded);
+    const expected=options?.expectedQuestionIds?.slice().sort();
+    const fail=(message: string)=>{if(alive.current && owner===accountId() && epoch===loadEpoch.current){saveFeedback(options)(message);if(generation===saveGeneration.current){setSaveStatus('failed');setSaveFailed(!options?.onError);}}return false;};
+    setSaveStatus('saving');pendingAutomaticSave.current=null;
+    const operation=saveQueue.current.catch(()=>{}).then(async()=>{
+      if(!alive.current||owner!==accountId()||epoch!==loadEpoch.current||completingAttempt.current)return false;
+      const statuses=getCollectionStatuses();
+      if(statuses && (statuses.examAttempts!=='ready'||statuses.plans!=='ready'))return fail('Your session is still loading. Retry adding the missing questions.');
+      const current=structuredClone(stateRef.current);applyCommittedVocabulary(current,owner);
+      const prior=current.examAttempts.find(row=>row.id===frozen.id);
+      const plan=current.plans.find(row=>row.id===frozen.planId);
+      const questions=frozen.questionSnapshot || [],ids=examQuestionIds(frozen);
+      const original=expected || examQuestionIds(prior);
+      if(frozen.mode!=='practice'||!['active','paused'].includes(frozen.status)||!questions.length||new Set(ids).size!==ids.length||questions.some(question=>question.skill!==frozen.skill||!frozen.sectionIds.includes(question.sectionId)))return fail('This session cannot add those questions. Reload it and retry.');
+      if(prior && (!['active','paused'].includes(prior.status)||prior.skill!==frozen.skill||prior.mode!==frozen.mode||prior.planId!==frozen.planId||prior.sourceId!==frozen.sourceId||JSON.stringify(examQuestionIds(prior))!==JSON.stringify(original)))return fail('This session changed while loading. Retry from its current questions.');
+      if(plan?.target?.type!=='section'||plan.target.skill!==frozen.skill||!['pending','in_progress'].includes(plan.status)||!frozen.sectionIds.includes(plan.target.sectionId)||original.some(id=>!ids.includes(id))||JSON.stringify([...(plan.target.questionIds||[])].sort())!==JSON.stringify(original))return fail('This task changed while loading. Retry from its current questions.');
+      const after={...frozen};
+      if(prior){
+        const newer=Date.parse(prior.updatedAt)>Date.parse(frozen.updatedAt);
+        for(const field of ['responses','evidence','keywords','errorReasons']) after[field]=newer?{...frozen[field],...prior[field]}:{...prior[field],...frozen[field]};
+        after.elapsedSeconds=Math.max(Number(prior.elapsedSeconds)||0,Number(frozen.elapsedSeconds)||0);
+        if(newer)for(const field of ['status','hintsEnabled','answerRevealed','checkedQuestionIds','audioPosition','updatedAt'])after[field]=structuredClone(prior[field]);
+      }
+      const change={owner,epoch,before:structuredClone(prior),after,beforeScope:JSON.stringify(original),afterScope:JSON.stringify(ids),planId:plan.id,sectionId:plan.target.sectionId,beforePlanScope:JSON.stringify(original),quantity:questions.reduce((total,question)=>total+questionSlotCount(question),0)};
+      applyExamExpansion(current,change);
+      let saved=false;
+      try{saved=await saveState(current,saveFeedback(options),{collections:['examAttempts','plans']});}catch{saved=false;}
+      if(!alive.current||owner!==accountId()||epoch!==loadEpoch.current)return false;
+      if(generation===saveGeneration.current){setSaveStatus(saved?'saved':'failed');setSaveFailed(!saved&&!options?.onError);}
+      if(saved){
+        committedExamExpansions.current.push(change);acknowledgeSaved(current,['examAttempts','plans']);
+        const latest=structuredClone(stateRef.current);applyCommittedVocabulary(latest,owner);stateRef.current=latest;setState(latest);
+      }
+      return saved;
+    });
+    saveQueue.current=operation;return operation;
+  },[toast]);
 
   function applyVocabularyFields(target, change) {
     const rows = target[change.key] || (target[change.key] = []);
@@ -1474,16 +1557,19 @@ function useFieldbookValue() {
     return mutatePlans(async draft=>{
       for(const session of draft.vocabularySessions || [])completeVocabularyPlan(draft,session);
       ensureUnifiedPlans(draft);
-      await bindCurrentPlanTargets(draft);
+      // Future slots stay prospective until started. Opening the calendar should
+      // not wait for every question bank and passage across the entire week.
+      const today=dateKey(new Date());
+      await bindCurrentPlanTargets(draft,new Set(draft.plans.filter(plan=>plan.dateKey===today&&!plan.onHold&&!plan.archivedAt).map(plan=>plan.id)));
     },options);
   },[ensureAccountModule,mutatePlans,loadVocabularyCatalog,ensureQuestionBank]);
 
-  async function bindCurrentPlanTargets(draft) {
+  async function bindCurrentPlanTargets(draft, planIds?: Set<string>) {
     if(draft.wordbookEnrollments?.length)await loadVocabularyCatalog();
     await bindStudyPlanTargets(draft,{
       bank:ensureQuestionBank,catalog:loadExamCatalog,section:loadExamSections,
       vocabulary:async(bookId,unitId)=>{await loadVocabularyCatalog(bookId,{unitId});draft.vocabulary=stateRef.current.vocabulary;},
-    });
+    },{planIds});
   }
 
   const changePlan = useCallback((planId,action,options?)=>mutatePlans(async draft=>{
@@ -1630,18 +1716,18 @@ function useFieldbookValue() {
         if(!sectionId)throw new Error('No practice section is available. Retry loading the bank.');
         const scoped=await loadExamSections([sectionId],{force:Boolean(options.force)});
         const section=scoped.sections.find(row=>row.id===sectionId&&row.skill===skill&&row.status==='ready');
-        if(!section||!scoped.questions.some(question=>question.sectionId===sectionId))throw new Error('The selected section is incomplete. Retry loading it.');
+        if(!section||!sectionQuestionsComplete(section,scoped.questions))throw new Error('The selected section is incomplete. Retry loading it.');
         if(plan.kind==='listening-intensive'){
           const sentenceId=target?.sentenceId||plan.sentenceId;
           if(!sentenceId||!section.sentences.some(sentence=>sentence.id===sentenceId))throw new Error('The selected listening sentence is unavailable. Retry loading it.');
           target={type:'intensive',skill:'listening',sectionId,sentenceId};plan.sentenceId=sentenceId;
         } else {
           const questions=scoped.questions.filter(question=>question.sectionId===sectionId).slice().sort((a,b)=>a.number-b.number);
-          const maximum=Math.floor(Number(plan.estimatedMinutes||stateRef.current.settings.dailyMinutes)/(skill==='reading'?2:1));
-          if(maximum<1)throw new Error('This task needs more study time. Reschedule it with a larger daily budget.');
-          const questionIds=target?.questionIds||questions.slice(0,maximum).map(question=>question.id);
-          if(!questionIds.length||questionIds.length>maximum||questionIds.some(id=>!questions.some(question=>question.id===id)))throw new Error('The selected questions no longer fit this task. Replace it or retry.');
-          target={type:'section',skill,sectionId,mode:'practice',questionIds};
+          const preserveScope=Boolean(plan.startedAt||plan.linkedSessionId||(stateRef.current.examAttempts||[]).some(attempt=>attempt.planId===planId));
+          const questionIds=preserveScope&&target?.questionIds?.length?target.questionIds:questions.map(question=>question.id);
+          if(questionIds.some(id=>!questions.some(question=>question.id===id)))throw new Error('The selected questions are unavailable. Retry loading this task.');
+          target={type:'section',skill,sectionId,mode:'practice',questionIds,...(!preserveScope?{questionScope:'full-section'}:target?.questionScope?{questionScope:target.questionScope}:{})};
+          plan.quantity=sectionQuestionCount(section,questions.filter(question=>questionIds.includes(question.id)));
         }
         plan.sectionId=sectionId;
       }
@@ -1658,7 +1744,7 @@ function useFieldbookValue() {
         target={...target,binding:noLongerDue?'dynamic':'frozen',cards};
         if(!noLongerDue && !isVocabularySessionSelection({kind:'planned-review',planId,cards}))throw new Error('The planned review target is invalid. Return to Planning and retry.');
       }
-      Object.assign(current,{target,questionId:plan.questionId,sectionId:plan.sectionId,sentenceId:plan.sentenceId,attemptId:plan.attemptId,...(plan.speakingGroups ? {speakingGroups:plan.speakingGroups} : {})});
+      Object.assign(current,{target,questionId:plan.questionId,sectionId:plan.sectionId,sentenceId:plan.sentenceId,attemptId:plan.attemptId,...(target.type==='section'?{quantity:plan.quantity}:{}),...(plan.speakingGroups ? {speakingGroups:plan.speakingGroups} : {})});
       if (noLongerDue) { current.status='skipped'; current.skipReason='no-longer-due'; current.updatedAt=new Date().toISOString(); if(draft.activePlanId===planId)draft.activePlanId=null; }
       else domainStartPlan(draft,planId);
       if(skill!=='vocabulary')draft.settings.activeSkill=skill;
@@ -1989,6 +2075,7 @@ function useFieldbookValue() {
       toastVisible,
       persist,
       persistNow,
+      commitExamSectionExpansion,
       scheduleDraftPersist,
       flushDraftPersist,
       activeSkill,
@@ -2151,6 +2238,7 @@ function useFieldbookValue() {
       pendingBackup,
       persist,
       persistNow,
+      commitExamSectionExpansion,
       questionIndex,
       revealedVocabulary,
       saveAttempt,

@@ -6762,54 +6762,64 @@
     "term": "accuse",
     "sense": {
       "id": "kaikki:24331ec34c786d34ce",
-      "definition": "To charge with having committed a crime or offence.",
-      "example": "The police accused him of stealing the vehicle.",
+      "definition": "To say that someone has committed a crime, offence, or other wrong.",
+      "example": "The police accused the driver of submitting false documents.",
       "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
-        "accuse someone of",
-        "be accused of a crime"
+        "accuse someone of something",
+        "accuse someone of doing something",
+        "be accused of fraud"
       ],
+      "usage": "Use accuse someone of something or of doing something.",
+      "register": "transitive",
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
-      "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/accuse#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Accuse states an allegation; prosecute starts or conducts criminal proceedings, and sue usually starts a civil action. An accusation does not prove guilt."
+      ],
+      "distinctionTask": {
+        "prompt": "Which construction correctly states an allegation?",
+        "options": [
+          "accuse someone of fraud",
+          "accuse someone for fraud",
+          "accuse someone to fraud"
+        ],
+        "answer": "accuse someone of fraud",
+        "explanation": "Accuse takes of. Being accused does not establish guilt or mean that a prosecution or civil lawsuit has begun."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
     },
     "originalSense": {
-      "id": "kaikki:d82978e1a03abe2b9d",
-      "definition": "To find fault with, blame, censure.",
-      "example": "[…] and their thoughts the meanwhile accusing or else excusing one another.",
+      "id": "kaikki:24331ec34c786d34ce",
+      "definition": "To charge with having committed a crime or offence.",
+      "example": "For the U.S. President to be impeached, he must be accused of a high crime or misdemeanor.",
       "pos": "verb",
       "synonyms": [
-        "denounce",
-        "fault",
-        "put the blame on",
+        "charge",
+        "indict",
+        "impeach",
+        "arraign",
+        "accriminate",
         "accuse",
-        "atwite",
-        "blame",
-        "bumble",
-        "challenge",
-        "cop out",
-        "decry",
-        "defame",
-        "denounce",
-        "fault",
-        "finger",
+        "appeach",
+        "arraign",
+        "becry",
+        "tax",
+        "charge",
+        "criminate",
+        "have up",
+        "incriminate",
         "inculpate",
-        "lay at someone's door",
-        "lay on",
-        "lay something at the feet of",
-        "patronize",
-        "point the bone",
-        "put it to",
-        "put the blame on",
-        "shend",
-        "twit",
-        "wite"
+        "indict"
       ],
       "antonyms": [],
       "collocations": [],
@@ -6831,7 +6841,28 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/accuse#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Curricular recommendation for Law and regulation: replace the selected meaning (To find fault with, blame, censure.) with the topic-relevant verb meaning. Dictionary alternatives were compared; this is not verification of the original source meaning."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:24331ec34c786d34ce",
+        "definition": "To charge with having committed a crime or offence.",
+        "example": "The police accused him of stealing the vehicle.",
+        "pos": "verb",
+        "collocations": [
+          "accuse someone of",
+          "be accused of a crime"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/accuse#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -6922,37 +6953,52 @@
     "sense": {
       "id": "kaikki:51f33cf2a5204320b3",
       "definition": "To give permission for someone to do something or for something to happen.",
-      "example": "The rules allow visitors to enter after nine o'clock.",
+      "example": "The rules allow visitors to enter after nine o’clock.",
       "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
-        "allow someone to do something",
-        "allow access"
+        "allow someone to enter",
+        "allow access",
+        "allow time for something"
       ],
+      "usage": "Use allow someone to do something; without a person, allow doing something is possible.",
+      "register": "catenative, transitive",
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
-      "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Allow and permit often express the same permission. Permit is more common in formal notices; neither word by itself means require."
+      ],
+      "distinctionTask": {
+        "prompt": "Which sentence correctly gives visitors permission?",
+        "options": [
+          "The rules allow visitors to enter.",
+          "The rules allow visitors enter.",
+          "The rules allow visitors entering."
+        ],
+        "answer": "The rules allow visitors to enter.",
+        "explanation": "Allow takes an object plus to-infinitive. Permit visitors to enter is also grammatical and generally more formal."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
     },
     "originalSense": {
-      "id": "kaikki:97cad366375c3a47b7",
-      "definition": "To let one have as a suitable share of something.",
-      "example": "to allow a servant his liberty; to allow a free passage; to allow one day for rest",
+      "id": "kaikki:51f33cf2a5204320b3",
+      "definition": "To permit, to give permission to.",
+      "example": "I will allow my son to be absent.",
       "pos": "verb",
       "synonyms": [
-        "grant",
-        "admit",
-        "afford",
-        "yield",
-        "give",
         "permit",
-        "allot",
-        "bestow",
-        "concede"
+        "let",
+        "grant licence to",
+        "consent",
+        "grant"
       ],
       "antonyms": [
         "ban",
@@ -6960,8 +7006,8 @@
         "prohibit"
       ],
       "collocations": [],
-      "usage": "ditransitive",
-      "register": "ditransitive",
+      "usage": "catenative",
+      "register": "catenative, transitive",
       "wordFamily": [
         "allowability",
         "allowable",
@@ -6983,7 +7029,28 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Curricular recommendation for Law and regulation: replace the selected meaning (To let one have as a suitable share of something.) with the topic-relevant verb meaning. Dictionary alternatives were compared; this is not verification of the original source meaning."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:51f33cf2a5204320b3",
+        "definition": "To give permission for someone to do something or for something to happen.",
+        "example": "The rules allow visitors to enter after nine o'clock.",
+        "pos": "verb",
+        "collocations": [
+          "allow someone to do something",
+          "allow access"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -6992,19 +7059,38 @@
     "term": "benchmark",
     "sense": {
       "id": "kaikki:0e221ad3e02bf36162",
-      "definition": "A standard by which something is evaluated or measured.",
-      "example": "The new safety standard provides a benchmark for all manufacturers.",
+      "definition": "A reference standard used to compare or evaluate performance or quality.",
+      "example": "The best regional hospitals provide a benchmark for comparing waiting times.",
       "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
+        "a benchmark for comparison",
         "set a benchmark",
-        "performance benchmark"
+        "measure against a benchmark"
       ],
+      "usage": "A benchmark is a reference point; it need not be a compulsory minimum.",
+      "register": "",
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
-      "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/benchmark#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Criteria are the factors used in judging. A benchmark is a reference level or example; a required standard sets a level that must be met."
+      ],
+      "distinctionTask": {
+        "prompt": "One hospital’s waiting times are used as a reference for comparing others. What role do they play?",
+        "options": [
+          "a benchmark for comparison",
+          "a compulsory legal minimum",
+          "permission to enter"
+        ],
+        "answer": "a benchmark for comparison",
+        "explanation": "A benchmark supplies a comparison point. Using one does not automatically make it a mandatory standard."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
@@ -7029,7 +7115,28 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/benchmark#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Curricular recommendation for Law and regulation: clarify the same meaning and supply a complete, relevant English example and reliable collocations."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:0e221ad3e02bf36162",
+        "definition": "A standard by which something is evaluated or measured.",
+        "example": "The new safety standard provides a benchmark for all manufacturers.",
+        "pos": "noun",
+        "collocations": [
+          "set a benchmark",
+          "performance benchmark"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/benchmark#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -7038,40 +7145,113 @@
     "term": "bound",
     "sense": {
       "id": "kaikki:a7aaf730ed7146d84a",
-      "definition": "Obliged (to).",
+      "definition": "Obliged to do something because of a duty, rule, or agreement.",
       "example": "The company is legally bound to honour the contract.",
       "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
+        "bound to do something",
         "legally bound",
-        "bound by a contract"
+        "bound by an agreement"
       ],
+      "usage": "In this meaning use be bound to do something or be bound by an agreement.",
+      "register": "not-comparable, with-infinitive",
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
-      "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/bound#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Bound to can express obligation here. In “The train is bound to be late”, the same phrase instead expresses strong expectation."
+      ],
+      "distinctionTask": {
+        "prompt": "What does “legally bound to honour the contract” mean?",
+        "options": [
+          "under a legal obligation to honour it",
+          "merely likely to honour it",
+          "free to ignore it"
+        ],
+        "answer": "under a legal obligation to honour it",
+        "explanation": "Legally and the contract identify obligation. Bound to can express probability in a different context."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
     },
     "originalSense": {
-      "id": "kaikki:a951e16441af7e0bcc",
-      "definition": "simple past and past participle of bind",
-      "example": "I bound the splint to my leg.",
-      "pos": "verb",
+      "id": "kaikki:a7aaf730ed7146d84a",
+      "definition": "Obliged (to).",
+      "example": "You are not legally bound to reply.",
+      "pos": "adj",
       "synonyms": [],
-      "antonyms": [],
+      "antonyms": [
+        "free"
+      ],
       "collocations": [],
-      "usage": "form-of, participle, past",
-      "register": "form-of, participle, past",
-      "wordFamily": [],
+      "usage": "not-comparable, with-infinitive",
+      "register": "not-comparable, with-infinitive",
+      "wordFamily": [
+        "airbound",
+        "antibound",
+        "awebound",
+        "barkbound",
+        "bedbound",
+        "boatbound",
+        "boundation",
+        "bound bailiff",
+        "bound entropy",
+        "bound form",
+        "bound morpheme",
+        "boundness",
+        "bound property",
+        "bound state",
+        "boundstone",
+        "bound termineme",
+        "bound up",
+        "bound water",
+        "brassbound",
+        "browbound",
+        "calfbound",
+        "casebound",
+        "cellbound",
+        "chairbound",
+        "cliffbound",
+        "clothbound",
+        "cobound",
+        "colourbound",
+        "couchbound",
+        "cropbound"
+      ],
       "source": "English Wiktionary via Kaikki.org",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/bound#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Curricular recommendation for Law and regulation: replace the selected meaning (simple past and past participle of bind) with the topic-relevant adj meaning. Dictionary alternatives were compared; this is not verification of the original source meaning."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:a7aaf730ed7146d84a",
+        "definition": "Obliged (to).",
+        "example": "The company is legally bound to honour the contract.",
+        "pos": "adj",
+        "collocations": [
+          "legally bound",
+          "bound by a contract"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/bound#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -7154,18 +7334,37 @@
     "sense": {
       "id": "kaikki:8bffbc8dabb1f7b217",
       "definition": "Standards or requirements used to judge or decide something; the plural of criterion.",
-      "example": "Applicants must meet all the selection criteria.",
+      "example": "Experience and language ability are two selection criteria for the post.",
       "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
         "selection criteria",
-        "meet the criteria"
+        "meet the criteria",
+        "assessment criteria"
       ],
+      "usage": "Criteria is plural: these criteria are; one criterion is.",
+      "register": "form-of, plural",
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
-      "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/criteria#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Criteria identify the factors used to judge. A benchmark gives a comparison point, while a standard can specify the required level."
+      ],
+      "distinctionTask": {
+        "prompt": "Complete the sentence: “These selection _____ clearly stated.”",
+        "options": [
+          "criteria are",
+          "criteria is",
+          "criterion are"
+        ],
+        "answer": "criteria are",
+        "explanation": "Criteria is plural and takes are. Its singular is criterion: this criterion is clearly stated."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
@@ -7186,7 +7385,28 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/criteria#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Curricular recommendation for Law and regulation: clarify the same meaning and supply a complete, relevant English example and reliable collocations."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:8bffbc8dabb1f7b217",
+        "definition": "Standards or requirements used to judge or decide something; the plural of criterion.",
+        "example": "Applicants must meet all the selection criteria.",
+        "pos": "noun",
+        "collocations": [
+          "selection criteria",
+          "meet the criteria"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/criteria#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -7195,35 +7415,52 @@
     "term": "discrimination",
     "sense": {
       "id": "kaikki:a5df0291766fa19a7e",
-      "definition": "Differential treatment of an individual or group to their disadvantage; treatment or consideration based on class or category rather than individual merit; partiality; prejudice; bigotry.",
-      "example": "The law protects workers from discrimination based on age.",
+      "definition": "Unfair or disadvantageous treatment of a person or group based on a characteristic or category.",
+      "example": "The policy prohibits discrimination against job applicants because of their age.",
       "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
-        "racial discrimination",
-        "discrimination against"
+        "discrimination against someone",
+        "age discrimination",
+        "prevent discrimination"
       ],
+      "usage": "This is the unfair-treatment meaning, rather than the separate ability-to-distinguish meaning.",
+      "register": "countable, sometimes, uncountable",
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
-      "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/discrimination#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Discrimination concerns treatment. Prejudice concerns attitudes or prejudgments; they can occur together but describe different things."
+      ],
+      "distinctionTask": {
+        "prompt": "An employer excludes qualified applicants because of their age. Which aspect does “discrimination” describe?",
+        "options": [
+          "the disadvantageous treatment",
+          "the ability to hear different sounds",
+          "a neutral comparison of qualifications"
+        ],
+        "answer": "the disadvantageous treatment",
+        "explanation": "Discrimination here describes unfair treatment based on age. Prejudice names an attitude rather than the treatment itself."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
     },
     "originalSense": {
-      "id": "kaikki:895af4c6d06c6b2031",
-      "definition": "Discernment, the act of discriminating, discerning, distinguishing, noting or perceiving differences between things, with the intent to understand rightly and make correct decisions.",
-      "example": "Have you felt the weight of the considerations which have been presented, in order to show the importance of discrimination on the subject of revealed truth?",
+      "id": "kaikki:a5df0291766fa19a7e",
+      "definition": "Differential treatment of an individual or group to their disadvantage; treatment or consideration based on class or category rather than individual merit; partiality; prejudice; bigotry.",
+      "example": "sexual or racial discrimination",
       "pos": "noun",
-      "synonyms": [
-        "differentiation"
-      ],
+      "synonyms": [],
       "antonyms": [],
       "collocations": [],
-      "usage": "",
-      "register": "countable, uncountable",
+      "usage": "sometimes",
+      "register": "countable, sometimes, uncountable",
       "wordFamily": [
         "antidiscrimination",
         "counterdiscrimination",
@@ -7244,7 +7481,28 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/discrimination#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Curricular recommendation for Law and regulation: replace the selected meaning (Discernment, the act of discriminating, discerning, distinguishing, noting or perceiving differences between things, with the intent to understand rightly and make correct decisions.) with the topic-relevant noun meaning. Dictionary alternatives were compared; this is not verification of the original source meaning."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:a5df0291766fa19a7e",
+        "definition": "Differential treatment of an individual or group to their disadvantage; treatment or consideration based on class or category rather than individual merit; partiality; prejudice; bigotry.",
+        "example": "The law protects workers from discrimination based on age.",
+        "pos": "noun",
+        "collocations": [
+          "racial discrimination",
+          "discrimination against"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/discrimination#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -7253,29 +7511,53 @@
     "term": "fair",
     "sense": {
       "id": "kaikki:437a461019b8d883c3",
-      "definition": "Just.",
-      "example": "Everyone is entitled to a fair trial.",
+      "definition": "Treating people impartially and according to reasonable standards of justice.",
+      "example": "Both sides must have a fair chance to present their evidence.",
       "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
-        "fair trial",
+        "a fair trial",
+        "a fair chance",
         "fair treatment"
       ],
+      "usage": "Fair and just often overlap in this meaning.",
+      "register": "",
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
-      "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/fair#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Fair often stresses impartial treatment or procedure. Just often stresses moral rightness; a fair trial and a just decision are common combinations, with overlap between the adjectives."
+      ],
+      "distinctionTask": {
+        "prompt": "Why is a chance to present evidence described as fair?",
+        "options": [
+          "both sides receive impartial treatment",
+          "both sides are guaranteed to win",
+          "the evidence must be identical"
+        ],
+        "answer": "both sides receive impartial treatment",
+        "explanation": "Fair treatment gives an impartial opportunity. It does not guarantee identical evidence or a favourable result for both sides."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
     },
     "originalSense": {
-      "id": "kaikki:e724d22d34bdd28828",
-      "definition": "Unblemished (figuratively or literally); clean and pure; innocent.",
-      "example": "one's fair name",
+      "id": "kaikki:437a461019b8d883c3",
+      "definition": "Just.",
+      "example": "He must be given a fair trial.",
       "pos": "adj",
-      "synonyms": [],
+      "synonyms": [
+        "honest",
+        "equitable",
+        "rightful",
+        "clean"
+      ],
       "antonyms": [],
       "collocations": [],
       "usage": "",
@@ -7317,7 +7599,28 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/fair#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Curricular recommendation for Law and regulation: replace the selected meaning (Unblemished (figuratively or literally); clean and pure; innocent.) with the topic-relevant adj meaning. Dictionary alternatives were compared; this is not verification of the original source meaning."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:437a461019b8d883c3",
+        "definition": "Just.",
+        "example": "Everyone is entitled to a fair trial.",
+        "pos": "adj",
+        "collocations": [
+          "fair trial",
+          "fair treatment"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/fair#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -7453,27 +7756,46 @@
     "term": "just",
     "sense": {
       "id": "kaikki:ace93356ef97e0b919",
-      "definition": "Morally right; upright, righteous, equitable; fair.",
-      "example": "The judges sought a just outcome for all parties.",
+      "definition": "Morally right and fair.",
+      "example": "The judges sought a just outcome for everyone affected.",
       "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
-        "just decision",
-        "just punishment"
+        "a just decision",
+        "a just outcome",
+        "a just society"
       ],
+      "usage": "Just is an adjective here; in “I have just arrived” it is an adverb with another meaning.",
+      "register": "",
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
-      "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/just#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Just often stresses moral rightness, while fair often stresses impartial treatment. They overlap, so context does not always force a single adjective."
+      ],
+      "distinctionTask": {
+        "prompt": "What does “just” mean in “a just outcome”?",
+        "options": [
+          "morally right and fair",
+          "very recent",
+          "only one possible outcome"
+        ],
+        "answer": "morally right and fair",
+        "explanation": "Just is an adjective describing fairness here. The adverb meanings recent or only do not fit this use."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
     },
     "originalSense": {
-      "id": "kaikki:a5cb2e3c08f8ca5847",
-      "definition": "Factually right, correct; factual.",
-      "example": "It is a just assessment of the facts.",
+      "id": "kaikki:ace93356ef97e0b919",
+      "definition": "Morally right; upright, righteous, equitable; fair.",
+      "example": "It looks like a just solution at first glance.",
       "pos": "adj",
       "synonyms": [
         "right",
@@ -7507,7 +7829,28 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/just#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Curricular recommendation for Law and regulation: replace the selected meaning (Factually right, correct; factual.) with the topic-relevant adj meaning. Dictionary alternatives were compared; this is not verification of the original source meaning."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:ace93356ef97e0b919",
+        "definition": "Morally right; upright, righteous, equitable; fair.",
+        "example": "The judges sought a just outcome for all parties.",
+        "pos": "adj",
+        "collocations": [
+          "just decision",
+          "just punishment"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/just#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -7516,19 +7859,38 @@
     "term": "legal",
     "sense": {
       "id": "kaikki:00ac2df9ecff5636b0",
-      "definition": "Relating to the law or to lawyers.",
-      "example": "The firm offered free legal advice to the tenants.",
+      "definition": "Relating to the law, lawyers, or the administration of justice.",
+      "example": "The tenants received free legal advice before signing the lease.",
       "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
         "legal advice",
-        "legal requirements"
+        "legal action",
+        "legal rights"
       ],
+      "usage": "This relational meaning does not itself say that an action is permitted by law.",
+      "register": "",
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
-      "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/legal#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Legal advice concerns the law. In a separate meaning, legal parking is parking allowed by law; official means authorised or issued by an authority."
+      ],
+      "distinctionTask": {
+        "prompt": "What does “legal” mean in “The tenants received legal advice”?",
+        "options": [
+          "concerning the law",
+          "certain to win in court",
+          "issued by the government"
+        ],
+        "answer": "concerning the law",
+        "explanation": "Legal advice concerns the law and may come from a private lawyer. It does not guarantee success or government endorsement."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
@@ -7580,7 +7942,28 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/legal#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Curricular recommendation for Law and regulation: clarify the same meaning and supply a complete, relevant English example and reliable collocations."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:00ac2df9ecff5636b0",
+        "definition": "Relating to the law or to lawyers.",
+        "example": "The firm offered free legal advice to the tenants.",
+        "pos": "adj",
+        "collocations": [
+          "legal advice",
+          "legal requirements"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/legal#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -7588,28 +7971,47 @@
     "entryId": "ve-31d89824",
     "term": "official",
     "sense": {
-      "id": "kaikki:12466cf4fa916b896c",
-      "definition": "Of or about an office or public trust.",
-      "example": "The official document confirms the new regulation.",
+      "id": "kaikki:3e3792961080473149",
+      "definition": "Issued or communicated by the appropriate authority.",
+      "example": "The council published an official notice confirming the road closure.",
       "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
-        "official document",
-        "official duties"
+        "an official notice",
+        "an official statement",
+        "official confirmation"
       ],
+      "usage": "An official statement comes from an appropriate authority; the adjective does not itself establish that every claim in it is correct.",
+      "register": "",
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
-      "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/official#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Official identifies authority or approval. Legal can mean relating to law or permitted by law; an official notice is not necessarily a law."
+      ],
+      "distinctionTask": {
+        "prompt": "What does “official” establish about the council’s notice?",
+        "options": [
+          "it was issued by the appropriate authority",
+          "every claim is beyond error",
+          "it is a new criminal law"
+        ],
+        "answer": "it was issued by the appropriate authority",
+        "explanation": "Official identifies the authorised source. It does not by itself prove accuracy or make a notice a law."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
     },
     "originalSense": {
-      "id": "kaikki:12466cf4fa916b896c",
-      "definition": "Of or about an office or public trust.",
-      "example": "official duties",
+      "id": "kaikki:3e3792961080473149",
+      "definition": "Derived from the proper office or officer, or the appropriate authority; made or communicated by authority",
+      "example": "an official statement or report",
       "pos": "adj",
       "synonyms": [
         "approved",
@@ -7660,7 +8062,28 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/official#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Curricular recommendation for Law and regulation: clarify the same meaning and supply a complete, relevant English example and reliable collocations."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:12466cf4fa916b896c",
+        "definition": "Of or about an office or public trust.",
+        "example": "The official document confirms the new regulation.",
+        "pos": "adj",
+        "collocations": [
+          "official document",
+          "official duties"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/official#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -7787,19 +8210,38 @@
     "term": "prosecute",
     "sense": {
       "id": "kaikki:80457664d320e44584",
-      "definition": "To start criminal proceedings against.",
-      "example": "The authorities will prosecute anyone who submits false documents.",
+      "definition": "To start or conduct criminal proceedings against someone.",
+      "example": "The authorities decided to prosecute the driver for using false documents.",
       "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
-        "prosecute an offender",
-        "prosecute for fraud"
+        "prosecute someone for an offence",
+        "decide to prosecute",
+        "criminal prosecution"
       ],
+      "usage": "Use prosecute someone for an offence or for doing something.",
+      "register": "transitive",
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
-      "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/prosecute#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Prosecute concerns criminal proceedings here. Accuse states an allegation; convict means find guilty, and sue usually concerns a civil claim."
+      ],
+      "distinctionTask": {
+        "prompt": "If the authorities prosecute a suspect, which fact is established?",
+        "options": [
+          "criminal proceedings are being brought",
+          "the suspect has already been found guilty",
+          "the suspect has won a civil claim"
+        ],
+        "answer": "criminal proceedings are being brought",
+        "explanation": "A prosecution brings criminal proceedings. A conviction is a finding of guilt and is not guaranteed by prosecution."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
@@ -7831,7 +8273,28 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/prosecute#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Curricular recommendation for Law and regulation: clarify the same meaning and supply a complete, relevant English example and reliable collocations."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:80457664d320e44584",
+        "definition": "To start criminal proceedings against.",
+        "example": "The authorities will prosecute anyone who submits false documents.",
+        "pos": "verb",
+        "collocations": [
+          "prosecute an offender",
+          "prosecute for fraud"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/prosecute#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -7913,81 +8376,54 @@
     "term": "standard",
     "sense": {
       "id": "kaikki:80b5f76717003fe356",
-      "definition": "A principle or example or measure used for comparison.",
+      "definition": "A level, principle, or measure used to judge quality or make comparisons.",
       "example": "The inspection checks whether the building meets the required safety standard.",
       "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
-        "safety standard",
-        "meet a standard"
+        "meet a standard",
+        "a safety standard",
+        "maintain high standards"
       ],
+      "usage": "A standard can be a requirement or a reference level; the surrounding words show whether it is compulsory.",
+      "register": "",
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
-      "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/standard#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A required standard sets a level to meet. A benchmark may simply support comparison, and criteria identify the factors being assessed."
+      ],
+      "distinctionTask": {
+        "prompt": "What does “required safety standard” emphasise?",
+        "options": [
+          "a level that must be met",
+          "an optional comparison only",
+          "a generally held opinion"
+        ],
+        "answer": "a level that must be met",
+        "explanation": "Required makes this standard compulsory in the stated setting. A benchmark need not impose a requirement."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
     },
     "originalSense": {
-      "id": "kaikki:de5d5a4f82072dab6d",
-      "definition": "Falling within an accepted range of size, amount, power, quality, etc.",
-      "example": "The room contains a standard double bed.",
-      "pos": "adj",
+      "id": "kaikki:80b5f76717003fe356",
+      "definition": "A principle or example or measure used for comparison.",
+      "example": "The humor of my proposition appealed more strongly to Miss Trevor than I had looked for, and from that time forward she became her old self again;[…]. Our table in the dining-room became again the abode of scintillating wit and caustic repartee, Farrar bracing up to his old standard, and the demand for seats in the vicinity rose to an animated competition.",
+      "pos": "noun",
       "synonyms": [
-        "customary",
-        "ordinary",
-        "typical",
-        "average",
-        "medial",
-        "basic",
-        "bog-standard",
-        "common",
-        "commonplace",
-        "common-and-garden",
-        "common-or-garden",
-        "congruent",
-        "consistent",
-        "conventional",
-        "customary",
-        "everyday",
-        "expected",
-        "garden variety",
-        "improminent",
-        "mundane",
-        "natural",
-        "normal",
-        "ordinary",
-        "par for the course",
-        "par",
-        "plain",
-        "plain vanilla",
-        "quotidian",
-        "regular",
-        "routine",
-        "run-of-the-mill",
-        "standard",
-        "standard issue",
-        "typical",
-        "unexceptional",
-        "unremarkable",
-        "unstrange",
-        "usual",
-        "vulgar",
-        "wakeaday",
-        "workaday"
+        "benchmark"
       ],
-      "antonyms": [
-        "nonstandard",
-        "non-standard",
-        "atypical",
-        "off",
-        "special"
-      ],
+      "antonyms": [],
       "collocations": [],
-      "usage": "comparative, standard",
-      "register": "comparative, standard",
+      "usage": "",
+      "register": "",
       "wordFamily": [
         "bog-standard",
         "dog standard",
@@ -8025,7 +8461,28 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/standard#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Curricular recommendation for Law and regulation: replace the selected meaning (Falling within an accepted range of size, amount, power, quality, etc.) with the topic-relevant noun meaning. Dictionary alternatives were compared; this is not verification of the original source meaning."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:80b5f76717003fe356",
+        "definition": "A principle or example or measure used for comparison.",
+        "example": "The inspection checks whether the building meets the required safety standard.",
+        "pos": "noun",
+        "collocations": [
+          "safety standard",
+          "meet a standard"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/standard#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -8034,19 +8491,38 @@
     "term": "sue",
     "sense": {
       "id": "kaikki:36a1a03ccb77ebb060",
-      "definition": "To file a legal action against someone, generally a non-criminal (civil) action.",
+      "definition": "To bring a legal claim against someone, usually in a civil court.",
       "example": "The customer decided to sue the company for breach of contract.",
       "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
-        "sue for damages",
-        "sue a company"
+        "sue someone for damages",
+        "sue for breach of contract",
+        "threaten to sue"
       ],
+      "usage": "Use sue someone for something, such as damages or breach of contract.",
+      "register": "transitive",
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
-      "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/sue#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Sue usually concerns a civil claim; prosecute concerns criminal proceedings in the meaning taught here. Either action can begin without establishing that the claim will succeed."
+      ],
+      "distinctionTask": {
+        "prompt": "A customer brings a civil claim seeking compensation for breach of contract. Which verb fits?",
+        "options": [
+          "sue the company",
+          "convict the company",
+          "acquit the company"
+        ],
+        "answer": "sue the company",
+        "explanation": "Sue describes bringing the civil claim. Convict and acquit describe criminal court decisions, rather than starting a civil claim."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
@@ -8081,7 +8557,28 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/sue#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Curricular recommendation for Law and regulation: clarify the same meaning and supply a complete, relevant English example and reliable collocations."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:36a1a03ccb77ebb060",
+        "definition": "To file a legal action against someone, generally a non-criminal (civil) action.",
+        "example": "The customer decided to sue the company for breach of contract.",
+        "pos": "verb",
+        "collocations": [
+          "sue for damages",
+          "sue a company"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/sue#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -28470,73 +28967,113 @@
     },
     "sense": {
       "id": "kaikki:a8594b6a839efa92b7",
-      "definition": "A debate or discussion of opposing opinions; (generally) strife.",
+      "definition": "Strong public disagreement about an issue.",
       "example": "The proposed policy caused controversy among residents.",
       "pos": "noun",
-      "synonyms": [
-        "argument",
-        "argy-bargy",
-        "altercation",
-        "contention",
-        "barney",
-        "bawl out",
-        "blue",
-        "bobbery",
-        "brawl",
-        "clash",
-        "conflict",
-        "controversy",
-        "debate",
-        "difference",
-        "ding-dong",
-        "disagreement",
-        "discordance",
-        "disharmony",
-        "disputation",
-        "dispute",
-        "dissonance",
-        "disunion",
-        "dustup",
-        "face-off",
-        "falling out",
-        "feud",
-        "fight",
-        "flite",
-        "hassle",
-        "issue",
-        "palaver",
-        "quarrel",
-        "quibble",
-        "row",
-        "spat",
-        "squabble",
-        "tangle",
-        "threap",
-        "tiff",
-        "wrangle"
-      ],
-      "antonyms": [
-        "consensus",
-        "agreement"
-      ],
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
-        "public controversy",
-        "cause controversy"
+        "cause controversy",
+        "controversy over an issue",
+        "a public controversy"
       ],
-      "usage": "",
+      "usage": "Use controversy over or about an issue. It can be uncountable, or countable for a particular public dispute.",
       "register": "countable, uncountable",
       "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/controversy#English",
       "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A debate is an exchange of opposing arguments and can be orderly. A dispute is a disagreement between parties; controversy emphasises strong public disagreement and attention. The words can overlap."
+      ],
+      "distinctionTask": {
+        "prompt": "The proposed policy caused controversy among residents. Which description best explains “controversy”?",
+        "options": [
+          "strong public disagreement about the policy",
+          "a formal debate with a guaranteed vote",
+          "a court ruling that settles the issue"
+        ],
+        "answer": "strong public disagreement about the policy",
+        "explanation": "Controversy emphasises public disagreement. A debate can be an organised discussion; a dispute can involve just the parties concerned. These words overlap and are not freely interchangeable in every context."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
     },
-    "reason": "Retains the selected meaning identity and supplies substantive teaching content in place of a cross-reference, archaic quotation, incomplete example, or overly technical sentence. Transparent editorial syllabus choice; original group meaning remains unconfirmed."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:a8594b6a839efa92b7",
+        "definition": "A debate or discussion of opposing opinions; (generally) strife.",
+        "example": "The proposed policy caused controversy among residents.",
+        "pos": "noun",
+        "synonyms": [
+          "argument",
+          "argy-bargy",
+          "altercation",
+          "contention",
+          "barney",
+          "bawl out",
+          "blue",
+          "bobbery",
+          "brawl",
+          "clash",
+          "conflict",
+          "controversy",
+          "debate",
+          "difference",
+          "ding-dong",
+          "disagreement",
+          "discordance",
+          "disharmony",
+          "disputation",
+          "dispute",
+          "dissonance",
+          "disunion",
+          "dustup",
+          "face-off",
+          "falling out",
+          "feud",
+          "fight",
+          "flite",
+          "hassle",
+          "issue",
+          "palaver",
+          "quarrel",
+          "quibble",
+          "row",
+          "spat",
+          "squabble",
+          "tangle",
+          "threap",
+          "tiff",
+          "wrangle"
+        ],
+        "antonyms": [
+          "consensus",
+          "agreement"
+        ],
+        "collocations": [
+          "public controversy",
+          "cause controversy"
+        ],
+        "usage": "",
+        "register": "countable, uncountable",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/controversy#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -28544,9 +29081,9 @@
     "entryId": "ve-58a4b3c5",
     "term": "murmur",
     "originalSense": {
-      "id": "kaikki:feaaa2971feeb3a205",
-      "definition": "Any low, indistinct sound, like that of running water.",
-      "example": "The delightful murmur of water running over pebbles is heard a few yards off",
+      "id": "kaikki:05ca12343db8fed4f4",
+      "definition": "Soft indistinct speech.",
+      "example": "A murmur arose from the audience.",
       "pos": "noun",
       "synonyms": [
         "murmur",
@@ -28574,44 +29111,84 @@
       "license": "CC-BY-SA-4.0"
     },
     "sense": {
-      "id": "kaikki:feaaa2971feeb3a205",
-      "definition": "Any low, indistinct sound, like that of running water.",
-      "example": "We heard the soft murmur of water flowing over the stones.",
+      "id": "kaikki:05ca12343db8fed4f4",
+      "definition": "Soft, indistinct speech.",
+      "example": "A murmur of conversation continued at the back of the room.",
       "pos": "noun",
-      "synonyms": [
-        "murmur",
-        "murmuration",
-        "susurration",
-        "susurrus"
-      ],
-      "antonyms": [
-        "din",
-        "silence"
-      ],
+      "synonyms": [],
+      "antonyms": [],
       "collocations": [
-        "soft murmur",
-        "murmur of water"
+        "a murmur of conversation",
+        "a quiet murmur",
+        "speak in a murmur"
       ],
-      "usage": "",
+      "usage": "This meaning concerns speech. Murmur can separately describe water sounds or a medical heart sound.",
       "register": "countable, uncountable",
-      "wordFamily": [
-        "heart murmur",
-        "murmur diphthong",
-        "murmurish",
-        "Still's murmur",
-        "without a murmur"
-      ],
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/murmur#English",
       "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A murmur suggests soft indistinct speech here. A mutter often conveys dissatisfaction; whisper emphasises very quiet speech. These descriptions can overlap."
+      ],
+      "distinctionTask": {
+        "prompt": "What does “a murmur of conversation” describe here?",
+        "options": [
+          "soft, indistinct speech",
+          "a diagnosed heart condition",
+          "an official announcement"
+        ],
+        "answer": "soft, indistinct speech",
+        "explanation": "Of conversation selects the speech meaning of murmur. The word has separate non-speech and medical meanings."
+      },
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
     },
-    "reason": "Retains the selected meaning identity and supplies substantive teaching content in place of a cross-reference, archaic quotation, incomplete example, or overly technical sentence. Transparent editorial syllabus choice; original group meaning remains unconfirmed."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:feaaa2971feeb3a205",
+        "definition": "Any low, indistinct sound, like that of running water.",
+        "example": "We heard the soft murmur of water flowing over the stones.",
+        "pos": "noun",
+        "synonyms": [
+          "murmur",
+          "murmuration",
+          "susurration",
+          "susurrus"
+        ],
+        "antonyms": [
+          "din",
+          "silence"
+        ],
+        "collocations": [
+          "soft murmur",
+          "murmur of water"
+        ],
+        "usage": "",
+        "register": "countable, uncountable",
+        "wordFamily": [
+          "heart murmur",
+          "murmur diphthong",
+          "murmurish",
+          "Still's murmur",
+          "without a murmur"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/murmur#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -32863,51 +33440,49 @@
     "term": "obligation",
     "sense": {
       "id": "kaikki:cce7b96f7a629bce81",
-      "definition": "A social, legal, or moral requirement, duty, contract, or promise that compels someone to follow or avoid a particular course of action.",
-      "example": "We have an obligation to keep our promise.",
+      "definition": "A duty or requirement to do or avoid something, arising from a law, agreement, or moral responsibility.",
+      "example": "The contract places an obligation on the supplier to replace faulty goods.",
       "pos": "noun",
-      "synonyms": [
-        "duty"
-      ],
+      "synonyms": [],
       "antonyms": [],
       "collocations": [
+        "a legal obligation",
         "an obligation to do something",
         "fulfil an obligation"
       ],
-      "usage": "",
+      "usage": "Obligation is a noun. Obligatory and mandatory are adjectives describing what is required.",
       "register": "countable, uncountable",
-      "wordFamily": [
-        "collateralized debt obligation",
-        "collateralized fund obligation",
-        "collateralized loan obligation",
-        "counterobligation",
-        "debt obligation",
-        "disobligation",
-        "holy day of obligation",
-        "moral obligation",
-        "remaining performance obligation",
-        "Sunday obligation"
-      ],
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/obligation#English",
       "license": "CC-BY-SA-4.0",
       "distinctions": [
-        "An obligation is a requirement or duty; a preference is something someone would like."
+        "An obligation requires an action. Permission allows it, while a preference only expresses what someone would like."
       ],
+      "distinctionTask": {
+        "prompt": "The supplier has an obligation to replace faulty goods. Which description fits?",
+        "options": [
+          "replacement is a duty under the contract",
+          "replacement is merely allowed",
+          "replacement is only a preference"
+        ],
+        "answer": "replacement is a duty under the contract",
+        "explanation": "An obligation is a duty. It is stronger than permission or personal preference."
+      },
       "editorial": {
-        "source": "Fieldbook core content review",
+        "source": "Fieldbook law-group teaching review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }
     },
     "originalSense": {
-      "id": "kaikki:cc5f519f99af9b076a",
-      "definition": "The act of binding oneself by a social, legal, or moral tie to someone.",
-      "example": "Signing the contract creates an obligation to pay on time.",
+      "id": "kaikki:cce7b96f7a629bce81",
+      "definition": "A social, legal, or moral requirement, duty, contract, or promise that compels someone to follow or avoid a particular course of action.",
+      "example": "I feel I'm under obligation to attend my sister's wedding, even though we have a very frosty relationship.",
       "pos": "noun",
       "synonyms": [
-        "commitment"
+        "duty"
       ],
       "antonyms": [],
       "collocations": [],
@@ -32928,14 +33503,51 @@
       "source": "English Wiktionary via Kaikki.org",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/obligation#English",
-      "license": "CC-BY-SA-4.0",
-      "editorial": {
-        "source": "Fieldbook core content review",
-        "license": "CC-BY-4.0",
-        "attribution": "Fieldbook editorial contributors"
-      }
+      "license": "CC-BY-SA-4.0"
     },
-    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:cce7b96f7a629bce81",
+        "definition": "A social, legal, or moral requirement, duty, contract, or promise that compels someone to follow or avoid a particular course of action.",
+        "example": "We have an obligation to keep our promise.",
+        "pos": "noun",
+        "synonyms": [
+          "duty"
+        ],
+        "antonyms": [],
+        "collocations": [
+          "an obligation to do something",
+          "fulfil an obligation"
+        ],
+        "usage": "",
+        "register": "countable, uncountable",
+        "wordFamily": [
+          "collateralized debt obligation",
+          "collateralized fund obligation",
+          "collateralized loan obligation",
+          "counterobligation",
+          "debt obligation",
+          "disobligation",
+          "holy day of obligation",
+          "moral obligation",
+          "remaining performance obligation",
+          "Sunday obligation"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/obligation#English",
+        "license": "CC-BY-SA-4.0",
+        "distinctions": [
+          "An obligation is a requirement or duty; a preference is something someone would like."
+        ],
+        "editorial": {
+          "source": "Fieldbook core content review",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-listening-essentials",
@@ -33335,5 +33947,2730 @@
       }
     },
     "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-b873fff",
+    "term": "law",
+    "sense": {
+      "id": "kaikki:49ff0044d3e644213f",
+      "definition": "The system of rules that a community recognises and enforces through its authorities.",
+      "example": "Everyone must comply with the law, including government officials.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "comply with the law",
+        "enforce the law",
+        "the rule of law"
+      ],
+      "usage": "Here law is uncountable and refers to the legal system. A law can also mean one particular legal rule.",
+      "register": "countable, uncountable, usually",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/law#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Rule is broader: a school or game can have rules. A regulation is an official rule governing a particular activity; its legal status depends on the authority and jurisdiction."
+      ],
+      "distinctionTask": {
+        "prompt": "In “Everyone must comply with the law”, what does “the law” refer to?",
+        "options": [
+          "the system of legally enforced rules",
+          "a personal preference",
+          "one school timetable"
+        ],
+        "answer": "the system of legally enforced rules",
+        "explanation": "The law here refers collectively to legally enforced rules. Rule has wider uses, while a regulation usually sets an official requirement for an activity."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:49ff0044d3e644213f",
+      "definition": "The body of binding rules and regulations, customs, and standards established in a community by its legislative and judicial authorities.",
+      "example": "Not unnaturally, \"Auntie\" took this communication in bad part.[…]Next day she[…]tried to recover her ward by the hair of the head. Then, thwarted, the wretched creature went to the police for help; she was versed in the law, and perhaps had spared no pains to keep on good terms with the local constabulary.",
+      "pos": "noun",
+      "synonyms": [
+        "act",
+        "canon",
+        "code",
+        "convention",
+        "constitution",
+        "corpus",
+        "decree",
+        "dictate",
+        "directive",
+        "doctrine",
+        "edict",
+        "enactment",
+        "guideline",
+        "legislation",
+        "mandate",
+        "maxim",
+        "order",
+        "ordinance",
+        "pandect",
+        "prescription",
+        "prohibition",
+        "regulation",
+        "rule",
+        "standard",
+        "statute",
+        "tenet"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "usually",
+      "register": "countable, uncountable, usually",
+      "wordFamily": [
+        "above the law",
+        "administrative law",
+        "admiralty law",
+        "against the law",
+        "alternate law",
+        "Amagat's law",
+        "Amara's law",
+        "Amdahl's law",
+        "Ammon's law",
+        "Ampère's circuital law",
+        "Ampère's force law",
+        "Ampère's law",
+        "arbitrary law",
+        "Arndt-Schulz law",
+        "as a matter of law",
+        "Ashby's law",
+        "Ashby's Law",
+        "astrolaw",
+        "attorney-at-law",
+        "attorney at law",
+        "Atwood's Law",
+        "Avogadro's law",
+        "Babo's law",
+        "Baby Moses law",
+        "bad facts make bad law",
+        "basic law",
+        "Basquin's law",
+        "Baxter's law",
+        "Bayes' law",
+        "Beer-Lambert-Bouguer law"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/law#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:49ff0044d3e644213f",
+        "definition": "The body of binding rules and regulations, customs, and standards established in a community by its legislative and judicial authorities.",
+        "example": "Not unnaturally, \"Auntie\" took this communication in bad part.[…]Next day she[…]tried to recover her ward by the hair of the head. Then, thwarted, the wretched creature went to the police for help; she was versed in the law, and perhaps had spared no pains to keep on good terms with the local constabulary.",
+        "pos": "noun",
+        "synonyms": [
+          "act",
+          "canon",
+          "code",
+          "convention",
+          "constitution",
+          "corpus",
+          "decree",
+          "dictate",
+          "directive",
+          "doctrine",
+          "edict",
+          "enactment",
+          "guideline",
+          "legislation",
+          "mandate",
+          "maxim",
+          "order",
+          "ordinance",
+          "pandect",
+          "prescription",
+          "prohibition",
+          "regulation",
+          "rule",
+          "standard",
+          "statute",
+          "tenet"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "usually",
+        "register": "countable, uncountable, usually",
+        "wordFamily": [
+          "above the law",
+          "administrative law",
+          "admiralty law",
+          "against the law",
+          "alternate law",
+          "Amagat's law",
+          "Amara's law",
+          "Amdahl's law",
+          "Ammon's law",
+          "Ampère's circuital law",
+          "Ampère's force law",
+          "Ampère's law",
+          "arbitrary law",
+          "Arndt-Schulz law",
+          "as a matter of law",
+          "Ashby's law",
+          "Ashby's Law",
+          "astrolaw",
+          "attorney-at-law",
+          "attorney at law",
+          "Atwood's Law",
+          "Avogadro's law",
+          "Babo's law",
+          "Baby Moses law",
+          "bad facts make bad law",
+          "basic law",
+          "Basquin's law",
+          "Baxter's law",
+          "Bayes' law",
+          "Beer-Lambert-Bouguer law"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/law#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-7c78b74b",
+    "term": "rule",
+    "sense": {
+      "id": "kaikki:1b2c92052a45858c20",
+      "definition": "An instruction or principle that says what is allowed, required, or expected.",
+      "example": "The school has a rule against using phones during lessons.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "follow a rule",
+        "break a rule",
+        "a school rule"
+      ],
+      "usage": "A rule can belong to a school, game, organisation, or legal system.",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/rule#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Rule is broader than law. A school rule need not be a national law; regulation usually suggests a formal official rule."
+      ],
+      "distinctionTask": {
+        "prompt": "A school bans phones during lessons. Which statement is justified?",
+        "options": [
+          "this is a school rule",
+          "this must be a criminal law",
+          "this is only a personal preference"
+        ],
+        "answer": "this is a school rule",
+        "explanation": "A rule states what the school permits or requires. Calling it a rule does not establish that it is a criminal law."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:1b2c92052a45858c20",
+      "definition": "A regulation, law, guideline.",
+      "example": "All participants must adhere to the rules.",
+      "pos": "noun",
+      "synonyms": [
+        "rule",
+        "sanction"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "regulate",
+        "regent",
+        "regular",
+        "principle",
+        "test",
+        "criterion",
+        "rule of thumb",
+        "saying",
+        "restriction",
+        "limitation",
+        "limit",
+        "constraint",
+        "command",
+        "prohibition",
+        "instruction",
+        "procedure",
+        "routine",
+        "convention",
+        "norm",
+        "algorithm",
+        "word",
+        "phrase",
+        "sentence",
+        "characteristic",
+        "property",
+        "attribute",
+        "predicate",
+        "formula",
+        "rigid",
+        "flexible"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/rule#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:1b2c92052a45858c20",
+        "definition": "A regulation, law, guideline.",
+        "example": "All participants must adhere to the rules.",
+        "pos": "noun",
+        "synonyms": [
+          "rule",
+          "sanction"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "countable, uncountable",
+        "wordFamily": [
+          "regulate",
+          "regent",
+          "regular",
+          "principle",
+          "test",
+          "criterion",
+          "rule of thumb",
+          "saying",
+          "restriction",
+          "limitation",
+          "limit",
+          "constraint",
+          "command",
+          "prohibition",
+          "instruction",
+          "procedure",
+          "routine",
+          "convention",
+          "norm",
+          "algorithm",
+          "word",
+          "phrase",
+          "sentence",
+          "characteristic",
+          "property",
+          "attribute",
+          "predicate",
+          "formula",
+          "rigid",
+          "flexible"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/rule#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-76c9d691",
+    "term": "regulation",
+    "sense": {
+      "id": "kaikki:ac60c6ffaab517860a",
+      "definition": "An official rule made by an authority or organisation to control an activity.",
+      "example": "A new safety regulation requires workers to wear protective helmets.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "safety regulation",
+        "comply with regulations",
+        "introduce a regulation"
+      ],
+      "usage": "This meaning is countable: a regulation; safety regulations. Regulation can separately mean the process of controlling an activity.",
+      "register": "countable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regulation#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A regulation states an official requirement. A norm may be maintained by social expectations without being written into law; rule is the broader word."
+      ],
+      "distinctionTask": {
+        "prompt": "An authority issues a written helmet requirement. Which description best fits it?",
+        "options": [
+          "an official safety regulation",
+          "an unwritten social expectation",
+          "a measure of typical performance"
+        ],
+        "answer": "an official safety regulation",
+        "explanation": "The authority has issued a regulation. A norm can be an unwritten expectation, and a benchmark is a reference for comparison."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:ac60c6ffaab517860a",
+      "definition": "A law or administrative rule, issued by an organization, used to guide or prescribe the conduct of members of that organization.",
+      "example": "Army regulations state a soldier AWOL over 30 days is a deserter.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "antiregulation",
+        "autoregulation",
+        "baroregulation",
+        "bioregulation",
+        "chemoregulation",
+        "cisregulation",
+        "COLREGS",
+        "counterregulation",
+        "down-regulation",
+        "downregulation",
+        "dysregulation",
+        "epiregulation",
+        "glucoregulation",
+        "glycoregulation",
+        "hemoregulation",
+        "hydroregulation",
+        "hyperregulation",
+        "hyporegulation",
+        "interregulation",
+        "liporegulation",
+        "macroregulation",
+        "mechanoregulation",
+        "metalloregulation",
+        "midnight regulation",
+        "misregulation",
+        "morphoregulation",
+        "myoregulation",
+        "neuroimmune regulation",
+        "neuroregulation",
+        "nonregulation"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regulation#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:ac60c6ffaab517860a",
+        "definition": "A law or administrative rule, issued by an organization, used to guide or prescribe the conduct of members of that organization.",
+        "example": "Army regulations state a soldier AWOL over 30 days is a deserter.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "countable",
+        "wordFamily": [
+          "antiregulation",
+          "autoregulation",
+          "baroregulation",
+          "bioregulation",
+          "chemoregulation",
+          "cisregulation",
+          "COLREGS",
+          "counterregulation",
+          "down-regulation",
+          "downregulation",
+          "dysregulation",
+          "epiregulation",
+          "glucoregulation",
+          "glycoregulation",
+          "hemoregulation",
+          "hydroregulation",
+          "hyperregulation",
+          "hyporegulation",
+          "interregulation",
+          "liporegulation",
+          "macroregulation",
+          "mechanoregulation",
+          "metalloregulation",
+          "midnight regulation",
+          "misregulation",
+          "morphoregulation",
+          "myoregulation",
+          "neuroimmune regulation",
+          "neuroregulation",
+          "nonregulation"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/regulation#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-7c724e1b",
+    "term": "norm",
+    "sense": {
+      "id": "kaikki:59351ba1d955d6e40e",
+      "definition": "A rule or expectation about behaviour that a community accepts and enforces socially or through regulations.",
+      "example": "Waiting your turn is a social norm even where no written rule requires it.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a social norm",
+        "cultural norms",
+        "challenge a norm"
+      ],
+      "usage": "A norm may be unwritten. A separate meaning, as in “remote work is the norm”, describes what is usual.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/norm#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A social norm is an accepted expectation. A law has legal authority; a benchmark provides a basis for comparison."
+      ],
+      "distinctionTask": {
+        "prompt": "People expect visitors to queue, although no written rule requires it. What is being illustrated?",
+        "options": [
+          "a social norm",
+          "a legal conviction",
+          "a performance benchmark"
+        ],
+        "answer": "a social norm",
+        "explanation": "The expectation is maintained socially, so it illustrates a norm. The sentence does not establish a legal obligation."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:59351ba1d955d6e40e",
+      "definition": "A rule that is imposed by regulations and/or socially enforced by members of a community.",
+      "example": "Not eating your children is just one of those societal norms.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "1-norm",
+        "2-norm",
+        "absolute norm",
+        "adnorm",
+        "age norm",
+        "Banach norm",
+        "basic norm",
+        "Bombieri norm",
+        "C*-cross norm",
+        "Chebyshev norm",
+        "complex norm",
+        "conorm",
+        "copynorm",
+        "Cr-norm",
+        "cross norm",
+        "Dedekind-Hasse norm",
+        "dual norm",
+        "ethical norm",
+        "Euclidean matrix norm",
+        "Euclidean norm",
+        "Euclidean vector norm",
+        "exonorm",
+        "extended norm",
+        "field norm",
+        "flat norm",
+        "four-vector norm",
+        "Frobenius matrix norm",
+        "Frobenius norm",
+        "Frobenius norm function",
+        "Gowers norm"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/norm#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:59351ba1d955d6e40e",
+        "definition": "A rule that is imposed by regulations and/or socially enforced by members of a community.",
+        "example": "Not eating your children is just one of those societal norms.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "1-norm",
+          "2-norm",
+          "absolute norm",
+          "adnorm",
+          "age norm",
+          "Banach norm",
+          "basic norm",
+          "Bombieri norm",
+          "C*-cross norm",
+          "Chebyshev norm",
+          "complex norm",
+          "conorm",
+          "copynorm",
+          "Cr-norm",
+          "cross norm",
+          "Dedekind-Hasse norm",
+          "dual norm",
+          "ethical norm",
+          "Euclidean matrix norm",
+          "Euclidean norm",
+          "Euclidean vector norm",
+          "exonorm",
+          "extended norm",
+          "field norm",
+          "flat norm",
+          "four-vector norm",
+          "Frobenius matrix norm",
+          "Frobenius norm",
+          "Frobenius norm function",
+          "Gowers norm"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/norm#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-70e0b1f2",
+    "term": "permit",
+    "sense": {
+      "id": "kaikki:398ea99dfb8f16be81",
+      "definition": "To allow an activity or give permission for it.",
+      "example": "The rules permit parking in marked bays.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "permit parking",
+        "permit access",
+        "permit someone to enter"
+      ],
+      "usage": "Permit is often formal. Use permit someone to do something or permit doing something.",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Permit and allow often overlap; permit is common in formal rules. Permission does not mean obligation or guarantee that a space is available."
+      ],
+      "distinctionTask": {
+        "prompt": "Which construction gives a visitor permission to enter?",
+        "options": [
+          "permit the visitor to enter",
+          "permit the visitor enter",
+          "permit the visitor entering"
+        ],
+        "answer": "permit the visitor to enter",
+        "explanation": "Permit takes an object plus to-infinitive here. Allow the visitor to enter is also possible, with a less formal tone."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:398ea99dfb8f16be81",
+      "definition": "To allow (something) to happen, to give permission for.",
+      "example": "Mr. Cooke at once began a tirade against the residents of Asquith for permitting a sandy and generally disgraceful condition of the roads. So roundly did he vituperate the inn management in particular, and with such a loud flow of words, that I trembled lest he should be heard on the veranda.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "permitable",
+        "permit nature to take her course",
+        "permittable",
+        "permittance",
+        "permitter",
+        "repermit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:398ea99dfb8f16be81",
+        "definition": "To allow (something) to happen, to give permission for.",
+        "example": "Mr. Cooke at once began a tirade against the residents of Asquith for permitting a sandy and generally disgraceful condition of the roads. So roundly did he vituperate the inn management in particular, and with such a loud flow of words, that I trembled lest he should be heard on the veranda.",
+        "pos": "verb",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": [
+          "permitable",
+          "permit nature to take her course",
+          "permittable",
+          "permittance",
+          "permitter",
+          "repermit"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-6f00f92c",
+    "term": "admission",
+    "sense": {
+      "id": "kaikki:3e36e144cab0bea0c5",
+      "definition": "Permission to enter a place, event, or institution.",
+      "example": "Admission to the hearing is restricted to people with a valid pass.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "admission to an event",
+        "gain admission",
+        "refuse admission"
+      ],
+      "usage": "Use admission to for the place or event. Other meanings include an entrance fee or acknowledging that something is true.",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/admission#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Admission names permission to enter; permit and allow are verbs that can grant that permission. A confession or admission of guilt is a different meaning."
+      ],
+      "distinctionTask": {
+        "prompt": "What does “admission” mean in “Admission to the hearing requires a pass”?",
+        "options": [
+          "permission to enter",
+          "a statement accepting guilt",
+          "a court’s final decision"
+        ],
+        "answer": "permission to enter",
+        "explanation": "Admission to the hearing concerns entry. An admission of guilt concerns acknowledging an offence."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:3e36e144cab0bea0c5",
+      "definition": "Permission to enter, or the entrance itself; admittance; entrance; access",
+      "example": "I request admission for two adults.",
+      "pos": "noun",
+      "synonyms": [
+        "admittance",
+        "concession",
+        "acknowledgment",
+        "concurrence",
+        "allowance"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "legacy admission",
+        "nonadmission",
+        "open admission",
+        "postadmission",
+        "preadmission",
+        "readmission",
+        "request for admission"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/admission#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:3e36e144cab0bea0c5",
+        "definition": "Permission to enter, or the entrance itself; admittance; entrance; access",
+        "example": "I request admission for two adults.",
+        "pos": "noun",
+        "synonyms": [
+          "admittance",
+          "concession",
+          "acknowledgment",
+          "concurrence",
+          "allowance"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "countable, uncountable",
+        "wordFamily": [
+          "legacy admission",
+          "nonadmission",
+          "open admission",
+          "postadmission",
+          "preadmission",
+          "readmission",
+          "request for admission"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/admission#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-f1252e13",
+    "term": "enforce",
+    "sense": {
+      "id": "kaikki:6adc7d21d0d75c866e",
+      "definition": "To make people obey a law, rule, or agreement.",
+      "example": "Inspectors enforce safety regulations by checking workplaces.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "enforce a law",
+        "enforce regulations",
+        "enforce an agreement"
+      ],
+      "usage": "Enforce takes the rule or agreement as its object.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/enforce#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Enact means make a law; enforce means make people obey it. Legislate concerns making or changing laws."
+      ],
+      "distinctionTask": {
+        "prompt": "Inspectors check whether employers obey an existing safety law. What are they doing?",
+        "options": [
+          "enforcing the law",
+          "enacting a new law",
+          "repealing the law"
+        ],
+        "answer": "enforcing the law",
+        "explanation": "Enforcing concerns compliance with an existing law. Enacting makes a law, while repealing removes it."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:6adc7d21d0d75c866e",
+      "definition": "To keep up, impose or bring into effect something, not necessarily by force.",
+      "example": "The police are there to enforce the law.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "enforceability",
+        "enforceable",
+        "enforcedly",
+        "enforcement",
+        "enforcer",
+        "enforcibility",
+        "enforcingly",
+        "enforcive",
+        "misenforce",
+        "nonenforced",
+        "nonenforcing",
+        "overenforce",
+        "re-enforce",
+        "reenforce",
+        "underenforce",
+        "unenforced"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/enforce#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:6adc7d21d0d75c866e",
+        "definition": "To keep up, impose or bring into effect something, not necessarily by force.",
+        "example": "The police are there to enforce the law.",
+        "pos": "verb",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "enforceability",
+          "enforceable",
+          "enforcedly",
+          "enforcement",
+          "enforcer",
+          "enforcibility",
+          "enforcingly",
+          "enforcive",
+          "misenforce",
+          "nonenforced",
+          "nonenforcing",
+          "overenforce",
+          "re-enforce",
+          "reenforce",
+          "underenforce",
+          "unenforced"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/enforce#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-de066872",
+    "term": "mandatory",
+    "sense": {
+      "id": "kaikki:d653322f443eab521c",
+      "definition": "Required by a rule, law, or authority.",
+      "example": "Safety training is mandatory for every new employee.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "mandatory training",
+        "a mandatory requirement",
+        "make something mandatory"
+      ],
+      "usage": "Mandatory describes an obligation. Optional describes a choice.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mandatory#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Mandatory, compulsory, and obligatory often overlap. Permitted means allowed, and recommended means advised; neither necessarily means required."
+      ],
+      "distinctionTask": {
+        "prompt": "If training is mandatory, which statement follows?",
+        "options": [
+          "employees are required to attend",
+          "attendance is merely permitted",
+          "attendance is only recommended"
+        ],
+        "answer": "employees are required to attend",
+        "explanation": "Mandatory means required. Permission allows an action; a recommendation advises it."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:d653322f443eab521c",
+      "definition": "obligatory; required or commanded by authority.",
+      "example": "Attendance at a school is usually mandatory for children.",
+      "pos": "adj",
+      "synonyms": [
+        "compulsory",
+        "obligatory",
+        "binding",
+        "compulsatory",
+        "compulsory",
+        "decretory",
+        "forced",
+        "imperative",
+        "involuntary",
+        "mandatory",
+        "nonoptional",
+        "obligatory",
+        "required",
+        "unbewised",
+        "unvoluntary"
+      ],
+      "antonyms": [
+        "optional",
+        "elective",
+        "discretionary",
+        "elective",
+        "facultative",
+        "free",
+        "noncompulsory",
+        "nonmandatory",
+        "nonobligate",
+        "nonobligatory",
+        "nonrequired",
+        "nonrequisite",
+        "optional",
+        "optionary",
+        "unrequired",
+        "volitional",
+        "voluntary"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "mandatorily",
+        "mandatoriness",
+        "mandatory detention",
+        "Mandatory Palestine",
+        "mandatory reporter",
+        "mandatory sentence",
+        "mandatory sentencing",
+        "nonmandatory",
+        "supermandatory"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mandatory#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:d653322f443eab521c",
+        "definition": "obligatory; required or commanded by authority.",
+        "example": "Attendance at a school is usually mandatory for children.",
+        "pos": "adj",
+        "synonyms": [
+          "compulsory",
+          "obligatory",
+          "binding",
+          "compulsatory",
+          "compulsory",
+          "decretory",
+          "forced",
+          "imperative",
+          "involuntary",
+          "mandatory",
+          "nonoptional",
+          "obligatory",
+          "required",
+          "unbewised",
+          "unvoluntary"
+        ],
+        "antonyms": [
+          "optional",
+          "elective",
+          "discretionary",
+          "elective",
+          "facultative",
+          "free",
+          "noncompulsory",
+          "nonmandatory",
+          "nonobligate",
+          "nonobligatory",
+          "nonrequired",
+          "nonrequisite",
+          "optional",
+          "optionary",
+          "unrequired",
+          "volitional",
+          "voluntary"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "mandatorily",
+          "mandatoriness",
+          "mandatory detention",
+          "Mandatory Palestine",
+          "mandatory reporter",
+          "mandatory sentence",
+          "mandatory sentencing",
+          "nonmandatory",
+          "supermandatory"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/mandatory#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-9dc1678",
+    "term": "enact",
+    "sense": {
+      "id": "kaikki:6b0e00da522fae4a78",
+      "definition": "To make a bill or proposal into law.",
+      "example": "Parliament voted to enact the new consumer protection law.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "enact a law",
+        "enact legislation",
+        "newly enacted legislation"
+      ],
+      "usage": "Enact takes a law or legislation as its object in this meaning.",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/enact#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Enact focuses on making a particular law. Legislate can describe lawmaking generally, while enforce concerns compliance after a law exists."
+      ],
+      "distinctionTask": {
+        "prompt": "Parliament formally makes a new bill into law. What has it done?",
+        "options": [
+          "enacted the law",
+          "enforced an existing law",
+          "appealed against a judgment"
+        ],
+        "answer": "enacted the law",
+        "explanation": "Enact describes giving a proposal the force of law. Enforcement and appeal are different actions."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:6b0e00da522fae4a78",
+      "definition": "To make (a bill) into law.",
+      "example": "The practical effect of the Government's new anti-strike bill on the rail disputes in Great Britain is awaited, after the legislation was enacted.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "coenact",
+        "enactability",
+        "enactable",
+        "enactably",
+        "enacter",
+        "enaction",
+        "enactive",
+        "enactment",
+        "enactor",
+        "enacture",
+        "preenact",
+        "reenact",
+        "unenacted"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/enact#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:6b0e00da522fae4a78",
+        "definition": "To make (a bill) into law.",
+        "example": "The practical effect of the Government's new anti-strike bill on the rail disputes in Great Britain is awaited, after the legislation was enacted.",
+        "pos": "verb",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": [
+          "coenact",
+          "enactability",
+          "enactable",
+          "enactably",
+          "enacter",
+          "enaction",
+          "enactive",
+          "enactment",
+          "enactor",
+          "enacture",
+          "preenact",
+          "reenact",
+          "unenacted"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/enact#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-ab47ef8d",
+    "term": "legislate",
+    "sense": {
+      "id": "kaikki:3b07617343eeffb6aa",
+      "definition": "To make, change, or repeal laws.",
+      "example": "The government plans to legislate against misleading advertising.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "legislate against something",
+        "legislate on an issue",
+        "legislate to protect consumers"
+      ],
+      "usage": "Common patterns include legislate against, legislate on, and legislate to do something.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/legislate#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Legislate describes lawmaking. Enact commonly takes a particular law as its object; enforce means make people obey rules already in force."
+      ],
+      "distinctionTask": {
+        "prompt": "Which action is an example of legislating?",
+        "options": [
+          "making or changing laws",
+          "inspecting compliance with an existing law",
+          "giving a private recommendation"
+        ],
+        "answer": "making or changing laws",
+        "explanation": "Legislate concerns creating or changing the law. Inspecting compliance is enforcement."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:3b07617343eeffb6aa",
+      "definition": "To pass laws (including the amending or repeal of existing laws).",
+      "example": "If they can't get people to do the right thing by talking then they will try to legislate and enforce the statutes.",
+      "pos": "verb",
+      "synonyms": [
+        "lawmake"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/legislate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:3b07617343eeffb6aa",
+        "definition": "To pass laws (including the amending or repeal of existing laws).",
+        "example": "If they can't get people to do the right thing by talking then they will try to legislate and enforce the statutes.",
+        "pos": "verb",
+        "synonyms": [
+          "lawmake"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/legislate#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-45b2d4c0",
+    "term": "equity",
+    "sense": {
+      "id": "kaikki:569420050a8d0a53ae",
+      "definition": "Fairness or justice in the way people are treated.",
+      "example": "The policy aims to improve equity in access to education.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "equity in education",
+        "promote equity",
+        "equity and fairness"
+      ],
+      "usage": "This is the fairness meaning. In finance, equity can mean an ownership interest; in law it can also name a distinct body of principles.",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/equity#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Equity concerns fairness; equality concerns being equal in status, rights, amounts, or treatment. Equal treatment and fair treatment can overlap, but are not always identical."
+      ],
+      "distinctionTask": {
+        "prompt": "What does “equity” refer to in “equity in access to education”?",
+        "options": [
+          "fairness in access",
+          "a company ownership share",
+          "equal numerical exam scores"
+        ],
+        "answer": "fairness in access",
+        "explanation": "Equity here concerns fairness in opportunities. Equality and fairness can overlap without requiring identical numerical outcomes."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:569420050a8d0a53ae",
+      "definition": "Fairness, impartiality, or justice as determined in light of \"natural law\" or \"natural right\".",
+      "example": "Sufficeth what they in their graue wiſedoomes ſhall proſcribe, I in no ſorte will ſeeke to acquite, nor preſumptuouſly attempte to diſpute againſt the equity of their iudgementes, but humble and proſtrate appeale to their mercies.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "inequity",
+        "iniquity"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "brand equity",
+        "court of equity",
+        "dequity",
+        "equitable",
+        "equitize",
+        "equity collar",
+        "equity court",
+        "equity fund",
+        "equity language",
+        "equitylike",
+        "equity of redemption",
+        "equity share",
+        "fold equity",
+        "guaranteed equity bond",
+        "home equity",
+        "jury equity",
+        "negative equity",
+        "non-equity",
+        "nonequity",
+        "owner's equity",
+        "ownership equity",
+        "private equity",
+        "sweat equity",
+        "techquity",
+        "unequity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/equity#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:569420050a8d0a53ae",
+        "definition": "Fairness, impartiality, or justice as determined in light of \"natural law\" or \"natural right\".",
+        "example": "Sufficeth what they in their graue wiſedoomes ſhall proſcribe, I in no ſorte will ſeeke to acquite, nor preſumptuouſly attempte to diſpute againſt the equity of their iudgementes, but humble and proſtrate appeale to their mercies.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [
+          "inequity",
+          "iniquity"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "countable, uncountable",
+        "wordFamily": [
+          "brand equity",
+          "court of equity",
+          "dequity",
+          "equitable",
+          "equitize",
+          "equity collar",
+          "equity court",
+          "equity fund",
+          "equity language",
+          "equitylike",
+          "equity of redemption",
+          "equity share",
+          "fold equity",
+          "guaranteed equity bond",
+          "home equity",
+          "jury equity",
+          "negative equity",
+          "non-equity",
+          "nonequity",
+          "owner's equity",
+          "ownership equity",
+          "private equity",
+          "sweat equity",
+          "techquity",
+          "unequity"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/equity#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-ad50c4f6",
+    "term": "prejudice",
+    "sense": {
+      "id": "kaikki:67be0f4ac6c4d2df40",
+      "definition": "An unfavourable opinion formed before considering the facts fairly.",
+      "example": "The campaign challenges prejudice against people with disabilities.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "prejudice against a group",
+        "racial prejudice",
+        "challenge prejudice"
+      ],
+      "usage": "Prejudice can be an attitude; discriminatory treatment is an action or practice.",
+      "register": "countable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prejudice#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Prejudice concerns a prejudgment or attitude. Discrimination concerns disadvantageous treatment; an unfair action does not by itself reveal every belief behind it."
+      ],
+      "distinctionTask": {
+        "prompt": "A person assumes an applicant is unsuitable before reading any evidence because of the applicant’s age. What is illustrated?",
+        "options": [
+          "prejudice in the person’s judgment",
+          "proof of the applicant’s ability",
+          "a fair assessment of the evidence"
+        ],
+        "answer": "prejudice in the person’s judgment",
+        "explanation": "Prejudice is a prejudgment formed without fair consideration. Discrimination would concern the disadvantageous treatment that may follow."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:67be0f4ac6c4d2df40",
+      "definition": "An adverse judgment or opinion formed beforehand or without knowledge of the facts.",
+      "example": "Many of the inhabitants of our Eastern States refuse to eat Squirrels of any kind, from some prejudice or other; but we can assure our readers that the flesh of this species, and many others, is both tender and well-flavoured, and when nicely broiled, does not require a hunter’s appetite to recommend it.",
+      "pos": "noun",
+      "synonyms": [
+        "bigotry",
+        "bias",
+        "chauvinism",
+        "clannishness",
+        "discrimination",
+        "inequality",
+        "inequity",
+        "intolerance",
+        "jaundiced eye",
+        "narrow-mindedness",
+        "one-sidedness",
+        "partisanship"
+      ],
+      "antonyms": [
+        "disinterest",
+        "equality",
+        "equity",
+        "fairness",
+        "impartiality",
+        "tolerance"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "antiprejudice",
+        "biprejudice",
+        "counterprejudice",
+        "disprejudice",
+        "extreme prejudice",
+        "heteroprejudice",
+        "homoprejudice",
+        "in prejudice of",
+        "postjudice",
+        "prejudiceless",
+        "prejudicer",
+        "prejudicious",
+        "self-prejudice",
+        "terminate with extreme prejudice",
+        "to the prejudice of",
+        "transprejudice",
+        "unprejudice",
+        "without prejudice",
+        "with prejudice"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prejudice#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:67be0f4ac6c4d2df40",
+        "definition": "An adverse judgment or opinion formed beforehand or without knowledge of the facts.",
+        "example": "Many of the inhabitants of our Eastern States refuse to eat Squirrels of any kind, from some prejudice or other; but we can assure our readers that the flesh of this species, and many others, is both tender and well-flavoured, and when nicely broiled, does not require a hunter’s appetite to recommend it.",
+        "pos": "noun",
+        "synonyms": [
+          "bigotry",
+          "bias",
+          "chauvinism",
+          "clannishness",
+          "discrimination",
+          "inequality",
+          "inequity",
+          "intolerance",
+          "jaundiced eye",
+          "narrow-mindedness",
+          "one-sidedness",
+          "partisanship"
+        ],
+        "antonyms": [
+          "disinterest",
+          "equality",
+          "equity",
+          "fairness",
+          "impartiality",
+          "tolerance"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "countable",
+        "wordFamily": [
+          "antiprejudice",
+          "biprejudice",
+          "counterprejudice",
+          "disprejudice",
+          "extreme prejudice",
+          "heteroprejudice",
+          "homoprejudice",
+          "in prejudice of",
+          "postjudice",
+          "prejudiceless",
+          "prejudicer",
+          "prejudicious",
+          "self-prejudice",
+          "terminate with extreme prejudice",
+          "to the prejudice of",
+          "transprejudice",
+          "unprejudice",
+          "without prejudice",
+          "with prejudice"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/prejudice#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-485937d0",
+    "term": "mediate",
+    "sense": {
+      "id": "kaikki:8abfe999aea3f7e9a9",
+      "definition": "To help opposing sides discuss a disagreement in order to reach a settlement.",
+      "example": "An independent adviser will mediate between the employer and the union.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "mediate between two sides",
+        "mediate in a dispute",
+        "mediate a settlement"
+      ],
+      "usage": "This meaning describes intervening to seek a resolution; it does not guarantee agreement.",
+      "register": "intransitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mediate#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A mediator helps parties seek agreement. A judge decides a case; an arbitrator may issue a decision under an arbitration procedure."
+      ],
+      "distinctionTask": {
+        "prompt": "An adviser will mediate between two sides. What does this promise?",
+        "options": [
+          "help with seeking agreement",
+          "a guaranteed settlement",
+          "a court judgment by the adviser"
+        ],
+        "answer": "help with seeking agreement",
+        "explanation": "Mediate here describes helping opposing parties work towards agreement. It does not itself promise a successful settlement or a binding judgment."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:8abfe999aea3f7e9a9",
+      "definition": "To intervene between conflicting parties in order to resolve differences or bring about a settlement.",
+      "example": "\"Nay,\" replied Charles, gravely, \"this is carrying your anger too far. Allow me to mediate between you. I must entreat, nay, I command, the Lady Francesca's presence.\"",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "antibody-mediated rejection",
+        "electromediated",
+        "hypermediated",
+        "immunomediate",
+        "mediatable",
+        "mediatingly",
+        "mediative",
+        "nonmediated",
+        "nonmediating",
+        "telemediated",
+        "unmediated"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mediate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:8abfe999aea3f7e9a9",
+        "definition": "To intervene between conflicting parties in order to resolve differences or bring about a settlement.",
+        "example": "\"Nay,\" replied Charles, gravely, \"this is carrying your anger too far. Allow me to mediate between you. I must entreat, nay, I command, the Lady Francesca's presence.\"",
+        "pos": "verb",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "intransitive",
+        "wordFamily": [
+          "antibody-mediated rejection",
+          "electromediated",
+          "hypermediated",
+          "immunomediate",
+          "mediatable",
+          "mediatingly",
+          "mediative",
+          "nonmediated",
+          "nonmediating",
+          "telemediated",
+          "unmediated"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/mediate#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-80201287",
+    "term": "whisper",
+    "sense": {
+      "id": "kaikki:142168930e1bdfadb8",
+      "definition": "The sound or act of speaking very quietly, often so only someone nearby can hear.",
+      "example": "She spoke in a whisper so that only the person beside her could hear.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "speak in a whisper",
+        "a quiet whisper",
+        "a stage whisper"
+      ],
+      "usage": "Whisper is a noun here. Speak in a whisper uses the same meaning; whisper can also be a verb.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/whisper#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A whisper stresses very quiet speech. A mutter is low and indistinct, often expressing dissatisfaction; a murmur can be soft speech or another low continuous sound. These can overlap."
+      ],
+      "distinctionTask": {
+        "prompt": "What feature does “a whisper” emphasise in this example?",
+        "options": [
+          "very quiet speech heard nearby",
+          "a complete absence of speech",
+          "a loud public accusation"
+        ],
+        "answer": "very quiet speech heard nearby",
+        "explanation": "Whisper emphasises quiet speech. Mutter often adds indistinctness or dissatisfaction, while murmur has wider sound uses."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:142168930e1bdfadb8",
+      "definition": "The act of speaking in a quiet voice, especially without vibration of the vocal cords; the sound thus produced.",
+      "example": "I spoke in a near whisper.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "a whisper down the lane",
+        "Chinese whispers",
+        "in a pig's whisper",
+        "kissper",
+        "pig's whisper",
+        "stage whisper",
+        "whisper campaign",
+        "whisperhood",
+        "whisper interpreting",
+        "whisper network",
+        "whisperous",
+        "whisper porn",
+        "whispersome",
+        "whisper test",
+        "whispery"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/whisper#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:142168930e1bdfadb8",
+        "definition": "The act of speaking in a quiet voice, especially without vibration of the vocal cords; the sound thus produced.",
+        "example": "I spoke in a near whisper.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "a whisper down the lane",
+          "Chinese whispers",
+          "in a pig's whisper",
+          "kissper",
+          "pig's whisper",
+          "stage whisper",
+          "whisper campaign",
+          "whisperhood",
+          "whisper interpreting",
+          "whisper network",
+          "whisperous",
+          "whisper porn",
+          "whispersome",
+          "whisper test",
+          "whispery"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/whisper#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-589fc9ca",
+    "term": "mutter",
+    "sense": {
+      "id": "kaikki:3f89eb03671c14cb65",
+      "definition": "A low, indistinct utterance, often expressing dissatisfaction.",
+      "example": "He gave a mutter of complaint when the meeting was extended.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a mutter of complaint",
+        "barely a mutter",
+        "an angry mutter"
+      ],
+      "usage": "Mutter is a countable noun here. The verb often appears as mutter something or mutter about something.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mutter#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Mutter often suggests indistinct speech or dissatisfaction. Whisper primarily stresses a quiet voice; murmur can describe soft speech or other low sounds. No single mood is compulsory in every use."
+      ],
+      "distinctionTask": {
+        "prompt": "What does “a mutter of complaint” describe?",
+        "options": [
+          "an indistinct low utterance expressing dissatisfaction",
+          "a clearly shouted instruction",
+          "a legally binding objection"
+        ],
+        "answer": "an indistinct low utterance expressing dissatisfaction",
+        "explanation": "The low indistinct utterance is a mutter, and of complaint supplies dissatisfaction. Low volume alone does not make every utterance a complaint."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:3f89eb03671c14cb65",
+      "definition": "A repressed or obscure utterance; an instance of muttering.",
+      "example": "The prisoners were docile, and accepted their lot with barely a mutter.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mutter#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:3f89eb03671c14cb65",
+        "definition": "A repressed or obscure utterance; an instance of muttering.",
+        "example": "The prisoners were docile, and accepted their lot with barely a mutter.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/mutter#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-8181612c",
+    "term": "silent",
+    "sense": {
+      "id": "kaikki:04ba261bc01489628c",
+      "definition": "Not speaking.",
+      "example": "The witness remained silent while the lawyer checked the document.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "remain silent",
+        "keep silent",
+        "fall silent"
+      ],
+      "usage": "This describes the absence of speech at a particular time.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/silent#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Silent does not establish that someone is unable to speak. Mute can mean unable to speak, but also has separate quiet or sound-switched-off uses."
+      ],
+      "distinctionTask": {
+        "prompt": "What follows from “The witness remained silent”?",
+        "options": [
+          "the witness did not speak during that time",
+          "the witness was necessarily unable to speak",
+          "the witness agreed with every statement"
+        ],
+        "answer": "the witness did not speak during that time",
+        "explanation": "Silent describes not speaking here. It establishes neither inability to speak nor agreement."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:04ba261bc01489628c",
+      "definition": "Not speaking; indisposed to talk; speechless; mute; taciturn; not loquacious; not talkative.",
+      "example": "Ulysses, adds he, was the most eloquent and most silent of men.",
+      "pos": "adj",
+      "synonyms": [
+        "speechless",
+        "dumb"
+      ],
+      "antonyms": [
+        "loud",
+        "noisy",
+        "unsilent",
+        "nonsilent"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "be silent",
+        "fall silent",
+        "immunosilent",
+        "Jay and Silent Bob",
+        "nonsilent",
+        "on silent",
+        "oversilent",
+        "phosphosilent",
+        "pseudosilent",
+        "radio silent",
+        "right to remain silent",
+        "serosilent",
+        "silent agitator",
+        "silent alarm",
+        "silent as a grave",
+        "silent as the grave",
+        "silent as the tomb",
+        "silent auction",
+        "silent barter",
+        "silent but deadly",
+        "silent butler",
+        "silent-but-violent",
+        "silent cinema",
+        "silent commerce",
+        "silent cop",
+        "silent disco",
+        "silent e",
+        "silent fart",
+        "silent film",
+        "silent forest syndrome"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/silent#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:04ba261bc01489628c",
+        "definition": "Not speaking; indisposed to talk; speechless; mute; taciturn; not loquacious; not talkative.",
+        "example": "Ulysses, adds he, was the most eloquent and most silent of men.",
+        "pos": "adj",
+        "synonyms": [
+          "speechless",
+          "dumb"
+        ],
+        "antonyms": [
+          "loud",
+          "noisy",
+          "unsilent",
+          "nonsilent"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "be silent",
+          "fall silent",
+          "immunosilent",
+          "Jay and Silent Bob",
+          "nonsilent",
+          "on silent",
+          "oversilent",
+          "phosphosilent",
+          "pseudosilent",
+          "radio silent",
+          "right to remain silent",
+          "serosilent",
+          "silent agitator",
+          "silent alarm",
+          "silent as a grave",
+          "silent as the grave",
+          "silent as the tomb",
+          "silent auction",
+          "silent barter",
+          "silent but deadly",
+          "silent butler",
+          "silent-but-violent",
+          "silent cinema",
+          "silent commerce",
+          "silent cop",
+          "silent disco",
+          "silent e",
+          "silent fart",
+          "silent film",
+          "silent forest syndrome"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/silent#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-7c700b2c",
+    "term": "mute",
+    "sense": {
+      "id": "kaikki:670809871db7761143",
+      "definition": "Unable to speak.",
+      "example": "The character is mute and communicates through sign language.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "be mute",
+        "a mute character",
+        "communicate without speech"
+      ],
+      "usage": "This meaning describes inability to speak. Other meanings include quiet or having sound turned off, as in a muted microphone.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mute#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Silent can describe someone who is simply not speaking at that moment. Mute in this example describes inability to speak, rather than a choice to remain quiet."
+      ],
+      "distinctionTask": {
+        "prompt": "How does “mute” differ from “silent” in this example?",
+        "options": [
+          "it describes inability to speak",
+          "it proves the person cannot communicate",
+          "it means the person agrees"
+        ],
+        "answer": "it describes inability to speak",
+        "explanation": "Mute has the inability-to-speak meaning here. The character still communicates through sign language; silent alone would not establish inability."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:670809871db7761143",
+      "definition": "Not having the power of speech; dumb.",
+      "example": "Thus, while the mute Creation downward bend / Their sight, and to their Earthy Mother tend, / Man looks aloft; and with erected Eyes / Beholds his own hereditary Skies. / From ſuch rude Principles our Form began; / And Earth was Metamorphos'd into Man.",
+      "pos": "adj",
+      "synonyms": [
+        "aphonic",
+        "aphonous",
+        "dumb",
+        "dumb as a post",
+        "mumchance",
+        "mute",
+        "tongueless",
+        "unspeaking",
+        "voiceless"
+      ],
+      "antonyms": [
+        "audible",
+        "nonmute",
+        "talkative",
+        "vocal",
+        "voiced"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "deaf-mute",
+        "I'm mute",
+        "mute as a mouse",
+        "mute cornett",
+        "mute e",
+        "mute h",
+        "mutely",
+        "muteness",
+        "mute of malice",
+        "mute point",
+        "mute swan",
+        "mutism",
+        "mutist",
+        "mutistic",
+        "nonmute",
+        "palm mute",
+        "selectively mute",
+        "semimute"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mute#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:670809871db7761143",
+        "definition": "Not having the power of speech; dumb.",
+        "example": "Thus, while the mute Creation downward bend / Their sight, and to their Earthy Mother tend, / Man looks aloft; and with erected Eyes / Beholds his own hereditary Skies. / From ſuch rude Principles our Form began; / And Earth was Metamorphos'd into Man.",
+        "pos": "adj",
+        "synonyms": [
+          "aphonic",
+          "aphonous",
+          "dumb",
+          "dumb as a post",
+          "mumchance",
+          "mute",
+          "tongueless",
+          "unspeaking",
+          "voiceless"
+        ],
+        "antonyms": [
+          "audible",
+          "nonmute",
+          "talkative",
+          "vocal",
+          "voiced"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "deaf-mute",
+          "I'm mute",
+          "mute as a mouse",
+          "mute cornett",
+          "mute e",
+          "mute h",
+          "mutely",
+          "muteness",
+          "mute of malice",
+          "mute point",
+          "mute swan",
+          "mutism",
+          "mutist",
+          "mutistic",
+          "nonmute",
+          "palm mute",
+          "selectively mute",
+          "semimute"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/mute#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-724d4dcc",
+    "term": "supreme",
+    "sense": {
+      "id": "kaikki:433e5320f72b39fa81",
+      "definition": "Having the highest authority or power.",
+      "example": "The constitution gives the national court supreme authority in these cases.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "supreme authority",
+        "supreme power",
+        "the Supreme Court"
+      ],
+      "usage": "Supreme describes the highest authority in the stated system or context.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/supreme#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Supreme concerns highest rank or power. Superior means higher relative to something else and need not mean highest; official concerns authority or approval."
+      ],
+      "distinctionTask": {
+        "prompt": "What does “supreme authority” emphasise?",
+        "options": [
+          "the highest authority in the stated context",
+          "any authority higher than another",
+          "a necessarily error-free decision"
+        ],
+        "answer": "the highest authority in the stated context",
+        "explanation": "Supreme means highest in the specified system. Superior is relative, and authority does not guarantee that decisions are error-free."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:433e5320f72b39fa81",
+      "definition": "Dominant, having power over all others.",
+      "example": "The US supreme court has ruled unanimously that natural human genes cannot be patented, a decision that scientists and civil rights campaigners said removed a major barrier to patient care and medical innovation.",
+      "pos": "adj",
+      "synonyms": [
+        "predominant",
+        "preponderant",
+        "regnant"
+      ],
+      "antonyms": [
+        "inferior",
+        "minor"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "hypersupreme",
+        "reign supreme",
+        "supersupreme",
+        "supremacism",
+        "supremacist",
+        "supremacy",
+        "supreme being",
+        "supreme court",
+        "supreme leader",
+        "Supreme Leader",
+        "supremely",
+        "supreme moderator",
+        "supreme moment",
+        "supremeness",
+        "supreme sacrifice",
+        "Supreme Soviet",
+        "supremist",
+        "supremity",
+        "unsupreme"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/supreme#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:433e5320f72b39fa81",
+        "definition": "Dominant, having power over all others.",
+        "example": "The US supreme court has ruled unanimously that natural human genes cannot be patented, a decision that scientists and civil rights campaigners said removed a major barrier to patient care and medical innovation.",
+        "pos": "adj",
+        "synonyms": [
+          "predominant",
+          "preponderant",
+          "regnant"
+        ],
+        "antonyms": [
+          "inferior",
+          "minor"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "hypersupreme",
+          "reign supreme",
+          "supersupreme",
+          "supremacism",
+          "supremacist",
+          "supremacy",
+          "supreme being",
+          "supreme court",
+          "supreme leader",
+          "Supreme Leader",
+          "supremely",
+          "supreme moderator",
+          "supreme moment",
+          "supremeness",
+          "supreme sacrifice",
+          "Supreme Soviet",
+          "supremist",
+          "supremity",
+          "unsupreme"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/supreme#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-9bd1ac74",
+    "term": "suitable",
+    "sense": {
+      "id": "kaikki:0e2ed165945a7f2f9d",
+      "definition": "Appropriate for a particular purpose, person, or situation.",
+      "example": "The committee needs a room suitable for a confidential hearing.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "suitable for a purpose",
+        "a suitable candidate",
+        "suitable accommodation"
+      ],
+      "usage": "Use suitable for someone or something, and suitable to do something where the construction allows it.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suitable#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Suitable focuses on fit for a purpose. Reasonable can concern fairness or sensible limits; legal concerns law. A room can be legally usable yet unsuitable for a confidential meeting."
+      ],
+      "distinctionTask": {
+        "prompt": "Why does the committee need a room “suitable for a confidential hearing”?",
+        "options": [
+          "it must fit the hearing’s privacy needs",
+          "it must be the cheapest room",
+          "it must be owned by a court"
+        ],
+        "answer": "it must fit the hearing’s privacy needs",
+        "explanation": "Suitable focuses on fitness for the purpose, here privacy. It does not specify price or ownership."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:0e2ed165945a7f2f9d",
+      "definition": "Having sufficient or the required properties for a certain purpose or task; appropriate to a certain occasion.",
+      "example": "Doctors told Matthew Parker’s family there was only a 1% chance of finding a suitable donor for Matthew because his body had rejected a previous transplant.",
+      "pos": "adj",
+      "synonyms": [
+        "fit for purpose",
+        "up to standard",
+        "allowable",
+        "appropriate",
+        "apropos",
+        "apposite",
+        "apt",
+        "comely",
+        "commensurate",
+        "correct",
+        "decorous",
+        "expedient",
+        "felicitous",
+        "fit",
+        "fitting",
+        "gainand",
+        "idoneous",
+        "in line",
+        "likely",
+        "meet",
+        "opportune",
+        "proper",
+        "right",
+        "seemly",
+        "sensible",
+        "sortable",
+        "suitable",
+        "tidy"
+      ],
+      "antonyms": [
+        "unsuitable"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suitable#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:0e2ed165945a7f2f9d",
+        "definition": "Having sufficient or the required properties for a certain purpose or task; appropriate to a certain occasion.",
+        "example": "Doctors told Matthew Parker’s family there was only a 1% chance of finding a suitable donor for Matthew because his body had rejected a previous transplant.",
+        "pos": "adj",
+        "synonyms": [
+          "fit for purpose",
+          "up to standard",
+          "allowable",
+          "appropriate",
+          "apropos",
+          "apposite",
+          "apt",
+          "comely",
+          "commensurate",
+          "correct",
+          "decorous",
+          "expedient",
+          "felicitous",
+          "fit",
+          "fitting",
+          "gainand",
+          "idoneous",
+          "in line",
+          "likely",
+          "meet",
+          "opportune",
+          "proper",
+          "right",
+          "seemly",
+          "sensible",
+          "sortable",
+          "suitable",
+          "tidy"
+        ],
+        "antonyms": [
+          "unsuitable"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/suitable#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-eb8ee940",
+    "term": "constraint",
+    "sense": {
+      "id": "kaikki:ce24c8ab1860d9a245",
+      "definition": "A limit or restriction on what can be done.",
+      "example": "The budget constraint prevents the council from extending the service this year.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a budget constraint",
+        "time constraints",
+        "work within constraints"
+      ],
+      "usage": "A constraint can arise from resources, circumstances, or a rule.",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/constraint#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Constraint is broader than prohibition: a limited budget restricts options without necessarily forbidding an activity by law. Obligation concerns a duty to act."
+      ],
+      "distinctionTask": {
+        "prompt": "A council cannot afford an extension because its budget is limited. What does “constraint” describe?",
+        "options": [
+          "a limit on available options",
+          "a duty to extend the service",
+          "a criminal prohibition on all extensions"
+        ],
+        "answer": "a limit on available options",
+        "explanation": "The budget is a constraint on options. A constraint need not be a legal prohibition or an obligation."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:ce24c8ab1860d9a245",
+      "definition": "Something that constrains; a restriction.",
+      "example": "An engineer must recognize the difference between a constraint (to work within) and a problem (to be eliminated via resolution).",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "budget constraint",
+        "constraint cluster",
+        "constrainted",
+        "constraintive",
+        "constraintless",
+        "constraint logic programming",
+        "constraint satisfaction",
+        "Hamiltonian constraint",
+        "holonomic constraint",
+        "integrity constraint",
+        "liquidity constraint",
+        "markedness constraint",
+        "metaconstraint",
+        "multiconstraint",
+        "nonconstraint",
+        "subconstraint",
+        "theory of constraints",
+        "time constraint",
+        "unconstraint",
+        "unconstrainted"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/constraint#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:ce24c8ab1860d9a245",
+        "definition": "Something that constrains; a restriction.",
+        "example": "An engineer must recognize the difference between a constraint (to work within) and a problem (to be eliminated via resolution).",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "countable, uncountable",
+        "wordFamily": [
+          "budget constraint",
+          "constraint cluster",
+          "constrainted",
+          "constraintive",
+          "constraintless",
+          "constraint logic programming",
+          "constraint satisfaction",
+          "Hamiltonian constraint",
+          "holonomic constraint",
+          "integrity constraint",
+          "liquidity constraint",
+          "markedness constraint",
+          "metaconstraint",
+          "multiconstraint",
+          "nonconstraint",
+          "subconstraint",
+          "theory of constraints",
+          "time constraint",
+          "unconstraint",
+          "unconstrainted"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/constraint#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-dee2f533",
+    "term": "protocol",
+    "sense": {
+      "id": "kaikki:355133f5ab63510815",
+      "definition": "An agreement that adds to or changes an existing treaty.",
+      "example": "The countries signed a protocol adding new reporting rules to the treaty.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "sign a protocol",
+        "a protocol to a treaty",
+        "amend a treaty by protocol"
+      ],
+      "usage": "This is the treaty-related meaning. Protocol can separately mean an agreed procedure or a set of communication rules.",
+      "register": "countable, historical, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/protocol#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A treaty is the underlying international agreement here. A protocol adds to or changes it; in another setting, a safety protocol can instead describe a procedure."
+      ],
+      "distinctionTask": {
+        "prompt": "What does “protocol” mean in this example?",
+        "options": [
+          "an agreement adding to or changing a treaty",
+          "any informal personal promise",
+          "a computer connection"
+        ],
+        "answer": "an agreement adding to or changing a treaty",
+        "explanation": "The reference to a treaty selects this legal meaning of protocol. Procedure and computer-communication meanings are separate."
+      },
+      "editorial": {
+        "source": "Fieldbook law-group teaching review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:355133f5ab63510815",
+      "definition": "The minutes, or official record, of a negotiation or transaction; especially a document drawn up officially which forms the legal basis for subsequent agreements based on it.",
+      "example": "Another account says that, on the morning of the 31st of May, the king delivered to the prince-royal the crown, the sceptre, and the key of his treasure and gave him his blessing. The privy-counsillor Vockerodt drew up at his desire a protocol of the transaction.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "historical",
+      "register": "countable, historical, uncountable",
+      "wordFamily": [
+        "Address Resolution Protocol",
+        "application protocol data unit",
+        "bonding protocol",
+        "Budwig protocol",
+        "Chicago Protocol",
+        "cryptoprotocol",
+        "File Transfer Protocol",
+        "immunoprotocol",
+        "Internet Protocol",
+        "interprotocol",
+        "intraprotocol",
+        "Kyoto Protocol",
+        "layer 2 tunnelling protocol",
+        "layer two tunnelling protocol",
+        "metaprotocol",
+        "Milwaukee protocol",
+        "multiprotocol",
+        "Needham-Schroeder protocol",
+        "Newman-Goldfarb protocol",
+        "Otway-Rees protocol",
+        "preprotocol",
+        "protocolary",
+        "protocolic",
+        "protocoligorically",
+        "protocolist",
+        "protocolization",
+        "protocolize",
+        "protocol sentence",
+        "protocol stack",
+        "pseudoprotocol"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/protocol#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:355133f5ab63510815",
+        "definition": "The minutes, or official record, of a negotiation or transaction; especially a document drawn up officially which forms the legal basis for subsequent agreements based on it.",
+        "example": "Another account says that, on the morning of the 31st of May, the king delivered to the prince-royal the crown, the sceptre, and the key of his treasure and gave him his blessing. The privy-counsillor Vockerodt drew up at his desire a protocol of the transaction.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "historical",
+        "register": "countable, historical, uncountable",
+        "wordFamily": [
+          "Address Resolution Protocol",
+          "application protocol data unit",
+          "bonding protocol",
+          "Budwig protocol",
+          "Chicago Protocol",
+          "cryptoprotocol",
+          "File Transfer Protocol",
+          "immunoprotocol",
+          "Internet Protocol",
+          "interprotocol",
+          "intraprotocol",
+          "Kyoto Protocol",
+          "layer 2 tunnelling protocol",
+          "layer two tunnelling protocol",
+          "metaprotocol",
+          "Milwaukee protocol",
+          "multiprotocol",
+          "Needham-Schroeder protocol",
+          "Newman-Goldfarb protocol",
+          "Otway-Rees protocol",
+          "preprotocol",
+          "protocolary",
+          "protocolic",
+          "protocoligorically",
+          "protocolist",
+          "protocolization",
+          "protocolize",
+          "protocol sentence",
+          "protocol stack",
+          "pseudoprotocol"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/protocol#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ],
+    "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
   }
 ]

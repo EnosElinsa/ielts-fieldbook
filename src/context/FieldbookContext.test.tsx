@@ -113,6 +113,91 @@ test('a successful scoped exam save keeps recovery for unrelated unsaved writing
   });
   expect(readDraftRecovery(mocks.owner)?.drafts.q1.text).toBe('New unsaved writing');
 });
+
+function examExpansionFixture() {
+  const questions=Array.from({length:13},(_,index)=>({id:`expansion-q${index+1}`,sectionId:'expansion-section',skill:'reading',number:index+1,type:'gap',points:1}));
+  const original={id:'expansion-attempt',planId:'expansion-plan',skill:'reading',sourceId:'expansion-section',sectionIds:['expansion-section'],mode:'practice',status:'paused',startedAt:'2026-11-12T10:00:00Z',updatedAt:'2026-11-12T10:01:00Z',elapsedSeconds:25,hintsEnabled:true,responses:{'expansion-q1':'original answer'},evidence:{'expansion-q1':'original evidence'},keywords:{},errorReasons:{},questionSnapshot:questions.slice(0,7),questionTypes:Object.fromEntries(questions.slice(0,7).map(question=>[question.id,question.type]))};
+  const expanded={...structuredClone(original),updatedAt:'2026-11-12T10:02:00Z',questionSnapshot:questions,questionTypes:Object.fromEntries(questions.map(question=>[question.id,question.type]))};
+  const plan={id:'expansion-plan',dateKey:'2026-11-12',skill:'reading',kind:'reading-practice',status:'in_progress',quantity:7,target:{type:'section',skill:'reading',sectionId:'expansion-section',questionIds:questions.slice(0,7).map(question=>question.id)}};
+  mocks.initial.examAttempts=[original];mocks.initial.plans=[plan];
+  return {original,expanded,plan,expectedQuestionIds:questions.slice(0,7).map(question=>question.id)};
+}
+
+test('failed exam expansion never exposes the expanded session or task before acknowledgement',async()=>{
+  const {original,expanded,plan,expectedQuestionIds}=examExpansionFixture();
+  await mount('/reading');
+  const pending=defer(),onError=vi.fn();mocks.saveState.mockImplementationOnce(async(_next,feedback)=>{const saved=await pending.promise;if(!saved)feedback('Server timeout');return saved;});
+  let saving;await act(async()=>{saving=fieldbook.commitExamSectionExpansion(expanded,{expectedQuestionIds,onError});});
+  expect(fieldbook.state.examAttempts[0]).toEqual(original);
+  expect(fieldbook.state.plans[0]).toEqual(plan);
+  await act(async()=>{pending.resolve(false);expect(await saving).toBe(false);});
+  expect(fieldbook.state.examAttempts[0]).toEqual(original);
+  expect(fieldbook.state.plans[0]).toEqual(plan);
+  expect(onError).toHaveBeenCalledWith('Server timeout');expect(fieldbook.saveFailed).toBe(false);
+  expect(mocks.saveState.mock.calls.at(-1)[2].collections).toEqual(['examAttempts','plans']);
+});
+
+test('acknowledged exam expansion preserves live answers and survives an older queued save',async()=>{
+  const {original,expanded,expectedQuestionIds}=examExpansionFixture();
+  expanded.responses['expansion-q1']='latest local answer';
+  await mount('/reading');
+  const pending=defer();mocks.saveState.mockReturnValueOnce(pending.promise);
+  let expanding,autosave;
+  await act(async()=>{expanding=fieldbook.commitExamSectionExpansion(expanded,{expectedQuestionIds});});
+  expect(fieldbook.state.examAttempts[0]).toEqual(original);
+  await act(async()=>{autosave=fieldbook.persist(draft=>{draft.examAttempts[0].responses['expansion-q1']='newer answer while saving';draft.examAttempts[0].evidence['expansion-q2']='new evidence';draft.plans[0].order=9;draft.drafts.q1.text='keep unrelated writing';});});
+  expect(mocks.saveState).toHaveBeenCalledTimes(1);
+  await act(async()=>{pending.resolve(true);expect(await expanding).toBe(true);expect(await autosave).toBe(true);});
+  const stored=mocks.saveState.mock.calls.at(-1)[0];
+  for(const state of [fieldbook.state,stored]){
+    expect(state.examAttempts[0].questionSnapshot).toHaveLength(13);
+    expect(state.examAttempts[0].responses['expansion-q1']).toBe('newer answer while saving');
+    expect(state.examAttempts[0].evidence['expansion-q2']).toBe('new evidence');
+    expect(state.plans[0]).toMatchObject({order:9,quantity:13,target:{questionScope:'full-section'}});
+    expect(state.plans[0].target.questionIds).toHaveLength(13);
+    expect(state.drafts.q1.text).toBe('keep unrelated writing');
+  }
+});
+
+test('stale exam scope cannot expand a different current session',async()=>{
+  const {original,expanded}=examExpansionFixture();
+  await mount('/reading');mocks.saveState.mockClear();
+  const onError=vi.fn();
+  await act(async()=>{expect(await fieldbook.commitExamSectionExpansion(expanded,{expectedQuestionIds:['another-question'],onError})).toBe(false);});
+  expect(mocks.saveState).not.toHaveBeenCalled();expect(fieldbook.state.examAttempts[0]).toEqual(original);expect(onError).toHaveBeenCalled();
+});
+
+test('an exam expansion acknowledgement cannot publish into a replacement account',async()=>{
+  const {original,expanded,expectedQuestionIds}=examExpansionFixture();
+  await mount('/reading');const pending=defer();mocks.saveState.mockReturnValueOnce(pending.promise);
+  let saving;await act(async()=>{saving=fieldbook.commitExamSectionExpansion(expanded,{expectedQuestionIds});});
+  mocks.owner='account-2';
+  await act(async()=>{pending.resolve(true);expect(await saving).toBe(false);});
+  expect(fieldbook.state.examAttempts[0]).toEqual(original);
+  expect(fieldbook.state.plans[0].target.questionScope).toBeUndefined();
+});
+
+test('an unpersisted recovered session expands only after the targeted write succeeds',async()=>{
+  const {expanded,expectedQuestionIds}=examExpansionFixture();mocks.initial.examAttempts=[];
+  await mount('/reading');const pending=defer();mocks.saveState.mockReturnValueOnce(pending.promise);
+  let saving;await act(async()=>{saving=fieldbook.commitExamSectionExpansion(expanded,{expectedQuestionIds});});
+  expect(fieldbook.state.examAttempts).toEqual([]);
+  await act(async()=>{pending.resolve(true);expect(await saving).toBe(true);});
+  expect(fieldbook.state.examAttempts[0]).toEqual(expanded);
+  expect(fieldbook.state.plans[0].target.questionIds).toHaveLength(13);
+});
+
+test('a successful exam expansion commits answers that had only been checkpointed locally',async()=>{
+  const {expanded,expectedQuestionIds}=examExpansionFixture();
+  expanded.responses['expansion-q1']='latest checkpointed answer';expanded.evidence['expansion-q2']='checkpointed evidence';
+  expanded.checkedQuestionIds=['expansion-q1'];expanded.hintsEnabled=false;expanded.audioPosition=8;
+  await mount('/reading');
+  await act(async()=>{expect(await fieldbook.commitExamSectionExpansion(expanded,{expectedQuestionIds})).toBe(true);});
+  expect(fieldbook.state.examAttempts[0].responses['expansion-q1']).toBe('latest checkpointed answer');
+  expect(fieldbook.state.examAttempts[0].evidence['expansion-q2']).toBe('checkpointed evidence');
+  expect(fieldbook.state.examAttempts[0].questionSnapshot).toHaveLength(13);
+  expect(fieldbook.state.examAttempts[0]).toMatchObject({checkedQuestionIds:['expansion-q1'],hintsEnabled:false,audioPosition:8});
+});
 function Probe() { fieldbook = useFieldbook(); currentPath = useLocation().pathname + useLocation().search; return null; }
 async function mount(path = '/') {
   render(<MemoryRouter initialEntries={[path]}><FieldbookProvider><Probe /></FieldbookProvider></MemoryRouter>);
@@ -1802,4 +1887,34 @@ test('a vocabulary-only settings rebuild commits newly generated tasks when ever
   expect(fieldbook.state.plans).toEqual(saved.plans);
   expect(fieldbook.state.plans.find(plan=>plan.id===frozen.id)).toEqual(frozen);
   expect(fieldbook.state.settings.vocabulary.mode).toBe('definition');
+});
+
+test('schedule refresh binds today without fetching every future exercise',async()=>{
+  mocks.initial.settings.days=[1,2,3,4,5,6,7];
+  mocks.initial.settings.skills=['reading'];
+  mocks.initial.settings.dailyMinutes=14;
+  mocks.initial.settings.planning.newWordsPerDay=0;
+  const days=Array.from({length:7},(_,index)=>{const at=new Date();at.setDate(at.getDate()+index);return `${at.getFullYear()}-${String(at.getMonth()+1).padStart(2,'0')}-${String(at.getDate()).padStart(2,'0')}`;});
+  mocks.examCatalogRead.mockResolvedValue({papers:[],sections:days.map((_,index)=>({id:`section-${index}`,skill:'reading',status:'ready',part:1,questionCount:13}))});
+  mocks.examSectionsRead.mockImplementation(async ids=>({sections:ids.map(id=>({id,skill:'reading',status:'ready',sentences:[]})),questions:ids.flatMap(id=>Array.from({length:13},(_,index)=>({id:`${id}-q${index+1}`,sectionId:id,number:index+1})))}));
+  await mount('/planning');
+  await act(async()=>{expect(await fieldbook.ensureUnifiedPlans()).toBe(true);});
+  expect(mocks.examSectionsRead).toHaveBeenCalledTimes(1);
+  const current=fieldbook.state.plans.find(plan=>plan.dateKey===days[0]);
+  expect(current.target.questionIds).toHaveLength(13);
+  const future=fieldbook.state.plans.filter(plan=>plan.dateKey>days[0]);
+  expect(future).toHaveLength(6);
+  expect(future.every(plan=>!plan.target.questionIds?.length)).toBe(true);
+});
+
+test.each([false,true])('starting a fourteen-minute passage binds all thirteen questions while an existing session keeps its scope (started: %s)',async started=>{
+  const questions=Array.from({length:13},(_,index)=>({id:`q${index+1}`,sectionId:'source:1238',number:index+1,type:index<6?'gap':'true-false',points:1}));
+  mocks.initial.settings.days=[];
+  mocks.initial.plans=[{id:'manatees',kind:'reading-practice',skill:'reading',status:started?'in_progress':'pending',startedAt:started?'2026-11-12T10:00:00Z':null,estimatedMinutes:14,target:{type:'section',skill:'reading',sectionId:'source:1238',questionIds:questions.slice(0,7).map(question=>question.id)}}];
+  mocks.examSectionsRead.mockResolvedValue({sections:[{id:'source:1238',skill:'reading',status:'ready',questionCount:13}],questions});
+  await mount('/planning');
+  await act(async()=>{expect(await fieldbook.startPlan('manatees')).toBe(true);});
+  const expected=questions.slice(0,started?7:13).map(question=>question.id);
+  expect(fieldbook.state.plans.find(plan=>plan.id==='manatees').target.questionIds).toEqual(expected);
+  expect(new URL(currentPath,'https://fieldbook.local').searchParams.get('questions')).toBe(JSON.stringify(expected));
 });
