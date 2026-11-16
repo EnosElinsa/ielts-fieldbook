@@ -15,7 +15,7 @@ import { accountId } from '../../storage/remote';
 import { clearExamRecovery, readExamRecovery, writeExamRecovery } from '../../storage/examRecovery';
 import '../../styles/exam.css';
 import { useWorkspacePageState } from '../../lib/workspacePageState';
-import { questionNumberPrefixLength } from './questionPresentation';
+import { questionNumberPrefixLength, questionPresentation } from './questionPresentation';
 import { PartVocabularyPanel } from './PartVocabularyPanel';
 import { ExamSessionHistory } from './ExamSessionHistory';
 import { recoveredExamSessions } from './sessionRecovery';
@@ -31,6 +31,13 @@ function ReviewNotes({ hasNotes, children }: { hasNotes: boolean; children: Reac
   const [open, setOpen] = useState(hasNotes);
   useEffect(() => { if (hasNotes) setOpen(true); }, [hasNotes]);
   return <details className="exam-review-notes" open={open} onToggle={event => setOpen(event.currentTarget.open)}><summary>{hasNotes ? 'Your review notes' : 'Add review notes'}</summary>{children}</details>;
+}
+
+function ReferenceChoices({ question }: { question: ExamQuestion }) {
+  if (!['matching', 'heading'].includes(question.type) || !question.options?.some(option => option.trim().length > 2)) return null;
+  const source = new DOMParser().parseFromString(question.stimulusHtml || '', 'text/html').body.textContent!.replace(/\s+/g, ' ');
+  const present = question.options.every(option => source.includes(option.replace(/^(?:[A-Z]|[IVXLCDM]+)[.)]?\s+/, '').replace(/\s+/g, ' ').trim()));
+  return present ? null : <ul className="exam-heading-list" aria-label="Answer choices">{question.options.map(option => <li key={option}>{option}</li>)}</ul>;
 }
 
 export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
@@ -93,7 +100,8 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
   const partWrong = wrong.filter(question => question.sectionId === sectionId);
   const visibleRows = filter === 'wrong' && partWrong.length ? partWrong : partRows;
   const hasPooled = questionRows.some(question => questionSlotCount(question) > 1);
-  const references = visibleRows.filter((question, index) => question.stimulusHtml && (!question.groupId || visibleRows.findIndex(row => row.groupId === question.groupId) === index));
+  const presentation = questionPresentation(visibleRows);
+  const references = visibleRows.filter((question, index) => question.stimulusHtml && presentation[index].hasMaterial && presentation[index].groupStart);
   const dirty = Object.keys(annotations).length > 0;
   const hasSavedNotes = savedThisVisit || [attempt.evidence, attempt.keywords, attempt.errorReasons].some(fields => Object.values(fields || {}).some(value => value.trim()));
   const reviewPlanId = params.get('planId') || attempt.planId;
@@ -159,6 +167,7 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
 </header>{references.map(question => <details key={question.id} open>
 <summary>{question.groupId ? 'Question group' : questionLabel(question)} · {QUESTION_TYPE_NAMES[question.type]}</summary>
 <ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} />
+<ReferenceChoices question={question} />
 </details>)}</aside>}
     <div className="exam-review-list">{visibleRows.map(question => { const prompt = readingQuestionPrompt(question, questionRows, catalog.passages.filter(p => p.sectionId === question.sectionId).flatMap(p => p.paragraphs)); const review = questionReviewContent(question); const response = attempt.responses[question.id] || ''; const correct = attempt.results?.[question.id] ?? gradeQuestion(question, response); const annotation = notes(question.id); const sentenceId = skill === 'listening' ? evidenceSentenceId(question, catalog.sections.find(section => section.id === question.sectionId)) : undefined; return <article id={`exam-review-${question.id}`} tabIndex={-1} className={`exam-review-card ${correct ? 'is-correct' : 'is-wrong'}`} key={question.id}>
 <header>

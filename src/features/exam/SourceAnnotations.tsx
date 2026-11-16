@@ -48,7 +48,7 @@ function textPosition(block: Node, offset: number): [Node, number] {
   return [block, block.childNodes.length];
 }
 
-export function AnnotatedText({ blockId, text, version, hiddenPrefixLength = 0, evidenceRanges = [] }: { blockId: string; text: string; version: string; hiddenPrefixLength?: number; evidenceRanges?: EvidenceRange[] }) {
+export function AnnotatedText({ blockId, text, version, hiddenPrefixLength = 0, trimWhitespace = false, evidenceRanges = [] }: { blockId: string; text: string; version: string; hiddenPrefixLength?: number; trimWhitespace?: boolean; evidenceRanges?: EvidenceRange[] }) {
   const context = useContext(SourceContext);
   const register = context?.register;
   useEffect(() => register?.(blockId, { text, version }), [register, blockId, text, version]);
@@ -62,14 +62,17 @@ export function AnnotatedText({ blockId, text, version, hiddenPrefixLength = 0, 
     onKeyDown={event => { if (event.target === event.currentTarget && ['Enter', ' '].includes(event.key)) { event.preventDefault(); context?.selectBlock(blockId, text, version); } }}>
     {segments.map(segment => {
       // Keep the complete source in the DOM and registry so saved ranges retain their offsets.
-      const hiddenLength = Math.max(0, Math.min(segment.text.length, hiddenPrefixLength - segment.start));
-      const visible = segment.text.slice(hiddenLength);
+      const from = Math.max(hiddenPrefixLength, trimWhitespace ? text.length - text.trimStart().length : 0);
+      const to = trimWhitespace ? text.trimEnd().length : text.length;
+      const hiddenLength = Math.max(0, Math.min(segment.text.length, from - segment.start));
+      const visibleEnd = Math.max(hiddenLength, Math.min(segment.text.length, to - segment.start));
+      const visible = segment.text.slice(hiddenLength, visibleEnd);
       const highlighted = segment.evidence ? <mark key={segment.start} className="exam-evidence-highlight" data-evidence-highlight>{visible}</mark> : visible;
       const Tag = segment.color ? 'mark' : 'span';
       const content = visible && (segment.annotationIds.length ? <Tag key={segment.start} className={`source-annotation-anchor ${segment.color ? `source-highlight source-highlight-${segment.color}` : 'source-note-anchor'}`} title="Annotation options" tabIndex={0} role="button"
       onClick={event => { if (!window.getSelection()?.isCollapsed) return; context?.open(segment.primaryAnnotationId!, event.currentTarget, false, segment.annotationIds); }}
       onKeyDown={event => { if (['Enter', ' '].includes(event.key)) { event.preventDefault(); event.stopPropagation(); context?.open(segment.primaryAnnotationId!, event.currentTarget, true, segment.annotationIds); } }}>{highlighted}</Tag> : highlighted);
-      return hiddenLength ? <span key={segment.start}><span hidden aria-hidden="true">{segment.text.slice(0, hiddenLength)}</span>{content}</span> : content;
+      return hiddenLength || visibleEnd < segment.text.length ? <span key={segment.start}>{hiddenLength > 0 && <span hidden aria-hidden="true">{segment.text.slice(0, hiddenLength)}</span>}{content}{visibleEnd < segment.text.length && <span hidden aria-hidden="true">{segment.text.slice(visibleEnd)}</span>}</span> : content;
     })}
   </span>;
 }

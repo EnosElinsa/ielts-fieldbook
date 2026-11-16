@@ -3,7 +3,7 @@ import { SelectField } from '../../components/SelectField';
 import { SaveFailure } from '../../components/SaveFailure';
 import { ReadingPassage, readingQuestionPrompt, HeadingList, HeadingReference, QuestionReference } from './ReadingPassage';
 import { useWorkspacePageState } from '../../lib/workspacePageState';
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type KeyboardEvent } from 'react';
+import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type KeyboardEvent } from 'react';
 import { InlineLoadingState, PageLoadingState, StateMessage } from '../../components/AsyncState';
 import { useParams, useSearchParams } from 'react-router-dom';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
@@ -26,6 +26,7 @@ import { ModalFrame } from '../../components/ModalFrame';
 import { SourceAnnotations, AnnotatedText, type SourceSelection } from './SourceAnnotations';
 import { examGapMatches, examGapNumber, questionPresentation, questionNumberPrefixLength } from './questionPresentation';
 import { stimulusDocument } from './stimulusDocument';
+import { stimulusChoiceBank } from './stimulusChoiceBank';
 import '../../styles/exam.css';
 
 export function ExamImage({ asset, label, inline = false }: { asset?: ExamAsset; label: string; inline?: boolean }) {
@@ -82,6 +83,10 @@ export function ExamStimulus({ html, assets = [], renderGap, blockPrefix = 'stim
       if (['p', 'div'].includes(tag) && !node.textContent?.trim() && !node.querySelector('img')) return tableLine ? <span key={key} className="exam-table-break" aria-hidden="true"> </span> : null;
       if (tag === 'img') { const source = node.getAttribute('src') || ''; const asset = source.startsWith('exam-asset:') ? assets.find(row => row.id === source.slice('exam-asset:'.length) && row.kind === 'image') : undefined; return asset ? <ExamImage inline key={key} asset={asset} label={node.getAttribute('alt') || 'Source diagram'} /> : null; }
       if (['script', 'style', 'iframe', 'object', 'embed', 'svg', 'form', 'input'].includes(tag)) return null;
+      if (tag === 'table') {
+        const bank = stimulusChoiceBank(node, key);
+        if (bank) return <ul key={key} className="exam-choice-bank" aria-label="Answer choices">{bank.map(choice => <li key={choice.code.key}><span className="exam-choice-bank-code"><AnnotatedText blockId={`${blockPrefix}:${choice.code.key}:0`} text={choice.code.text} version={version} trimWhitespace /></span>{' '}<span>{choice.description.map((fragment, index) => <Fragment key={fragment.key}><AnnotatedText blockId={`${blockPrefix}:${fragment.key}:0`} text={fragment.text} version={version} trimWhitespace />{index < choice.description.length - 1 && (/\s$/.test(fragment.text) || /^\s/.test(choice.description[index + 1].text)) ? ' ' : null}</Fragment>)}</span></li>)}</ul>;
+      }
       if (noteParagraph(node)) {
         // Wrap printed note lines while keeping their original child-index keys:
         // saved annotations still point to exactly the same source text blocks.
@@ -95,6 +100,7 @@ export function ExamStimulus({ html, assets = [], renderGap, blockPrefix = 'stim
       const children = Array.from(node.childNodes).map((child, index) => convert(child, `${key}-${index}`));
       if (!allowed.has(tag)) return children;
       const props: Record<string, unknown> = {}; if (tag === 'td' || tag === 'th') { const span = Number(node.getAttribute('colspan')); if (span > 0 && span < 20) props.colSpan = span; const row = Number(node.getAttribute('rowspan')); if (row > 0 && row < 20) props.rowSpan = row; }
+      if (tag === 'span' && node.textContent?.trim() === 'NB' && node.parentElement?.tagName === 'P') props.className = 'exam-instruction-label';
       if (hasNotes && node.parentElement === document.body && tag === 'div' && !node.querySelector('p,div,table,img,br') && node.textContent!.trim().length < 100) props.className = 'exam-note-title';
       if (tag === 'table') {
         const columns = Math.max(1, ...Array.from(node.querySelectorAll('tr')).map(row => Array.from(row.children).reduce((count, cell) => count + Math.max(1, Math.min(20, Number(cell.getAttribute('colspan')) || 1)), 0)));

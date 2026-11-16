@@ -660,6 +660,10 @@
 .exam-inline-answer [role=combobox] { min-width: 64px; min-height: 38px; width: 100%; }
 .exam-stimulus strong:has(.exam-inline-answer) { font-weight: 400; }
 .exam-stimulus:empty { display: none; }
+.exam-stimulus .exam-instruction-label { font-weight: 600; margin-inline-end: .4em; }
+.exam-choice-bank { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,180px),1fr)); gap: 12px 24px; margin: 16px 0 0; padding: 16px; border: 1px solid var(--rule); border-radius: 8px; list-style: none; }
+.exam-choice-bank li { display: grid; grid-template-columns: 1.2em minmax(0,1fr); gap: 8px; align-items: baseline; }
+.exam-choice-bank-code { color: var(--blue); font-weight: 600; }
 .intensive-review-rule { border-top: 1px solid var(--rule); padding-top: 12px; margin-block: 16px; color: var(--muted); font-size: 13px; line-height: 1.75; }
 .intensive-review-rule summary { cursor: pointer; color: var(--ink); }
 @media(min-width:901px) {
