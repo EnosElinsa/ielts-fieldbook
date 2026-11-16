@@ -39,9 +39,11 @@ export function createIntensiveSession(sectionId: string, sentenceId: string, no
   return { id: `intensive:${sectionId}:${sentenceId}`, sectionId, sentenceId, stage: 0, gist: '', transcriptInput: '', replayCount: 0, listened: false, revealed: false, dictationResult: 'pending', errorReasons: [], updatedAt: now, speed: 1, loop: false };
 }
 
+export function intensiveReviewDays(result: IntensiveSession['dictationResult'], rating: number) {
+  return result === 'wrong' || result === 'pending' || rating <= 2 ? 1 : result === 'partial' || rating === 3 ? 2 : rating === 4 ? 4 : 7;
+}
 export function nextIntensiveReview(result: IntensiveSession['dictationResult'], rating: number, now = new Date().toISOString()): string {
-  const days = result === 'wrong' || result === 'pending' || rating <= 2 ? 1 : result === 'partial' || rating === 3 ? 2 : rating === 4 ? 4 : 7;
-  return new Date(new Date(now).getTime() + days * 86_400_000).toISOString();
+  return new Date(new Date(now).getTime() + intensiveReviewDays(result, rating) * 86_400_000).toISOString();
 }
 
 /** A listening check supplies new recall evidence, never another dictation or recording. */

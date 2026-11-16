@@ -1,6 +1,11 @@
 /** Repair only the identifiable damaged restaurant-table import, including saved attempts. */
 export function stimulusDocument(html: string): Document {
   const parsed = new DOMParser().parseFromString(html, 'text/html');
+  // Identify the damaged twins summary; preserve its element tree and block IDs.
+  if (parsed.body.textContent?.includes('Epigenetic processes')) {
+    const walker = parsed.createTreeWalker(parsed.body, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) walker.currentNode.textContent = walker.currentNode.textContent!.replace('Onexample', 'One example');
+  }
   for (const table of parsed.querySelectorAll('table')) {
     if (!table.textContent?.includes('The Junction') || !table.textContent.includes('Paloma')) continue;
     for (const paragraph of table.querySelectorAll('p')) {

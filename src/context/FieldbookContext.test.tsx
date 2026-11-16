@@ -1891,7 +1891,7 @@ test('a vocabulary-only settings rebuild commits newly generated tasks when ever
   expect(fieldbook.state.settings.vocabulary.mode).toBe('definition');
 });
 
-test('schedule refresh binds today without fetching every future exercise',async()=>{
+test('schedule refresh keeps exercise resources deferred until a task starts',async()=>{
   mocks.initial.settings.days=[1,2,3,4,5,6,7];
   mocks.initial.settings.skills=['reading'];
   mocks.initial.settings.dailyMinutes=14;
@@ -1901,9 +1901,9 @@ test('schedule refresh binds today without fetching every future exercise',async
   mocks.examSectionsRead.mockImplementation(async ids=>({sections:ids.map(id=>({id,skill:'reading',status:'ready',sentences:[]})),questions:ids.flatMap(id=>Array.from({length:13},(_,index)=>({id:`${id}-q${index+1}`,sectionId:id,number:index+1})))}));
   await mount('/planning');
   await act(async()=>{expect(await fieldbook.ensureUnifiedPlans()).toBe(true);});
-  expect(mocks.examSectionsRead).toHaveBeenCalledTimes(1);
+  expect(mocks.examSectionsRead).not.toHaveBeenCalled();
   const current=fieldbook.state.plans.find(plan=>plan.dateKey===days[0]);
-  expect(current.target.questionIds).toHaveLength(13);
+  expect(current.target.questionIds?.length || 0).toBe(0);
   const future=fieldbook.state.plans.filter(plan=>plan.dateKey>days[0]);
   expect(future).toHaveLength(6);
   expect(future.every(plan=>!plan.target.questionIds?.length)).toBe(true);

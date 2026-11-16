@@ -103,7 +103,7 @@ export function useWorkspaceModuleMemory({ owner, ready, activeSkill, setSkill }
   }, [owner, ready, url, location.key, location.state, activeModule, navigationType]);
 
   const selectModule = (module: WorkspaceModule) => {
-    if (module === activeModule) return;
+    if (module === activeModule && module !== 'planning') return;
     const link = workspaceModules.find(link => link.id === module);
     if (!link) return;
     // Planning is an overview: task deep links still work when opened explicitly.

@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { connectionFetch } from './connectionFetch';
 
 const url = import.meta.env.VITE_SUPABASE_URL;
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -13,6 +14,6 @@ export function getSupabase() {
   if (!url || !anonKey) {
     throw new Error('Supabase is not configured');
   }
-  if (!client) client = createClient(url, anonKey);
+  if (!client) client = createClient(url, anonKey, { global: { fetch: connectionFetch } });
   return client;
 }

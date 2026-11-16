@@ -674,8 +674,7 @@
 }
 .practice-result-table-wrap {
   width: 100%;
-  max-height: min(65vh, 680px);
-  overflow: auto;
+  overflow-x: auto;
   border: 1px solid var(--rule);
   border-radius: 6px;
   scrollbar-gutter: stable;

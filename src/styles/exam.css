@@ -651,3 +651,28 @@
 /* Review queue: Manrope titles and a quiet back link above the page title. */
 .exam-queue-card h3 { margin: 8px 0; font: 650 17px/1.45 Manrope,Arial,sans-serif; }
 .exam-queue-back { margin-bottom: 12px; }
+
+/* Keep reading copy light and answers attached to their source sentences. */
+.exam-passage p { font-weight: 400; font-size: 17px; line-height: 1.85; }
+.exam-passage h4 { font-weight: 600; font-size: 23px; line-height: 1.4; margin-bottom: 24px; }
+.exam-source-panel > h3 { font: 500 12px/1.5 Manrope,Arial,sans-serif; color: var(--muted); margin: 0 0 10px; }
+.exam-inline-answer:has([role=combobox]) { min-width: 96px; font: 400 14px/1.5 Manrope,Arial,sans-serif; }
+.exam-inline-answer [role=combobox] { min-width: 64px; min-height: 38px; width: 100%; }
+.exam-stimulus strong:has(.exam-inline-answer) { font-weight: 400; }
+.exam-stimulus:empty { display: none; }
+.intensive-review-rule { border-top: 1px solid var(--rule); padding-top: 12px; margin-block: 16px; color: var(--muted); font-size: 13px; line-height: 1.75; }
+.intensive-review-rule summary { cursor: pointer; color: var(--ink); }
+@media(min-width:901px) {
+  .exam-workspace-reading { max-width: 1480px; }
+  .exam-workspace-reading .exam-layout-integrated { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+  .exam-workspace-reading .exam-source-panel { padding: 24px 28px; min-height: 0; max-height: calc(100dvh - 44px); scroll-padding-top: 24px; scrollbar-gutter: stable; }
+  .exam-workspace-reading .exam-question-panel { padding: 24px 28px; }
+}
+@media(max-width:900px) {
+  .exam-workspace-reading .exam-source-panel { position: static; min-height: 0; max-height: none; overflow: visible; }
+}
+@media(max-width:560px) {
+  .exam-passage p { font-size: 17px; line-height: 1.85; }
+  .exam-passage h4 { font-size: 21px; }
+  .exam-inline-answer [role=combobox] { min-height: 44px; }
+}

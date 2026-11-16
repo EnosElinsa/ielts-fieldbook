@@ -7,6 +7,7 @@ import type { ExamSentence, IntensiveListeningReview, IntensiveSession } from '.
 import { readExamRecovery, writeExamRecovery, clearExamRecovery } from '../../storage/examRecovery';
 import { IntensiveAudio } from './IntensiveAudio';
 import { IntensiveDiagnosisSummary } from './IntensiveDiagnosis';
+import { nextIntensiveReview, intensiveReviewDays } from '../../domain/exam/intensive';
 
 type Review = Omit<IntensiveListeningReview, 'nextReviewAt'>;
 type Draft = { started: boolean; listened?: boolean; selfRating?: Review['selfRating']; reviewedAt?: string; revealed?: boolean };
@@ -36,6 +37,8 @@ export function IntensiveSentenceReview({ owner, session, sentence, audioUrl, au
   const start = session.correctedStart ?? sentence.start;
   const end = session.correctedEnd ?? sentence.end;
   const hasTiming = start !== undefined && end !== undefined && start >= 0 && end > start;
+  const lastRating = session.listeningReviews?.at(-1)?.selfRating;
+  const interval = intensiveReviewDays(lastRating ? 'correct' : session.dictationResult, lastRating || session.selfRating || 1);
   async function saveReview() {
     if (!draft?.listened || !draft.selfRating || savingRef.current) return;
     savingRef.current = true;
@@ -55,6 +58,7 @@ export function IntensiveSentenceReview({ owner, session, sentence, audioUrl, au
       {complete ? <p role="status">Review saved</p> : null}
       <p>{due && !complete ? 'Check whether you can still understand this sentence. Listen once, then rate your understanding.' : 'Your work is saved. This sentence will appear in Listening → Review when its next review is due.'}</p>
       {session.nextReviewAt ? <p className="intensive-next-review">Next review: <strong>{date(session.nextReviewAt)}</strong>{due && !complete ? ' · Due now' : ''}</p> : null}
+      <details className="intensive-review-rule"><summary>Why is this sentence scheduled?</summary><p>Every completed intensive sentence is scheduled, including correct dictations. Your latest understanding rating determines the next interval: 1–2 → 1 day, 3 → 2 days, 4 → 4 days, 5 → 7 days. On the first cycle, a wrong dictation returns in 1 day; a partial dictation returns within 2 days.</p><p>This sentence: {lastRating ? `latest listening rating ${lastRating}/5` : `${session.dictationResult || 'saved'} dictation · understanding ${session.selfRating || '—'}/5`} · {interval}-day interval.</p></details>
       <div className="intensive-actions">
         {onNext ? <button className="btn primary" disabled={busy} onClick={onNext}>Continue to next sentence</button> : null}
         <Link className="btn line" to="/listening/review">Open listening review</Link>
@@ -68,6 +72,7 @@ export function IntensiveSentenceReview({ owner, session, sentence, audioUrl, au
       {!hasTiming ? <p role="alert">Sentence timing is unavailable. Return to the practice to correct its A/B timing before reviewing.</p> : null}
       <label>How much did you understand?<SelectField aria-label="How much did you understand?" disabled={!draft?.listened || saving || Boolean(draft?.reviewedAt)} value={draft?.selfRating || ''} onChange={event => update({ ...draft!, selfRating: Number(event.target.value) as Review['selfRating'] })}><option value="">Choose a rating</option>{[1, 2, 3, 4, 5].map(rating => <option key={rating} value={rating}>{rating} · {['Need help', 'Difficult', 'Some gaps', 'Mostly clear', 'Clear and fluent'][rating - 1]}</option>)}</SelectField></label>
       <p className="intensive-action-hint">{draft?.listened ? 'Sentence heard in full. Choose a rating to schedule the next review.' : 'Listen from the beginning to the end before rating.'}</p>
+      {draft?.selfRating ? <p className="intensive-next-review">Next review after saving: <strong>{date(nextIntensiveReview('correct', draft.selfRating, draft.reviewedAt))}</strong></p> : null}
       {draft?.listened ? <><button className="btn line" onClick={() => update({ ...draft, revealed: !draft.revealed })}>{draft.revealed ? 'Hide transcript' : 'Show transcript'}</button>{draft.revealed ? <blockquote>{sentence.text}</blockquote> : null}</> : null}
       <details><summary>Need more practice?</summary><p>Choose this to repeat dictation and shadowing, or correct sentence timing. Your previous work stays in history.</p><button className="btn line" disabled={saving} onClick={() => { clearExamRecovery(owner, key); onRestart(); }}>Practise dictation and shadowing again</button></details>
       {error ? <p role="alert">{error}</p> : null}

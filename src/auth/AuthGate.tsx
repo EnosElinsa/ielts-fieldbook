@@ -1,6 +1,7 @@
 import { FormEvent, lazy, Suspense, useEffect, useState, type ReactNode } from 'react';
 import { InlineLoadingState } from '../components/AsyncState';
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
+import { requestTimeout } from '../lib/requestTimeout';
 import { authError, type Mode } from './errors';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
@@ -58,7 +59,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
     let cancelled = false;
     void (async () => {
       try {
-        const { data, error: sessionError } = await supabase.auth.getSession();
+        const { data, error: sessionError } = await requestTimeout(supabase.auth.getSession());
         if (cancelled) return;
         if (sessionError) throw sessionError;
         setSessionCheckFailed(false);

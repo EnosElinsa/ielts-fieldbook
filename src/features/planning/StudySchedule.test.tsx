@@ -40,3 +40,12 @@ test('a failed resource read clears updating and a deliberate retry can recover'
  expect(view.result.current.error).toBe('');
  expect(mocks.refresh).toHaveBeenCalledTimes(2);
 });
+
+test('duplicate foreground events share a refresh without requeueing identical work',async()=>{
+ const view=renderHook(()=>useStudySchedule());await act(async()=>{});
+ let finish;mocks.refresh.mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
+ await act(async()=>{fireEvent(document,new Event('visibilitychange'));fireEvent.focus(window);});
+ expect(mocks.refresh).toHaveBeenCalledTimes(2);
+ await act(async()=>{finish(true);});
+ expect(mocks.refresh).toHaveBeenCalledTimes(2);
+});

@@ -1352,3 +1352,45 @@ test('passage panel scroll restores after leaving and stays isolated by account'
   await screen.findByRole('textbox', { name: 'Answer 1' });
   expect(document.getElementById('exam-panel-source')!.scrollTop).toBe(0);
 });
+
+
+test('summary choices are answered in the text, without duplicate detached answer rows', async () => {
+  mocks.catalog.questions = [1, 2].map(number => ({ ...catalog.questions[0], id: `summary-${number}`, number, type: 'summary', groupId: 'summary', prompt: `Question ${number} · Complete the marked gap in the text above.`, options: ['A', 'B'], stimulusHtml: '<p>Genes [1 ____] influence our [2 ____].</p><p>A nature · B environment</p>' }));
+  practice();
+  const answer = await screen.findByRole('combobox', { name: 'Answer 1' });
+  expect(answer.closest('.exam-stimulus')).not.toBeNull();
+  expect(screen.getAllByRole('combobox', { name: /^Answer/ })).toHaveLength(2);
+  expect(document.querySelector('.exam-question[aria-label="Question 1 details"]')).toBeNull();
+});
+
+test('empty imported judgment instructions show useful guidance without an empty stimulus box', async () => {
+  mocks.catalog.questions = [{ ...catalog.questions[1], groupId: 'judgment', stimulusHtml: '<p>      </p><p><br></p>', instructions: '' }];
+  practice();
+  await screen.findByRole('radio', { name: 'TRUE' });
+  expect(screen.getByText(/NOT GIVEN.*not.*information/i)).toBeInTheDocument();
+  expect(document.querySelector('.exam-stimulus')).toBeNull();
+});
+
+test('backgrounding pauses an active passage, preserves answers, and waits for Resume', async () => {
+  practice('/reading/section');
+  const answer = await screen.findByRole('textbox', { name: 'Answer 1' });
+  fireEvent.change(answer, { target: { value: '1990' } });
+  vi.useFakeTimers();
+  await act(async () => { await vi.advanceTimersByTimeAsync(3100); });
+  const visibility = vi.spyOn(document, 'visibilityState', 'get').mockReturnValue('hidden');
+  fireEvent(document, new Event('visibilitychange'));
+  const before = screen.getByRole('timer').textContent;
+  await act(async () => { await vi.advanceTimersByTimeAsync(60000); });
+  expect(screen.getByRole('timer').textContent).toBe(before);
+  expect(answer).toHaveValue('1990');
+  expect(screen.getByRole('button', { name: 'Resume' })).toBeInTheDocument();
+  visibility.mockReturnValue('visible');
+  fireEvent(document, new Event('visibilitychange'));
+  await act(async () => { await vi.advanceTimersByTimeAsync(2000); });
+  expect(screen.getByRole('timer').textContent).toBe(before);
+  fireEvent.click(screen.getByRole('button', { name: 'Resume' }));
+  await act(async () => { await vi.advanceTimersByTimeAsync(1000); });
+  expect(screen.getByRole('timer').textContent).not.toBe(before);
+  visibility.mockRestore();
+  vi.useRealTimers();
+});

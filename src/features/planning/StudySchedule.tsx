@@ -18,8 +18,8 @@ export function useStudySchedule() {
     (fb.state.errors||[]).map(row=>[row.id,row.resolved,row.nextReviewAt]),
     (fb.state.plans||[]).filter(row=>row.origin==='manual'||['completed','skipped'].includes(row.status)).map(row=>[row.id,row.status,row.dateKey,row.manuallyEditedAt]),
   ]);
-  const refresh=useCallback(()=>{
-    if(inFlight.current){rerun.current=true;return inFlight.current;}
+  const refresh=useCallback((reconcile=false)=>{
+    if(inFlight.current){if(reconcile)rerun.current=true;return inFlight.current;}
     const operation=Promise.resolve().then(async()=>{
       setSaving(true);setError('');let feedback='';
       try{if(!await fb.ensureUnifiedPlans({onError:message=>{feedback=message;}}))setError(feedback||'Your plan could not be saved. Retry to keep these tasks.');}
@@ -28,7 +28,7 @@ export function useStudySchedule() {
     });
     inFlight.current=operation;return operation;
   },[fb.ensureUnifiedPlans]);
-  useEffect(()=>{void refresh();},[refresh,settingsKey,today,activityKey,revision]);
+  useEffect(()=>{void refresh(true);},[refresh,settingsKey,today,activityKey,revision]);
   useEffect(()=>{
     const at=new Date(),midnight=new Date(at);midnight.setHours(24,0,0,0);
     const timer=setTimeout(()=>setToday(dateKey(new Date())),Math.max(1,midnight.getTime()-at.getTime()));

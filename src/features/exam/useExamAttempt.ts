@@ -82,7 +82,9 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
     const tick = () => {
       if (accountId() !== boundOwner.current || !ref.current || ref.current.status !== 'active') return;
       const now = Date.now(); const elapsed = mode === 'mock' ? Math.max(ref.current.elapsedSeconds, Math.floor((now - Date.parse(ref.current.startedAt)) / 1000)) : ref.current.elapsedSeconds + Math.max(0, Math.floor((now - practiceTick.current) / 1000));
-      practiceTick.current = now; ref.current = { ...ref.current, elapsedSeconds: elapsed }; setClock(elapsed); checkpointExamSession(boundOwner.current, key, ref.current);
+      if (mode === 'practice') practiceTick.current += Math.max(0, elapsed - ref.current.elapsedSeconds) * 1000;
+      else practiceTick.current = now;
+      ref.current = { ...ref.current, elapsedSeconds: elapsed }; setClock(elapsed); checkpointExamSession(boundOwner.current, key, ref.current);
     };
     tick(); const id = window.setInterval(tick, 1000); return () => window.clearInterval(id);
   }, [attempt?.id, attempt?.status, mode, key]);
@@ -167,11 +169,14 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
     const checkpoint = () => {
       if (accountId() !== boundOwner.current || !ref.current || !unfinishedExamSession(ref.current)) return;
       const current = ref.current;
-      const next = mode === 'practice' && current.status === 'active' ? { ...current, status: 'paused' as const, updatedAt: new Date().toISOString() } : current;
+      const next = mode === 'practice' && current.status === 'active' ? { ...current, status: 'paused' as const, elapsedSeconds: current.elapsedSeconds + Math.max(0, Math.floor((Date.now() - practiceTick.current) / 1000)), updatedAt: new Date().toISOString() } : current;
+      practiceTick.current = Date.now(); setClock(next.elapsedSeconds);
       ref.current = next; setAttempt(next); checkpointExamSession(boundOwner.current, key, next);
     };
+    const visibility = () => { if (document.visibilityState === 'hidden') checkpoint(); };
     window.addEventListener('pagehide', checkpoint);
-    return () => window.removeEventListener('pagehide', checkpoint);
+    document.addEventListener('visibilitychange', visibility);
+    return () => { window.removeEventListener('pagehide', checkpoint); document.removeEventListener('visibilitychange', visibility); };
   }, [key, mode]);
   const discard = async () => {
     if (!ref.current || lock.current || !unfinishedExamSession(ref.current) || accountId() !== boundOwner.current) return;

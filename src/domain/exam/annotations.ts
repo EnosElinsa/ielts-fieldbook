@@ -1,4 +1,5 @@
 import type { ExamSkill } from './types';
+import { readingCopy } from './readingCopy';
 
 export const HIGHLIGHT_COLORS = ['yellow', 'green', 'blue', 'pink'] as const;
 export type HighlightColor = typeof HIGHLIGHT_COLORS[number];
@@ -13,6 +14,12 @@ export function makeTextAnchor(blockId: string, text: string, start: number, end
 
 export function resolveTextAnchor(anchor: TextAnchor, text: string, version: string): { start: number; end: number } | null {
   if (!anchor.quote) return null;
+  if (anchor.blockId.startsWith('passage:passage:1010:')) {
+    const quote = readingCopy('passage:1010', anchor.quote);
+    const prefix = readingCopy('passage:1010', anchor.prefix);
+    const suffix = readingCopy('passage:1010', anchor.suffix);
+    if ((quote !== anchor.quote || prefix !== anchor.prefix || suffix !== anchor.suffix) && text.includes(quote)) return resolveTextAnchor({ ...anchor, quote, prefix, suffix }, text, version);
+  }
   const matches: number[] = [];
   for (let at = text.indexOf(anchor.quote); at >= 0; at = text.indexOf(anchor.quote, at + 1)) matches.push(at);
   const contextual = matches.filter(at => (!anchor.prefix || text.slice(0, at).endsWith(anchor.prefix)) && (!anchor.suffix || text.slice(at + anchor.quote.length).startsWith(anchor.suffix)));

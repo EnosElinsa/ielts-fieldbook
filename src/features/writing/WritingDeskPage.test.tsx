@@ -180,6 +180,19 @@ test('writing countdown catches up after delayed ticks and completes only once',
   expect(toast).toHaveBeenCalledTimes(1);
 });
 
+test('backgrounding pauses the writing clock until explicitly resumed', () => {
+  vi.useFakeTimers();
+  const view = render(<WritingDeskPage />);
+  fireEvent.click(screen.getByRole('button', { name: 'Start timer' }));
+  act(() => vi.advanceTimersByTime(3000));
+  vi.spyOn(document, 'visibilityState', 'get').mockReturnValue('hidden');
+  fireEvent(document, new Event('visibilitychange'));
+  act(() => vi.advanceTimersByTime(60000));
+  expect(view.container.querySelector('.timer')).toHaveTextContent('39:57');
+  expect(screen.getByRole('button', { name: 'Start timer' })).toBeInTheDocument();
+  vi.restoreAllMocks();
+});
+
 test('failed save status exposes the existing draft save action as a retry', async () => {
   saveState.status = 'failed';
   persistNow.mockResolvedValue(true);

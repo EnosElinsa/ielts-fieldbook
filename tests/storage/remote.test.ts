@@ -87,6 +87,36 @@ beforeEach(() => {
   mocks.scopedPlans=null;mocks.planStamp='a'.repeat(32);mocks.historyRows=[];
 });
 
+test('stalled module reads expire and a foreground retry can load again', async () => {
+  const remote = await import('../../src/storage/remote');
+  await remote.hydrateState({ modules: [] });
+  vi.useFakeTimers();
+  mocks.readPromises.sessions = new Promise(() => {});
+  let error: unknown;
+  const load = remote.ensureAccountModule('planning').catch(cause => { error = cause; });
+  await vi.advanceTimersByTimeAsync(20_001);
+  expect(error).toBeInstanceOf(Error);
+  expect(String(error)).toMatch(/took too long|timeout/i);
+  await load;
+  delete mocks.readPromises.sessions;
+  expect((await remote.ensureAccountModule('planning')).data.planningEvidence).toHaveLength(6);
+});
+
+test('a stalled session refresh releases the save queue with retryable feedback', async () => {
+  const remote = await import('../../src/storage/remote');
+  const state = await remote.hydrateState({ modules: [] });
+  vi.useFakeTimers();
+  mocks.sessions.push({ user: mocks.user, promise: new Promise(() => {}) });
+  let result: boolean | undefined;
+  const feedback = vi.fn();
+  const save = remote.saveState(state, feedback).then(value => { result = value; });
+  await vi.advanceTimersByTimeAsync(20_001);
+  expect(result).toBe(false);
+  await save;
+  expect(feedback).toHaveBeenCalledWith(expect.stringMatching(/connection|reach|retry/i));
+  expect(await remote.saveState(state, feedback)).toBe(true);
+});
+
 test('scoped planning hydration and paged history preserve unseen identities and use compact schedule baselines',async()=>{
   const remote=await import('../../src/storage/remote');
   mocks.scopedPlans=[mocks.rows.plans[0]];
