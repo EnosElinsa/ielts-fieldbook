@@ -24,7 +24,7 @@ async function main() {
         grant select,insert,update,delete on public.${table} to authenticated;`);
     }
     const migrationDir = path.resolve(__dirname, '../../supabase/migrations');
-    for (const migration of ['20261010090000_unified_vocabulary.sql', '20261010170000_vocabulary_sessions.sql', '20261013120000_workspace_commits.sql', '20261013160000_neutral_vocabulary_identities.sql', '20261014120000_exam_annotations.sql', '20261020120000_planning_conflict_guards.sql', '20261020140000_planning_schedule_baseline.sql', '20261020220000_planning_history_pages.sql', '20261105120000_planning_conflict_http_status.sql']) {
+    for (const migration of ['20261010090000_unified_vocabulary.sql', '20261010170000_vocabulary_sessions.sql', '20261013120000_workspace_commits.sql', '20261013160000_neutral_vocabulary_identities.sql', '20261014120000_exam_annotations.sql', '20261020120000_planning_conflict_guards.sql', '20261020140000_planning_schedule_baseline.sql', '20261020220000_planning_history_pages.sql', '20261105120000_planning_conflict_http_status.sql', '20261116120000_learning_replan_history.sql']) {
       await db.exec(fs.readFileSync(path.join(migrationDir, migration), 'utf8'));
     }
     const conflictDefinition = async () => (await db.query("select pg_get_functiondef('public.commit_workspace_changes_neutral_rows(jsonb)'::regprocedure) as value")).rows[0].value;
@@ -160,6 +160,11 @@ async function main() {
     await assert.rejects(()=>commit({id:'stale-replay-stamp',lists:{plans:diff('must-not-exist')},baseline:{planStamp:ack.planStamp,plans:{'must-not-exist':null}}}),conflict(/schedule changed on another device/));
     assert.equal(await count('plans','must-not-exist'),0);
     await assert.rejects(() => db.exec("update workspace_commit_receipts set payload_hash='changed'"), /permission denied/);
+
+    const replanned={id:'replanned-learning',dateKey:'2026-11-16',status:'skipped',skipReason:'replanned-learning',origin:'automatic',skill:'vocabulary'};
+    await commit({id:'seed-replanned-learning',lists:{plans:diff(replanned.id,replanned)}});
+    assert.equal((await historyPage({status:'system',reason:'replanned-learning'})).plans[0]?.id,replanned.id);
+    assert.equal((await historyPage({status:'skipped',reason:'replanned-learning'})).total,0);
 
     await db.exec(`set request.jwt.claim.sub='${other}';`);
     assert.equal((await historyPage()).total,0);

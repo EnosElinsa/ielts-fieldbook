@@ -1,9 +1,10 @@
 import { useEffect, useState, type ReactNode } from 'react';
 
-export type LoadingVariant = 'bank' | 'workbench' | 'cards' | 'document' | 'list' | 'form';
+export type LoadingVariant = 'bank' | 'workbench' | 'cards' | 'document' | 'list' | 'form' | 'planning' | 'today';
 
 type LoadingProps = {
   message?: string;
+  title?: string;
   variant?: LoadingVariant;
   onRetry?: () => void;
   retryLabel?: string;
@@ -49,9 +50,36 @@ function FormSkeleton({ fields }: { fields: number }) {
   </div>;
 }
 
-function LoadingMark() { return <span className="async-loading-mark" aria-hidden="true"><span /></span>; }
+function FocusSkeleton() {
+  return <div className="async-skeleton-focus">
+    <div className="async-skeleton-focus-copy"><span className="async-skeleton-line is-short" /><span className="async-skeleton-line is-heading" /><span className="async-skeleton-line is-medium" /></div>
+    <span className="async-skeleton-action" />
+  </div>;
+}
 
-function LoadingState({ message = 'Loading…', variant = 'cards', onRetry, retryLabel = 'Retry loading', className = '', size }: LoadingProps & { size: 'page' | 'panel' | 'inline' }) {
+function PlanningSkeleton() {
+  return <>
+    <div className="async-skeleton-tabs">{[0, 1, 2].map(index => <span className="async-skeleton-chip" key={index} />)}</div>
+    <FocusSkeleton />
+    <div className="async-skeleton-calendar-head"><span className="async-skeleton-line is-medium" /><div className="async-skeleton-nav">{[0, 1, 2].map(index => <span className="async-skeleton-chip" key={index} />)}</div></div>
+    {[0, 1].map(day => <div className="async-skeleton-day" key={day}>
+      <div className="async-skeleton-day-overview">
+        <div className="async-skeleton-day-heading"><span className="async-skeleton-line is-heading" /><span className="async-skeleton-line is-short" /></div>
+        <div className="async-skeleton-day-stats">{[0, 1, 2].map(index => <div key={index}><span className="async-skeleton-line is-short" /><span className="async-skeleton-line is-heading" /></div>)}</div>
+        <span className="async-skeleton-chip" />
+      </div>
+      <ListSkeleton rows={day === 0 ? 3 : 2} />
+    </div>)}
+  </>;
+}
+
+function TodaySkeleton() {
+  return <><div className="async-skeleton-today-focus"><DocumentSkeleton compact /><div className="async-skeleton-summary"><span className="async-skeleton-line is-heading" /><ListSkeleton rows={3} /></div></div><ListSkeleton rows={3} /></>;
+}
+
+function LoadingMark() { return <span className="async-loading-mark" aria-hidden="true"><span /><span /><span /></span>; }
+
+function LoadingState({ message = 'Loading…', title, variant = 'cards', onRetry, retryLabel = 'Retry loading', className = '', size }: LoadingProps & { size: 'page' | 'panel' | 'inline' }) {
   const [slow, setSlow] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
   const canRetry = Boolean(onRetry);
@@ -71,9 +99,15 @@ function LoadingState({ message = 'Loading…', variant = 'cards', onRetry, retr
     {slow && canRetry ? <button type="button" className="btn line" onClick={retry}>{retryLabel}</button> : null}
   </span>;
   return <div className={`async-loading async-loading-${size} async-loading-${variant} ${className}`} aria-busy="true">
-    <div className="async-loading-status"><LoadingMark /><div className="async-loading-copy">{status}</div>{slow && canRetry ? <button type="button" className="btn line" onClick={retry}>{retryLabel}</button> : null}</div>
+    <div className="async-loading-header">
+      {size === 'page' ? <div className="async-loading-heading">
+        <span className="async-skeleton-line is-short" aria-hidden="true" />
+        {title ? <h2>{title}</h2> : <span className="async-skeleton-line is-heading" aria-hidden="true" />}
+      </div> : null}
+      <div className="async-loading-status"><LoadingMark /><div className="async-loading-copy">{status}</div>{slow && canRetry ? <button type="button" className="btn line" onClick={retry}>{retryLabel}</button> : null}</div>
+    </div>
     <div className={`async-skeleton-layout async-skeleton-${variant}`} aria-hidden="true">
-      {variant === 'workbench' ? <WorkbenchSkeleton /> : variant === 'document' ? <DocumentSkeleton compact={size === 'panel'} /> : variant === 'list' ? <ListSkeleton rows={size === 'panel' ? 3 : 6} /> : variant === 'form' ? <FormSkeleton fields={size === 'panel' ? 2 : 4} /> : Array.from({ length: variant === 'bank' ? 4 : size === 'panel' ? 2 : 3 }, (_, index) => <CardSkeleton key={index} />)}
+      {variant === 'planning' ? <PlanningSkeleton /> : variant === 'today' ? <TodaySkeleton /> : variant === 'workbench' ? <WorkbenchSkeleton /> : variant === 'document' ? <DocumentSkeleton compact={size === 'panel'} /> : variant === 'list' ? <ListSkeleton rows={size === 'panel' ? 3 : 6} /> : variant === 'form' ? <FormSkeleton fields={size === 'panel' ? 2 : 4} /> : Array.from({ length: variant === 'bank' ? 4 : size === 'panel' ? 2 : 3 }, (_, index) => <CardSkeleton key={index} />)}
     </div>
   </div>;
 }

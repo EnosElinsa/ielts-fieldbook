@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { PageLoadingState, StateMessage } from './AsyncState';
+import { PageLoadingState, PanelLoadingState, StateMessage } from './AsyncState';
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { studyStreak } from '../domain';
@@ -37,7 +37,12 @@ const LegalModal = lazy(()=>import('../features/modals/LegalModal').then(m=>({de
 
 /** The loading skeleton follows the layout of the page that replaces it. */
 function loadingLayout(pathname: string) {
-  if (/^\/(today|planning)?$/.test(pathname)) return 'list';
+  if (pathname === '/planning') return 'planning';
+  if (/^\/(today)?$/.test(pathname)) return 'today';
+  if (/^\/(reading|listening)$/.test(pathname)) return 'bank';
+  if (/^\/(reading|listening)\/review$/.test(pathname)) return 'list';
+  if (/^\/(reading|listening)\/source\//.test(pathname)) return 'document';
+  if (/^\/(reading|listening)\//.test(pathname)) return 'workbench';
   if (pathname === '/write' || pathname === '/speak') return 'workbench';
   if (['/write/questions', '/speak/questions', '/stories'].includes(pathname) || pathname.startsWith('/vocabulary/wordbooks')) return 'bank';
   if (pathname === '/review' || pathname.startsWith('/vocabulary/history') || pathname.startsWith('/vocabulary/words')) return 'list';
@@ -48,6 +53,7 @@ function loadingLayout(pathname: string) {
 
 function WorkspaceRoute() {
   const {pathname, search, key} = useLocation();
+  const title = pathname === '/planning' ? 'Planning' : /^\/(today)?$/.test(pathname) ? 'Today' : undefined;
   let modules = []; let banks = []; let area = 'study data';
   if (pathname.startsWith('/vocabulary')) { modules = [/^\/vocabulary\/(progress|import)(?:\/|$)/.test(pathname)?'vocabulary':'vocabularyCore']; area = 'vocabulary'; }
   else if (/^\/(reading|listening)/.test(pathname)) { modules = ['receptive']; area = 'practice records'; }
@@ -58,7 +64,7 @@ function WorkspaceRoute() {
   else if (pathname.startsWith('/review')) {modules=['productive','vocabulary'];area='review records';}
   else if (pathname.startsWith('/settings')) {modules=['planning','vocabularyCore'];area='settings';}
   const teachingScope=pathname.startsWith('/settings')||pathname.startsWith('/vocabulary/history')?[]:vocabularyTeachingScope(pathname,search);
-  return <PageErrorBoundary resetKey={`${accountId()}:${key}`}><AccountDataBoundary modules={modules} banks={banks} vocabularyEntryIds={teachingScope} variant={loadingLayout(pathname)} area={area}><Outlet /></AccountDataBoundary></PageErrorBoundary>;
+  return <PageErrorBoundary resetKey={`${accountId()}:${key}`}><AccountDataBoundary modules={modules} banks={banks} vocabularyEntryIds={teachingScope} variant={loadingLayout(pathname)} title={title} area={area}><Outlet /></AccountDataBoundary></PageErrorBoundary>;
 }
 
 function RailHint({ label, enabled, children }) {
@@ -323,9 +329,9 @@ export function Shell() {
           {fb.loadError && fb.booted ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
           {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
           {fb.loadError && !fb.booted ? <StateMessage kind="error" title="Your workspace could not load" message={<>Check your connection, then retry. Work you already saved is safe.{fb.loadError !== WORKSPACE_LOAD_ERROR ? <small className="async-state-detail">{fb.loadError}</small> : null}</>} onRetry={fb.retryLoad} retryLabel="Retry" /> : null}
-          {!fb.booted && !fb.loadError ? <PageLoadingState message="Loading your workspace…" variant={loadingLayout(location.pathname)} /> : null}
+          {!fb.booted && !fb.loadError ? <PageLoadingState title={ownHeading ? chrome.title : undefined} message="Loading your workspace…" variant={loadingLayout(location.pathname)} onRetry={fb.retryLoad} /> : null}
           <PageTransition transitionKey={transitionKey} key={module === 'settings' ? 'settings' : location.pathname}>
-            <WorkspaceScrollRestoration.Provider value={scrollRestoration}><Suspense fallback={<PageLoadingState message="Loading page…" />}>{fb.booted || fb.state.questions.length ? <WorkspaceRoute /> : null}</Suspense></WorkspaceScrollRestoration.Provider>
+            <WorkspaceScrollRestoration.Provider value={scrollRestoration}><Suspense fallback={<PageLoadingState title={ownHeading ? chrome.title : undefined} variant={loadingLayout(location.pathname)} message="Loading page…" />}>{fb.booted ? <WorkspaceRoute /> : null}</Suspense></WorkspaceScrollRestoration.Provider>
           </PageTransition>
         </main>
       </div>
@@ -333,7 +339,7 @@ export function Shell() {
       <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header="Your workspace"><div className="more-modal">{secondaryLinks.length > 0 && <p className="eyebrow">{workspaceModules.find(link => link.id === module)?.label} study</p>}<div className="mobile-more-links">{secondaryLinks.map((link) => <button type="button" key={link.to} className={studyLinkActive(link.to, location.pathname, location.search, module) ? 'active' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}{workspaceModules.filter(link => ['planning', 'progress', 'settings'].includes(link.id)).map(link => <button type="button" key={link.id} className={module === link.id ? 'active' : undefined} onClick={() => { setMoreOpen(false); resumeModule(link.id); }}><link.Icon size={20} />{link.label}</button>)}<button type="button" onClick={() => goFromMore('/settings/account')}><UserRound size={20} />Account</button></div></div></ModalFrame>
       {searchOpen && <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
       <PageErrorBoundary resetKey={`${accountId()}:${fb.modal}:${legalView}`} onDismiss={() => { fb.closeModal(); setLegalView(null); }}>
-      <Suspense fallback={<PageLoadingState message="Opening dialog…" />}>
+      <Suspense fallback={<ModalFrame open={Boolean(fb.modal || legalView)} onClose={() => { fb.closeModal(); setLegalView(null); }} title="Opening dialog"><PanelLoadingState variant="form" message="Loading dialog…" /></ModalFrame>}>
         {fb.modal === 'assessment' && <AccountDataBoundary modules={['productive']}><AssessmentImportModal /></AccountDataBoundary>}
         {legalView && <LegalModal view={legalView} onClose={() => setLegalView(null)} />}
         {fb.modal === 'settings' && <SettingsModal />}

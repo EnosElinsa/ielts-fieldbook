@@ -18,7 +18,7 @@ import { formatDateKey, plural } from '../../lib/format';
 import { useExamCatalog } from '../exam/useExamCatalog';
 
 export function TodayPage() {
-  return <AccountDataBoundary modules={['planning','vocabularyCore']} vocabularyEntryIds={[]} variant="list" area="study plan"><UnifiedToday /></AccountDataBoundary>;
+  return <AccountDataBoundary modules={['planning','vocabularyCore']} vocabularyEntryIds={[]} variant="today" title="Today" area="study plan"><UnifiedToday /></AccountDataBoundary>;
 }
 
 function UnifiedToday() {

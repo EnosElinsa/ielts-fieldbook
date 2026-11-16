@@ -21,7 +21,7 @@ import { TaskCollection } from './TaskCollection';
 import { LearningTaskDetails } from './LearningTaskDetails';
 import { formatDateKey } from '../../lib/format';
 
-export function PlanningPage(){return <AccountDataBoundary modules={['planning','vocabularyCore']} vocabularyEntryIds={[]} variant="list" area="study plan"><PlanningCalendar/></AccountDataBoundary>;}
+export function PlanningPage(){return <AccountDataBoundary modules={['planning','vocabularyCore']} vocabularyEntryIds={[]} variant="planning" title="Planning" area="study plan"><PlanningCalendar/></AccountDataBoundary>;}
 
 function PlanningCalendar(){
   const fb=useFieldbook();const schedule=useStudySchedule();const today=dateKey(new Date());const [anchor,setAnchor]=useState(today);const days=calendarDays(new Date(`${anchor}T12:00:00`));const [editor,setEditor]=useState(null);
@@ -55,7 +55,7 @@ function PlanningCalendar(){
       </div>
     </nav>
     <div className="study-calendar" aria-busy={schedule.saving}>{days.map(day=>{
-      const tasks=fb.state.plans.filter(plan=>plan.dateKey===day&&!plan.onHold&&!plan.archivedAt).sort(compareStudyPlans);
+      const tasks=fb.state.plans.filter(plan=>plan.dateKey===day&&plan.status!=='skipped'&&!plan.onHold&&!plan.archivedAt).sort(compareStudyPlans);
       const used=tasks.filter(plan=>plan.status!=='skipped').reduce((sum,plan)=>sum+Number(plan.estimatedMinutes||0),0);
       const dayBudget=studyBudget(fb.state.settings,day),budget=dayBudget.daily;
       const newWords=tasks.filter(plan=>plan.status!=='skipped'&&plan.target?.mode==='learning-batch').reduce((sum,plan)=>sum+(plan.target.cards?.length||plan.target.entryIds?.length||plan.quantity||plan.target.batchSize||0),0);
@@ -91,7 +91,7 @@ function PlanTask({plan}){
   const completionDescription=receptivePlanCompletionDescription(plan);
   const status=plan.onHold&&plan.status!=='completed'?'On hold':({pending:'Not started',in_progress:'In progress',completed:'Completed',skipped:'Skipped'})[plan.status] || plan.status;
   const reasons=[
-    plan.skipReason&&({"merged-review":"Merged into current review planning","bulk-skip":"Skipped in backlog","user-skipped":"Skipped by you","no-longer-due":"No review needed any more"})[plan.skipReason],
+    plan.skipReason&&({"merged-review":"Merged into current review planning","replanned-learning":"Unstarted words returned to the current daily learning plan","bulk-skip":"Skipped in backlog","user-skipped":"Skipped by you","no-longer-due":"No review needed any more"})[plan.skipReason],
     plan.onHold&&'Held tasks stay out of automatic scheduling.',
     plan.waitingReason,
     plan.reviewReason&&`Review reason: ${({error:'Confirmed mistake',recovery:'Mistake recovery',due:'Scheduled review is due',missing:'Build a missing skill',spaced:'Spaced consolidation'})[plan.reviewReason]||plan.reviewReason}`,

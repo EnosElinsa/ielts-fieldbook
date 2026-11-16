@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AppRoutes } from './App';
+import { hydrateState } from './storage';
 
 afterEach(() => {
   cleanup();
@@ -94,7 +95,7 @@ vi.mock('./storage', async () => {
   return {
     ...actual,
     loadState,
-    hydrateState: async () => loadState(),
+    hydrateState: vi.fn(async () => loadState()),
     getCollectionStatuses: () => null,
     ensureAccountModule: async () => ({ data: {}, statuses: {} }),
     ensureCompleteAccount: async () => loadState(),
@@ -173,6 +174,16 @@ function renderAt(path: string) {
 const longEssay = Array.from({ length: 160 }, (_, i) => `word${i}`).join(' ');
 
 describe('Fieldbook UI', () => {
+  it('shows only one route-shaped loader while cached questions await account hydration', () => {
+    vi.mocked(hydrateState).mockImplementationOnce(() => new Promise(() => {}));
+    const { container } = renderAt('/planning');
+    expect(within(container.querySelector('main')!).getAllByRole('status')).toHaveLength(1);
+    expect(container.querySelectorAll('.async-loading-page')).toHaveLength(1);
+    expect(container.querySelector('.async-skeleton-planning')).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Planning', level: 2 })).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Settings' })).toBeTruthy();
+  });
+
   it('shows global modules and route-specific study links', async () => {
     const user = userEvent.setup();
     renderAt('/write');

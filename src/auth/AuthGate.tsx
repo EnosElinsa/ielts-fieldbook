@@ -169,13 +169,11 @@ export function AuthGate({ children }: { children: ReactNode }) {
 
   if (sessionState === 'loading') {
     return (
-      <main className="auth-screen">
-        <Aside title="Loading your account." />
-        <section className="auth-card">
-          <p className="kicker">Fieldbook</p>
-          <h2>Checking your sign-in</h2>
-          <InlineLoadingState message="Checking your saved session…" />
-        </section>
+      <main className="auth-screen auth-session-loading">
+        <Aside title="Your study workspace" />
+        <div className="auth-session-status">
+          <InlineLoadingState message="Checking your saved session…" onRetry={() => setSessionCheck(value => value + 1)} retryLabel="Retry connection" />
+        </div>
       </main>
     );
   }

@@ -1,4 +1,4 @@
-import type { StudyPlan } from '../../domain/plans';
+import { isReplannableLearningPlan, type StudyPlan } from '../../domain/plans';
 
 export function LearningTaskDetails({plan,batchSize}:{plan:StudyPlan;batchSize:number}) {
   const target=plan.target;
@@ -7,7 +7,9 @@ export function LearningTaskDetails({plan,batchSize}:{plan:StudyPlan;batchSize:n
   if(!count||count===batchSize)return null;
   return <details className="study-word-selection">
     <summary>Why {count} {count===1?'word':'words'}?</summary>
-    <p>This task has a saved selection of {count} {count===1?'word':'words'}. Your current limit is up to {batchSize} {batchSize===1?'word':'words'} per new batch. Changing limits keeps saved word selections intact.</p>
+    {isReplannableLearningPlan(plan)
+      ? <p>This automatic task contains {count} {count===1?'word':'words'}, with up to {batchSize} per batch. Unstarted automatic tasks are recalculated from your current progress and daily goal.</p>
+      : <p>This task has a saved selection of {count} {count===1?'word':'words'}. Your current limit is up to {batchSize} {batchSize===1?'word':'words'} per new batch. Changing limits keeps saved word selections intact.</p>}
     <p>New tasks also depend on the daily goal, available study time and words remaining in the source group.</p>
   </details>;
 }

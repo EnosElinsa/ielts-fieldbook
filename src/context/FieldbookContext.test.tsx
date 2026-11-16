@@ -115,6 +115,8 @@ test('a successful scoped exam save keeps recovery for unrelated unsaved writing
 });
 
 function examExpansionFixture() {
+  vi.useFakeTimers({toFake:['Date']});
+  vi.setSystemTime(new Date('2026-11-12T12:00:00Z'));
   const questions=Array.from({length:13},(_,index)=>({id:`expansion-q${index+1}`,sectionId:'expansion-section',skill:'reading',number:index+1,type:'gap',points:1}));
   const original={id:'expansion-attempt',planId:'expansion-plan',skill:'reading',sourceId:'expansion-section',sectionIds:['expansion-section'],mode:'practice',status:'paused',startedAt:'2026-11-12T10:00:00Z',updatedAt:'2026-11-12T10:01:00Z',elapsedSeconds:25,hintsEnabled:true,responses:{'expansion-q1':'original answer'},evidence:{'expansion-q1':'original evidence'},keywords:{},errorReasons:{},questionSnapshot:questions.slice(0,7),questionTypes:Object.fromEntries(questions.slice(0,7).map(question=>[question.id,question.type]))};
   const expanded={...structuredClone(original),updatedAt:'2026-11-12T10:02:00Z',questionSnapshot:questions,questionTypes:Object.fromEntries(questions.map(question=>[question.id,question.type]))};

@@ -230,6 +230,30 @@ test('history keeps skipped identities and restores only through an explicit dat
  await userEvent.click(screen.getByRole('button',{name:'Restore task'}));expect(screen.getByRole('dialog',{name:'Restore task'})).toBeInTheDocument();
 });
 
+test('skipped tasks leave the daily schedule and remain restorable in history',async()=>{
+ mocks.state.plans.push({...mocks.state.plans[0],id:'skip-today',status:'skipped',skipReason:'user-skipped',title:'Skipped vocabulary fragment'});
+ mount();
+ expect(screen.queryByRole('heading',{name:'Skipped vocabulary fragment'})).not.toBeInTheDocument();
+ expect(screen.queryByRole('button',{name:'Restore task'})).not.toBeInTheDocument();
+ await userEvent.click(screen.getByRole('button',{name:'History',exact:true}));
+ expect(screen.getByRole('heading',{name:'Skipped vocabulary fragment'})).toBeInTheDocument();
+ expect(screen.getByRole('button',{name:'Restore task'})).toBeInTheDocument();
+});
+
+test('replanned learning is a system decision with its original selection in history',async()=>{
+ mocks.state.plans.push({...mocks.state.plans[0],id:'replanned',status:'skipped',origin:'automatic',skipReason:'replanned-learning',title:'Old learning selection'});
+ mount();
+ await userEvent.click(screen.getByRole('button',{name:'History',exact:true}));
+ await userEvent.click(screen.getByRole('combobox',{name:'Status'}));
+ await userEvent.click(screen.getByRole('option',{name:'Skipped by you'}));
+ expect(screen.queryByRole('heading',{name:'Old learning selection'})).not.toBeInTheDocument();
+ await userEvent.click(screen.getByRole('combobox',{name:'Status'}));
+ await userEvent.click(screen.getByRole('option',{name:'System handled'}));
+ expect(screen.getByRole('heading',{name:'Old learning selection'})).toBeInTheDocument();
+ await userEvent.click(screen.getByText('Details'));
+ expect(screen.getByText('Unstarted words returned to the current daily learning plan')).toBeVisible();
+});
+
 test('history pagination locates a deep link and separates user skips from system handling',async()=>{
   mocks.state.plans=Array.from({length:25},(_,index)=>({id:`history-${index}`,dateKey:`2020-01-${String(index+1).padStart(2,'0')}`,status:'skipped',skipReason:index===24?'no-longer-due':'user-skipped',skill:'vocabulary',title:`History item ${index}`,estimatedMinutes:1}));
   render(<MemoryRouter initialEntries={['/planning#task-history-0']}><PlanningPage/></MemoryRouter>);

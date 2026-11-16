@@ -2,7 +2,7 @@
 import { latestPracticeRecommendation, rewritePlanDescription, syncPendingPlan, dateKey, dueErrors, dueVocabulary, examPressure, assignStoryPlanTarget } from '../domain';
 import { sessionSkill, speakingKinds } from './format';
 import { receptivePlanTemplates, ensureReceptivePlans } from './receptivePlans';
-import { isProtectedPlan, practiceFromWeakness } from '../domain/plans';
+import { isProtectedPlan, isReplannableLearningPlan, practiceFromWeakness } from '../domain/plans';
 import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
 import { vocabularyLearningSource } from '../domain/vocabulary/learningSource';
 import { getVocabularyPlanningCandidates, selectVocabularyPlanReview } from '../domain/vocabulary/planning';
@@ -526,7 +526,8 @@ function refreshEvidenceTargets(state, keys, skills, now) {
 const isVocabularyPlan=plan=>plan.skill==='vocabulary'||plan.kind==='vocabulary';
 const startedPlan=plan=>plan.status==='in_progress'||Boolean(plan.startedAt);
 const frozenVocabularyPlan=plan=>plan.target?.type==='vocabulary'&&(plan.target.binding==='frozen'||plan.target.binding!=='dynamic'&&plan.target.cards?.length>0);
-const protectedSchedulePlan=plan=>isProtectedPlan(plan)||Boolean(plan.originalDateKey || plan.onHold || plan.archivedAt)||frozenVocabularyPlan(plan);
+const protectedSchedulePlan=plan=>isProtectedPlan(plan)||Boolean(plan.onHold || plan.archivedAt || plan.draft || plan.restoredAt || plan.linkedSessionId)
+  ||!isReplannableLearningPlan(plan)&&(Boolean(plan.originalDateKey)||frozenVocabularyPlan(plan));
 const cardIdentity=(card,mode=card.mode)=>JSON.stringify([card.entryId,card.senseId,mode]);
 const taskMinutes=plan=>Math.max(1,Number(plan.estimatedMinutes)||Number(plan.quantity)||1);
 
@@ -634,6 +635,12 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
   const before=JSON.stringify(state.plans);
   const previous=(state.plans||[]).slice();
   const keys=calendarDays(now),today=keys[0],generationKey=planningSettingsKey(state.settings);
+  // Retire missed proposals before carryover and reservations are calculated.
+  // Their words remain unlearned and join the current daily allocation again.
+  for(const plan of previous)if(isReplannableLearningPlan(plan)&&(plan.originalDateKey||plan.dateKey)<today&&(!recoveryIds||recoveryIds.has(plan.id))) {
+    plan.previousStatus=plan.status;plan.status='skipped';plan.skipReason='replanned-learning';plan.skippedAt=new Date(now).toISOString();
+    if(state.activePlanId===plan.id)state.activePlanId=null;
+  }
   // Reclaim only untouched generated slots, before allocating carryover.
   state.plans=previous.filter(plan=>plan.dateKey<today||protectedSchedulePlan(plan)||!(plan.origin==='automatic'||plan.schemaVersion===2||/^plan-(?:(?:reading|listening)-)?\d{4}-\d{2}-\d{2}$/.test(plan.id||'')));
   const previousDates=new Map();
