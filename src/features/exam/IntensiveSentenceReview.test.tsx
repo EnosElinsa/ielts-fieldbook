@@ -114,3 +114,15 @@ test('the learner can finish a fully heard review without scheduling another one
   expect(onSave).toHaveBeenCalledWith(expect.objectContaining({ selfRating: 5, reviewEnabled: false }));
   expect(await screen.findByText('Review saved')).toBeInTheDocument();
 });
+
+test('a correct sentence can be reviewed on demand without opting into future reminders', async () => {
+  const { onSave } = open({ session: { ...session, dictationResult: 'correct' } }); const user = userEvent.setup();
+  await user.click(screen.getByRole('button', { name: 'Review now' }));
+  expect(screen.getByRole('checkbox', { name: 'Schedule another listening review' })).not.toBeChecked();
+  await user.click(screen.getByRole('button', { name: 'Play test audio' }));
+  await user.click(screen.getByRole('button', { name: 'Finish test audio' }));
+  const { selectChoice } = await import('../../../tests/selectChoice');
+  await selectChoice(screen.getByLabelText('How much did you understand?'), '5 · Clear and fluent');
+  await user.click(screen.getByRole('button', { name: 'Save review and finish' }));
+  expect(onSave).toHaveBeenCalledWith(expect.objectContaining({ selfRating: 5, reviewEnabled: false }));
+});
