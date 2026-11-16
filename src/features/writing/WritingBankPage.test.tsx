@@ -69,3 +69,36 @@ test('search accepts a pasted topic with surrounding whitespace', () => {
   render(<MemoryRouter initialEntries={['/write/questions?q=%20Education%20']}><WritingBankPage /></MemoryRouter>);
   expect(screen.getByRole('heading', { name: 'Education' })).toBeInTheDocument();
 });
+
+test('chart previews expose loading and failure states with a working retry without blocking practice', async () => {
+  fieldbook.current.state.questions[0].image = 'question-assets/1342.png';
+  render(<MemoryRouter><WritingBankPage /></MemoryRouter>);
+  let chart = screen.getByAltText('Cities chart');
+  expect(screen.getByText('Loading chart…')).toBeInTheDocument();
+  fireEvent.error(chart);
+  expect(screen.getByText('Chart preview unavailable')).toBeInTheDocument();
+  await userEvent.click(screen.getByRole('button', { name: 'Retry chart: Cities chart' }));
+  chart = screen.getByAltText('Cities chart');
+  expect(screen.queryByText('Chart preview unavailable')).not.toBeInTheDocument();
+  expect(screen.getByText('Loading chart…')).toBeInTheDocument();
+  fireEvent.load(chart);
+  expect(screen.queryByText('Loading chart…')).not.toBeInTheDocument();
+  await userEvent.click(screen.getAllByRole('button', { name: 'Write this' })[0]);
+  expect(fieldbook.current.chooseQuestion).toHaveBeenCalledWith('q1');
+});
+
+test('a replacement chart starts fresh and ignores events from the old image', () => {
+  fieldbook.current.state.questions[0].image = 'question-assets/1342.png';
+  const view = render(<MemoryRouter><WritingBankPage /></MemoryRouter>);
+  const old = screen.getByAltText('Cities chart');
+  fireEvent.error(old);
+  fieldbook.current.state.questions[0].image = 'question-assets/1344.png';
+  view.rerender(<MemoryRouter><WritingBankPage /></MemoryRouter>);
+  const next = screen.getByAltText('Cities chart');
+  expect(next).not.toBe(old);
+  expect(screen.queryByText('Chart preview unavailable')).not.toBeInTheDocument();
+  fireEvent.load(old);
+  expect(screen.getByText('Loading chart…')).toBeInTheDocument();
+  fireEvent.load(next);
+  expect(screen.queryByText('Loading chart…')).not.toBeInTheDocument();
+});

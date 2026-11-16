@@ -1,4 +1,4 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
@@ -57,4 +57,36 @@ test('due listening reviews identify their paper and sentence and preserve the s
   expect(screen.getByText('1 sentence due')).toBeInTheDocument();
   expect(mocks.loadSections).toHaveBeenCalledWith(['audio'], { force: false });
   expect(screen.queryByText('Part 1 · Sentence 1')).not.toBeInTheDocument();
+});
+
+test('attempt filters are scoped below due sentence reviews and count attempts with mistakes', async () => {
+  mocks.state.examAttempts = [{ ...mocks.state.examAttempts[0], skill: 'listening', results: { q1: false, q2: false } }];
+  mocks.state.intensiveSessions = [{ id: 'due', sectionId: 'audio', sentenceId: 's2', completedAt: '2026-01-01', nextReviewAt: '2026-01-02', errorReasons: [] }];
+  render(<MemoryRouter><ExamReviewQueuePage skill="listening" /></MemoryRouter>);
+  const sentences = await screen.findByRole('region', { name: 'Sentence reviews' });
+  const attempts = screen.getByRole('region', { name: 'Practice attempts' });
+  expect(within(attempts).getByRole('group', { name: 'Practice attempt filter' })).toBeInTheDocument();
+  expect(within(attempts).getByRole('button', { name: 'With mistakes (1)' })).toBeInTheDocument();
+  expect(sentences.compareDocumentPosition(attempts) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  await userEvent.click(screen.getByRole('button', { name: 'All attempts (1)' }));
+  expect(within(sentences).getByRole('link', { name: /Sentence 2/ })).toBeInTheDocument();
+});
+
+test('a due sentence with no ordinary attempts has an accurate separate empty state', async () => {
+  mocks.state.examAttempts = [];
+  mocks.state.intensiveSessions = [{ id: 'due', sectionId: 'audio', sentenceId: 's2', completedAt: '2026-01-01', nextReviewAt: '2026-01-02', errorReasons: [] }];
+  render(<MemoryRouter><ExamReviewQueuePage skill="listening" /></MemoryRouter>);
+  expect(await screen.findByText('1 sentence due')).toBeInTheDocument();
+  expect(within(screen.getByRole('region', { name: 'Practice attempts' })).getByText('No practice attempts yet.')).toBeInTheDocument();
+  expect(screen.queryByText('No incorrect answers to review.')).not.toBeInTheDocument();
+});
+
+test('a completed attempt without results is never described as all correct', async () => {
+  render(<MemoryRouter><ExamReviewQueuePage skill="listening" /></MemoryRouter>);
+  await userEvent.click(screen.getByRole('button', { name: 'View all attempts' }));
+  expect(await screen.findByText('Part 1')).toBeInTheDocument();
+  expect(screen.getByText('Results unavailable')).toBeInTheDocument();
+  expect(screen.queryByText('All correct')).not.toBeInTheDocument();
+  expect(screen.queryByText(/— \/ —/)).not.toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Review attempt listen' })).toHaveAttribute('href', '/listening/review/listen');
 });

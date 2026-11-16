@@ -28,6 +28,26 @@ test('future practice is complete and explains where the scheduled review will a
   expect(screen.getByRole('link', { name: 'Open listening review' })).toHaveAttribute('href', '/listening/review');
 });
 
+test('a due sentence prioritizes starting review and labels its past date accurately', () => {
+  const { container } = open({ onNext: vi.fn() });
+  const start = screen.getByRole('button', { name: 'Start listening review' });
+  const next = screen.getByRole('button', { name: 'Continue to next sentence' });
+  expect(container.querySelectorAll('.btn.primary')).toHaveLength(1);
+  expect(start).toHaveClass('primary');
+  expect(start.compareDocumentPosition(next) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  expect(screen.getByText(/Review due:/)).toHaveTextContent('2 Jan 2020');
+  expect(screen.queryByText(/Next review:/)).not.toBeInTheDocument();
+  expect(start.compareDocumentPosition(screen.getByText('How sentence reviews are scheduled')) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+});
+
+test('a future review keeps continuing practice as the sole primary action', () => {
+  const { container } = open({ session: { ...session, nextReviewAt: '2099-01-01' }, onNext: vi.fn() });
+  expect(container.querySelectorAll('.btn.primary')).toHaveLength(1);
+  expect(screen.getByRole('button', { name: 'Continue to next sentence' })).toHaveClass('primary');
+  expect(screen.getByRole('button', { name: 'Review now' })).not.toHaveClass('primary');
+  expect(screen.getByText(/Next review:/)).toHaveTextContent('1 Jan 2099');
+});
+
 test('due review is opt-in, hides prior answers and requires a complete blind playback before rating', async () => {
   const { onSave } = open(); const user = userEvent.setup();
   expect(screen.getByRole('heading', { name: 'Listening review due' })).toBeInTheDocument();

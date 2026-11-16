@@ -216,6 +216,7 @@
 .intensive-listening-review > details { margin-top: 24px; border-top: 1px solid var(--rule); padding-top: 16px; }
 .intensive-listening-review > details > summary { min-height: 44px; cursor: pointer; }
 .intensive-next-review { padding: 12px 14px; background: var(--soft-green); border-radius: 6px; }
+.intensive-next-review.is-due { background: var(--soft-blue); border-left: 3px solid var(--blue); }
 .intensive-workbench .intensive-review-choice { display: flex; align-items: flex-start; gap: 10px; margin-block: 18px 8px; min-height: 44px; padding: 12px 14px; border: 1px solid var(--rule); border-radius: 6px; background: var(--sheet); font-size: 14px; line-height: 1.5; cursor: pointer; }
 .intensive-review-choice > input[type=checkbox] { flex: none; width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--blue-dark); }
 .intensive-review-choice > span { min-width: 0; }

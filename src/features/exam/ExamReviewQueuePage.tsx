@@ -9,13 +9,88 @@ import { useExamCatalog } from './useExamCatalog';
 import '../../styles/exam.css';
 
 export function ExamReviewQueuePage({ skill }: { skill: ExamSkill }) {
-  const fb = useFieldbook(); const { catalog, loading, error, reload } = useExamCatalog(skill); const [filter, setFilter] = useState<'wrong' | 'all'>('wrong');
-  const completed = ((fb.state.examAttempts || []) as ExamAttempt[]).filter(attempt => attempt.skill === skill && attempt.status === 'completed').sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
-  const attempts = completed.filter(attempt => filter === 'all' || Object.values(attempt.results || {}).some(correct => !correct));
-  const wrongCount = completed.filter(attempt => Object.values(attempt.results || {}).some(correct => !correct)).length;
+  const fb = useFieldbook();
+  const { catalog, loading, error, reload } = useExamCatalog(skill);
+  const [filter, setFilter] = useState<'wrong' | 'all'>('wrong');
+  const completed = ((fb.state.examAttempts || []) as ExamAttempt[])
+    .filter(attempt => attempt.skill === skill && attempt.status === 'completed')
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  const withMistakes = completed.filter(attempt => Object.values(attempt.results || {}).some(correct => !correct));
+  const attempts = filter === 'all' ? completed : withMistakes;
   const due = skill === 'listening' ? dueIntensive((fb.state.intensiveSessions || []) as IntensiveSession[]) : [];
   const { catalog: dueCatalog, loading: dueLoading, error: dueError, reload: reloadDue } = useExamCatalog(skill, undefined, [...new Set(due.map(session => session.sectionId))]);
-  return <section className="view active exam-review-queue"><Link className="btn text back-link exam-queue-back" to={`/${skill}`}><ArrowLeft size={14} />Back to bank</Link><div className="exam-intro"><span className="exam-eyebrow">{skill} · review</span><h2>Review your answers</h2><p>Check incorrect answers, record why you missed them, and try again.</p></div><div className="exam-workspace-tools"><div className="exam-part-tabs" role="group" aria-label="Review filter"><button className={filter === 'wrong' ? 'active' : ''} aria-pressed={filter === 'wrong'} onClick={() => setFilter('wrong')}>Wrong answers ({wrongCount})</button><button className={filter === 'all' ? 'active' : ''} aria-pressed={filter === 'all'} onClick={() => setFilter('all')}>All attempts ({completed.length})</button></div></div>{skill === 'listening' && <details className="intensive-review-rule"><summary>How sentence reviews are scheduled</summary><p>Wrong and partially correct intensive dictations enter review by default. Correct dictations are excluded unless you add them. You can add or remove any sentence from its practice page, and choose whether to continue after each review. The first interval uses both dictation accuracy and understanding: wrong or rating 1–2 → 1 day; partial or rating 3 → 2 days; rating 4 → 4 days; rating 5 → 7 days. After that, your latest listening rating sets the interval. Sentences appear here when due; an ordinary part-practice mistake does not create a sentence review until you complete its intensive practice.</p></details>}{(loading || (due.length > 0 && dueLoading)) && <InlineLoadingState message="Loading source details… Your saved reviews remain available." onRetry={() => { reload(); reloadDue(); }} retryLabel="Retry source details" />}{(error || dueError) && <StateMessage kind="error" message="Source details could not load. Your saved reviews remain available." onRetry={() => { reload(); reloadDue(); }} retryLabel="Retry source details" />}{due.length > 0 && <section className="exam-paper exam-due-review"><span className="exam-eyebrow">Listening review</span><h3>{due.length} sentence{due.length === 1 ? '' : 's'} due</h3><div className="exam-section-grid">{due.map(session => { const section = dueCatalog.sections.find(row => row.id === session.sectionId) || catalog.sections.find(row => row.id === session.sectionId); const paper = catalog.papers.find(row => row.id === section?.paperId); const sentenceIndex = section?.sentences?.findIndex(row => row.id === session.sentenceId) ?? -1; return <Link className="exam-queue-due" key={session.id} to={`/listening/intensive/${session.sectionId}?sentence=${encodeURIComponent(session.sentenceId)}`}><Headphones size={18} /><span><small className="exam-due-source">{paper ? `Cambridge ${paper.book} / Test ${paper.test}` : 'Listening review'}</small><strong>{section?.title || 'Listening part'} · {sentenceIndex >= 0 ? `Sentence ${sentenceIndex + 1}` : 'Saved sentence'}</strong><small>{session.errorReasons.join(' · ') || 'Listen, rate and schedule'}</small></span><ArrowRight size={16} /></Link>; })}</div></section>}
-    {attempts.length ? <div className="exam-review-list">{attempts.map(attempt => { const wrong = Object.values(attempt.results || {}).filter(correct => !correct).length; const section = catalog.sections.find(row => row.id === attempt.sectionIds[0]); const paper = catalog.papers.find(row => row.id === (attempt.mode === 'mock' ? attempt.sourceId : section?.paperId)); const reasons = [...new Set(Object.values(attempt.errorReasons || {}).filter(Boolean))]; return <article className="exam-review-card exam-queue-card" key={attempt.id}><div><span className="exam-eyebrow">{paper ? `Cambridge ${paper.book} / Test ${paper.test}` : 'Saved practice'} · {new Date(attempt.completedAt || attempt.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span><h3>{attempt.mode === 'mock' ? paper?.title || 'Full mock' : section?.title || `Saved ${skill === 'reading' ? 'passage' : 'part'} practice`}</h3><div className="exam-queue-meta"><span className="pill">{attempt.mode === 'mock' ? 'Full mock' : 'Practice'}</span><span>{attempt.score ?? '—'} / {attempt.total ?? '—'} marks</span><span className={`pill ${wrong ? 'red' : 'green'}`}>{wrong ? `${wrong} to revisit` : 'All correct'}</span></div>{reasons.length > 0 && <div className="exam-reason-pills">{reasons.map(reason => <span className="pill" key={reason}>{reason}</span>)}</div>}</div><Link className="btn primary" aria-label={`Review attempt ${attempt.id}`} to={`/${skill}/review/${attempt.id}`}><RotateCcw size={15} />Review attempt</Link></article>; })}</div> : <StateMessage title={filter === 'wrong' ? 'No incorrect answers to review.' : 'No saved attempts yet.'} message={filter === 'wrong' && completed.length ? 'Your completed attempts are available in All attempts.' : 'Complete a practice part or mock to build your review record.'}>{filter === 'wrong' && completed.length ? <button className="btn primary" onClick={() => setFilter('all')}>View all attempts</button> : <Link className="btn line" to={`/${skill}`}>Open {skill} bank</Link>}</StateMessage>}
+  const retrySources = () => { reload(); reloadDue(); };
+
+  return <section className="view active exam-review-queue">
+    <Link className="btn text back-link exam-queue-back" to={`/${skill}`}><ArrowLeft size={14} />Back to bank</Link>
+    <div className="exam-intro">
+      <span className="exam-eyebrow">{skill} · review</span>
+      <h2>Review your answers</h2>
+      <p>{skill === 'listening' ? 'Revisit scheduled sentences or check your practice answers.' : 'Check incorrect answers, record why you missed them, and try again.'}</p>
+    </div>
+    {(loading || (due.length > 0 && dueLoading)) && <InlineLoadingState message="Loading source details… Your saved reviews remain available." onRetry={retrySources} retryLabel="Retry source details" />}
+    {(error || dueError) && <StateMessage kind="error" message="Source details could not load. Your saved reviews remain available." onRetry={retrySources} retryLabel="Retry source details" />}
+
+    {skill === 'listening' && <section className="exam-paper exam-due-review" aria-label="Sentence reviews">
+      <span className="exam-eyebrow">Sentence reviews</span>
+      <h3>{due.length ? `${due.length} sentence${due.length === 1 ? '' : 's'} due` : 'No sentences due'}</h3>
+      {due.length ? <div className="exam-section-grid">{due.map(session => {
+        const section = dueCatalog.sections.find(row => row.id === session.sectionId) || catalog.sections.find(row => row.id === session.sectionId);
+        const paper = catalog.papers.find(row => row.id === section?.paperId) || dueCatalog.papers.find(row => row.id === section?.paperId);
+        const sentenceIndex = section?.sentences?.findIndex(row => row.id === session.sentenceId) ?? -1;
+        return <Link className="exam-queue-due" key={session.id} to={`/listening/intensive/${session.sectionId}?sentence=${encodeURIComponent(session.sentenceId)}`}>
+          <Headphones size={18} />
+          <span>
+            <small className="exam-due-source">{paper ? `Cambridge ${paper.book} / Test ${paper.test}` : 'Listening review'}</small>
+            <strong>{section?.title || 'Listening part'} · {sentenceIndex >= 0 ? `Sentence ${sentenceIndex + 1}` : 'Saved sentence'}</strong>
+            <small>{session.errorReasons.join(' · ') || 'Listen and rate your understanding'}</small>
+          </span>
+          <ArrowRight size={16} />
+        </Link>;
+      })}</div> : <p className="exam-queue-description">Sentences you include in listening review will appear here when due. You can also review a completed sentence at any time from its practice page.</p>}
+      <details className="intensive-review-rule">
+        <summary>How sentence reviews are scheduled</summary>
+        <p>Wrong and partially correct intensive dictations enter review by default. Correct dictations are excluded unless you add them. You can add or remove any sentence from its practice page, and choose whether to continue after each review.</p>
+        <p>The first interval uses both dictation accuracy and understanding: wrong or rating 1–2 → 1 day; partial or rating 3 → 2 days; rating 4 → 4 days; rating 5 → 7 days. After that, your latest listening rating sets the interval. An ordinary part-practice mistake does not create a sentence review until you complete its intensive practice.</p>
+      </details>
+    </section>}
+
+    <section className="exam-attempt-reviews" aria-label="Practice attempts">
+      <h3>Practice attempts</h3>
+      <p className="exam-queue-description">Review a completed practice or mock, including its answers and mistake notes.</p>
+      <div className="exam-workspace-tools">
+        <div className="exam-part-tabs" role="group" aria-label="Practice attempt filter">
+          <button className={filter === 'wrong' ? 'active' : ''} aria-pressed={filter === 'wrong'} onClick={() => setFilter('wrong')}>With mistakes ({withMistakes.length})</button>
+          <button className={filter === 'all' ? 'active' : ''} aria-pressed={filter === 'all'} onClick={() => setFilter('all')}>All attempts ({completed.length})</button>
+        </div>
+      </div>
+      {attempts.length ? <div className="exam-review-list">{attempts.map(attempt => {
+        const results = Object.values(attempt.results || {});
+        const wrong = results.filter(correct => !correct).length;
+        const hasScore = typeof attempt.score === 'number' && typeof attempt.total === 'number' && attempt.total > 0;
+        const allCorrect = hasScore ? attempt.score === attempt.total : results.length > 0 && wrong === 0;
+        const section = catalog.sections.find(row => row.id === attempt.sectionIds[0]);
+        const paper = catalog.papers.find(row => row.id === (attempt.mode === 'mock' ? attempt.sourceId : section?.paperId));
+        const reasons = [...new Set(Object.values(attempt.errorReasons || {}).filter(Boolean))];
+        return <article className="exam-review-card exam-queue-card" key={attempt.id}>
+          <div>
+            <span className="exam-eyebrow">{paper ? `Cambridge ${paper.book} / Test ${paper.test}` : 'Saved practice'} · {new Date(attempt.completedAt || attempt.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
+            <h4>{attempt.mode === 'mock' ? paper?.title || 'Full mock' : section?.title || `Saved ${skill === 'reading' ? 'passage' : 'part'} practice`}</h4>
+            <div className="exam-queue-meta">
+              <span className="pill">{attempt.mode === 'mock' ? 'Full mock' : 'Practice'}</span>
+              {hasScore && <span>{attempt.score} / {attempt.total} marks</span>}
+              <span className={`pill${wrong ? ' red' : allCorrect ? ' green' : ''}`}>{wrong ? `${wrong} to revisit` : allCorrect ? 'All correct' : results.length || hasScore ? 'Review answers' : 'Results unavailable'}</span>
+            </div>
+            {reasons.length > 0 && <div className="exam-reason-pills">{reasons.map(reason => <span className="pill" key={reason}>{reason}</span>)}</div>}
+          </div>
+          <Link className="btn primary" aria-label={`Review attempt ${attempt.id}`} to={`/${skill}/review/${attempt.id}`}><RotateCcw size={15} />Review attempt</Link>
+        </article>;
+      })}</div> : <StateMessage
+        title={!completed.length ? 'No practice attempts yet.' : 'No practice mistakes to review.'}
+        message={completed.length ? 'Your completed attempts are available in All attempts.' : `Complete a ${skill === 'reading' ? 'passage' : 'part'} practice or mock to build your review record.`}
+      >
+        {completed.length ? <button className="btn line" onClick={() => setFilter('all')}>View all attempts</button> : <Link className="btn line" to={`/${skill}`}>Open {skill} bank</Link>}
+      </StateMessage>}
+    </section>
   </section>;
 }
