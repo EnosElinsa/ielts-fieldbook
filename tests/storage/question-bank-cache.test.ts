@@ -73,6 +73,29 @@ test('returned bank rows and subscription payloads cannot mutate cached content'
   unsubscribe();
 });
 
+test('writing bank reads and subscriptions repair verified import defects without mutating source rows', async () => {
+  const source = 'https://www.ieltscb.com/WriteQuestion/getPartWriteInfo?paper_id=121&chapters_id=1225';
+  const original = { id: 1225, payload: { type: '1', source, prompt: 'Summarise the information by selecting and reporting the mail features, and make comparisons where relevant.' } };
+  mock.rows = [original];
+  const updates = vi.fn();
+  const unsubscribe = subscribeQuestionBank('writing', updates);
+  const rows = await ensureQuestionBank('writing');
+  expect(rows[0].prompt).toContain('the main features');
+  expect(updates.mock.calls.at(-1)?.[0].rows[0].prompt).toContain('the main features');
+  expect(original.payload.prompt).toContain('the mail features');
+  unsubscribe();
+});
+
+test('restoring an older workspace repairs the same imported prompts while retaining user writing', async () => {
+  const { migrateState } = await import('../../src/domain');
+  const raw = { questions: [{ id: '1221', source: 'https://www.ieltscb.com/WriteQuestion/getPartWriteInfo?chapters_id=1221', prompt: 'The plans below show the site ofa farm. Summarise the information byselecting and reporting the main features.' }], sessions: [{ id: 'saved', questionId: '1221', essay: 'My writing uses ofa verbatim.' }], drafts: { '1221': { text: 'My unsaved ofa draft.' } } };
+  const state = migrateState(raw);
+  expect(state.questions[0].prompt).toContain('site of a farm');
+  expect(state.questions[0].prompt).toContain('by selecting');
+  expect(state.sessions[0].essay).toBe(raw.sessions[0].essay);
+  expect(state.drafts['1221'].text).toBe(raw.drafts['1221'].text);
+});
+
 test('different accounts read separate banks and unsubscribed consumers receive no refreshes', async () => {
   const updates = vi.fn();
   const unsubscribe = subscribeQuestionBank('writing', updates);

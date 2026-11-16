@@ -27,6 +27,9 @@ textarea:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .editor.is-writing{border-color:var(--blue)}
 .prompt-with-figure{display:grid;gap:18px}.prompt-figure{margin:0}.prompt-figure img{display:block;width:100%;height:auto;margin:0;max-height:420px;object-fit:contain}
 .figure-zoom{display:block;width:100%;padding:8px;background:var(--sheet);border:1px solid var(--rule);border-radius:6px;cursor:zoom-in}.figure-zoom span{display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:8px 4px 0;color:var(--blue);font-size:12px}
+.figure-zoom.is-loading { position: relative; min-height: 220px; cursor: wait; opacity: 1; }
+.figure-zoom.is-loading img { position: absolute; visibility: hidden; }
+.figure-zoom .task-chart-loading { min-height: 200px; justify-content: center; padding: 16px; border-radius: 4px; background: var(--surface-soft); color: var(--muted); font-size: 13px; }
 .draft-status{margin-left:8px;color:var(--muted);font-size:12px}
 .workspace-layout-tools{display:none}.prompt-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.split-control{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}.split-control input{width:88px;accent-color:var(--blue)}.split-control span{width:30px;font-variant-numeric:tabular-nums}
 .mobile-desk-tabs{display:none}.icon-btn{width:36px;height:36px;min-width:36px;display:inline-flex;align-items:center;justify-content:center;padding:0!important;border-radius:6px!important}.btn svg{flex-shrink:0}

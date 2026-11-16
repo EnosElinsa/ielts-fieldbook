@@ -727,6 +727,27 @@ test('reading and due listening plans open their own workspaces and save linked 
   expect(fieldbook.state.plans.find(plan => plan.id === 'listening-plan')).toMatchObject({ status: 'completed', linkedSessionId: 'intensive' });
 });
 
+test.each(['current', 'legacy'])('starting a %s due sentence task retains short-review completion and its identity', async version => {
+  vi.useFakeTimers({toFake:['Date']}); vi.setSystemTime(new Date('2026-10-13T12:00:00'));
+  mocks.initial.settings.days=[1,2,3,4,5,6,7]; mocks.initial.settings.skills=['listening'];
+  mocks.initial.intensiveSessions=[{id:'due',sectionId:'part',sentenceId:'sentence',stage:6,completedAt:'2026-10-01',nextReviewAt:'2026-10-02',dictationResult:'partial'}];
+  ensureUnifiedPlans(mocks.initial,undefined,new Date());
+  const planned=mocks.initial.plans.find(plan=>plan.target?.reviewMode==='listening-check');
+  if(version==='legacy') { delete planned.target.reviewMode; planned.status='in_progress'; planned.startedAt=new Date().toISOString(); }
+  mocks.examSectionsRead.mockResolvedValue({sections:[{id:'part',skill:'listening',status:'ready',sentences:[{id:'sentence'}]}],questions:[{id:'q',sectionId:'part'}]});
+  await mount('/planning');
+  await act(async()=>{expect(await fieldbook.startPlan(planned.id)).toBe(true);});
+  expect(fieldbook.state.plans.find(plan=>plan.id===planned.id).target.reviewMode).toBe('listening-check');
+  await act(async()=>{await fieldbook.ensureUnifiedPlans();});
+  expect(fieldbook.state.plans.filter(plan=>plan.target?.sectionId==='part'&&plan.target?.sentenceId==='sentence')).toHaveLength(1);
+  await act(async()=>{
+    const draft=structuredClone(fieldbook.stateRef.current);
+    draft.intensiveSessions[0].listeningReviews=[{reviewedAt:new Date(Date.now()+1000).toISOString(),planId:planned.id,selfRating:4}];
+    await fieldbook.persistNow(draft);
+  });
+  expect(fieldbook.state.plans.find(plan=>plan.id===planned.id)).toMatchObject({status:'completed',linkedSessionId:'due'});
+});
+
 test.each(['reading','listening'])('starting a %s plan keeps the Planning view and task anchor in its return URL', async skill => {
   const id = `${skill}-planned-origin`;
   mocks.initial.plans = [{ id, kind: `${skill}-practice`, skill, status: 'pending' }];

@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { emptyState, migrateState, persistShape, STATE_VERSION, dateKey } from '../domain';
 import { normalizeVocabularyIdentities, normalizeVocabularyScope } from '../domain/vocabulary/identities';
+import { normalizeWritingQuestion } from '../domain/writingQuestions';
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import { requestTimeout } from '../lib/requestTimeout';
 import { cachedRead, clearReadCache, readCacheKey, readSnapshot, subscribeRead } from '../lib/readCache';
@@ -167,6 +168,7 @@ export type QuestionBankRow = { id: string; [key: string]: unknown };
 export type QuestionBankSnapshot = { rows?: QuestionBankRow[]; error?: unknown; loading: boolean };
 const questionBankTable = (skill: 'writing' | 'speaking') => skill === 'writing' ? 'writing_questions' : 'speaking_topics';
 const questionBankKey = (skill: 'writing' | 'speaking') => readCacheKey(accountId(), String(STATE_VERSION), questionBankTable(skill), accountGeneration());
+const questionBankRows = (skill: 'writing' | 'speaking', rows: QuestionBankRow[]) => structuredClone(rows).map(row => skill === 'writing' ? normalizeWritingQuestion(row) : row);
 
 /** Subscribe before reading to receive cached rows and subsequent background updates. */
 export function subscribeQuestionBank(skill: 'writing' | 'speaking', listener: (snapshot: QuestionBankSnapshot) => void): () => void {
@@ -176,7 +178,7 @@ export function subscribeQuestionBank(skill: 'writing' | 'speaking', listener: (
   const publish = () => {
     if (generation !== accountGeneration() || id !== accountId()) return;
     const { data, error, loading } = readSnapshot<QuestionBankRow[]>(key);
-    listener({ rows: data === undefined ? undefined : structuredClone(data), error, loading });
+    listener({ rows: data === undefined ? undefined : questionBankRows(skill, data), error, loading });
   };
   const unsubscribe = subscribeRead(key, publish);
   publish();
@@ -190,7 +192,7 @@ export async function ensureQuestionBank(skill: 'writing' | 'speaking', options:
   const data = await cachedRead(questionBankKey(skill), async () =>
     (await selectCatalog(table)).map(row => ({ ...row.payload, id: String(row.id) })), options);
   assertAccount(generation, id);
-  return structuredClone(data);
+  return questionBankRows(skill, data);
 }
 
 export async function ensureSpeakingSample(topicId: string) {

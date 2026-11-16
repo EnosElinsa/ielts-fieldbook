@@ -423,17 +423,20 @@ export function WritingDeskPage() {
 }
 
 export function WritingTaskPrompt({ prompt, image }) {
-  const [failedImage, setFailedImage] = useState('');
-  const [retry, setRetry] = useState(0);
   return <div className={image ? 'prompt-with-figure' : 'prompt-body'}>
-            <div className="prompt-copy">{prompt}</div>
-            {image ? (
-              <figure className="prompt-figure">
-                {failedImage === image ? <div className="task-chart-error" role="status"><p>The task chart could not load.</p><button type="button" className="btn line" onClick={() => { setFailedImage(''); setRetry(value => value + 1); }}><RotateCcw size={15}/>Retry chart</button></div> : <Dialog.Root>
-                  <Dialog.Trigger asChild><button type="button" className="figure-zoom" aria-label="Zoom task chart"><img key={`${image}:${retry}`} src={image} alt="Task chart" onError={() => setFailedImage(image)} /><span><ZoomIn size={16} /> Zoom</span></button></Dialog.Trigger>
-                  <Dialog.Portal><Dialog.Overlay className="chart-dialog-overlay" /><Dialog.Content className="chart-dialog-content"><div className="chart-dialog-head"><Dialog.Title>Task chart</Dialog.Title><Dialog.Close asChild><button className="btn line icon-btn" aria-label="Close task chart"><X size={20} /></button></Dialog.Close></div><Dialog.Description className="sr-only">Full-size chart for the current writing prompt.</Dialog.Description><div className="chart-dialog-image"><img src={image} alt="Task chart enlarged" onError={() => setFailedImage(image)} /></div></Dialog.Content></Dialog.Portal>
-                </Dialog.Root>}
-              </figure>
-            ) : null}
-          </div>;
+    <div className="prompt-copy">{prompt}</div>
+    {image ? <WritingTaskChart key={image} image={image} /> : null}
+  </div>;
+}
+
+function WritingTaskChart({ image }) {
+  const [failed, setFailed] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [retry, setRetry] = useState(0);
+  return <figure className="prompt-figure" aria-busy={!failed && !loaded}>
+    {failed ? <div className="task-chart-error" role="status"><p>The task chart could not load.</p><button type="button" className="btn line" onClick={() => { setFailed(false); setLoaded(false); setRetry(value => value + 1); }}><RotateCcw size={15}/>Retry chart</button></div> : <Dialog.Root>
+      <Dialog.Trigger asChild><button type="button" className={`figure-zoom${loaded ? '' : ' is-loading'}`} disabled={!loaded} aria-label="Zoom task chart"><img key={retry} src={image} alt="Task chart" onLoad={() => setLoaded(true)} onError={() => setFailed(true)} />{loaded ? <span><ZoomIn size={16} /> Zoom</span> : <span className="task-chart-loading" role="status">Loading chart…</span>}</button></Dialog.Trigger>
+      <Dialog.Portal><Dialog.Overlay className="chart-dialog-overlay" /><Dialog.Content className="chart-dialog-content"><div className="chart-dialog-head"><Dialog.Title>Task chart</Dialog.Title><Dialog.Close asChild><button className="btn line icon-btn" aria-label="Close task chart"><X size={20} /></button></Dialog.Close></div><Dialog.Description className="sr-only">Full-size chart for the current writing prompt.</Dialog.Description><div className="chart-dialog-image"><img src={image} alt="Task chart enlarged" onError={() => setFailed(true)} /></div></Dialog.Content></Dialog.Portal>
+    </Dialog.Root>}
+  </figure>;
 }

@@ -98,7 +98,7 @@ export function WritingBankPage() {
         {questions.length ? (
           visible.map((question) => {
             const image = safeImage(question.image);
-            const prompt = clipAtWord(question.prompt, 175);
+            const prompt = clipAtWord(String(question.prompt || '').replace(/^Write about the following topic:\s*/i, ''), 175);
             return (
               <article className="q-card" key={question.id}>
                 <div className="q-top">

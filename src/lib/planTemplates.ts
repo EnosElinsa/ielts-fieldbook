@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { latestPracticeRecommendation, rewritePlanDescription, syncPendingPlan, dateKey, dueErrors, dueVocabulary, examPressure, assignStoryPlanTarget } from '../domain';
 import { sessionSkill, speakingKinds } from './format';
-import { receptivePlanTemplates, ensureReceptivePlans, retireInactiveSentenceReviews } from './receptivePlans';
+import { receptivePlanTemplates, ensureReceptivePlans, retireInactiveSentenceReviews, isListeningCheckPlan } from './receptivePlans';
 import { dueIntensive } from '../domain/exam/store';
 import { isProtectedPlan, isReplannableLearningPlan, practiceFromWeakness } from '../domain/plans';
 import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
@@ -491,6 +491,7 @@ function reviewTask(state, skills, now, minutes) {
 }
 
 function evidenceTargetKey(task) {
+  if (task.target?.type === 'intensive') return JSON.stringify(['intensive', task.target.skill, task.target.sectionId, task.target.sentenceId, isListeningCheckPlan(task)]);
   if (['error-review','intensive','exam-review'].includes(task.target?.type)) return JSON.stringify(task.target);
   return typeof task.driver==='string'&&task.driver.startsWith('criterion:') ? JSON.stringify([task.skill,task.driver,task.kind,task.deskMode]) : null;
 }
@@ -514,7 +515,17 @@ function refreshEvidenceTargets(state, keys, skills, now) {
   const reviewSlot=review&&candidates.find(plan=>studyDaySkills(state.settings,plan.dateKey,skills).includes(review.skill));
   if (review&&!alreadyScheduled&&reviewSlot) {
     const plan=reviewSlot;
-    replaceAutomaticTarget(plan,{...review,estimatedMinutes:plan.estimatedMinutes});plan.order=-1;
+    const shortReview=review.target?.type==='intensive'&&review.target.reviewMode==='listening-check';
+    const minutes=shortReview?Math.min(5,plan.estimatedMinutes):plan.estimatedMinutes;
+    const remaining=plan.estimatedMinutes-minutes;
+    const practice=shortReview&&studyBudget(state.settings,plan.dateKey).planning.multipleTasks&&remaining>=(plan.skill==='reading'?2:1) ? {...plan} : null;
+    replaceAutomaticTarget(plan,{...review,estimatedMinutes:minutes});plan.order=-1;
+    if(practice){
+      const base=`${plan.id}-practice`;let id=base,index=2;while(state.plans.some(row=>row.id===id))id=`${base}-${index++}`;
+      clearPlanBinding(practice);
+      Object.assign(practice,skillTask(state,practice.skill,remaining,Math.floor((practice.rotationIndex||0)/skills.length)),{id});
+      state.plans.push(practice);
+    }
   }
   for (const plan of candidates) {
     if (['error-review','intensive','exam-review'].includes(plan.target?.type)) continue;

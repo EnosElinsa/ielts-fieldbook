@@ -5,8 +5,9 @@ import { ArrowRight, CheckCheck, Clock3, Target, RotateCcw } from 'lucide-react'
 import { useFieldbook } from '../../context/FieldbookContext';
 import { dueIntensive, examStats } from '../../domain/exam';
 import type { ExamAttempt, ExamSkill, IntensiveSession, QuestionType } from '../../domain/exam/types';
-import { QUESTION_TYPE_NAMES } from './useExamCatalog';
+import { QUESTION_TYPE_NAMES, useExamCatalog } from './useExamCatalog';
 import { Empty } from '../../components/ui';
+import { InlineLoadingState, StateMessage } from '../../components/AsyncState';
 import { formatDateKey } from '../../lib/format';
 import { activityBuckets, activityInRange } from '../progress/practiceActivity';
 
@@ -25,6 +26,15 @@ export function ExamProgressPanel({ skill, since = 0 }: { skill: ExamSkill; sinc
   const stats = examStats(completed);
   const intensive = ((fb.state.intensiveSessions || []) as IntensiveSession[]).filter(session => activityInRange(session.completedAt || session.updatedAt, since, now));
   const due = dueIntensive((fb.state.intensiveSessions || []) as IntensiveSession[]);
+  const duePreview = skill === 'listening' ? due.slice(0, 5) : [];
+  const { catalog, loading, error, reload } = useExamCatalog(skill, undefined, [...new Set(duePreview.map(session => session.sectionId))]);
+  const sentenceSource = (session: IntensiveSession) => {
+    const section = catalog.sections.find(row => row.id === session.sectionId);
+    if (!section) return 'Saved listening sentence';
+    const paper = catalog.papers.find(row => row.id === section.paperId);
+    const index = section.sentences.findIndex(row => row.id === session.sentenceId);
+    return [paper ? `Cambridge ${paper.book} / Test ${paper.test}` : '', section.title, index >= 0 ? `Sentence ${index + 1}` : 'Saved sentence'].filter(Boolean).join(' · ');
+  };
   const minutes = Math.round(completed.reduce((sum, attempt) => sum + (attempt.elapsedSeconds || 0), 0) / 60);
   const wrong = completed.filter(attempt => Object.values(attempt.results || {}).some(correct => !correct));
   const typeRows = Object.entries(stats.byType).sort((left, right) => left[1].correct / left[1].total - right[1].correct / right[1].total);
@@ -45,8 +55,28 @@ export function ExamProgressPanel({ skill, since = 0 }: { skill: ExamSkill; sinc
     </section>
     <div className="evidence-grid"><section className="progress-section"><h3>{activity.period} accuracy</h3><div className="week-bars">{weeks.map(week => <div className="week-bar" key={week.start}><span>{week.label}</span><div className="track"><div className="fill" style={{ width: `${week.stats.accuracy * 100}%` }} /></div><strong>{week.stats.total ? `${week.stats.correct}/${week.stats.total}` : '—'}</strong></div>)}</div><p className="rule-note">Marks earned / available in the selected range.</p></section>
       <section className="progress-section"><h3>Error reasons</h3>{Object.keys(stats.errors).length ? <div className="band-list">{Object.entries(stats.errors).sort((left, right) => right[1] - left[1]).map(([reason, count]) => <div className="band-row" key={reason}><span>{reason}</span><strong>{count}</strong></div>)}</div> : <p className="empty">Tag your mistakes during review to see recurring causes.</p>}{wrong.length > 0 && <Link className="btn line" to={`/${skill}/review/${wrong[wrong.length - 1].id}`}>Review recent mistakes<ArrowRight size={15} aria-hidden="true" /></Link>}</section></div>
-    <section className="progress-section"><h3>Attempt history</h3>{completed.length ? <div className="progress-score-table"><table><thead><tr><th>Date</th><th>Practice</th><th>Marks</th><th>Time</th><th>Review</th></tr></thead><tbody>{completed.slice().reverse().map(attempt => <tr key={attempt.id}><td>{date(attempt.completedAt || attempt.startedAt)}</td><td>{attempt.mode === 'mock' ? 'Full mock' : attempt.retryOfAttemptId ? 'Retry' : 'Part practice'}{attempt.answerRevealed ? ' · supported' : ''}</td><td>{attempt.score || 0} / {attempt.total || 0}</td><td>{studyMinutes(attempt.elapsedSeconds)}</td><td><Link to={`/${skill}/review/${attempt.id}`}>Review attempt</Link></td></tr>)}</tbody></table></div> : <Empty message="No completed attempts in this range." />}</section>
-    {skill === 'listening' && <section className="progress-section"><div className="section-head"><h3>Intensive listening</h3><span className="pill blue">{due.length} due</span></div><div className="band-list"><div className="band-row"><span>Sentences completed</span><strong>{intensive.filter(session => session.completedAt).length}</strong></div><div className="band-row"><span>Correct dictations</span><strong>{intensive.filter(session => session.completedAt && session.dictationResult === 'correct').length}</strong></div><div className="band-row"><span>Replays</span><strong>{intensive.reduce((sum, session) => sum + (session.replayCount || 0), 0)}</strong></div></div>{due.slice(0, 5).map(session => <div className="work-row" key={session.id}><div className="work-name">Sentence review<small>{session.sectionId} · {session.dictationResult}</small></div><Link className="btn line" to={`/listening/intensive/${session.sectionId}?sentence=${encodeURIComponent(session.sentenceId)}`}>Recall sentence</Link></div>)}</section>}
+    <section className="progress-section"><h3>Attempt history</h3>{completed.length ? <div className="progress-score-table"><table><thead><tr><th>Date</th><th>Practice</th><th>Marks</th><th>Time</th><th>Review</th></tr></thead><tbody>{completed.slice().reverse().map(attempt => <tr key={attempt.id}><td>{date(attempt.completedAt || attempt.startedAt)}</td><td>{attempt.mode === 'mock' ? 'Full mock' : attempt.retryOfAttemptId ? 'Retry' : skill === 'reading' ? 'Passage practice' : 'Part practice'}{attempt.answerRevealed ? ' · supported' : ''}</td><td>{typeof attempt.score === 'number' && typeof attempt.total === 'number' && attempt.total > 0 ? String(attempt.score) + ' / ' + attempt.total : '—'}</td><td>{studyMinutes(attempt.elapsedSeconds)}</td><td><Link to={`/${skill}/review/${attempt.id}`}>Review attempt</Link></td></tr>)}</tbody></table></div> : <Empty message="No completed attempts in this range." />}</section>
+    {skill === 'listening' && <section className="progress-section">
+      <div className="section-head"><h3>Intensive listening</h3></div>
+      <div className="band-list">
+        <div className="band-row"><span>Sentences completed</span><strong>{intensive.filter(session => session.completedAt).length}</strong></div>
+        <div className="band-row"><span>Correct dictations</span><strong>{intensive.filter(session => session.completedAt && session.dictationResult === 'correct').length}</strong></div>
+        <div className="band-row"><span>Replays</span><strong>{intensive.reduce((sum, session) => sum + (session.replayCount || 0), 0)}</strong></div>
+      </div>
+      <div className="sentence-review-list" role="region" aria-label="Due sentence reviews">
+        <div className="section-head"><h4>Due sentence reviews</h4><span className="pill blue">{due.length} due now</span></div>
+        <p className="rule-note">Due reviews include all saved sentences, regardless of the date range above.</p>
+        {duePreview.length > 0 && loading && <InlineLoadingState message="Loading sentence sources…" onRetry={reload} retryLabel="Retry source details" />}
+        {duePreview.length > 0 && error && <StateMessage kind="error" message="Sentence sources could not load. Your saved reviews remain available." onRetry={reload} retryLabel="Retry source details" />}
+        {duePreview.length ? <>
+          {duePreview.map(session => <div className="work-row" key={session.id}>
+            <div className="work-name">{sentenceSource(session)}<small>Last dictation: {({ correct: 'Correct', partial: 'Partially correct', wrong: 'Incorrect', pending: 'Not assessed' })[session.dictationResult] || 'Not assessed'}</small></div>
+            <Link className="btn line" to={`/listening/intensive/${session.sectionId}?sentence=${encodeURIComponent(session.sentenceId)}`}>Review sentence</Link>
+          </div>)}
+          <Link className="sentence-review-more" to="/listening/review">View all sentence reviews <ArrowRight size={14} aria-hidden="true" /></Link>
+        </> : <p className="empty">No sentence reviews are due right now.</p>}
+      </div>
+    </section>}
     <section className="progress-section"><h3>Study plans</h3>{plans.length ? <div className="plan-list">{plans.slice().sort((left, right) => String(right.dateKey).localeCompare(String(left.dateKey))).map(plan => <div className="work-row" key={plan.id}><div className="work-name">{plan.title}<small>{formatDateKey(plan.dateKey)}</small></div><span className={`pill ${plan.status === 'completed' ? 'green' : ''}`}>{statusNames[plan.status] || plan.status}</span></div>)}</div> : <Empty message="No plans in this range." />}</section>
   </div>;
 }
