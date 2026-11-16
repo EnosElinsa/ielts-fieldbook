@@ -6,6 +6,7 @@ import { DEFAULT_VOCABULARY_PREFERENCES, normalizeVocabularyPreferences } from '
 import { normalizeExamStore } from './exam/store';
 import { normalizeVocabularyIdentities } from './vocabulary/identities';
 import { DEFAULT_PLANNING, normalizePlanning } from './planningPreferences';
+import { normalizeWritingQuestion } from './writingQuestions';
 import type { ExamAttempt, IntensiveSession } from './exam/types';
 import type { ExamAnnotation } from './exam/annotations';
 import { wordCount, hashText, dateKey, makeId, nowIso, clone } from './utils';
@@ -200,7 +201,7 @@ export function migrateState(raw) {
   Object.assign(state, normalizeExamStore(source));
   delete state.lexicon;
   state.schemaVersion = STATE_VERSION;
-  state.questions = Array.isArray(source.questions) ? source.questions.map(q => Object.assign({}, q, { id: String(q.id) })) : [];
+  state.questions = Array.isArray(source.questions) ? source.questions.map(q => normalizeWritingQuestion(Object.assign({}, q, { id: String(q.id) }))) : [];
   state.sessions = Array.isArray(source.sessions) ? source.sessions.map((item, index) => {
     const session = Object.assign({}, item);
     session.id = session.id || `legacy-session-${index}`;

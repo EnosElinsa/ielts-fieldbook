@@ -70,6 +70,13 @@ test('search accepts a pasted topic with surrounding whitespace', () => {
   expect(screen.getByRole('heading', { name: 'Education' })).toBeInTheDocument();
 });
 
+test('Task 2 cards lead with the actual topic instead of the repeated task instruction', () => {
+  fieldbook.current.state.questions[0].prompt = 'Write about the following topic: Discuss urban life. Give reasons for your answer.';
+  render(<MemoryRouter><WritingBankPage /></MemoryRouter>);
+  expect(screen.getByText('Discuss urban life. Give reasons for your answer.')).toBeInTheDocument();
+  expect(screen.queryByText(/Write about the following topic:/)).not.toBeInTheDocument();
+});
+
 test('chart previews expose loading and failure states with a working retry without blocking practice', async () => {
   fieldbook.current.state.questions[0].image = 'question-assets/1342.png';
   render(<MemoryRouter><WritingBankPage /></MemoryRouter>);

@@ -16,6 +16,77 @@ function enroll(state,count=100){
 }
 afterEach(()=>{for(const unit of fixtureGroups.splice(0))VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);});
 
+function sentenceReviewState(multipleTasks = true, dailyMinutes = 60) {
+  const state = setup(); state.settings.skills = ['listening']; state.settings.dailyMinutes = dailyMinutes;
+  state.settings.planning = { ...state.settings.planning, vocabularyMinutes: 0, multipleTasks, blockMinutes: 30 };
+  state.intensiveSessions = [{ id: 'due', sectionId: 'part', sentenceId: 's1', stage: 6, completedAt: '2026-10-01', nextReviewAt: '2026-10-02', dictationResult: 'partial' }];
+  return state;
+}
+
+test('a short sentence review uses five minutes and returns its remaining slot to ordinary practice', () => {
+  const state = sentenceReviewState();
+  ensureUnifiedPlans(state, undefined, now);
+  const today = state.plans.filter(plan => plan.dateKey === '2026-10-13');
+  const reviews = today.filter(plan => plan.target?.reviewMode === 'listening-check');
+  expect(reviews).toHaveLength(1);
+  expect(reviews[0].estimatedMinutes).toBe(5);
+  expect(today.reduce((sum, plan) => sum + plan.estimatedMinutes, 0)).toBe(60);
+  expect(today.filter(plan => plan.target?.type === 'section').reduce((sum, plan) => sum + plan.estimatedMinutes, 0)).toBe(55);
+  const before = structuredClone(state.plans); const persist = () => { throw new Error('Unchanged plans must not save again'); };
+  ensureUnifiedPlans(state, persist, now);
+  expect(state.plans).toEqual(before);
+  expect(new Set(state.plans.map(plan => plan.id)).size).toBe(state.plans.length);
+});
+
+test.each(['current', 'legacy'])('a running %s short review is not scheduled again after returning to Planning', version => {
+  const state=sentenceReviewState(); ensureUnifiedPlans(state,undefined,now);
+  const review=state.plans.find(plan=>plan.target?.reviewMode==='listening-check');
+  startPlan(state,review.id,now.toISOString());
+  if(version==='legacy')delete review.target.reviewMode;
+  const retained=structuredClone(review);
+  ensureUnifiedPlans(state,undefined,now);
+  expect(state.plans.find(plan=>plan.id===review.id)).toEqual(retained);
+  expect(state.plans.filter(plan=>plan.target?.sentenceId==='s1')).toHaveLength(1);
+  expect(state.plans.filter(plan=>plan.dateKey===review.dateKey).reduce((sum,plan)=>sum+plan.estimatedMinutes,0)).toBe(60);
+  const before=structuredClone(state.plans); ensureUnifiedPlans(state,undefined,now); expect(state.plans).toEqual(before);
+});
+
+test('a short review respects a single-task preference and very small daily budgets', () => {
+  for (const minutes of [1, 3, 5, 30, 60]) {
+    const state = sentenceReviewState(false, minutes); ensureUnifiedPlans(state, undefined, now);
+    const today = state.plans.filter(plan => plan.dateKey === '2026-10-13');
+    expect(today).toHaveLength(1);
+    expect(today[0].estimatedMinutes).toBe(Math.min(5, minutes));
+  }
+});
+
+test('started and manually resized sentence reviews retain their chosen time and target', () => {
+  for (const protect of ['started', 'manual']) {
+    const state = sentenceReviewState(); ensureUnifiedPlans(state, undefined, now);
+    const review = state.plans.find(plan => plan.target?.reviewMode === 'listening-check');
+    review.estimatedMinutes = 12;
+    if (protect === 'started') { review.status = 'in_progress'; review.startedAt = now.toISOString(); }
+    else review.manuallyEditedAt = now.toISOString();
+    const before = structuredClone(review);
+    ensureUnifiedPlans(state, undefined, now);
+    expect(state.plans.find(plan => plan.id === review.id)).toEqual(before);
+    expect(state.plans.filter(plan => plan.dateKey === review.dateKey).reduce((sum, plan) => sum + plan.estimatedMinutes, 0)).toBeLessThanOrEqual(60);
+  }
+});
+
+test('a retained remainder task cannot collide with a newly generated review remainder', () => {
+  const state = sentenceReviewState(); ensureUnifiedPlans(state, undefined, now);
+  const practice = state.plans.find(plan => plan.id.endsWith('-practice'));
+  practice.status = 'in_progress'; practice.startedAt = now.toISOString(); practice.target.sectionId = 'saved-part';
+  const before = structuredClone(practice);
+  ensureUnifiedPlans(state, undefined, now);
+  expect(new Set(state.plans.map(plan => plan.id)).size).toBe(state.plans.length);
+  expect(state.plans.find(plan => plan.id === practice.id)).toEqual(before);
+  const frozen = structuredClone(state.plans);
+  ensureUnifiedPlans(state, undefined, now);
+  expect(state.plans).toEqual(frozen);
+});
+
 test('seven calendar days rotate all selected skills and are deterministic and idempotent', () => {
   const left = setup(); const right = setup();
   expect(ensureUnifiedPlans(left, undefined, now)).toEqual(ensureUnifiedPlans(right, undefined, now));

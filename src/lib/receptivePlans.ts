@@ -4,11 +4,19 @@ import { isProtectedPlan } from '../domain/plans';
 import { dueIntensive } from '../domain/exam/store';
 import { intensiveReviewEnabled } from '../domain/exam/intensive';
 
+export function isListeningCheckPlan(plan: Record<string, any>, sessionId?: string): boolean {
+  if (plan.kind !== 'listening-intensive') return false;
+  return plan.target?.reviewMode === 'listening-check' || (sessionId ? plan.driver === `intensive:${sessionId}` : String(plan.driver || '').startsWith('intensive:'))
+    // Earlier automatic starts discarded reviewMode but retained this exact completion contract.
+    || !plan.driver && plan.origin === 'automatic' && plan.schemaVersion === 2 && plan.target?.type === 'intensive'
+      && plan.completion?.type === 'review' && plan.completion.description === 'Complete the selected sentence listening review.';
+}
+
 /** Retire untouched automatic reminders only; actual work and manual choices stay in history. */
 export function retireInactiveSentenceReviews(state: { plans: Record<string, any>[]; intensiveSessions?: IntensiveSession[]; activePlanId?: string | null }, now = new Date()) {
   for (const plan of state.plans || []) {
     if (isProtectedPlan(plan) || plan.origin !== 'automatic' || plan.onHold || plan.archivedAt || plan.draft || plan.restoredAt || plan.linkedSessionId) continue;
-    if (plan.target?.reviewMode !== 'listening-check' && !String(plan.driver || '').startsWith('intensive:')) continue;
+    if (!isListeningCheckPlan(plan)) continue;
     const sentence = state.intensiveSessions?.find(row => row.sectionId === (plan.target?.sectionId || plan.sectionId) && row.sentenceId === (plan.target?.sentenceId || plan.sentenceId));
     if (!sentence?.completedAt || intensiveReviewEnabled(sentence)) continue;
     plan.previousStatus = plan.status; plan.status = 'skipped'; plan.skipReason = 'no-longer-due'; plan.skippedAt = now.toISOString();
@@ -18,7 +26,7 @@ export function retireInactiveSentenceReviews(state: { plans: Record<string, any
 
 /** Explain the actual completion rule, including for plans saved before this wording. */
 export function receptivePlanCompletionDescription(plan: Record<string, any>): string {
-  if (plan.kind === 'listening-intensive') return plan.target?.reviewMode === 'listening-check' || String(plan.driver || '').startsWith('intensive:')
+  if (plan.kind === 'listening-intensive') return isListeningCheckPlan(plan)
     ? 'Listen to the whole sentence without the transcript, rate your understanding, and save the review.'
     : 'Finish dictation, comparison, shadowing, blind replay and self-rating, then save. A perfect score is not required.';
   if (plan.kind === 'listening-review') return 'Save an error reason for every wrong answer. Retrying for a higher score is optional.';
@@ -92,7 +100,7 @@ function completeBoundReceptivePlan(state: CompletionState, plan: Record<string,
     for (const row of state.intensiveSessions || []) {
       if (plan.sectionId && row.sectionId !== plan.sectionId || plan.sentenceId && row.sentenceId !== plan.sentenceId) continue;
       if (row.stage === 6 && exactPlan(row) && afterStart(row.completedAt)) { linked = row; break; }
-      if (row.completedAt && (plan.target?.reviewMode === 'listening-check' || plan.driver === `intensive:${row.id}`)) {
+      if (row.completedAt && isListeningCheckPlan(plan, row.id)) {
         const check = row.listeningReviews?.find(check => afterStart(check.reviewedAt) && (!plan.target || check.planId === plan.id));
         if (check) { linked = { ...row, completedAt: check.reviewedAt }; break; }
       }

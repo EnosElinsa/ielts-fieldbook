@@ -80,7 +80,7 @@ import { vocabularyForwardState } from '../features/vocabulary/VocabularyRouteLi
 import { safeExamReturn, withExamReturn } from '../lib/examNavigation';
 import { safeVocabularyReturn, rememberVocabularyPosition } from '../features/vocabulary/vocabularyNavigation';
 import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
-import { completeReceptivePlanIfMatched, receptivePlanPath } from '../lib/receptivePlans';
+import { completeReceptivePlanIfMatched, receptivePlanPath, isListeningCheckPlan } from '../lib/receptivePlans';
 import { bindStudyPlanTargets } from '../lib/planTargets';
 import { normalizeVocabularyIdentities } from '../domain/vocabulary/identities';
 import { sessionSkill } from '../lib/format';
@@ -1718,7 +1718,7 @@ function useFieldbookValue() {
         if(plan.kind==='listening-intensive'){
           const sentenceId=target?.sentenceId||plan.sentenceId;
           if(!sentenceId||!section.sentences.some(sentence=>sentence.id===sentenceId))throw new Error('The selected listening sentence is unavailable. Retry loading it.');
-          target={type:'intensive',skill:'listening',sectionId,sentenceId};plan.sentenceId=sentenceId;
+          target={type:'intensive',skill:'listening',sectionId,sentenceId,...(isListeningCheckPlan(plan)?{reviewMode:'listening-check'}:{})};plan.sentenceId=sentenceId;
         } else {
           const questions=scoped.questions.filter(question=>question.sectionId===sectionId).slice().sort((a,b)=>a.number-b.number);
           const preserveScope=Boolean(plan.startedAt||plan.linkedSessionId||(stateRef.current.examAttempts||[]).some(attempt=>attempt.planId===planId));

@@ -12,6 +12,17 @@ test('ending future reviews still completes a listening check with actual saved 
   expect(completeReceptivePlanIfMatched(state)).toMatchObject({ status: 'completed', completedAt, linkedSessionId: 'intensive' });
 });
 
+test('legacy automatic listening checks retain their completion rule without changing full practice', () => {
+  const state=base('listening-intensive');
+  state.plans[0]={...state.plans[0],origin:'automatic',schemaVersion:2,target:{type:'intensive',sectionId:'part',sentenceId:'s1'},completion:{type:'review',description:'Complete the selected sentence listening review.'}};
+  state.intensiveSessions=[{id:'intensive',sectionId:'part',sentenceId:'s1',stage:6,completedAt:'2026-10-01',listeningReviews:[{reviewedAt:completedAt,selfRating:4,planId:'plan'}]}];
+  const full=structuredClone(state); full.plans[0].completion.description='Complete the selected sentence practice.';
+  expect(completeReceptivePlanIfMatched(full)).toBeNull();
+  const wrongSource=structuredClone(state); wrongSource.plans[0].driver='intensive:another-session';
+  expect(completeReceptivePlanIfMatched(wrongSource)).toBeNull();
+  expect(completeReceptivePlanIfMatched(state)).toMatchObject({status:'completed',linkedSessionId:'intensive'});
+});
+
 test('removing a sentence retires only untouched automatic reminders and preserves work and user choices', () => {
   const template = { origin: 'automatic', status: 'pending', kind: 'listening-intensive', target: { type: 'intensive', reviewMode: 'listening-check', sectionId: 'part', sentenceId: 's1' } };
   const plans = [{ ...template, id: 'old' }, { ...template, id: 'carried', originalDateKey: '2020-01-01' }, { ...template, id: 'running', status: 'in_progress', startedAt }, { ...template, id: 'manual', origin: 'manual' }, { ...template, id: 'done', status: 'completed', completedAt }, { ...template, id: 'edited', manuallyEditedAt: startedAt }, { ...template, id: 'practice', target: { type: 'intensive', sectionId: 'part', sentenceId: 's1' } }];
