@@ -51,12 +51,11 @@ test('search remains open and dismissible while data is loading, and failed resu
   expect(close).toHaveBeenCalledOnce();
 });
 
-test('mobile module order follows test order and recognizes speaking review', () => {
+test('mobile navigation promotes planning and groups productive study under More', () => {
   render(<MemoryRouter initialEntries={['/review?skill=speaking']}><MobileNavigation onMore={() => {}} /></MemoryRouter>);
   const nav = screen.getByRole('navigation', { name: 'Main navigation' });
-  expect(Array.from(nav.children).map(item => item.getAttribute('aria-label') || item.textContent)).toEqual(['Today', 'Listening', 'Reading', 'Writing', 'Speaking', 'Vocabulary', 'More']);
-  expect(within(nav).getByRole('button', { name: 'Speaking' })).toHaveAttribute('aria-current', 'page');
-  expect(within(nav).getByRole('button', { name: 'Writing' })).not.toHaveAttribute('aria-current');
+  expect(Array.from(nav.children).map(item => item.getAttribute('aria-label') || item.textContent)).toEqual(['Today', 'Planning', 'Listening', 'Reading', 'Vocabulary', 'More']);
+  expect(within(nav).getByRole('button', { name: 'More' })).toHaveAttribute('aria-current', 'page');
 });
 
 test('listening questions remains active across bank, standard practice, mock, and intensive paths', () => {
@@ -71,11 +70,20 @@ test.each(['/listening/part1', '/listening/intensive/part1', '/listening/mock/pa
   expect(screen.getByRole('button', { name: 'Listening' })).toHaveAttribute('aria-current', 'page');
 });
 
-test.each(['/planning', '/settings', '/settings/audio'])('planning and settings fit under mobile More on %s', path => {
+test.each(['/settings', '/settings/audio'])('settings remains available under mobile More on %s', path => {
   render(<MemoryRouter initialEntries={[path]}><MobileNavigation onMore={() => {}} /></MemoryRouter>);
   expect(screen.getByRole('button', { name: 'More' })).toHaveAttribute('aria-current', 'page');
   expect(screen.queryByRole('button', { name: 'Planning' })).not.toBeInTheDocument();
   expect(screen.queryByRole('button', { name: 'Settings' })).not.toBeInTheDocument();
+});
+
+test('planning has a direct guarded link with its own current state', async () => {
+  const select = vi.fn();
+  render(<MemoryRouter initialEntries={['/planning']}><MobileNavigation onMore={() => {}} onSelectModule={select}/></MemoryRouter>);
+  expect(screen.getByRole('link', { name: 'Planning' })).toHaveAttribute('aria-current', 'page');
+  expect(screen.getByRole('button', { name: 'More' })).not.toHaveAttribute('aria-current');
+  await userEvent.click(screen.getByRole('link', { name: 'Planning' }));
+  expect(select).toHaveBeenCalledWith('planning');
 });
 
 test('legacy listening bank canonicalization keeps filters, paging and hash', () => {

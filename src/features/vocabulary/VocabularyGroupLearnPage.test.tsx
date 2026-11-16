@@ -42,6 +42,29 @@ test('a learning card gives a direct route to all dictionary meanings', async ()
   expect(url.hash).toBe('#vocabulary-dictionary');
   expect(screen.getByText('This card shows one selected meaning.')).toBeInTheDocument();
 });
+
+test('an older frozen shed batch explains the current group meaning without replacing its assessment', async () => {
+  const released = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
+  Object.assign(VOCABULARY_CATALOG, released);
+  const entry = released.entries.find((row: any) => row.term === 'shed');
+  const member = released.memberships.find((row: any) => row.entryId === entry.id && row.bookId === 'ielts-vocabulary');
+  const previous = entry.senses.find((sense: any) => sense.pos === 'verb');
+  const cards = [{ entryId: entry.id, senseId: previous.id }];
+  const before = structuredClone(mocks.fb.state);
+  mount(`/vocabulary/wordbooks/${member.bookId}/groups/${member.unitId}/learn?word=${entry.id}&selectedEntryIds=${encodeURIComponent(JSON.stringify([entry.id]))}&batch=0&batchSize=10&batchCards=${encodeURIComponent(JSON.stringify(cards))}`);
+  await screen.findByRole('heading', { name: 'shed' });
+  expect(within(document.getElementById('learning-meaning')!).getByText(previous.definition)).toBeInTheDocument();
+  const recommendation = screen.getByRole('region', { name: 'Current recommended meaning' });
+  expect(recommendation).toHaveTextContent('A small simple building used for shelter, storage, or work.');
+  const assessment = new URL(screen.getByRole('link', { name: /^Start / }).getAttribute('href')!, 'https://local.test');
+  expect(JSON.parse(assessment.searchParams.get('batchCards')!)).toEqual(cards);
+  const updated = new URL(within(recommendation).getByRole('link', { name: 'Learn the recommended meaning' }).getAttribute('href')!, 'https://local.test');
+  const refs = JSON.parse(updated.searchParams.get('batchCards')!);
+  expect(refs).toHaveLength(1);
+  expect(refs[0].senseId).not.toBe(previous.id);
+  expect(updated.searchParams.has('planId')).toBe(false);
+  expect(mocks.fb.state).toEqual(before);
+});
 test('planned learning retains its required fixed batch mode and whole-group assessments clear binding', async () => {
   const batch=buildLearningBatch(mocks.fb.state,'book','group',0,10,'definition');
   mocks.fb.state.plans=[{id:'planned',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',...batch.selection,cards:batch.selection.cards}}];
@@ -156,6 +179,76 @@ test('exact planned learning browses only its frozen words and retains the origi
   expect(JSON.parse(assessment.searchParams.get('batchCards')!)).toEqual(cards);
   expect(screen.getByRole('button',{name:'Next word'})).toBeDisabled();
   expect(screen.getByRole('button',{name:'Whole group · 12 words'})).toBeInTheDocument();
+});
+
+test('returning to a completed exact task retains its words, order and meanings without binding a new assessment', async () => {
+  const cards = [11, 3, 1].map(index => ({entryId:`word-${index}`,senseId:`sense-${index}`}));
+  mocks.fb.state.plans = [{id:'finished-batch',kind:'vocabulary',status:'completed',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'dictation',selectionPolicy:'exact',bookId:'book',unitId:'group',batchIndex:2,batchSize:10,cards}}];
+  mocks.fb.state.wordbookProgress = [{bookId:'book',unitId:'group',learning:{viewedEntryIds:['word-11','word-3','word-1','word-2'],currentEntryId:'word-1'}}];
+  const before = structuredClone(mocks.fb.state);
+  const route = `${path}?planId=finished-batch&word=word-1&batch=2&batchSize=10`;
+  const view = mount(route);
+  await screen.findByRole('heading', {name:'Word 1'});
+  expect(screen.getByLabelText('Group progress')).toHaveTextContent('Viewed 3 / 3');
+  expect(screen.getByText('Task assessment complete')).toBeInTheDocument();
+  expect(screen.getByText('Word 3 of 3')).toBeInTheDocument();
+  expect(screen.queryByRole('group', {name:'Learning batches'})).not.toBeInTheDocument();
+  const quiz = new URL(screen.getByRole('link', {name:'Start dictation · 3 words'}).getAttribute('href')!, 'https://local.test');
+  expect(JSON.parse(quiz.searchParams.get('batchCards')!)).toEqual(cards);
+  expect(quiz.searchParams.get('batch')).toBe('2');
+  expect(quiz.searchParams.has('planId')).toBe(false);
+  fireEvent.click(screen.getByRole('button', {name:'Previous word'}));
+  await screen.findByRole('heading', {name:'Word 3'});
+  expect(screen.getByText('Meaning 3')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', {name:'Previous word'}));
+  await screen.findByRole('heading', {name:'Word 11'});
+  expect(screen.getByRole('button', {name:'Previous word'})).toBeDisabled();
+  view.unmount();
+  mount(`${path}?planId=finished-batch`);
+  await screen.findByRole('heading', {name:'Word 1'});
+  expect(screen.getByText('Word 3 of 3')).toBeInTheDocument();
+  expect(mocks.fb.state).toEqual(before);
+});
+
+test('a refreshed completed task waits for its historical row and never displays the whole group', async () => {
+  let restore!: () => void;
+  const cards = [11, 3, 1].map(index => ({entryId:`word-${index}`,senseId:`sense-${index}`}));
+  mocks.fb.ensurePlanningRows = vi.fn(() => new Promise<void>(resolve => { restore = resolve; }));
+  const route = `${path}?planId=historical`;
+  const view = mount(route);
+  await waitFor(() => expect(mocks.fb.ensurePlanningRows).toHaveBeenCalledWith(['historical']));
+  expect(screen.getByText('Restoring your learning batch…')).toBeInTheDocument();
+  expect(screen.queryByRole('article', {name:'Current learning word'})).not.toBeInTheDocument();
+  await act(async () => {
+    mocks.fb.state.plans = [{id:'historical',kind:'vocabulary',status:'completed',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'dictation',selectionPolicy:'exact',bookId:'book',unitId:'group',batchIndex:2,batchSize:10,cards}}];
+    restore();
+  });
+  view.rerender(<MemoryRouter initialEntries={[route]}><Routes><Route path="/vocabulary/wordbooks/:bookId/groups/:unitId/learn" element={<VocabularyGroupLearnPage/>}/></Routes><Location/></MemoryRouter>);
+  await screen.findByRole('heading', {name:'Word 11'});
+  expect(screen.getByText('Word 1 of 3')).toBeInTheDocument();
+  expect(screen.queryByRole('group', {name:'Learning batches'})).not.toBeInTheDocument();
+});
+
+test('an unavailable task fails visibly and can retry without broadening the word selection', async () => {
+  mocks.fb.ensurePlanningRows = vi.fn().mockRejectedValueOnce(new Error('offline')).mockResolvedValueOnce(undefined);
+  mount(`${path}?planId=missing`);
+  await screen.findByText(/This learning task could not be restored/);
+  expect(screen.queryByRole('article', {name:'Current learning word'})).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', {name:'Retry group'}));
+  await waitFor(() => expect(mocks.fb.ensurePlanningRows).toHaveBeenCalledTimes(2));
+  expect(screen.queryByRole('article', {name:'Current learning word'})).not.toBeInTheDocument();
+});
+
+test('saving an exact task position retains viewed words outside that task', async () => {
+  mocks.fb.state.plans = [{id:'subset',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'dictation',selectionPolicy:'exact',bookId:'book',unitId:'group',batchIndex:0,batchSize:10,cards:[{entryId:'word-11',senseId:'sense-11'},{entryId:'word-3',senseId:'sense-3'}]}}];
+  mocks.fb.state.wordbookProgress = [{bookId:'book',unitId:'group',learning:{viewedEntryIds:['word-2'],currentEntryId:'word-2'}}];
+  mount(`${path}?planId=subset`);
+  await screen.findByRole('heading', {name:'Word 11'});
+  fireEvent.click(screen.getByRole('button', {name:'Mark viewed & next'}));
+  fireEvent(document, new Event('visibilitychange'));
+  fireEvent(window, new Event('pagehide'));
+  await waitFor(() => expect(mocks.fb.saveVocabularyLearning).toHaveBeenCalled());
+  expect(mocks.fb.saveVocabularyLearning.mock.calls.at(-1)[2].viewedEntryIds).toEqual(['word-2','word-11']);
 });
 function entry(index: number) {
   return { id:`word-${index}`, term:`Word ${index}`, category:'word', meaning:`Meaning ${index}`, example:`Example ${index}.`, tags:[], sources:[{type:'wordbook',id:`source-${index}`,bookId:'book',unitId:'group'}], senses:[{id:`sense-${index}`,definition:`Meaning ${index}`,example:index===1?'Meronym: stock animal':`Example ${index}.`,pos:'noun',collocations:['reliable phrase']}], createdAt:'2026-01-01T00:00:00Z',updatedAt:'2026-01-01T00:00:00Z' };

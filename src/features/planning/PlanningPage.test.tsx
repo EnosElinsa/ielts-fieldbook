@@ -13,6 +13,30 @@ beforeEach(()=>{vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date(20
 afterEach(()=>{cleanup();vi.useRealTimers();});
 const mount=()=>render(<MemoryRouter><PlanningPage/></MemoryRouter>);
 
+test('missing a wordbook explains allocation without reporting daily goal deficits',()=>{
+ mocks.state.settings.planning={newWordsPerDay:10};
+ const {container}=mount();
+ expect(screen.getByRole('link',{name:'Choose a wordbook'})).toHaveAttribute('href','/vocabulary/wordbooks');
+ expect(container.querySelector('.study-day-stats')).not.toHaveTextContent('below daily goal');
+ expect(container.querySelector('.study-day-stats')).toHaveTextContent('Choose a wordbook');
+});
+
+test('future mobile days unfold without losing task actions and linked tasks start expanded',async()=>{
+ vi.stubGlobal('matchMedia',()=>({matches:true,addEventListener:vi.fn(),removeEventListener:vi.fn()}));
+ try{
+  mocks.state.plans.push({...mocks.state.plans[0],id:'tomorrow',dateKey:'2026-10-18',title:'Tomorrow task'});
+  const {container}=mount();
+  const day=container.querySelector('details.study-day')!;
+  expect(day).not.toHaveAttribute('open');
+  expect(screen.getByRole('heading',{name:'Tomorrow task'})).not.toBeVisible();
+  await userEvent.click(day.querySelector('summary')!);
+  expect(await screen.findByRole('heading',{name:'Tomorrow task'})).toBeVisible();
+  cleanup();
+  render(<MemoryRouter initialEntries={['/planning#task-tomorrow']}><PlanningPage/></MemoryRouter>);
+  expect(await screen.findByRole('heading',{name:'Tomorrow task'})).toBeVisible();
+ }finally{vi.unstubAllGlobals();}
+});
+
 test('Writing tasks name their skill and IELTS task while retaining custom titles', () => {
  mocks.state.plans=[
   {...mocks.state.plans[0],kind:'2',title:'Task 2 - Position and support'},

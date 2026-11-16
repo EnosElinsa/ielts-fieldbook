@@ -309,7 +309,7 @@ export function Shell() {
             <div className="actions">
               <IconButton label="Search workspace" onClick={() => setSearchOpen(true)}><Search size={18} /></IconButton>
               <AccountMenu user={accountUser} onImportBackup={() => backupInput.current?.click()} onExportBackup={exportBackup} onLegal={setLegalView} />
-              {!['vocabulary', 'account', 'settings', 'planning', 'reading', 'listening'].includes(module) ? <button className="btn primary import-score" type="button" onClick={() => fb.openFeedbackImport()}>
+              {!['vocabulary', 'account', 'settings', 'planning', 'reading', 'listening'].includes(module) ? <button className="btn line import-score" type="button" onClick={() => fb.openFeedbackImport()}>
                 <Upload size={16} />Import score
               </button> : null}
               <input
@@ -336,7 +336,7 @@ export function Shell() {
         </main>
       </div>
       <MobileNavigation onMore={() => setMoreOpen(true)} onSelectModule={resumeModule} />
-      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header="Your workspace"><div className="more-modal">{secondaryLinks.length > 0 && <p className="eyebrow">{workspaceModules.find(link => link.id === module)?.label} study</p>}<div className="mobile-more-links">{secondaryLinks.map((link) => <button type="button" key={link.to} className={studyLinkActive(link.to, location.pathname, location.search, module) ? 'active' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}{workspaceModules.filter(link => ['planning', 'progress', 'settings'].includes(link.id)).map(link => <button type="button" key={link.id} className={module === link.id ? 'active' : undefined} onClick={() => { setMoreOpen(false); resumeModule(link.id); }}><link.Icon size={20} />{link.label}</button>)}<button type="button" onClick={() => goFromMore('/settings/account')}><UserRound size={20} />Account</button></div></div></ModalFrame>
+      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header="Your workspace"><div className="more-modal">{secondaryLinks.length > 0 && <p className="eyebrow">{workspaceModules.find(link => link.id === module)?.label} study</p>}<div className="mobile-more-links">{secondaryLinks.map((link) => <button type="button" key={link.to} className={studyLinkActive(link.to, location.pathname, location.search, module) ? 'active' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}{workspaceModules.filter(link => ['writing', 'speaking', 'progress', 'settings'].includes(link.id)).map(link => <button type="button" key={link.id} className={module === link.id ? 'active' : undefined} onClick={() => { setMoreOpen(false); resumeModule(link.id); }}><link.Icon size={20} />{link.label}</button>)}<button type="button" onClick={() => goFromMore('/settings/account')}><UserRound size={20} />Account</button></div></div></ModalFrame>
       {searchOpen && <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
       <PageErrorBoundary resetKey={`${accountId()}:${fb.modal}:${legalView}`} onDismiss={() => { fb.closeModal(); setLegalView(null); }}>
       <Suspense fallback={<ModalFrame open={Boolean(fb.modal || legalView)} onClose={() => { fb.closeModal(); setLegalView(null); }} title="Opening dialog"><PanelLoadingState variant="form" message="Loading dialog…" /></ModalFrame>}>

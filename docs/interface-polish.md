@@ -4,7 +4,7 @@ The workspace uses IELTS test order: Listening, Reading, Writing, Speaking, then
 
 The expanded sidebar puts study links immediately below their module. Collapsing the sidebar hides study links and keeps the module tooltips. Study selection includes route query parameters so intensive listening and the listening bank cannot both appear selected. Reading and Listening review commands open their dedicated review queues.
 
-All five learning modules remain directly available on mobile. The Vocabulary label is shortened to Vocab while retaining its accessible name. More contains current-module study actions, Progress, study settings and Account. It does not repeat the five module entries.
+Mobile navigation offers Today, Planning, Listening, Reading, Vocabulary and More. The Vocabulary label is shortened to Vocab while retaining its accessible name. More contains Writing, Speaking, current-module study actions, Progress, study settings and Account.
 
 Exam surfaces use the workspace theme variables for cards, inputs, methods, evidence, audio and answer review. Page headings use the workspace typeface; passages retain the reading typeface. Global navigation uses a consistent active color across modules, while Speaking retains its practice accent with a darker fill for readable white button text.
 
