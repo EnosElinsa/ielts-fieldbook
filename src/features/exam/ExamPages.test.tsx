@@ -240,6 +240,26 @@ test('matching tasks keep shared choices beside answers without changing saved v
   expect(mocks.recovery.get('one:reading:practice:section').responses.q2).toBe('B a modern setting');
 });
 
+test('saved matching review includes the named choices missing from its imported reference', async () => {
+  const question = { ...catalog.questions[0], type: 'matching', groupId: 'researchers', options: ['A. Francis Galton', 'B. Thomas Bouchard', 'C. Danielle Reed'], stimulusHtml: '<p>Match each statement with the correct researcher.</p><p>List of Researchers:</p>' };
+  mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'reading', mode: 'practice', status: 'completed', sourceId: 'section', sectionIds: ['section'], questionSnapshot: [question], responses: { q1: 'A. Francis Galton' }, results: { q1: true }, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-11-01' }];
+  practice('/reading/review/saved');
+  const reference = await screen.findByRole('complementary', { name: 'Question reference' });
+  const choices = within(reference).getByRole('list', { name: 'Answer choices' });
+  expect(choices).toHaveTextContent('A. Francis Galton');
+  expect(choices).toHaveTextContent('C. Danielle Reed');
+  expect(mocks.fb.state.examAttempts[0].questionSnapshot[0]).toEqual(question);
+});
+
+test('review omits empty references and avoids repeating choices already in source HTML', async () => {
+  const questions = [{ ...catalog.questions[0], type: 'matching', options: ['A. Francis Galton', 'B. Thomas Bouchard'], stimulusHtml: '<p>A Francis Galton · B Thomas Bouchard</p>' }, { ...catalog.questions[1], stimulusHtml: '<p>  </p>' }];
+  mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'reading', mode: 'practice', status: 'completed', sourceId: 'section', sectionIds: ['section'], questionSnapshot: questions, responses: {}, results: { q1: true, q2: true }, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-11-01' }];
+  practice('/reading/review/saved');
+  const reference = await screen.findByRole('complementary', { name: 'Question reference' });
+  expect(reference.querySelectorAll('details')).toHaveLength(1);
+  expect(within(reference).queryByRole('list', { name: 'Answer choices' })).not.toBeInTheDocument();
+});
+
 test('different matching choices are not presented as a shared reference', async () => {
   mocks.catalog.questions = [1, 2].map(number => ({ ...catalog.questions[0], id: `q${number}`, number, type: 'matching', groupId: 'matching', options: [`A choice ${number}`], answer: `A choice ${number}` }));
   practice();

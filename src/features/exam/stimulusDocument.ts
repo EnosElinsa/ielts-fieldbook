@@ -1,6 +1,10 @@
-/** Repair only the identifiable damaged restaurant-table import, including saved attempts. */
+/** Repair identifiable import defects, including saved attempts. */
 export function stimulusDocument(html: string): Document {
   const parsed = new DOMParser().parseFromString(html, 'text/html');
+  if (parsed.body.textContent?.includes('List of Researchers:') && parsed.body.textContent.includes('ook at the following statements (Questions 5-9)')) {
+    const walker = parsed.createTreeWalker(parsed.body, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) walker.currentNode.textContent = walker.currentNode.textContent!.replace(/^ook at the following statements \(Questions 5-9\)/, 'Look at the following statements (Questions 5-9)');
+  }
   // Identify the damaged twins summary; preserve its element tree and block IDs.
   if (parsed.body.textContent?.includes('Epigenetic processes')) {
     const walker = parsed.createTreeWalker(parsed.body, NodeFilter.SHOW_TEXT);

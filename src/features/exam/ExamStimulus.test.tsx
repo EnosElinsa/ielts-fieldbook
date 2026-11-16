@@ -6,6 +6,43 @@ import { ExamStimulus, examStimulusBlockIds } from './ExamPracticePage';
 
 afterEach(cleanup);
 
+test('twins matching instructions retain the opening word and spacing between imported fragments', () => {
+  const html = '<div><p><span>ook at the following statements (Questions 5-9) and the list of researchers below.</span></p><p><span>NB </span><span>Y</span><span>ou may use any letter more than once.</span></p></div><p><strong>List of Researchers: </strong></p>';
+  const { container } = render(<ExamStimulus html={html} />);
+  expect(container).toHaveTextContent('Look at the following statements');
+  expect(container).toHaveTextContent('NB You may use any letter more than once.');
+});
+
+test('imported letter bank keeps each label separated from its word', () => {
+  const html = '<p>Epigenetic processes</p><table><tbody><tr><td><p><span>A</span><span> nurture     </span><span>B</span><span> organs     </span><span>C</span><span> code</span></p><p><span>D</span><span> chemicals     </span><span>E</span><span> environment     </span><span>F</span><span> behaviour/behavior</span></p></td></tr></tbody></table>';
+  const { container } = render(<ExamStimulus html={html} />);
+  expect(container).toHaveTextContent('A nurture');
+  expect(container).toHaveTextContent('B organs');
+  expect(container).toHaveTextContent('F behaviour/behavior');
+  const bank = screen.getByRole('list', { name: 'Answer choices' });
+  expect(bank.querySelectorAll('li')).toHaveLength(6);
+  expect(bank.querySelector('li')).toHaveTextContent('A nurture');
+  expect(container.querySelector('table')).toBeNull();
+  const blocks = examStimulusBlockIds(html, 'stimulus');
+  for (const node of bank.querySelectorAll('[data-source-block]')) expect(blocks).toContain(node.getAttribute('data-source-block'));
+});
+
+test('letter banks preserve inline word spacing and original annotation text', () => {
+  const html = '<table><tbody><tr><td><p><span>  A</span><span> a </span><b>modern</b><span> setting     </span><span>B</span><span> org</span><span>ans   </span><span>C</span><span> code</span></p></td></tr></tbody></table>';
+  const { container } = render(<ExamStimulus html={html} blockPrefix="bank" />);
+  const options = screen.getAllByRole('listitem');
+  expect(options[0]).toHaveTextContent('A a modern setting');
+  expect(options[1]).toHaveTextContent('B organs');
+  expect(container.querySelector('[data-source-block="bank:0-0-0-0-0-0-0:0"]')).toHaveTextContent('A');
+  expect(options[0].querySelector('[data-source-block]')?.textContent).toBe('  A');
+});
+
+test('ordinary one-cell tables and multi-column tables retain their table layout', () => {
+  const { container } = render(<ExamStimulus html='<table><tbody><tr><td><p>A garden</p><p>B lake</p><p>C city</p></td></tr></tbody></table><table><tbody><tr><td>A</td><td>garden</td></tr></tbody></table>' />);
+  expect(container.querySelectorAll('table')).toHaveLength(2);
+  expect(screen.queryByRole('list', { name: 'Answer choices' })).not.toBeInTheDocument();
+});
+
 test('flat imported notes have distinct section headings and answer rows while annotation anchors stay stable', () => {
   const html = '<p><em>Complete the notes below.</em></p><div><span>Wildlife</span></div><p><span>Appearance</span><br>· a broad <strong>[1 ____]</strong><br><span>Movement</span><br>· use their <strong>[2 ____]</strong> to turn</p>';
   const {container} = render(<ExamStimulus html={html} blockPrefix="notes" renderGap={number=><input aria-label={`Answer ${number}`}/>} />);
