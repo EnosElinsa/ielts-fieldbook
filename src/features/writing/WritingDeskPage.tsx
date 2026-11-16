@@ -61,6 +61,7 @@ export function WritingDeskPage() {
 
   useElapsedCountdown({
     seconds: timerSeconds, running, scope: JSON.stringify([owner, uiKey]), setSeconds: setTimerSeconds,
+    onBackground: () => { setRunning(false); fb.toast('Timer paused while this page is in the background.'); },
     onComplete: () => { setRunning(false); fb.toast('Time is up. Check the answer.'); },
   });
 

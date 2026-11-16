@@ -2,6 +2,7 @@
 import { emptyState, migrateState, persistShape, STATE_VERSION, dateKey } from '../domain';
 import { normalizeVocabularyIdentities, normalizeVocabularyScope } from '../domain/vocabulary/identities';
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
+import { requestTimeout } from '../lib/requestTimeout';
 import { cachedRead, clearReadCache, readCacheKey, readSnapshot, subscribeRead } from '../lib/readCache';
 import { accountId, accountGeneration, beginAccountLoad, resetAccountIdentity, setAccountIdentity } from './accountIdentity';
 import { ACCOUNT_MODULES, emptyCollectionStatuses, type AccountCollection, type AccountModule } from './accountModules';
@@ -90,7 +91,7 @@ async function selectAll(table: string) {
   const supabase = getSupabase();
   const rows = [];
   for (let from = 0; ; from += PAGE) {
-    const { data, error } = await supabase.from(table).select('id, payload, updated_at').order('id', { ascending: true }).range(from, from + PAGE - 1);
+    const { data, error } = await requestTimeout(Promise.resolve(supabase.from(table).select('id, payload, updated_at').order('id', { ascending: true }).range(from, from + PAGE - 1)), 15_000);
     if (error) throw error;
     rows.push(...(data || []));
     if (!data || data.length < PAGE) break;
@@ -234,7 +235,7 @@ async function readPlanningEvidence(generation:number, owner:string|null):Promis
     const projection=['id',...fields.map(field=>`${field}:payload->${field}`)].join(',');
     const rows=[];
     for(let offset=0;;offset+=PAGE){
-      const {data,error}=await getSupabase().from(USER_TABLES[key]).select(projection).order('id',{ascending:true}).range(offset,offset+PAGE-1);
+      const {data,error}=await requestTimeout(Promise.resolve(getSupabase().from(USER_TABLES[key]).select(projection).order('id',{ascending:true}).range(offset,offset+PAGE-1)),15_000);
       assertAccount(generation,owner);if(error)throw error;
       rows.push(...(data||[]).map(row=>Object.fromEntries(Object.entries(row).filter(([,value])=>value!==null))));
       if(!data||data.length<PAGE)break;
@@ -330,7 +331,7 @@ export async function ensureCompleteAccount() {
 }
 
 async function readPlanningWorkspace(full=false) {
-  const {data,error}=await getSupabase().rpc('load_planning_workspace',{options:{today:dateKey(new Date()),full}});
+  const {data,error}=await requestTimeout(Promise.resolve(getSupabase().rpc('load_planning_workspace',{options:{today:dateKey(new Date()),full}})),15_000);
   if(error)throw error;
   if(!data||!Array.isArray(data.plans)||!/^[a-f0-9]{32}$/.test(data.planStamp))throw new Error('Invalid planning workspace response. Retry loading your account.');
   return data;
@@ -340,7 +341,7 @@ export type PlanningHistoryOptions={offset?:number;limit?:number;status?:string;
 export async function loadPlanningHistoryPage(options:PlanningHistoryOptions={}) {
   const owner=accountId(),generation=accountGeneration();
   if(!owner||!accountReady)throw new Error('Sign in to load planning history.');
-  const {data,error}=await getSupabase().rpc('load_planning_history',{options:{...options,limit:Math.min(100,Math.max(1,Math.floor(options.limit||20))),offset:Math.max(0,Math.floor(options.offset||0))}});
+  const {data,error}=await requestTimeout(Promise.resolve(getSupabase().rpc('load_planning_history',{options:{...options,limit:Math.min(100,Math.max(1,Math.floor(options.limit||20))),offset:Math.max(0,Math.floor(options.offset||0))}})),15_000);
   assertAccount(generation,owner);if(error)throw error;
   if(planStamp&&data?.planStamp!==planStamp)throw new Error('Your schedule changed on another device. Refresh planning and review the latest tasks.');
   if(!Array.isArray(data?.plans)||!Number.isSafeInteger(data.total)||!Number.isSafeInteger(data.offset))throw new Error('Invalid planning history response. Retry loading history.');
@@ -431,7 +432,7 @@ export async function hydrateState(options?: { modules?: AccountModule[]; prefet
     return emptyState();
   }
   const supabase = getSupabase();
-  const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+  const { data: sessionData, error: sessionError } = await requestTimeout(supabase.auth.getSession());
   if (sessionError) throw sessionError;
   const session = sessionData.session;
   if (generation !== accountGeneration()) throw new Error('Account load superseded');
@@ -484,7 +485,7 @@ export async function saveState(state, onQuotaToast?: (message: string) => void,
   const supabase = getSupabase();
   try {
     if (!expectedAccount || !accountReady) throw new Error('Account is not loaded');
-    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+    const { data: sessionData, error: sessionError } = await requestTimeout(supabase.auth.getSession());
     if (sessionError) throw sessionError;
     assertAccount(generation, expectedAccount);
     if (sessionData.session?.user.id !== expectedAccount) throw new Error('Sign in to save');
@@ -559,7 +560,7 @@ export async function saveVocabularyImport(state, batchId: string, onError?: (me
   }
   const supabase = getSupabase();
   try {
-    const { data, error: sessionError } = await supabase.auth.getSession();
+    const { data, error: sessionError } = await requestTimeout(supabase.auth.getSession());
     if (sessionError) throw sessionError;
     if (!data.session || data.session.user.id !== expectedAccount || accountId() !== expectedAccount || generation !== accountGeneration()) return false;
     if (!VOCABULARY_LISTS.every(key => statuses[key] === 'ready')) throw new Error('Vocabulary is not loaded');
@@ -601,7 +602,7 @@ export async function saveVocabularySession(state, sessionId: string, onError?: 
   }
   const supabase = getSupabase();
   try {
-    const { data, error: sessionError } = await supabase.auth.getSession();
+    const { data, error: sessionError } = await requestTimeout(supabase.auth.getSession());
     if (sessionError) throw sessionError;
     if (!data.session || data.session.user.id !== expectedAccount || accountId() !== expectedAccount || generation !== accountGeneration()) return false;
     if (!ACCOUNT_MODULES.vocabularyCore.every(key => statuses[key] === 'ready')) throw new Error('Vocabulary is not loaded');

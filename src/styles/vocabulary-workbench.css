@@ -594,11 +594,13 @@
   white-space: pre-wrap;
 }
 .practice-result-table-wrap thead th {
-  position: sticky;
-  top: 0;
+  position: static;
   background: var(--sheet);
   z-index: 3;
 }
+.practice-word-sources { display: flex; flex-wrap: wrap; gap: 5px 10px; margin-top: 8px; }
+.practice-results .practice-word-sources a { font-size: 11px; font-weight: 500; line-height: 1.6; color: var(--muted); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
+.practice-results .practice-word-sources a:hover { color: var(--blue); }
 @media (max-width: 760px) {
   .vocabulary-group-word-head {
     display: none;

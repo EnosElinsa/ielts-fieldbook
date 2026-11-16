@@ -203,6 +203,30 @@ test('preparation countdown continues through notes editing and moves to the ans
   expect(screen.getByRole('button', { name: 'Start timer' })).toBeInTheDocument();
 });
 
+test('backgrounding freezes speaking time and keeps the stopped recording recoverable', async () => {
+  vi.useFakeTimers();
+  const stopTracks = vi.fn();
+  vi.stubGlobal('navigator', { mediaDevices: { getUserMedia: vi.fn().mockResolvedValue({ getTracks: () => [{ stop: stopTracks }] }) } });
+  vi.stubGlobal('MediaRecorder', class {
+    state = 'inactive'; mimeType = 'audio/webm'; ondataavailable: any; onstop: any;
+    start() { this.state = 'recording'; }
+    stop() { this.state = 'inactive'; this.ondataavailable?.({ data: new Blob(['answer'], { type: 'audio/webm' }) }); this.onstop?.(); }
+  });
+  URL.createObjectURL = vi.fn(() => 'blob:answer'); URL.revokeObjectURL = vi.fn();
+  const view = render(<SpeakingDeskPage />);
+  await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Record' })); });
+  act(() => vi.advanceTimersByTime(3000));
+  const before = view.container.querySelector('.timer')!.textContent;
+  const visibility = vi.spyOn(document, 'visibilityState', 'get').mockReturnValue('hidden');
+  await act(async () => { fireEvent(document, new Event('visibilitychange')); });
+  act(() => vi.advanceTimersByTime(60000));
+  expect(view.container.querySelector('.timer')!.textContent).toBe(before);
+  expect(screen.queryByRole('button', { name: 'Stop' })).not.toBeInTheDocument();
+  expect(screen.getByText('Decoded recording player')).toBeInTheDocument();
+  expect(writePendingAudio).toHaveBeenCalledWith('account-1', 'speaking-1', '1', expect.any(Blob), expect.any(String));
+  visibility.mockRestore();
+});
+
 test('recording restarts an exhausted answer timer and expires into recoverable playback', async () => {
   vi.useFakeTimers();
   const stopTracks = vi.fn();

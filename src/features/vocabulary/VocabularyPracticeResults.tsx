@@ -17,7 +17,7 @@ import {getVocabularyNextPractice} from '../../domain/vocabulary/nextPractice';
 import {VocabularyNextPractice} from './VocabularyNextPractice';
 import { closestAcceptedAnswer } from './answerDiff';
 import { VocabularyAnswerDiff } from './VocabularyAnswerDiff';
-import { VocabularySourceLinks } from './VocabularySourceLinks';
+import { VocabularySourceLinks, VocabularyWordbookSources } from './VocabularySourceLinks';
 import type { VocabularySessionResult } from '../../domain/vocabulary/session';
 import type { VocabularyPracticeController } from "./useVocabularyPracticeController";
 import { vocabularyTaskSubmissionOutcome } from '../../domain/vocabulary/submissionOutcome';
@@ -184,6 +184,7 @@ export function VocabularyPracticeResults({ controller, results }: {
                   </Link>
                   {(wordCounts.get(row.entryId) || 0) > 1 ? <small className="practice-result-meaning">Meaning {meaningNumbers.get(row.cardId)} of {wordCounts.get(row.entryId)}</small> : null}
                   <small>{results.mode === 'dictation' ? currentDefinition || row.definition : row.definition}</small>
+                  <VocabularyWordbookSources sources={frozen?.sources || current.raw.sources} context={current.context} onNavigate={() => rememberPosition(row.cardId)} />
                   {changed ? <small className="practice-current-reference">{results.mode === 'dictation' ? 'Current learning reference updated; saved grading is unchanged.' : `Current meaning: ${currentDefinition}`}</small> : null}
                   {current.raw ? <Pronunciation compact entry={audioEntry} sense={audioEntry.senses.find(sense=>sense.id===row.senseId) || null} options={{pronunciation:frozen?.pronunciation ?? 'legacy'}} accent={frozenAudio ? results.preferences.accent : controller.preferences.accent}/> : null}
                   {row.prompt && results.mode !== 'dictation' ? <small className="practice-result-context">{row.prompt}</small> : null}

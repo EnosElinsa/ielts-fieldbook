@@ -2,6 +2,7 @@ import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import type { ExamAsset, ExamCatalog, ExamPaper, ExamSection, ExamSkill } from '../domain/exam/types';
 import { cachedRead, readCacheKey, type ReadOptions } from '../lib/readCache';
 import { accountGeneration, accountId } from './accountIdentity';
+import { readingCopy } from '../domain/exam/readingCopy';
 import { cleanExamSection } from '../domain/exam/transcript';
 import { sectionQuestionCount, sectionQuestionsComplete } from '../domain/exam/integrity';
 import { requestTimeout } from '../lib/requestTimeout';
@@ -93,7 +94,7 @@ export function loadExamSections(sectionIds: string[], options?: ReadOptions): P
         throw new Error(`This section is incomplete: expected ${section.questionCount} questions, received ${sectionQuestionCount(section, catalog.questions)}. Retry loading the section.`);
       }
     }
-    return { ...catalog, sections: catalog.sections.map(cleanExamSection) };
+    return { ...catalog, sections: catalog.sections.map(cleanExamSection), passages: catalog.passages.map(passage => ({ ...passage, paragraphs: passage.paragraphs.map(paragraph => ({ ...paragraph, text: readingCopy(passage.id, paragraph.text) })) })) };
   })(), 15_000), options);
 }
 

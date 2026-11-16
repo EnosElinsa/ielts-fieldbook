@@ -47,6 +47,12 @@ test('Planning navigation opens the schedule instead of restoring a completed ta
   expect(screen.getByLabelText('Location').textContent).toBe('/planning');
 });
 
+test('Planning navigation resets its overview even while viewing its own task history', async () => {
+  render(<MemoryRouter initialEntries={['/planning?view=history#task-completed']}><Harness /></MemoryRouter>);
+  await userEvent.setup().click(screen.getByText('Planning'));
+  expect(screen.getByLabelText('Location').textContent).toBe('/planning');
+});
+
 test('module clicks resume deep URLs, history return chains, and scroll after a reload', async () => {
   const user = userEvent.setup();
   const first = render(<MemoryRouter initialEntries={['/vocabulary/words?tag=fruit']}><Harness /></MemoryRouter>);

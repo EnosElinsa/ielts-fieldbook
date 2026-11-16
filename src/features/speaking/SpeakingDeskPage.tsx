@@ -232,10 +232,16 @@ export function SpeakingDeskPage() {
 
   useElapsedCountdown({
     seconds: noteSeconds, running: noteRunning, scope: JSON.stringify([owner, uiKey]), setSeconds: setNoteSeconds,
+    onBackground: () => { setNoteRunning(false); fb.toast('Preparation timer paused while this page is in the background.'); },
     onComplete: () => { setNoteRunning(false); setNotesOpen(false); setPhase('answer'); fb.toast('Note time is up.'); },
   });
   useElapsedCountdown({
     seconds: speakSeconds, running: speakRunning, scope: JSON.stringify([owner, uiKey]), setSeconds: setSpeakSeconds,
+    onBackground: () => {
+      setSpeakRunning(false);
+      if (mediaRecorderRef.current?.state === 'recording') mediaRecorderRef.current.stop();
+      fb.toast('Speaking timer paused. Your recording is kept.');
+    },
     onComplete: () => {
       setSpeakRunning(false);
       setPhase(audioBlob ? 'playback' : 'answer');

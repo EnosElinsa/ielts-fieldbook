@@ -191,3 +191,8 @@
 .study-setup-days .check-chip:has(input:checked)::before{transform:rotate(-45deg)}
 .study-setup-skills .check-chip{justify-content:flex-start;padding:0 14px}
 @media(max-width:640px){.study-today .study-page-head{flex-direction:row;align-items:center;justify-content:space-between}.study-today .study-page-head>.btn{flex:none;width:auto;min-height:44px}.study-setup-days{gap:4px}}
+
+.study-view-bar { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.study-view-bar .study-tabs { margin: 0; }
+.study-sync-status { min-height: 28px; display: flex; align-items: center; color: var(--muted); font-size: 12px; }
+@media(max-width:640px) { .study-view-bar { gap: 4px; } .study-sync-status { width: 100%; min-height: 22px; } }

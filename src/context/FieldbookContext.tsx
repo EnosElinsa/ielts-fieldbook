@@ -1557,10 +1557,8 @@ function useFieldbookValue() {
     return mutatePlans(async draft=>{
       for(const session of draft.vocabularySessions || [])completeVocabularyPlan(draft,session);
       ensureUnifiedPlans(draft);
-      // Future slots stay prospective until started. Opening the calendar should
-      // not wait for every question bank and passage across the entire week.
-      const today=dateKey(new Date());
-      await bindCurrentPlanTargets(draft,new Set(draft.plans.filter(plan=>plan.dateKey===today&&!plan.onHold&&!plan.archivedAt).map(plan=>plan.id)));
+      // Resolve source material when a task starts; the overview needs no passage,
+      // question-bank or audio requests and must not hold the save queue on them.
     },options);
   },[ensureAccountModule,mutatePlans,loadVocabularyCatalog,ensureQuestionBank]);
 
