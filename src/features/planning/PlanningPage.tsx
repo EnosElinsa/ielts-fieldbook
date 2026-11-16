@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useLocation } from 'react-router-dom';
-import { CalendarClock, Clock3, Replace, RotateCcw, SkipForward, Check, Plus, Copy, SlidersHorizontal, ArrowUp, ArrowDown, MoreHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { CalendarClock, Clock3, Replace, RotateCcw, SkipForward, Check, Plus, Copy, SlidersHorizontal, ArrowUp, ArrowDown, MoreHorizontal, ChevronLeft, ChevronRight, ChevronDown, BookOpen } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { AccountDataBoundary } from '../../components/AccountDataBoundary';
 
@@ -37,6 +38,7 @@ function PlanningCalendar(){
   useEffect(()=>{if(!targetId||linkedTask)return;let active=true;fb.ensurePlanningRows([targetId]).then(state=>{if(active&&!state.plans.some(plan=>plan.id===targetId))setTargetError('This task is unavailable. Check its link or refresh planning.');}).catch(cause=>{if(active)setTargetError(cause.message);});return()=>{active=false;};},[targetId,Boolean(linkedTask),fb.ensurePlanningRows]);
   useEffect(()=>{const target=linkedTask;if(!target)return;setTargetError('');if(['completed','skipped'].includes(target.status))setTab('history');else if(target.dateKey<today||target.onHold)setTab('waiting');else{setTab('schedule');setAnchor(target.dateKey);}},[location.hash,Boolean(linkedTask)]);
   const focus=fb.state.plans.filter(plan=>plan.dateKey===today&&!plan.onHold&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status)).sort((a,b)=>(a.status==='in_progress'?-1:0)-(b.status==='in_progress'?-1:0)||compareStudyPlans(a,b))[0];
+  const needsWordbook=!(fb.state.wordbookEnrollments||[]).length&&!fb.state.plans.some(plan=>plan.target?.mode==='learning-batch'&&!plan.onHold&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status));
   return <section className="view active study-planning"><header className="study-page-head"><div><p className="kicker">Next seven days · {fb.state.settings.dailyMinutes || 30} min per study day</p><h2>Planning</h2></div></header>
     {schedule.error&&<div className="study-alert" role="alert"><span>{schedule.error}</span><button className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}
     {targetError&&<p role="alert">{targetError}</p>}
@@ -45,6 +47,7 @@ function PlanningCalendar(){
     {tab==='history'&&<TaskCollection tasks={history} kind="history" renderTask={plan=><PlanTask plan={plan}/>}/>}
     {schedule.saving&&<InlineLoadingState message="Updating your schedule…" />}
     {tab==='schedule'&&<>
+    {needsWordbook&&studyBudget(fb.state.settings,today).planning.newWordsPerDay>0&&<aside className="study-wordbook-prompt"><BookOpen size={19} aria-hidden="true"/><p><strong>Choose a wordbook for new-word tasks</strong><span>Your daily word goal starts allocating words after you add a wordbook.</span></p><Link className="btn line" to="/vocabulary/wordbooks">Choose a wordbook</Link></aside>}
     {focus&&<aside className="study-focus"><div><p className="kicker">Today's focus</p><strong>{studyPlanTitle(focus)}</strong><p>{focus.status==='in_progress'?'Continue your saved task':'Next in your schedule'} · {planMinutesLabel(focus)}</p></div><TaskStartButton plan={focus}/></aside>}
     <nav className="study-date-navigation" aria-label="Schedule dates">
       <p className="study-date-range" aria-live="polite" aria-atomic="true">{dateRange}</p>
@@ -66,21 +69,33 @@ function PlanningCalendar(){
       if(!tasks.length&&!(schedule.saving&&budget))return <section className={`study-day is-empty${budget?'':' is-rest'}${day===today?' is-today':''}`} key={day}>
         <header>{heading}<p className="study-day-empty">{budget?`No tasks yet · ${budget} min available${goal>0?` · ${goal} new words goal`:''}`:'Rest day'}</p>{addTask}</header>
       </section>;
-      return <section className={`study-day${day===today?' is-today':''}`} key={day}>
+      return <ScheduleDay className={`study-day${day===today?' is-today':''}`} key={day} current={day===today} forceOpen={tasks.some(plan=>plan.id===targetId||plan.status==='in_progress')} heading={heading} summary={`${tasks.length} ${tasks.length===1?'task':'tasks'} · ${used} min`}>
         <header>
           {heading}
           <dl className="study-day-stats" role="group" aria-label="Daily plan summary">
             <div><dt>Planned time</dt><dd className={used>budget?'study-over-budget':''}>{used} <span>/ {budget} min</span><small>{used>budget?`${used-budget} min extra`:budget?`${budget-used} min free`:'No time budget'}</small></dd></div>
             <div><dt>Completed</dt><dd>{completed} <span>min</span><small>{used-completed} min remaining</small></dd></div>
-            <div><dt>New words</dt><dd>{newWords}{budget>0&&goal>0&&<span> / {goal}</span>}<small>{!budget?'No daily goal on rest days':!goal?'Automatic learning paused':newWords<goal?`${goal-newWords} below daily goal`:newWords===goal?'Daily goal allocated':`${newWords-goal} above daily goal`}</small></dd></div>
+            <div><dt>New words</dt><dd>{newWords}{budget>0&&goal>0&&!needsWordbook&&<span> / {goal}</span>}<small>{!budget?'No daily goal on rest days':!goal?'Automatic learning paused':needsWordbook?'Choose a wordbook':newWords<goal?`${goal-newWords} below daily goal`:newWords===goal?'Daily goal allocated':`${newWords-goal} above daily goal`}</small></dd></div>
           </dl>
           {addTask}
         </header>
         {tasks.length?<div className="study-task-list">{tasks.map(plan=><PlanTask key={plan.id} plan={plan}/>)}</div>:<CardSkeleton/>}
-      </section>;
+      </ScheduleDay>;
     })}</div></>}
     {editor&&<TaskEditor key={`${accountId()}:${editor.mode}:${editor.dateKey}`} {...editor} onClose={()=>setEditor(null)}/>}
   </section>;
+}
+
+function ScheduleDay({current,forceOpen,heading,summary,className,children}){
+  const [expanded,setExpanded]=useState(()=>current||forceOpen||!window.matchMedia?.('(max-width: 640px)').matches);
+  useEffect(()=>{if(forceOpen)setExpanded(true);},[forceOpen]);
+  useEffect(()=>{
+    const media=window.matchMedia?.('(max-width: 640px)');if(!media)return;
+    const resize=()=>setExpanded(current||forceOpen||!media.matches);
+    media.addEventListener('change',resize);return()=>media.removeEventListener('change',resize);
+  },[current,forceOpen]);
+  if(current)return <section className={className}>{children}</section>;
+  return <details className={`${className} study-day-foldable`} open={expanded} onToggle={event=>setExpanded(event.currentTarget.open)}><summary className="study-day-toggle">{heading}<span>{summary}<ChevronDown size={17} aria-hidden="true"/></span></summary>{children}</details>;
 }
 
 function PlanTask({plan}){
@@ -109,7 +124,7 @@ function PlanTask({plan}){
       </details>}
     </div>
     <div className="study-task-tools">{plan.status==='skipped'?<button type="button" className="btn line" disabled={saving} onClick={()=>{setError('');setDialog('restore');}}><RotateCcw size={16}/>Restore task</button>:<>
-      {!plan.onHold&&<TaskStartButton plan={plan}/>}
+      {!plan.onHold&&<TaskStartButton plan={plan} emphasis={plan.status==='in_progress'}/>}
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild><button type="button" className="btn line study-task-menu" aria-label={`Task actions: ${studyPlanTitle(plan)}`} disabled={saving}><MoreHorizontal size={18}/></button></DropdownMenu.Trigger>
         <DropdownMenu.Portal><DropdownMenu.Content className="dropdown-content study-task-actions" align="end" sideOffset={6} collisionPadding={12}>

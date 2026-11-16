@@ -3,7 +3,7 @@ import { PageLoadingState, StateMessage } from '../../components/AsyncState';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Star, ArrowRight, RotateCcw } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
-import { FilterMenu } from '../../components/ui';
+import { ExamBankFilters } from './ExamBankFilters';
 import type { ExamAttempt, ExamSkill, QuestionType } from '../../domain/exam/types';
 import { genericSectionTitle, QUESTION_TYPE_NAMES, useExamCatalog } from './useExamCatalog';
 import '../../styles/exam.css';
@@ -97,11 +97,13 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
     </div>
     {(loading || hasCatalogSections || hasFilters) && <div className="toolbar exam-toolbar">
       <input className="search" value={search} onChange={event => update('q', event.target.value)} aria-label={`Search ${skill} sections`} placeholder="Search a title, book or test…" />
-      <FilterMenu label="Book" value={book} onChange={value => update('book', value)} options={[{ value: 'all', label: 'All books' }, ...Array.from({ length: 14 }, (_, index) => ({ value: String(index + 8), label: `Cambridge ${index + 8}` }))]} />
-      <FilterMenu label="Test" value={test} onChange={value => update('test', value)} options={[{ value: 'all', label: 'All tests' }, ...[1, 2, 3, 4].map(value => ({ value: String(value), label: `Test ${value}` }))]} />
-      <FilterMenu label={sectionLabel} value={part} onChange={value => update('part', value)} options={[{ value: 'all', label: `All ${sectionLabel.toLowerCase()}s` }, ...Array.from({ length: skill === 'reading' ? 3 : 4 }, (_, index) => ({ value: String(index + 1), label: `${sectionLabel} ${index + 1}` }))]} />
-      <FilterMenu label="Question type" value={type} onChange={value => update('type', value)} options={[{ value: 'all', label: 'All question types' }, ...Object.entries(QUESTION_TYPE_NAMES).map(([value, label]) => ({ value, label }))]} />
-      <FilterMenu label="Practice status" value={status} onChange={value => update('status', value)} options={[{ value: 'all', label: 'Any status' }, { value: 'ready', label: 'Ready' }, { value: 'incomplete', label: 'Source incomplete' }, { value: 'new', label: 'Not practised' }, { value: 'practised', label: 'Practised' }, { value: 'favorites', label: 'Favourites' }]} />
+      <ExamBankFilters onChange={update} filters={[
+        {key:'book',label:'Book',value:book,options:[{value:'all',label:'All books'},...Array.from({length:14},(_,index)=>({value:String(index+8),label:`Cambridge ${index+8}`}))]},
+        {key:'test',label:'Test',value:test,options:[{value:'all',label:'All tests'},...[1,2,3,4].map(value=>({value:String(value),label:`Test ${value}`}))]},
+        {key:'part',label:sectionLabel,value:part,options:[{value:'all',label:`All ${sectionLabel.toLowerCase()}s`},...Array.from({length:skill==='reading'?3:4},(_,index)=>({value:String(index+1),label:`${sectionLabel} ${index+1}`}))]},
+        {key:'type',label:'Question type',value:type,options:[{value:'all',label:'All question types'},...Object.entries(QUESTION_TYPE_NAMES).map(([value,label])=>({value,label}))]},
+        {key:'status',label:'Practice status',value:status,options:[{value:'all',label:'Any status'},{value:'ready',label:'Ready'},{value:'incomplete',label:'Source incomplete'},{value:'new',label:'Not practised'},{value:'practised',label:'Practised'},{value:'favorites',label:'Favourites'}]},
+      ]}/>
     </div>}
     {saveError && <div role="alert" className="exam-notice">{saveError} {failedFavorite && <button className="btn line" disabled={savingFavorite} onClick={() => void toggleFavorite(failedFavorite.id, failedFavorite.wanted)}>Retry favourite save</button>}</div>}
     {recent.length > 0 && <aside className="exam-recent" aria-label="Your recent work"><span className="exam-eyebrow">Your recent work</span><div className="exam-recent-list">{recent.map(attempt => { const section = catalog.sections.find(row => row.id === attempt.sectionIds[0]); const paper = catalog.papers.find(row => row.id === (attempt.mode === 'mock' ? attempt.sourceId : section?.paperId)); const mock = attempt.mode === 'mock'; return <Link key={attempt.id} to={examSessionUrl(attempt)}>
@@ -133,7 +135,7 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
                 {section.status === 'ready' ? <>
                   {pending && <Link className="btn text" to={`/${skill}/${encodeURIComponent(section.id)}?new=1`}>New session</Link>}
                   {skill === 'listening' && <Link className="btn text" aria-label={`Open intensive part ${section.part}`} to={`/listening/intensive/${section.id}`}>Intensive</Link>}
-                  <Link className="btn primary" aria-label={pending ? 'Resume session' : `Practise ${sectionLabel.toLowerCase()} ${section.part}`} to={pending ? examSessionUrl(pending) : `/${skill}/${encodeURIComponent(section.id)}`}>{pending ? 'Resume' : 'Practise'} <ArrowRight size={15} /></Link>
+                  <Link className={`btn ${pending?'primary':'line'} exam-part-practise`} aria-label={pending ? 'Resume session' : `Practise ${sectionLabel.toLowerCase()} ${section.part}`} to={pending ? examSessionUrl(pending) : `/${skill}/${encodeURIComponent(section.id)}`}>{pending ? 'Resume' : 'Practise'} <ArrowRight size={15} /></Link>
                 </> : <span className="exam-source-status">Source incomplete · practice unavailable</span>}
               </div>
               <ExamSessionHistory sessions={history} />

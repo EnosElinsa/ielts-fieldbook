@@ -66,6 +66,8 @@
 .intensive-shadowing { margin-bottom: 20px; }
 .intensive-workbench .panel { border-radius: 12px; }
 .intensive-player-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+.intensive-player-sentinel { height:0; margin-bottom:-18px; pointer-events:none; }
+.intensive-player-expand { display:none; }
 .intensive-player-heading h2 { margin: 0; }
 .intensive-player-heading select { width: auto; max-width: 100%; font-size: 12px; min-height: 38px; padding: 8px; background: var(--surface-soft); }
 .intensive-player .waveform { background: var(--surface-soft); border-radius: 8px; padding: 10px 4px; }
@@ -153,6 +155,17 @@
 .intensive-playback-options > summary .intensive-settings-state { margin-left: 6px; color: var(--ink); }
 .intensive-playback-options > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
 .intensive-playback-options[open] { flex-basis: 100%; }
+@media(max-width:700px) {
+  .intensive-player-panel[data-docked=true]:not(:has([role=status],[role=alert]))>.intensive-player-expand { display:flex; align-items:center; justify-content:center; width:44px; min-height:44px; margin-top:8px; margin-left:auto; }
+  .intensive-workbench .intensive-player-panel[data-compact=true]:not(:has([role=status],[role=alert],details[open],.intensive-player-heading:focus-within)) { display:grid; grid-template-columns:minmax(0,1fr) 44px; align-items:center; gap:8px; padding:12px; }
+  .intensive-player-panel[data-compact=true]:not(:has([role=status],[role=alert],details[open],.intensive-player-heading:focus-within))>.intensive-player-heading { display:none; }
+  .intensive-player-panel[data-compact=true]:not(:has([role=status],[role=alert],details[open],.intensive-player-heading:focus-within)) :is(.intensive-player,.intensive-audio-controls) { display:contents; }
+  .intensive-player-panel[data-compact=true]:not(:has([role=status],[role=alert],details[open],.intensive-player-heading:focus-within)) :is(.intensive-playback-meta,.waveform) { display:none; }
+  .intensive-player-panel[data-compact=true] .intensive-replay-label { display:none; }
+  .intensive-player-panel[data-compact=true] .intensive-transport .intensive-replay { width:44px; min-height:44px; padding:0; }
+  .intensive-player-panel[data-compact=true] .intensive-transport { grid-column:1; grid-row:1; }
+  .intensive-player-panel[data-compact=true]>.intensive-player-expand { grid-column:2; grid-row:1; margin:0; }
+}
 .intensive-practice-tools > .file-hint { margin: 0 0 12px; }
 @media(max-width:700px) {
   .intensive-workbench .intensive-player-panel { padding: 12px; }

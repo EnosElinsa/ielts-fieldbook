@@ -4,11 +4,21 @@ import { normalizeVocabularyIdentities } from './identities';
 
 type Binding = { id: string; origin?:'automatic'|'manual';dateKey?:string;title?:string;target: { type: 'vocabulary'; mode?: 'learning-batch' | 'due-review'; binding?: 'dynamic' | 'frozen'; selectionPolicy?: 'exact'; assessmentMode: VocabularyPracticeMode; cards: {entryId:string;senseId:string}[]; batchIndex?:number; batchSize?:number; bookId?: string; unitId?: string } };
 export function boundVocabularyAssessment(state: { plans?: unknown[] }, planId: string | null): Binding | undefined {
+  return readVocabularyPlan(state, planId, ['pending', 'in_progress']);
+}
+
+/** Completed learning tasks retain their display scope, but cannot bind another assessment. */
+export function vocabularyLearningPlan(state: { plans?: unknown[] }, planId: string | null): Binding | undefined {
+  const plan = readVocabularyPlan(state, planId, ['pending', 'in_progress', 'completed']);
+  return plan?.target.mode === 'learning-batch' ? plan : undefined;
+}
+
+function readVocabularyPlan(state: { plans?: unknown[] }, planId: string | null, statuses: string[]): Binding | undefined {
   if (!planId) return;
   const plan = state.plans?.find(value => {
     if (!value || typeof value !== 'object') return false;
     const row = value as Record<string, unknown>;
-    return row.id === planId && row.kind === 'vocabulary' && ['pending','in_progress'].includes(String(row.status));
+    return row.id === planId && row.kind === 'vocabulary' && statuses.includes(String(row.status));
   }) as Record<string, unknown> | undefined;
   const target = plan?.target as Binding['target'] | undefined;
   if (!target || target.type !== 'vocabulary' || !VOCABULARY_PRACTICE_MODES.some(mode => mode.value === target.assessmentMode) || ['audio','production'].includes(target.assessmentMode) || !Array.isArray(target.cards) || !target.cards.length) return;

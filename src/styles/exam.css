@@ -506,6 +506,28 @@
 }
 
 /* Question bank: one card per test with one compact row per part. */
+.exam-filter-panel { flex:0 1 auto; min-width:0; }
+.exam-filter-panel > summary { display:none; }
+.exam-filter-fields { display:flex; flex-wrap:wrap; gap:10px; }
+.exam-active-filters { display:flex; flex-wrap:wrap; gap:6px; flex-basis:100%; }
+.exam-active-filters .btn { display:inline-flex; align-items:center; gap:8px; min-width:0; padding:6px 10px; font-size:12px; font-weight:500; }
+.exam-active-filters .btn span { overflow-wrap:anywhere; }
+.exam-active-filters .btn svg { flex:none; }
+.exam-filter-count { border-radius:999px; background:var(--soft-blue); color:var(--blue); padding:1px 7px; font-size:12px; }
+.exam-part-actions .exam-part-practise:not(.primary) { border-color:var(--rule); color:var(--ink); }
+.exam-part-row:focus-within .exam-part-practise:not(.primary) { color:var(--blue); border-color:var(--blue); background:var(--soft-blue); }
+@media (hover:hover) { .exam-part-row:hover .exam-part-practise:not(.primary) { color:var(--blue); border-color:var(--blue); background:var(--soft-blue); } }
+@media(max-width:740px) {
+  .exam-bank .exam-toolbar { display:flex; gap:8px; }
+  .exam-filter-panel { flex-basis:100%; }
+  .exam-filter-panel > summary { display:flex; align-items:center; gap:8px; width:fit-content; min-height:44px; padding:9px 12px; border:1px solid var(--rule); border-radius:8px; background:var(--sheet); font-size:13px; font-weight:600; cursor:pointer; list-style:none; }
+  .exam-filter-panel > summary::-webkit-details-marker { display:none; }
+  .exam-filter-panel[open] > summary { color:var(--blue); background:var(--soft-blue); border-color:var(--blue); }
+  .exam-filter-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; padding:12px; margin-top:8px; border:1px solid var(--rule); border-radius:10px; background:var(--sheet); }
+  .exam-filter-fields .filter-menu:last-child { grid-column:1/-1; }
+  .exam-active-filters .btn { min-height:44px; }
+  .exam-bank .exam-intro { margin-bottom:12px; padding-bottom:18px; }
+}
 .exam-paper-list { display: grid; gap: 14px; }
 .exam-bank .exam-paper { display: flex; flex-direction: column; margin-top: 0; padding: 16px 20px 6px; background: var(--sheet); border-radius: 10px; }
 .exam-bank .exam-paper > header { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding-bottom: 12px; }

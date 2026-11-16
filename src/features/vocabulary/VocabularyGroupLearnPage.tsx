@@ -1,5 +1,5 @@
 import { useVocabularySearchParams } from './vocabularyNavigation';
-import { boundVocabularyAssessment } from '../../domain/vocabulary/plannedAssessment';
+import { boundVocabularyAssessment, vocabularyLearningPlan } from '../../domain/vocabulary/plannedAssessment';
 import { normalizeVocabularyScope } from '../../domain/vocabulary/identities';
 import { PageLoadingState, StateMessage } from '../../components/AsyncState';
 import { VocabularyLearningVisual } from './VocabularyLearningVisual';
@@ -40,18 +40,37 @@ export function VocabularyGroupLearnPage() {
   const owner = accountId();
   const location = useLocation();
   const [params, setParams] = useVocabularySearchParams();
-  const requestedPlan = boundVocabularyAssessment(fb.state, params.get('planId'));
+  const planId = params.get('planId');
+  const requestedPlan = vocabularyLearningPlan(fb.state, planId) || boundVocabularyAssessment(fb.state, planId);
   const boundPlan = requestedPlan?.target.bookId === bookId && requestedPlan.target.unitId === unitId ? requestedPlan : undefined;
   const exactCards=boundPlan?.target.mode==='learning-batch'&&boundPlan.target.selectionPolicy==='exact'?boundPlan.target.cards:undefined;
   const preferences = normalizeVocabularyPreferences(state.settings?.vocabulary);
   const requestedSize = Number(boundPlan?.target.batchSize ?? params.get('batchSize'));
   const BATCH_SIZE = exactCards?.length || (Number.isSafeInteger(requestedSize) && requestedSize >= 1 && requestedSize <= 50 ? requestedSize : preferences.learningBatchSize);
-  const { status, retry } = useVocabularyCatalog(fb.loadVocabularyCatalog, bookId, unitId);
+  const { status: catalogStatus, retry: retryCatalog } = useVocabularyCatalog(fb.loadVocabularyCatalog, bookId, unitId);
+  const knownPlan = (fb.state.plans as {id:string}[] | undefined)?.some(plan => plan.id === planId);
+  const planReadKey = JSON.stringify([owner, planId]);
+  const [planRead, setPlanRead] = useState<{key:string;status:'ready'|'error'}>();
+  const [planRetry, setPlanRetry] = useState(0);
+  useEffect(() => {
+    if (!planId || knownPlan) return;
+    let active = true;
+    // Completed tasks are paged out of the initial account load. Restore the
+    // requested row before showing cards, including after a refresh or new tab.
+    Promise.resolve().then(() => fb.ensurePlanningRows?.([planId])).then(() => {
+      if (active) setPlanRead({key:planReadKey,status:'ready'});
+    }).catch(() => { if (active) setPlanRead({key:planReadKey,status:'error'}); });
+    return () => { active = false; };
+  }, [planId, knownPlan, planReadKey, planRetry, fb.ensurePlanningRows]);
+  const planLoading = Boolean(planId && !knownPlan && planRead?.key !== planReadKey);
+  const planUnavailable = Boolean(planId && !planLoading && !boundPlan);
+  const status = planLoading ? 'loading' : planUnavailable ? 'error' : catalogStatus;
+  const retry = () => { setPlanRead(undefined); setPlanRetry(value => value + 1); retryCatalog(); };
   const book = VOCABULARY_CATALOG.books.find(row => row.id === bookId);
   const unit = VOCABULARY_CATALOG.units.find(row => row.bookId === bookId && row.id === unitId);
   const isGroup = unit && unit.kind !== 'chapter' && !VOCABULARY_CATALOG.units.some(row => row.bookId === bookId && row.parentId === unitId);
   const selectedIds=useMemo(()=>{try{const ids=JSON.parse(params.get('selectedEntryIds')||'null');return Array.isArray(ids)&&ids.length>0&&ids.length<=50&&ids.every(id=>typeof id==='string')?ids as string[]:null;}catch{return null;}},[params.get('selectedEntryIds')]);
-  const sourceWords = useMemo(() => groupWords(state, bookId, unitId).flatMap(row => row.entry && !row.entry.tags.includes('archived') ? [{ ...row, entry: row.entry, resolved: resolveVocabularyLearningContext(row.entry, { bookId, unitId }) }] : []), [state, bookId, unitId, status]);
+  const sourceWords = useMemo(() => groupWords(state, bookId, unitId).flatMap(row => row.entry && !row.entry.tags.includes('archived') ? [{ ...row, entry: row.entry, resolved: resolveVocabularyLearningContext(row.entry, { bookId, unitId }) }] : []), [state, bookId, unitId, status, fb.vocabularyCatalogRevision]);
   const words = useMemo(() => exactCards ? exactCards.flatMap(ref=>{const row=sourceWords.find(row=>row.entry.id===ref.entryId);return row?[row]:[];}) : sourceWords.filter(row=>!selectedIds||selectedIds.includes(row.entry.id)), [sourceWords, exactCards, selectedIds]);
   const wordIds = words.map(row => row.entry.id);
   const idsKey = wordIds.join('\n');
@@ -106,7 +125,7 @@ export function VocabularyGroupLearnPage() {
       const next = new URLSearchParams(params); next.delete('word'); setParams(next, { replace:true, state: location.state });
     }
     const requested = accountChanged ? null : params.get('word');
-    const requestedBatch = exactCards ? 0 : params.has('batch') ? Number(params.get('batch')) : null;
+    const requestedBatch = exactCards ? null : params.has('batch') ? Number(params.get('batch')) : null;
     const batchStart = requestedBatch !== null && Number.isSafeInteger(requestedBatch) && requestedBatch >= 0 ? wordIds[requestedBatch * BATCH_SIZE] : undefined;
     const position = requested && wordIds.includes(requested) ? requested : batchStart || (learning?.currentEntryId && wordIds.includes(learning.currentEntryId) ? learning.currentEntryId : wordIds[0]);
     setCurrentId(position); setViewed(validIds); viewedRef.current = validIds;
@@ -139,7 +158,8 @@ export function VocabularyGroupLearnPage() {
     .filter(session => session.status === 'submitted' && session.mode !== 'audio' && session.submittedAt
       && ((session.selection && 'bookId' in session.selection ? session.selection.bookId === bookId && session.selection.unitId === unitId : session.filter?.bookId === bookId && session.filter?.unitId === unitId)))
     .map(session => session.submittedAt!).filter(value => Number.isFinite(Date.parse(value))).sort().at(-1), [state.vocabularySessions, bookId, unitId]);
-  const assessmentStatus = progress === 'Studied' ? assessedAt ? `Assessed ${formatDate(assessedAt, false)}` : 'Assessed' : progress === 'In progress' ? 'Assessment in progress' : 'Not assessed yet';
+  const completedTask = exactCards && (fb.state.plans as {id:string;status:string}[] | undefined)?.some(plan => plan.id === planId && plan.status === 'completed');
+  const assessmentStatus = completedTask ? 'Task assessment complete' : progress === 'Studied' ? assessedAt ? `Assessed ${formatDate(assessedAt, false)}` : 'Assessed' : progress === 'In progress' ? 'Assessment in progress' : 'Not assessed yet';
   // Mastered counts the effective status, so a word you marked mastered counts here as it does on the word list.
   const mastery = useMemo(() => words.map(row => getVocabularyMastery(state, row.entry.id, row.resolved.sense?.id)), [state, words]);
   const mastered = mastery.filter(row => row.effective === 'mastered').length;
@@ -164,7 +184,7 @@ export function VocabularyGroupLearnPage() {
       return buildLearningBatch(state, bookId, unitId, boundPlan?.target.batchIndex ?? batch, boundPlan?.target.batchSize ?? BATCH_SIZE, boundPlan?.target?.assessmentMode || preferences.mode, frozen);
     } catch { return null; }
   }, [state, bookId, unitId, batch, BATCH_SIZE, batchScope, preferences.mode, status, words.length, word?.entry.id, params.toString(), boundPlan]);
-  const boundBatch = Boolean(boundPlan && currentBatch && currentBatch.mode === boundPlan.target.assessmentMode && JSON.stringify(currentBatch.selection.cards) === JSON.stringify(boundPlan.target.cards));
+  const boundBatch = Boolean(boundVocabularyAssessment(fb.state, planId) && boundPlan && currentBatch && currentBatch.mode === boundPlan.target.assessmentMode && JSON.stringify(currentBatch.selection.cards) === JSON.stringify(boundPlan.target.cards));
   const batchAssessmentUrl = (mode = currentBatch?.mode) => {
     if (!currentBatch || !mode) return '#';
     const next = learningBatchParams(currentBatch.selection);
@@ -194,7 +214,11 @@ export function VocabularyGroupLearnPage() {
     if (nextBatch !== batch && !exactCards) next.delete('planId');
     setParams(next, { replace:true, state: location.state });
     requestAnimationFrame(() => { if (mounted.current && owner === accountId()) document.getElementById('learning-word')?.focus({ preventScroll:true }); });
-    sync.current?.update({ viewedEntryIds:nextViewed, currentEntryId:nextId, updatedAt:new Date().toISOString() }, markViewed ? 800 : 2500);
+    const savedLearning = sync.current?.snapshot().pending || state.wordbookProgress.find(row => row.bookId === bookId && row.unitId === unitId)?.learning;
+    // The display may be an exact task subset. Keep the group's other viewed
+    // words when saving its position; a subset visit must not erase progress.
+    const allViewed = [...new Set([...(savedLearning?.viewedEntryIds || []), ...nextViewed])];
+    sync.current?.update({ viewedEntryIds:allViewed, currentEntryId:nextId, updatedAt:new Date().toISOString() }, markViewed ? 800 : 2500);
   }
 
   const batchSenseId=(boundPlan?.target.cards || currentBatch?.selection.cards)?.find(ref=>ref.entryId===word?.entry.id)?.senseId;
@@ -208,14 +232,17 @@ export function VocabularyGroupLearnPage() {
   const visualPresentation = activeResolved ? getVocabularyVisualPresentation(activeResolved) : 'none';
   const hasVisual = visualPresentation === 'inline';
   const presentation = selectedSense ? vocabularySensePresentation(selectedSense) : undefined;
-  const recommendedSense = boundPlan && selectedSense && word?.resolved.sense?.id !== selectedSense.id ? word?.resolved.sense : undefined;
+  // Use the same public group recommendation as Word details, independently of
+  // an older frozen batch or a learner's saved meaning. Those selections stay intact.
+  const publicEntry = word ? catalogVocabularyEntry(word.entry.id) : undefined;
+  const currentGroupMeaning = publicEntry ? resolveVocabularyLearningContext(publicEntry, {bookId,unitId}).sense : word?.resolved.sense;
+  const recommendedSense = selectedSense && currentGroupMeaning?.id !== selectedSense.id ? currentGroupMeaning : undefined;
   const recommendation = recommendedSense ? vocabularySensePresentation(recommendedSense) : undefined;
   const recommendationUrl = word && recommendedSense ? `${location.pathname}?${new URLSearchParams({
     word: word.entry.id, sense: recommendedSense.id, batch: '0', batchSize: '1',
     batchCards: JSON.stringify([{ entryId: word.entry.id, senseId: recommendedSense.id }]),
     selectedEntryIds: JSON.stringify([word.entry.id]), returnTo: origin,
   })}` : undefined;
-  const publicEntry = word ? catalogVocabularyEntry(word.entry.id) : undefined;
   const publicSense = publicEntry && selectedSense ? resolveVocabularyLearningContext(publicEntry, { bookId, unitId, senseId:selectedSense.id }).sense : undefined;
   const reviewedNotes = Boolean(word && selectedSense && hasVocabularyReadinessNotes(word.entry.id, selectedSense));
   const groupTeachingNotes = Boolean(activeResolved?.curriculumCurrent && activeResolved.contentReviewed);
@@ -236,7 +263,7 @@ export function VocabularyGroupLearnPage() {
   return <section className="view active vocabulary-view vocabulary-workbench vocabulary-learning">
     <VocabularyNavigation />
     <VocabularyBackLink fallback={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}#group-${encodeURIComponent(unitId)}`}/>
-    {status === 'loading' ? <PageLoadingState message="Loading group words…" onRetry={retry} retryLabel="Retry group" /> : status === 'error' ? <StateMessage kind="error" message="Group words could not be loaded." onRetry={retry} retryLabel="Retry group" /> : !book || !isGroup ? <StateMessage kind="error" message="This wordbook group is unavailable." /> : <>
+    {status === 'loading' ? <PageLoadingState message={planLoading?'Restoring your learning batch…':'Loading group words…'} onRetry={retry} retryLabel="Retry group" /> : status === 'error' ? <StateMessage kind="error" message={planUnavailable?'This learning task could not be restored. Retry to load its saved words.':'Group words could not be loaded.'} onRetry={retry} retryLabel="Retry group" /> : !book || !isGroup ? <StateMessage kind="error" message="This wordbook group is unavailable." /> : <>
       <header className="vocabulary-learning-heading">
         <p className="vocabulary-group-path">{groupPath(bookId, unitId)}</p>
         <div className="page-tools"><h2>Learn {unit.title}</h2>{!words.length ? <Link className="btn line" to={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}/groups/${encodeURIComponent(unitId)}/words`}>View group words</Link> : null}</div>
@@ -244,7 +271,7 @@ export function VocabularyGroupLearnPage() {
         <div className="vocabulary-group-learning-progress" aria-label="Group progress"><span>Viewed {viewed.length} / {words.length}</span><span>Mastered {mastered} / {words.length}{masteredByYou ? ` · ${masteredByYou} set by you` : ''}</span><span>{assessmentStatus}</span></div>
       </header>
       {!word ? <p>No active words are available in this group.</p> : <div className="vocabulary-learning-workspace">
-        <div className="vocabulary-learning-batches"><span>Batch {batch+1} of {batches} · Words {batch*BATCH_SIZE+1}–{Math.min((batch+1)*BATCH_SIZE,words.length)}</span><div ref={batchNavigation} role="group" aria-label="Learning batches">{Array.from({length:batches},(_,i)=><button key={i} className="btn line" aria-label={`Batch ${i+1}: words ${i*BATCH_SIZE+1}–${Math.min((i+1)*BATCH_SIZE,words.length)}`} aria-current={batch===i?'true':undefined} onClick={()=>{if(batch!==i)navigateTo(i*BATCH_SIZE);}}>{i+1}</button>)}</div></div>
+        <div className="vocabulary-learning-batches"><span>Batch {batch+1} of {batches} · Words {batch*BATCH_SIZE+1}–{Math.min((batch+1)*BATCH_SIZE,words.length)}</span>{batches>1&&<div ref={batchNavigation} role="group" aria-label="Learning batches">{Array.from({length:batches},(_,i)=><button key={i} className="btn line" aria-label={`Batch ${i+1}: words ${i*BATCH_SIZE+1}–${Math.min((i+1)*BATCH_SIZE,words.length)}`} aria-current={batch===i?'true':undefined} onClick={()=>{if(batch!==i)navigateTo(i*BATCH_SIZE);}}>{i+1}</button>)}</div>}</div>
         <VocabularyLearningCard cardKey={learningCardKey} position={position}>
           <div className="page-tools"><span className="vocabulary-muted">Word {position+1} of {words.length}</span>{viewed.includes(word.entry.id)?<span className="pill"><Check size={13}/>Viewed</span>:null}</div>
           <div className="vocabulary-learning-mode" role="group" aria-label="Learning style">
@@ -254,27 +281,28 @@ export function VocabularyGroupLearnPage() {
           <h3 id="learning-word" tabIndex={-1}>{word.entry.term}</h3>
           <Pronunciation entry={word.entry} sense={selectedSense || null} accent={preferences.accent}/>
           {recommendation && recommendationUrl ? <section className="vocabulary-learning-recommendation" aria-label="Current recommended meaning">
-            <h4>Current recommended meaning</h4>
-            <p>This task was saved with a different meaning. Separate study does not complete this older task.</p>
+            <h4>Current group meaning</h4>
+            <p>{boundPlan?'This task was saved with a different meaning. Separate study does not complete this older task.':'This batch uses a different selected meaning. You can study the current group meaning in a separate batch.'}</p>
             {meaningVisible ? <><p>{recommendation.definition}</p>{recommendation.example ? <p><strong>Example:</strong> {recommendation.example}</p> : null}</> : null}
-            <Link className="btn primary" to={recommendationUrl}>Learn the recommended meaning<ArrowRight size={14}/></Link>
+            <Link className="btn line" to={recommendationUrl}>Learn the recommended meaning<ArrowRight size={14}/></Link>
           </section> : null}
           {word.resolved.curriculum && word.resolved.curriculum.senses.length>1 ? <section className="vocabulary-learning-meaning-picker" aria-label="Meanings to learn"><p>{boundPlan?'This task uses the selected meaning. Other meanings keep their own review progress.':'Choose the meaning to study. Each meaning keeps its own review progress.'}</p><div className="vocabulary-learning-meanings">{word.resolved.curriculum.senses.map((sense,i)=><button className="btn line" key={sense.id} aria-pressed={selectedSense?.id===sense.id} disabled={Boolean(params.get('planId'))} onClick={()=>{const next=new URLSearchParams(params);next.set('sense',sense.id);if(currentBatch)next.set('batchCards',JSON.stringify(currentBatch.selection.cards.map(ref=>ref.entryId===word.entry.id?{...ref,senseId:sense.id}:ref)));setParams(next,{replace:true, state: location.state});}}><span className="vocabulary-learning-meaning-label">Meaning {i+1} · {sense.pos}{selectedSense?.id===sense.id?<Check size={14} aria-label="Selected"/>:null}</span>{meaningVisible?<span className="vocabulary-learning-meaning-preview">{vocabularySensePresentation(sense).definition}</span>:null}</button>)}</div></section> : null}
           {!meaningVisible ? <div className="vocabulary-learning-reveal"><p>Recall the meaning and think of a sentence before checking.</p><button className="btn primary" aria-controls="learning-meaning" onClick={() => { setRevealedKey(learningCardKey); requestAnimationFrame(() => document.getElementById('learning-meaning')?.focus({ preventScroll:true })); }}>Reveal meaning<ArrowRight size={15}/></button></div> : null}
-          {meaningVisible ? <div id="learning-meaning" tabIndex={-1} className={`vocabulary-learning-content${hasVisual ? ' has-visual' : ''}`}><div className="vocabulary-learning-copy"><div className="vocabulary-learning-primary"><div className="vocabulary-learning-definition"><small>{recommendation ? 'Assigned meaning for this task · ' : ''}{selectedSense?.pos || 'Meaning'}</small><p>{presentation?.definition || 'Definition not available yet'}</p></div>
+          {meaningVisible ? <div id="learning-meaning" tabIndex={-1} className={`vocabulary-learning-content${hasVisual ? ' has-visual' : ''}`}><div className="vocabulary-learning-copy"><div className="vocabulary-learning-primary"><div className="vocabulary-learning-definition"><small>{recommendation ? boundPlan?'Assigned meaning for this task · ':'Selected meaning for this batch · ' : ''}{selectedSense?.pos || 'Meaning'}</small><p>{presentation?.definition || 'Definition not available yet'}</p></div>
 
           {presentation?.example ? <div className="vocabulary-learning-example"><h4>Example</h4><p>{presentation.example}</p></div> : null}
           {hasVisual && activeResolved ? <VocabularyLearningVisual resolved={activeResolved} /> : null}
           </div><div className="vocabulary-learning-secondary">
           {reliableCollocations && selectedSense?.collocations?.length ? <div className="vocabulary-learning-collocations"><h4>Common combinations</h4><ul>{selectedSense.collocations.map(item=><li key={item}>{item}</li>)}</ul></div> : null}
-          {selectedSense ? <VocabularyMeaningNotes entryId={word.entry.id} sense={selectedSense} showDistinctions={reviewedNotes || groupTeachingNotes} expanded={Boolean(distinctionTask && (reviewedNotes || groupTeachingNotes))} /> : null}
           {distinctionTask ? <div className="vocabulary-learning-selected-practice"><Link className="btn line" to={practiceUrl(word.entry.id,selectedSense?.id,{bookId,unitId},origin,'distinction')}>Practise word distinctions<ArrowRight size={14}/></Link><p className="vocabulary-muted">Choose the meaning or construction that fits the context, then check the explanation.</p></div> : null}
           {visualPresentation === 'supplementary' && activeResolved ? <VocabularyLearningVisual resolved={activeResolved} /> : null}
+          {word.resolved.curriculum?.basis==='multiple' ? <div className="vocabulary-learning-selected-practice"><Link className="btn line" to={practiceUrl(word.entry.id,selectedSense?.id,{bookId,unitId},origin,'definition')}>Practise this meaning<ArrowRight size={14}/></Link><p className="vocabulary-muted">This checks the selected meaning and keeps its own review progress. The whole-group assessment uses the first learning meaning for each word.</p></div> : null}
+          </div><footer className="vocabulary-learning-reference">
+          {selectedSense ? <VocabularyMeaningNotes entryId={word.entry.id} sense={selectedSense} showDistinctions={reviewedNotes || groupTeachingNotes} expanded={Boolean(distinctionTask && (reviewedNotes || groupTeachingNotes))} /> : null}
           <details className="vocabulary-learning-provenance" key={`${word.entry.id}:${selectedSense?.id}`}><summary>Meaning source</summary><p>{meaningSource} See Word details for references and other meanings.</p></details>
-          <div className="vocabulary-learning-meaning-scope"><p>This card shows one selected meaning.</p><Link className="btn text" to={allMeaningsUrl!} onClick={()=>rememberVocabularyPosition(origin,'learning-word')}>Browse all meanings<ArrowRight size={14}/></Link></div>
+          <div className="vocabulary-learning-meaning-scope"><p>This card shows one selected meaning.</p><div className="vocabulary-learning-reference-actions"><Link className="btn text" to={allMeaningsUrl!} onClick={()=>rememberVocabularyPosition(origin,'learning-word')}>Browse all meanings<ArrowRight size={14}/></Link>
           <Link className="btn text" to={entryUrl(word.entry.id,{bookId,unitId,senseId:selectedSense?.id},origin)} onClick={()=>rememberVocabularyPosition(origin,'learning-word')}>Word details<ArrowRight size={14}/></Link>
-          {word.resolved.curriculum?.basis==='multiple' ? <div className="vocabulary-learning-selected-practice"><Link className="btn primary" to={practiceUrl(word.entry.id,selectedSense?.id,{bookId,unitId},origin,'definition')}>Practise this meaning<ArrowRight size={14}/></Link><p className="vocabulary-muted">This checks the selected meaning and keeps its own review progress. The whole-group assessment uses the first learning meaning for each word.</p></div> : null}
-          </div></div></div> : null}
+          </div></div></footer></div></div> : null}
         </VocabularyLearningCard>
         <div className={`vocabulary-learning-controls${batchComplete ? ' is-complete' : ''}`}><button className="btn line" disabled={position===0} onClick={()=>navigateTo(position-1)}><ArrowLeft size={15}/>Previous word</button>{batchComplete ? <span className="vocabulary-learning-batch-complete"><Check size={16}/>Batch viewed</span> : <button className="btn primary" disabled={viewed.includes(word.entry.id) || !meaningVisible} onClick={()=>navigateTo(Math.min(position+1,batchEnd),true)}><Check size={15}/>{viewed.includes(word.entry.id)?'Viewed':position===batchEnd?'Mark viewed':'Mark viewed & next'}</button>}{!batchComplete || position<words.length-1 ? <button className="btn line" disabled={position===words.length-1} onClick={()=>navigateTo(position+1)}>{batchComplete && position===batchEnd ? 'Next batch' : 'Next word'}<ArrowRight size={15}/></button> : null}</div>
         {saveStatus==='failed'?<div role="alert" className="vocabulary-learning-save-error">Progress could not be saved. {savedOnDevice?'Your position is kept on this device.':'Your position is kept while this page is open.'} <button className="btn line" onClick={()=>sync.current?.flush()}>Retry save</button></div>:<p role="status" className="vocabulary-learning-save-status">{saveStatus==='pending'?(savedOnDevice?'Position saved on this device':'Position kept in this page'):saveStatus==='saving'?'Syncing progress…':saveStatus==='saved'?'Progress saved':'Mark each word viewed when you have finished learning it.'}</p>}
