@@ -1,9 +1,28 @@
 import { expect, test } from 'vitest';
-import { completeReceptivePlanIfMatched, receptivePlanPath } from './receptivePlans';
+import { completeReceptivePlanIfMatched, receptivePlanPath, retireInactiveSentenceReviews } from './receptivePlans';
 import { studyStreak } from '../domain/plans';
 const startedAt = '2026-10-11T10:00:00Z';
 const completedAt = '2026-10-11T11:00:00Z';
 const base = (kind: string) => ({ plans: [{ id: 'plan', kind, status: 'in_progress', startedAt, sectionId: 'part' }], activePlanId: 'plan', examAttempts: [], intensiveSessions: [] } as any);
+
+test('ending future reviews still completes a listening check with actual saved recall', () => {
+  const state = base('listening-intensive');
+  state.plans[0].target = { type: 'intensive', reviewMode: 'listening-check', sectionId: 'part', sentenceId: 's1' };
+  state.intensiveSessions = [{ id: 'intensive', sectionId: 'part', sentenceId: 's1', stage: 6, completedAt: '2026-10-01', reviewEnabled: false, listeningReviews: [{ reviewedAt: completedAt, selfRating: 5, reviewEnabled: false, planId: 'plan' }] }];
+  expect(completeReceptivePlanIfMatched(state)).toMatchObject({ status: 'completed', completedAt, linkedSessionId: 'intensive' });
+});
+
+test('removing a sentence retires only untouched automatic reminders and preserves work and user choices', () => {
+  const template = { origin: 'automatic', status: 'pending', kind: 'listening-intensive', target: { type: 'intensive', reviewMode: 'listening-check', sectionId: 'part', sentenceId: 's1' } };
+  const plans = [{ ...template, id: 'old' }, { ...template, id: 'carried', originalDateKey: '2020-01-01' }, { ...template, id: 'running', status: 'in_progress', startedAt }, { ...template, id: 'manual', origin: 'manual' }, { ...template, id: 'done', status: 'completed', completedAt }, { ...template, id: 'edited', manuallyEditedAt: startedAt }, { ...template, id: 'practice', target: { type: 'intensive', sectionId: 'part', sentenceId: 's1' } }];
+  const state: any = { plans, intensiveSessions: [{ id: 's', sectionId: 'part', sentenceId: 's1', completedAt, dictationResult: 'correct' }] };
+  const before = structuredClone(plans);
+  retireInactiveSentenceReviews(state);
+  expect(plans.slice(0, 2).every(plan => plan.status === 'skipped')).toBe(true);
+  expect(plans.slice(2)).toEqual(before.slice(2));
+  const after = structuredClone(plans); retireInactiveSentenceReviews(state);
+  expect(plans).toEqual(after);
+});
 test('links only a newly completed exam of the matching skill and section', () => {
   const state = base('reading-practice');
   state.examAttempts = [{ id: 'exam', skill: 'listening', status: 'completed', startedAt, completedAt, sectionIds: ['part'] }];

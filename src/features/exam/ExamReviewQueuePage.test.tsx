@@ -46,6 +46,8 @@ test('source failure preserves saved review navigation and can retry metadata', 
 test('due listening reviews identify their paper and sentence and preserve the sentence destination', async () => {
   mocks.load.mockImplementation(async () => ({ ...mocks.catalog, sections: mocks.catalog.sections.map((row: any) => ({ ...row, sentences: [] })) }));
   mocks.state.intensiveSessions = [
+    { id: 'correct', sectionId: 'audio', sentenceId: 's1', completedAt: '2026-01-01', nextReviewAt: '2026-01-02', dictationResult: 'correct', errorReasons: [] },
+    { id: 'excluded', sectionId: 'audio', sentenceId: 's1', completedAt: '2026-01-01', nextReviewAt: '2026-01-02', dictationResult: 'wrong', reviewEnabled: false, errorReasons: [] },
     { id: 'due', sectionId: 'audio', sentenceId: 's2', completedAt: '2026-01-01', nextReviewAt: '2026-01-02', errorReasons: ['Weak forms'] },
     { id: 'future', sectionId: 'audio', sentenceId: 's1', completedAt: '2026-01-01', nextReviewAt: '2099-01-02', errorReasons: [] },
   ];

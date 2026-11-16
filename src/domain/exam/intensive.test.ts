@@ -24,7 +24,7 @@ describe('intensive listening learning loop', () => {
     let session = createIntensiveSession('part-1', 'sentence-1', now);
     expect(applyIntensiveStage(session, 'complete', now)).toEqual(session);
     session = applyIntensiveStage(session, 'listened', now);
-    session = { ...session, transcriptInput: 'The train', dictationResult: 'correct' };
+    session = { ...session, transcriptInput: 'The train', dictationResult: 'wrong' };
     session = applyIntensiveStage(session, 'reveal', now);
     session = { ...session, shadowingAudioId: 'recording-1', selfRating: 4 };
     session = applyIntensiveStage(session, 'shadowed', now);
@@ -32,7 +32,7 @@ describe('intensive listening learning loop', () => {
     session = applyIntensiveStage(session, 'complete', now);
     expect(session.stage).toBe(6);
     expect(session.completedAt).toBe(now);
-    expect(session.nextReviewAt).toBe('2026-10-15T04:00:00.000Z');
+    expect(session.nextReviewAt).toBe('2026-10-12T04:00:00.000Z');
     expect(sentenceProgress(session)).toBe(100);
   });
   it('schedules weaker sentences sooner and uses UTC-safe intervals', () => {

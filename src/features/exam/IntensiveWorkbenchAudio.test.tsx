@@ -64,7 +64,7 @@ async function prepareShadowing(user:ReturnType<typeof userEvent.setup>){
   await user.click(await screen.findByRole('button',{name:'Save shadowing recording'}));
   await screen.findByText('Saved recording');
 }
-it('step three plays the original with the same player and earns an actual scheduled completion',async()=>{
+it('step three plays the original with the same player and completes a correct sentence without automatic review',async()=>{
   const user=userEvent.setup();open();await prepareShadowing(user);
   const createCount=mocks.create.mock.calls.length;
   await user.click(screen.getByRole('button',{name:'Play original blind'}));
@@ -76,7 +76,7 @@ it('step three plays the original with the same player and earns an actual sched
   act(()=>{mocks.events.timeupdate(1);mocks.events.timeupdate(2);});expect(finish).toBeDisabled();
   act(()=>mocks.events.timeupdate(3));expect(finish).toBeEnabled();
   await user.click(finish);expect(await screen.findByRole('heading',{name:'Practice complete'})).toBeInTheDocument();
-  const completed=mocks.fb.stateRef.current.intensiveSessions[0];expect(completed.stage).toBe(6);expect(completed.shadowingAudioId).toMatch(/^intensive-/);expect(completed.completedAt).toBeTruthy();expect(completed.nextReviewAt).toBeTruthy();
+  const completed=mocks.fb.stateRef.current.intensiveSessions[0];expect(completed.stage).toBe(6);expect(completed.shadowingAudioId).toMatch(/^intensive-/);expect(completed.completedAt).toBeTruthy();expect(completed.nextReviewAt).toBeUndefined();
 });
 it('a paused or sought blind replay cannot finish, but a fresh complete replay can',async()=>{
   const user=userEvent.setup();open();await prepareShadowing(user);await selectChoice(await screen.getByLabelText('Self rating'), '5 · Clear and fluent');

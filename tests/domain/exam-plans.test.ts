@@ -11,7 +11,7 @@ test('reading and listening plans route to their skill, never writing', () => {
   }
 });
 test('listening plans surface due intensive sentence with its exact source', () => {
-  const state = migrateState({settings:{activeSkill:'listening',skillMix:'listening',days:[1,2,3,4,5,6,7]},intensiveSessions:[{id:'i',sectionId:'s',sentenceId:'sentence',nextReviewAt:'2020-01-01',dictationResult:'wrong'}]});
+  const state = migrateState({settings:{activeSkill:'listening',skillMix:'listening',days:[1,2,3,4,5,6,7]},intensiveSessions:[{id:'i',sectionId:'s',sentenceId:'sentence',stage:6,completedAt:'2019-12-31',nextReviewAt:'2020-01-01',dictationResult:'wrong'}]});
   const plan=ensurePlans(state,'listening')[0];
   expect(plan.kind).toBe('listening-intensive');
   expect(plan.sectionId).toBe('s');

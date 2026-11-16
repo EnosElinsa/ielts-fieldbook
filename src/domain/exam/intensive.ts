@@ -46,13 +46,29 @@ export function nextIntensiveReview(result: IntensiveSession['dictationResult'],
   return new Date(new Date(now).getTime() + intensiveReviewDays(result, rating) * 86_400_000).toISOString();
 }
 
+/** Explicit choices win; older records without an accuracy grade keep their existing schedule. */
+export function intensiveReviewEnabled(session: Pick<IntensiveSession, 'dictationResult' | 'reviewEnabled' | 'nextReviewAt'>): boolean {
+  if (typeof session.reviewEnabled === 'boolean') return session.reviewEnabled;
+  if (session.dictationResult === 'correct') return false;
+  return session.dictationResult === 'wrong' || session.dictationResult === 'partial' || Boolean(session.nextReviewAt);
+}
+
+export function setIntensiveReviewEnabled(session: IntensiveSession, enabled: boolean, now = new Date().toISOString()): IntensiveSession {
+  const last = session.listeningReviews?.at(-1);
+  const nextReviewAt = enabled && session.completedAt
+    ? intensiveReviewEnabled(session) && session.nextReviewAt || nextIntensiveReview(last ? 'correct' : session.dictationResult, last?.selfRating || session.selfRating || 1, now)
+    : undefined;
+  return { ...session, reviewEnabled: enabled, nextReviewAt, updatedAt: now };
+}
+
 /** A listening check supplies new recall evidence, never another dictation or recording. */
 export function recordIntensiveListeningReview(session: IntensiveSession, review: Omit<IntensiveListeningReview, 'nextReviewAt'>): IntensiveSession {
   if (!session.completedAt || !Number.isFinite(Date.parse(review.reviewedAt)) || ![1, 2, 3, 4, 5].includes(review.selfRating)) return session;
   const history = session.listeningReviews || [];
   if (history.some(row => Date.parse(row.reviewedAt) >= Date.parse(review.reviewedAt))) return session;
-  const nextReviewAt = nextIntensiveReview('correct', review.selfRating, review.reviewedAt);
-  return { ...session, nextReviewAt, updatedAt: review.reviewedAt, listeningReviews: [...history, { ...review, nextReviewAt }] };
+  const enabled = review.reviewEnabled ?? intensiveReviewEnabled(session);
+  const nextReviewAt = enabled ? nextIntensiveReview('correct', review.selfRating, review.reviewedAt) : undefined;
+  return { ...session, ...(review.reviewEnabled !== undefined ? { reviewEnabled: review.reviewEnabled } : {}), nextReviewAt, updatedAt: review.reviewedAt, listeningReviews: [...history, { ...review, ...(!enabled ? { reviewEnabled: false } : {}), nextReviewAt }] };
 }
 
 export type IntensiveAction = 'listened' | 'reveal' | 'shadowed' | 'blind-replayed' | 'complete' | 'review';
@@ -67,7 +83,7 @@ export function applyIntensiveStage(session: IntensiveSession, action: Intensive
   if (action === 'shadowed' && session.revealed && session.shadowingAudioId) return { ...session, stage: Math.max(session.stage, 3), updatedAt: now };
   if (action === 'blind-replayed' && session.stage >= 3) return { ...session, revealed: false, blindReplayDone: true, stage: Math.max(session.stage, 4), updatedAt: now };
   if (action === 'complete' && session.listened && session.stage >= 4 && session.shadowingAudioId && session.blindReplayDone && session.selfRating && session.dictationResult !== 'pending') {
-    return { ...session, stage: 6, completedAt: now, nextReviewAt: nextIntensiveReview(session.dictationResult, session.selfRating, now), updatedAt: now };
+    return { ...session, stage: 6, completedAt: now, nextReviewAt: intensiveReviewEnabled(session) ? nextIntensiveReview(session.dictationResult, session.selfRating, now) : undefined, updatedAt: now };
   }
   return session;
 }

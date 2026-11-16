@@ -1,7 +1,8 @@
 // @ts-nocheck
 import { latestPracticeRecommendation, rewritePlanDescription, syncPendingPlan, dateKey, dueErrors, dueVocabulary, examPressure, assignStoryPlanTarget } from '../domain';
 import { sessionSkill, speakingKinds } from './format';
-import { receptivePlanTemplates, ensureReceptivePlans } from './receptivePlans';
+import { receptivePlanTemplates, ensureReceptivePlans, retireInactiveSentenceReviews } from './receptivePlans';
+import { dueIntensive } from '../domain/exam/store';
 import { isProtectedPlan, isReplannableLearningPlan, practiceFromWeakness } from '../domain/plans';
 import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
 import { vocabularyLearningSource } from '../domain/vocabulary/learningSource';
@@ -482,8 +483,8 @@ function reviewTask(state, skills, now, minutes) {
     const first = due[0]; const source=(state.sessions||[]).find(row=>row.id===first.sourceSessionId);
     return {skill:source?.skill==='speaking'?'speaking':'writing',kind:'review',title:'Review - Due mistakes',description:first.text,deskMode:'full',estimatedMinutes:minutes,target:{type:'error-review',errorIds:[first.id]},targetErrorIds:[first.id],completion:{type:'review',description:'Review the selected mistake and save the correction.'}};
   }
-  const sentence=(state.intensiveSessions||[]).filter(row=>row.nextReviewAt&&Date.parse(row.nextReviewAt)<=new Date(now).getTime()).sort((a,b)=>String(a.nextReviewAt).localeCompare(String(b.nextReviewAt)))[0];
-  if (skills.includes('listening') && sentence) return {skill:'listening',kind:'listening-intensive',title:'Listening - Due sentence',description:'Listen without the transcript, rate your understanding, and schedule the next review.',deskMode:'full',estimatedMinutes:minutes,sectionId:sentence.sectionId,sentenceId:sentence.sentenceId,target:{type:'intensive',skill:'listening',sectionId:sentence.sectionId,sentenceId:sentence.sentenceId,reviewMode:'listening-check'},completion:{type:'review',description:'Complete the selected sentence listening review.'}};
+  const sentence=dueIntensive(state.intensiveSessions||[],now)[0];
+  if (skills.includes('listening') && sentence) return {skill:'listening',kind:'listening-intensive',title:'Listening - Due sentence',description:'Listen without the transcript, rate your understanding, and choose whether to keep reviewing.',deskMode:'full',estimatedMinutes:minutes,sectionId:sentence.sectionId,sentenceId:sentence.sentenceId,target:{type:'intensive',skill:'listening',sectionId:sentence.sectionId,sentenceId:sentence.sentenceId,reviewMode:'listening-check'},completion:{type:'review',description:'Complete the selected sentence listening review.'}};
   const attempt=(state.examAttempts||[]).filter(row=>skills.includes(row.skill)&&row.status==='completed'&&Object.values(row.results||{}).some(value=>!value)&&Object.entries(row.results||{}).some(([id,correct])=>!correct&&(!row.errorReasons?.[id]||row.skill==='reading'&&!row.evidence?.[id]))).sort((a,b)=>String(b.completedAt).localeCompare(String(a.completedAt)))[0];
   if (attempt) return {skill:attempt.skill,kind:`${attempt.skill}-review`,title:`${attempt.skill==='reading'?'Reading':'Listening'} - Review mistakes`,description:'Save the evidence and diagnosis for each missed answer.',deskMode:'full',estimatedMinutes:minutes,attemptId:attempt.id,target:{type:'exam-review',skill:attempt.skill,attemptId:attempt.id},completion:{type:'review',description:'Save proof and a diagnosis for every missed answer.'}};
   return null;
@@ -633,6 +634,7 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
   const writable=state;
   state=planningEvidenceView(state);
   const before=JSON.stringify(state.plans);
+  retireInactiveSentenceReviews(state, now);
   const previous=(state.plans||[]).slice();
   const keys=calendarDays(now),today=keys[0],generationKey=planningSettingsKey(state.settings);
   // Retire missed proposals before carryover and reservations are calculated.

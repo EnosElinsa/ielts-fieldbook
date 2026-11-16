@@ -2,6 +2,10 @@
 
 The bank contains Cambridge IELTS 8–21 material collected from the user's signed-in ieltscb.com account. The user stated that this material is authorized for their internal use. That statement is recorded in each row's provenance; it is not an independently verified open-content license. Retain the source URL, fetched timestamp, source version, content hash and authorization statement when copying or correcting a row. Full passages, questions, transcripts and media stay under ignored `local/` storage or the authenticated Supabase catalog. The public metadata file contains titles and section availability only.
 
+## Intensive listening reviews
+
+Intensive listening reviews default to wrong and partially correct dictations. Correct dictations enter review only when the learner selects them. The choice is available before finishing practice, on the completed sentence page, and after each listening check. The learner can also review any completed sentence immediately without adding future reminders. Stopping future reviews keeps the dictation, recording, diagnosis and recall history; a completed check still finishes its started plan. Review queues, Today and Planning share this policy, including older correct records with automatic dates. Untouched automatic reminders that no longer qualify are skipped as `no-longer-due`; manual, edited, started and completed tasks are preserved. Legacy completed records with no accuracy grade retain their existing schedule until the learner chooses otherwise.
+
 ## Source collection and normalization
 
 Sign in through the source browser and export its Playwright storage state to `local/exam-source/browser-state.json`. This file contains session credentials. Keep it local, never include it in an issue, commit, shared bank or upload. The collector reads the cookie without printing it and removes source account answers and learning records from the export. Existing complete raw section files are reused.

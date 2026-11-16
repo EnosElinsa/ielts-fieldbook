@@ -1,5 +1,20 @@
 import type { ExamAttempt, IntensiveSession, ExamSkill } from '../domain/exam/types';
 import { dateKey } from '../domain/utils';
+import { isProtectedPlan } from '../domain/plans';
+import { dueIntensive } from '../domain/exam/store';
+import { intensiveReviewEnabled } from '../domain/exam/intensive';
+
+/** Retire untouched automatic reminders only; actual work and manual choices stay in history. */
+export function retireInactiveSentenceReviews(state: { plans: Record<string, any>[]; intensiveSessions?: IntensiveSession[]; activePlanId?: string | null }, now = new Date()) {
+  for (const plan of state.plans || []) {
+    if (isProtectedPlan(plan) || plan.origin !== 'automatic' || plan.onHold || plan.archivedAt || plan.draft || plan.restoredAt || plan.linkedSessionId) continue;
+    if (plan.target?.reviewMode !== 'listening-check' && !String(plan.driver || '').startsWith('intensive:')) continue;
+    const sentence = state.intensiveSessions?.find(row => row.sectionId === (plan.target?.sectionId || plan.sectionId) && row.sentenceId === (plan.target?.sentenceId || plan.sentenceId));
+    if (!sentence?.completedAt || intensiveReviewEnabled(sentence)) continue;
+    plan.previousStatus = plan.status; plan.status = 'skipped'; plan.skipReason = 'no-longer-due'; plan.skippedAt = now.toISOString();
+    if (state.activePlanId === plan.id) state.activePlanId = null;
+  }
+}
 
 /** Explain the actual completion rule, including for plans saved before this wording. */
 export function receptivePlanCompletionDescription(plan: Record<string, any>): string {
@@ -28,7 +43,7 @@ type ReceptiveState = {settings:{days:number[]};plans:Record<string,any>[];examA
 export function ensureReceptivePlans(state:ReceptiveState, skill:ExamSkill, changed?:()=>void) {
   const generated:Record<string,any>[]=[];const cursor=new Date();cursor.setHours(0,0,0,0);
   const templates=receptivePlanTemplates[skill];
-  const due=(state.intensiveSessions||[]).filter(s=>s.nextReviewAt&&Date.parse(s.nextReviewAt)<=Date.now()).sort((a,b)=>String(a.nextReviewAt).localeCompare(String(b.nextReviewAt)))[0];
+  const due=dueIntensive(state.intensiveSessions||[])[0];
   const latest=(state.examAttempts||[]).filter(a=>a.skill===skill&&a.status==='completed'&&Object.values(a.results||{}).some(v=>!v)).sort((a,b)=>b.startedAt.localeCompare(a.startedAt))[0];
   for(let day=0;day<35&&generated.length<Math.max(1,state.settings.days.length);day++,cursor.setDate(cursor.getDate()+1)) {
     if(!state.settings.days.includes(cursor.getDay()||7))continue;
