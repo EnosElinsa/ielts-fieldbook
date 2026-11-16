@@ -649,8 +649,11 @@
 .exam-sentence-play:hover { background: var(--soft-blue); }
 .exam-sentence-play:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 /* Review queue: Manrope titles and a quiet back link above the page title. */
-.exam-queue-card h3 { margin: 8px 0; font: 650 17px/1.45 Manrope,Arial,sans-serif; }
+.exam-queue-card h4 { margin: 8px 0; font: 650 17px/1.45 Manrope,Arial,sans-serif; overflow-wrap: anywhere; }
 .exam-queue-back { margin-bottom: 12px; }
+.exam-attempt-reviews > h3 { margin: 0 0 8px; font: 650 18px/1.5 Manrope,Arial,sans-serif; }
+.exam-queue-description { max-width: 70ch; margin: 8px 0 16px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.exam-due-review .intensive-review-rule { margin-bottom: 0; }
 
 /* Keep reading copy light and answers attached to their source sentences. */
 .exam-passage p { font-weight: 400; font-size: 17px; line-height: 1.85; }

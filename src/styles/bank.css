@@ -4,3 +4,14 @@
 @media(prefers-reduced-motion:reduce){.q-card{transition:none}}
 .bank-pagination{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:16px 0;font-size:13px;color:var(--muted)}
 .bank-pagination>div{display:flex;align-items:center;gap:10px}.bank-pagination>div>span{min-width:88px;text-align:center;font-variant-numeric:tabular-nums}.bank-pagination .icon-button{width:44px;height:44px;border:1px solid var(--rule);border-radius:6px}
+.writing-chart-preview { position: relative; height: 164px; flex-shrink: 0; overflow: hidden; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface-soft); }
+.q-card .writing-chart-preview img { display: block; height: 100%; }
+.writing-chart-preview:not(.is-loaded) img { visibility: hidden; }
+.writing-chart-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 12px; color: var(--muted); font-size: 12px; text-align: center; }
+.writing-chart-placeholder .btn { min-height: 44px; padding: 7px 12px; font-size: 12px; }
+.writing-chart-skeleton { display: flex; gap: 6px; align-items: flex-end; height: 32px; padding: 0 8px 5px; border-bottom: 1px solid var(--rule); }
+.writing-chart-skeleton i { width: 10px; height: 12px; border-radius: 2px 2px 0 0; background: var(--rule); }
+.writing-chart-skeleton i:nth-child(2) { height: 22px; }.writing-chart-skeleton i:nth-child(3) { height: 17px; }.writing-chart-skeleton i:nth-child(4) { height: 28px; }
+.questions-list .writing-chart-preview { grid-column: 2; grid-row: 1 / 5; width: 180px; height: 148px; align-self: center; }
+.questions-list .writing-chart-preview img { width: 100%; height: 100%; }
+@media(max-width:600px) { .questions-list .writing-chart-preview { grid-column: 1; grid-row: auto; width: 100%; } }

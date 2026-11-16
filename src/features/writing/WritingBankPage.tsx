@@ -7,6 +7,7 @@ import { clipAtWord } from '../../domain';
 import { chartLabels, displayName, formatLabel, safeImage, typeName } from '../../lib/format';
 import { Empty, FilterMenu } from '../../components/ui';
 import { BANK_PAGE_SIZE, BankPagination, bankPage } from '../../components/BankPagination';
+import { WritingChartPreview } from './WritingChartPreview';
 
 export function WritingBankPage() {
   const fb = useFieldbook();
@@ -106,7 +107,7 @@ export function WritingBankPage() {
                   <button type="button" className="btn text icon-btn" aria-label={`${favorites.has(`writing:${question.id}`) ? 'Remove' : 'Add'} favourite: ${displayName(question.name)}`} title="Favourite question" aria-pressed={favorites.has(`writing:${question.id}`)} onClick={() => fb.toggleFavorite(question.id, 'writing')}><Star size={17} fill={favorites.has(`writing:${question.id}`) ? 'currentColor' : 'none'} /></button>
                 </div>
                 <h4>{displayName(question.name)}</h4>
-                {image ? <img src={image} alt={`${displayName(question.name)} chart`} loading="lazy" /> : null}
+                {image ? <WritingChartPreview key={image} src={image} alt={`${displayName(question.name)} chart`} /> : null}
                 <p>{prompt}</p>
                 <div className="q-bottom">
                   <button className="btn primary" type="button" onClick={() => fb.chooseQuestion(question.id)}>
