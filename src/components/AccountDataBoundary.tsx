@@ -35,12 +35,12 @@ export function useAccountRequirements({ modules = [], banks = [], vocabularyEnt
 
 const GENERIC_LOAD_ERROR = 'Could not load study data.';
 
-export function AccountDataBoundary({ children, modules, banks, vocabularyEntryIds, variant = 'cards', area = 'study data' }: Requirements & { children: ReactNode; variant?: LoadingVariant; area?: string }) {
+export function AccountDataBoundary({ children, modules, banks, vocabularyEntryIds, variant = 'cards', area = 'study data', title }: Requirements & { children: ReactNode; variant?: LoadingVariant; area?: string; title?: string }) {
   const { ready, error, retry } = useAccountRequirements({modules,banks,vocabularyEntryIds});
   const fb = useFieldbook();
   const refreshError = error || (banks || []).map(bank => fb.bankErrors?.[bank]).find(Boolean);
   const detail = refreshError && refreshError !== GENERIC_LOAD_ERROR ? refreshError : '';
   if (!ready && refreshError) return <StateMessage kind="error" title={`Your ${area} could not load`} message={<>Check your connection, then retry. Work you already saved is safe.{detail ? <small className="async-state-detail">{detail}</small> : null}</>} onRetry={retry} retryLabel="Retry" />;
-  if (!ready) return <PageLoadingState message={`Loading your ${area}…`} variant={variant} onRetry={retry} retryLabel="Retry" />;
+  if (!ready) return <PageLoadingState title={title} message={`Loading your ${area}…`} variant={variant} onRetry={retry} retryLabel="Retry" />;
   return <>{refreshError && <p role="alert">{refreshError} <button className="btn text" onClick={retry}>Retry</button></p>}{children}</>;
 }

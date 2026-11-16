@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
@@ -36,6 +36,7 @@ vi.mock('../lib/supabase', () => ({
 
 afterEach(() => {
   cleanup();
+  vi.useRealTimers();
   signUp.mockReset();
   signInWithPassword.mockReset();
   getSession.mockReset();
@@ -44,6 +45,18 @@ afterEach(() => {
   resetPasswordForEmail.mockReset();
   onAuthStateChange.mockClear();
   window.location.hash = '';
+});
+
+test('a stalled session check offers a real retry and can reach sign-in', async () => {
+  vi.useFakeTimers();
+  getSession.mockImplementationOnce(() => new Promise(() => {}));
+  render(<AuthGate><p>Study workspace</p></AuthGate>);
+  expect(screen.getByRole('status')).toHaveTextContent('Checking your saved session');
+  expect(screen.queryByRole('button', { name: 'Retry connection' })).not.toBeInTheDocument();
+  await act(async () => { vi.advanceTimersByTime(10_000); });
+  await act(async () => { fireEvent.click(screen.getByRole('button', { name: 'Retry connection' })); });
+  expect(getSession).toHaveBeenCalledTimes(2);
+  expect(screen.getByLabelText('Email')).toBeInTheDocument();
 });
 
 async function renderGate() {

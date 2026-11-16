@@ -36,20 +36,29 @@
 .dictation-missing { color: var(--ink); background: color-mix(in srgb, var(--gold) 20%, var(--sheet)); border-bottom: 2px solid var(--gold); }
 .dictation-extra { color: var(--red); background: var(--soft-red); text-decoration: line-through; }
 .intensive-diagnosis, .intensive-diagnosis-group { min-width: 0; border: 0; padding: 0; margin: 0; }
-.intensive-diagnosis { margin-top: 20px; }
+.intensive-diagnosis { margin-top: 20px; container-type: inline-size; }
 .intensive-diagnosis > legend { font-size: 13px; font-weight: 600; }
-.intensive-diagnosis > .file-hint { margin: 6px 0 14px; }
-.intensive-diagnosis-groups { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
-.intensive-diagnosis-group > legend { padding: 0 0 8px; font-size: 12px; font-weight: 600; color: var(--muted); }
-.intensive-diagnosis-choice { display: flex; gap: 8px; align-items: flex-start; min-height: 44px; padding: 10px; margin-bottom: 6px; border: 1px solid var(--rule); border-radius: 8px; font-size: 12px; cursor: pointer; overflow-wrap: anywhere; }
+.intensive-diagnosis > .file-hint { margin: 6px 0 12px; }
+.intensive-diagnosis-groups { display: grid; }
+.intensive-diagnosis-group { display: grid; grid-template-columns: 164px minmax(0,1fr); align-items: start; gap: 16px; padding: 10px 0; border-top: 1px solid var(--rule); }
+.intensive-diagnosis-group > h4 { margin: 0; padding: 8px 0; font-size: 12px; line-height: 1.5; font-weight: 600; color: var(--muted); }
+.intensive-diagnosis-choices { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px; min-width: 0; }
+.intensive-diagnosis-content { min-width: 0; }
+.intensive-diagnosis-content > .file-hint { margin: 0 0 8px; }
+.intensive-diagnosis-choice { display: inline-flex; gap: 8px; align-items: center; max-width: 100%; min-width: 0; min-height: 36px; padding: 7px 10px; margin: 0; border: 1px solid var(--rule); border-radius: 6px; font-size: 12px; line-height: 1.5; cursor: pointer; overflow-wrap: anywhere; }
+.intensive-diagnosis-choice:hover { background: var(--surface-hover); }
 .intensive-diagnosis-choice:has(input:checked) { border-color: var(--blue); background: var(--soft-blue); }
-.intensive-diagnosis-choice input[type="checkbox"] { flex-shrink: 0; width: auto; margin-top: 2px; accent-color: var(--blue); }
-.intensive-diagnosis-other, .intensive-diagnosis-earlier { grid-column: 1 / -1; }
+.intensive-diagnosis-choice:has(input:focus-visible) { outline: 2px solid var(--blue); outline-offset: 2px; }
+.intensive-diagnosis-choice input[type="checkbox"] { flex-shrink: 0; width: 14px; height: 14px; margin: 0; accent-color: var(--blue); }
 .intensive-diagnosis-note-label { display: block; font-size: 12px; font-weight: 600; margin-top: 12px; }
 .intensive-diagnosis-other textarea { min-height: 88px; }
 .intensive-diagnosis-summary { margin: 12px 0; overflow-wrap: anywhere; }
 .intensive-diagnosis-summary p { margin: 4px 0; }
 .intensive-diagnosis-saved-note { white-space: pre-wrap; }
+@container (max-width: 620px) {
+  .intensive-diagnosis-group { grid-template-columns: minmax(0,1fr); gap: 8px; }
+  .intensive-diagnosis-group > h4 { padding: 0; }
+}
 .intensive-cycle-history { margin-top: 16px; border-top: 1px solid var(--rule); padding-top: 12px; }
 .intensive-timing { border-top: 1px solid var(--rule); padding-top: 12px; }
 .intensive-timing summary { cursor: pointer; }
@@ -117,7 +126,7 @@
   .intensive-step textarea { font-size: 16px; }
   .intensive-step .btn { min-height: 44px; white-space: normal; }
   .intensive-checklist { grid-template-columns: 1fr; }
-  .intensive-diagnosis-groups { grid-template-columns: 1fr; }
+  .intensive-diagnosis-choice { min-height: 44px; }
 }
 
 @media(max-width:700px) {

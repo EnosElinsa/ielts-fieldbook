@@ -45,7 +45,7 @@ export type PlanTarget =
 export type StudyPlan = {
   id: string; dateKey: string; skill: StudySkill; kind: string; title: string; description: string;
   estimatedMinutes: number; origin: 'automatic' | 'manual'; status: 'pending' | 'in_progress' | 'completed' | 'skipped';
-  skipReason?: 'no-longer-due' | 'merged-review' | 'bulk-skip' | 'user-skipped';
+  skipReason?: 'no-longer-due' | 'merged-review' | 'replanned-learning' | 'bulk-skip' | 'user-skipped';
   originalDateKey?: string; rescheduledAt?: string; skippedAt?: string;
   onHold?: boolean; heldAt?: string; archivedAt?: string; unarchivedAt?: string;
   target: PlanTarget; completion: { type: 'attempt' | 'review' | 'assessment'; description: string };
@@ -55,6 +55,14 @@ export type StudyPlan = {
 
 export function isProtectedPlan(plan) {
   return plan.status !== 'pending' || Boolean(plan.startedAt || plan.completedAt || plan.manuallyEditedAt || plan.origin === 'manual' || plan.manual || plan.userModified);
+}
+
+/** Exact system reservations remain proposals until the learner commits to them. */
+export function isReplannableLearningPlan(plan) {
+  return plan.schemaVersion === 2 && plan.origin === 'automatic' && !isProtectedPlan(plan)
+    && !plan.onHold && !plan.archivedAt && !plan.restoredAt && !plan.draft && !plan.linkedSessionId
+    && plan.target?.type === 'vocabulary' && plan.target.mode === 'learning-batch'
+    && plan.target.selectionPolicy === 'exact' && Boolean(plan.target.bookId && plan.target.unitId && plan.target.entryIds?.length);
 }
 
 export function recommendationFromAssessment(state, assessment) {
