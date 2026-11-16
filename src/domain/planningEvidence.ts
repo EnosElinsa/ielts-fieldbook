@@ -6,7 +6,7 @@ export const PLANNING_FIELDS = {
   errors: ['code','text','resolved','nextReviewAt','sourceSessionId','sourceAssessmentId'],
   stories: ['topicIds'],
   examAttempts: ['skill','status','sectionIds','results','errorReasons','evidence','completedAt','mode','sourceId','planId','retryOfAttemptId','updatedAt','startedAt','remainingSeconds','durationSeconds'],
-  intensiveSessions: ['nextReviewAt','sectionId','sentenceId','stage','completedAt'],
+  intensiveSessions: ['nextReviewAt','sectionId','sentenceId','stage','completedAt','dictationResult','reviewEnabled'],
 } as const;
 
 export type PlanningEvidenceKey = keyof typeof PLANNING_FIELDS;

@@ -1,5 +1,6 @@
 import { makeId } from '../utils';
 import { normalizeExamAnnotations } from './annotations';
+import { intensiveReviewEnabled } from './intensive';
 import type { ExamAttempt, ExamQuestion, ExamSection, ExamStore, IntensiveListeningReview, IntensiveSession } from './types';
 
 export function createExamAttempt(sections: ExamSection[], questions: ExamQuestion[], mode: ExamAttempt['mode'], now = new Date().toISOString()): ExamAttempt {
@@ -40,15 +41,16 @@ export function normalizeExamStore(input: unknown): ExamStore {
     ...row, stage: Math.max(0, Math.min(6, number(row.stage))), gist: String(row.gist || ''), transcriptInput: String(row.transcriptInput || ''),
     replayCount: Math.max(0, number(row.replayCount)), listened: Boolean(row.listened), revealed: Boolean(row.revealed),
     dictationResult: ['correct', 'partial', 'wrong', 'pending'].includes(row.dictationResult) ? row.dictationResult : 'pending',
+    reviewEnabled: typeof row.reviewEnabled === 'boolean' ? row.reviewEnabled : undefined,
     errorReasons: strings(row.errorReasons), updatedAt: row.updatedAt || '', speed: Math.max(0.25, Math.min(2, number(row.speed, 1))), loop: Boolean(row.loop),
-    ...(row.listeningReviews !== undefined ? { listeningReviews: Array.isArray(row.listeningReviews) ? row.listeningReviews.filter((review: IntensiveListeningReview) => review && Number.isFinite(Date.parse(review.reviewedAt)) && Number.isFinite(Date.parse(review.nextReviewAt)) && [1, 2, 3, 4, 5].includes(review.selfRating)) : [] } : {}),
+    ...(row.listeningReviews !== undefined ? { listeningReviews: Array.isArray(row.listeningReviews) ? row.listeningReviews.filter((review: IntensiveListeningReview) => review && Number.isFinite(Date.parse(review.reviewedAt)) && (review.reviewEnabled === false && review.nextReviewAt == null || typeof review.nextReviewAt === 'string' && Number.isFinite(Date.parse(review.nextReviewAt))) && [1, 2, 3, 4, 5].includes(review.selfRating)) : [] } : {}),
   } as IntensiveSession));
   return { examAttempts, intensiveSessions, examAnnotations: normalizeExamAnnotations(source.examAnnotations) };
 }
 
 export function dueIntensive(sessions: IntensiveSession[], now: string | Date = new Date()): IntensiveSession[] {
   const timestamp = new Date(now).getTime();
-  return sessions.filter(session => session.completedAt && session.nextReviewAt && Date.parse(session.nextReviewAt) <= timestamp)
+  return sessions.filter(session => session.completedAt && intensiveReviewEnabled(session) && session.nextReviewAt && Date.parse(session.nextReviewAt) <= timestamp)
     .sort((left, right) => String(left.nextReviewAt).localeCompare(String(right.nextReviewAt)));
 }
 

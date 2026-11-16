@@ -14,7 +14,7 @@ const session = { id: 'old', sectionId: 'part', sentenceId: 's1', completedAt: '
 function open(overrides: Record<string, unknown> = {}) {
   const onSave = vi.fn().mockResolvedValue(true);
   const onRestart = vi.fn();
-  const view = render(<MemoryRouter><IntensiveSentenceReview owner="one" session={session} sentence={{ id: 's1', text: 'The train leaves at nine.', start: 0, end: 3, alignment: 'source' }} audioUrl="/audio.mp3" audioError="" onRetryAudio={vi.fn()} onSave={onSave} onRestart={onRestart} {...overrides} /></MemoryRouter>);
+  const view = render(<MemoryRouter><IntensiveSentenceReview owner="one" session={session} sentence={{ id: 's1', text: 'The train leaves at nine.', start: 0, end: 3, alignment: 'source' }} audioUrl="/audio.mp3" audioError="" onRetryAudio={vi.fn()} onSave={onSave} onReviewEnabledChange={vi.fn().mockResolvedValue(true)} onRestart={onRestart} {...overrides} /></MemoryRouter>);
   return { ...view, onSave, onRestart };
 }
 afterEach(() => { cleanup(); mocks.recovery.clear(); vi.restoreAllMocks(); });
@@ -85,4 +85,32 @@ test('a successful save clears its retry draft even after leaving the page', asy
   view.unmount();
   await act(async () => finish(true));
   expect(mocks.recovery.size).toBe(0);
+});
+
+test('a correct legacy sentence hides its old automatic date and allows explicit inclusion', async () => {
+  const onReviewEnabledChange = vi.fn().mockResolvedValue(false);
+  open({ session: { ...session, dictationResult: 'correct' }, onReviewEnabledChange });
+  expect(screen.getByText(/No listening review is scheduled/)).toBeInTheDocument();
+  expect(screen.queryByText(/Next review:/)).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Start listening review' })).not.toBeInTheDocument();
+  const choice = screen.getByRole('checkbox', { name: 'Include this sentence in listening review' });
+  expect(choice).not.toBeChecked();
+  await userEvent.click(choice);
+  expect(onReviewEnabledChange).toHaveBeenCalledWith(true);
+  expect(await screen.findByRole('alert')).toHaveTextContent('Could not save your review choice');
+  expect(choice).not.toBeChecked();
+});
+
+test('the learner can finish a fully heard review without scheduling another one', async () => {
+  const { onSave } = open(); const user = userEvent.setup();
+  await user.click(screen.getByRole('button', { name: 'Start listening review' }));
+  await user.click(screen.getByRole('button', { name: 'Play test audio' }));
+  await user.click(screen.getByRole('button', { name: 'Finish test audio' }));
+  const { selectChoice } = await import('../../../tests/selectChoice');
+  await selectChoice(screen.getByLabelText('How much did you understand?'), '5 · Clear and fluent');
+  await user.click(screen.getByRole('checkbox', { name: 'Schedule another listening review' }));
+  expect(screen.queryByText(/Next review after saving/)).not.toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Save review and finish' }));
+  expect(onSave).toHaveBeenCalledWith(expect.objectContaining({ selfRating: 5, reviewEnabled: false }));
+  expect(await screen.findByText('Review saved')).toBeInTheDocument();
 });

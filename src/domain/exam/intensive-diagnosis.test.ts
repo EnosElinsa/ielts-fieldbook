@@ -38,5 +38,5 @@ test('a legacy session without a note restarts without inventing a historical di
 
 test('a correct practice can complete without any diagnosis or note', () => {
   const ready = { ...completed, stage: 4, completedAt: undefined, dictationResult: 'correct' as const, errorReasons: [], errorNote: '' };
-  expect(applyIntensiveStage(ready, 'complete', now)).toMatchObject({ stage: 6, dictationResult: 'correct', errorReasons: [], completedAt: now, nextReviewAt: '2026-11-13T12:00:00.000Z' });
+  expect(applyIntensiveStage(ready, 'complete', now)).toMatchObject({ stage: 6, dictationResult: 'correct', errorReasons: [], completedAt: now, nextReviewAt: undefined });
 });

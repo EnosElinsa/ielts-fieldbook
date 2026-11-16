@@ -7,8 +7,9 @@ import { ExamBackLink } from './ExamNavigation';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { RecordingPlayer, SessionAudioPlayer } from '../../components/SessionAudioPlayer';
 import { useConfirmationDialog } from '../../components/useConfirmationDialog';
-import { applyIntensiveStage, calculateDictationResult, createIntensiveSession, lcsDiff, recordIntensiveListeningReview } from '../../domain/exam/intensive';
+import { applyIntensiveStage, calculateDictationResult, createIntensiveSession, lcsDiff, recordIntensiveListeningReview, intensiveReviewEnabled, setIntensiveReviewEnabled } from '../../domain/exam/intensive';
 import type { ExamAsset, ExamAttempt, ExamCatalog, ExamSentence, IntensiveListeningReview, IntensiveSession } from '../../domain/exam/types';
+import { retireInactiveSentenceReviews } from '../../lib/receptivePlans';
 import { IntensiveSentenceReview } from './IntensiveSentenceReview';
 import { IntensiveDiagnosis, IntensiveDiagnosisSummary } from './IntensiveDiagnosis';
 import { hasActiveSourceMock } from '../../domain/exam/sourceAccess';
@@ -37,7 +38,7 @@ const activeStepFor = (stage: number) => stage >= 4 ? 4 : stage >= 3 ? 3 : stage
 /** The last step whose work is finished. */
 const finishedStepFor = (stage: number) => stage >= 6 ? 4 : stage >= 4 ? 3 : stage >= 2 ? 2 : stage >= 1 ? 1 : 0;
 function sentenceStatus(session?: IntensiveSession) {
-  if (session?.nextReviewAt && Date.parse(session.nextReviewAt) <= Date.now()) return { tone: 'due', label: 'Due' };
+  if (session?.completedAt && intensiveReviewEnabled(session) && session.nextReviewAt && Date.parse(session.nextReviewAt) <= Date.now()) return { tone: 'due', label: 'Due' };
   if (session?.completedAt) return { tone: 'done', label: 'Done' };
   if (session && (session.stage > 0 || session.listened || session.transcriptInput?.trim() || session.gist?.trim())) return { tone: 'progress', label: 'In progress' };
   return { tone: 'new', label: 'Not started' };
@@ -277,7 +278,7 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
     setStatus('');
   }
 
-  const save = useCallback(async (override?: SessionMap) => {
+  const save = useCallback(async (override?: SessionMap, onPrepared?: (draft: any) => void) => {
     if (accountId() !== owner || !mounted.current) return false;
     const snapshot = structuredClone(override || sessionRef.current);
     writeExamRecovery(owner, recoveryKey, snapshot);
@@ -294,6 +295,8 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
       const draft = structuredClone(fb.stateRef.current);
       const ids = new Set(Object.values(snapshot).map(row => row.id));
       draft.intensiveSessions = [...(draft.intensiveSessions || []).filter((row: IntensiveSession) => !ids.has(row.id)), ...Object.values(snapshot)];
+      retireInactiveSentenceReviews(draft);
+      onPrepared?.(draft);
       let saved = false;
       let feedback = '';
       try { saved = Boolean(await fb.persistNow(draft, { collections: ['intensiveSessions', 'plans'], onError: (message: string) => { feedback = message; } })); } catch { saved = false; }
@@ -332,44 +335,39 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
     return save();
   }
 
-  async function saveListeningReview(review: Omit<IntensiveListeningReview, 'nextReviewAt'>) {
+  async function saveCompletedSession(row: IntensiveSession) {
     if (!sentence || accountId() !== owner || !mounted.current || listeningReviewSavingRef.current) return false;
     const current = sessionRef.current[sentence.id];
     if (!current?.completedAt) return false;
-    const row = recordIntensiveListeningReview(current, { ...review, ...(search.get('planId') ? { planId: search.get('planId')! } : {}) });
-    if (!row.listeningReviews?.some(check => check.reviewedAt === review.reviewedAt && check.selfRating === review.selfRating)) return false;
-    const beforePlans = structuredClone(fb.stateRef.current.plans || []) as Record<string, any>[];
-    const beforeActivePlan = fb.stateRef.current.activePlanId as string | null;
+    let beforePlans: Record<string, any>[] = [];
+    let beforeActivePlan: string | null = null;
+    let attempted: any;
     const next = { ...sessionRef.current, [sentence.id]: row };
     listeningReviewSavingRef.current = true; setSavingListeningReview(true);
     try {
-      const saved = await save(next);
+      const saved = await save(next, draft => {
+        beforePlans = structuredClone(fb.stateRef.current.plans || []);
+        beforeActivePlan = fb.stateRef.current.activePlanId;
+        attempted = draft;
+      });
       if (accountId() !== owner) return false;
       if (!saved) {
-        // persistNow updates shared state optimistically. A failed check must stay due everywhere.
+        // Roll back only this optimistic save; retain unrelated concurrent changes.
         const live = fb.stateRef.current;
-        const revertedPlans = new Set<string>();
         const restored: any = { ...live,
           intensiveSessions: (live.intensiveSessions || []).map((value: IntensiveSession) => value.id === row.id && JSON.stringify(value) === JSON.stringify(row) ? current : value),
           plans: (live.plans || []).map((value: Record<string, any>) => {
-            const prior = beforePlans.find((plan: Record<string, any>) => plan.id === value.id);
-            if (!prior || prior.status === 'completed' || value.linkedSessionId !== row.id || value.completedAt !== review.reviewedAt) return value;
-            revertedPlans.add(value.id);
-            const restoredPlan = { ...value };
-            for (const key of ['status', 'completedAt', 'linkedSessionId']) {
-              if (Object.hasOwn(prior, key)) restoredPlan[key] = prior[key]; else delete restoredPlan[key];
-            }
-            return restoredPlan;
+            const prior = beforePlans.find(plan => plan.id === value.id);
+            const proposed = attempted?.plans?.find((plan: Record<string, any>) => plan.id === value.id);
+            return prior && proposed && JSON.stringify(value) === JSON.stringify(proposed) ? prior : value;
           }),
         };
-        if (beforeActivePlan && revertedPlans.has(beforeActivePlan) && live.activePlanId === null) restored.activePlanId = beforeActivePlan;
+        if (attempted && live.activePlanId === attempted.activePlanId) restored.activePlanId = beforeActivePlan;
         fb.stateRef.current = restored; fb.setState(restored);
-        // The short-review draft keeps its retry token; the practice stays unchanged.
         if (JSON.stringify(readExamRecovery(owner, recoveryKey)) === JSON.stringify(next)) writeExamRecovery(owner, recoveryKey, sessionRef.current);
         return false;
       }
       if (!mounted.current) return true;
-      // A route change must not let a late response overwrite a newer practice cycle.
       if (sessionRef.current[sentence.id] !== current) return false;
       const latest = { ...sessionRef.current, [sentence.id]: row };
       sessionRef.current = latest; setSessions(latest);
@@ -379,6 +377,21 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
       listeningReviewSavingRef.current = false;
       if (mounted.current && accountId() === owner) setSavingListeningReview(false);
     }
+  }
+
+  async function saveListeningReview(review: Omit<IntensiveListeningReview, 'nextReviewAt'>) {
+    if (!sentence) return false;
+    const current = sessionRef.current[sentence.id];
+    if (!current?.completedAt) return false;
+    const row = recordIntensiveListeningReview(current, { ...review, ...(search.get('planId') ? { planId: search.get('planId')! } : {}) });
+    if (!row.listeningReviews?.some(check => check.reviewedAt === review.reviewedAt && check.selfRating === review.selfRating)) return false;
+    return saveCompletedSession(row);
+  }
+
+  async function saveReviewPreference(enabled: boolean) {
+    if (!sentence) return false;
+    const current = sessionRef.current[sentence.id];
+    return current?.completedAt ? saveCompletedSession(setIntensiveReviewEnabled(current, enabled)) : false;
   }
 
   function captureVocabulary(selection: SourceSelection) {
@@ -418,7 +431,7 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
     {sentence && session ? <div className="intensive-layout">
       <aside ref={sentencesPanel} className="panel intensive-sentences"><h2>Sentences</h2>{section.sentences.map((row, rowIndex) => { const rowStatus = sentenceStatus(sessions[row.id]); return <button key={row.id} className={`intensive-sentence ${rowIndex === index ? 'active' : ''}`} aria-current={rowIndex === index ? 'step' : undefined} disabled={savingListeningReview} onClick={() => choose(rowIndex)}><span>Sentence {rowIndex + 1}</span><span className={`intensive-sentence-status is-${rowStatus.tone}`}><span className="intensive-status-dot" aria-hidden="true" />{rowStatus.label}</span></button>; })}<p className="file-hint">Return to weak sentences after a delay, then practise without the transcript first.</p></aside>
       <div className="intensive-main">
-        {completionSaved ? <IntensiveSentenceReview key={`${owner}:${sentence.id}:${session.completedAt}`} owner={owner} session={session} sentence={sentence} audioUrl={audioUrl} audioError={audioError} busy={savingListeningReview} onRetryAudio={() => setAssetRetry(value => value + 1)} onSave={saveListeningReview} onRestart={() => { if (listeningReviewSavingRef.current) return; change(value => applyIntensiveStage(value, 'review')); resetCyclePresentation(); }} onNext={index < section.sentences.length - 1 ? () => choose(index + 1) : undefined} /> : <>
+        {completionSaved ? <IntensiveSentenceReview key={`${owner}:${sentence.id}:${session.completedAt}`} owner={owner} session={session} sentence={sentence} audioUrl={audioUrl} audioError={audioError} busy={savingListeningReview} onRetryAudio={() => setAssetRetry(value => value + 1)} onSave={saveListeningReview} onReviewEnabledChange={saveReviewPreference} onRestart={() => { if (listeningReviewSavingRef.current) return; change(value => applyIntensiveStage(value, 'review')); resetCyclePresentation(); }} onNext={index < section.sentences.length - 1 ? () => choose(index + 1) : undefined} /> : <>
         <IntensivePlayerPanel><div className="intensive-player-heading"><h2>Sentence {index + 1} / {section.sentences.length}</h2><SelectField aria-label="Jump to sentence" value={index} onChange={event => choose(Number(event.target.value))}>{section.sentences.map((row, rowIndex) => <option key={row.id} value={rowIndex}>Sentence {rowIndex + 1}</option>)}</SelectField></div>
           {!sentence.text.trim() ? <p role="status">Transcript unavailable for this sentence.</p> : null}
           {!hasTiming ? <p role="status">Sentence timing unavailable. Listen to the full track, or set accurate A/B points below.</p> : null}
@@ -438,8 +451,8 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
         <IntensiveStep id="intensive-shadow" {...stepProps(3)}><ShadowingRecorder key={`${owner}:${sentence.id}`} owner={owner} sectionId={sectionId} sentenceId={sentence.id} enabled={session.stage >= 2} audioId={session.shadowingAudioId} onSaved={recordingSaved} />
           <div className="intensive-actions"><button className="btn primary" aria-describedby="intensive-blind-hint" disabled={session.stage < 3 || !audioUrl || !audioReady || !hasTiming} onClick={() => { audioPlayer.current?.stop(); change(value => ({ ...value, revealed: false, blindReplayDone: false })); blindReplayStarted.current=false; setBlind(true); setBlindReplayRequest(value=>value+1); }}>Play original blind</button><button className="btn line" aria-describedby="intensive-blind-hint" disabled={session.stage < 3 || !audioUrl || blind} aria-pressed={blind} onClick={() => { audioPlayer.current?.stop(); change(value => ({ ...value, revealed: false, blindReplayDone: false })); blindReplayStarted.current = false; setBlind(true); }}>Hide transcript for blind re-listening</button></div><p id="intensive-blind-hint" className="intensive-action-hint" role={blind ? 'status' : undefined}>{blind ? 'Transcript hidden. Play the whole sentence without pausing or seeking before finishing.' : session.stage < 3 ? 'Save your shadowing recording before blind re-listening.' : !audioUrl || !audioReady ? 'Wait for the source recording to load.' : !hasTiming ? 'Set valid sentence A/B timing before blind re-listening.' : 'Play original blind hides the transcript and plays this sentence from the beginning.'}</p>
         </IntensiveStep>
-        <IntensiveStep id="intensive-review" {...stepProps(4)}><p>Rate your understanding and shadowing after the blind replay. Weak sentences return sooner.</p><label htmlFor="intensive-rating">Self rating</label><SelectField id="intensive-rating" value={session.selfRating || ''} onChange={event => change(value => ({ ...value, selfRating: Number(event.target.value) as IntensiveSession['selfRating'] }))}><option value="">Choose a rating</option>{[1, 2, 3, 4, 5].map(rating => <option key={rating} value={rating}>{rating} · {['Need help', 'Difficult', 'Some gaps', 'Mostly clear', 'Clear and fluent'][rating - 1]}</option>)}</SelectField><ul className="intensive-checklist" aria-label="Sentence completion checklist">{checklist.map(item => <li key={item.label} className={item.done ? 'is-done' : ''}><span aria-hidden="true">{item.done ? <Check size={13} /> : '○'}</span>{item.label}<span className="sr-only">{item.done ? ' · Complete' : ' · Pending'}</span></li>)}</ul><div className="intensive-actions"><button className="btn primary" disabled={saving || completionSaved || !session.blindReplayDone || !session.shadowingAudioId || !session.selfRating || session.dictationResult === 'pending'} onClick={() => { if (!session.completedAt) change(value => applyIntensiveStage(value, 'complete')); void save(); }}>{saving && session.completedAt ? 'Saving practice…' : session.completedAt ? 'Retry saving practice' : 'Finish practice'}</button></div>
-          {session.nextReviewAt ? <p role="status">Next review: {new Date(session.nextReviewAt).toLocaleDateString()} · {!completionSaved && session.completedAt ? 'Pending save' : new Date(session.nextReviewAt) <= new Date() ? 'Due now' : 'Scheduled'}</p> : null}
+        <IntensiveStep id="intensive-review" {...stepProps(4)}><p>Rate your understanding and shadowing after the blind replay. Mistaken dictations enter review by default; you can change this below.</p><label htmlFor="intensive-rating">Self rating</label><SelectField id="intensive-rating" value={session.selfRating || ''} onChange={event => change(value => ({ ...value, selfRating: Number(event.target.value) as IntensiveSession['selfRating'] }))}><option value="">Choose a rating</option>{[1, 2, 3, 4, 5].map(rating => <option key={rating} value={rating}>{rating} · {['Need help', 'Difficult', 'Some gaps', 'Mostly clear', 'Clear and fluent'][rating - 1]}</option>)}</SelectField><label className="intensive-review-choice"><input type="checkbox" checked={intensiveReviewEnabled(session)} disabled={saving || Boolean(session.completedAt)} onChange={event => change(value => ({ ...value, reviewEnabled: event.target.checked }))} /><span>Add this sentence to listening review</span></label><p className="intensive-action-hint">Wrong and partially correct dictations are selected by default. You can include a correct sentence or skip a mistaken one.</p><ul className="intensive-checklist" aria-label="Sentence completion checklist">{checklist.map(item => <li key={item.label} className={item.done ? 'is-done' : ''}><span aria-hidden="true">{item.done ? <Check size={13} /> : '○'}</span>{item.label}<span className="sr-only">{item.done ? ' · Complete' : ' · Pending'}</span></li>)}</ul><div className="intensive-actions"><button className="btn primary" disabled={saving || completionSaved || !session.blindReplayDone || !session.shadowingAudioId || !session.selfRating || session.dictationResult === 'pending'} onClick={() => { if (!session.completedAt) change(value => applyIntensiveStage(value, 'complete')); void save(); }}>{saving && session.completedAt ? 'Saving practice…' : session.completedAt ? 'Retry saving practice' : 'Finish practice'}</button></div>
+          {intensiveReviewEnabled(session) && session.nextReviewAt ? <p role="status">Next review: {new Date(session.nextReviewAt).toLocaleDateString()} · {!completionSaved && session.completedAt ? 'Pending save' : new Date(session.nextReviewAt) <= new Date() ? 'Due now' : 'Scheduled'}</p> : null}
           {session.stage >= 2 && !blind && session.reviewHistory?.length ? <details><summary>Previous completed cycles</summary>{session.reviewHistory.map((cycle, cycleIndex) => <div key={cycleIndex}><p>{cycle.completedAt ? new Date(cycle.completedAt).toLocaleDateString() : 'Previous review'} · {cycle.dictationResult} · Rating {cycle.selfRating || '—'}</p><IntensiveDiagnosisSummary diagnosis={cycle} />{cycle.shadowingAudioId ? <SessionAudioPlayer audioId={cycle.shadowingAudioId} label={`Previous shadowing ${cycleIndex + 1}`} /> : null}</div>)}</details> : null}
         </IntensiveStep>
         </>}

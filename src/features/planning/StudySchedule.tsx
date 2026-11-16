@@ -13,7 +13,7 @@ export function useStudySchedule() {
     (fb.state.vocabularySessions||[]).filter(row=>row.status==='submitted').map(row=>[row.id,row.submittedAt]),
     (fb.state.sessions||[]).map(row=>[row.id,row.date]),
     (fb.state.examAttempts||[]).filter(row=>row.status==='completed').map(row=>[row.id,row.completedAt]),
-    (fb.state.intensiveSessions||[]).map(row=>[row.id,row.completedAt,row.nextReviewAt]),
+    (fb.state.intensiveSessions||[]).map(row=>[row.id,row.completedAt,row.nextReviewAt,row.dictationResult,row.reviewEnabled]),
     (fb.state.assessments||[]).map(row=>[row.id,row.date]),
     (fb.state.errors||[]).map(row=>[row.id,row.resolved,row.nextReviewAt]),
     (fb.state.plans||[]).filter(row=>row.origin==='manual'||['completed','skipped'].includes(row.status)).map(row=>[row.id,row.status,row.dateKey,row.manuallyEditedAt]),

@@ -21,3 +21,18 @@ test('summary-based scheduling matches full evidence without leaking summaries i
   partial.sessions=[{id:'session',skill:'writing',practiceMode:'timed',date:'2026-10-02',questionId:'new'}];
   expect(planningEvidenceView(partial).sessions[0].questionId).toBe('new');
 });
+
+test.each([
+  ['correct', undefined, false], ['partial', undefined, true], ['wrong', false, false], ['correct', true, true],
+])('cold planning respects sentence review choice for %s / %s', (dictationResult, reviewEnabled, expected) => {
+  const state: any = emptyState();
+  Object.assign(state.settings, { dailyMinutes: 30, days: [1,2,3,4,5,6,7], skills: ['listening'] });
+  const row = { id: 'sentence', sectionId: 'part', sentenceId: 's1', stage: 6, completedAt: '2026-10-01', nextReviewAt: '2026-10-02', dictationResult, reviewEnabled };
+  const fields = PLANNING_FIELDS.intensiveSessions;
+  state.planningEvidence = [{ id: 'intensiveSessions', rows: [Object.fromEntries(['id', ...fields].map(field => [field, row[field]]))] }];
+  const legacyPlan = { id: 'old-reminder', origin: 'automatic', kind: 'listening-intensive', skill: 'listening', dateKey: '2026-10-02', status: 'pending', target: { type: 'intensive', skill: 'listening', sectionId: 'part', sentenceId: 's1', reviewMode: 'listening-check' } };
+  state.plans = [legacyPlan];
+  ensureUnifiedPlans(state, undefined, new Date('2026-10-20T12:00:00'));
+  expect(state.plans.some(plan => plan.status !== 'skipped' && plan.target?.reviewMode === 'listening-check')).toBe(expected);
+  expect(legacyPlan.status).toBe(expected ? 'pending' : 'skipped');
+});

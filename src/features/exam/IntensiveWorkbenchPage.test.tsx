@@ -40,6 +40,36 @@ beforeEach(() => {
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
+it.each(['correct', 'partial', 'wrong'] as const)('finishing %s dictation uses the default review choice', async dictationResult => {
+  mocks.fb.state.intensiveSessions = [{ ...createIntensiveSession('part', 's1'), stage: 4, listened: true, dictationResult, shadowingAudioId: 'recording', blindReplayDone: true, selfRating: 5 }];
+  const user = userEvent.setup(); open();
+  const choice = await screen.findByRole('checkbox', { name: 'Add this sentence to listening review' });
+  expect((choice as HTMLInputElement).checked).toBe(dictationResult !== 'correct');
+  await user.click(screen.getByRole('button', { name: 'Finish practice' }));
+  await screen.findByRole('heading', { name: 'Practice complete' });
+  expect(Boolean(mocks.fb.stateRef.current.intensiveSessions[0].nextReviewAt)).toBe(dictationResult !== 'correct');
+});
+
+it('a failed review opt-out restores the due sentence and automatic plan, then retries safely', async () => {
+  const sentence = { ...createIntensiveSession('part', 's1'), stage: 6, dictationResult: 'partial' as const, completedAt: '2020-01-01', nextReviewAt: '2020-01-02', shadowingAudioId: 'recording' };
+  const plan = { id: 'pending-review', origin: 'automatic', status: 'pending', kind: 'listening-intensive', target: { type: 'intensive', reviewMode: 'listening-check', sectionId: 'part', sentenceId: 's1' } };
+  mocks.fb.state.intensiveSessions = [sentence]; mocks.fb.state.plans = [plan];
+  mocks.fb.persistNow.mockImplementationOnce(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return false; });
+  const user = userEvent.setup(); open();
+  const choice = await screen.findByRole('checkbox', { name: 'Include this sentence in listening review' });
+  await user.click(choice);
+  await screen.findByText('Could not save your review choice. Please try again.');
+  expect(choice).toBeChecked();
+  expect(mocks.fb.stateRef.current.intensiveSessions[0]).toEqual(sentence);
+  expect(mocks.fb.stateRef.current.plans[0]).toEqual(plan);
+  expect(screen.getByRole('heading', { name: 'Listening review due' })).toBeInTheDocument();
+  await user.click(choice);
+  await waitFor(() => expect(choice).not.toBeChecked());
+  expect(mocks.fb.stateRef.current.intensiveSessions[0]).toMatchObject({ reviewEnabled: false, shadowingAudioId: 'recording' });
+  expect(mocks.fb.stateRef.current.plans[0]).toMatchObject({ status: 'skipped', skipReason: 'no-longer-due' });
+  expect(screen.queryByText(/Next review:/)).not.toBeInTheDocument();
+});
+
 it('returns to the exact review after sentence navigation and reopening the intensive URL', async () => {
   const origin = '/listening/review/attempt-one?planId=review-task#exam-review-q2';
   const path = '/listening/intensive/part?sentence=s1&returnTo=' + encodeURIComponent(origin);
@@ -143,7 +173,7 @@ it('a failed listening-review save rolls back optimistic scheduling and task com
 });
 
 it('keeps saved due sentences eligible for blind recall when another sentence has an unsaved draft', async () => {
-  const completed = { ...createIntensiveSession('part', 's1'), stage: 6, listened: true, revealed: true, transcriptInput: 'old answer', dictationResult: 'correct' as const, shadowingAudioId: 'recording', completedAt: '2026-01-01', nextReviewAt: '2099-01-01' };
+  const completed = { ...createIntensiveSession('part', 's1'), stage: 6, listened: true, revealed: true, transcriptInput: 'old answer', dictationResult: 'correct' as const, reviewEnabled: true, shadowingAudioId: 'recording', completedAt: '2026-01-01', nextReviewAt: '2099-01-01' };
   mocks.fb.state.intensiveSessions = [completed];
   const user = userEvent.setup(); const view = open();
   await user.click(await screen.findByRole('button', { name: /^Sentence 2\s*Not started$/ }));
@@ -325,7 +355,7 @@ it('does not reveal another account’s state after a save changes account', asy
   await waitFor(() => expect(screen.queryByText('Progress saved.')).not.toBeInTheDocument());
 });
 it('a due sentence offers a short listening review without clearing its saved practice', async () => {
-  mocks.fb.state.intensiveSessions = [{ id: 'i1', sectionId: 'part', sentenceId: 's1', stage: 6, gist: 'old gist', transcriptInput: 'The train leaves at nine', errorReasons: [], dictationResult: 'correct', completedAt: '2020-01-01', nextReviewAt: '2020-01-02', updatedAt: '2020-01-01', speed: 1, loop: false, selfRating: 5, shadowingAudioId: 'old', replayCount: 1, listened: true, revealed: false }];
+  mocks.fb.state.intensiveSessions = [{ id: 'i1', sectionId: 'part', sentenceId: 's1', stage: 6, gist: 'old gist', transcriptInput: 'The train leaves at nine', errorReasons: [], dictationResult: 'correct', reviewEnabled: true, completedAt: '2020-01-01', nextReviewAt: '2020-01-02', updatedAt: '2020-01-01', speed: 1, loop: false, selfRating: 5, shadowingAudioId: 'old', replayCount: 1, listened: true, revealed: false }];
   const before = structuredClone(mocks.fb.state.intensiveSessions[0]);
   open();
   expect(await screen.findByRole('heading', { name: 'Listening review due' })).toBeInTheDocument();
@@ -375,6 +405,7 @@ it('completes shadowing and schedules only after a fresh blind replay, retaining
   expect(screen.queryByRole('textbox', { name: 'Sentence dictation' })).not.toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Dictate and compare' })).toHaveAttribute('href', '#intensive-player');
   await selectChoice(await screen.getByLabelText('Self rating'), '5 · Clear and fluent');
+  await user.click(screen.getByRole('checkbox', { name: 'Add this sentence to listening review' }));
   await user.click(screen.getByRole('button', { name: 'Finish ongoing play' }));
   expect(screen.getByRole('button', { name: 'Finish practice' })).toBeDisabled();
   await user.click(screen.getByRole('button', { name: 'Play test sentence' }));
@@ -416,6 +447,7 @@ it('restarts full practice only after an explicit choice during a listening revi
   await user.click(screen.getByRole('button', { name: 'Hide transcript for blind re-listening' }));
   await user.click(screen.getByRole('button', { name: 'Play test sentence' }));
   await selectChoice(screen.getByLabelText('Self rating'), '5 · Clear and fluent');
+  await user.click(screen.getByRole('checkbox', { name: 'Add this sentence to listening review' }));
   await user.click(screen.getByRole('button', { name: 'Finish practice' }));
   expect(await screen.findByRole('heading', { name: 'Practice complete' })).toBeInTheDocument();
   const completed = structuredClone(mocks.fb.stateRef.current.intensiveSessions[0]);
