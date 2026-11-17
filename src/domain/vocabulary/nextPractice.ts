@@ -1,4 +1,4 @@
-import type {VocabularyDimension,VocabularyEntry,VocabularyMode,VocabularyStore} from './types';
+import type {ReviewCard,VocabularyDimension,VocabularyEntry,VocabularyMode,VocabularyStore} from './types';
 import {getVocabularyReviewQueue,VOCABULARY_MODE_DIMENSIONS} from './index';
 import {getVocabularySpacedProgress,VOCABULARY_FOUNDATION_DIMENSIONS} from './mastery';
 import {VOCABULARY_CATALOG} from './catalog';
@@ -11,19 +11,27 @@ export type VocabularyNextPractice = {
   target?: 'familiar' | 'mastered';
   error?: VocabularyConfirmedError;
 };
+type PracticeRequest = {senseId: string; bookId?: string; unitId?: string; now?: string | Date; foundationMode?: 'definition'|'dictation'};
 
 export function getVocabularyNextPractice(
   store: Partial<VocabularyStore>, entry: VocabularyEntry,
-  request: {senseId: string; bookId?: string; unitId?: string; now?: string | Date; foundationMode?: 'definition'|'dictation'},
+  request: PracticeRequest,
 ): VocabularyNextPractice | undefined {
   const now = new Date(request.now || new Date()).getTime();
   if (!Number.isFinite(now)) return;
-  const order: VocabularyMode[] = ['definition','dictation','distinction','cloze','synonym','production'];
   const member = request.bookId && request.unitId && VOCABULARY_CATALOG.memberships.some(row=>row.entryId===entry.id&&row.bookId===request.bookId&&row.unitId===request.unitId);
   const scoped = member && !entry.sources.some(source=>source.bookId===request.bookId&&source.unitId===request.unitId)
     ? {...entry,sources:[...entry.sources,{type:'wordbook' as const,id:`${request.bookId}:${request.unitId}:${entry.id}`,bookId:request.bookId,unitId:request.unitId}]} : entry;
-  const cards = getVocabularyReviewQueue({...store,vocabulary:[scoped]}, {...request,entryId:entry.id,dueOnly:false,now:new Date(now)})
-    .sort((a,b)=>order.indexOf(a.mode)-order.indexOf(b.mode));
+  const cards = getVocabularyReviewQueue({...store,vocabulary:[scoped]}, {...request,entryId:entry.id,dueOnly:false,now:new Date(now)});
+  return getVocabularyNextPracticeFromCards(store,entry,{...request,now:new Date(now)},cards);
+}
+
+/** Reuse the same resolved questions when comparing foundation modes for one exact meaning. */
+export function getVocabularyNextPracticeFromCards(store: Partial<VocabularyStore>, entry: VocabularyEntry, request: PracticeRequest, prepared: readonly ReviewCard[]): VocabularyNextPractice | undefined {
+  const now = new Date(request.now || new Date()).getTime();
+  if (!Number.isFinite(now)) return;
+  const order: VocabularyMode[] = ['definition','dictation','distinction','cloze','synonym','production'];
+  const cards = prepared.filter(card=>card.entryId===entry.id && card.senseId===request.senseId).sort((a,b)=>order.indexOf(a.mode)-order.indexOf(b.mode));
   if (!cards.length || !cards[0].entry.senses.find(sense=>sense.id===request.senseId)?.definition.trim()) return;
   const learning = store.vocabularyStates?.find(row=>row.entryId===entry.id&&row.senseId===request.senseId);
   const schedule = (mode: VocabularyMode) => {

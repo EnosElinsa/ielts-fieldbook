@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { requestTimeout } from '../lib/requestTimeout';
 import { timeOperation } from '../lib/performanceTelemetry';
+import { yieldForLargeData } from '../lib/yieldToBrowser';
 import {
   createContext,
   useCallback,
@@ -62,7 +63,7 @@ import { vocabularySourceKey } from '../domain/vocabulary/sources';
 import { collectVocabularyChoice } from '../domain/vocabulary/collection';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
-import { ensurePlans, ensureUnifiedPlans, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan, applyBacklogPreview, compareStudyPlans } from '../lib/planTemplates';
+import { ensurePlans, ensureUnifiedPlans, ensureUnifiedPlansAsync, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan, applyBacklogPreview, compareStudyPlans } from '../lib/planTemplates';
 import { bindSpeakingPlan } from '../domain/plans';
 import { speakingPrompts, speakingResponseDraft, updateSpeakingResponse } from '../domain/speaking';
 import { useConfirmationDialog } from '../components/useConfirmationDialog';
@@ -464,6 +465,7 @@ function useFieldbookValue() {
     const request = readAccountModule(module).then(async ({data}) => {
       if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
       if (module.startsWith('vocabulary')) await ensureVocabularyTeaching(data.vocabulary || [], options);
+      await yieldForLargeData(data);
       if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
       const next = mergeAccountData(data, before);
       if (module === 'productive') {
@@ -619,7 +621,7 @@ function useFieldbookValue() {
     return () => stops.forEach(stop => stop());
   }, [booted, loadGeneration]);
 
-  function applyCommittedVocabulary(target, owner) {
+  function applyCommittedPlans(target, owner) {
     committedPlanChanges.current.filter(change => change.owner === owner && change.epoch===loadEpoch.current).forEach(change => {
       let applied=false;
       const before = new Map(change.before.map(plan=>[plan.id,JSON.stringify(plan)]));
@@ -633,6 +635,10 @@ function useFieldbookValue() {
       if (applied && target.activePlanId===change.beforeActivePlanId) target.activePlanId=change.afterActivePlanId;
       if (applied && target.settings.activeSkill===change.beforeActiveSkill) target.settings.activeSkill=change.afterActiveSkill;
     });
+  }
+
+  function applyCommittedVocabulary(target, owner) {
+    applyCommittedPlans(target, owner);
     committedVocabularyFields.current.filter(change => change.owner === owner).forEach(change => applyVocabularyFields(target, change));
     committedStudySettings.current.filter(change => change.owner === owner).forEach(change => {
       let staleSettings = change.beforeVocabulary !== undefined && JSON.stringify(target.settings.vocabulary) === change.beforeVocabulary;
@@ -1527,7 +1533,7 @@ function useFieldbookValue() {
     [chooseQuestion, navigate, persistNow, startSpeakingPractice, toast],
   );
 
-  const mutatePlans = useCallback((mutate, options?: { onError?: (message: string) => void }) => {
+  const mutatePlans = useCallback((mutate, options?: { onError?: (message: string) => void }, readOnlyEvidence = false) => {
     if (completingAttempt.current) return Promise.resolve(false);
     const owner=accountId();const epoch=loadEpoch.current;const generation=++saveGeneration.current;
     pendingAutomaticSave.current=null;setSaveStatus('saving');
@@ -1535,17 +1541,28 @@ function useFieldbookValue() {
       if(!alive.current||accountId()!==owner||epoch!==loadEpoch.current)return false;
       const statuses=getCollectionStatuses();
       if(statuses && (statuses.plans!=='ready'||statuses.profile!=='ready'))throw new Error('Your plan is still loading. Retry shortly.');
-      const current=structuredClone(stateRef.current);applyCommittedVocabulary(current,owner);
-      const before=structuredClone(current.plans);const beforeActivePlanId=current.activePlanId;const beforeActiveSkill=current.settings.activeSkill;
-      await mutate(current);
-      if(!alive.current||accountId()!==owner||epoch!==loadEpoch.current)return false;
+      let current,before,beforeActivePlanId,beforeActiveSkill,source;
+      do {
+        source=stateRef.current;
+        current=readOnlyEvidence ? {...source,plans:structuredClone(source.plans),settings:structuredClone(source.settings)} : structuredClone(source);
+        if(readOnlyEvidence)applyCommittedPlans(current,owner);else applyCommittedVocabulary(current,owner);
+        before=structuredClone(current.plans);beforeActivePlanId=current.activePlanId;beforeActiveSkill=current.settings.activeSkill;
+        await mutate(current);
+        if(!alive.current||accountId()!==owner||epoch!==loadEpoch.current)return false;
+        // Evidence can change while a browser-friendly scan yields. Rebase before saving its proposals.
+      } while(readOnlyEvidence && source!==stateRef.current);
       const change={owner,epoch,before,after:structuredClone(current.plans),beforeActivePlanId,afterActivePlanId:current.activePlanId,beforeActiveSkill,afterActiveSkill:current.settings.activeSkill};
       if(JSON.stringify(before)===JSON.stringify(change.after)&&beforeActivePlanId===change.afterActivePlanId&&beforeActiveSkill===change.afterActiveSkill){if(generation===saveGeneration.current)setSaveStatus('saved');return true;}
       const collections=readySaveCollections()?.filter(key=>key==='profile'||key==='plans');
       let saved=false;try{saved=await saveState(current,saveFeedback(options),{collections});}catch{saved=false;}
       if(!alive.current||accountId()!==owner||epoch!==loadEpoch.current)return false;
       if(generation===saveGeneration.current){setSaveFailed(!saved && !options?.onError);setSaveStatus(saved?'saved':'failed');}
-      if(saved){committedPlanChanges.current.push(change);const next=structuredClone(stateRef.current);applyCommittedVocabulary(next,owner);stateRef.current=next;setState(next);acknowledgeSaved(current,collections);}
+      if(saved){
+        committedPlanChanges.current.push(change);
+        const next=readOnlyEvidence ? {...stateRef.current,plans:structuredClone(stateRef.current.plans),settings:structuredClone(stateRef.current.settings)} : structuredClone(stateRef.current);
+        if(readOnlyEvidence)applyCommittedPlans(next,owner);else applyCommittedVocabulary(next,owner);
+        stateRef.current=next;setState(next);acknowledgeSaved(current,collections);
+      }
       return saved;
     }).catch(error=>{if(alive.current&&accountId()===owner&&epoch===loadEpoch.current&&generation===saveGeneration.current){setSaveStatus('failed');setSaveFailed(!options?.onError);}throw error;});
     saveQueue.current=operation;return operation;
@@ -1556,10 +1573,10 @@ function useFieldbookValue() {
     if(stateRef.current.wordbookEnrollments?.length)await loadVocabularyCatalog();
     return mutatePlans(async draft=>{
       for(const session of draft.vocabularySessions || [])completeVocabularyPlan(draft,session);
-      ensureUnifiedPlans(draft);
+      await ensureUnifiedPlansAsync(draft);
       // Resolve source material when a task starts; the overview needs no passage,
       // question-bank or audio requests and must not hold the save queue on them.
-    },options);
+    },options,true);
   },[ensureAccountModule,mutatePlans,loadVocabularyCatalog,ensureQuestionBank]);
 
   async function bindCurrentPlanTargets(draft, planIds?: Set<string>) {

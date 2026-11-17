@@ -1,5 +1,6 @@
 import {getVocabularyReviewQueue} from './index';
-import {getVocabularyNextPractice} from './nextPractice';
+import {getVocabularyNextPracticeFromCards} from './nextPractice';
+import {yieldToBrowser} from '../../lib/yieldToBrowser';
 import {getLearnedVocabularyIds} from './progress';
 import type {ReviewCard,VocabularyMode,VocabularyStore} from './types';
 import type {VocabularySessionRecord} from './session';
@@ -24,8 +25,23 @@ export function selectVocabularyPlanReview(store: Partial<VocabularyStore>, now:
  * One opportunity per exact entry/sense/mode; preference never crosses a reason or due-date priority.
  */
 export function getVocabularyPlanningCandidates(store:Partial<VocabularyStore>,now:string|Date,preferredMode?:VocabularyMode):VocabularyPlanningCandidate[] {
+  return sortCandidates([...candidateBatches(store,now)].flat(),preferredMode);
+}
+
+/** Keep the browser responsive during large historical scans; the synchronous path shares every rule. */
+export async function getVocabularyPlanningCandidatesAsync(store:Partial<VocabularyStore>,now:string|Date,preferredMode?:VocabularyMode):Promise<VocabularyPlanningCandidate[]> {
+  const candidates:VocabularyPlanningCandidate[]=[];
+  let deadline=performance.now()+8;
+  for(const batch of candidateBatches(store,now)) {
+    candidates.push(...batch);
+    if(performance.now()>=deadline) {await yieldToBrowser();deadline=performance.now()+8;}
+  }
+  return sortCandidates(candidates,preferredMode);
+}
+
+function* candidateBatches(store:Partial<VocabularyStore>,now:string|Date):Generator<VocabularyPlanningCandidate[]> {
   const at=new Date(now).getTime();
-  if (!Number.isFinite(at)) return [];
+  if (!Number.isFinite(at)) return;
   const scopes=new Map((store.vocabulary || []).filter(entry=>!entry.tags.includes('archived')).map(entry=>[entry.id,{
     entry,states:[] as VocabularyStore['vocabularyStates'],events:[] as VocabularyStore['vocabularyEvidence'],
     reviews:[] as VocabularyStore['vocabularyReviews'],sessions:[] as VocabularySessionRecord[],learned:new Set<string>(),
@@ -62,22 +78,29 @@ export function getVocabularyPlanningCandidates(store:Partial<VocabularyStore>,n
   // Old wordbook attempt records identify words, so they can establish only the saved primary sense.
   const historical=getLearnedVocabularyIds({vocabulary:store.vocabulary,wordbookProgress:store.wordbookProgress});
   for (const scope of scopes.values()) if (historical.has(scope.entry.id) && scope.entry.senses[0]) scope.learned.add(scope.entry.senses[0].id);
-  const candidates:VocabularyPlanningCandidate[]=[];
   for (const {entry,states,events,reviews,sessions,learned} of scopes.values()) {
     const snapshot={vocabulary:[entry],vocabularyStates:states,vocabularyEvidence:events,vocabularyReviews:reviews,vocabularySessions:sessions};
     const seen=new Set<string>();
     for (const sense of entry.senses) {
       if (seen.has(sense.id) || !learned.has(sense.id) || !sense.definition.trim()) continue;
       seen.add(sense.id);
-      const cards=getVocabularyReviewQueue(snapshot,{entryId:entry.id,senseId:sense.id,now,dueOnly:false});
+      const candidates:VocabularyPlanningCandidate[]=[];
+      // Foundation planning never offers cloze/synonym/production. Only an active
+      // distinction error needs its exact task to verify a targeted recommendation.
+      const distinction=states.some(state=>state.senseId===sense.id && state.wrong?.modes?.distinction?.active && state.wrong.modes.distinction.lastFailureAt);
+      const cards=getVocabularyReviewQueue(snapshot,{entryId:entry.id,senseId:sense.id,now,dueOnly:false,modes:distinction?['definition','dictation','distinction']:['definition','dictation']});
       for (const foundationMode of ['definition','dictation'] as const) {
-        const recommendation=getVocabularyNextPractice(snapshot,entry,{senseId:sense.id,now,foundationMode});
+        const recommendation=getVocabularyNextPracticeFromCards(snapshot,entry,{senseId:sense.id,now,foundationMode},cards);
         if (recommendation?.status!=='ready' || recommendation.reason==='production') continue;
         const card=cards.find(card=>card.mode===foundationMode);
         if (card) candidates.push({card,reason:recommendation.reason});
       }
+      yield candidates;
     }
   }
+}
+
+function sortCandidates(candidates:VocabularyPlanningCandidate[],preferredMode?:VocabularyMode) {
   const priority={error:0,recovery:1,due:2,missing:3,spaced:4};
   return candidates.sort((a,b)=>priority[a.reason]-priority[b.reason]
     || ((a.reason==='due'||a.reason==='recovery') ? Date.parse(a.card.dueAt)-Date.parse(b.card.dueAt) : 0)

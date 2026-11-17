@@ -5,6 +5,7 @@ import { collectVocabularyProduction, migrateLegacyVocabulary } from './vocabula
 import { DEFAULT_VOCABULARY_PREFERENCES, normalizeVocabularyPreferences } from './vocabulary/preferences';
 import { normalizeExamStore } from './exam/store';
 import { normalizeVocabularyIdentities } from './vocabulary/identities';
+import { yieldToBrowser } from '../lib/yieldToBrowser';
 import { DEFAULT_PLANNING, normalizePlanning } from './planningPreferences';
 import { normalizeWritingQuestion } from './writingQuestions';
 import type { ExamAttempt, IntensiveSession } from './exam/types';
@@ -196,6 +197,27 @@ export function emptyState() {
 
 export function migrateState(raw) {
   const source = normalizeVocabularyIdentities(raw && typeof raw === 'object' ? raw : {});
+  return migrateNormalizedState(source);
+}
+
+/** Remote workspaces can contain years of evidence. Normalize bounded batches before migration. */
+export async function migrateStateAsync(raw) {
+  const source = {};
+  let deadline=performance.now()+8;
+  for(const [key,value] of Object.entries(raw && typeof raw==='object' ? raw : {})) {
+    if(Array.isArray(value)) {
+      source[key]=[];
+      for(let offset=0;offset<value.length;offset+=100) {
+        source[key].push(...normalizeVocabularyIdentities({[key]:value.slice(offset,offset+100)})[key]);
+        if(performance.now()>=deadline) {await yieldToBrowser();deadline=performance.now()+8;}
+      }
+    } else Object.assign(source,normalizeVocabularyIdentities({[key]:value}));
+  }
+  await yieldToBrowser();
+  return migrateNormalizedState(source);
+}
+
+function migrateNormalizedState(source) {
   const state = Object.assign(emptyState(), source);
   Object.assign(state, migrateLegacyVocabulary(source));
   Object.assign(state, normalizeExamStore(source));

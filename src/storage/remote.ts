@@ -1,9 +1,11 @@
 // @ts-nocheck
 import { emptyState, migrateState, persistShape, STATE_VERSION, dateKey } from '../domain';
+import { migrateStateAsync } from '../domain/state';
 import { normalizeVocabularyIdentities, normalizeVocabularyScope } from '../domain/vocabulary/identities';
 import { normalizeWritingQuestion } from '../domain/writingQuestions';
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import { requestTimeout } from '../lib/requestTimeout';
+import { yieldForLargeData } from '../lib/yieldToBrowser';
 import { cachedRead, clearReadCache, readCacheKey, readSnapshot, subscribeRead } from '../lib/readCache';
 import { accountId, accountGeneration, beginAccountLoad, resetAccountIdentity, setAccountIdentity } from './accountIdentity';
 import { ACCOUNT_MODULES, emptyCollectionStatuses, type AccountCollection, type AccountModule } from './accountModules';
@@ -79,8 +81,13 @@ function emptySnapshot(): Snapshot {
   };
 }
 
-function takeSnapshot(state): Snapshot {
-  const shaped = structuredClone(persistShape(state));
+function takeSnapshot(state, collections?: Set<string>): Snapshot {
+  const scoped = collections ? Object.fromEntries([
+    ...USER_LISTS.filter(key => collections.has(key)).map(key => [key, state[key]]),
+    ...(collections.has('drafts') ? [['drafts', state.drafts]] : []),
+    ...(collections.has('profile') ? ['settings', 'activePlanId', 'reviewedAt'].map(key => [key, state[key]]) : []),
+  ]) : state;
+  const shaped = structuredClone(persistShape(scoped));
   return {
     lists: Object.fromEntries(USER_LISTS.map(key => [key, shaped[key] || []])),
     drafts: shaped.drafts || {},
@@ -250,7 +257,16 @@ export async function ensureAccountModule(module: AccountModule) {
   const keys = ACCOUNT_MODULES[module];
   if (!keys) throw new Error('Unknown account module');
   if (!accountReady || !accountId()) throw new Error('Sign in to load account records.');
-  const result = () => ({ data: { ...Object.fromEntries(keys.map(key => [key, structuredClone(accountState[key] || [])])), ...(module==='productive'?{drafts:structuredClone(accountState.drafts||{})}:{}), ...(planningLoaded?{planningEvidence:structuredClone(accountState.planningEvidence||[])}:{}), ...(module==='vocabularyCore'?{vocabularySessions:structuredClone(accountState.vocabularySessions||[]),vocabularyGroupAttempts:structuredClone(accountState.vocabularyGroupAttempts||[])}:{}) }, statuses: getCollectionStatuses() });
+  const result = async () => {
+    const generation=accountGeneration(),owner=accountId(),data={};
+    const resultKeys=[...keys,...(module==='productive'?['drafts']:[]),...(planningLoaded?['planningEvidence']:[]),...(module==='vocabularyCore'?['vocabularySessions','vocabularyGroupAttempts']:[])];
+    const values=resultKeys.map(key=>[key,accountState[key]||(key==='drafts'?{}:[])]);
+    for(const [key,value] of values) {
+      data[key]=structuredClone(value);
+      await yieldForLargeData({[key]:value});assertAccount(generation,owner);
+    }
+    return {data,statuses:getCollectionStatuses()};
+  };
   if(module==='planning'){
     if(planningLoaded)return result();
     if(moduleLoads.has(module))return moduleLoads.get(module);
@@ -273,12 +289,15 @@ export async function ensureAccountModule(module: AccountModule) {
       const rows = await readAccountModuleRows(module, generation, id,true);
       assertAccount(generation, id);
       const raw = Object.fromEntries(collections.map((key, index) => [key, key === 'drafts' ? rowsToDrafts(rows[index]) : rowsToList(rows[index])]));
-      const normalized = migrateState({ ...emptyState(), ...raw });
-      keys.forEach(key => {
+      const normalized = await migrateStateAsync({ ...emptyState(), ...raw });
+      await yieldForLargeData(raw);
+      assertAccount(generation, id);
+      for(const key of keys) {
         accountState[key] = normalized[key] || [];
         // Preserve raw vocabulary baselines so legacy migrations are persisted.
         snapshot.lists[key] = structuredClone(module.startsWith('vocabulary') ? raw[key] || [] : normalized[key] || []);
-      });
+        await yieldForLargeData({[key]:raw[key]});assertAccount(generation,id);
+      }
       if (module === 'productive') {
         accountState.drafts = normalized.drafts || {};
         snapshot.drafts = structuredClone(accountState.drafts);
@@ -308,6 +327,8 @@ export async function ensureAccountModule(module: AccountModule) {
           snapshot.lists.vocabularySessions=structuredClone(accountState.vocabularySessions);
         }
       }
+      await yieldForLargeData(raw);
+      assertAccount(generation, id);
       collections.forEach(key => { statuses[key] = 'ready'; });
       return result();
     } catch (error) {
@@ -491,7 +512,7 @@ export async function saveState(state, onQuotaToast?: (message: string) => void,
     if (sessionError) throw sessionError;
     assertAccount(generation, expectedAccount);
     if (sessionData.session?.user.id !== expectedAccount) throw new Error('Sign in to save');
-    const next = takeSnapshot(state);
+    const next = takeSnapshot(state, collections);
     const previous = snapshot || emptySnapshot();
     const changes = { lists: {} };
     for (const key of USER_LISTS) {
@@ -504,7 +525,7 @@ export async function saveState(state, onQuotaToast?: (message: string) => void,
       if (diff.upserts.length || diff.deletes.length) changes.drafts = diff;
     }
     if (collections.has('profile') && statuses.profile === 'ready' && previous.profile !== next.profile) {
-      const shaped = persistShape(state);
+      const shaped = persistShape({settings:state.settings,activePlanId:state.activePlanId,reviewedAt:state.reviewedAt});
       changes.profile = { settings: shaped.settings || {}, activePlanId: shaped.activePlanId || null, reviewedAt: shaped.reviewedAt || null };
     }
     if (!Object.keys(changes.lists).length && !changes.drafts && !changes.profile) return true;

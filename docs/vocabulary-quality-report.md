@@ -2,7 +2,7 @@
 
 Generated with `npm run vocabulary:quality` from checked-in public data and the actual learning-context and exercise resolvers. No account data or external services are read.
 
-Source snapshot: `47842355c670ce4a415b579dd257edc571cad9f471afd540dc291840d7ddbdd4`.
+Source snapshot: `0da50b54771ec668696433799fdc8fb830e121cf9cd31c2b6111d3abf587fa6c`.
 
 ## Coverage
 
