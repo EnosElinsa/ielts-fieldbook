@@ -10,6 +10,18 @@ const entry = (term: string) => structuredClone(catalog.entries.find((e: Vocabul
 beforeEach(() => Object.assign(VOCABULARY_CATALOG, structuredClone(catalog)));
 afterEach(() => Object.assign(VOCABULARY_CATALOG, structuredClone(original)));
 
+test.each(['porch', 'hut', 'nursery'])('explicit current %s meaning resolves from a legacy snapshot and remains assessable', term => {
+  const raw = entry(term);
+  const member = catalog.memberships.find((row: any) => row.entryId === raw.id && row.bookId === 'ielts-vocabulary');
+  const before = structuredClone(raw);
+  const current = resolveVocabularyLearningContext(raw, member).sense!;
+  expect(current.definition).toBeTruthy();
+  const resolved = resolveVocabularyLearningContext(raw, { ...member, senseId: current.id });
+  expect(resolved.sense).toMatchObject({ id: current.id, definition: current.definition, example: current.example });
+  expect(raw).toEqual(before);
+  expect(resolveVocabularyLearningContext(raw, { ...member, senseId: 'missing-sense' }).sense).toBeUndefined();
+});
+
 test('every released membership has a complete explicit learning curriculum without pretending source confirmation', () => {
   for (const m of catalog.memberships) {
     const e = catalog.entries.find((row: VocabularyEntry) => row.id === m.entryId);

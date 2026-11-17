@@ -118,8 +118,9 @@ Two disposable accounts were deleted after acceptance. Their three recording
 objects were removed, all 21 private account-dependent tables were checked for
 empty cascades, and both recording prefixes were empty. The browser QA session
 was closed. Pre- and post-release backups and private verification reports are
-retained under gitignored `local/manual-test-release-2026-10-14/` in the primary
-checkout; credentials and session files are excluded from the acceptance archive.
+preserved as original archive members in gitignored `local/backups/releases/2026-10-14.tar.gz`
+and `local/archive/qa/history-2026-11-17.tar.gz` after the 2026-11-17 cleanup;
+credentials and session files are excluded from the acceptance archive.
 The post-release backup verified all 36 tables and their file SHA256 checksums.
 
 ## Implementation decisions

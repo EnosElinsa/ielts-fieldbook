@@ -8,9 +8,14 @@ export function sourceEvidenceText(text?: string) {
 
 export function questionReviewContent(question: ExamQuestion) {
   const evidence = sourceEvidenceText(question.evidence?.text);
-  const explanation = question.explanation?.trim() || '';
+  let explanation = question.explanation?.trim() || '';
   const source = question.skill === 'listening' ? 'transcript' : 'passage';
   const sameText = (value: string) => value.replace(/\s+/g, ' ').trim();
+  // Some imports append the very same quotation to the authored explanation.
+  // Remove only an explicitly labelled duplicate; preserve independent reasoning.
+  const duplicate = explanation.match(/(?:^|\n|\s)(?:Evidence|Passage evidence|Transcript evidence)\s*:\s*([\s\S]*)$/i);
+  const unquote = (value: string) => sameText(value).replace(/^[“"']|[”"']$/g, '');
+  if (evidence && duplicate && unquote(duplicate[1]) === unquote(evidence)) explanation = explanation.slice(0, duplicate.index).trim();
   if (explanation && !/[\u3400-\u9fff]/.test(explanation) && sameText(explanation) !== sameText(evidence)) {
     return { title: 'Answer explanation', explanation, evidence };
   }

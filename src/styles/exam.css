@@ -67,6 +67,31 @@
 }
 
 .exam-back-links { display: flex; gap: 4px; flex-wrap: wrap; }
+.exam-review-actions { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px 24px; }
+.exam-review-summary { flex: 1 1 280px; }
+.exam-review-summary p { margin: 0 0 6px; line-height: 1.6; }
+.exam-review-summary p:first-child { color: var(--ink); font-weight: 600; }
+.exam-review-save { display: grid; gap: 6px; justify-items: end; }
+.exam-review-save > span { min-height: 18px; color: var(--muted); font-size: 12px; }
+.exam-review-retry { flex-basis: 100%; padding-block: 4px 12px; border-bottom: 1px solid var(--rule); }
+.exam-review-retry summary { cursor: pointer; color: var(--muted); font-size: 13px; min-height: 32px; }
+.exam-review-retry p { max-width: 65ch; line-height: 1.6; }
+.exam-review-workspace.has-source { grid-template-columns: minmax(0,1.05fr) minmax(0,1fr); gap: 24px; }
+.exam-review-source { position: sticky; top: 16px; min-width: 0; max-height: calc(100dvh - 32px); overflow-y: auto; border: 1px solid var(--rule); border-radius: 12px; background: var(--sheet); }
+.exam-review-source .exam-review-evidence { margin: 0; border: 0; border-radius: 0; }
+.exam-review-source .exam-review-evidence-text { max-height: none; overflow: visible; }
+.exam-review-source > details > summary { padding: 14px 18px; color: var(--muted); font-size: 13px; cursor: pointer; min-height: 44px; }
+.exam-review-question-context { margin: 0 20px; border-top: 1px solid var(--rule); padding-block: 16px; }
+.exam-review-question-context > summary { cursor: pointer; color: var(--muted); font-size: 13px; }
+.exam-review-question-context .exam-stimulus { margin-top: 16px; }
+@media(max-width:1049px) {
+ .exam-review-workspace.has-source { grid-template-columns: minmax(0,1fr); }
+ .exam-review-source { position: static; max-height: 50dvh; }
+}
+@media(max-width:740px) {
+ .exam-review .exam-review-actions { display: flex; }
+ .exam-review-save { justify-items: start; }
+}
 .exam-review-title { flex: 1; }
 
 /* Practice shortcuts and a spacious review workbench. */
@@ -628,12 +653,23 @@
 }
 
 /* Results: one face for the score, notes folded until needed. */
-.exam-review-summary { flex: 1; min-width: 0; }
+.exam-review-summary { flex: 1 1 220px; min-width: 0; }
 .exam-review-summary p { margin: 0; line-height: 1.7; }
 .exam-review-summary p + p { margin-top: 5px; }
 .exam-review-save { display: flex; flex-direction: column; align-items: stretch; gap: 6px; flex-shrink: 0; }
 .exam-review-save > span { color: var(--muted); font-size: 12px; text-align: center; }
 @media(max-width:740px) { .exam-review-summary { grid-column: 1/-1; } .exam-review-save { min-width: 0; } }
+.exam-review-tools { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px 24px; padding-block: 2px 16px; border-bottom: 1px solid var(--rule); margin-bottom: 16px; }
+.exam-review-tools > :is(.exam-review-retry,.exam-review-vocabulary,.exam-session-history) { flex: 1 1 180px; padding: 0; margin: 0; border: 0; background: transparent; }
+.exam-review-tools summary { padding-block: 10px; min-height: 40px; box-sizing: border-box; font-size: 13px; color: var(--muted); }
+.exam-review-tools > [open] { flex-basis: 100%; }
+.exam-review-tools .exam-review-vocabulary .part-vocabulary { padding: 16px; border: 1px solid var(--rule); border-radius: 8px; }
+.exam-review .exam-review-actions { flex-direction: row; align-items: center; }
+@media(max-width:740px) {
+ .exam-review-actions .exam-review-summary { flex: 1 1 100%; }
+ .exam-review-tools { gap: 0 16px; }
+ .exam-review-tools > :is(.exam-review-retry,.exam-review-vocabulary,.exam-session-history) { flex-basis: 145px; }
+}
 .exam-review .exam-score strong { font-family: Manrope,Arial,sans-serif; font-weight: 650; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .exam-review .exam-score small { font-family: inherit; font-weight: 500; }
 .exam-review-notes > summary { display: flex; align-items: center; gap: 8px; width: fit-content; min-height: 40px; color: var(--blue); font-size: 13px; font-weight: 600; list-style: none; cursor: pointer; }

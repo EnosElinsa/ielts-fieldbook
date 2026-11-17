@@ -528,8 +528,9 @@ test('an explicit plant meaning keeps its identity and offers a direct route to 
   expect(screen.getByText('The pea plant climbed the garden support.')).toBeInTheDocument();
   expect(screen.queryByText('Your selected meaning')).not.toBeInTheDocument();
   expect(screen.queryByRole('img', { name: /Green peas/ })).not.toBeInTheDocument();
+  await userEvent.setup().click(screen.getByText('Group meaning', { selector: 'summary' }));
   const target = screen.getByRole('link', { name: 'View group meaning' });
-  const comparison = screen.getByRole('region', { name: 'Current group meaning' });
+  const comparison = target.closest('details')!;
   expect(within(comparison).getByText('The small edible seed of the pea plant.')).toBeVisible();
   expect(within(comparison).getByText('Add the peas to the soup near the end of cooking.')).toBeVisible();
   expect(screen.getByRole('heading', { name: 'Selected dictionary meaning' })).toBeInTheDocument();
@@ -537,6 +538,19 @@ test('an explicit plant meaning keeps its identity and offers a direct route to 
   await userEvent.setup().click(target);
   expect(screen.getByText('The small edible seed of the pea plant.')).toBeInTheDocument();
   expect(screen.getByRole('img', { name: /Green peas/ })).toBeInTheDocument();
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+test('identical grid definitions are shown once without changing the selected sense identity', () => {
+  const grid = structuredClone(release.entries.find((entry: any) => entry.term === 'grid'));
+  const member = release.memberships.find((row: any) => row.entryId === grid.id && row.bookId === book);
+  const group = resolveVocabularyLearningContext(grid, member).sense!;
+  const selected = { ...group, id: 'personal-grid-sense', source: 'Personal note' };
+  mocks.fb.state.vocabulary = [{ ...grid, senses: [selected] }];
+  mount(`/vocabulary/entry/${grid.id}?bookId=${member.bookId}&unitId=${member.unitId}&senseId=${selected.id}`);
+  expect(screen.getAllByText(group.definition)).toHaveLength(1);
+  expect(screen.queryByText('Group meaning', {selector:'summary'})).not.toBeInTheDocument();
+  expect(screen.getByRole('link',{name:'Practise this word'})).toHaveAttribute('href',expect.stringContaining('senseId=personal-grid-sense'));
   expect(mocks.fb.persistNow).not.toHaveBeenCalled();
 });
 
@@ -563,7 +577,7 @@ test('a personal changed meaning never borrows an example from a different meani
   mocks.fb.state.vocabulary = [pea];
   mount(`/vocabulary/entry/${pea.id}?bookId=${book}&unitId=ielts-vocabulary-chapter-12-group-02`);
   const primary = document.querySelector('.vocabulary-primary-meaning')!;
-  expect(within(primary as HTMLElement).getByText('A learning example has not been added for this meaning yet.')).toBeInTheDocument();
+  expect(within(primary as HTMLElement).queryByRole('blockquote')).not.toBeInTheDocument();
   expect(within(primary as HTMLElement).queryByText(/soup|garden support/)).not.toBeInTheDocument();
   expect(screen.queryByRole('img')).not.toBeInTheDocument();
 });

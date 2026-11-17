@@ -2,7 +2,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 
-const directory = resolve(process.argv[2] || 'local/workflow-release-backup');
+const directory = resolve(process.argv[2] || 'local/backups/releases/workflow');
 const env = Object.fromEntries((await readFile('.env', 'utf8')).split(/\r?\n/).flatMap(line => {
   const pair = line.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/);
   return pair ? [[pair[1], pair[2].trim().replace(/^['"]|['"]$/g, '')]] : [];

@@ -51,7 +51,7 @@ Historical verification on October 14, 2026 (not evidence for the current uncomm
 - Unit regressions cover keyboard selection, Escape, outside-pointer dismissal and returned focus, including the vocabulary workbench focus interaction.
 - Independent review identified full-response allocation and resize minimum inconsistencies; both were corrected and verified. The final review found no further actionable regressions in the reviewed changes.
 
-Local test/build logs are under `local/`. Browser scripts, screenshots and `qa.json` are stored outside the repository under the task's Codex visualization directory.
+Final local test/build logs are under `local/logs/<release>/`. Browser scripts, screenshots and `qa.json` are stored outside the repository under the task's Codex visualization directory.
 
 Vocabulary and backlog recovery checks on October 19, 2026 used an isolated local account with external connections blocked:
 

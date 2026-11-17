@@ -35,7 +35,7 @@ def shard(id):
  for c in id:h=(h*31+ord(c))&0xffffffff
  return format(h%16,'x')
 def run(probe=False):
- catalog=read('public/vocabulary-catalog.json');cache=read('local/context-media-plan/commons-audio-metadata.json');probe_path=ROOT/'local/context-media-plan/audio-http-status.json';http=json.loads(probe_path.read_text(encoding='utf8')) if probe_path.exists() else {}; rows=[];by={};unique={}
+ catalog=read('public/vocabulary-catalog.json');cache=read('local/data/vocabulary/context-media/commons-audio-metadata.json');probe_path=ROOT/'local/data/vocabulary/context-media/audio-http-status.json';http=json.loads(probe_path.read_text(encoding='utf8')) if probe_path.exists() else {}; rows=[];by={};unique={}
  def recording(e,title,url,requested=None,supplement=False):
   page=cache.get(title);ii=((page or {}).get('imageinfo')or[{}])[0];meta=ii.get('extmetadata',{});accent,reason=target(title,meta);matches=term_matches(e['term'],title)
   mime=ii.get('mime','');format_ok=mime.startswith('audio/') or mime in ['application/ogg','application/x-ogg'] or not mime and re.search(r'\.(ogg|oga|wav|mp3|flac)$',title,re.I)

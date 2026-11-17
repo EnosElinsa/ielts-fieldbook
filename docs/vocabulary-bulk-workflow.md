@@ -1,5 +1,7 @@
 # Bulk vocabulary content workflow
 
+Historical `local/unified-dictionary/` evidence referenced below was checksum-verified and compressed into `local/archive/vocabulary/unified-dictionary-2026-11-17.tar.gz` on 2026-11-17. Those paths identify archive members. Start new jobs under `local/work/`; do not rerun archived release scripts against the current workspace.
+
 This workflow replaces choosing a few words and checking every rare meaning before publishing again. It preserves the complete dictionary objective, every source identity, all earlier editorial reviews and the distinction between machine checks and semantic review.
 
 ## Execution priority — 2026-10-20
@@ -28,8 +30,8 @@ The normal work unit is now the entire matching issue queue. Source collection a
 
 ```powershell
 npm run vocabulary:quality
-npm run vocabulary:sources -- --work local/audits/vocabulary-quality.json --scope learning --issue missing-collocations --cache local/vocabulary-work/revision-cache --output local/vocabulary-work/sources.json
-npm run vocabulary:prepare -- --all --scope learning --issue missing-collocations --sources local/vocabulary-work/sources.json --fields collocations,distinctions --output local/vocabulary-work/collocations-job
+npm run vocabulary:sources -- --work local/audits/vocabulary-quality.json --scope learning --issue missing-collocations --cache local/work/vocabulary/revision-cache --output local/work/vocabulary/sources.json
+npm run vocabulary:prepare -- --all --scope learning --issue missing-collocations --sources local/work/vocabulary/sources.json --fields collocations,distinctions --output local/work/vocabulary/collocations-job
 ```
 
 The collector uses sequential requests of 20 case-sensitive titles, retries only unresolved titles and persists successful replies immediately. Repeating the same command reuses valid cached pages and explicit missing-page results. `--seed responses.json` imports existing MediaWiki responses; imported evidence is retained in the cache after collection. `--refresh-missing` checks absent pages again without refetching valid revisions. `--batch-size` accepts 1–50 source titles. Missing pages and failed requests are separate report fields: incomplete requests set a nonzero exit status but retain successful evidence. Conflicting cached revisions remain explicit rather than silently choosing the last or highest revision. This command collects source evidence only and never edits the dictionary or grants review status.
@@ -61,13 +63,13 @@ This implements reusable evidence collection, whole-queue authoring input and ex
 For the visible example backlog:
 
 ```powershell
-npm run vocabulary:quality -- --export --scope learning --issue missing-example --limit 200 --offset 0 --output local/vocabulary-work/examples-001.json
+npm run vocabulary:quality -- --export --scope learning --issue missing-example --limit 200 --offset 0 --output local/work/vocabulary/examples-001.json
 ```
 
 For a larger set of collocation candidates:
 
 ```powershell
-npm run vocabulary:quality -- --export --scope learning --issue missing-collocations --limit 200 --offset 0 --output local/vocabulary-work/collocations-001.json
+npm run vocabulary:quality -- --export --scope learning --issue missing-collocations --limit 200 --offset 0 --output local/work/vocabulary/collocations-001.json
 ```
 
 Use `--scope reference` for meanings not currently selected for default/group learning, or `--scope all` for the complete queue. Omit `--issue` to export all work of that scope. Limits are 1–1000 items. An offset is deterministic for the same source snapshot; regenerate and restart the selection after a content change. Work-item fingerprints reject candidates prepared against changed material.
@@ -79,8 +81,8 @@ Each exported item has `status: candidate-required`. It is an authoring task, no
 `npm run vocabulary:prepare` joins an exported package to saved MediaWiki query/revisions responses. The source file is either one response or an array of responses from the public Wiktionary API with `prop=revisions`, `rvprop=ids|timestamp|content` and `rvslots=main`. Keep the page's case-sensitive title, revision ID and original wikitext. The preparer is offline; obtaining those public responses is a separate collection step.
 
 ```powershell
-npm run vocabulary:quality -- --export --scope learning --issue truncated-example --limit 1000 --output local/vocabulary-work/truncated-examples.json
-npm run vocabulary:prepare -- --work local/vocabulary-work/truncated-examples.json --sources local/vocabulary-work/source-responses.json --output local/vocabulary-work/prepared.json
+npm run vocabulary:quality -- --export --scope learning --issue truncated-example --limit 1000 --output local/work/vocabulary/truncated-examples.json
+npm run vocabulary:prepare -- --work local/work/vocabulary/truncated-examples.json --sources local/work/vocabulary/source-responses.json --output local/work/vocabulary/prepared.json
 ```
 
 The command checks the current runtime quality snapshot before reading the package, then rejects stale work identities or source/display hashes. Regenerate the full report with `npm run vocabulary:quality` if its snapshot is stale. The optional `--report` selects a full report path; its snapshot must still match the freshly checked current report. Output must stay inside ignored `local/`.
@@ -105,7 +107,7 @@ The original complete-candidate format remains available. Supply a JSON array or
 - An optional `distinctionTask` with `prompt` containing `_____`, distinct `options`, an included `answer`, and an `explanation`.
 
 ```powershell
-npm run vocabulary:quality -- --candidates local/vocabulary-work/candidates.jsonl --output local/vocabulary-work/validation.json
+npm run vocabulary:quality -- --candidates local/work/vocabulary/candidates.jsonl --output local/work/vocabulary/validation.json
 ```
 
 The checker rejects stale source/display fingerprints, repeated work identities, unknown fields, blank learning fields and invalid exercise structures. Focused changes additionally reject empty or ineffective patches and cannot mix full-format fields with `changes`. Approval fields such as `reviewedAreas` are rejected. Even a structurally valid candidate returns **zero ready for publication** and requires semantic review. It never edits teaching JSON, source records or the editorial ledger. Reference URLs are recorded and structurally checked; the checker does not fetch or substantiate their claims.
@@ -201,8 +203,8 @@ The issue workflow in [vocabulary-bulk-workflow.md](vocabulary-bulk-workflow.md)
 Create a current quality report using the existing workflow, then run:
 
 ```powershell
-node node_modules/vite-node/vite-node.mjs --script scripts/manage-vocabulary-review-jobs.ts create --report local/audits/vocabulary-quality.json --output local/dictionary-review/job
-node node_modules/vite-node/vite-node.mjs --script scripts/manage-vocabulary-review-jobs.ts claim --manifest local/dictionary-review/job/manifest.json --package review-0001 --actor author-a
+node node_modules/vite-node/vite-node.mjs --script scripts/manage-vocabulary-review-jobs.ts create --report local/audits/vocabulary-quality.json --output local/work/dictionary-review/job
+node node_modules/vite-node/vite-node.mjs --script scripts/manage-vocabulary-review-jobs.ts claim --manifest local/work/dictionary-review/job/manifest.json --package review-0001 --actor author-a
 ```
 
 Creation requires a new or empty directory inside ignored `local/`. Use vite-node's `--script` option so the CLI entry point receives its own filename and arguments. It writes `manifest.json` and `review-*.json` packages with complete source/display work rows. The manifest binds the source snapshot, complete work inventory, package membership, every term and every exact work item to SHA-256 fingerprints. The CLI recomputes the current source snapshot before creating or changing a job. Changed source data, teaching content or teaching scopes require a fresh job; an old job remains evidence.
@@ -212,7 +214,7 @@ All authors claim through one central manifest. A package claim covers every ter
 For subsequent actions, write a JSON request and supply it with:
 
 ```powershell
-node node_modules/vite-node/vite-node.mjs --script scripts/manage-vocabulary-review-jobs.ts update --manifest local/dictionary-review/job/manifest.json --request local/dictionary-review/request.json
+node node_modules/vite-node/vite-node.mjs --script scripts/manage-vocabulary-review-jobs.ts update --manifest local/work/dictionary-review/job/manifest.json --request local/work/dictionary-review/request.json
 ```
 
 A request contains `term`, `actor`, the term's `workFingerprint` and `to`. Supported stages are:

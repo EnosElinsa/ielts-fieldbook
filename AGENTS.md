@@ -9,3 +9,4 @@ IELTS Fieldbook is a React 19 / TypeScript / Vite app backed by Supabase. Read `
 - Run `npm test`, then `npm run build`, then `node scripts/check-bundle-budget.mjs`. CI additionally checks dictionary/quality reports and identity/SQL compatibility. Do not run full tests concurrently with builds or performance measurements.
 - Use synthetic account fixtures for browser checks. Put temporary scripts, screenshots and traces outside the checkout. Follow the ignored local-directory conventions in `docs/contributing.md`; preserve private backups and unique work before cleanup.
 - Never commit `.env`, credentials, browser sessions or personal study data. Generated detailed audit reports belong in ignored `local/audits/`.
+- Group private local files under `data/`, `backups/`, `archive/`, `evidence/`, `logs/` or `audits/`; active temporary jobs use `work/<topic>/`. Update readers when relocating inputs and verify archived/moved files before deleting raw copies.

@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { normalizeSourceSection, validateCatalog, hash } from './lib/exam-import.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const input=path.join(root,'local/exam-source/raw'),output=path.join(root,'local/exam-bank');
+const input=path.join(root,'local/data/exams/source/raw'),output=path.join(root,'local/data/exams/bank');
 await fs.mkdir(path.join(output,'sections'),{recursive:true});await fs.mkdir(path.join(output,'assets'),{recursive:true});
 const catalog={schemaVersion:1,papers:[],sections:[],passages:[],questions:[],assets:[]}, failures=[];
 for(const file of await fs.readdir(input)) {

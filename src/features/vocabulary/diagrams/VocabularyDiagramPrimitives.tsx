@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { InlineLoadingState } from '../../../components/AsyncState';
 import type { VocabularySenseDiagram } from '../../../domain/vocabulary/media';
 import '../../../styles/vocabulary-visual.css';
 
@@ -34,7 +35,7 @@ export function VocabularyDiagramFrame({ diagram, description, children }: { dia
 export function VocabularyDiagramPlaceholder({ term, loading, onRetry }: { term: string; loading: boolean; onRetry: () => void }) {
   return <figure className="vocabulary-learning-visual">
     <div className="vocabulary-diagram-placeholder" aria-busy={loading}>
-      {loading ? <p role="status">Loading diagram…</p> : <div>
+      {loading ? <InlineLoadingState message="Loading diagram…" /> : <div>
         <p role="status">Diagram could not load. You can keep learning from the definition and example.</p>
         <button type="button" className="btn line" onClick={onRetry}>Retry diagram</button>
       </div>}

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ImageOff, RotateCcw } from 'lucide-react';
+import { InlineLoadingState } from '../../components/AsyncState';
 
 /** The parent keys this preview by source so a replacement starts with fresh load state. */
 export function WritingChartPreview({ src, alt }: { src: string; alt: string }) {
@@ -9,7 +10,7 @@ export function WritingChartPreview({ src, alt }: { src: string; alt: string }) 
     <img key={revision} src={src} alt={alt} loading="lazy" decoding="async" onLoad={() => setStatus('loaded')} onError={() => setStatus('error')} />
     {status === 'loading' ? <div className="writing-chart-placeholder">
       <span className="writing-chart-skeleton" aria-hidden="true"><i /><i /><i /><i /></span>
-      <span>Loading chart…</span>
+      <InlineLoadingState message="Loading chart…" />
     </div> : status === 'error' ? <div className="writing-chart-placeholder">
       <ImageOff size={24} aria-hidden="true" />
       <span>Chart preview unavailable</span>

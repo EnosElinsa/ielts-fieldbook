@@ -1,7 +1,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 
-const output = resolve(process.argv[2] || 'local/qa/identity-rehearsal.sql');
+const output = resolve(process.argv[2] || 'local/evidence/identities/identity-rehearsal.sql');
 const migration = (await readFile('supabase/migrations/20261013160000_neutral_vocabulary_identities.sql', 'utf8'))
   .replace(/^begin;\s*$/m, '').replace(/^commit;\s*$/m, '');
 const repeat = (await readFile('supabase/neutral-vocabulary-template.sql','utf8')).replace('__IDENTITY_VALUES__','').replace(/^begin;\s*$/m,'').replace(/^commit;\s*$/m,'');

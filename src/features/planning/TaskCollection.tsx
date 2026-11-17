@@ -11,6 +11,7 @@ import { useVocabularyPosition } from '../vocabulary/vocabularyNavigation';
 import { DateField } from '../../components/ui';
 import { SelectField } from '../../components/SelectField';
 import { CheckCircle2, ListFilter } from 'lucide-react';
+import { InlineLoadingState, PanelLoadingState } from '../../components/AsyncState';
 
 const PAGE_SIZE=20;
 const SYSTEM_REASONS=['merged-review','no-longer-due','replanned-learning'];
@@ -98,7 +99,8 @@ export function TaskCollection({tasks,kind,renderTask}:{tasks:StudyPlan[];kind:'
       {kind==='history'&&<div className="study-history-utility"><button type="button" className="btn line" disabled={server?['completed','archived'].includes(filters.status):!filtered.some(plan=>plan.status==='skipped'&&!plan.archivedAt)} onClick={()=>void archiveSkipped()}>Archive skipped results</button></div>}
     </fieldset>}
     {error&&!preview&&<div role="alert"><p>{error}</p>{server&&<button type="button" className="btn line" onClick={()=>void fb.refreshPlanningState().then(()=>setReload(value=>value+1)).catch(cause=>setError(cause.message))}>Refresh history</button>}</div>}
-    {(loading||preparing)&&<p role="status">{preparing?'Preparing selected tasks…':'Loading history…'}</p>}
+    {loading&&<PanelLoadingState variant="list" message="Loading history…" onRetry={()=>setReload(value=>value+1)} retryLabel="Retry history" />}
+    {preparing&&<InlineLoadingState message="Preparing selected tasks…" />}
     {!loading&&<div className="study-task-list">{visible.map(plan=><div key={plan.id} className="study-selectable-task"><label className="check-field"><input type="checkbox" aria-label={`Select ${studyPlanTitle(plan)}`} checked={selection.includes(plan.id)} disabled={saving||preparing||!eligible(plan)} onChange={event=>setSelected(event.target.checked?[...selection,plan.id]:selection.filter(id=>id!==plan.id))}/>Select task</label>{renderTask(plan)}</div>)}</div>}
     {!loading&&!preparing&&!error&&!total&&<div className="study-collection-empty">{!filtersActive&&kind==='waiting'?<CheckCircle2 size={26} aria-hidden="true"/>:<ListFilter size={26} aria-hidden="true"/>}<h4>{filtersActive?'No tasks match these filters':kind==='waiting'?'All caught up':'No visible history'}</h4><p>{filtersActive?'Change a filter or use Reset filters to see more tasks.':kind==='waiting'?'There are no unfinished tasks waiting for a date. Continue with your schedule.':'Completed and skipped tasks appear here. Use Status to view archived tasks.'}</p></div>}
     {pages>1&&<nav className="study-pagination" aria-label={`${kind} pages`}><button type="button" className="btn line" disabled={!current||loading||preparing} onClick={()=>setPage(current-1)}>Previous page</button><span>Page {current+1} of {pages} · {total} tasks · {PAGE_SIZE} per page</span><button type="button" className="btn line" disabled={current+1>=pages||loading||preparing} onClick={()=>setPage(current+1)}>Next page</button></nav>}

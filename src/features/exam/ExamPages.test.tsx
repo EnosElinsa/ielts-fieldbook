@@ -78,6 +78,7 @@ test('submitting planned listening preserves Planning through results and a wron
   await user.click(screen.getByRole('button', { name: 'Submit answers' }));
   await screen.findByRole('heading', { name: 'Practice results' });
   expect(screen.getByRole('link', { name: 'Back to Planning' })).toHaveAttribute('href', origin);
+  await user.click(screen.getByText('Optional practice'));
   await user.click(screen.getByRole('button', { name: 'Retry wrong answers' }));
   expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue('');
   expect(screen.getByRole('link', { name: 'Back to Planning' })).toHaveAttribute('href', origin);
@@ -244,7 +245,9 @@ test('saved matching review includes the named choices missing from its imported
   const question = { ...catalog.questions[0], type: 'matching', groupId: 'researchers', options: ['A. Francis Galton', 'B. Thomas Bouchard', 'C. Danielle Reed'], stimulusHtml: '<p>Match each statement with the correct researcher.</p><p>List of Researchers:</p>' };
   mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'reading', mode: 'practice', status: 'completed', sourceId: 'section', sectionIds: ['section'], questionSnapshot: [question], responses: { q1: 'A. Francis Galton' }, results: { q1: true }, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-11-01' }];
   practice('/reading/review/saved');
-  const reference = await screen.findByRole('complementary', { name: 'Question reference' });
+  await screen.findByRole('complementary', {name:'Passage workspace'});
+  await userEvent.setup().click(screen.getByText('Question context'));
+  const reference = screen.getByText('Question context').closest('details')!;
   const choices = within(reference).getByRole('list', { name: 'Answer choices' });
   expect(choices).toHaveTextContent('A. Francis Galton');
   expect(choices).toHaveTextContent('C. Danielle Reed');
@@ -255,8 +258,10 @@ test('review omits empty references and avoids repeating choices already in sour
   const questions = [{ ...catalog.questions[0], type: 'matching', options: ['A. Francis Galton', 'B. Thomas Bouchard'], stimulusHtml: '<p>A Francis Galton · B Thomas Bouchard</p>' }, { ...catalog.questions[1], stimulusHtml: '<p>  </p>' }];
   mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'reading', mode: 'practice', status: 'completed', sourceId: 'section', sectionIds: ['section'], questionSnapshot: questions, responses: {}, results: { q1: true, q2: true }, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-11-01' }];
   practice('/reading/review/saved');
-  const reference = await screen.findByRole('complementary', { name: 'Question reference' });
-  expect(reference.querySelectorAll('details')).toHaveLength(1);
+  await screen.findByRole('complementary', {name:'Passage workspace'});
+  await userEvent.setup().click(screen.getByText('Question context'));
+  const reference = screen.getByText('Question context').closest('details')!;
+  expect(reference.querySelectorAll('.exam-stimulus')).toHaveLength(1);
   expect(within(reference).queryByRole('list', { name: 'Answer choices' })).not.toBeInTheDocument();
 });
 
@@ -493,7 +498,8 @@ test('review shares question material and shows clean source evidence when impor
   const questions = [1, 2].map(number => ({ ...catalog.questions[0], id: `q${number}`, number, groupId: 'form', stimulusHtml, explanation: '中文解析', sourceExplanation: '来源解析', evidence: { text: '出题句：\nThe garden opened in 1990.' } }));
   mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'reading', mode: 'practice', status: 'completed', sourceId: 'paper', sectionIds: ['section'], questionSnapshot: questions, responses: {}, results: { q1: false, q2: false }, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-10-14', startedAt: '2026-10-14' }];
   const { container } = practice('/reading/review/saved');
-  expect(await screen.findByRole('complementary', { name: 'Question reference' })).toBeVisible();
+  expect(await screen.findByRole('complementary', { name: 'Passage workspace' })).toBeVisible();
+  await userEvent.setup().click(screen.getByText('Question context'));
   expect(container.querySelectorAll('.exam-stimulus')).toHaveLength(1);
   expect(screen.queryByText('中文解析')).not.toBeInTheDocument();
   expect(screen.queryByText('来源解析')).not.toBeInTheDocument();
@@ -1058,8 +1064,8 @@ test('a perfect listening result needs no review save until notes actually chang
   const save = await screen.findByRole('button', { name: 'Save review notes' });
   expect(save).toBeDisabled();
   expect(screen.queryByText('Review notes saved')).not.toBeInTheDocument();
-  expect(screen.getByText('No changes to save')).toBeInTheDocument();
-  expect(screen.getByText(/A practice task finishes at any score/)).toBeInTheDocument();
+  expect(screen.queryByText('No changes to save')).not.toBeInTheDocument();
+  expect(screen.queryByText(/A practice task finishes at any score/)).not.toBeInTheDocument();
   await user.click(save); expect(mocks.fb.persistNow).not.toHaveBeenCalled(); expect(mocks.fb.toast).not.toHaveBeenCalled();
   await user.click(within(document.getElementById('exam-review-q1')!).getByText('Add review notes'));
   await user.type(screen.getByRole('textbox', { name: 'Evidence for question 1' }), 'My optional note');
@@ -1071,6 +1077,25 @@ test('a perfect listening result needs no review save until notes actually chang
   expect(mocks.fb.toast).not.toHaveBeenCalled();
 });
 
+test('reading review opens source evidence by default and protects unsaved notes before optional retry', async () => {
+  mocks.catalog.questions[1].evidence = { text: 'opened in 1990' };
+  savedReview(); practice('/reading/review/saved');
+  const user = userEvent.setup();
+  const source = await screen.findByRole('region', { name: 'Source evidence for question 2' });
+  await waitFor(() => expect(source.querySelector('mark')).toHaveTextContent('opened in 1990'));
+  expect(screen.getByText('Optional practice').closest('details')).not.toHaveAttribute('open');
+  await user.click(screen.getByText('Optional practice'));
+  await user.click(screen.getByText('Add review notes'));
+  await user.type(screen.getByRole('textbox', {name:'Evidence for question 2'}), 'Fresh evidence.');
+  expect(screen.getByRole('button', {name:'Retry wrong answers'})).toBeDisabled();
+  await user.click(screen.getByRole('button', {name:'Save review notes'}));
+  await waitFor(() => expect(screen.getByRole('button', {name:'Retry wrong answers'})).toBeEnabled());
+  expect(mocks.fb.state.examAttempts[0].score).toBe(1);
+  await user.click(screen.getByRole('button', {name:'Retry wrong answers'}));
+  expect(await screen.findByRole('radio', {name:'FALSE'})).not.toBeChecked();
+  expect(screen.queryByRole('textbox', {name:'Answer 1'})).not.toBeInTheDocument();
+});
+
 test('a bound listening mistake review explains its requirement and saves reasons without changing the score', async () => {
   savedReview(); const row = mocks.fb.state.examAttempts[0];
   Object.assign(row, { skill: 'listening', score: 0, results: { q1: false, q2: false }, planId: 'previous-review' });
@@ -1080,8 +1105,8 @@ test('a bound listening mistake review explains its requirement and saves reason
   ];
   mocks.fb.persistNow.mockImplementationOnce(async (draft: any) => { draft.plans.find((plan: any) => plan.id === 'mistake-review').status = 'completed'; mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; });
   render(<MemoryRouter initialEntries={['/listening/review/saved?planId=mistake-review']}><Routes><Route path="/listening/review/:attemptId" element={<ExamReviewPage skill="listening" />} /></Routes></MemoryRouter>);
-  expect(await screen.findByText('Save an error reason for every wrong answer. Retrying for a higher score is optional.')).toBeInTheDocument();
-  expect(screen.getByText('Review task needs notes')).toBeInTheDocument();
+  expect(await screen.findByText('Save an error reason for each wrong answer.')).toBeInTheDocument();
+  expect(screen.queryByText('Review task needs notes')).not.toBeInTheDocument();
   const user = userEvent.setup();
   for (const number of [1, 2]) {
     await user.click(within(document.getElementById(`exam-review-q${number}`)!).getByText('Add review notes'));
@@ -1090,7 +1115,7 @@ test('a bound listening mistake review explains its requirement and saves reason
   }
   await user.click(screen.getByRole('button', { name: 'Save review notes' }));
   await waitFor(() => expect(screen.getByRole('button', { name: 'Save review notes' })).toBeDisabled());
-  expect(screen.getByText('Mistake review task completed. Your original score is unchanged.')).toBeInTheDocument();
+  expect(screen.getByText('Review task complete.')).toBeInTheDocument();
   expect(mocks.fb.state.examAttempts[0]).toMatchObject({ planId: 'mistake-review', score: 0, errorReasons: { q1: 'Wrong detail', q2: 'Wrong detail' } });
   expect(mocks.fb.state.examAttempts[0].evidence).toEqual({ q1: '', q2: '' });
 });

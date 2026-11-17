@@ -47,7 +47,7 @@ const membershipIndexes=new WeakMap<object,Set<string>>();
 export function vocabularyCurriculum(entry:VocabularyEntry, request:{bookId?:string;unitId?:string}, fallback:VocabularySense|undefined): {curriculum:VocabularyCurriculum;rows:CurriculumRow[]}|undefined {
   ensureCurriculum();
   const {bookId,unitId}=normalizeVocabularyScope(request);
-  if(!bookId||!unitId||!fallback) return;
+  if(!bookId||!unitId) return;
   let units=unitIndexes.get(VOCABULARY_CATALOG.units);
   if(!units){units=new Map(VOCABULARY_CATALOG.units.map(row=>[JSON.stringify([row.bookId,row.id]),row]));unitIndexes.set(VOCABULARY_CATALOG.units,units);}
   let memberships=membershipIndexes.get(VOCABULARY_CATALOG.memberships);
@@ -59,11 +59,14 @@ export function vocabularyCurriculum(entry:VocabularyEntry, request:{bookId?:str
   const commonChoices=commonRows.get(entry.id)||[];
   const multiple=bookId==='ielts-listening-essentials'&&unit.parentId==='ielts-listening-essentials-chapter-04';
   const theme=bookId==='ielts-vocabulary';
-  const repair=repairRows.get(JSON.stringify([entry.id,fallback.id]));
+  const repair=fallback && repairRows.get(JSON.stringify([entry.id,fallback.id]));
   const modernRow=modernRows.get(entry.id);
   const rows=sourceRow?[sourceRow]:topicRow?[topicRow]:!theme?multiple&&commonChoices.length?commonChoices:modernRow?[modernRow]:commonChoices.length?commonChoices:repair?[repair]:[]:[];
   const basis=sourceRow?'source':multiple?'multiple':theme?'theme':'common';
-  const senses=rows.length?(multiple?rows.map(row=>row.sense):[rows[0].sense]):[fallback];
+  // An explicitly requested curriculum sense need not exist in an older saved
+  // entry. Resolve the syllabus first; only an empty syllabus needs a fallback.
+  if(!rows.length&&!fallback) return;
+  const senses=rows.length?(multiple?rows.map(row=>row.sense):[rows[0].sense]):[fallback!];
   const explanation=basis==='source'?'Selected from the listening passage. The example is written for practice.':basis==='theme'?`Recommended for the ${chapter?.title||unit.title} topic.`:basis==='multiple'?senses.length>1?'Each meaning has its own practice and review progress.':'A common everyday meaning for this word.':'A common everyday meaning for this word.';
   return {curriculum:{basis,title:[chapter?.title,unit.title].filter(Boolean).join(' · '),explanation,senses},rows};
 }

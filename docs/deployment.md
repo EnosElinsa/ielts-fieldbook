@@ -8,12 +8,12 @@ Browser builds use `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`. Administrat
 
 ## Release Order
 
-1. Back up affected personal tables and the current public catalogue into gitignored `local/`.
+1. Back up affected personal tables and the current public catalogue into gitignored `local/backups/releases/<release>/`.
 2. Apply the timestamped SQL migrations in one transaction. Verify tables, policies and RPCs before frontend deployment.
    Register applied versions in `supabase_migrations.schema_migrations` when migrations are executed through the database management API. An empty history causes the Supabase GitHub integration to recreate existing tables. Verify each migration's objects before registering it; never mark an unexecuted migration as applied.
 3. Seed the public question/vocabulary catalogue. Never publish personal source snapshots or answer history.
 4. Import personal vocabulary through `commit_vocabulary_import` as the destination account. The batch ID makes retries idempotent and every row is committed in one transaction.
-5. Commit reviewed source changes, merge to `master` and push. For the October 12 release, migration `20261011120000_exam_practice` is applied and registered, the final catalog is `local/exam-bank-final-v4/catalog.json` (SHA-256 `8dd491d4e0770336e7b529218af562ccdc1b76e77923e659597a88ff8bc82da0`), and the administrator seed has uploaded 248 private assets plus 56 papers, 392 sections, 168 passages and 4,339 question groups. The final v4 timing catalog has 120 generated intervals, 26 computationally reviewed corrections and zero unavailable timing; the final digest-skip reseed completed and was verified. The seed dry run reports only the two preserved source word-limit conflicts.
+5. Commit reviewed source changes, merge to `master` and push. For the October 12 release, migration `20261011120000_exam_practice` is applied and registered, the final catalog is `local/data/exams/bank-final-v4/catalog.json` (SHA-256 `8dd491d4e0770336e7b529218af562ccdc1b76e77923e659597a88ff8bc82da0`), and the administrator seed has uploaded 248 private assets plus 56 papers, 392 sections, 168 passages and 4,339 question groups. The final v4 timing catalog has 120 generated intervals, 26 computationally reviewed corrections and zero unavailable timing; the final digest-skip reseed completed and was verified. The seed dry run reports only the two preserved source word-limit conflicts.
 6. Inspect GitHub Check and the Cloudflare Pages check for that exact commit. Confirm the production HTML/assets and primary account workflows.
 
 ## Vocabulary Schema
@@ -50,7 +50,7 @@ The one-time Git title migration uses an isolated mirror and verifies every comm
 
 If finished tasks reappear in Planning, open the updated planner and allow its schedule save to finish. It reconciles exact saved work before carryover and preserves the work's completion time; no data migration or history deletion is needed. Work without a reliable task association, partial reviews and productive mock stages remain unfinished rather than being guessed complete. A failed save stays retryable. Check the plan, linked record, start/completion timestamps and any explicit restoration before diagnosing a remaining case. See [planning rules](actionable-planning.md#recover-missed-days).
 
-Local cleanup must retain private backups and historical public resource URLs. Retired checkout differences and their SHA256 manifests belong in ignored `local/archive/`; release logs belong in `local/logs/`. See [workspace conventions](contributing.md#local-workspace).
+Local cleanup must retain private backups and historical public resource URLs. Keep active private banks under `local/data/`, compressed historical evidence under `local/archive/`, original backup data under `local/backups/`, cleanup manifests under `local/evidence/maintenance/` and final release logs under `local/logs/`. A raw historical directory can be removed only after every archived member passes checksum verification. See [workspace conventions](contributing.md#local-workspace).
 
 The October 14 manual-test upgrade adds state v13 and the compatible
 `exam_annotations` table through `20261014120000_exam_annotations.sql`.
