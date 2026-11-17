@@ -229,13 +229,13 @@ export function VocabularyNavigation() {
   );
 }
 
-function VocabularyLayout({ children, ready = true, embedded = false }) {
+function VocabularyLayout({ children, ready = true, embedded = false, showNavigation = true }) {
   const location = useLocation();
   useVocabularyPosition(location.pathname + location.search + location.hash, ready);
   const Container = embedded ? 'div' : 'section';
   return (
     <Container className={`${embedded ? '' : 'view active '}vocabulary-view vocabulary-workbench`}>
-      {!embedded ? <VocabularyNavigation /> : null}
+      {!embedded && showNavigation ? <VocabularyNavigation /> : null}
       {children}
     </Container>
   );
@@ -332,6 +332,17 @@ function VocabularyHomePage() {
   const href = saved ? resumeTo : due.length ? `/vocabulary/review?${new URLSearchParams({ mode: reviewMode, dueOnly: 'true', scheduledOnly:'true' })}` : nextLearningUrl;
   const action = saved ? 'Continue session' : due.length ? 'Review due words' : nextGroup ? learning?.viewedEntryIds?.length ? 'Continue learning' : 'Start learning' : 'Study wordbooks';
   const title = saved ? 'Continue your session' : due.length ? 'Words due for review' : enrollment ? enrollment.book.title : 'Choose a wordbook';
+  const hasLearningHistory = ['vocabularyStates', 'vocabularyEvidence', 'vocabularyReviews', 'vocabularyActivities', 'vocabularySessions', 'wordbookProgress'].some(key => fb.state[key]?.length);
+  const firstRun = catalogStatus === 'ready' && deviceSessions.ready && !saved && !fb.state.vocabulary.length && !fb.state.wordbookEnrollments?.length && !hasLearningHistory;
+  if (firstRun) return <VocabularyLayout showNavigation={false}>
+    <div className="page-tools"><h1>Vocabulary</h1></div>
+    <section className="vocabulary-home-next" aria-label="Get started with vocabulary">
+      <span className="vocabulary-eyebrow">Your first words</span>
+      <h2>Build your vocabulary</h2>
+      <p>Choose a wordbook, then learn your first group. Your next learning and review tasks will appear here.</p>
+      <Link className="btn primary" to="/vocabulary/wordbooks">Choose a wordbook<ArrowRight size={16} aria-hidden="true"/></Link>
+    </section>
+  </VocabularyLayout>;
   return <VocabularyLayout ready={catalogStatus !== 'loading'}>
     <div className="page-tools"><h1>Vocabulary</h1><Link className="btn line" to="/settings/vocabulary">Practice settings</Link></div>
     <section className="vocabulary-home-next" aria-label="Next vocabulary task">

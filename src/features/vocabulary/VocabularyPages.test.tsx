@@ -205,10 +205,33 @@ test("blank answers and audio listening do not complete an assessed study group"
   expect(screen.getByRole("link", { name: /Start first group/ })).toHaveAttribute("href", expect.stringContaining("/groups/first/learn"));
 });
 
-test("overview provides separate wordbook study and vocabulary review entry routes", () => {
+test('first-run vocabulary gives one wordbook action and explains the next step', async () => {
   render(<MemoryRouter><VocabularyPage /></MemoryRouter>);
-  expect(screen.getByRole("link", { name: /Study wordbooks/ })).toHaveAttribute("href", "/vocabulary/wordbooks");
-  expect(screen.getByRole("link", { name: /Review vocabulary/ })).toHaveAttribute("href", "/vocabulary/review");
+  const choose = await screen.findByRole('link', {name:'Choose a wordbook'});
+  expect(choose).toHaveAttribute('href','/vocabulary/wordbooks');
+  expect(choose).toHaveClass('primary');
+  expect(screen.getAllByRole('link').filter(link=>link.getAttribute('href')==='/vocabulary/wordbooks')).toEqual([choose]);
+  expect(screen.getByText('Choose a wordbook, then learn your first group. Your next learning and review tasks will appear here.')).toBeInTheDocument();
+  expect(screen.queryByRole('navigation',{name:'More vocabulary tasks'})).not.toBeInTheDocument();
+  expect(screen.queryByText('Due cards')).not.toBeInTheDocument();
+});
+
+test("a learner overview retains separate wordbook study and vocabulary review entry routes", () => {
+  fixture();
+  fb.current.state.wordbookEnrollments = [];
+  render(<MemoryRouter><VocabularyPage /></MemoryRouter>);
+  const tasks = within(screen.getByRole('navigation', {name:'More vocabulary tasks'}));
+  expect(tasks.getByRole("link", { name: 'Wordbooks' })).toHaveAttribute("href", "/vocabulary/wordbooks");
+  expect(tasks.getByRole("link", { name: /Review vocabulary/ })).toHaveAttribute("href", "/vocabulary/review");
+  expect(screen.getByText('Saved words')).toBeInTheDocument();
+});
+
+test('removing all words and wordbooks preserves an existing learner history overview', async () => {
+  fb.current.state.vocabularySessions = [submitted(['removed-word'])];
+  render(<MemoryRouter><VocabularyPage /></MemoryRouter>);
+  await waitFor(() => expect(screen.getByRole('navigation', {name:'More vocabulary tasks'})).toBeInTheDocument());
+  expect(screen.getByRole('link', {name:'Session history'})).toHaveAttribute('href','/vocabulary/history');
+  expect(screen.queryByRole('region', {name:'Get started with vocabulary'})).not.toBeInTheDocument();
 });
 
 test('vocabulary home recommends the enrolled group instead of word management', async () => {
