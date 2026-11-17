@@ -60,7 +60,7 @@ function PlanningCalendar(){
     {tab==='history'&&<TaskCollection tasks={history} kind="history" renderTask={plan=><PlanTask plan={plan}/>}/>}
     {tab==='schedule'&&<>
     {needsWordbook&&studyBudget(fb.state.settings,today).planning.newWordsPerDay>0&&<aside className="study-wordbook-prompt"><BookOpen size={19} aria-hidden="true"/><p><strong>Choose a wordbook for new-word tasks</strong><span>Your daily word goal starts allocating words after you add a wordbook.</span></p><Link className="btn line" to="/vocabulary/wordbooks">Choose a wordbook</Link></aside>}
-    {focus&&<aside className="study-focus"><div><p className="kicker">Today's focus</p><strong>{studyPlanTitle(focus)}</strong><p>{focus.status==='in_progress'?'Continue your saved task':'Next in your schedule'} · {planMinutesLabel(focus)}</p></div><TaskStartButton plan={focus}/></aside>}
+    {focus&&<div className="study-focus"><div><p className="kicker">Today's focus</p><strong>{studyPlanTitle(focus)}</strong><p>{focus.status==='in_progress'?'Continue your saved task':'Next in your schedule'} · {planMinutesLabel(focus)}</p></div><TaskStartButton plan={focus}/></div>}
     <nav className="study-date-navigation" aria-label="Schedule dates">
       <p className="study-date-range" aria-live="polite" aria-atomic="true">{dateRange}</p>
       <div className="study-date-controls">
@@ -84,7 +84,7 @@ function PlanningCalendar(){
       return <ScheduleDay className={`study-day${day===today?' is-today':''}`} key={day} current={day===today} forceOpen={tasks.some(plan=>plan.id===targetId||plan.status==='in_progress')} heading={heading} summary={`${tasks.length} ${tasks.length===1?'task':'tasks'} · ${used} min`}>
         <div className="study-day-content"><header className="study-day-header">
           {heading}
-          <dl className="study-day-stats" role="group" aria-label="Daily plan summary">
+          <dl className="study-day-stats" aria-label="Daily plan summary">
             <div><dt>Planned time</dt><dd className={used>budget?'study-over-budget':''}>{used} <span>/ {budget} min</span><small>{used>budget?`${used-budget} min extra`:budget?`${budget-used} min free`:'No time budget'}</small></dd></div>
             <div><dt>Completed</dt><dd>{completed} <span>min</span><small>{used-completed} min remaining</small></dd></div>
             <div><dt>New words</dt><dd>{newWords}{budget>0&&goal>0&&!needsWordbook&&<span> / {goal}</span>}<small>{!budget?'No daily goal on rest days':!goal?'Automatic learning paused':needsWordbook?'Choose a wordbook':newWords<goal?`${goal-newWords} below daily goal`:newWords===goal?'Daily goal allocated':`${newWords-goal} above daily goal`}</small></dd></div>

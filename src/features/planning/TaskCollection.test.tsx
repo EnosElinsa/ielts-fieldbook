@@ -1,4 +1,4 @@
-import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
@@ -24,8 +24,8 @@ function mount(path='/planning'){
   return render(<MemoryRouter initialEntries={[path]}><TaskCollection tasks={mocks.fb.state.plans} kind="history" renderTask={plan=><article>{plan.title}</article>}/></MemoryRouter>);
 }
 function chooseDate(field:string,date:string){
-  fireEvent.click(screen.getByRole('button',{name:field}));
-  fireEvent.click(within(screen.getByRole('dialog',{name:field})).getByRole('button',{name:date}));
+  const value = date ? new Date(date).toLocaleDateString('en-CA') : '';
+  fireEvent.change(screen.getByLabelText(field), {target:{value}});
 }
 
 test('history filters use the themed popup and keyboard changes clear task selection',async()=>{
@@ -136,34 +136,28 @@ test('resetting filters restores the full history, first page and empty selectio
   expect(mocks.fb.loadPlanningHistoryPage).toHaveBeenLastCalledWith(expect.objectContaining({status:'all',skill:'all',origin:'all',reason:'all',from:'',to:'',offset:0}));
   expect(screen.getByRole('combobox',{name:'Status'})).toHaveTextContent('All visible');
   expect(screen.getByRole('combobox',{name:'Source'})).toHaveTextContent('All sources');
-  expect(screen.getByRole('button',{name:'From'})).toHaveTextContent('Choose a date');
-  expect(screen.getByRole('button',{name:'To'})).toHaveTextContent('Choose a date');
+  expect(screen.getByLabelText('From')).toHaveValue('');
+  expect(screen.getByLabelText('To')).toHaveValue('');
   expect(screen.getByText('0 selected · 25 matching tasks')).toBeInTheDocument();
   expect(reset).toBeDisabled();
 });
 
-test('date filters show English labels, preserve ISO values and prevent reversed ranges',async()=>{
+test('date filters preserve ISO values, clearing and native range limits',async()=>{
   mount();await screen.findByText('Historical task 0');
-  expect(screen.getByRole('button',{name:'From'})).toHaveTextContent('Choose a date');
+  expect(screen.getByLabelText('From')).toHaveAttribute('type','date');
   chooseDate('From','21 October 2026');
-  expect(screen.getByRole('button',{name:'From'})).toHaveTextContent('21 Oct 2026');
-  fireEvent.click(screen.getByRole('button',{name:'To'}));
-  let calendar=within(screen.getByRole('dialog',{name:'To'}));
-  expect(calendar.getByText('October 2026')).toBeInTheDocument();
-  expect(calendar.getByRole('button',{name:'20 October 2026'})).toBeDisabled();
-  expect(calendar.getByRole('button',{name:'21 October 2026'})).toBeEnabled();
-  fireEvent.click(calendar.getByRole('button',{name:'22 October 2026'}));
-  await waitFor(()=>expect(mocks.fb.loadPlanningHistoryPage).toHaveBeenLastCalledWith(expect.objectContaining({from:'2026-10-21',to:'2026-10-22'})));
-  fireEvent.click(screen.getByRole('button',{name:'From'}));
-  calendar=within(screen.getByRole('dialog',{name:'From'}));
-  expect(calendar.getByRole('button',{name:'23 October 2026'})).toBeDisabled();
-  fireEvent.click(calendar.getByRole('button',{name:'Clear'}));
-  expect(screen.getByRole('button',{name:'From'})).toHaveTextContent('Choose a date');
+  expect(screen.getByLabelText('From')).toHaveValue('2026-10-21');
+  expect(screen.getByLabelText('To')).toHaveAttribute('min','2026-10-21');
   chooseDate('To','20 October 2026');
-  fireEvent.click(screen.getByRole('button',{name:'From'}));
-  calendar=within(screen.getByRole('dialog',{name:'From'}));
-  expect(calendar.getByRole('button',{name:'Today'})).toBeDisabled();
-  expect(calendar.getByRole('button',{name:'21 October 2026'})).toBeDisabled();
-  fireEvent.click(calendar.getByRole('button',{name:'10 October 2026'}));
+  expect(mocks.fb.loadPlanningHistoryPage).not.toHaveBeenLastCalledWith(expect.objectContaining({to:'2026-10-20'}));
+  chooseDate('To','22 October 2026');
+  await waitFor(()=>expect(mocks.fb.loadPlanningHistoryPage).toHaveBeenLastCalledWith(expect.objectContaining({from:'2026-10-21',to:'2026-10-22'})));
+  expect(screen.getByLabelText('From')).toHaveAttribute('max','2026-10-22');
+  chooseDate('From','23 October 2026');
+  expect(mocks.fb.loadPlanningHistoryPage).not.toHaveBeenLastCalledWith(expect.objectContaining({from:'2026-10-23'}));
+  chooseDate('From','');
+  expect(screen.getByLabelText('From')).toHaveValue('');
+  chooseDate('To','20 October 2026');
+  chooseDate('From','10 October 2026');
   await waitFor(()=>expect(mocks.fb.loadPlanningHistoryPage).toHaveBeenLastCalledWith(expect.objectContaining({from:'2026-10-10',to:'2026-10-20'})));
 });

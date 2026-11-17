@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { act, cleanup, render, screen, within, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
@@ -77,7 +77,7 @@ test('day summary explains saved word selections and keeps configuration in Sett
  const vocabulary={id:'partial-batch',dateKey:dateKey(new Date()),status:'pending',skill:'vocabulary',origin:'manual',title:'Vocabulary - Learn 10 words',estimatedMinutes:30,target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',batchIndex:1,batchSize:10,cards:Array.from({length:7},(_,i)=>({entryId:`word-${i}`,senseId:'meaning'}))}};
  mocks.state.plans=[vocabulary,{...mocks.state.plans[0],status:'completed'},...['skipped','held','archived'].map(id=>({...mocks.state.plans[0],id,estimatedMinutes:100,...(id==='skipped'?{status:'skipped'}:id==='held'?{onHold:true}:{archivedAt:'2026-10-16T12:00:00Z'})}))];
  const {container}=mount();const day=within(container.querySelector('.study-day'));
- const summary=day.getByRole('group',{name:'Daily plan summary'});
+ const summary=day.getByLabelText('Daily plan summary');
  expect(summary).toHaveTextContent('Planned time50 / 90 min40 min free');
  expect(summary).toHaveTextContent('Completed20 min30 min remaining');
  expect(summary).toHaveTextContent('New words7 / 158 below daily goal');
@@ -96,7 +96,7 @@ test('day summary explains saved word selections and keeps configuration in Sett
 
 test('manual rest-day tasks show extra time without a false new-word deficit',()=>{
  mocks.state.settings.days=[];
- const {container}=mount();const summary=within(container.querySelector('.study-day')).getByRole('group',{name:'Daily plan summary'});
+ const {container}=mount();const summary=within(container.querySelector('.study-day')).getByLabelText('Daily plan summary');
  expect(summary).toHaveTextContent('Planned time20 / 0 min20 min extra');
  expect(summary).toHaveTextContent('No daily goal on rest days');
  expect(summary).not.toHaveTextContent(/below daily goal/);
@@ -104,7 +104,7 @@ test('manual rest-day tasks show extra time without a false new-word deficit',()
 
 test('a zero new-word goal is presented as paused automatic learning',()=>{
  mocks.state.settings.days=[1,2,3,4,5,6,7];mocks.state.settings.planning.newWordsPerDay=0;
- const {container}=mount();const summary=within(container.querySelector('.study-day')).getByRole('group',{name:'Daily plan summary'});
+ const {container}=mount();const summary=within(container.querySelector('.study-day')).getByLabelText('Daily plan summary');
  expect(summary).toHaveTextContent('Automatic learning paused');
  expect(summary).not.toHaveTextContent(/below daily goal/);
 });
@@ -148,22 +148,21 @@ test.each([
 });
 test('replace and reschedule save explicit actions',async()=>{
   mount();await taskAction('Replace task');
-  await userEvent.click(screen.getByRole('button',{name:'Skill'}));
+  await userEvent.click(screen.getByRole('combobox',{name:'Skill'}));
   await userEvent.click(screen.getByRole('option',{name:'Listening'}));
   await waitFor(()=>expect(within(screen.getByRole('dialog')).getByRole('button',{name:'Replace task'})).toBeEnabled());
   await userEvent.click(within(screen.getByRole('dialog')).getByRole('button',{name:'Replace task'}));
   expect(mocks.change).toHaveBeenCalledWith('task',expect.objectContaining({type:'replace',skill:'listening',practice:'recommended',estimatedMinutes:20}),{onError:expect.any(Function)});
   await taskAction('Reschedule task');
-  const dialog=screen.getByRole('dialog');expect(within(dialog).getByRole('button',{name:'Study date'})).toHaveTextContent(new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}));
+  const dialog=screen.getByRole('dialog');expect(within(dialog).getByLabelText('Study date')).toHaveValue(dateKey(new Date()));
   await userEvent.click(within(dialog).getByRole('button',{name:'Move task'}));expect(mocks.change).toHaveBeenLastCalledWith('task',{type:'reschedule',dateKey:dateKey(new Date()),allowOverBudget:false},{onError:expect.any(Function)});
 });
-test('the themed date picker saves its chosen date and cannot change during saving',async()=>{
+test('the native date field saves its chosen date and cannot change during saving',async()=>{
   let finish; mocks.change.mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
   mount();await taskAction('Reschedule task');
-  await userEvent.click(screen.getByRole('button',{name:'Study date'}));
-  await userEvent.click(within(screen.getByRole('dialog',{name:'Study date'})).getByRole('button',{name:'Today'}));
+  fireEvent.change(screen.getByLabelText('Study date'),{target:{value:dateKey(new Date())}});
   await userEvent.click(screen.getByRole('button',{name:'Move task'}));
-  expect(screen.getByRole('button',{name:'Study date'})).toBeDisabled();
+  expect(screen.getByLabelText('Study date')).toBeDisabled();
   expect(screen.getByRole('button',{name:'Close dialog'})).toBeDisabled();
   expect(mocks.change).toHaveBeenCalledWith('task',{type:'reschedule',dateKey:dateKey(new Date()),allowOverBudget:false},{onError:expect.any(Function)});
   await act(async()=>finish(true));
@@ -172,12 +171,12 @@ test('the themed date picker saves its chosen date and cannot change during savi
 test('skill selection stays disabled while its replacement saves',async()=>{
   let finish; mocks.change.mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
   mount();await taskAction('Replace task');
-  await userEvent.click(screen.getByRole('button',{name:'Skill'}));
+  await userEvent.click(screen.getByRole('combobox',{name:'Skill'}));
   await userEvent.click(screen.getByRole('option',{name:'Speaking'}));
   await userEvent.click(screen.getByRole('combobox',{name:'Practice type'}));
   await userEvent.click(screen.getByRole('option',{name:'Speaking mock'}));
   await userEvent.click(within(screen.getByRole('dialog')).getByRole('button',{name:'Replace task'}));
-  expect(screen.getByRole('button',{name:'Skill'})).toBeDisabled();
+  expect(screen.getByRole('combobox',{name:'Skill'})).toBeDisabled();
   expect(mocks.change).toHaveBeenCalledWith('task',expect.objectContaining({type:'replace',skill:'speaking',practice:'speaking-mock',estimatedMinutes:15}),{onError:expect.any(Function)});
   await act(async()=>finish(true));
 });
@@ -215,7 +214,7 @@ test('a legacy task without an estimate says so and adds no planned time',()=>{
  const task=container.querySelector('#task-legacy');
  expect(task).toHaveTextContent('No time estimate');
  expect(task.querySelector('.study-skill')).toHaveTextContent(/^writing$/);
- expect(day.getByRole('group',{name:'Daily plan summary'})).toHaveTextContent(/^Planned time0 \//);
+ expect(day.getByLabelText('Daily plan summary')).toHaveTextContent(/^Planned time0 \//);
  expect(container.querySelector('.study-focus')).toHaveTextContent('Next in your schedule · No time estimate');
 });
 

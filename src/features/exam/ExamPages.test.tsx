@@ -737,7 +737,7 @@ test('an unknown book in the URL keeps a labelled Book filter and offers Clear f
   mocks.catalog.sections[0].skill = 'listening';
   render(<MemoryRouter initialEntries={['/listening?book=99']}><ExamBankPage skill="listening" /></MemoryRouter>);
   expect(await screen.findByRole('button', { name: 'Clear filters' })).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: 'Book' })).toHaveTextContent('Book: 99');
+  expect(screen.getByRole('combobox', { name: 'Book' })).toHaveTextContent('Book: 99');
 });
 test('an empty catalog under a book filter keeps the filters and offers Clear filters', async () => {
   mocks.catalog = { schemaVersion: 1, papers: [], sections: [], passages: [], questions: [], assets: [] };

@@ -13,14 +13,14 @@ afterEach(() => cleanup());
 test('story filters return after remount and remain isolated between accounts', async () => {
   const user = userEvent.setup(); const first=render(<StoriesPage />);
   await user.type(screen.getByRole('textbox', {name:'Search stories'}), 'Mountain');
-  await user.click(screen.getByRole('button', {name:'Story theme'}));
+  await user.click(screen.getByRole('combobox', {name:'Story theme'}));
   await user.click(screen.getByRole('option', {name:'Travel'}));
   first.unmount(); const restored=render(<StoriesPage />);
   expect(screen.getByRole('textbox', {name:'Search stories'})).toHaveValue('Mountain');
-  expect(screen.getByRole('button', {name:'Story theme'})).toHaveTextContent('Travel');
+  expect(screen.getByRole('combobox', {name:'Story theme'})).toHaveTextContent('Travel');
   identity.owner='two'; restored.rerender(<StoriesPage />);
   expect(screen.getByRole('textbox', {name:'Search stories'})).toHaveValue('');
-  expect(screen.getByRole('button', {name:'Story theme'})).toHaveTextContent('All themes');
+  expect(screen.getByRole('combobox', {name:'Story theme'})).toHaveTextContent('All themes');
 });
 
 test('story cards keep one primary Practise action and name their icon actions', () => {

@@ -23,7 +23,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-.vocabulary-workbench .vocabulary-entryway h3 {
+.vocabulary-workbench .vocabulary-entryway :is(h2,h3) {
   margin: 8px 0;
 }
 .vocabulary-workbench .vocabulary-entryway p {
@@ -41,7 +41,7 @@
   border-radius: 12px;
   background: var(--sheet);
 }
-.vocabulary-workbench .vocabulary-study-heading h3 {
+.vocabulary-workbench .vocabulary-study-heading :is(h2,h3) {
   margin: 8px 0 12px;
   font-size: 24px;
 }
@@ -169,7 +169,7 @@
   border-radius: 12px;
   margin-bottom: 24px;
 }
-.vocabulary-workbench .vocabulary-recovery h3 {
+.vocabulary-workbench .vocabulary-recovery :is(h2,h3) {
   margin: 0 0 6px;
 }
 .vocabulary-workbench .vocabulary-recovery p {
@@ -398,7 +398,7 @@
 .vocabulary-entry-heading {
   margin-top: 20px;
 }
-.vocabulary-entry-heading h2 {
+.vocabulary-entry-heading :is(h1,h2) {
   font-size: 34px;
   margin-bottom: 4px;
 }
@@ -417,7 +417,7 @@
   margin-top: 4px;
   padding-top: 0;
 }
-.vocabulary-primary-meaning h3 {
+.vocabulary-primary-meaning :is(h2,h3) {
   font-size: 14px;
   font-weight: 600;
   color: var(--muted);
@@ -647,7 +647,7 @@
   .vocabulary-meaning-layout .vocabulary-learning-visual {
     justify-self: center;
   }
-  .vocabulary-entry-heading h2 {
+  .vocabulary-entry-heading :is(h1,h2) {
     font-size: 28px;
   }
   .vocabulary-primary-meaning .vocabulary-definition {

@@ -20,6 +20,7 @@
   border-bottom-color: var(--blue);
   font-weight: 700;
 }
+.vocabulary-view h1,
 .vocabulary-view h2 {
   font:
     600 24px/1.35 Manrope,
@@ -240,7 +241,7 @@
   background: var(--sheet);
   min-width: 0;
 }
-.vocabulary-book h3 {
+.vocabulary-book :is(h2,h3) {
   margin: 12px 0 8px;
   overflow-wrap: anywhere;
 }
@@ -317,7 +318,7 @@
   justify-content: space-between;
   gap: 16px;
 }
-.vocabulary-sense-head h3 {
+.vocabulary-sense-head :is(h2,h3) {
   margin: 0;
 }
 .vocabulary-definition {
@@ -705,7 +706,7 @@
 .vocabulary-history-source{display:grid;gap:8px;max-width:280px;margin:20px 0;font-size:12px;color:var(--muted)}.vocabulary-history-source .select-field{width:100%;padding:10px;border:1px solid var(--rule);border-radius:8px;background:var(--sheet);color:var(--ink);font:inherit}
 .vocabulary-import-label{display:block;flex-basis:100%;font-size:13px;font-weight:600;margin:0 0 8px}
 .vocabulary-history-tools { flex-wrap: wrap; align-items: center; }
-.vocabulary-history-tools h2 { margin-right: auto; }
+.vocabulary-history-tools :is(h1,h2) { margin-right: auto; }
 .vocabulary-history-tools .vocabulary-history-source { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0; max-width: none; }
 .vocabulary-history-tools .vocabulary-history-source .select-field { width: auto; }
 .vocabulary-history-main > strong { font-size: 14px; line-height: 1.5; }
@@ -722,7 +723,7 @@
 .vocabulary-progress-detail > summary { display: flex; align-items: center; gap: 12px; min-height: 52px; cursor: pointer; }
 .vocabulary-progress-detail > summary::after { content: '+'; margin-left: auto; color: var(--muted); }
 .vocabulary-progress-detail[open] > summary::after { content: '−'; }
-.vocabulary-progress-detail > summary h3 { margin: 0; font-size: 16px; }
+.vocabulary-progress-detail > summary :is(h2,h3) { margin: 0; font-size: 16px; }
 .vocabulary-progress-detail > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
 .vocabulary-progress-detail .vocabulary-evidence a { display: flex; align-items: center; min-height: 44px; }
 .vocabulary-progress-detail .vocabulary-evidence { margin-bottom: 16px; }
@@ -745,3 +746,7 @@
   .vocabulary-view .vocabulary-word-meaning { line-height: 1.45; }
 }
 .vocabulary-view .vocabulary-word-edit { width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
+
+.vocabulary-view h2.vocabulary-section-title { font: 600 18px/1.4 Manrope,Arial,sans-serif; }
+.vocabulary-view .vocabulary-book h2 { font-size: 18px; }
+.vocabulary-view .vocabulary-entryway h2, .vocabulary-view .vocabulary-recovery h2, .vocabulary-view .vocabulary-sense-head h2, .vocabulary-learning-progress > :is(h2,h3) { font-size: 18px; }

@@ -82,7 +82,7 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-.practice-heading h2 {
+.practice-heading :is(h1,h2) {
   font-size: 27px;
   letter-spacing: -0.045em;
 }
@@ -648,7 +648,7 @@
   color: var(--muted);
   font-size: 12px;
 }
-.practice-result-title h2 {
+.practice-result-title :is(h1,h2) {
   font-size: 23px;
   letter-spacing: -0.035em;
   margin: 8px 0 0;
@@ -896,7 +896,7 @@
   .practice-results tbody th > small { max-width: none; }
   .practice-results tbody td:nth-last-child(-n+2) { border-bottom: 0; }
   .practice-result-summary { justify-content: space-between; gap: 12px; }
-  .practice-heading h2 {
+  .practice-heading :is(h1,h2) {
     font-size: 24px;
   }
   .practice-heading .actions {

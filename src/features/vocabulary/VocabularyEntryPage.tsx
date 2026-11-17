@@ -401,9 +401,9 @@ export function VocabularyEntryPage() {
         key={sense.id}
       >
         <div className="vocabulary-sense-head">
-          <h3>
+          <h2>
             {isVocabularyMeaningGroup(entry!.id, sense) ? "Meaning group" : isVocabularyUsageReference(entry!.id, sense) ? "Usage reference" : main && alternateGroupMeaning ? personalNotes ? "Your selected meaning" : "Selected dictionary meaning" : main ? "Meaning" : sense.pos || "Other meaning"}
-          </h3>
+          </h2>
         </div>
         {sense.pos ? (
           <span className="vocabulary-part-of-speech">{sense.pos}</span>
@@ -505,7 +505,7 @@ export function VocabularyEntryPage() {
                   {groupPath(bookId!, unitId!)}
                 </p>
               ) : null}
-              <h2>{entry.term}</h2>
+              <h1>{entry.term}</h1>
             </div>
             <div className="actions">
               <FilterMenu
@@ -641,7 +641,7 @@ export function VocabularyEntryPage() {
                 </>
               ) : (
                 <section className="vocabulary-sense">
-                  <h3>Meaning</h3>
+                  <h2>Meaning</h2>
                   {needsLookup ? lookup?.key !== lookupKey ? <InlineLoadingState message="Loading selected meaning…" />
                     : lookup.error ? <StateMessage kind="error" message="This dictionary meaning could not be loaded." onRetry={() => { resetDictionaryCache(); setLookupRevision(value => value + 1); }} retryLabel="Retry meaning" />
                     : <p>This dictionary meaning could not be found.</p>
@@ -678,7 +678,7 @@ export function VocabularyEntryPage() {
             className="vocabulary-learning-progress"
             aria-label="Learning progress"
           >
-            <h3>Learning progress</h3>
+            <h2>Learning progress</h2>
             <div className="vocabulary-progress-overview">
             {nextPractice && primary ? <VocabularyNextPractice recommendation={nextPractice}
               to={mode=>practiceUrl(entry.id,primary.id,context,origin,mode)}
@@ -856,14 +856,14 @@ export function VocabularyEntryPage() {
             )}
           </details>
           {entry.sources.some(source => source.exam) && <section className="vocabulary-exam-sources" aria-label="Exam sources">
-            <h3>Exam sources</h3><p className="vocabulary-muted">Return to the original paragraph or sentence for this word. Each saved occurrence keeps its source.</p>
+            <h2>Exam sources</h2><p className="vocabulary-muted">Return to the original paragraph or sentence for this word. Each saved occurrence keeps its source.</p>
             <VocabularySourceLinks sources={entry.sources} />
           </section>}
           <section
             className="vocabulary-source-locations"
             aria-label="Wordbook sources"
           >
-            <h3>Wordbook sources</h3>
+            <h2>Wordbook sources</h2>
             <p className="vocabulary-muted">
               A word can appear in several groups. Select a source to view its
               learning meaning; the same meaning shares learning progress.

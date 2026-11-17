@@ -1,8 +1,8 @@
 .vocabulary-home-next{padding:28px 0 32px;border-bottom:1px solid var(--rule);}
-.vocabulary-home-next h3{font-size:26px;line-height:1.3;margin:12px 0;overflow-wrap:anywhere;}
-.vocabulary-home-next h3 a,.vocabulary-home-next h3 a:visited{font:inherit;color:var(--ink);text-decoration:none;}
-.vocabulary-home-next h3 a:hover{color:var(--blue);text-decoration:underline;text-underline-offset:4px;}
-.vocabulary-home-next h3 a:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:3px;}
+.vocabulary-home-next :is(h2,h3){font-size:26px;line-height:1.3;margin:12px 0;overflow-wrap:anywhere;}
+.vocabulary-home-next :is(h2,h3) a,.vocabulary-home-next :is(h2,h3) a:visited{font:inherit;color:var(--ink);text-decoration:none;}
+.vocabulary-home-next :is(h2,h3) a:hover{color:var(--blue);text-decoration:underline;text-underline-offset:4px;}
+.vocabulary-home-next :is(h2,h3) a:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:3px;}
 .vocabulary-home-next p{margin:0 0 20px;overflow-wrap:anywhere;}
 .vocabulary-home-next .btn{margin-top:12px;}
 .vocabulary-home-next .vocabulary-home-meaning{max-width:65ch;line-height:1.65;margin-bottom:16px;}
@@ -16,4 +16,4 @@
 .vocabulary-home-links a:hover{background:var(--surface-hover);color:var(--blue);}
 .vocabulary-home-links a:hover svg{color:currentColor;}
 .vocabulary-home-links a:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;background:var(--soft-blue);}
-@media(max-width:640px){.vocabulary-home-links{grid-template-columns:minmax(0,1fr);}.vocabulary-home-next h3{font-size:23px;}}
+@media(max-width:640px){.vocabulary-home-links{grid-template-columns:minmax(0,1fr);}.vocabulary-home-next :is(h2,h3){font-size:23px;}}

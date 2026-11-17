@@ -5,7 +5,7 @@ import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 const EMPTY = '__fieldbook_empty__';
 type Choice = {value:string; label:ReactNode; disabled?:boolean};
 type Props = SelectHTMLAttributes<HTMLSelectElement> & {
-  options?: Choice[]; triggerRole?: 'button' | 'combobox'; onValueChange?: (value:string)=>void;
+  options?: Choice[]; onValueChange?: (value:string)=>void;
 };
 function choicesFrom(children: ReactNode): Choice[] {
   return Children.toArray(children).flatMap(child=> {
@@ -15,7 +15,7 @@ function choicesFrom(children: ReactNode): Choice[] {
   });
 }
 /** One themed, viewport-positioned select for fields and toolbar filters. */
-export function SelectField({options,children,value,defaultValue,onChange,onValueChange,disabled,id,name,className,triggerRole='combobox',...props}:Props) {
+export function SelectField({options,children,value,defaultValue,onChange,onValueChange,disabled,id,name,className,...props}:Props) {
   const choices=options||choicesFrom(children);
   const selected=value==null ? undefined : String(value)||EMPTY;
   const label=props['aria-label'];
@@ -25,7 +25,7 @@ export function SelectField({options,children,value,defaultValue,onChange,onValu
       onValueChange?.(value);
       if(onChange)onChange({target:{value,name},currentTarget:{value,name}} as React.ChangeEvent<HTMLSelectElement>);
     }}>
-    <Select.Trigger {...props as React.ButtonHTMLAttributes<HTMLButtonElement>} type="button" role={triggerRole} id={id} disabled={disabled} className={`filter-trigger select-field ${className||''}`} aria-label={label}>
+    <Select.Trigger {...props as React.ButtonHTMLAttributes<HTMLButtonElement>} type="button" id={id} disabled={disabled} className={`filter-trigger select-field ${className||''}`} aria-label={label}>
       <Select.Value placeholder="Choose an option"/><Select.Icon asChild><ChevronDown size={16} aria-hidden="true"/></Select.Icon>
     </Select.Trigger>
     <Select.Portal><Select.Content className="select-pop" position="popper" side="bottom" align="start" sideOffset={6} collisionPadding={12} sticky="always" aria-label={label}>

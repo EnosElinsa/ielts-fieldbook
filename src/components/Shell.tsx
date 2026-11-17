@@ -245,6 +245,11 @@ export function Shell() {
 
   return (
     <>
+      <a className="skip-link" href="#main-content" onClick={event => {
+        event.preventDefault();
+        const target = document.querySelector<HTMLElement>('main h1') || document.getElementById('main-content');
+        if (target) { target.tabIndex = -1; target.focus(); }
+      }}>Skip to main content</a>
       <div className={`${collapsed ? 'shell is-collapsed' : 'shell'}${speaking ? ' skill-speaking' : ''}`}>
         <Tooltip.Provider delayDuration={350}><aside className="rail">
           <div className="mark">
@@ -297,7 +302,7 @@ export function Shell() {
             {streak === null ? <Link to="/progress" className="rail-activity-link">View activity<ArrowRight size={14} aria-hidden="true"/></Link> : <strong>{streak} {streak === 1 ? 'day' : 'days'}</strong>}
           </div>
         </aside></Tooltip.Provider>
-        <main className="main">
+        <main className="main" id="main-content" tabIndex={-1}>
           <header className="top">
             {vocabularyOwnHeading ? <div className="page-title page-title-compact"><p className="kicker">Vocabulary</p></div> : ownHeading ? <div className="page-title page-title-compact" key={`${chrome.kicker}-${chrome.title}`}>
               <p className="kicker">{chrome.kicker}</p>
@@ -330,7 +335,7 @@ export function Shell() {
           {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
           {fb.loadError && !fb.booted ? <StateMessage kind="error" title="Your workspace could not load" message={<>Check your connection, then retry. Work you already saved is safe.{fb.loadError !== WORKSPACE_LOAD_ERROR ? <small className="async-state-detail">{fb.loadError}</small> : null}</>} onRetry={fb.retryLoad} retryLabel="Retry" /> : null}
           {!fb.booted && !fb.loadError ? <PageLoadingState title={ownHeading ? chrome.title : undefined} message="Loading your workspace…" variant={loadingLayout(location.pathname)} onRetry={fb.retryLoad} /> : null}
-          <PageTransition transitionKey={transitionKey} key={module === 'settings' ? 'settings' : location.pathname}>
+          <PageTransition transitionKey={transitionKey} focusKey={location.pathname} skipHeadingFocus={Boolean(location.hash)} scrollRestoration={scrollRestoration} key={module === 'settings' ? 'settings' : location.pathname}>
             <WorkspaceScrollRestoration.Provider value={scrollRestoration}><Suspense fallback={<PageLoadingState title={ownHeading ? chrome.title : undefined} variant={loadingLayout(location.pathname)} message="Loading page…" />}>{fb.booted ? <WorkspaceRoute /> : null}</Suspense></WorkspaceScrollRestoration.Provider>
           </PageTransition>
         </main>

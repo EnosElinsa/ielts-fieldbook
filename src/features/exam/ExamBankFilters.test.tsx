@@ -14,11 +14,11 @@ test('mobile filters retain URL values while collapsed, remove individually and 
   const view=render(<ExamBankFilters onChange={change} filters={[{key:'book',label:'Book',value:'8',options:[{value:'all',label:'All books'},{value:'8',label:'Cambridge 8'}]}]}/>);
   const panel=view.container.querySelector('details')!;
   expect(panel.open).toBe(false);
-  expect(screen.getByRole('button',{name:'Book'})).not.toBeVisible();
+  expect(screen.getByRole('combobox',{name:'Book'})).not.toBeVisible();
   await userEvent.click(screen.getByRole('button',{name:'Remove Book filter: Cambridge 8'}));
   expect(change).toHaveBeenCalledWith('book','all');
   fireEvent.click(panel.querySelector('summary')!);
-  expect(await screen.findByRole('button',{name:'Book'})).toHaveTextContent('Cambridge 8');
+  expect(await screen.findByRole('combobox',{name:'Book'})).toHaveTextContent('Cambridge 8');
   narrow=false;act(()=>resize());
   expect(panel.open).toBe(true);
   view.unmount();expect(remove).toHaveBeenCalled();

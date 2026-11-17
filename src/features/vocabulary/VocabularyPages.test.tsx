@@ -273,7 +273,7 @@ test("entry details omit raw source context and retain review history", async ()
 test("wrong word recovery preserves active source filters in its practice link", () => {
   fixture();
   render(<MemoryRouter><VocabularyWrongPage /></MemoryRouter>);
-  fireEvent.click(screen.getByRole("button", { name: "Wrong word book" }));
+  fireEvent.click(screen.getByRole("combobox", { name: "Wrong word book" }));
   fireEvent.click(screen.getByRole("option", { name: "IELTS source book" }));
   expect(screen.getByRole("link", { name: /Retry words/ })).toHaveAttribute("href", "/vocabulary/review?wrongOnly=true&dueOnly=false&bookId=book");
 });
@@ -421,18 +421,18 @@ test('my words restores pending-definition and source filters through browser hi
   otherSource.senses = [{ ...otherSource.senses[0], definition: '' }];
   render(<MemoryRouter initialEntries={['/vocabulary/words?source=reading&readiness=pending']}><VocabularyWordsPage /><WordRouteControls /></MemoryRouter>);
 
-  expect(screen.getByRole('button', { name: 'Practice readiness' })).toHaveTextContent('Pending definition');
-  expect(screen.getByRole('button', { name: 'Source' })).toHaveTextContent('Reading');
+  expect(screen.getByRole('combobox', { name: 'Practice readiness' })).toHaveTextContent('Pending definition');
+  expect(screen.getByRole('combobox', { name: 'Source' })).toHaveTextContent('Reading');
   const word = screen.getByRole('link', { name: 'one' });
   const target = new URL(word.getAttribute('href')!, 'https://fieldbook.invalid');
   expect(target.searchParams.get('returnTo')).toBe('/vocabulary/words?source=reading&readiness=pending');
   expect(screen.queryByRole('link', { name: 'two' })).not.toBeInTheDocument();
   expect(screen.queryByRole('link', { name: 'three' })).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Open second filter' }));
-  expect(screen.getByRole('button', { name: 'Practice readiness' })).toHaveTextContent('All words');
+  expect(screen.getByRole('combobox', { name: 'Practice readiness' })).toHaveTextContent('All words');
   expect(screen.getByRole('link', { name: 'two' })).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Browser back' }));
-  expect(screen.getByRole('button', { name: 'Practice readiness' })).toHaveTextContent('Pending definition');
+  expect(screen.getByRole('combobox', { name: 'Practice readiness' })).toHaveTextContent('Pending definition');
   expect(screen.getByRole('link', { name: 'one' })).toBeInTheDocument();
   expect(screen.queryByRole('link', { name: 'two' })).not.toBeInTheDocument();
 });
@@ -448,7 +448,7 @@ test('changing practice readiness resets page and selection while preserving sou
   render(<MemoryRouter initialEntries={['/vocabulary/words?source=reading&page=1&marker=keep']}><VocabularyWordsPage /><WordRouteControls /></MemoryRouter>);
   fireEvent.click(screen.getByRole('checkbox', { name: 'Select word100' }));
   expect(screen.getByText('1 selected')).toBeInTheDocument();
-  fireEvent.click(screen.getByRole('button', { name: 'Practice readiness' }));
+  fireEvent.click(screen.getByRole('combobox', { name: 'Practice readiness' }));
   fireEvent.click(screen.getByRole('option', { name: 'Pending definition' }));
   expect(screen.getByRole('link', { name: 'unfinished' })).toBeInTheDocument();
   expect(screen.queryByRole('link', { name: 'other' })).not.toBeInTheDocument();
@@ -457,12 +457,12 @@ test('changing practice readiness resets page and selection while preserving sou
   expect(screen.getByLabelText('Words URL')).toHaveTextContent('readiness=pending');
   expect(screen.getByLabelText('Words URL')).toHaveTextContent('marker=keep');
   expect(screen.getByLabelText('Words URL')).not.toHaveTextContent('page=');
-  fireEvent.click(screen.getByRole('button', { name: 'Practice readiness' }));
+  fireEvent.click(screen.getByRole('combobox', { name: 'Practice readiness' }));
   fireEvent.click(screen.getByRole('option', { name: 'Ready to practise' }));
   expect(screen.getByRole('link', { name: 'word0' })).toBeInTheDocument();
   expect(screen.queryByRole('link', { name: 'unfinished' })).not.toBeInTheDocument();
   expect(screen.getByLabelText('Words URL')).toHaveTextContent('readiness=ready');
-  fireEvent.click(screen.getByRole('button', { name: 'Practice readiness' }));
+  fireEvent.click(screen.getByRole('combobox', { name: 'Practice readiness' }));
   fireEvent.click(screen.getByRole('option', { name: 'All words' }));
   expect(screen.getByLabelText('Words URL')).not.toHaveTextContent('readiness=');
 });
@@ -472,7 +472,7 @@ test('clear word filters resets practice readiness and preserves unrelated URL s
   render(<MemoryRouter initialEntries={['/vocabulary/words?search=missing&status=mastered&source=reading&skill=reading&readiness=pending&page=1&marker=keep']}><VocabularyWordsPage /><WordRouteControls /></MemoryRouter>);
   expect(screen.getByText('No vocabulary matches these filters.')).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Clear filters' }));
-  expect(screen.getByRole('button', { name: 'Practice readiness' })).toHaveTextContent('All words');
+  expect(screen.getByRole('combobox', { name: 'Practice readiness' })).toHaveTextContent('All words');
   expect(screen.getByRole('checkbox', { name: 'Select one' })).toBeInTheDocument();
   expect(screen.getByRole('checkbox', { name: 'Select two' })).toBeInTheDocument();
   expect(screen.getByRole('checkbox', { name: 'Select three' })).toBeInTheDocument();

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { BookOpen, Check, ChevronDown, House, Library, LogOut, Monitor, Moon, MoreHorizontal, PencilLine, Search, Settings2, Sun, Upload, Download, ShieldCheck, MessageSquare, ChartNoAxesCombined, Mic2, NotebookTabs, Headphones } from 'lucide-react';
@@ -46,7 +46,8 @@ export function CommandSearch({ open, onClose }: { open: boolean; onClose: () =>
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState(0);
-  const requirements = useAccountRequirements({ modules: ['productive', 'vocabulary', 'receptive'], banks: ['writing', 'speaking'] });
+  const searching = Boolean(query.trim());
+  const requirements = useAccountRequirements({ modules: searching ? ['productive', 'vocabulary', 'receptive'] : [], banks: searching ? ['writing', 'speaking'] : [] });
   const items = useMemo(() => {
     const navigation = [
       ...workspaceModules.map(({ label, to, Icon }) => [label, to, Icon]),
@@ -54,13 +55,14 @@ export function CommandSearch({ open, onClose }: { open: boolean; onClose: () =>
       ['Reading review', '/reading/review', BookOpen], ['Writing questions', '/write/questions', Library],
       ['Speaking questions', '/speak/questions', Library], ['Writing review', '/review?skill=writing', BookOpen], ['Speaking review', '/review?skill=speaking', BookOpen],
     ].map(([title, path, Icon]) => ({ id: path, path, title, kind: 'Page', Icon, run: () => { const module = moduleFor(path.split('?')[0], path.includes('?') ? path.slice(path.indexOf('?')) : '', fb.activeSkill); if (['writing', 'speaking', 'reading', 'listening'].includes(module)) fb.setSkill(module, path); else navigate(path); } }));
+    const search = query.trim().toLowerCase();
+    if (!search) return navigation;
     const questions = fb.state.questions.map((q) => ({ id: `w:${q.id}`, path: '/write', title: q.name, kind: 'Writing question', Icon: PencilLine, run: () => { fb.setSkill('writing', '/write'); fb.chooseQuestion(q.id); } }));
     const topics = fb.state.speakingTopics.map((q) => ({ id: `s:${q.id}`, path: `/speak/topics/${q.id}`, title: q.title, kind: 'Speaking topic', Icon: Library, run: () => { fb.setSelectedTopicId(q.id); fb.setSkill('speaking', `/speak/topics/${q.id}`); } }));
     const attempts = fb.state.sessions.map((s) => ({ id: `a:${s.id}`, path: '', title: s.name, kind: 'Your attempt', Icon: BookOpen, run: () => { fb.setViewedSession(s); fb.openModal('history'); } }));
     const vocabularyEntries = fb.state.vocabulary.filter(p => !p.tags?.includes('archived')).map((p) => ({ id: `v:${p.id}`, path: `/vocabulary/entry/${p.id}`, title: p.term, kind: 'Vocabulary entry', Icon: BookOpen, run: () => navigate(`/vocabulary/entry/${p.id}`) }));
     const examAttempts = (fb.state.examAttempts || []).filter(row => row.status === 'completed').map(row => ({ id: `exam:${row.id}`, path: `/${row.skill}/review/${encodeURIComponent(row.id)}`, title: row.sourceId, kind: `${row.skill === 'reading' ? 'Reading' : 'Listening'} attempt`, Icon: row.skill === 'reading' ? BookOpen : Headphones, run: () => fb.setSkill(row.skill, `/${row.skill}/review/${encodeURIComponent(row.id)}`) }));
-    const search = query.trim().toLowerCase();
-    return [...navigation, ...questions, ...topics, ...attempts, ...examAttempts, ...vocabularyEntries].filter((item) => !search || `${item.title} ${item.kind}`.toLowerCase().includes(search)).slice(0, search ? 12 : navigation.length);
+    return [...navigation, ...questions, ...topics, ...attempts, ...examAttempts, ...vocabularyEntries].filter((item) => `${item.title} ${item.kind}`.toLowerCase().includes(search)).slice(0, 12);
   }, [query, fb.state, navigate]);
   useEffect(() => { document.getElementById(`command-${selected}`)?.scrollIntoView?.({ block: 'nearest' }); }, [selected, query, items.length]);
   const choose = (item) => { onClose(); if (item.path) navigateWithPracticeGuard(item.path, item.run); else item.run(); };
@@ -68,7 +70,7 @@ export function CommandSearch({ open, onClose }: { open: boolean; onClose: () =>
     <div className="command-input"><Search size={20} /><input autoFocus role="combobox" aria-autocomplete="list" aria-expanded="true" aria-label="Search Fieldbook" placeholder="Search your workspace" value={query} onChange={(e) => { setQuery(e.target.value); setSelected(0); }} aria-controls="command-results" aria-activedescendant={items[selected] ? `command-${selected}` : undefined} onKeyDown={(e) => {
       if (e.key === 'ArrowDown') { e.preventDefault(); setSelected((v) => Math.max(0, Math.min(v + 1, items.length - 1))); }
       if (e.key === 'ArrowUp') { e.preventDefault(); setSelected((v) => Math.max(v - 1, 0)); }
-      if (e.key === 'Enter' && items[selected]) { e.preventDefault(); choose(items[selected]); }
+      if (e.key === 'Enter' && !e.nativeEvent.isComposing && e.nativeEvent.keyCode !== 229 && items[selected]) { e.preventDefault(); choose(items[selected]); }
     }} /></div>
     {requirements.error ? <div className="command-load-state"><p role="alert">{requirements.error}</p><button type="button" className="btn line" onClick={requirements.retry}>Retry search</button></div> : !requirements.ready && <div className="command-load-state"><InlineLoadingState message="Loading workspace results..." onRetry={requirements.retry} retryLabel="Retry search" /></div>}
     <div className="command-results" id="command-results" role="listbox" aria-label="Search results" aria-busy={!requirements.ready}> {items.length ? items.map((item, index) => <button type="button" role="option" tabIndex={-1} aria-selected={selected === index} id={`command-${index}`} key={item.id} onMouseEnter={() => setSelected(index)} onClick={() => choose(item)}><item.Icon size={18} /><span>{item.title}<small>{item.kind}</small></span></button>) : requirements.ready ? <div className="empty">No matching results.</div> : null}</div>
@@ -79,6 +81,9 @@ const MOBILE_LABELS = { listening: 'Listen', reading: 'Read', writing: 'Write', 
 
 export function MobileNavigation({ onMore, onSelectModule }: { onMore: () => void; onSelectModule?: (id: string) => void }) {
   const fb = useFieldbook();
+  const [studyOpen, setStudyOpen] = useState(false);
+  const selectingStudy = useRef(false);
+  const [pendingStudy, setPendingStudy] = useState(null);
   const { pathname, search } = useLocation();
   const activeModule = moduleFor(pathname, search, fb.activeSkill);
   const navigate = useNavigate();
@@ -87,8 +92,26 @@ export function MobileNavigation({ onMore, onSelectModule }: { onMore: () => voi
     if (activeModule === id) return;
     navigateWithPracticeGuard(to, () => ['writing', 'speaking', 'reading', 'listening'].includes(id) ? fb.setSkill(id, to) : navigate(to));
   };
+  const skills = ['listening', 'reading', 'writing', 'speaking'].map(id => workspaceModules.find(link => link.id === id));
+  const activeSkill = skills.find(link => link.id === activeModule);
+  useEffect(() => {
+    if (studyOpen || !pendingStudy) return;
+    setPendingStudy(null);
+    select(pendingStudy.id, pendingStudy.to);
+  }, [studyOpen, pendingStudy]);
+  const mainLink = id => {
+    const { to, label, Icon } = workspaceModules.find(link => link.id === id);
+    return <Link key={id} to={to} aria-current={activeModule === id ? 'page' : undefined} className={activeModule === id ? 'active' : undefined} aria-label={label} data-practice-navigation onClick={event => { if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); select(id, to); }}><Icon size={20} aria-hidden="true"/><span>{MOBILE_LABELS[id] || label}</span></Link>;
+  };
   return <nav className="mobile-navigation" aria-label="Main navigation">
-    {workspaceModules.filter(link => ['today', 'planning', 'listening', 'reading', 'vocabulary'].includes(link.id)).map(({ id, to, label, Icon }) => ['today','planning','vocabulary'].includes(id) ? <Link key={id} to={to} aria-current={activeModule === id ? 'page' : undefined} className={activeModule === id ? 'active' : undefined} aria-label={label} data-practice-navigation onClick={event => { if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); select(id, to); }}><Icon size={20} /><span>{MOBILE_LABELS[id] || label}</span></Link> : <button key={id} type="button" aria-label={label} aria-current={activeModule === id ? 'page' : undefined} className={activeModule === id ? 'active' : undefined} onClick={() => select(id, to)}><Icon size={20} /><span>{MOBILE_LABELS[id] || label}</span></button>)}
-    <button type="button" className={['writing', 'speaking', 'progress', 'settings', 'account'].includes(activeModule) ? 'active' : undefined} aria-current={['writing', 'speaking', 'progress', 'settings', 'account'].includes(activeModule) ? 'page' : undefined} onClick={onMore}><MoreHorizontal size={20} /><span>More</span></button>
+    {mainLink('today')}{mainLink('planning')}
+    <DropdownMenu.Root open={studyOpen} onOpenChange={open => { if (open) selectingStudy.current = false; setStudyOpen(open); }}>
+      <DropdownMenu.Trigger type="button" className={activeSkill ? 'active' : undefined} aria-current={activeSkill ? 'page' : undefined} aria-label={activeSkill ? `Study: ${activeSkill.label}` : 'Study'}><BookOpen size={20} aria-hidden="true"/><span>Study</span></DropdownMenu.Trigger>
+      {studyOpen && <DropdownMenu.Portal><DropdownMenu.Content className="dropdown-content mobile-study-menu" side="top" align="center" sideOffset={12} collisionPadding={12} aria-label="Study skills" onCloseAutoFocus={event => { if (selectingStudy.current) event.preventDefault(); }}>
+        {skills.map(({id,to,label,Icon}) => <DropdownMenu.Item key={id} className="dropdown-item" aria-current={activeModule === id ? 'page' : undefined} onSelect={() => { selectingStudy.current = true; setStudyOpen(false); setPendingStudy({id,to}); }}><Icon size={18} aria-hidden="true"/>{label}{activeModule === id && <Check className="item-check" size={16} aria-hidden="true"/>}</DropdownMenu.Item>)}
+      </DropdownMenu.Content></DropdownMenu.Portal>}
+    </DropdownMenu.Root>
+    {mainLink('vocabulary')}
+    <button type="button" className={['progress', 'settings', 'account'].includes(activeModule) ? 'active' : undefined} aria-current={['progress', 'settings', 'account'].includes(activeModule) ? 'page' : undefined} onClick={onMore}><MoreHorizontal size={20} aria-hidden="true"/><span>More</span></button>
   </nav>;
 }

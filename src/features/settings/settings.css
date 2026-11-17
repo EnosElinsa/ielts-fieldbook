@@ -27,7 +27,7 @@
 .settings-category-picker { display: none; }
 .settings-categories { min-width: 0; gap: 24px; padding-right: 20px; position: sticky; top: 24px; }
 .settings-category-section { display: grid; gap: 4px; min-width: 0; }
-.settings-category-group { margin: 4px 12px 8px; font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.settings-category-group { margin: 4px 12px 8px; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .settings-categories a { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 11px 12px; font-size: 13px; line-height: 1.5; }
 .settings-categories a > svg { flex: 0 0 18px; }
 .settings-categories a > span { min-width: 0; overflow-wrap: break-word; text-wrap: pretty; }
@@ -50,11 +50,11 @@
 .settings-group .settings-field-help { margin: 12px 0; }
 .settings-group > .btn, .settings-group .btn-row .btn { min-height: 44px; }
 .settings-page .settings-group .btn-row { justify-content: flex-start; flex-wrap: wrap; gap: 8px; }
-.settings-draft-status { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 7px; }
+.settings-draft-status { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 7px; }
 .settings-draft-status::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
 .settings-fields .form { margin: 0; gap: 24px 20px; }
 .settings-fields .field { gap: 10px; font-size: 13px; }
-.settings-fields input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), .settings-fields select, .settings-fields .select-field, .settings-fields .date-field > .filter-trigger, .settings-category-picker select { width: 100%; background: var(--sheet); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; padding: 11px 12px; min-height: 44px; }
+.settings-fields input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), .settings-fields select, .settings-fields .select-field, .settings-category-picker select { width: 100%; background: var(--sheet); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; padding: 11px 12px; min-height: 44px; }
 .settings-fields .date-field { width: 100%; }
 .settings-page :is(button, a, input, select, summary):focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 .settings-skills label, .settings-toggle { font-size: 13px; }
@@ -77,9 +77,9 @@
 .settings-weekday input:checked + span svg { visibility: visible; }
 .settings-weekday input:focus-visible + span { outline: 2px solid var(--blue); outline-offset: 3px; }
 .settings-week-summary { display: grid; grid-template-columns: 1.3fr 1fr 1fr; margin: 0; gap: 16px; }
-.settings-week-summary dt { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+.settings-week-summary dt { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
 .settings-week-summary dd { margin: 0; font-size: 22px; font-weight: 600; }
-.settings-week-summary small { color: var(--muted); font-size: 11px; font-weight: 400; }
+.settings-week-summary small { color: var(--muted); font-size: 12px; font-weight: 400; }
 .settings-plan-preview { font-size: 12px; padding: 18px 0; }
 .settings-plan-preview summary { cursor: pointer; display: flex; align-items: center; gap: 10px; min-height: 28px; font-weight: 600; }
 .settings-plan-preview summary::after { content: '+'; margin-left: auto; font-size: 18px; color: var(--muted); }
@@ -121,7 +121,7 @@
   .settings-save-buttons > .btn:last-child { grid-column: 1 / -1; }
   .settings-save-buttons .btn { flex: 1; font-size: 12px; }
   .settings-weekdays { gap: 4px; }
-  .settings-weekday > span { height: 60px; font-size: 11px; }
+  .settings-weekday > span { height: 60px; font-size: 12px; }
   .settings-week-summary { gap: 10px; }
   .settings-week-summary dd { font-size: 20px; }
   .settings-week-summary small { display: block; margin-top: 4px; }
@@ -194,3 +194,5 @@
   .settings-schedule .settings-time-controls > .settings-segment { align-self: end; }
   .settings-fields:has(.settings-schedule) .settings-weight-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
+
+.settings-field-help, .settings-input-help, .settings-save-help, .settings-help > p { font-size: 13px; }
