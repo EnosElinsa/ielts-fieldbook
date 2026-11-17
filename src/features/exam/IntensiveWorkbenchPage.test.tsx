@@ -34,7 +34,7 @@ function RecallProbe() {
 beforeEach(() => {
   mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); mocks.putAudio.mockReset().mockResolvedValue(undefined);
   const state = { intensiveSessions: [] };
-  mocks.fb = { state, stateRef: { current: state }, setState: vi.fn((next: any) => { mocks.fb.state = next; }), setEditingVocabularyId: vi.fn(), setVocabularySeed: vi.fn(), openModal: vi.fn(), persistNow: vi.fn(async (draft: any) => { mocks.fb.state = draft; mocks.fb.stateRef.current = draft; return true; }) };
+  mocks.fb = { state, stateRef: { current: state }, ensurePlanningRows: vi.fn().mockResolvedValue(undefined), setState: vi.fn((next: any) => { mocks.fb.state = next; }), setEditingVocabularyId: vi.fn(), setVocabularySeed: vi.fn(), openModal: vi.fn(), persistNow: vi.fn(async (draft: any) => { mocks.fb.state = draft; mocks.fb.stateRef.current = draft; return true; }) };
   const NativeURL = globalThis.URL;
   vi.stubGlobal('URL', Object.assign(NativeURL, { createObjectURL: () => 'blob:recording', revokeObjectURL: vi.fn() }));
 });
@@ -400,6 +400,37 @@ it('a planned sentence cannot be replaced by a different sentence in the URL',as
   expect(await screen.findByRole('heading',{name:'Sentence 2'})).toBeInTheDocument();
   expect(screen.queryByLabelText('Jump to sentence')).not.toBeInTheDocument();
   expect(screen.queryByRole('heading',{name:'Sentences'})).not.toBeInTheDocument();
+});
+
+it('a legacy planned listening check keeps a single sentence without a review URL flag',async()=>{
+  mocks.fb.state.plans=[{id:'legacy-review',kind:'listening-intensive',origin:'automatic',schemaVersion:2,completion:{type:'review',description:'Complete the selected sentence listening review.'},target:{type:'intensive',sectionId:'part',sentenceId:'s2'}}];
+  mocks.fb.state.intensiveSessions=[{...createIntensiveSession('part','s2'),stage:6,dictationResult:'partial',completedAt:'2020-01-01',nextReviewAt:'2020-01-02'}];
+  render(<MemoryRouter initialEntries={['/listening/intensive/part?planId=legacy-review&sentence=s1']}><IntensiveWorkbenchPage sectionId="part"/><NavigationProbe/></MemoryRouter>);
+  expect(await screen.findByRole('heading',{name:'Listening review due'})).toBeInTheDocument();
+  expect(screen.getByText('Sentence 2 · Listening review')).toBeInTheDocument();
+  expect(screen.queryByRole('heading',{name:'Sentences'})).not.toBeInTheDocument();
+  await waitFor(()=>expect(screen.getByLabelText('Sentence URL').textContent).toContain('review=sentence'));
+  expect(new URLSearchParams(screen.getByLabelText('Sentence URL').textContent!).get('sentence')).toBe('s2');
+});
+
+it('a missing planned task never opens an unrelated full-section session',async()=>{
+  open('/listening/intensive/part?planId=missing&sentence=s2');
+  expect(await screen.findByText('Planned sentence unavailable')).toBeInTheDocument();
+  expect(screen.queryByRole('heading',{name:'Sentences'})).not.toBeInTheDocument();
+  expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+it('loads an older task omitted from the active planning summary before showing its sentence',async()=>{
+  let finish:()=>void=()=>{};
+  const task={id:'old-task',kind:'listening-intensive',target:{type:'intensive',sectionId:'part',sentenceId:'s2'}};
+  mocks.fb.ensurePlanningRows=vi.fn(()=>new Promise<void>(resolve=>{finish=()=>{mocks.fb.state.plans=[task];resolve();};}));
+  open('/listening/intensive/part?planId=old-task&sentence=s1');
+  await waitFor(()=>expect(mocks.fb.ensurePlanningRows).toHaveBeenCalledWith(['old-task']));
+  expect(screen.queryByRole('heading',{name:'Sentences'})).not.toBeInTheDocument();
+  finish();
+  expect(await screen.findByRole('heading',{name:'Sentence 2'})).toBeInTheDocument();
+  expect(screen.queryByLabelText('Jump to sentence')).not.toBeInTheDocument();
 });
 
 it('saving a single review preserves concurrent work and pending drafts for other sentences',async()=>{

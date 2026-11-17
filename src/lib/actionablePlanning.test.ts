@@ -2,7 +2,7 @@
 import { expect, test } from 'vitest';
 import { emptyState, migrateState } from '../domain';
 import { addVocabularyItem, recordVocabularyReview } from '../domain/vocabulary';
-import { ensureUnifiedPlans, mutateStudyPlan, studyBudget } from './planTemplates';
+import { ensureUnifiedPlans, mutateStudyPlan, skillTask, studyBudget } from './planTemplates';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 const now = new Date('2026-10-14T12:00:00');
 const setup = () => { const state=emptyState(); state.settings.days=[1,2,3,4,5,6,7]; state.settings.dailyMinutes=90; return state; };
@@ -37,6 +37,73 @@ test('full-task preference allocates complete writing blocks before the short re
   const tasks=ensureUnifiedPlans(state,undefined,now).filter(p=>p.dateKey==='2026-10-14');
   expect(tasks.map(p=>p.estimatedMinutes).sort((a,b)=>b-a)).toEqual([40,40,10]);
   expect(tasks.filter(p=>p.deskMode==='timed')).toHaveLength(2);
+});
+test('longer writing sessions keep other skills evenly split and respect the writing focus',()=>{
+  for(const skill of ['speaking','reading','listening']) {
+    const state=setup();state.settings.skills=[skill];
+    state.settings.planning={...state.settings.planning,vocabularyMinutes:0,vocabularyMode:'fixed',preferFullTasks:true};
+    const tasks=ensureUnifiedPlans(state,undefined,now).filter(p=>p.dateKey==='2026-10-14');
+    expect(tasks.map(p=>p.estimatedMinutes)).toEqual([30,30,30]);
+    state.settings.dailyMinutes=65;
+    expect(ensureUnifiedPlans(state,undefined,now).filter(p=>p.dateKey==='2026-10-14').map(p=>p.estimatedMinutes)).toEqual([22,22,21]);
+  }
+  const state=setup();state.settings.skills=['writing'];state.settings.focus='task1';state.settings.dailyMinutes=50;
+  Object.assign(state.settings.planning,{vocabularyMinutes:0,vocabularyMode:'fixed',preferFullTasks:true,blockMinutes:20});
+  const tasks=ensureUnifiedPlans(state,undefined,now).filter(p=>p.dateKey==='2026-10-14');
+  expect(tasks.map(p=>p.estimatedMinutes)).toEqual([20,20,10]);
+  expect(tasks.filter(p=>p.deskMode==='timed')).toHaveLength(2);
+});
+
+test('complete writing responses retain spare minutes instead of adding a trivial drill',()=>{
+  const state=setup();state.settings.dailyMinutes=45;state.settings.skills=['writing'];state.settings.focus='task2';
+  Object.assign(state.settings.planning,{vocabularyMode:'fixed',vocabularyMinutes:0,preferFullTasks:true});
+  const tasks=ensureUnifiedPlans(state,undefined,now).filter(p=>p.dateKey==='2026-10-14');
+  expect(tasks).toHaveLength(1);expect(tasks[0]).toMatchObject({deskMode:'timed',estimatedMinutes:45});
+});
+
+test('weakness recommendations respect explicit part choices and complete-writing preference',()=>{
+  const state=setup();
+  state.assessments=[{id:'weak',skill:'writing',date:'2026-10-14T09:00:00',practiceMode:'timed',criteria:[{name:'Task Response',score:'5'},{name:'Coherence and Cohesion',score:'7'}]}];
+  state.settings.focus='task1';
+  expect(skillTask(state,'writing',20)).toMatchObject({kind:'1',deskMode:'timed'});
+  state.settings.focus='task2';
+  expect(skillTask(state,'writing',40)).toMatchObject({kind:'2',deskMode:'outline'});
+  state.settings.planning.preferFullTasks=true;
+  expect(skillTask(state,'writing',40)).toMatchObject({kind:'2',deskMode:'timed'});
+  state.assessments=[{id:'weak-speaking',skill:'speaking',date:'2026-10-14T09:00:00',practiceMode:'full',criteria:[{name:'Fluency and Coherence',score:'5'},{name:'Lexical Resource',score:'7'}]}];
+  state.settings.speakingFocus='part2';
+  expect(skillTask(state,'speaking',10)).toMatchObject({kind:'speaking-p2'});
+});
+
+test('one focused skill session still allocates the entire new-word goal across exact batches',()=>{
+  const state=setup(),unit={id:'focus-batch-group',bookId:'focus-batch-book',kind:'group',order:1,entryIds:Array.from({length:40},(_,i)=>`focus-word-${i}`)};
+  state.wordbookEnrollments=[{bookId:unit.bookId,id:'enrolled'}];state.settings.vocabulary.learningBatchSize=10;
+  Object.assign(state.settings.planning,{vocabularyMode:'fixed',vocabularyMinutes:30,newWordsPerDay:25,multipleTasks:false});
+  VOCABULARY_CATALOG.units.push(unit);
+  try {
+    const tasks=ensureUnifiedPlans(state,undefined,now).filter(p=>p.dateKey==='2026-10-14');
+    const vocabulary=tasks.filter(p=>p.target?.mode==='learning-batch');
+    expect(vocabulary.map(p=>p.quantity)).toEqual([10,10,5]);
+    expect(vocabulary.flatMap(p=>p.target.entryIds)).toEqual(unit.entryIds.slice(0,25));
+    expect(vocabulary.map(p=>p.target.allocation)).toEqual([
+      {batchSize:10,sourceRemaining:40,dailyRemaining:25,minutesRemaining:30},
+      {batchSize:10,sourceRemaining:30,dailyRemaining:15,minutesRemaining:20},
+      {batchSize:10,sourceRemaining:20,dailyRemaining:5,minutesRemaining:10},
+    ]);
+    expect(tasks.filter(p=>p.skill!=='vocabulary')).toHaveLength(1);
+    expect(tasks.reduce((sum,p)=>sum+p.estimatedMinutes,0)).toBe(90);
+    const before=structuredClone(state.plans);ensureUnifiedPlans(state,undefined,now);expect(state.plans).toEqual(before);
+  } finally { VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1); }
+});
+
+test.each([{source:9,goal:10,time:15},{source:30,goal:9,time:15},{source:30,goal:20,time:9}])('short learning batches record the actual source, goal and time constraints: %j',({source,goal,time})=>{
+  const state=setup(),unit={id:'short-group',bookId:'short-book',kind:'group',order:1,entryIds:Array.from({length:source},(_,i)=>`short-word-${i}`)};
+  state.wordbookEnrollments=[{bookId:unit.bookId,id:'enrolled'}];Object.assign(state.settings.planning,{vocabularyMode:'fixed',vocabularyMinutes:time,newWordsPerDay:goal});
+  VOCABULARY_CATALOG.units.push(unit);
+  try {
+    const task=ensureUnifiedPlans(state,undefined,now).find(p=>p.dateKey==='2026-10-14'&&p.target?.mode==='learning-batch');
+    expect(task.quantity).toBe(9);expect(task.target.allocation).toEqual({batchSize:10,sourceRemaining:source,dailyRemaining:goal,minutesRemaining:time});
+  } finally {VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);}
 });
 test('add, resize and duplicate require explicit over-budget confirmation and clear completion bindings',()=>{
   const state=setup(); state.settings.dailyMinutes=30;

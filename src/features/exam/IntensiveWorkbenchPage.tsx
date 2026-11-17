@@ -233,9 +233,17 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
   }, [sectionId, owner, retry]);
 
   const section = catalog?.sections.find(row => row.id === sectionId);
-  const boundTask = ((fb.state.plans || []) as any[]).find(plan => plan.id === search.get('planId') && plan.target?.type === 'intensive');
-  const sentenceReview = search.get('review') === 'sentence' || Boolean(boundTask && isListeningCheckPlan(boundTask));
-  const singleSentence = sentenceReview || Boolean(boundTask);
+  const planId=search.get('planId');
+  const boundTask = ((fb.state.plans || []) as any[]).find(plan => plan.id === planId && plan.target?.type === 'intensive');
+  const [planRead,setPlanRead]=useState<{id:string;error:string}|null>(null);
+  useEffect(()=>{
+    if(!planId||boundTask)return;
+    let active=true;
+    void fb.ensurePlanningRows([planId]).then(()=>{if(active&&accountId()===owner)setPlanRead({id:planId,error:''});},()=>{if(active&&accountId()===owner)setPlanRead({id:planId,error:'Could not load the assigned task. Retry or return to Planning.'});});
+    return()=>{active=false;};
+  },[planId,boundTask,fb.ensurePlanningRows,owner,retry]);
+  const sentenceReview = boundTask ? isListeningCheckPlan(boundTask) : search.get('review') === 'sentence';
+  const singleSentence = sentenceReview || Boolean(planId);
   const requestedSentence=boundTask?.target?.sentenceId || boundTask?.sentenceId || search.get('sentence') || search.get('sentenceId');
   function sourceMockActive() {
     const local = section?.paperId ? readExamRecoveries<ExamAttempt>(owner, `listening:mock:${section.paperId}`).filter(attempt => attempt.sourceId === section.paperId) : [];
@@ -251,10 +259,14 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
     const id = section.sentences[selected].id;
     setIndex(selected);
     writeExamRecovery(owner, `${recoveryKey}:position`, id);
-    if (!requested) { const next = new URLSearchParams(search); next.set('sentence', id); setSearch(next, { replace: true, state: location.state }); }
-  }, [section, search, owner, recoveryKey, setSearch, requestedSentence, singleSentence]);
+    const next = new URLSearchParams(search);
+    if (!requested || boundTask) next.set('sentence', id);
+    if(boundTask){if(sentenceReview)next.set('review','sentence');else next.delete('review');}
+    if(next.toString()!==search.toString())setSearch(next, { replace: true, state: location.state });
+  }, [section, search, owner, recoveryKey, setSearch, requestedSentence, singleSentence, boundTask, sentenceReview, location.state]);
   useEffect(() => { sentencesPanel.current?.querySelector('[aria-current="step"]')?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' }); }, [index, section?.id]);
   const sentence: ExamSentence | undefined = singleSentence ? section?.sentences.find(row=>row.id===requestedSentence) : section?.sentences[index];
+  const sentenceIndex = singleSentence && sentence ? section!.sentences.indexOf(sentence) : index;
   const session = sentence ? sessions[sentence.id] || createIntensiveSession(sectionId, sentence.id) : null;
   const asset: ExamAsset | undefined = catalog?.assets.find(row => row.id === (sentence?.assetId || section?.assetId));
   useEffect(() => {
@@ -418,6 +430,9 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
   if (loadingError) return <section className="panel intensive-workbench">{backLink}<h1>Intensive listening</h1><StateMessage kind="error" message={loadingError} onRetry={() => setRetry(value => value + 1)} retryLabel="Retry material" /></section>;
   if (!catalog) return <section className="intensive-workbench">{backLink}<PageLoadingState variant="workbench" message="Loading intensive listening material…" onRetry={() => setRetry(value => value + 1)} retryLabel="Retry material" /></section>;
   if (!section || section.skill !== 'listening') return <section className="intensive-workbench">{backLink}<StateMessage title="Listening section unavailable" /></section>;
+  if(planId&&!boundTask&&planRead?.id!==planId)return <section className="intensive-workbench">{backLink}<PageLoadingState variant="workbench" message="Loading the assigned sentence…" /></section>;
+  if(planId&&!boundTask&&planRead?.error)return <section className="intensive-workbench">{backLink}<StateMessage kind="error" message={planRead.error} onRetry={()=>{setPlanRead(null);setRetry(value=>value+1);}} /></section>;
+  if(planId&&!boundTask)return <section className="intensive-workbench">{backLink}<StateMessage title="Planned sentence unavailable" message="This task could not be found. Return to your plan and open its current sentence." /></section>;
   if(singleSentence&&(!sentence||boundTask&&(boundTask.target.sectionId||boundTask.sectionId)&&(boundTask.target.sectionId||boundTask.sectionId)!==sectionId))return <section className="intensive-workbench">{backLink}<StateMessage title="Sentence unavailable" message="This link does not identify an available sentence in this section." /></section>;
   if(sentenceReview&&!session?.completedAt&&!(session?.reviewHistory?.length))return <section className="intensive-workbench">{backLink}<StateMessage title="Sentence review unavailable" message="Complete this sentence's intensive practice before starting a listening review." /><ExamStudyLink className="btn line" to={`/listening/intensive/${encodeURIComponent(sectionId)}?sentence=${encodeURIComponent(sentence!.id)}`}>Open intensive practice</ExamStudyLink></section>;
   const hasTiming = Boolean(sentence && (session?.correctedStart ?? sentence.start) !== undefined && (session?.correctedEnd ?? sentence.end) !== undefined);
@@ -438,7 +453,7 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
   const hiddenWhileBlind = <p className="intensive-action-hint">Hidden while you re-listen without the transcript.</p>;
 
   return <section className="intensive-workbench">
-    <header className="intensive-header"><div>{backLink}<h2>{catalog.papers.find(paper => paper.id === section.paperId)?.title || 'Listening'} · {section.title}</h2><div className="intensive-progress"><p>{singleSentence ? `Sentence ${index+1} · ${sentenceReview?'Listening review':'Intensive practice'}` : `${completedCount} / ${section.sentences.length} sentences completed`}</p>{status && <span className={`intensive-save-status ${status === 'Progress saved.' ? 'is-saved' : ''}`} role="status">{status}</span>}</div></div>{!completionSaved && <button className="btn line" disabled={saving || !sentence} onClick={() => void save()}><Save size={16} />{saving ? 'Saving…' : 'Save progress'}</button>}</header>
+    <header className="intensive-header"><div>{backLink}<h2>{catalog.papers.find(paper => paper.id === section.paperId)?.title || 'Listening'} · {section.title}</h2><div className="intensive-progress"><p>{singleSentence ? `Sentence ${sentenceIndex+1} · ${sentenceReview?'Listening review':'Intensive practice'}` : `${completedCount} / ${section.sentences.length} sentences completed`}</p>{status && <span className={`intensive-save-status ${status === 'Progress saved.' ? 'is-saved' : ''}`} role="status">{status}</span>}</div></div>{!completionSaved && <button className="btn line" disabled={saving || !sentence} onClick={() => void save()}><Save size={16} />{saving ? 'Saving…' : 'Save progress'}</button>}</header>
     {!completionSaved && <ol className="intensive-stages" aria-label="Intensive listening method">{steps.map((step, stepIndex) => { const number = stepIndex + 1; const state = stepState(number); const content = <><span className="intensive-stage-number" aria-hidden="true">{state === 'done' ? <Check size={13} /> : number}</span><span className="intensive-stage-label">{step.title}</span></>; return <li key={step.title} className={state === 'done' ? 'done' : ''} title={step.stages.map(stage => stages[stage]).join(' · ')}>{sentence ? <a href={`#${stepTargets[stepIndex]}`} aria-current={activeStep === number ? 'step' : undefined} onClick={() => { if (state !== 'locked') setOpenSteps(current => [...new Set([...current, number])]); }}>{content}</a> : <div>{content}</div>}</li>; })}</ol>}
     {saveError ? <p role="alert" className="audio-error">{saveError}</p> : null}
     {!section.sentences.length ? <div className="panel"><h2>Transcript unavailable</h2><p>This section has no imported sentence transcript yet. Full-track listening is available when audio has been imported; dictation comparison and sentence loops need the source transcript and timing.</p>{audioUrl ? <RecordingPlayer src={audioUrl} label="Full listening track" /> : <p role="status">{audioError || 'Listening audio unavailable.'}</p>}</div> : null}
@@ -446,7 +461,7 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
       {!singleSentence && <aside ref={sentencesPanel} className="panel intensive-sentences"><h2>Sentences</h2>{section.sentences.map((row, rowIndex) => { const rowStatus = sentenceStatus(sessions[row.id]); return <button key={row.id} className={`intensive-sentence ${rowIndex === index ? 'active' : ''}`} aria-current={rowIndex === index ? 'step' : undefined} disabled={savingListeningReview} onClick={() => choose(rowIndex)}><span>Sentence {rowIndex + 1}</span><span className={`intensive-sentence-status is-${rowStatus.tone}`}><span className="intensive-status-dot" aria-hidden="true" />{rowStatus.label}</span></button>; })}<p className="file-hint">Return to weak sentences after a delay, then practise without the transcript first.</p></aside>}
       <div className="intensive-main">
         {completionSaved ? <IntensiveSentenceReview key={`${owner}:${sentence.id}:${session.completedAt}`} owner={owner} session={session} sentence={sentence} audioUrl={audioUrl} audioError={audioError} busy={savingListeningReview} onRetryAudio={() => setAssetRetry(value => value + 1)} onSave={saveListeningReview} onReviewEnabledChange={saveReviewPreference} onRestart={() => { if (listeningReviewSavingRef.current) return; change(value => applyIntensiveStage(value, 'review')); resetCyclePresentation(); }} onNext={!singleSentence && index < section.sentences.length - 1 ? () => choose(index + 1) : undefined} /> : <>
-        <IntensivePlayerPanel><div className="intensive-player-heading"><h2>Sentence {index + 1}{!singleSentence ? ` / ${section.sentences.length}` : ''}</h2>{!singleSentence && <SelectField aria-label="Jump to sentence" value={index} onChange={event => choose(Number(event.target.value))}>{section.sentences.map((row, rowIndex) => <option key={row.id} value={rowIndex}>Sentence {rowIndex + 1}</option>)}</SelectField>}</div>
+        <IntensivePlayerPanel><div className="intensive-player-heading"><h2>Sentence {sentenceIndex + 1}{!singleSentence ? ` / ${section.sentences.length}` : ''}</h2>{!singleSentence && <SelectField aria-label="Jump to sentence" value={index} onChange={event => choose(Number(event.target.value))}>{section.sentences.map((row, rowIndex) => <option key={row.id} value={rowIndex}>Sentence {rowIndex + 1}</option>)}</SelectField>}</div>
           {!sentence.text.trim() ? <p role="status">Transcript unavailable for this sentence.</p> : null}
           {!hasTiming ? <p role="status">Sentence timing unavailable. Listen to the full track, or set accurate A/B points below.</p> : null}
           {audioUrl ? <IntensiveAudio ref={audioPlayer} scope={`${owner}:${sectionId}:${sentence.id}:${blind?'blind':'normal'}`} src={audioUrl} start={start} end={end} full={!hasTiming} speed={session.speed} loop={session.loop} onAvailabilityChange={setAudioReady} onPlaybackInvalidated={()=>{blindReplayStarted.current=false;}} previousDisabled={singleSentence || index === 0} nextDisabled={singleSentence || index === section.sentences.length - 1} onPrevious={() => choose(index - 1)} onNext={() => choose(index + 1)} onSpeedChange={speed => change(value => ({ ...value, speed }))} onLoopChange={loop => change(value => ({ ...value, loop }))} onReplay={() => { if (blind) blindReplayStarted.current = true; change(value => ({ ...value, replayCount: value.replayCount + 1 })); }} onSentenceEnd={() => { if (!hasTiming || blind && !blindReplayStarted.current) return; blindReplayStarted.current=false; change(value => applyIntensiveStage(value, blind ? 'blind-replayed' : 'listened')); }} /> : <div>{audioError ? <StateMessage kind="error" message={audioError} onRetry={() => setAssetRetry(value => value + 1)} retryLabel="Retry audio link" /> : !asset ? <StateMessage message="Listening audio unavailable for this section." /> : <InlineLoadingState message="Loading listening audio…" onRetry={() => setAssetRetry(value => value + 1)} retryLabel="Retry audio link" />}</div>}

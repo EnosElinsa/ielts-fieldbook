@@ -469,7 +469,10 @@ export function skillTask(state, skill, minutes, sequence = 0, useEvidence = tru
   const weak = useEvidence && ['writing','speaking'].includes(skill) ? practiceFromWeakness(state,skill) : null;
   if (weak) {
     const required = weak.deskMode === 'full' || weak.deskMode === 'timed' ? weak.kind === '2' ? 40 : weak.kind === '1' ? 20 : 5 : 1;
-    if (minutes >= required) template = {...template,...weak};
+    const focus=skill==='writing'?state.settings.focus:state.settings.speakingFocus;
+    const matchesFocus=!focus||focus==='balanced'||weak.kind===(skill==='writing'?(focus==='task1'?'1':'2'):`speaking-p${focus==='part1'?'1':'2'}`);
+    const keepFullWriting=skill==='writing'&&state.settings.planning?.multipleTasks!==false&&state.settings.planning?.preferFullTasks&&template.deskMode==='timed';
+    if (minutes >= required&&matchesFocus&&(!keepFullWriting||['full','timed'].includes(weak.deskMode))) template = {...template,...weak};
   }
   const questionId = template.questionId || deterministicQuestion(state,skill,template.kind,sequence);
   const target = ['writing','speaking'].includes(skill)
@@ -596,10 +599,11 @@ export function nextLearningTarget(state, reserved = new Set(), frozenCards = []
       const source=vocabularyLearningSource(state,group.bookId,group.id),ids=source.entryIds;
       if(capacity!==undefined){
         const limit=Math.min(batchSize,Math.max(0,Math.floor(capacity)));
-        const available=ids.filter(id=>!learned.has(id)&&!frozenCards.some(ref=>ref.entryId===id)).slice(0,limit);
+        const eligible=ids.filter(id=>!learned.has(id)&&!frozenCards.some(ref=>ref.entryId===id));
+        const available=eligible.slice(0,limit);
         if(!available.length)continue;
         const cards=available.map(id=>{const entry=source.entries.find(row=>row.id===id);return entry?.senses[0]?{entryId:id,senseId:entry.senses[0].id}:null;});
-        return {type:'vocabulary',mode:'learning-batch',assessmentMode,bookId:group.bookId,unitId:group.id,batchIndex:Math.floor(ids.indexOf(available[0])/batchSize),batchSize,selectionPolicy:'exact',entryIds:available,binding:cards.every(Boolean)?'frozen':'dynamic',cards:cards.every(Boolean)?cards:[]};
+        return {type:'vocabulary',mode:'learning-batch',assessmentMode,bookId:group.bookId,unitId:group.id,batchIndex:Math.floor(ids.indexOf(available[0])/batchSize),batchSize,selectionPolicy:'exact',entryIds:available,allocation:{batchSize,sourceRemaining:eligible.length},binding:cards.every(Boolean)?'frozen':'dynamic',cards:cards.every(Boolean)?cards:[]};
       }
       for(let index=0;index<Math.ceil(source.count/batchSize);index++) {
         const batchIds=ids.slice(index*batchSize,(index+1)*batchSize);
@@ -701,17 +705,18 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
     let remaining=remainingCapacity(state,key).vocabulary;
     const vocabularyTasks=[];
     const retainedNew=state.plans.filter(plan=>plan.dateKey===key&&plan.status!=='skipped'&&!plan.onHold&&!plan.archivedAt&&plan.target?.mode==='learning-batch').reduce((sum,plan)=>sum+(plan.target.cards?.length||plan.target.entryIds?.length||plan.quantity||plan.target.batchSize||0),0);
-    let newAllowance=Math.min(remaining,Math.max(0,budget.planning.newWordsPerDay-retainedNew));
+    let dailyNewRemaining=Math.max(0,budget.planning.newWordsPerDay-retainedNew);
+    let newAllowance=Math.min(remaining,dailyNewRemaining);
     let lastBookId;
     while(newAllowance>0){
       const target=nextLearningTarget(state,reserved,frozenCards,newAllowance,lastBookId,key);if(!target)break;
+      target.allocation={...target.allocation,dailyRemaining:dailyNewRemaining,minutesRemaining:remaining};
       lastBookId=target.bookId;
       const count=target.entryIds?.length||target.cards?.length||Math.min(target.batchSize,newAllowance);if(!count)break;
       const refs=target.cards?.length?target.cards:(target.entryIds||[]).map(entryId=>({entryId,senseId:''}));
       frozenCards.push(...refs.map(ref=>({...ref,mode:target.assessmentMode})));
       vocabularyTasks.push({skill:'vocabulary',kind:'vocabulary',title:`Vocabulary - Learn ${count} words`,description:'Learn the selected words, then submit their recall answers.',estimatedMinutes:count,quantity:count,deskMode:target.assessmentMode,target,completion:{type:'assessment',description:'Submit an answer for every selected word. Accuracy is tracked separately.'}});
-      newAllowance-=count;remaining-=count;
-      if(!budget.planning.multipleTasks)break;
+      newAllowance-=count;remaining-=count;dailyNewRemaining-=count;
     }
     while(remaining>0&&candidates.length) {
       const mode=candidates[0].card.mode,words=new Set(),chosen=[];
@@ -728,7 +733,7 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
     const daySkills=studyDaySkills(state.settings,key,skills);
     if(available>0&&daySkills.length) {
       if(budget.planning.multipleTasks) {
-        allocateStudyBlocks(skills,budget,available,sequence).forEach(({skill,minutes},index)=>{
+        allocateStudyBlocks(skills,budget,available,sequence,state.settings.focus).forEach(({skill,minutes},index)=>{
           add(key,skillTask(state,skill,minutes,sequence+index),`study-${key}-slot-${index+1}`,index+vocabularyOrder,sequence+index);
         });
       } else if(!state.plans.some(plan=>plan.dateKey===key&&plan.status!=='skipped'&&!isVocabularyPlan(plan))) {
@@ -784,7 +789,7 @@ function studyDaySkills(settings,key,skills) {
   return skills.filter(skill=>budget.planning.weights[skill]>0);
 }
 
-function allocateStudyBlocks(skills, budget, minutes, sequence) {
+function allocateStudyBlocks(skills, budget, minutes, sequence, writingFocus) {
   const {planning}=budget;
   let candidates=skills.filter(skill=>planning.weights[skill]>0);
   if (budget.focus!=='balanced' && skills.includes(budget.focus)) candidates=[budget.focus];
@@ -797,10 +802,13 @@ function allocateStudyBlocks(skills, budget, minutes, sequence) {
   for(let index=0;remainder>0;index=(index+1)%shares.length,remainder--)shares[index].minutes++;
   const blocks=[];
   for(const row of shares) {
-    const size=planning.preferFullTasks&&row.skill==='writing' ? Math.max(planning.blockMinutes,40) : planning.blockMinutes;
+    const fullWriting=planning.preferFullTasks&&row.skill==='writing';
+    const size=fullWriting ? Math.max(planning.blockMinutes,writingFocus==='task1'?20:40) : planning.blockMinutes;
     const count=Math.max(1,Math.ceil(row.minutes/size));
     for(let index=0;index<count;index++) {
-      const duration=planning.preferFullTasks ? Math.min(size,row.minutes-index*size) : Math.floor(row.minutes/count)+(index<row.minutes%count?1:0);
+      const duration=fullWriting ? Math.min(size,row.minutes-index*size) : Math.floor(row.minutes/count)+(index<row.minutes%count?1:0);
+      // Keep a few spare minutes with the response rather than creating a token drill.
+      if(fullWriting&&index===count-1&&index>0&&duration<10){blocks[blocks.length-1].minutes+=duration;continue;}
       if(duration>=(row.skill==='reading'?2:1))blocks.push({skill:row.skill,minutes:duration});
     }
   }

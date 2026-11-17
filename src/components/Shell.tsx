@@ -56,7 +56,7 @@ function WorkspaceRoute() {
   const title = pathname === '/planning' ? 'Planning' : /^\/(today)?$/.test(pathname) ? 'Today' : undefined;
   let modules = []; let banks = []; let area = 'study data';
   if (pathname.startsWith('/vocabulary')) { modules = [/^\/vocabulary\/(progress|import)(?:\/|$)/.test(pathname)?'vocabulary':'vocabularyCore']; area = 'vocabulary'; }
-  else if (/^\/(reading|listening)/.test(pathname)) { modules = ['receptive']; area = 'practice records'; }
+  else if (/^\/(reading|listening)/.test(pathname)) { modules = new URLSearchParams(search).get('planId') ? ['receptive','planning'] : ['receptive']; area = 'practice records'; }
   else if (pathname.startsWith('/progress')) { modules = ['productive','vocabulary','receptive']; area = 'progress'; }
   else if (pathname.startsWith('/write')) { modules = ['productive']; banks = ['writing']; area = 'writing records'; }
   else if (pathname.startsWith('/speak')) { modules = ['productive']; banks = ['speaking']; area = 'speaking records'; }

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SelectField } from '../../components/SelectField';
 import { SessionAudioPlayer } from '../../components/SessionAudioPlayer';
@@ -20,6 +20,7 @@ export function IntensiveSentenceReview({ owner, session, sentence, audioUrl, au
   onReviewEnabledChange: (enabled: boolean) => Promise<boolean>;
 }) {
   const key = `listening-review:${session.sectionId}:${sentence.id}:${session.completedAt}`;
+  const transcriptId=useId();
   const [draft, setDraft] = useState<Draft | null>(() => readExamRecovery<Draft>(owner, key));
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -89,8 +90,8 @@ export function IntensiveSentenceReview({ owner, session, sentence, audioUrl, au
       <label>How much did you understand?<SelectField aria-label="How much did you understand?" disabled={!draft?.listened || saving || Boolean(draft?.reviewedAt)} value={draft?.selfRating || ''} onChange={event => update({ ...draft!, selfRating: Number(event.target.value) as Review['selfRating'] })}><option value="">Choose a rating</option>{[1, 2, 3, 4, 5].map(rating => <option key={rating} value={rating}>{rating} · {['Need help', 'Difficult', 'Some gaps', 'Mostly clear', 'Clear and fluent'][rating - 1]}</option>)}</SelectField></label>
       <p className="intensive-action-hint">{draft?.listened ? 'Sentence heard in full. Choose a rating, then decide whether to keep reviewing.' : 'Listen from the beginning to the end before rating.'}</p>
       <label className="intensive-review-choice"><input type="checkbox" checked={keepReviewing} disabled={saving || busy || Boolean(draft?.reviewedAt)} onChange={event => update({ ...draft!, reviewEnabled: event.target.checked })} /><span>Schedule another listening review</span></label>
-      {draft?.selfRating ? keepReviewing ? <p className="intensive-next-review">Next review after saving: <strong>{date(nextIntensiveReview('correct', draft.selfRating, draft.reviewedAt))}</strong></p> : <p className="intensive-action-hint">Your rating will be saved without scheduling another review.</p> : null}
-      {draft?.listened ? <><button className="btn line" onClick={() => update({ ...draft, revealed: !draft.revealed })}>{draft.revealed ? 'Hide transcript' : 'Show transcript'}</button>{draft.revealed ? <blockquote>{sentence.text}</blockquote> : null}</> : null}
+      {draft?.selfRating && keepReviewing ? <p className="intensive-next-review">Next review after saving: <strong>{date(nextIntensiveReview('correct', draft.selfRating, draft.reviewedAt))}</strong></p> : null}
+      {draft?.listened ? <div className="intensive-review-transcript"><button type="button" className="btn line" aria-expanded={Boolean(draft.revealed)} aria-controls={transcriptId} onClick={() => update({ ...draft, revealed: !draft.revealed })}>{draft.revealed ? 'Hide transcript' : 'Show transcript'}</button><blockquote id={transcriptId} hidden={!draft.revealed}>{sentence.text}</blockquote></div> : null}
       <details><summary>Need more practice?</summary><p>Choose this to repeat dictation and shadowing, or correct sentence timing. Your previous work stays in history.</p><button className="btn line" disabled={saving} onClick={() => { clearExamRecovery(owner, key); onRestart(); }}>Practise dictation and shadowing again</button></details>
       <div className="intensive-actions"><button className="btn primary" disabled={saving || busy || !draft?.listened || !draft.selfRating} onClick={() => void saveReview()}>{saving ? 'Saving review…' : draft?.reviewedAt ? 'Retry saving review' : keepReviewing ? 'Save review and schedule next' : 'Save review and finish'}</button><button className="btn line" disabled={saving} onClick={() => { clearExamRecovery(owner, key); setDraft(null); setError(''); }}>Cancel review</button></div>
     </>}

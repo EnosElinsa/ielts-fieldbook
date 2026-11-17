@@ -103,11 +103,15 @@ export function useWorkspaceModuleMemory({ owner, ready, activeSkill, setSkill }
   }, [owner, ready, url, location.key, location.state, activeModule, navigationType]);
 
   const selectModule = (module: WorkspaceModule) => {
-    if (module === activeModule && module !== 'planning') return;
+    if (module === activeModule && module !== 'planning' && module !== 'settings') return;
     const link = workspaceModules.find(link => link.id === module);
     if (!link) return;
     // Planning is an overview: task deep links still work when opened explicitly.
-    const context = ready && module !== 'planning' ? readModuleContext(owner, module) : null;
+    const remembered = ready && module !== 'planning' ? readModuleContext(owner, module) : null;
+    // Global Settings resumes its category, not a previous contextual study visit.
+    const context = remembered && module === 'settings'
+      ? { ...remembered, url: remembered.url.split(/[?#]/)[0], state: null }
+      : remembered;
     const destination = context?.url || link.to;
     navigateWithPracticeGuard(destination, () => {
       // A delayed confirmation must never carry the previous account's context to a new owner.

@@ -66,7 +66,14 @@ test('due review is opt-in, hides prior answers and requires a complete blind pl
   await user.click(screen.getByRole('button', { name: 'Finish test audio' }));
   expect(screen.getByLabelText('How much did you understand?')).toBeEnabled();
   await user.click(screen.getByRole('button', { name: 'Show transcript' }));
-  expect(screen.getByText('The train leaves at nine.')).toBeVisible();
+  const transcript=screen.getByText('The train leaves at nine.');
+  expect(transcript).toBeVisible();
+  const toggle=screen.getByRole('button',{name:'Hide transcript'});
+  expect(toggle).toHaveAttribute('aria-expanded','true');
+  expect(toggle).toHaveAttribute('aria-controls',transcript.id);
+  await user.click(toggle);
+  expect(transcript).not.toBeVisible();
+  expect(screen.getByRole('button',{name:'Show transcript'})).toHaveAttribute('aria-expanded','false');
   await user.click(screen.getByText('Need more practice?'));
   await user.click(screen.getByRole('button', { name: 'Practise dictation and shadowing again' }));
   expect(onSave).not.toHaveBeenCalled();
