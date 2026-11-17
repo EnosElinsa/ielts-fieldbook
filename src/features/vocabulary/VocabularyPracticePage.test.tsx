@@ -3,7 +3,7 @@ import { IDBFactory } from 'fake-indexeddb';
 import { createEmptyCard } from 'ts-fsrs';
 import { vocabularySessionDrafts } from '../../storage/vocabularySessionDrafts';
 import { act, cleanup, configure, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { Profiler, Suspense, useState } from 'react';
+import { Profiler, Suspense, useRef, useState } from 'react';
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Link, useLocation, useNavigate, Routes, Route } from "react-router-dom";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
@@ -20,6 +20,7 @@ import { createVocabularySession, evaluateVocabularySessionAnswer, updateVocabul
 import { freezeVocabularyPronunciation } from '../../domain/vocabulary/sensePronunciation';
 import { WorkspaceScrollRestoration } from '../../components/WorkspaceScrollRestoration';
 import * as releasedVocabulary from '../../storage/vocabularyCatalog';
+import { SkipToContent } from '../../components/SkipToContent';
 
 // Large sessions render slowly when other test files share the machine.
 configure({ asyncUtilTimeout: 5000 });
@@ -1405,6 +1406,26 @@ test('More closes before the practice departure decision', async () => {
   await user.click(screen.getByRole('button', { name: 'Keep progress' }));
   expect(await screen.findByText('/progress')).toBeInTheDocument();
 });
+test('skip to content keeps an active practice session and its answers without asking to leave', async () => {
+  function Workspace() {
+    const main = useRef<HTMLElement>(null);
+    return <><SkipToContent targetRef={main} /><main ref={main} id="workspace-content" tabIndex={-1}><VocabularyPracticePage /></main><CurrentRoute /></>;
+  }
+  const user = userEvent.setup();
+  render(<MemoryRouter initialEntries={['/vocabulary/review?dueOnly=false']}><Workspace /></MemoryRouter>);
+  await user.click(await readyStart());
+  const answer = screen.getByRole('textbox', { name: 'Answer 1' });
+  await user.type(answer, 'my answer');
+  const skip = screen.getByRole('link', { name: 'Skip to main content' });
+  skip.focus();
+  await user.keyboard('{Enter}');
+  expect(screen.getByRole('main')).toHaveFocus();
+  expect(screen.queryByRole('dialog', { name: 'Exit practice session' })).not.toBeInTheDocument();
+  expect(answer).toHaveValue('my answer');
+  expect(screen.getByText('/vocabulary/review')).toBeInTheDocument();
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+});
+
 test('active internal navigation lets learners cancel or keep their draft before departure',async()=>{
 const user=userEvent.setup();render(<MemoryRouter initialEntries={['/vocabulary/review?dueOnly=false']}><Link to='/vocabulary/words'>Leave for words</Link><VocabularyPracticePage/><CurrentRoute/></MemoryRouter>);
 await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());await user.click(await readyStart());

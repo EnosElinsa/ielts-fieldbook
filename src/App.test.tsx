@@ -173,6 +173,16 @@ function renderAt(path: string) {
 
 const longEssay = Array.from({ length: 160 }, (_, i) => `word${i}`).join(' ');
 
+it('offers a keyboard shortcut past navigation without changing the task return address', async () => {
+  render(<MemoryRouter initialEntries={['/write?questionId=1#answer']}><AppRoutes /><RouteLocation /></MemoryRouter>);
+  const skip = await screen.findByRole('link', { name: 'Skip to main content' });
+  const main = screen.getByRole('main');
+  await userEvent.click(skip);
+  expect(document.activeElement).toBe(main);
+  expect(main.getAttribute('tabindex')).toBe('-1');
+  expect(screen.getByLabelText('Current route').textContent).toBe('/write?questionId=1#answer');
+});
+
 describe('Fieldbook UI', () => {
   it('shows only one route-shaped loader while cached questions await account hydration', () => {
     vi.mocked(hydrateState).mockImplementationOnce(() => new Promise(() => {}));

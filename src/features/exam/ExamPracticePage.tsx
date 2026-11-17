@@ -247,7 +247,7 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   };
   const requestSubmit = () => { if (attempt?.status !== 'completed' && unanswered.length) setConfirmSubmit(true); else void controller.submit(); };
   const handleShortcut = (event: KeyboardEvent<HTMLElement>) => {
-    if (event.defaultPrevented || event.nativeEvent.isComposing || event.repeat || disabled || confirmSubmit || mapPreview || event.target instanceof Element && event.target.closest('[role="dialog"],[role="listbox"],[contenteditable="true"]') || document.querySelector('[role="dialog"]')) return;
+    if (event.defaultPrevented || event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229 || event.repeat || disabled || confirmSubmit || mapPreview || event.target instanceof Element && event.target.closest('[role="dialog"],[role="listbox"],[contenteditable="true"]') || document.querySelector('[role="dialog"]')) return;
     const target = event.target as HTMLElement;
     const answer = target.closest('[id^="exam-inline-"],[id^="exam-question-"]');
     const targetIndex = questions.findIndex(question => answer?.id === `exam-inline-${question.id}` || answer?.id === `exam-question-${question.id}`);
