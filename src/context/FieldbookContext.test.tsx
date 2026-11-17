@@ -1727,7 +1727,7 @@ test('dynamic vocabulary starts freeze current candidates durably and retain Pla
   await act(async()=>{await fieldbook.persist(draft=>{draft.plans=draft.plans.filter(row=>row.id==='dynamic-review');});});
   await act(async()=>{expect(await fieldbook.startPlan('dynamic-review')).toBe(true);});
   expect(fieldbook.state.plans[0]).toMatchObject({status:'in_progress',target:{binding:'frozen',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]}});
-  expect(new URLSearchParams(currentPath.split('?')[1]).get('returnTo')).toBe('/planning?week=next#task-dynamic-review');
+  expect(new URLSearchParams(currentPath.split('?')[1]).get('returnTo')).toBe('/planning?week=next&view=schedule#task-dynamic-review');
   expect(mocks.saveState.mock.calls.at(-1)[0].plans[0].target.binding).toBe('frozen');
 });
 
@@ -1888,12 +1888,15 @@ test.each(['/today?view=overdue','/planning?view=overdue#planning-backlog'])('ac
   await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());fireEvent.click(screen.getByRole('button',{name:'Start session'}));
   fireEvent.change(await screen.findByRole('textbox',{name:'Answer 1'}),{target:{value:'persistent'}});fireEvent.click(screen.getByRole('button',{name:'Submit session'}));
   await waitFor(()=>expect(fieldbook.state.plans.find(plan=>plan.id==='return-old').status).toBe('completed'));
-  const destination=source.split('#')[0]+'#task-return-old';
+  const destination=(source.startsWith('/planning')?'/planning?view=waiting':source.split('#')[0])+'#task-return-old';
   const back=await screen.findByRole('link',{name:source.startsWith('/today')?'Back to Today':'Back to Planning'});
   expect(back).toHaveAttribute('href',destination);fireEvent.click(back);
   await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent(destination));
-  await waitFor(()=>expect(view.container.querySelector('#task-return-old')).toHaveFocus());
-  expect(view.container.querySelector('#task-return-old')).toHaveTextContent('Completed');
+  if(!source.startsWith('/planning'))await waitFor(()=>expect(view.container.querySelector('#task-return-old')).toHaveFocus());
+  if(source.startsWith('/planning')){
+   expect(await screen.findByRole('button',{name:/Waiting ·/})).toHaveAttribute('aria-pressed','true');
+   expect(view.container.querySelector('#task-return-old')).not.toBeInTheDocument();
+  }else expect(view.container.querySelector('#task-return-old')).toHaveTextContent('Completed');
   fireEvent.click(screen.getByRole('button',{name:'Browser back'}));expect(await screen.findByText('Before source')).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button',{name:'Browser forward'}));await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent(destination));
  }finally{view.unmount();scroll.mockRestore();window.history.replaceState({},'','/');}

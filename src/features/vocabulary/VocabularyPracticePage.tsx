@@ -31,7 +31,7 @@ export function VocabularyPracticePage() {
   return (
     <section className="view active vocabulary-view vocabulary-practice-view">
       <VocabularyNavigation />
-      <header className="practice-heading">
+      {!results && !resultRequested && <header className="practice-heading">
         {showSetup ? <div className="practice-heading-context">
           <VocabularyBackLink fallback={study && controller.bookId !== 'all' && controller.unitId !== 'all' ? `/vocabulary/wordbooks/${encodeURIComponent(controller.bookId)}/groups/${encodeURIComponent(controller.unitId)}/words` : '/vocabulary'}/>
           <h2>{study ? "Wordbook study" : "Vocabulary review"}</h2>
@@ -56,7 +56,7 @@ export function VocabularyPracticePage() {
             </button>
           ) : null}
         </div>
-      </header>
+      </header>}
       {unavailableSession ? <StateMessage title="This session isn't in your account"><VocabularyLink className="btn line" to="/vocabulary/history">Back to history</VocabularyLink></StateMessage> : error ? (
         <div className="practice-error" role="alert">
           <span>{error}</span>

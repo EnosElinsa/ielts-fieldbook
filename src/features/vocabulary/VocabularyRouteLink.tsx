@@ -5,13 +5,9 @@ import { accountId } from '../../storage/remote';
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { rememberVocabularyPosition, safeVocabularyReturn } from './vocabularyNavigation';
 import { normalizeVocabularyRoute } from '../../domain/vocabulary/identities';
+import { studyReturnDelta, type StudyReturnOrigin } from '../../lib/studyNavigation';
 
-type ReturnOrigin = {
-  owner: string | null;
-  url: string;
-  index?: number;
-  parent?: ReturnOrigin;
-};
+type ReturnOrigin = StudyReturnOrigin;
 
 function readOrigin(value: unknown, depth = 0): ReturnOrigin | undefined {
   if (!value || typeof value !== 'object' || depth >= 12) return;
@@ -80,7 +76,8 @@ export function useVocabularyReturn(fallback = '/vocabulary') {
     if (!resumedModule && latest && latest.url !== current) {
       // Pop to the real source entry, including any intermediate practice replacements.
       if (latest.index === undefined && !skippedMeaning) { navigate(-1); return; }
-      if (Number.isInteger(index) && Number.isInteger(latest.index) && index > latest.index!) { navigate(latest.index! - index); return; }
+      const delta = studyReturnDelta(latest, latest.url, accountId(), index, resumedModule);
+      if (delta !== undefined) { navigate(delta); return; }
     }
     // New tabs and direct URLs have no owned history entry to pop.
     navigate(to, {replace: true, state: {vocabularyReturn: latest?.parent, vocabularyRestore: true, ...(resumedModule ? {workspaceModuleRestore: {owner: accountId(), url: to}} : {})}});

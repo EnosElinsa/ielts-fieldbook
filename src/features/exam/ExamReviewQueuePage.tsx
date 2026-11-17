@@ -6,6 +6,7 @@ import type { ExamAttempt, ExamSkill, IntensiveSession } from '../../domain/exam
 import { dueIntensive } from '../../domain/exam/store';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { useExamCatalog } from './useExamCatalog';
+import { ExamStudyLink } from './ExamNavigation';
 import '../../styles/exam.css';
 
 export function ExamReviewQueuePage({ skill }: { skill: ExamSkill }) {
@@ -38,7 +39,7 @@ export function ExamReviewQueuePage({ skill }: { skill: ExamSkill }) {
         const section = dueCatalog.sections.find(row => row.id === session.sectionId) || catalog.sections.find(row => row.id === session.sectionId);
         const paper = catalog.papers.find(row => row.id === section?.paperId) || dueCatalog.papers.find(row => row.id === section?.paperId);
         const sentenceIndex = section?.sentences?.findIndex(row => row.id === session.sentenceId) ?? -1;
-        return <Link className="exam-queue-due" key={session.id} to={`/listening/intensive/${session.sectionId}?sentence=${encodeURIComponent(session.sentenceId)}`}>
+        return <ExamStudyLink className="exam-queue-due" key={session.id} to={`/listening/intensive/${session.sectionId}?sentence=${encodeURIComponent(session.sentenceId)}&review=sentence`}>
           <Headphones size={18} />
           <span>
             <small className="exam-due-source">{paper ? `Cambridge ${paper.book} / Test ${paper.test}` : 'Listening review'}</small>
@@ -46,7 +47,7 @@ export function ExamReviewQueuePage({ skill }: { skill: ExamSkill }) {
             <small>{session.errorReasons.join(' · ') || 'Listen and rate your understanding'}</small>
           </span>
           <ArrowRight size={16} />
-        </Link>;
+        </ExamStudyLink>;
       })}</div> : <p className="exam-queue-description">Sentences you include in listening review will appear here when due. You can also review a completed sentence at any time from its practice page.</p>}
       <details className="intensive-review-rule">
         <summary>How sentence reviews are scheduled</summary>

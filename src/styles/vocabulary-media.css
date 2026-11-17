@@ -12,6 +12,8 @@
 .vocabulary-pronunciation-note { width:100%; font-size:12px; color:var(--muted); }
 .vocabulary-device-voices{min-width:0}
 .vocabulary-device-voices>legend{font-size:14px;font-weight:600;padding:0 6px}
+.vocabulary-device-voices>legend{float:inline-start;inline-size:100%;padding:0;margin-block:0 12px}
+.vocabulary-device-voices>legend+p{clear:both;margin-block:0 16px}
 .vocabulary-device-voices>p{line-height:1.6}
 .vocabulary-device-voices label{min-width:min(180px,100%);font-size:13px}
 .vocabulary-device-voices .select-field{width:100%;min-height:44px}

@@ -32,6 +32,14 @@ Waiting supports today, a selected date, capped automatic replan, hold, resume a
 
 The daily schedule shows active and completed work; skipped and replanned records live in History, where they remain restorable. History filters completion, user skips, system decisions and archives by date, module, origin and reason. Archive skipped results hides records recoverably and retains their identity so automatic generation cannot recreate them. Unarchiving only restores visibility; restoring a skipped task for execution requires a date. No skip counts as learning, and rearranging never changes FSRS due times. The `20261116120000_learning_replan_history.sql` migration adds the new system reason to server history filters. See [vocabulary learning rules](vocabulary-learning-rules.md) and the [unified implementation ledger](unified-learning-implementation.md) for remaining loading and verification work.
 
+## Study navigation and sentence scope
+
+Planning views and date ranges are URL state (`view=schedule|waiting|history`, `date=YYYY-MM-DD`). Task return links retain that source address and task anchor; completing a task does not switch the source view to History. Legacy links with only a task anchor locate its current collection once. Explicit views take precedence.
+
+Study return links use the browser's owned source entry when its account, address and history index match. Direct links, new tabs and restored modules fall back to the validated in-app source URL. Ordinary browser Back and modifier-click remain available; scroll restoration stays bounded and account-scoped.
+
+Due listening sentence links use `review=sentence`. A planned intensive task is limited to its assigned sentence; its target overrides incidental sentence parameters. Short listening reviews retain original dictation/recording and save only the selected sentence's listening rating. Full intensive practice remains a separate entry. Wrong or partial completed dictations enter review by default; learners can opt any sentence in or out.
+
 ## Unified select controls
 
 Use `SelectField` for form fields and `FilterMenu` for toolbar filters. Both use the same Radix Select, styles and keyboard behavior. `SelectField` accepts either `options` with `onValueChange` or existing option children with `onChange`.

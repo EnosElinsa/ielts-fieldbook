@@ -80,6 +80,7 @@ import { isVocabularySessionSelection } from '../domain/vocabulary/selection';
 import { vocabularyForwardState } from '../features/vocabulary/VocabularyRouteLink';
 import { safeExamReturn, withExamReturn } from '../lib/examNavigation';
 import { safeVocabularyReturn, rememberVocabularyPosition } from '../features/vocabulary/vocabularyNavigation';
+import { studySourceUrl } from '../lib/studyNavigation';
 import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
 import { completeReceptivePlanIfMatched, receptivePlanPath, isListeningCheckPlan } from '../lib/receptivePlans';
 import { bindStudyPlanTargets } from '../lib/planTargets';
@@ -1598,8 +1599,9 @@ function useFieldbookValue() {
     const owner=accountId();const epoch=loadEpoch.current;
     const taskSource = ['/planning','/today','/'].includes(accountLocation.pathname);
     const sourceHash = taskSource ? `#task-${planId}` : accountLocation.hash;
-    const sourceUrl = safeVocabularyReturn(accountLocation.pathname + accountLocation.search + sourceHash, '/vocabulary');
-    const returnState = vocabularyForwardState({...accountLocation, hash:sourceHash});
+    const sourceUrl = safeVocabularyReturn(studySourceUrl(accountLocation, sourceHash), '/vocabulary');
+    const sourceAddress = new URL(sourceUrl, 'https://fieldbook.local');
+    const returnState = vocabularyForwardState({...accountLocation, search:sourceAddress.search, hash:sourceAddress.hash});
     const sourceHistoryIndex = window.history.state?.idx;
     const sourceHistoryKey = window.history.state?.key;
     const openVocabularyTask = path => {
@@ -1610,7 +1612,7 @@ function useFieldbookValue() {
         || window.history.state?.key!==sourceHistoryKey)return;
       // Back pops this owned source entry. Replace its hash before pushing practice,
       // so successful completion can still render the exact historical task.
-      if(taskSource && sourceHash!==accountLocation.hash)navigate(sourceUrl,{replace:true,state:accountLocation.state});
+      if(taskSource && sourceUrl!==accountLocation.pathname+accountLocation.search+accountLocation.hash)navigate(sourceUrl,{replace:true,state:accountLocation.state});
       navigate(path,{state:returnState});
     };
     rememberVocabularyPosition(sourceUrl, `task-${planId}`);
@@ -1621,10 +1623,14 @@ function useFieldbookValue() {
     if(!plan)throw new Error('Task is unavailable. Reload your plan.');
     const skill=plan.skill || (String(plan.kind).startsWith('reading')?'reading':String(plan.kind).startsWith('listening')?'listening':String(plan.kind).startsWith('speaking')||plan.kind==='stories'?'speaking':plan.kind==='vocabulary'?'vocabulary':'writing');
     const openExamTask = (path: string) => {
-      const origin = safeExamReturn(accountLocation.pathname + accountLocation.search + sourceHash, `/${skill}`);
+      if(latestAccountLocation.current.key!==accountLocation.key
+        || window.history.state?.idx!==sourceHistoryIndex
+        || window.history.state?.key!==sourceHistoryKey)return;
+      const origin = safeExamReturn(studySourceUrl(accountLocation, sourceHash), `/${skill}`);
       const destination = new URL(withExamReturn(path, origin), 'https://fieldbook.local');
       destination.searchParams.set('planId', planId);
-      navigate(destination.pathname + destination.search + destination.hash, {state:{examReturn:{owner,url:origin,sourceUrl:accountLocation.pathname + accountLocation.search + accountLocation.hash,index:sourceHistoryIndex}}});
+      if(taskSource && origin!==accountLocation.pathname+accountLocation.search+accountLocation.hash)navigate(origin,{replace:true,state:accountLocation.state});
+      navigate(destination.pathname + destination.search + destination.hash, {state:{examReturn:{owner,url:origin,sourceUrl:origin,index:sourceHistoryIndex}}});
     };
     if(plan.status==='skipped')throw new Error('Restore this task before starting it.');
     if(plan.status==='completed'){

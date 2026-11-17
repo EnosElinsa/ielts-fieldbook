@@ -7,42 +7,21 @@ export function VocabularyLearningCard({ cardKey, position, children }: { cardKe
   const frame = useRef<HTMLDivElement>(null);
   const card = useRef<HTMLElement>(null);
   const previous = useRef({ cardKey, position });
-  const lastHeight = useRef(0);
   const reveal = useRef<Animation | undefined>(undefined);
-  const resize = useRef<Animation | undefined>(undefined);
   const reduced = useRef<MediaQueryList | null>(null);
-  const measure = useRef(() => {});
 
   useLayoutEffect(() => {
-    const container = frame.current, content = card.current;
-    if (!container || !content) return;
     reduced.current = window.matchMedia?.('(prefers-reduced-motion: reduce)') || null;
-    const stop = () => { reveal.current?.cancel(); resize.current?.cancel(); reveal.current = undefined; resize.current = undefined; };
-    measure.current = () => {
-      const target = content.offsetHeight;
-      const from = resize.current?.playState === 'running' ? container.getBoundingClientRect().height : lastHeight.current;
-      resize.current?.cancel();
-      resize.current = undefined;
-      lastHeight.current = target;
-      if (from && target && Math.abs(from - target) > 1 && !reduced.current?.matches && typeof container.animate === 'function') {
-        resize.current = container.animate([{ height: `${from}px`, overflow: 'clip' }, { height: `${target}px`, overflow: 'clip' }], timing);
-      }
-    };
-    measure.current();
-    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(() => {
-      // Ignore notifications for the height already handled by this commit.
-      if (content.offsetHeight !== lastHeight.current) measure.current();
-    }) : undefined;
-    observer?.observe(content);
+    const stop = () => { reveal.current?.cancel(); reveal.current = undefined; };
     reduced.current?.addEventListener('change', stop);
-    return () => { observer?.disconnect(); reduced.current?.removeEventListener('change', stop); stop(); measure.current = () => {}; };
+    return () => { reduced.current?.removeEventListener('change', stop); stop(); };
   }, []);
 
   useLayoutEffect(() => {
     const last = previous.current;
     previous.current = { cardKey, position };
-    measure.current();
     if (last.cardKey === cardKey) return;
+    frame.current?.scrollTo?.(0, 0);
     reveal.current?.cancel();
     const content = card.current;
     if (!content || reduced.current?.matches || typeof content.animate !== 'function') return;
@@ -53,5 +32,5 @@ export function VocabularyLearningCard({ cardKey, position, children }: { cardKe
     ], timing);
   }, [cardKey, position]);
 
-  return <div className="vocabulary-learning-card-frame" ref={frame}><article className="vocabulary-learning-card" aria-label="Current learning word" ref={card}>{children}</article></div>;
+  return <div className="vocabulary-learning-card-frame" ref={frame} role="region" aria-label="Learning card content" tabIndex={0}><article className="vocabulary-learning-card" aria-label="Current learning word" ref={card}>{children}</article></div>;
 }

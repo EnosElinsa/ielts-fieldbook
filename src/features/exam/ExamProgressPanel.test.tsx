@@ -39,7 +39,7 @@ test('due sentences show their actual source and explain why old work appears ou
   expect(screen.getByText('Last dictation: Partially correct')).toBeInTheDocument();
   expect(screen.getByText('Due reviews include all saved sentences, regardless of the date range above.')).toBeInTheDocument();
   expect(screen.queryByText(/source:1000/)).not.toBeInTheDocument();
-  expect(screen.getByRole('link', { name: 'Review sentence' })).toHaveAttribute('href', '/listening/intensive/source:1000?sentence=s2');
+  expect(screen.getByRole('link', { name: 'Review sentence' })).toHaveAttribute('href', '/listening/intensive/source:1000?sentence=s2&review=sentence&returnTo=%2F');
   expect(screen.getByRole('link', { name: 'View all sentence reviews' })).toHaveAttribute('href', '/listening/review');
 });
 
@@ -48,7 +48,7 @@ test('missing source metadata keeps due reviews usable and offers a scoped retry
   mock.catalog = { papers: [], sections: [] }; mock.error = 'Offline';
   render(<MemoryRouter><ExamProgressPanel skill="listening" /></MemoryRouter>);
   expect(screen.queryByText(/source:1000/)).not.toBeInTheDocument();
-  expect(screen.getByRole('link', { name: 'Review sentence' })).toHaveAttribute('href', '/listening/intensive/source:1000?sentence=s1');
+  expect(screen.getByRole('link', { name: 'Review sentence' })).toHaveAttribute('href', '/listening/intensive/source:1000?sentence=s1&review=sentence&returnTo=%2F');
   await userEvent.click(screen.getByRole('button', { name: 'Retry source details' }));
   expect(mock.reload).toHaveBeenCalled();
 });

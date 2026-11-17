@@ -53,7 +53,7 @@ test('due listening reviews identify their paper and sentence and preserve the s
   ];
   render(<MemoryRouter><ExamReviewQueuePage skill="listening" /></MemoryRouter>);
   expect(await screen.findByText('Part 1 · Sentence 2')).toBeInTheDocument();
-  expect(screen.getByRole('link', { name: /Cambridge 8 \/ Test 1 Part 1 · Sentence 2 Weak forms/ })).toHaveAttribute('href', '/listening/intensive/audio?sentence=s2');
+  expect(screen.getByRole('link', { name: /Cambridge 8 \/ Test 1 Part 1 · Sentence 2 Weak forms/ })).toHaveAttribute('href', '/listening/intensive/audio?sentence=s2&review=sentence&returnTo=%2F');
   expect(screen.getByText('1 sentence due')).toBeInTheDocument();
   expect(mocks.loadSections).toHaveBeenCalledWith(['audio'], { force: false });
   expect(screen.queryByText('Part 1 · Sentence 1')).not.toBeInTheDocument();

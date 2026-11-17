@@ -148,10 +148,10 @@ export const IntensiveAudio = forwardRef<IntensiveAudioHandle, Props>(function I
     {status === 'ready' && !props.full && !hasBounds ? <p role="status">Sentence timing is unavailable or outside the audio. Set valid A/B points below, or use full-track listening.</p> : null}
     <div className="intensive-audio-controls">
       <div className="intensive-transport" role="group" aria-label="Sentence playback">
-      <button className="btn line intensive-skip" aria-label="Previous sentence" title="Previous sentence" disabled={props.previousDisabled} onClick={()=>{stop();props.onPrevious();}}><SkipBack size={17} /></button>
+      {!(props.previousDisabled && props.nextDisabled) && <button className="btn line intensive-skip" aria-label="Previous sentence" title="Previous sentence" disabled={props.previousDisabled} onClick={()=>{stop();props.onPrevious();}}><SkipBack size={17} /></button>}
       <button className="btn primary intensive-play" aria-label={playing ? 'Pause audio' : 'Play audio'} title={playing ? 'Pause audio' : 'Play audio'} disabled={!allowed} onClick={toggle}>{playing ? <Pause size={20} /> : <Play size={20} />}</button>
       <button className="btn line intensive-replay" aria-label="Replay sentence" disabled={!allowed} onClick={replay}><RotateCcw size={17} /><span className="intensive-replay-label">Replay</span></button>
-      <button className="btn line intensive-skip" aria-label="Next sentence" title="Next sentence" disabled={props.nextDisabled} onClick={()=>{stop();props.onNext();}}><SkipForward size={17} /></button>
+      {!(props.previousDisabled && props.nextDisabled) && <button className="btn line intensive-skip" aria-label="Next sentence" title="Next sentence" disabled={props.nextDisabled} onClick={()=>{stop();props.onNext();}}><SkipForward size={17} /></button>}
       </div>
       <div className="intensive-playback-meta">
       <span className="audio-time">{clock(position)} / {clock(duration)}</span>
@@ -160,6 +160,6 @@ export const IntensiveAudio = forwardRef<IntensiveAudioHandle, Props>(function I
       <button className={`btn line ${props.loop ? 'selected' : ''}`} disabled={props.full || !hasBounds} aria-pressed={props.loop} onClick={() => props.onLoopChange(!props.loop)}><Repeat size={17} /> A/B loop</button>
       </div></details></div>
     </div>
-    <p className="file-hint">Space: play / pause · ← / →: sentence · Ctrl / ⌘ + Enter: replay</p>
+    <p className="file-hint">Space: play / pause{!(props.previousDisabled && props.nextDisabled) ? ' · ← / →: sentence' : ''} · Ctrl / ⌘ + Enter: replay</p>
   </div>;
 });

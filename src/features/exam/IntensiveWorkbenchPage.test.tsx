@@ -364,18 +364,72 @@ it('a due sentence offers a short listening review without clearing its saved pr
   expect(mocks.recovery.has('one:intensive:part')).toBe(false);
   expect(screen.queryByText('Saved recording')).not.toBeInTheDocument();
 });
-it('viewing due sentences preserves both completions when progress is saved', async () => {
+it('viewing completed sentences needs no duplicate save and preserves both completions', async () => {
   const first = { ...createIntensiveSession('part', 's1'), stage: 6, completedAt: '2020-01-01', nextReviewAt: '2020-01-02', transcriptInput: 'The train leaves at nine.', shadowingAudioId: 'old-1' };
   const second = { ...first, id: 'i2', sentenceId: 's2', transcriptInput: 'Please bring your ticket.', shadowingAudioId: 'old-2' };
   mocks.fb.state.intensiveSessions = [first, second];
   open('/?sentence=s2');
   await screen.findByRole('heading', { name: 'Listening review due' });
-  await userEvent.click(screen.getByRole('button', { name: 'Save progress' }));
+  expect(screen.queryByRole('button', { name: 'Save progress' })).not.toBeInTheDocument();
   expect(mocks.fb.stateRef.current.intensiveSessions).toEqual([first, second]);
   await userEvent.click(screen.getByRole('button', { name: /^Sentence 1\s*Due$/ }));
   expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
-  await userEvent.click(screen.getByRole('button', { name: 'Save progress' }));
+  expect(screen.queryByRole('button', { name: 'Save progress' })).not.toBeInTheDocument();
   expect(mocks.fb.stateRef.current.intensiveSessions).toEqual([first, second]);
+});
+
+it('a sentence review opens only its exact saved sentence and preserves other sentences',async()=>{
+  const first={...createIntensiveSession('part','s1'),stage:6,dictationResult:'partial' as const,completedAt:'2020-01-01',nextReviewAt:'2020-01-02',shadowingAudioId:'first'};
+  const second={...first,id:'second',sentenceId:'s2',shadowingAudioId:'second'};
+  mocks.fb.state.intensiveSessions=[first,second];
+  open('/listening/intensive/part?sentence=s2&review=sentence&returnTo=%2Flistening%2Freview');
+  await screen.findByRole('heading',{name:'Listening review due'});
+  expect(screen.getByText('Sentence 2 · Listening review')).toBeInTheDocument();
+  expect(screen.getByRole('link',{name:'Back to listening review'})).toHaveAttribute('href','/listening/review');
+  expect(screen.queryByRole('heading',{name:'Sentences'})).not.toBeInTheDocument();
+  expect(screen.queryByLabelText('Jump to sentence')).not.toBeInTheDocument();
+  expect(screen.queryByRole('button',{name:'Next sentence'})).not.toBeInTheDocument();
+  expect(screen.queryByText(/2 \/ 2 sentences completed/)).not.toBeInTheDocument();
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+  expect(mocks.fb.state.intensiveSessions).toEqual([first,second]);
+});
+
+it('a planned sentence cannot be replaced by a different sentence in the URL',async()=>{
+  mocks.fb.state.plans=[{id:'selected',kind:'listening-intensive',target:{type:'intensive',sectionId:'part',sentenceId:'s2'}}];
+  open('/listening/intensive/part?planId=selected&sentence=s1');
+  expect(await screen.findByRole('heading',{name:'Sentence 2'})).toBeInTheDocument();
+  expect(screen.queryByLabelText('Jump to sentence')).not.toBeInTheDocument();
+  expect(screen.queryByRole('heading',{name:'Sentences'})).not.toBeInTheDocument();
+});
+
+it('saving a single review preserves concurrent work and pending drafts for other sentences',async()=>{
+  const first={...createIntensiveSession('part','s1'),gist:'Original note',updatedAt:'2026-01-01'};
+  const second={...createIntensiveSession('part','s2'),stage:6,dictationResult:'partial' as const,completedAt:'2020-01-01',nextReviewAt:'2020-01-02'};
+  mocks.fb.state.intensiveSessions=[first,second];
+  const pending={...first,gist:'Unsaved draft',updatedAt:'2026-01-02'};
+  mocks.recovery.set('one:intensive:part',{s1:pending});
+  open('/listening/intensive/part?sentence=s2&review=sentence');
+  const choice=await screen.findByRole('checkbox',{name:'Include this sentence in listening review'});
+  const concurrent={...first,gist:'Newer saved note',updatedAt:'2026-01-03'};
+  mocks.fb.stateRef.current={...mocks.fb.stateRef.current,intensiveSessions:[concurrent,second]};
+  await userEvent.click(choice);
+  await waitFor(()=>expect(choice).not.toBeChecked());
+  expect(mocks.fb.stateRef.current.intensiveSessions.find((row:any)=>row.sentenceId==='s1')).toEqual(concurrent);
+  expect(mocks.recovery.get('one:intensive:part').s1).toEqual(pending);
+});
+
+it.each(['?review=sentence','?review=sentence&sentence=missing'])('invalid review scope does not fall back to another sentence: %s',async query=>{
+  open('/listening/intensive/part'+query);
+  expect(await screen.findByText('Sentence unavailable')).toBeInTheDocument();
+  expect(screen.queryByRole('textbox',{name:'Sentence dictation'})).not.toBeInTheDocument();
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+it('a review link without saved practice offers an explicit practice entry',async()=>{
+  open('/listening/intensive/part?review=sentence&sentence=s2');
+  expect(await screen.findByText('Sentence review unavailable')).toBeInTheDocument();
+  expect(screen.getByRole('link',{name:'Open intensive practice'})).toHaveAttribute('href',expect.stringContaining('/listening/intensive/part?sentence=s2&returnTo='));
+  expect(screen.queryByRole('textbox',{name:'Sentence dictation'})).not.toBeInTheDocument();
 });
 
 it('completes shadowing and schedules only after a fresh blind replay, retaining a failed upload', async () => {

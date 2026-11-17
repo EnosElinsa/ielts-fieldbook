@@ -8,7 +8,7 @@ import { VocabularyLearningCard } from './VocabularyLearningCard';
 import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useParams, } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, List, Square } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { accountId } from '../../storage/remote';
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
@@ -83,6 +83,7 @@ export function VocabularyGroupLearnPage() {
   const [currentId, setCurrentId] = useState<string>();
   const [viewed, setViewed] = useState<string[]>([]);
   const [recallFirst, setRecallFirst] = useState(false);
+  const layout = params.get('layout') === 'list' ? 'list' : 'cards';
   const [revealedKey, setRevealedKey] = useState('');
   const viewedRef = useRef<string[]>([]);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'pending' | 'saving' | 'saved' | 'failed'>('idle');
@@ -268,7 +269,17 @@ export function VocabularyGroupLearnPage() {
   const activeResolved = word && selectedSenseId ? resolveVocabularyLearningContext(word.entry, { bookId, unitId, senseId: selectedSenseId }) : word?.resolved;
   const selectedSense = activeResolved?.sense;
   const learningCardKey = `${owner}:${bookId}:${unitId}:${word?.entry.id}:${selectedSense?.id}`;
-  const meaningVisible = !recallFirst || revealedKey === learningCardKey;
+  const meaningVisible = layout === 'list' || !recallFirst || revealedKey === learningCardKey;
+  const listRegion = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const region=listRegion.current;
+    const selected=region?.querySelector<HTMLElement>('li[aria-current="true"]');
+    if(!region||!selected)return;
+    const bounds=region.getBoundingClientRect(),row=selected.getBoundingClientRect();
+    // Move only the word list; selecting a word must not scroll the whole page.
+    if(row.top<bounds.top+12)region.scrollTop+=row.top-bounds.top-12;
+    else if(row.bottom>bounds.bottom-12)region.scrollTop+=row.bottom-bounds.bottom+12;
+  },[word?.entry.id,layout]);
   useLayoutEffect(() => { setRevealedKey(''); }, [learningCardKey]);
   const visualPresentation = activeResolved ? getVocabularyVisualPresentation(activeResolved) : 'none';
   const hasVisual = visualPresentation === 'inline';
@@ -307,7 +318,21 @@ export function VocabularyGroupLearnPage() {
           <div><button className="btn primary" disabled={meaningUpdateBusy} onClick={() => void updateBatchMeanings()}>{meaningUpdateBusy ? 'Updating batch…' : 'Update batch meanings'}</button><button className="btn text" disabled={meaningUpdateBusy} onClick={() => setKeepTaskMeanings(previewingMeanings ? meaningUpdateKey : '')}>{previewingMeanings ? 'Use original task meanings' : 'Preview group meanings'}</button></div>
           {meaningUpdateError && <p role="alert">{meaningUpdateError}</p>}
         </aside>}
-        <VocabularyLearningCard cardKey={learningCardKey} position={position}>
+        <div className="vocabulary-learning-view-options" role="group" aria-label="Learning layout">
+          <button type="button" className="btn line" aria-pressed={layout==='cards'} onClick={()=>{const next=new URLSearchParams(params);next.delete('layout');setParams(next,{replace:true,state:location.state});}}><Square size={15} aria-hidden="true"/>Cards</button>
+          <button type="button" className="btn line" aria-pressed={layout==='list'} onClick={()=>{const next=new URLSearchParams(params);next.set('layout','list');setParams(next,{replace:true,state:location.state});}}><List size={15} aria-hidden="true"/>List</button>
+        </div>
+        <div className="vocabulary-learning-stage">
+        {layout==='list' ? <div ref={listRegion} className="vocabulary-learning-list" role="region" aria-label="Batch word list" tabIndex={0}><ol role="list">{batchWords.map((row,offset)=>{
+          const senseId=(previewingMeanings?meaningUpdate!.batch.selection.cards:currentBatch?.selection.cards)?.find(ref=>ref.entryId===row.entry.id)?.senseId;
+          const resolved=resolveVocabularyLearningContext(row.entry,{bookId,unitId,...(senseId?{senseId}:{})});
+          const content=resolved.sense?vocabularySensePresentation(resolved.sense):undefined;
+          return <li key={row.entry.id} aria-current={row.entry.id===word.entry.id?'true':undefined}>
+            <button type="button" className="vocabulary-learning-list-word" onClick={()=>navigateTo(batch*BATCH_SIZE+offset)}><span>{batch*BATCH_SIZE+offset+1}</span><strong>{row.entry.term}</strong>{viewedSet.has(row.entry.id)?<Check size={15} aria-label="Viewed"/>:null}</button>
+            <p>{content?.definition||'Selected meaning unavailable'}</p>
+            {row.entry.id===word.entry.id?<div className="vocabulary-learning-list-actions"><Pronunciation entry={row.entry} sense={resolved.sense||null} accent={preferences.accent} compact/><button type="button" className="btn text" onClick={()=>{const next=new URLSearchParams(params);next.delete('layout');setParams(next,{replace:true,state:location.state});}}>Open card<ArrowRight size={14} aria-hidden="true"/></button></div>:null}
+          </li>;
+        })}</ol></div> : <VocabularyLearningCard cardKey={learningCardKey} position={position}>
           <div className="page-tools"><span className="vocabulary-muted">Word {position+1} of {words.length}</span>{viewed.includes(word.entry.id)?<span className="pill"><Check size={13}/>Viewed</span>:null}</div>
           <div className="vocabulary-learning-mode" role="group" aria-label="Learning style">
             <button className="btn line" aria-pressed={!recallFirst} onClick={() => { setRecallFirst(false); setRevealedKey(''); }}>Read first</button>
@@ -332,9 +357,10 @@ export function VocabularyGroupLearnPage() {
           <div className="vocabulary-learning-reference-actions">
           <Link className="btn text" to={entryUrl(word.entry.id,{bookId,unitId,senseId:selectedSense?.id},origin)} onClick={()=>rememberVocabularyPosition(origin,'learning-word')}>Word details<ArrowRight size={14}/></Link>
           </div></footer></div></div> : null}
-        </VocabularyLearningCard>
-        <div className={`vocabulary-learning-controls${batchComplete ? ' is-complete' : ''}`}><button className="btn line" disabled={position===0} onClick={()=>navigateTo(position-1)}><ArrowLeft size={15}/>Previous word</button>{batchComplete ? <span className="vocabulary-learning-batch-complete"><Check size={16}/>Batch viewed</span> : <button className="btn primary" disabled={viewed.includes(word.entry.id) || !meaningVisible} onClick={()=>navigateTo(Math.min(position+1,batchEnd),true)}><Check size={15}/>{viewed.includes(word.entry.id)?'Viewed':position===batchEnd?'Mark viewed':'Mark viewed & next'}</button>}{!batchComplete || position<words.length-1 ? <button className="btn line" disabled={position===words.length-1} onClick={()=>navigateTo(position+1)}>{batchComplete && position===batchEnd ? 'Next batch' : 'Next word'}<ArrowRight size={15}/></button> : null}</div>
+        </VocabularyLearningCard>}
+        <div className={`vocabulary-learning-controls${batchComplete ? ' is-complete' : ''}`}><button className="btn line" disabled={position===0} onClick={()=>navigateTo(position-1)}><ArrowLeft size={15}/><span>Previous word</span></button>{batchComplete ? <span className="vocabulary-learning-batch-complete"><Check size={16}/>Batch viewed</span> : <button className="btn primary" disabled={viewed.includes(word.entry.id) || !meaningVisible} onClick={()=>navigateTo(Math.min(position+1,batchEnd),true)}><Check size={15}/><span>{viewed.includes(word.entry.id)?'Viewed':position===batchEnd?'Mark viewed':'Mark viewed & next'}</span></button>}<button className="btn line" disabled={position===words.length-1} onClick={()=>navigateTo(position+1)}><span>{batchComplete && position===batchEnd && position<words.length-1 ? 'Next batch' : 'Next word'}</span><ArrowRight size={15}/></button></div>
         {saveStatus==='failed'?<div role="alert" className="vocabulary-learning-save-error">Progress could not be saved. {savedOnDevice?'Your position is kept on this device.':'Your position is kept while this page is open.'} <button className="btn line" onClick={()=>sync.current?.flush()}>Retry save</button></div>:<p role="status" className="vocabulary-learning-save-status">{saveStatus==='pending'?(savedOnDevice?'Saved on this device':'Pending sync'):saveStatus==='saving'?'Syncing progress…':saveStatus==='saved'?'Progress saved':''}</p>}
+        </div>
         <section className="vocabulary-learning-assessments" aria-labelledby="learning-assessment-heading">
           <h3 id="learning-assessment-heading">Test your recall</h3>
           <div className="vocabulary-learning-checkpoint">
