@@ -67,7 +67,7 @@ npm test
 npm run build
 ```
 
-Stack: React 19, TypeScript, Vite, Supabase, FSRS, Radix UI and Cloudflare Pages. Study records use schema **v12**. Historical backups migrate to the current model; the old Phrases route is removed.
+Stack: React 19, TypeScript, Vite, Supabase, FSRS, Radix UI and Cloudflare Pages. Study records use schema **v13**. Historical backups migrate to the current model; the old Phrases route is removed.
 
 ## Data And Privacy
 
@@ -75,7 +75,7 @@ Shared question and vocabulary catalogues are read-only to signed-in users. Atte
 
 JSON backups include study data but omit recordings. Recordings remain in private account storage and can be downloaded separately. Account deletion removes owned records and recordings. Draft recovery and pending audio are scoped to the account in the current browser.
 
-`local/` is gitignored and holds personal exports, source snapshots and deployment backups. Never commit `.env`, service credentials, login sessions or personal learning history. Code uses the MIT license; dictionary and other content retain their own source licenses.
+`local/` is gitignored and holds personal exports, source snapshots and deployment backups. See [local workspace conventions](docs/contributing.md#local-workspace) for backups, logs and recoverable archives. Never commit `.env`, service credentials, login sessions or personal learning history. Code uses the MIT license; dictionary and other content retain their own source licenses.
 
 ## Deploy
 

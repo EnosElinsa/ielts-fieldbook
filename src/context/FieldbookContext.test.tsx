@@ -43,6 +43,24 @@ vi.mock('../storage/vocabularyCatalog', () => ({
 vi.mock('../storage/remote', () => ({ accountId: () => mocks.owner, refreshPlanningState:(...args)=>mocks.planningRead(...args),loadVocabularySession:async()=>null,loadVocabularyHistoryPage:async()=>({rows:[],total:0}),rememberPlanningRows:()=>{},loadPlanningRows:(...args)=>mocks.planRowsRead(...args),loadPlanningHistoryPage:(...args)=>mocks.historyRead(...args) }));
 
 let fieldbook;
+test('cold planning commits recovered completion before carryover without writing summary histories or unsaved drafts', async () => {
+  mocks.statuses={profile:'ready',plans:'ready',drafts:'ready',sessions:'unloaded',intensiveSessions:'unloaded',examAttempts:'unloaded'};
+  const startedAt='2026-10-12T10:00:00Z', completedAt='2026-10-12T10:15:00Z';
+  mocks.initial.plans=[{id:'saved-listening',kind:'listening-intensive',skill:'listening',origin:'manual',dateKey:'2026-10-12',estimatedMinutes:10,status:'in_progress',startedAt,
+    target:{type:'intensive',skill:'listening',sectionId:'section',sentenceId:'sentence',reviewMode:'listening-check'}}];
+  mocks.initial.planningEvidence=[{id:'intensiveSessions',rows:[{id:'saved-sentence',sectionId:'section',sentenceId:'sentence',stage:6,completedAt:'2026-10-01T10:00:00Z',reviewEnabled:false,
+    listeningReviews:[{planId:'saved-listening',reviewedAt:completedAt,selfRating:5,reviewEnabled:false}]}]}];
+  await mount('/planning');
+  await act(async()=>{fieldbook.setWritingDraft('q1','Keep newer unsaved writing');});
+  mocks.saveState.mockClear();
+  await act(async()=>{expect(await fieldbook.ensureUnifiedPlans()).toBe(true);});
+  expect(fieldbook.state.plans.find(plan=>plan.id==='saved-listening')).toMatchObject({status:'completed',dateKey:'2026-10-12',completedAt,linkedSessionId:'saved-sentence'});
+  expect(fieldbook.state.intensiveSessions).toEqual([]);
+  expect(fieldbook.draftSaveStatus('q1')).toBe('unsaved');
+  expect(mocks.saveState.mock.calls.at(-1)[2].collections.every(key=>['profile','plans'].includes(key))).toBe(true);
+  expect(fieldbook.state.planningEvidence[0].rows[0].completedAt).toBe('2026-10-01T10:00:00Z');
+});
+
 test('an acknowledged draft save cannot discard recovery for text edited during the request', async () => {
   await mount('/write');
   const pending = defer(); mocks.saveState.mockReturnValueOnce(pending.promise);
