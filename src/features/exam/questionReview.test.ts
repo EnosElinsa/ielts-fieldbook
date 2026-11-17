@@ -4,6 +4,14 @@ import { questionReviewContent, sourceEvidenceText } from './questionReview';
 
 const question = { skill: 'listening', type: 'gap', answer: 'clothing' } as ExamQuestion;
 
+test('a labelled evidence suffix is quoted once while independent reasoning stays intact', () => {
+  const evidence = 'In 1875 Galton introduced the method.';
+  const result = questionReviewContent({ ...question, skill: 'reading', explanation: `Galton pioneered the research. Evidence: “${evidence}”`, evidence: { text: evidence } });
+  expect(result.explanation).toBe('Galton pioneered the research.');
+  expect(result.evidence).toBe(evidence);
+  expect(questionReviewContent({ ...question, explanation: 'Compare the researchers. Evidence: a different observation.', evidence: { text: evidence } }).explanation).toContain('a different observation');
+});
+
 test.each(['出题句：\n', '答案句: ', '出处句\n', '出题句 '])('cleans the known label %j while preserving the original wording', label => {
   const quote = 'Threads detach from synthetic clothing.';
   expect(sourceEvidenceText(label + quote)).toBe(quote);

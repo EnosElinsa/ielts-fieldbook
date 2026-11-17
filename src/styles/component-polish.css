@@ -14,6 +14,8 @@
 
 .btn,.btn:visited,.filter-trigger { border-radius: 8px; }
 .btn svg { flex-shrink: 0; }
+.btn { box-sizing: border-box; max-inline-size: 100%; text-decoration: none; }
+.btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 @media (hover:hover) {
   .btn.line:hover,.btn:not(.primary):not(.text):hover { background: var(--surface-hover); border-color: color-mix(in srgb,var(--muted) 45%,var(--rule)); }
   .btn.text:hover { color: var(--ink); background: var(--surface-hover); }

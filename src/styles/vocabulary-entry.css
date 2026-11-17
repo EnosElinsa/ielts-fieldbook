@@ -6,6 +6,26 @@
   border-radius: 12px;
   background: var(--sheet);
 }
+.vocabulary-entry { max-width: 1080px; margin-inline: auto; }
+.vocabulary-entry-hero { margin-block: 20px 24px; padding: clamp(18px,3vw,28px); border: 1px solid var(--rule); border-radius: 12px; background: var(--sheet); }
+.vocabulary-entry-hero .vocabulary-entry-heading { margin: 0 0 16px; align-items: flex-start; gap: 16px; }
+.vocabulary-entry-heading h2 { margin: 0; line-height: 1.2; overflow-wrap: anywhere; }
+.vocabulary-entry-heading .actions { flex-wrap: wrap; justify-content: flex-end; }
+.vocabulary-entry-hero .vocabulary-entry-practice { margin: 20px 0 0; padding-block-start: 20px; border-top: 1px solid var(--rule); }
+.vocabulary-entry :is(.vocabulary-entry-practice,.vocabulary-entry-heading) .btn { min-height: 44px; }
+.vocabulary-entry > .vocabulary-meaning-layout { padding: clamp(18px,3vw,28px); border: 1px solid var(--rule); border-radius: 12px; background: var(--sheet); }
+.vocabulary-entry > .vocabulary-meaning-layout > div { min-width: 0; }
+.vocabulary-entry .vocabulary-primary-meaning { margin: 0; border: 0; padding: 0; }
+.vocabulary-entry .vocabulary-primary-meaning .vocabulary-definition { max-width: 65ch; }
+.vocabulary-entry .vocabulary-meaning-meta { border-top: 1px solid var(--rule); margin-top: 18px; padding-top: 6px; }
+.vocabulary-entry > :is(.vocabulary-dictionary,.vocabulary-saved-meanings,.vocabulary-timeline) { margin-block: 18px; padding: 0 20px; border: 1px solid var(--rule); border-radius: 10px; background: var(--sheet); }
+.vocabulary-entry > :is(.vocabulary-dictionary,.vocabulary-saved-meanings,.vocabulary-timeline) > summary { padding-block: 18px; min-height: 44px; cursor: pointer; }
+@media(max-width:600px) {
+ .vocabulary-entry-heading { flex-direction: column; }
+ .vocabulary-entry-heading .actions { justify-content: flex-start; }
+ .vocabulary-entry-hero .vocabulary-entry-practice { gap: 8px; }
+ .vocabulary-entry-practice .btn { flex: 1 1 130px; white-space: normal; }
+}
 .vocabulary-learning-progress > h3 { margin: 0 0 20px; }
 .vocabulary-progress-overview { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 28px; align-items: start; }
 .vocabulary-progress-overview > .vocabulary-next-practice { margin: 0; padding: 20px; border: 1px solid var(--rule); border-radius: 10px; background: var(--sheet); }
@@ -95,7 +115,9 @@
   text-decoration: none;
 }
 .vocabulary-group-meaning-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
-.vocabulary-group-recommendation { margin: 0 0 24px; padding: 18px 20px; border: 1px solid var(--rule); border-radius: 10px; background: var(--surface-soft); }
+.vocabulary-group-recommendation { margin: 20px 0 0; padding: 0; border-top: 1px solid var(--rule); }
+.vocabulary-group-recommendation > summary { padding-block: 14px; font-size: 13px; color: var(--muted); cursor: pointer; }
+.vocabulary-group-recommendation > div { padding-block: 4px 16px; }
 .vocabulary-group-recommendation h3 { margin: 0 0 10px; font-size: 14px; }
 .vocabulary-group-recommendation .vocabulary-definition { margin: 0 0 10px; }
 .vocabulary-group-recommendation blockquote { margin: 10px 0 14px; padding: 0; border: 0; font-size: 14px; line-height: 1.7; color: var(--muted); }

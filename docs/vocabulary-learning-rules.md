@@ -39,6 +39,10 @@ Due for review requires a valid FSRS schedule whose date has arrived for the sel
 
 ## Fixed tasks and recovery
 
+Learning cards display the batch's selected meaning once. Word details preserves that meaning and the return address, with dictionary references and an alternative group meaning available through disclosures. Reference browsing never creates a one-word learning batch or replaces a frozen task's assessment. Previously shared direct meaning links remain valid, including curriculum meanings absent from an older saved entry snapshot. Identical displayed definitions are not repeated merely because their sense IDs differ; their practice identities remain distinct.
+
+An unfinished learning task with a recorded curriculum correction can preview current group meanings and explicitly update the whole batch. The update keeps the same word identities, order, count, batch coordinates, task and assessed mode; its plan records both sense lists. It never treats distinct sense IDs as aliases or transfers old mastery. Personal edits, explicit custom selections, completed tasks and tasks with submitted assessments are protected. A saved unfinished assessment must be finished or discarded before updating; a failed save keeps the original contract. The test stays unavailable while previewing until the update succeeds, or the learner chooses to use the original task meanings.
+
 Dynamic review slots reserve time without freezing their word lists. Starting a slot selects current eligible prompts, excludes targets already reserved by another frozen unfinished task, and saves the exact target list before opening practice. User appointments can instead save a fixed word list. Submitting a graded assessment updates the corresponding mode's FSRS schedule; moving its task date or leaving an answer ungraded does not.
 
 An already started review keeps its full list and answer draft. Legacy tasks may contain multiple meanings of one word or more than 50 prompts. Those exact targets remain valid and are not reduced by free-practice filters, shuffle order, wordbook selection or session-size preferences.

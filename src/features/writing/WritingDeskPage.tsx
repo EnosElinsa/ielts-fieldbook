@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useEffect, useMemo, useState } from 'react';
+import { InlineLoadingState } from '../../components/AsyncState';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { Expand, Minimize2, Undo2, Redo2, X, ZoomIn, Pause, Play, RotateCcw, Save, ArrowRight, Shuffle } from 'lucide-react';
@@ -435,7 +436,7 @@ function WritingTaskChart({ image }) {
   const [retry, setRetry] = useState(0);
   return <figure className="prompt-figure" aria-busy={!failed && !loaded}>
     {failed ? <div className="task-chart-error" role="status"><p>The task chart could not load.</p><button type="button" className="btn line" onClick={() => { setFailed(false); setLoaded(false); setRetry(value => value + 1); }}><RotateCcw size={15}/>Retry chart</button></div> : <Dialog.Root>
-      <Dialog.Trigger asChild><button type="button" className={`figure-zoom${loaded ? '' : ' is-loading'}`} disabled={!loaded} aria-label="Zoom task chart"><img key={retry} src={image} alt="Task chart" onLoad={() => setLoaded(true)} onError={() => setFailed(true)} />{loaded ? <span><ZoomIn size={16} /> Zoom</span> : <span className="task-chart-loading" role="status">Loading chart…</span>}</button></Dialog.Trigger>
+      <Dialog.Trigger asChild><button type="button" className={`figure-zoom${loaded ? '' : ' is-loading'}`} disabled={!loaded} aria-label="Zoom task chart"><img key={retry} src={image} alt="Task chart" onLoad={() => setLoaded(true)} onError={() => setFailed(true)} />{loaded ? <span><ZoomIn size={16} /> Zoom</span> : <span className="task-chart-loading"><InlineLoadingState message="Loading chart…" /></span>}</button></Dialog.Trigger>
       <Dialog.Portal><Dialog.Overlay className="chart-dialog-overlay" /><Dialog.Content className="chart-dialog-content"><div className="chart-dialog-head"><Dialog.Title>Task chart</Dialog.Title><Dialog.Close asChild><button className="btn line icon-btn" aria-label="Close task chart"><X size={20} /></button></Dialog.Close></div><Dialog.Description className="sr-only">Full-size chart for the current writing prompt.</Dialog.Description><div className="chart-dialog-image"><img src={image} alt="Task chart enlarged" onError={() => setFailed(true)} /></div></Dialog.Content></Dialog.Portal>
     </Dialog.Root>}
   </figure>;

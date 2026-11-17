@@ -287,7 +287,10 @@ export function VocabularyEntryPage() {
     : undefined;
   const groupMeaningParams = new URLSearchParams(params);
   if (groupMeaning) groupMeaningParams.set('senseId', groupMeaning.id);
-  const alternateGroupMeaning = Boolean(groupMeaning && primary && groupMeaning.id !== primary.id);
+  // Deduplicate identical visible definitions without equating different sense
+  // identities or changing the learner's selected practice target.
+  const alternateGroupMeaning = Boolean(groupMeaning && primary && groupMeaning.id !== primary.id &&
+    (groupMeaning.pos !== primary.pos || vocabularySensePresentation(groupMeaning).definition.trim() !== vocabularySensePresentation(primary).definition.trim()));
   const originalNotes = raw
     ? vocabularySensePresentation({
         id: 'original-notes',
@@ -405,7 +408,7 @@ export function VocabularyEntryPage() {
         {sense.pos ? (
           <span className="vocabulary-part-of-speech">{sense.pos}</span>
         ) : null}
-        <VocabularySenseContent entryId={entry?.id} sense={sense} learningExample={entry ? publicVocabularyExample(entry.id, sense) : undefined} showMissingExample={main} showLearningNotes={!personalNotes && Boolean(sense.editorial || main && resolved?.contentReviewed)} />
+        <VocabularySenseContent entryId={entry?.id} sense={sense} learningExample={entry ? publicVocabularyExample(entry.id, sense) : undefined} showLearningNotes={!personalNotes && Boolean(sense.editorial || main && resolved?.contentReviewed)} />
         {personalNotes &&
         sense.collocations?.length ? (
           <div className="vocabulary-detail">
@@ -475,7 +478,7 @@ export function VocabularyEntryPage() {
     })),
   ];
   return (
-    <section className="view active vocabulary-view vocabulary-workbench">
+    <section className="view active vocabulary-view vocabulary-workbench vocabulary-entry">
       <VocabularyNavigation />
       <VocabularyBackLink label={returnLabel}/>
       {!entry ? (
@@ -494,6 +497,7 @@ export function VocabularyEntryPage() {
         )
       ) : (
         <>
+          <div className="vocabulary-entry-hero">
           <div className="page-tools vocabulary-entry-heading">
             <div>
               {validGroup ? (
@@ -595,6 +599,7 @@ export function VocabularyEntryPage() {
               <span className="pill">Archived · Excluded from practice</span>
             ) : null}
           </div>
+          </div>
           {bookId && unitId && !validGroup && status === "ready" ? (
             <p className="vocabulary-muted">
               The requested group does not contain this word. Showing its common
@@ -612,14 +617,16 @@ export function VocabularyEntryPage() {
             <div>
               {primary ? (
                 <>
-                  {alternateGroupMeaning && groupMeaning ? <aside className="vocabulary-group-recommendation" role="region" aria-label="Current group meaning">
-                    <h3>Current group meaning</h3>
+                  {renderSense(primary, true)}
+                  {alternateGroupMeaning && groupMeaning ? <details className="vocabulary-group-recommendation">
+                    <summary>Group meaning</summary>
+                    <div>
                     <VocabularySenseContent entryId={entry?.id} sense={groupMeaning} />
                     <Link className="btn line vocabulary-group-meaning-link" to={`${location.pathname}?${groupMeaningParams}`}>
                       View group meaning <ArrowRight size={14} aria-hidden="true" />
                     </Link>
-                  </aside> : null}
-                  {renderSense(primary, true)}
+                    </div>
+                  </details> : null}
                   {visualPresentation === 'supplementary' && resolved ? <VocabularyLearningVisual resolved={resolved} /> : null}
                   <div className="vocabulary-meaning-meta">
                     {personalMeaning || resolved?.curriculumCurrent || resolved?.reviewed ? <details className="vocabulary-context-notice">

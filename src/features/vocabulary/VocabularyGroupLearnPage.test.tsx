@@ -4,14 +4,12 @@ import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router-dom
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { readFileSync } from 'node:fs';
-import { IDBFactory } from 'fake-indexeddb';
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { VocabularyGroupLearnPage } from './VocabularyGroupLearnPage';
-import { VocabularyPracticePage } from './VocabularyPracticePage';
-import { vocabularySessionDrafts } from '../../storage/vocabularySessionDrafts';
 import { buildLearningBatch } from '../../domain/vocabulary/learningBatch';
 import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
 import { getVocabularyVisualPresentation } from '../../domain/vocabulary/visualPresentation';
+import { vocabularySessionDrafts } from '../../storage/vocabularySessionDrafts';
 
 const mocks = vi.hoisted(() => ({ fb: null as any, owner: 'account-one' as string | null, onCardReady: undefined as (() => void) | undefined }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mocks.fb }));
@@ -32,18 +30,18 @@ vi.mock('./Pronunciation', async () => {
 });
 const original = structuredClone(VOCABULARY_CATALOG);
 
-test('a learning card gives a direct route to all dictionary meanings', async () => {
+test('a learning card offers one detail link retaining its exact meaning and return route', async () => {
   mount();
   await screen.findByRole('heading', { name: 'Word 1' });
-  const link = screen.getByRole('link', { name: 'Browse all meanings' });
-  const url = new URL(link.getAttribute('href')!, 'https://local.test');
+  const url = new URL(screen.getByRole('link', { name: 'Word details' }).getAttribute('href')!, 'https://local.test');
   expect(url.pathname).toBe('/vocabulary/entry/word-1');
-  expect(url.searchParams.get('meanings')).toBe('all');
-  expect(url.hash).toBe('#vocabulary-dictionary');
-  expect(screen.getByText('This card shows one selected meaning.')).toBeInTheDocument();
+  expect(url.searchParams.get('senseId')).toBe('sense-1');
+  expect(url.searchParams.get('returnTo')).toContain('/learn?');
+  expect(screen.queryByRole('link', { name: 'Browse all meanings' })).not.toBeInTheDocument();
+  expect(screen.queryByText('This card shows one selected meaning.')).not.toBeInTheDocument();
 });
 
-test('an older frozen shed batch explains the current group meaning without replacing its assessment', async () => {
+test('an older frozen shed batch teaches its assigned meaning without creating a second batch', async () => {
   const released = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
   Object.assign(VOCABULARY_CATALOG, released);
   const entry = released.entries.find((row: any) => row.term === 'shed');
@@ -54,36 +52,27 @@ test('an older frozen shed batch explains the current group meaning without repl
   mount(`/vocabulary/wordbooks/${member.bookId}/groups/${member.unitId}/learn?word=${entry.id}&selectedEntryIds=${encodeURIComponent(JSON.stringify([entry.id]))}&batch=0&batchSize=10&batchCards=${encodeURIComponent(JSON.stringify(cards))}`);
   await screen.findByRole('heading', { name: 'shed' });
   expect(within(document.getElementById('learning-meaning')!).getByText(previous.definition)).toBeInTheDocument();
-  const recommendation = screen.getByRole('region', { name: 'Current recommended meaning' });
-  expect(recommendation).toHaveTextContent('A small simple building used for shelter, storage, or work.');
+  expect(screen.queryByRole('region', { name: 'Current recommended meaning' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: 'Learn the recommended meaning' })).not.toBeInTheDocument();
   const assessment = new URL(screen.getByRole('link', { name: /^Start / }).getAttribute('href')!, 'https://local.test');
   expect(JSON.parse(assessment.searchParams.get('batchCards')!)).toEqual(cards);
-  const updated = new URL(within(recommendation).getByRole('link', { name: 'Learn the recommended meaning' }).getAttribute('href')!, 'https://local.test');
-  const refs = JSON.parse(updated.searchParams.get('batchCards')!);
-  expect(refs).toHaveLength(1);
-  expect(refs[0].senseId).not.toBe(previous.id);
-  expect(updated.searchParams.has('planId')).toBe(false);
   expect(mocks.fb.state).toEqual(before);
 });
-test('planned learning retains its required fixed batch mode and whole-group assessments clear binding', async () => {
+test('planned learning has one assigned test and keeps optional group practice separate', async () => {
   const batch=buildLearningBatch(mocks.fb.state,'book','group',0,10,'definition');
   mocks.fb.state.plans=[{id:'planned',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',...batch.selection,cards:batch.selection.cards}}];
-  mount(`/vocabulary/wordbooks/book/groups/group/learn?planId=planned&batch=0&batchSize=10&batchCards=${encodeURIComponent(JSON.stringify(batch.selection.cards))}`);
+  mount(`/vocabulary/wordbooks/book/groups/group/learn?planId=planned`);
   const link=await screen.findByRole('link',{name:'Start meaning recall · 10 words'});
   const url=new URL(link.getAttribute('href')!,'http://local.test');
-  expect(url.searchParams.get('mode')).toBe('definition');
   expect(url.searchParams.get('planId')).toBe('planned');
-  expect(screen.getByRole('combobox',{name:'Test type'})).toBeDisabled();
-  fireEvent.click(screen.getByRole('button',{name:'Whole group · 12 words'}));
-  const groupLink=screen.getByRole('link',{name:'Start meaning recall · 12 words'});
-  expect(new URL(groupLink.getAttribute('href')!,'http://local.test').searchParams.has('planId')).toBe(false);
-  expect(screen.getByRole('combobox',{name:'Test type'})).toBeEnabled();
-  await userEvent.click(screen.getByRole('combobox',{name:'Test type'}));
-  await userEvent.click(screen.getByRole('option',{name:'Dictation'}));
-  fireEvent.click(screen.getByRole('button',{name:'This batch · 10 words'}));
-  expect(screen.getByRole('combobox',{name:'Test type'})).toBeDisabled();
-  expect(screen.getByRole('link',{name:'Start meaning recall · 10 words'})).toHaveAttribute('href',expect.stringContaining('planId=planned'));
+  expect(JSON.parse(url.searchParams.get('batchCards')!)).toEqual(batch.selection.cards);
+  expect(screen.queryByRole('combobox',{name:'Test type'})).not.toBeInTheDocument();
+  fireEvent.click(screen.getByText('Other practice'));
+  const other = screen.getByRole('link', {name:'Meaning recall · 12 words'});
+  expect(new URL(other.getAttribute('href')!,'http://local.test').searchParams.has('planId')).toBe(false);
+  expect(screen.getByRole('link',{name:'Start meaning recall · 10 words'})).toHaveAttribute('href',link.getAttribute('href'));
 });
+
 const path = '/vocabulary/wordbooks/book/groups/group/learn';
 function legacyImposePlan() {
   const released = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
@@ -97,11 +86,12 @@ function legacyImposePlan() {
   return { entry, member, cards, url: `/vocabulary/wordbooks/${member.bookId}/groups/${member.unitId}/learn?planId=legacy-impose` };
 }
 
-test('an old planned card displays the same frozen meaning as its assessment', async () => {
+test('a frozen meaning without an explicit syllabus correction keeps its assessment identity', async () => {
   const { entry, cards, url } = legacyImposePlan();
   const before = structuredClone(mocks.fb.state);
   mount(url);
   await screen.findByRole('heading', { name: 'impose' });
+  expect(screen.queryByRole('button', {name:'Update batch meanings'})).not.toBeInTheDocument();
   expect(within(document.getElementById('learning-meaning')!).getByText(entry.senses[0].definition)).toBeInTheDocument();
   expect(screen.getByText(entry.senses[0].example)).toBeInTheDocument();
   const assessment = new URL(screen.getByRole('link', { name: 'Start meaning recall · 1 word' }).getAttribute('href')!, 'https://local.test');
@@ -111,47 +101,93 @@ test('an old planned card displays the same frozen meaning as its assessment', a
   expect(mocks.fb.state).toEqual(before);
 });
 
-test('old tasks offer a separate modern learning card whose quiz freezes the same recommended meaning and example', async () => {
-  const { entry, url } = legacyImposePlan();
-  mocks.fb.state.settings.vocabulary = { mode: 'definition', autoPlay: false };
+function legacyEscalatorPlan() {
+  const released = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
+  Object.assign(VOCABULARY_CATALOG, released);
+  const entry = released.entries.find((row:any) => row.term === 'escalator');
+  const member = released.memberships.find((row:any) => row.entryId === entry.id && row.bookId === 'ielts-vocabulary');
+  const members = [member, ...released.memberships.filter((row:any) => row.bookId === member.bookId && row.unitId === member.unitId && row.entryId !== entry.id)].slice(0,10);
+  const entries = members.map((row:any) => released.entries.find((entry:any) => entry.id === row.entryId));
+  const cards = entries.map((entry:any) => ({entryId:entry.id,senseId:entry.senses[0].id}));
+  mocks.fb.state.vocabulary = structuredClone(entries);
+  mocks.fb.state.plans = [{id:'legacy-escalator',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'dictation',selectionPolicy:'exact',bookId:member.bookId,unitId:member.unitId,batchIndex:0,batchSize:10,cards}}];
+  return {entry,member,cards,url:`/vocabulary/wordbooks/${member.bookId}/groups/${member.unitId}/learn?planId=legacy-escalator&word=${entry.id}`};
+}
+
+test('updating legacy escalator meanings keeps all ten words and persists the same assessment mode and task', async () => {
+  const {entry,member,cards,url} = legacyEscalatorPlan();
   const before = structuredClone(mocks.fb.state);
-  vi.stubGlobal('indexedDB', new IDBFactory());
-  vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
-  try {
-    render(<MemoryRouter initialEntries={[url]}><Routes>
-      <Route path="/vocabulary/wordbooks/:bookId/groups/:unitId/learn" element={<VocabularyGroupLearnPage />} />
-      <Route path="/vocabulary/study" element={<VocabularyPracticePage />} />
-    </Routes><Location /></MemoryRouter>);
-    await screen.findByRole('heading', { name: 'impose' });
-    const recommendation = screen.getByRole('region', { name: 'Current recommended meaning' });
-    expect(within(recommendation).getByText('Congress imposed new tariffs.')).toBeInTheDocument();
-    expect(recommendation).toHaveTextContent(/does not complete this older task/i);
-    fireEvent.click(within(recommendation).getByRole('link', { name: 'Learn the recommended meaning' }));
-    const meaning = document.getElementById('learning-meaning')!;
-    expect(within(meaning).getByText('Congress imposed new tariffs.')).toBeInTheDocument();
-    expect(within(meaning).queryByText(entry.senses[0].definition)).not.toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Back to learning cards' })).toHaveAttribute('href', url);
-    const quiz = screen.getByRole('link', { name: 'Start meaning recall · 1 word' });
-    const quizUrl = new URL(quiz.getAttribute('href')!, 'https://local.test');
-    expect(quizUrl.searchParams.has('planId')).toBe(false);
-    expect(JSON.parse(quizUrl.searchParams.get('batchCards')!)).toEqual([{ entryId: entry.id, senseId: 'kaikki:ee67f93458d54ef0be' }]);
-    fireEvent.click(quiz);
-    const start = await screen.findByRole('button', { name: 'Start session' });
-    await waitFor(() => expect(start).toBeEnabled());
-    fireEvent.click(start);
-    await screen.findByRole('textbox', { name: 'Answer 1' });
-    expect(screen.getByText('To apply, enforce, or establish (something, often regarded as burdensome as a restriction or tax: see verb sense 1.2.2) with authority.')).toBeInTheDocument();
-    expect(screen.queryByText(entry.senses[0].example)).not.toBeInTheDocument();
-    await waitFor(async () => {
-      const draft = (await vocabularySessionDrafts.list('account-one'))[0]?.session;
-      expect(draft?.planId).toBeUndefined();
-      expect(draft?.cardSnapshots?.[0].entry.senses.find(sense => sense.id === 'kaikki:ee67f93458d54ef0be')).toMatchObject({ example: 'Congress imposed new tariffs.' });
-    });
-    expect(mocks.fb.state).toEqual(before);
-  } finally {
-    cleanup();
-    vi.unstubAllGlobals();
-  }
+  vi.spyOn(vocabularySessionDrafts,'list').mockResolvedValue([]);
+  mocks.fb.mutatePlans = vi.fn(async (mutate:any) => {
+    const next = structuredClone(mocks.fb.state);
+    await mutate(next);
+    mocks.fb.state = next; mocks.fb.stateRef.current = next;
+    return true;
+  });
+  mount(url);
+  await screen.findByText('A moving staircase that carries people between levels.');
+  expect(screen.queryByText('Anything that escalates.')).not.toBeInTheDocument();
+  expect(screen.queryByRole('link',{name:'Start dictation · 10 words'})).not.toBeInTheDocument();
+  await userEvent.click(screen.getByRole('button',{name:'Update batch meanings'}));
+  const quiz = new URL((await screen.findByRole('link',{name:'Start dictation · 10 words'})).getAttribute('href')!,'https://local.test');
+  const updated = JSON.parse(quiz.searchParams.get('batchCards')!);
+  expect(updated.map((row:any) => row.entryId)).toEqual(cards.map((row:any) => row.entryId));
+  expect(updated[0].senseId).toBe(resolveVocabularyLearningContext(entry,member).sense!.id);
+  expect(quiz.searchParams.get('planId')).toBe('legacy-escalator');
+  expect(mocks.fb.state.plans[0].meaningUpdates[0]).toMatchObject({before:cards,after:updated});
+  expect(mocks.fb.state.vocabulary).toEqual(before.vocabulary);
+  expect(mocks.fb.state.vocabularySessions).toEqual(before.vocabularySessions);
+  expect(mocks.fb.state.vocabularyEvidence).toEqual(before.vocabularyEvidence);
+  expect(screen.getByRole('link',{name:'Word details'})).toHaveAttribute('href',expect.stringContaining(encodeURIComponent(updated[0].senseId)));
+});
+
+test.each(['save failure','saved draft','account switch'])('a meaning update protects the existing task on %s', async scenario => {
+  const {url} = legacyEscalatorPlan();
+  const before = structuredClone(mocks.fb.state);
+  vi.spyOn(vocabularySessionDrafts,'list').mockImplementation(async () => {
+    if (scenario === 'account switch') mocks.owner = 'account-two';
+    return scenario === 'saved draft' ? [{session:{planId:'legacy-escalator',status:'paused'}}] as any : [];
+  });
+  mocks.fb.mutatePlans = vi.fn(async () => false);
+  mount(url);
+  await screen.findByRole('button',{name:'Update batch meanings'});
+  await userEvent.click(screen.getByRole('button',{name:'Update batch meanings'}));
+  if (scenario !== 'account switch') await screen.findByRole('alert');
+  if (scenario !== 'save failure') expect(mocks.fb.mutatePlans).not.toHaveBeenCalled();
+  expect(mocks.fb.state).toEqual(before);
+  expect(screen.queryByRole('link',{name:'Start dictation · 10 words'})).not.toBeInTheDocument();
+});
+
+test.each(['completed','submitted'])('a %s legacy task never offers to rewrite its historical meanings', async scenario => {
+  const {url,entry} = legacyEscalatorPlan();
+  if (scenario === 'completed') mocks.fb.state.plans[0].status = 'completed';
+  else mocks.fb.state.vocabularySessions = [{id:'record',planId:'legacy-escalator',status:'submitted',mode:'dictation'}];
+  const before = structuredClone(mocks.fb.state);
+  mount(url);
+  await screen.findByRole('heading',{name:'escalator'});
+  expect(within(document.getElementById('learning-meaning')!).getByText(entry.senses[0].definition)).toBeInTheDocument();
+  expect(screen.queryByRole('button',{name:'Update batch meanings'})).not.toBeInTheDocument();
+  expect(mocks.fb.state).toEqual(before);
+});
+
+test.each(['porch', 'hut', 'nursery', 'impose'])('existing direct %s meaning links load the exact curriculum definition and assessment', async term => {
+  const released = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
+  Object.assign(VOCABULARY_CATALOG, released);
+  const entry = released.entries.find((row: any) => row.term === term);
+  const member = released.memberships.find((row: any) => row.entryId === entry.id && row.bookId === 'ielts-vocabulary');
+  const meaning = resolveVocabularyLearningContext(entry, member).sense!;
+  const cards = [{entryId:entry.id,senseId:meaning.id}];
+  mocks.fb.state.settings.vocabulary = { mode:'definition',autoPlay:false };
+  const before = structuredClone(mocks.fb.state);
+  const query = new URLSearchParams({word:entry.id,sense:meaning.id,batch:'0',batchSize:'1',batchCards:JSON.stringify(cards),selectedEntryIds:JSON.stringify([entry.id])});
+  mount(`/vocabulary/wordbooks/${member.bookId}/groups/${member.unitId}/learn?${query}`);
+  await screen.findByRole('heading',{name:term});
+  expect(screen.getByText(meaning.definition)).toBeVisible();
+  expect(screen.queryByText('Definition not available yet')).not.toBeInTheDocument();
+  const quiz = new URL(screen.getByRole('link',{name:'Start meaning recall · 1 word'}).getAttribute('href')!,'https://local.test');
+  expect(JSON.parse(quiz.searchParams.get('batchCards')!)).toEqual(cards);
+  expect(quiz.searchParams.has('planId')).toBe(false);
+  expect(mocks.fb.state).toEqual(before);
 });
 
 test('exact planned learning browses only its frozen words and retains the original task batch when navigating', async () => {
@@ -178,7 +214,7 @@ test('exact planned learning browses only its frozen words and retains the origi
   expect(assessment.searchParams.get('batchSize')).toBe('10');
   expect(JSON.parse(assessment.searchParams.get('batchCards')!)).toEqual(cards);
   expect(screen.getByRole('button',{name:'Next word'})).toBeDisabled();
-  expect(screen.getByRole('button',{name:'Whole group · 12 words'})).toBeInTheDocument();
+  expect(screen.getByText('Other practice')).toBeInTheDocument();
 });
 
 test('returning to a completed exact task retains its words, order and meanings without binding a new assessment', async () => {
