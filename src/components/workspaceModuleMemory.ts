@@ -36,7 +36,7 @@ export function safeModuleUrl(value: unknown, module: WorkspaceModule): value is
     // Recognize registered routes, rather than accepting lookalike path prefixes.
     if (module === 'today') return path === '/' || path === '/today';
     if (module === 'planning') return path === '/planning';
-    if (module === 'settings') return /^\/settings(?:\/(?:target|schedule|skills|vocabulary|audio|appearance|account|backup))?$/.test(path);
+    if (module === 'settings') return /^\/settings(?:\/(?:target|schedule|overdue|skills|vocabulary|practice|workspace|audio|appearance|account|backup))?$/.test(path);
     if (module === 'progress') return path === '/progress';
     if (module === 'writing') return /^\/(?:write(?:\/questions)?|review(?:\/[^/]+)?)$/.test(path);
     if (module === 'speaking') return /^\/(?:speak(?:\/questions|\/topics\/[^/]+)?|stories|review(?:\/[^/]+)?)$/.test(path);

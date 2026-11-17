@@ -41,7 +41,7 @@ export type PlanTarget =
   | { type: 'exam-review'; skill: 'reading' | 'listening'; attemptId: string }
   | { type: 'intensive'; skill: 'listening'; sectionId: string; sentenceId: string; reviewMode?: 'listening-check' }
   | { type: 'error-review'; errorIds: string[] }
-  | { type: 'vocabulary'; binding?: 'dynamic' | 'frozen'; mode: 'learning-batch' | 'due-review'; assessmentMode: string; bookId?: string; unitId?: string; batchIndex?: number; batchSize?: number; selectionPolicy?: 'exact'; entryIds?: string[]; reviewType?:'due'|'wrong'|'custom';reviewFilter?:import('./vocabulary/types').ReviewQueueFilter;reviewReason?:string;questionOrder?:'source'|'random'|'due';selectedMeanings?:{entryId:string;senseId:string}[];cards: {entryId:string; senseId:string}[] };
+  | { type: 'vocabulary'; binding?: 'dynamic' | 'frozen'; mode: 'learning-batch' | 'due-review'; assessmentMode: string; bookId?: string; unitId?: string; batchIndex?: number; batchSize?: number; selectionPolicy?: 'exact'; entryIds?: string[]; allocation?: { batchSize: number; sourceRemaining: number; dailyRemaining?: number; minutesRemaining?: number }; reviewType?:'due'|'wrong'|'custom';reviewFilter?:import('./vocabulary/types').ReviewQueueFilter;reviewReason?:string;questionOrder?:'source'|'random'|'due';selectedMeanings?:{entryId:string;senseId:string}[];cards: {entryId:string; senseId:string}[] };
 export type StudyPlan = {
   id: string; dateKey: string; skill: StudySkill; kind: string; title: string; description: string;
   estimatedMinutes: number; origin: 'automatic' | 'manual'; status: 'pending' | 'in_progress' | 'completed' | 'skipped';

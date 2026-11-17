@@ -22,6 +22,7 @@ function Harness({ owner = 'one', ready = true }: { owner?: string; ready?: bool
     <button onClick={() => memory.selectModule('vocabulary')}>Vocabulary</button>
     <button onClick={() => memory.selectModule('writing')}>Writing</button>
     <button onClick={() => memory.selectModule('planning')}>Planning</button>
+    <button onClick={() => memory.selectModule('settings')}>Settings</button>
     <button onClick={() => navigate('/vocabulary/entry/apple?bookId=fruit#sense', { state: originState })}>Apple</button>
     <button onClick={() => navigate('/vocabulary/words?tag=fruit')}>Words</button>
     <button onClick={() => navigate('/write/questions?tag=task2')}>Questions</button>
@@ -51,6 +52,21 @@ test('Planning navigation resets its overview even while viewing its own task hi
   render(<MemoryRouter initialEntries={['/planning?view=history#task-completed']}><Harness /></MemoryRouter>);
   await userEvent.setup().click(screen.getByText('Planning'));
   expect(screen.getByLabelText('Location').textContent).toBe('/planning');
+});
+
+test.each(['schedule','practice','overdue','workspace'])('global Settings keeps the %s category without a stale study return', async category => {
+  rememberModuleContext('one','settings',{url:`/settings/${category}?returnTo=%2Fvocabulary%2Fhistory%2Fold#session`,state:originState,scroll:{x:0,y:400}});
+  render(<MemoryRouter initialEntries={['/write']}><Harness /></MemoryRouter>);
+  await userEvent.setup().click(screen.getByText('Settings'));
+  expect(screen.getByLabelText('Location').textContent).toBe(`/settings/${category}`);
+  expect(screen.getByLabelText('State').textContent).toBe('null');
+});
+
+test('global Settings clears a contextual return even from its active category', async () => {
+  render(<MemoryRouter initialEntries={[{pathname:'/settings/schedule',search:'?returnTo=%2Fvocabulary%2Fhistory%2Fold',state:originState}]}><Harness /></MemoryRouter>);
+  await userEvent.setup().click(screen.getByText('Settings'));
+  expect(screen.getByLabelText('Location').textContent).toBe('/settings/schedule');
+  expect(screen.getByLabelText('State').textContent).toBe('null');
 });
 
 test('module clicks resume deep URLs, history return chains, and scroll after a reload', async () => {

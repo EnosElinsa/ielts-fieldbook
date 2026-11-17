@@ -131,7 +131,7 @@ test('weekly overrides and vocabulary allocation can be saved as actionable sett
  expect(screen.getByRole('spinbutton',{name:'Mon study minutes'})).toBeVisible();
  fireEvent.change(screen.getByRole('spinbutton',{name:'Mon study minutes'}),{target:{value:'90'}});
  expect(overrides).toHaveTextContent('1 day customised');
- fireEvent.change(screen.getByRole('spinbutton',{name:'Task block minutes'}),{target:{value:'25'}});
+ fireEvent.change(screen.getByRole('spinbutton',{name:'Target task length (minutes)'}),{target:{value:'25'}});
  await user.click(screen.getByRole('button',{name:'Save settings'}));
  expect(context.current.saveStudySettings.mock.calls[0][0].planning).toMatchObject({blockMinutes:25,week:{1:{minutes:90}}});
 });
@@ -143,6 +143,27 @@ test('a customised day opens the individual-day settings by default',()=>{
  expect(overrides).toHaveAttribute('open');
  expect(overrides).toHaveTextContent('1 day customised');
  expect(screen.getByRole('spinbutton',{name:'Tue study minutes'})).toHaveValue(45);
+});
+
+test('practice structure exposes exclusive choices and only shows applicable writing options',async()=>{
+  setup();const user=userEvent.setup();
+  expect(screen.getByRole('radio',{name:'Several shorter sessions'})).toBeChecked();
+  expect(screen.getByRole('checkbox',{name:'Allow longer writing sessions'})).toBeVisible();
+  await user.click(screen.getByRole('radio',{name:'One focused session'}));
+  expect(screen.getByRole('radio',{name:'Several shorter sessions'})).not.toBeChecked();
+  expect(screen.queryByRole('checkbox',{name:'Allow longer writing sessions'})).not.toBeInTheDocument();
+  expect(screen.getByRole('spinbutton',{name:'Target task length (minutes)'})).toHaveAccessibleDescription(/focused skill session uses the remaining practice time/);
+  await user.click(screen.getByRole('button',{name:'Save settings'}));
+  expect(context.current.saveStudySettings).toHaveBeenCalledWith({planning:expect.objectContaining({multipleTasks:false})});
+});
+
+test('a contextual settings visit retains its explicit source through category changes',async()=>{
+  const source='/vocabulary/history/session-one';
+  render(<MemoryRouter initialEntries={[`/settings/audio?returnTo=${encodeURIComponent(source)}`]}><Routes><Route path="/settings/:category" element={<SettingsPage/>}/></Routes></MemoryRouter>);
+  const back=screen.getByRole('link',{name:'Back to session word list'});
+  expect(back).toHaveAttribute('href',source);
+  await userEvent.setup().click(screen.getByRole('link',{name:'Time and modules'}));
+  expect(screen.getByRole('link',{name:'Back to session word list'})).toHaveAttribute('href',source);
 });
 
 test('catch-up presets explain the daily minutes and save the selected limit',async()=>{
@@ -306,7 +327,7 @@ test('changing accounts discards the old owner draft before saving', async () =>
 test('selected skills persist with the legacy focus settings', async () => {
   setup('skills'); const user = userEvent.setup();
   for (const skill of ['Writing', 'Speaking', 'Listening']) await user.click(screen.getByRole('checkbox', { name: skill }));
-  await selectChoice(await screen.getByLabelText('Writing focus'), 'Task 2 first');
+  await selectChoice(await screen.getByLabelText('Writing focus'), 'Task 2 only');
   await user.click(screen.getByRole('button', { name: 'Save settings' }));
   expect(context.current.saveStudySettings).toHaveBeenCalledWith({ skills: ['reading'], skillMix: 'reading', focus: 'task2' });
 });
