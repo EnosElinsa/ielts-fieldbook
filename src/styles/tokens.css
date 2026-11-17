@@ -9,8 +9,8 @@
 @font-face{font-family:'Source Serif 4';font-style:normal;font-weight:700;font-display:swap;src:url('../../fonts/SourceSerif4-700.woff2') format('woff2')}
 @font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:swap;src:url('../../fonts/DMMono-400.woff2') format('woff2')}
 @font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:swap;src:url('../../fonts/DMMono-500.woff2') format('woff2')}
-:root{--bg:#f6f7f9;--sheet:#fff;--ink:#252830;--muted:#626974;--rule:#e4e7ec;--blue:#3268da;--blue-dark:#2860d3;--red:#d34d59;--gold:#b98018;--success:#237c61;--soft-blue:#eef3ff;--soft-red:#fff0f2;--soft-green:#eaf7f0;--surface-hover:#f1f3f6;--surface-soft:#f8f9fb;--teal:#168878;--shadow:0 1px 3px #1b263a08;--shadow-lift:0 8px 24px #1b263a0c;--ease:cubic-bezier(.2,.8,.2,1);--text:16px;--ui:14px;--label:12px}
-:root[data-theme=dark]{--bg:#18191c;--sheet:#202226;--ink:#e9ebef;--muted:#a1a7b2;--rule:#33363d;--blue:#89aaff;--blue-dark:#4579ed;--red:#f48f98;--gold:#e7ba6a;--success:#76cbb0;--soft-blue:#28354e;--soft-red:#402b32;--soft-green:#223b32;--surface-hover:#2b2e34;--surface-soft:#24262b;--teal:#60cbb9;--shadow:0 1px 3px #0002;--shadow-lift:0 8px 24px #0002}
+:root{--bg:#f6f7f9;--sheet:#fff;--ink:#252830;--muted:#626974;--rule:#e4e7ec;--blue:#3268da;--blue-dark:#2860d3;--blue-fill:#2860d3;--red:#bd3d4b;--gold:#b98018;--success:#237c61;--soft-blue:#eef3ff;--soft-red:#fff0f2;--soft-green:#eaf7f0;--surface-hover:#f1f3f6;--surface-soft:#f8f9fb;--teal:#168878;--shadow:0 1px 3px #1b263a08;--shadow-lift:0 8px 24px #1b263a0c;--ease:cubic-bezier(.2,.8,.2,1);--text:16px;--ui:14px;--label:12px}
+:root[data-theme=dark]{--bg:#18191c;--sheet:#202226;--ink:#e9ebef;--muted:#a1a7b2;--rule:#33363d;--blue:#89aaff;--blue-dark:#4579ed;--blue-fill:#3165d5;--red:#f48f98;--gold:#e7ba6a;--success:#76cbb0;--soft-blue:#28354e;--soft-red:#402b32;--soft-green:#223b32;--surface-hover:#2b2e34;--surface-soft:#24262b;--teal:#60cbb9;--shadow:0 1px 3px #0002;--shadow-lift:0 8px 24px #0002}
 *{box-sizing:border-box}
 html{background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 body{

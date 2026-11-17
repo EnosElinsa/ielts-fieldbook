@@ -106,11 +106,12 @@
 .page .exam-review-queue .async-state { margin-bottom: 20px; }
 
 .workspace-error-screen{min-height:100dvh;display:grid;place-items:center;padding:24px;background:var(--bg);color:var(--ink)}
-.workspace-error-screen>.async-state{width:min(100%,560px)}.workspace-page-error .async-state{margin-top:20px}.workspace-page-error .async-state-actions>button,.workspace-error-screen .async-state-actions>button{background:var(--blue-dark);border-color:var(--blue-dark);color:#fff}
+.workspace-error-screen>.async-state{width:min(100%,560px)}.workspace-page-error .async-state{margin-top:20px}.workspace-page-error .async-state-actions>button,.workspace-error-screen .async-state-actions>button{background:var(--blue-fill);border-color:var(--blue-fill);color:#fff}
 /* Programmatic alert focus announces the failure; action buttons retain their focus rings. */
 :is(.workspace-page-error,.workspace-error-screen,.workspace-dialog-error) [role=alert][tabindex="-1"]:focus{outline:none}
 
 /* Supporting copy remains readable at desktop and mobile sizes. */
 .kicker, .mark-sub, .rail-foot > span, .field label, .dropdown-label, .auth-card label { font-size: 12px; line-height: 1.5; }
 .page-tools p, .file-hint, .auth-hint, .modal > p, .async-state-detail, .study-selection-hint { font-size: 13px; line-height: 1.65; }
-.progress-section .section-head h2 { font-size: 16px; margin: 0; }
+.progress-section .section-head h2, .progress-score-section .section-head h2 { font: 600 17px Manrope,Arial,sans-serif; margin: 0; }
+@media (max-width: 740px) { .progress-section .section-head h2, .progress-score-section .section-head h2 { font-size: 16px; } }

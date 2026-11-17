@@ -135,9 +135,12 @@ test('foreground return refreshes eligibility and changing account cancels the o
  expect(within(panel()).getByRole('link',{name:/Practise Meaning recall/})).toBeInTheDocument();
  mocks.owner='home-b';mocks.fb.state={vocabulary:[],vocabularyStates:[],vocabularyEvidence:[],wordbookEnrollments:[]};
  view.rerender(<MemoryRouter><VocabularyPage/></MemoryRouter>);
- expect(within(panel()).getByRole('heading',{name:'Choose a wordbook'})).toBeInTheDocument();
+ const gettingStarted=within(screen.getByRole('region',{name:'Get started with vocabulary'}));
+ expect(gettingStarted.getByRole('heading',{name:'Build your vocabulary'})).toBeInTheDocument();
+ expect(gettingStarted.getByRole('link',{name:'Choose a wordbook'})).toHaveAttribute('href','/vocabulary/wordbooks');
+ expect(screen.queryByText('compass')).not.toBeInTheDocument();
  await act(async()=>vi.advanceTimersByTime(86400000));
- expect(within(panel()).queryByText('compass')).not.toBeInTheDocument();
+ expect(screen.queryByText('compass')).not.toBeInTheDocument();
 });
 
 test('unassessed production does not prevent foundation mastery or demand a production task',()=>{
@@ -188,7 +191,11 @@ test('late teaching completion from another account cannot expose its previous s
  await act(async()=>finishOld());
  expect(within(panel()).getByText('Preparing your vocabulary recommendations...')).toBeInTheDocument();
  expect(within(panel()).queryByText('compass')).not.toBeInTheDocument();
- await act(async()=>finish());expect(within(panel()).getByRole('heading',{name:'Choose a wordbook'})).toBeInTheDocument();
+ await act(async()=>finish());
+ const gettingStarted=within(screen.getByRole('region',{name:'Get started with vocabulary'}));
+ expect(gettingStarted.getByRole('heading',{name:'Build your vocabulary'})).toBeInTheDocument();
+ expect(gettingStarted.getByRole('link',{name:'Choose a wordbook'})).toHaveAttribute('href','/vocabulary/wordbooks');
+ expect(screen.queryByText('compass')).not.toBeInTheDocument();
 });
 
 test('unmount removes the recommendation boundary timer and foreground listeners',()=>{

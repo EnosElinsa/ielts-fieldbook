@@ -16,6 +16,7 @@ test.each(['', 'This saved session is unavailable for this account.'])('history 
   render(<MemoryRouter initialEntries={['/vocabulary/history/submitted?planId=finished']}><VocabularyPracticePage /></MemoryRouter>);
   expect(screen.queryByText('Free practice setup')).not.toBeInTheDocument();
   expect(screen.queryByRole('heading', { name: 'Vocabulary review' })).not.toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Saved vocabulary session', level: 1 })).toBeInTheDocument();
   if (error) {
     expect(screen.getByRole('heading', {name: "This session isn't in your account"})).toBeInTheDocument();
     expect(screen.getByRole('link', {name:'Back to history'})).toHaveAttribute('href','/vocabulary/history');

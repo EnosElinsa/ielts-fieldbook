@@ -1,5 +1,5 @@
 .auth-screen{min-height:100vh;display:grid;grid-template-columns:minmax(280px,1fr) minmax(320px,460px);align-items:stretch}
-.auth-aside{background:var(--blue-dark);color:#f7f4ee;padding:48px 40px;display:flex;flex-direction:column;justify-content:flex-end;gap:14px}
+.auth-aside{background:var(--blue-fill);color:#f7f4ee;padding:48px 40px;display:flex;flex-direction:column;justify-content:flex-end;gap:14px}
 .auth-aside .mark-box{color:#f7f4ee;border-color:var(--gold);box-shadow:4px 4px 0 var(--gold)}
 .auth-aside .kicker{color:#a7c8cf}
 .auth-aside h1{font:600 42px/1.08 'Source Serif 4',serif;letter-spacing:-.04em;margin:0;max-width:12ch}
