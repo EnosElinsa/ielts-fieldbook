@@ -1389,7 +1389,7 @@ test('imperative account and command navigation wait for the active session deci
   await user.click(screen.getByRole('button', { name: 'Command search route' }));
   expect(fb.current.setSkill).not.toHaveBeenCalled();
   await user.click(screen.getByRole('button', { name: 'Keep progress' }));
-  expect(fb.current.setSkill).toHaveBeenCalledWith('writing', '/write');
+  await waitFor(() => expect(fb.current.setSkill).toHaveBeenCalledWith('writing', '/write'));
   expect(await screen.findByText('/write')).toBeInTheDocument();
 });
 
