@@ -268,7 +268,7 @@ export function getVocabularyReviewQueue(state: Partial<VocabularyStore>, filter
     const sources = entry.sources.filter(s => matchesVocabularySource(s, filter, sense.id));
     if ((filter.bookId || filter.unitId || filter.skill || filter.sourceType || filter.sourceId) && !sources.length) return;
     const learning = learningBySense.get(`${entry.id}:${sense.id}`);
-    const modes = filter.mode ? [filter.mode] : VOCABULARY_MODES;
+    const modes = filter.mode ? [filter.mode] : filter.modes || VOCABULARY_MODES;
     modes.forEach(mode => {
       if (!supportsMode(entry, sense, mode) || (filter.dimension && !modeDimensions[mode].includes(filter.dimension))) return;
       if (filter.scheduledOnly || filter.dueOnly === true) {

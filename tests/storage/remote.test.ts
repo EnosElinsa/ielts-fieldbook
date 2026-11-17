@@ -258,6 +258,17 @@ test('base hydration defers productive drafts and never diffs unloaded module re
   expect(mocks.deletes).toEqual([]);
 });
 
+test('a scoped plan save does not traverse unrelated account content', async () => {
+  const {hydrateState,saveState}=await import('../../src/storage/remote');
+  const state=await hydrateState({modules:[]});
+  state.plans[0].status='completed';
+  let unrelatedReads=0;
+  Object.defineProperty(state,'vocabulary',{enumerable:true,get(){unrelatedReads++;return [{id:'unrelated',term:'personal'}];}});
+  expect(await saveState(state,undefined,{collections:['plans','profile']})).toBe(true);
+  expect(unrelatedReads).toBe(0);
+  expect(Object.keys(mocks.rpcCalls.at(-1).args.batch.lists)).toEqual(['plans']);
+});
+
 test('productive loading restores drafts once, establishes their save baseline and supports retries', async () => {
   const { hydrateState, ensureAccountModule, getCollectionStatuses, saveState } = await import('../../src/storage/remote');
   const state = await hydrateState({ modules: [] });

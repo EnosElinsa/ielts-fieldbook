@@ -7,7 +7,7 @@ const catalog = vi.hoisted(() => {
 vi.mock('../../src/domain/vocabulary/catalog', () => ({ VOCABULARY_CATALOG: catalog }));
 import { emptyState } from '../../src/domain/state';
 import { normalizePlanning } from '../../src/domain/planningPreferences';
-import { ensureUnifiedPlans, nextLearningTarget, nextHomeLearning, selectedStudySkills, mutateStudyPlan, previewBacklogChange, applyBacklogPreview } from '../../src/lib/planTemplates';
+import { ensureUnifiedPlans, ensureUnifiedPlansAsync, nextLearningTarget, nextHomeLearning, selectedStudySkills, mutateStudyPlan, previewBacklogChange, applyBacklogPreview } from '../../src/lib/planTemplates';
 import { addVocabularyItem, recordVocabularyReview } from '../../src/domain/vocabulary';
 import { bindStudyPlanTargets } from '../../src/lib/planTargets';
 import { orderReviewCards, oneQuestionPerWord } from '../../src/domain/vocabulary/reviewOrder';
@@ -23,6 +23,15 @@ function fixture() {
   return state;
 }
 beforeEach(() => vi.useRealTimers());
+
+test('browser scheduling preserves the same frozen tasks, learning allocation and review priorities',async()=>{
+ const state=fixture();
+ recordVocabularyReview(state,{entryId:'a',senseId:'one',mode:'dictation',result:'failure',occurredAt:'2026-10-19T12:00:00Z',response:'wrong'});
+ state.plans=[{id:'protected',dateKey:'2026-10-20',origin:'manual',status:'in_progress',startedAt:'2026-10-20T09:00:00Z',skill:'vocabulary',kind:'vocabulary',estimatedMinutes:3,target:{type:'vocabulary',mode:'review',assessmentMode:'dictation',cards:[{entryId:'a',senseId:'one',mode:'dictation'}]}}];
+ const expected=structuredClone(state);ensureUnifiedPlans(expected,undefined,now);
+ await ensureUnifiedPlansAsync(state,now);
+ expect(state).toEqual(expected);
+});
 
 test('home follows the exact task for today, reserves protected budgets and observes rest days',()=>{
  const state=fixture();

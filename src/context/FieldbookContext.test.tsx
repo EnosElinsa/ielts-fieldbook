@@ -8,6 +8,7 @@ import { readFileSync } from 'node:fs';
 import { IDBFactory } from 'fake-indexeddb';
 import { readDraftRecovery, writeDraftRecovery } from '../storage/recovery';
 import { ensureUnifiedPlans, previewBacklogChange, studyBudget } from '../lib/planTemplates';
+import * as planning from '../lib/planTemplates';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { TodayPage } from '../features/today/TodayPage';
 import { PlanningPage } from '../features/planning/PlanningPage';
@@ -1605,6 +1606,50 @@ test('unavailable content and failed start save leave the task pending',async()=
   mocks.saveState.mockResolvedValueOnce(false);
   await act(async()=>{expect(await fieldbook.startPlan('reading')).toBe(false);});
   expect(fieldbook.state.plans[0].status).toBe('pending');expect(fieldbook.state.activePlanId).toBeNull();
+});
+
+test('schedule refresh copies plan edits without deep-copying unrelated study records',async()=>{
+  await mount('/planning');
+  await act(async()=>{await fieldbook.ensureUnifiedPlans();});
+  const current=fieldbook.stateRef.current;
+  const clone=vi.spyOn(globalThis,'structuredClone');
+  try {
+    await act(async()=>{expect(await fieldbook.ensureUnifiedPlans()).toBe(true);});
+    expect(clone.mock.calls.filter(([value])=>value?.drafts===current.drafts&&value?.vocabulary===current.vocabulary)).toHaveLength(0);
+    expect(fieldbook.stateRef.current.drafts).toBe(current.drafts);
+    expect(fieldbook.stateRef.current.vocabulary).toBe(current.vocabulary);
+  }finally{clone.mockRestore();}
+});
+
+test('a yielded schedule refresh rebases an intervening settings edit before saving',async()=>{
+  await mount('/planning');
+  const pending=defer(),original=planning.ensureUnifiedPlansAsync;
+  const scan=vi.spyOn(planning,'ensureUnifiedPlansAsync').mockImplementationOnce(async draft=>{await pending.promise;return original(draft);});
+  let operation;
+  try {
+    await act(async()=>{operation=fieldbook.ensureUnifiedPlans();await Promise.resolve();});
+    await waitFor(()=>expect(scan).toHaveBeenCalledTimes(1));
+    const live={...fieldbook.stateRef.current,settings:{...fieldbook.stateRef.current.settings,dailyMinutes:80}};
+    fieldbook.stateRef.current=live;
+    await act(async()=>{pending.resolve();expect(await operation).toBe(true);});
+    expect(scan).toHaveBeenCalledTimes(2);
+    expect(fieldbook.state.settings.dailyMinutes).toBe(80);
+    expect(mocks.saveState.mock.calls.at(-1)[0].settings.dailyMinutes).toBe(80);
+  }finally{scan.mockRestore();}
+});
+
+test('an account switch during a yielded schedule scan discards its proposals',async()=>{
+  await mount('/planning');
+  const pending=defer(),original=planning.ensureUnifiedPlansAsync;
+  const scan=vi.spyOn(planning,'ensureUnifiedPlansAsync').mockImplementationOnce(async draft=>{await pending.promise;return original(draft);});
+  let operation;
+  try {
+    await act(async()=>{operation=fieldbook.ensureUnifiedPlans();await Promise.resolve();});
+    await waitFor(()=>expect(scan).toHaveBeenCalledTimes(1));
+    mocks.owner='account-2';
+    await act(async()=>{pending.resolve();expect(await operation).toBe(false);});
+    expect(mocks.saveState).not.toHaveBeenCalled();
+  }finally{scan.mockRestore();}
 });
 
 test('unrelated profile changes keep manual pending and running tasks',async()=>{

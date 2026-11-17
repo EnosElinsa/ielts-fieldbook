@@ -6,7 +6,7 @@ import { dueIntensive } from '../domain/exam/store';
 import { isProtectedPlan, isReplannableLearningPlan, practiceFromWeakness } from '../domain/plans';
 import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
 import { vocabularyLearningSource } from '../domain/vocabulary/learningSource';
-import { getVocabularyPlanningCandidates, selectVocabularyPlanReview } from '../domain/vocabulary/planning';
+import { getVocabularyPlanningCandidates, getVocabularyPlanningCandidatesAsync, selectVocabularyPlanReview } from '../domain/vocabulary/planning';
 import { normalizeReviewScope, normalizeSelectedMeanings } from '../domain/vocabulary/reviewPlanning';
 import { isVocabularySessionSelection } from '../domain/vocabulary/selection';
 import { isAssessedReviewMode, vocabularyReviewTask } from './vocabularyReviewTask';
@@ -641,7 +641,17 @@ export function nextHomeLearning(state, now = new Date()) {
   return target?{target,plan:null}:null;
 }
 
-export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), recoveryIds?) {
+function hasVocabularyBudget(state,now) {
+  return calendarDays(now).some(key=>studyBudget(state.settings,key).vocabulary>0);
+}
+
+/** Browser entry point: yield during the expensive read-only scan, then apply the schedule atomically. */
+export async function ensureUnifiedPlansAsync(state, now = new Date()) {
+  const candidates=hasVocabularyBudget(state,now) ? await getVocabularyPlanningCandidatesAsync(state,now,state.settings.vocabulary?.mode) : [];
+  return ensureUnifiedPlans(state,undefined,now,undefined,candidates);
+}
+
+export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), recoveryIds?, preparedCandidates?) {
   const writable=state;
   state=planningEvidenceView(state);
   const before=JSON.stringify(state.plans);
@@ -665,7 +675,9 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
   const reserved=new Set(state.plans.filter(plan=>plan.target?.mode==='learning-batch'&&plan.status!=='skipped').map(plan=>JSON.stringify([plan.target.bookId,plan.target.unitId||null,plan.target.batchIndex,plan.target.batchSize])));
   const frozenCards=state.plans.filter(plan=>['pending','in_progress'].includes(plan.status)&&plan.target?.type==='vocabulary').flatMap(plan=>(plan.target.cards?.length?plan.target.cards:(plan.target.entryIds||[]).map(entryId=>({entryId,senseId:''}))).map(card=>({...card,mode:plan.target.assessmentMode})));
   const identities=new Set(frozenCards.map(card=>cardIdentity(card)));
-  let candidates=getVocabularyPlanningCandidates(state,now,state.settings.vocabulary?.mode).filter(({card})=>!identities.has(cardIdentity(card)));
+  const candidateRows=preparedCandidates ?? (hasVocabularyBudget(state,now) ? getVocabularyPlanningCandidates(state,now,state.settings.vocabulary?.mode) : []);
+  const candidateIdentities=new Map(candidateRows.map(({card})=>[card,cardIdentity(card)]));
+  let candidates=candidateRows.filter(({card})=>!identities.has(candidateIdentities.get(card)));
   const historical=previous.filter(plan=>(plan.originalDateKey||plan.dateKey)<today&&Number.isInteger(plan.rotationIndex)).sort((a,b)=>String(a.originalDateKey||a.dateKey).localeCompare(String(b.originalDateKey||b.dateKey))||a.rotationIndex-b.rotationIndex).pop();
   let sequence=historical ? historical.rotationIndex+1 : 0;
   const add=(key,task,id,order,rotationIndex?)=>{
@@ -705,7 +717,7 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
       if(!chosen.length)break;
       const reviewTask=vocabularyReviewTask(mode,chosen.length);
       vocabularyTasks.push({...reviewTask,target:{...reviewTask.target,reviewReason:chosen[0].reason},reviewReason:chosen[0].reason});remaining-=chosen.length;
-      const consumed=new Set(chosen.map(({card})=>cardIdentity(card)));candidates=candidates.filter(({card})=>!consumed.has(cardIdentity(card)));
+      const consumed=new Set(chosen.map(({card})=>candidateIdentities.get(card)));candidates=candidates.filter(({card})=>!consumed.has(candidateIdentities.get(card)));
     }
     vocabularyTasks.forEach((task,index)=>add(key,task,`study-${key}-vocabulary${index?`-${index+1}`:''}`,index));
     const vocabularyOrder=state.plans.filter(plan=>plan.dateKey===key&&plan.status!=='skipped'&&!plan.onHold&&!plan.archivedAt&&isVocabularyPlan(plan)).length;

@@ -1,7 +1,25 @@
 // @ts-nocheck
-import { expect, test } from 'vitest';
-import { emptyState, migrateState, persistShape } from '../../src/domain/state';
+import { expect, test, vi } from 'vitest';
+import { emptyState, migrateState, migrateStateAsync, persistShape } from '../../src/domain/state';
 import { mergeBackup, validateBackup } from '../../src/domain/backup';
+
+test('cooperative hydration preserves legacy identities, personal text and migration results',async()=>{
+ const raw={
+  lexicon:[{term:'mitigate',meaning:'Reduce the severity.',reviewCount:2}],
+  wordbookProgress:Array.from({length:300},(_,i)=>({id:`progress-${i}`,bookId:'guixue:2',unitId:'2001',completedEntryIds:[],status:'learning',updatedAt:'2026-10-01'})),
+  plans:[{id:'p',kind:'lexicon',target:{bookId:'guixue:2',unitId:'2001'}}],
+  drafts:{q:{text:'My personal writing.'}},
+ };
+ const before=structuredClone(raw);
+ const clock=vi.spyOn(performance,'now');let elapsed=0;clock.mockImplementation(()=>elapsed+=10);
+ // Match migration defaults without freezing browser task scheduling.
+ const at=new Date('2026-10-20T12:00:00Z');vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(at);
+ let responsive=false;const beat=setTimeout(()=>responsive=true,0);
+ try {
+  expect(await migrateStateAsync(raw)).toEqual(migrateState(raw));
+  expect(responsive).toBe(true);expect(raw).toEqual(before);
+ }finally{clearTimeout(beat);clock.mockRestore();vi.useRealTimers();}
+});
 
 test('v10 state has independent personal vocabulary collections and removes legacy runtime keys', () => {
   const state = migrateState({ lexicon: [{ id: 'old-1', term: 'mitigate', meaning: 'reduce the severity', example: 'Trees mitigate heat.', reviewCount: 4, skill: 'writing' }], plans: [{ id: 'p1', kind: 'lexicon' }] });

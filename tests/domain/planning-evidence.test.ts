@@ -1,7 +1,19 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
+import * as vocabularyPlanning from '../../src/domain/vocabulary/planning';
 import { emptyState, persistShape } from '../../src/domain';
 import { PLANNING_FIELDS, planningEvidenceView } from '../../src/domain/planningEvidence';
 import { ensureUnifiedPlans } from '../../src/lib/planTemplates';
+
+test('a schedule without vocabulary time does not build unused vocabulary questions',()=>{
+ const state:any=emptyState();
+ Object.assign(state.settings,{dailyMinutes:60,days:[1,2,3,4,5,6,7],skills:['reading'],planning:{vocabularyMode:'fixed',vocabularyMinutes:0}});
+ const candidates=vi.spyOn(vocabularyPlanning,'getVocabularyPlanningCandidates');
+ try {
+  ensureUnifiedPlans(state,undefined,new Date('2026-10-20T12:00:00'));
+  expect(state.plans.length).toBeGreaterThan(0);
+  expect(candidates).not.toHaveBeenCalled();
+ }finally{candidates.mockRestore();}
+});
 
 test('summary-based scheduling matches full evidence without leaking summaries into stored history',()=>{
   const full:any=emptyState();

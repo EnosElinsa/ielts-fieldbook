@@ -62,7 +62,7 @@ export type ReviewQueueFilter = {
   wrongOnly?: boolean;
   entryId?: string; senseId?: string;
   bookId?: string; unitId?: string; skill?: VocabularySkill; sourceType?: string; sourceId?: string;
-  dimension?: VocabularyDimension; mode?: VocabularyMode; dueOnly?: boolean; scheduledOnly?: boolean; now?: string | Date;
+  dimension?: VocabularyDimension; mode?: VocabularyMode; modes?: readonly VocabularyMode[]; dueOnly?: boolean; scheduledOnly?: boolean; now?: string | Date;
 };
 export type ReviewCard = {
   id: string; entryId: string; senseId: string; entry: VocabularyEntry; mode: VocabularyMode;

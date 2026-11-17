@@ -1,6 +1,7 @@
-import {expect,test} from 'vitest';
+import {expect,test,vi} from 'vitest';
 import {addVocabularyItem,getVocabularyReviewQueue,recordVocabularyReview} from '../../src/domain/vocabulary';
-import {getVocabularyPlanningCandidates} from '../../src/domain/vocabulary/planning';
+import {getVocabularyPlanningCandidates,getVocabularyPlanningCandidatesAsync} from '../../src/domain/vocabulary/planning';
+import {getVocabularyNextPractice} from '../../src/domain/vocabulary/nextPractice';
 import {buildVocabularySessionCommit,createVocabularySession,updateVocabularySessionAnswer} from '../../src/domain/vocabulary/session';
 import type {VocabularyDimension,VocabularyStore} from '../../src/domain/vocabulary/types';
 
@@ -13,6 +14,34 @@ function fixture(){
  return {store,entry,add,evidence,learning:store.vocabularyStates[0],candidates:(preferred?:'definition'|'dictation')=>getVocabularyPlanningCandidates(store,now,preferred)};
 }
 const rows=(store:VocabularyStore,at=now,preferred?:'definition'|'dictation')=>getVocabularyPlanningCandidates(store,at,preferred).map(({card,reason})=>[card.entryId,card.senseId,card.mode,reason]);
+
+test('planning a foundation review agrees with the full practice resolver across due, recovery and waiting modes',()=>{
+ const {store,entry,learning,evidence}=fixture();evidence();
+ entry.senses[0].distinctionTask={prompt:'Choose the classroom term.',answer:'word-a',options:['word-a','other'],explanation:'This is the classroom term.'};
+ for(const due of [past,now,future])for(const active of [false,true]) {
+  learning.cards.definition={due:new Date(due)} as never;
+  learning.wrong.modes.dictation={active,successesSinceFailure:0,lastFailureAt:past};
+  const expected=['definition','dictation'].flatMap(foundationMode=>{
+   const result=getVocabularyNextPractice(store,entry,{senseId:'one',now,foundationMode:foundationMode as 'definition'|'dictation'});
+   const card=getVocabularyReviewQueue(store,{entryId:entry.id,senseId:'one',mode:foundationMode as 'definition'|'dictation',now,dueOnly:false})[0];
+   return result?.status==='ready' && card ? [{card,reason:result.reason}] : [];
+  });
+  const key=row=>JSON.stringify([row.card.entryId,row.card.senseId,row.card.mode,row.reason]);
+  expect(getVocabularyPlanningCandidates(store,now).sort((a,b)=>key(a).localeCompare(key(b)))).toEqual(expected.sort((a,b)=>key(a).localeCompare(key(b))));
+ }
+});
+
+test('foundation planning still verifies the frozen distinction task before prioritizing its mistake',()=>{
+ const {store,entry}=fixture();
+ entry.senses[0].distinctionTask={prompt:'Choose the classroom term.',answer:'word-a',options:['word-a','other'],explanation:'This is the classroom term.'};
+ const card=getVocabularyReviewQueue(store,{entryId:'a',senseId:'one',mode:'distinction',dueOnly:false,now})[0];
+ let session=updateVocabularySessionAnswer(createVocabularySession([card],'distinction',{}),card.id,'other');session.submittedAt=past;
+ Object.assign(store,buildVocabularySessionCommit(store,session,[card]).state);
+ expect(getVocabularyNextPractice(store,store.vocabulary[0],{senseId:'one',now,foundationMode:'definition'})).toMatchObject({reason:'error'});
+ expect(getVocabularyPlanningCandidates(store,now)[0]).toMatchObject({reason:'error',card:{mode:'definition'}});
+ store.vocabulary[0].senses[0].distinctionTask!.prompt='A different question.';
+ expect(getVocabularyPlanningCandidates(store,now).some(row=>row.reason==='error')).toBe(false);
+});
 
 test('only attempted saved meanings qualify; adding a word does not invent learned senses',()=>{
  const {store,entry,evidence}=fixture();
@@ -113,4 +142,23 @@ test('a submitted but unassessed production attempt opens foundation gaps withou
  let session=updateVocabularySessionAnswer(createVocabularySession([card],'production',{}),card.id,'I used this term in class.');session.submittedAt=past;
  Object.assign(store,buildVocabularySessionCommit(store,session,[card]).state);
  expect(rows(store)).toEqual([['a','one','definition','missing'],['a','one','dictation','missing']]);
+});
+
+test('large candidate scans yield to browser input while preserving exact priorities and saved evidence',async()=>{
+ const {store,add,evidence,learning}=fixture();
+ for(const id of ['b','c']){add(id);evidence(id);}
+ learning.cards.definition={due:new Date(past)} as never;
+ const expected=getVocabularyPlanningCandidates(store,now,'dictation'),before=structuredClone(store);
+ let heartbeat=false;
+ const beat=setTimeout(()=>{heartbeat=true;},0);
+ const clock=vi.spyOn(performance,'now');let elapsed=0;clock.mockImplementation(()=>elapsed+=10);
+ const background=vi.fn((callback:()=>void)=>new Promise<void>(resolve=>setTimeout(()=>{callback();resolve();},0)));
+ vi.stubGlobal('scheduler',{yield:()=>Promise.resolve(),postTask:background});
+ try {
+  const actual=await getVocabularyPlanningCandidatesAsync(store,now,'dictation');
+  expect(heartbeat).toBe(true);
+  expect(background).toHaveBeenCalledWith(expect.any(Function),{priority:'background'});
+  expect(actual).toEqual(expected);
+  expect(store).toEqual(before);
+ }finally{clearTimeout(beat);clock.mockRestore();vi.unstubAllGlobals();}
 });
