@@ -8,7 +8,6 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     maxWorkers: process.env.CI ? 2 : 4,
-    minWorkers: 1,
     setupFiles: ['tests/vocabularyTeachingSetup.ts'],
     globals: false,
     include: ['tests/**/*.test.ts', 'src/**/*.{test,spec}.{ts,tsx}'],
