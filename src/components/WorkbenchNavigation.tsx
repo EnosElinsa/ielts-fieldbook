@@ -83,6 +83,7 @@ export function MobileNavigation({ onMore, onSelectModule }: { onMore: () => voi
   const fb = useFieldbook();
   const [studyOpen, setStudyOpen] = useState(false);
   const selectingStudy = useRef(false);
+  const studyTrigger = useRef<HTMLButtonElement>(null);
   const [pendingStudy, setPendingStudy] = useState(null);
   const { pathname, search } = useLocation();
   const activeModule = moduleFor(pathname, search, fb.activeSkill);
@@ -97,6 +98,8 @@ export function MobileNavigation({ onMore, onSelectModule }: { onMore: () => voi
   useEffect(() => {
     if (studyOpen || !pendingStudy) return;
     setPendingStudy(null);
+    // Restore a stable keyboard destination before a no-op, guard dialog or route can take focus.
+    studyTrigger.current?.focus({ preventScroll: true });
     select(pendingStudy.id, pendingStudy.to);
   }, [studyOpen, pendingStudy]);
   const mainLink = id => {
@@ -106,7 +109,7 @@ export function MobileNavigation({ onMore, onSelectModule }: { onMore: () => voi
   return <nav className="mobile-navigation" aria-label="Main navigation">
     {mainLink('today')}{mainLink('planning')}
     <DropdownMenu.Root open={studyOpen} onOpenChange={open => { if (open) selectingStudy.current = false; setStudyOpen(open); }}>
-      <DropdownMenu.Trigger type="button" className={activeSkill ? 'active' : undefined} aria-current={activeSkill ? 'page' : undefined} aria-label={activeSkill ? `Study: ${activeSkill.label}` : 'Study'}><BookOpen size={20} aria-hidden="true"/><span>Study</span></DropdownMenu.Trigger>
+      <DropdownMenu.Trigger ref={studyTrigger} type="button" className={activeSkill ? 'active' : undefined} aria-current={activeSkill ? 'page' : undefined} aria-label={activeSkill ? `Study: ${activeSkill.label}` : 'Study'}><BookOpen size={20} aria-hidden="true"/><span>Study</span></DropdownMenu.Trigger>
       {studyOpen && <DropdownMenu.Portal><DropdownMenu.Content className="dropdown-content mobile-study-menu" side="top" align="center" sideOffset={12} collisionPadding={12} aria-label="Study skills" onCloseAutoFocus={event => { if (selectingStudy.current) event.preventDefault(); }}>
         {skills.map(({id,to,label,Icon}) => <DropdownMenu.Item key={id} className="dropdown-item" aria-current={activeModule === id ? 'page' : undefined} onSelect={() => { selectingStudy.current = true; setStudyOpen(false); setPendingStudy({id,to}); }}><Icon size={18} aria-hidden="true"/>{label}{activeModule === id && <Check className="item-check" size={16} aria-hidden="true"/>}</DropdownMenu.Item>)}
       </DropdownMenu.Content></DropdownMenu.Portal>}

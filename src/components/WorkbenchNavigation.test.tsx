@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, expect, test, vi } from 'vitest';
@@ -122,4 +122,34 @@ test('mobile Study supports keyboard dismissal and guarded skill selection', asy
   await user.click(screen.getByRole('menuitem', {name:'Speaking'}));
   expect(fb.setSkill).toHaveBeenCalledWith('speaking', '/speak');
   expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+});
+
+test('selecting the active Study skill with the keyboard returns focus to its trigger', async () => {
+  render(<MemoryRouter initialEntries={['/listening']}><MobileNavigation onMore={() => {}} /></MemoryRouter>);
+  const user = userEvent.setup();
+  const trigger = screen.getByRole('button', {name:'Study: Listening'});
+  trigger.focus();
+  await user.keyboard('{Enter}');
+  await waitFor(() => expect(screen.getByRole('menuitem', {name:'Listening'})).toHaveFocus());
+  await user.keyboard('{Enter}');
+  expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+  expect(fb.setSkill).not.toHaveBeenCalled();
+  await waitFor(() => expect(trigger).toHaveFocus());
+});
+
+test('a blocked Study navigation retains trigger focus while waiting for a decision', async () => {
+  const block = (event: Event) => event.preventDefault();
+  document.addEventListener('fieldbook:before-navigate', block);
+  try {
+    render(<MemoryRouter><MobileNavigation onMore={() => {}} /></MemoryRouter>);
+    const user = userEvent.setup();
+    const trigger = screen.getByRole('button', {name:'Study'});
+    trigger.focus();
+    await user.keyboard('{Enter}');
+    await waitFor(() => expect(screen.getByRole('menuitem', {name:'Listening'})).toHaveFocus());
+    await user.keyboard('{Enter}');
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+    expect(fb.setSkill).not.toHaveBeenCalled();
+    await waitFor(() => expect(trigger).toHaveFocus());
+  } finally { document.removeEventListener('fieldbook:before-navigate', block); }
 });
