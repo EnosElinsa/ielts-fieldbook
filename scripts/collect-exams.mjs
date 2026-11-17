@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const output = path.join(root, 'local/exam-source');
+const output = path.join(root, 'local/data/exams/source');
 const stateFile = process.argv[2] || path.join(output, 'browser-state.json');
 const state = JSON.parse(await fs.readFile(stateFile, 'utf8'));
 const cookie = state.cookies.filter(c => /(^|\.)ieltscb\.com$/.test(c.domain)).map(c => `${c.name}=${c.value}`).join('; ');

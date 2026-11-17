@@ -7,9 +7,9 @@ import { vocabularyResourcesPlugin } from './scripts/vocabularyResources';
 const rootDir = __dirname;
 
 const BANK_FILES = [
-  { url: '/questions.json', privateRel: 'local/questions.json', sampleRel: 'public/sample/questions.json' },
-  { url: '/speaking-questions.json', privateRel: 'local/speaking-questions.json', sampleRel: 'public/sample/speaking-questions.json' },
-  { url: '/speaking-samples.json', privateRel: 'local/speaking-samples.json', sampleRel: 'public/sample/speaking-samples.json' },
+  { url: '/questions.json', privateRel: 'local/data/banks/questions.json', sampleRel: 'public/sample/questions.json' },
+  { url: '/speaking-questions.json', privateRel: 'local/data/banks/speaking-questions.json', sampleRel: 'public/sample/speaking-questions.json' },
+  { url: '/speaking-samples.json', privateRel: 'local/data/banks/speaking-samples.json', sampleRel: 'public/sample/speaking-samples.json' },
 ] as const;
 
 function contentTypeFor(filePath: string): string {
@@ -52,8 +52,8 @@ function privateBankMiddleware(): Connect.NextHandleFunction {
           : pathname.startsWith('/data/exam-sections/') ? `sections/${decodeURIComponent(pathname.slice('/data/exam-sections/'.length)).replaceAll(':', '_')}`
           : `assets/${decodeURIComponent(pathname.slice('/exam-assets/'.length))}`;
       } catch { res.statusCode = 400; res.end('Bad request'); return; }
-      const contentBank = ['local/exam-bank-final-v4', 'local/exam-bank-final', 'local/exam-bank-aligned', 'local/exam-bank'].find(directory => fs.existsSync(path.resolve(rootDir, directory, 'catalog.json'))) || 'local/exam-bank';
-      const bankRoot = path.resolve(rootDir, pathname.startsWith('/exam-assets/') ? 'local/exam-bank' : contentBank);
+      const contentBank = ['local/data/exams/bank-final-v4', 'local/data/exams/bank-final', 'local/data/exams/bank-aligned', 'local/data/exams/bank'].find(directory => fs.existsSync(path.resolve(rootDir, directory, 'catalog.json'))) || 'local/data/exams/bank';
+      const bankRoot = path.resolve(rootDir, pathname.startsWith('/exam-assets/') ? 'local/data/exams/bank' : contentBank);
       const filePath = path.resolve(bankRoot, relative);
       if (!filePath.startsWith(bankRoot + path.sep)) { res.statusCode = 400; res.end('Bad request'); return; }
       if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
@@ -94,8 +94,8 @@ function privateBankMiddleware(): Connect.NextHandleFunction {
         res.end('Bad request');
         return;
       }
-      const privatePath = path.resolve(rootDir, 'local', 'question-assets', relative);
-      const assetsRoot = path.resolve(rootDir, 'local', 'question-assets');
+      const privatePath = path.resolve(rootDir, 'local', 'data', 'banks', 'question-assets', relative);
+      const assetsRoot = path.resolve(rootDir, 'local', 'data', 'banks', 'question-assets');
       if (!privatePath.startsWith(assetsRoot + path.sep) && privatePath !== assetsRoot) {
         res.statusCode = 400;
         res.end('Bad request');
@@ -167,7 +167,7 @@ export default defineConfig({
   server: {
     port: 8000,
     strictPort: true,
-    watch: { ignored: ['**/local/archive/**', '**/local/logs/**', '**/local/backups/**', '**/local/audits/**'] },
+    watch: { ignored: ['**/local/archive/**', '**/local/logs/**', '**/local/backups/**', '**/local/audits/**', '**/local/evidence/**'] },
   },
   preview: {
     port: 8000,

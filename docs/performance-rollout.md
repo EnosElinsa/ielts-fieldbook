@@ -18,7 +18,7 @@ npm test
 npm run build
 node scripts/check-bundle-budget.mjs
 PGLITE_MODULE=/path/to/@electric-sql/pglite node tests/storage/workspace-commit-sql.cjs
-node scripts/performance-benchmark.mjs --runs=15 --url=http://127.0.0.1:8002 --source-ref=working-tree --env=.env --out=local/performance/optimized.json --screenshots=local/performance/screenshots
+node scripts/performance-benchmark.mjs --runs=15 --url=http://127.0.0.1:8002 --source-ref=working-tree --env=.env --out=local/evidence/performance/optimized.json --screenshots=local/evidence/performance/screenshots
 ```
 
 The browser script supports `--playwright=/absolute/path/to/playwright/index.mjs` and uses installed Chrome. It needs the build's Supabase URL to derive a storage key. It creates a synthetic session and intercepts every external request; it never reads account content or writes to a real database. Desktop is 1440×900 at normal CPU speed; mobile is 390×844 at 4× CPU slowdown. Both use 10 Mbps and 150 ms latency, 15 samples, and nearest-rank p75. Intercepted backend responses include the equivalent latency and transfer cost. Record local fixture results separately from online results, which include real routing and connection delays.

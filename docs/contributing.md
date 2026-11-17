@@ -14,13 +14,17 @@ Keep source in `src/`, `tests/`, `scripts/`, `public/`, `supabase/` and `docs/`.
 
 Vite scans `index.html` for dependency entry points and excludes local archives, logs, backups and generated audits from file watching. Private reference HTML and retired source trees must not trigger dependency scans or application reloads.
 
-The ignored `local/` directory uses these locations:
+The ignored `local/` directory groups files by purpose, not by whichever task created them:
 
-- `backups/<date>/`: personal exports and pre-release snapshots.
-- `logs/<release>/`: test, build and deployment logs.
+- `data/banks/`: private writing/speaking banks and `question-assets/`; development URLs remain unchanged. `data/exams/` holds source exports and normalized exam banks. `data/personal/` holds assessments and notes; `data/reference/` holds reference books.
+- `backups/exports/`, `backups/releases/` and `backups/storage/<date>/`: personal exports, database release snapshots and original storage objects. Keep manifests alongside the backup.
+- `logs/<release>/`: final test/build logs; remove superseded diagnostic runs.
 - `audits/`: regenerable detailed audit output; linked private JSON reports are not shipped in Git.
-- `archive/`: retired task artifacts and verified differences from orphaned checkouts, with manifests and SHA256 verification.
-- Existing named source banks and QA directories retain their paths when scripts or historical evidence refer to them. In particular, `questions.json`, `speaking-questions.json`, `speaking-samples.json` and `question-assets/` are development inputs.
+- `evidence/maintenance/<date>/`: file inventories, archive checksums and relocation/deletion manifests.
+- `archive/vocabulary/` and `archive/qa/`: compressed historical authoring/review packages and structured acceptance evidence. Verify every archive member before removing its raw copy. Historical paths inside these packages describe their original layout.
+- `work/<topic>/`: temporary active jobs and caches, created only when needed. Move unique completed evidence into an archive and remove reproducible intermediates when the job ends.
+
+Do not add task-named folders or loose data files directly under `local/`. See `local/README.md` for the current machine's index, archive contents and restoration commands. Raw source audio, personal records and unique editorial decisions are retained; obsolete screenshots/logs, transcoding trials and reproducible current reports can be removed after classification.
 
 Before removing a checkout, inspect both Git worktree registrations and its files. Preserve unique source, local data and build assets in a verified archive; delete only duplicates and reproducible dependencies after verification. Never recursively remove a junction or a computed path without checking its resolved target. See `local/README.md` when present for the machine's archive and relocation index.
 

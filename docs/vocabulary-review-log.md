@@ -476,8 +476,8 @@ Use [whole-queue collection and preparation](vocabulary-bulk-workflow.md#collect
 
 ```powershell
 npm run vocabulary:quality
-npm run vocabulary:quality -- --export --scope learning --issue archaic-example --limit 1000 --output local/vocabulary-work/archaic-work.json
-npm run vocabulary:prepare -- --work local/vocabulary-work/archaic-work.json --sources local/vocabulary-work/source-responses.json --fields example --output local/vocabulary-work/archaic-focused.json
+npm run vocabulary:quality -- --export --scope learning --issue archaic-example --limit 1000 --output local/work/vocabulary/archaic-work.json
+npm run vocabulary:prepare -- --work local/work/vocabulary/archaic-work.json --sources local/work/vocabulary/source-responses.json --fields example --output local/work/vocabulary/archaic-focused.json
 ```
 
 Reuse the revision responses already collected for the queue. `--fields` accepts a comma-separated selection from `definition`, `example`, `pos`, `usage`, `register`, `collocations`, `distinctions`, `exampleKind`, `learningPriority` and `distinctionTask`. Unknown, duplicate and empty selections fail. Omitting the option preserves the original complete-draft format.
@@ -501,7 +501,7 @@ Preparation is not model generation or semantic approval. Edit and verify the dr
 ```
 
 ```powershell
-npm run vocabulary:quality -- --candidates local/vocabulary-work/focused-candidates.jsonl --output local/vocabulary-work/focused-validation.json
+npm run vocabulary:quality -- --candidates local/work/vocabulary/focused-candidates.jsonl --output local/work/vocabulary/focused-validation.json
 ```
 
 Do not repeat teaching fields at the root alongside `changes`. Omitted fields remain in the existing displayed snapshot. Submitted fields must be valid; empty arrays, nulls and blank strings do not silently erase earlier content. At least one field must actually change. IDs, sources, licenses and approval status are not editable fields.

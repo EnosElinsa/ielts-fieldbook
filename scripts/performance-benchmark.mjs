@@ -13,7 +13,7 @@ const runs = Number(args.runs || 15);
 const url = args.url || 'http://127.0.0.1:8001';
 const origin = new URL(url).origin;
 const groupPath = '/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-01-group-01/words';
-const output = resolve(args.out || 'local/performance/report.json');
+const output = resolve(args.out || 'local/evidence/performance/report.json');
 const screenshotDir = args.screenshots && resolve(args.screenshots);
 await mkdir(resolve(output, '..'), { recursive: true });
 if (screenshotDir) await mkdir(screenshotDir, { recursive: true });

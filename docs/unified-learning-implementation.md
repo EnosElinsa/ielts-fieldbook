@@ -1,5 +1,7 @@
 # Unified learning implementation ledger
 
+Local archive update (2026-11-17): historical `local/unified-dictionary/` members are preserved in `local/archive/vocabulary/unified-dictionary-2026-11-17.tar.gz`; `local/unified-testing/` members are in `local/archive/qa/history-2026-11-17.tar.gz`. Paths below identify original archive members. Obsolete screenshots and raw logs were removed; structured evidence, authoring decisions and source hashes remain. See [workspace conventions](contributing.md#local-workspace).
+
 Approved 2026-10-20. This replaces both preceding plans. A release never closes remaining dictionary or platform work. Product copy remains English.
 
 Implemented means code exists; final release verification is recorded separately. Partial and pending requirements remain in scope.

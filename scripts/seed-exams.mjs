@@ -10,10 +10,10 @@ import { validateCatalog } from './lib/exam-import.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 if (args.includes('--help')) {
-  console.log('node scripts/seed-exams.mjs [--dry-run | --apply] [--catalog FILE] [--assets DIR] [--audit FILE] [--manifest FILE]\nDefaults: local/exam-bank/catalog.json, local/exam-bank/assets, sibling audit.json. Dry run validates every asset and prints counts/checksums. --apply requires SUPABASE_SERVICE_ROLE_KEY.');
+  console.log('node scripts/seed-exams.mjs [--dry-run | --apply] [--catalog FILE] [--assets DIR] [--audit FILE] [--manifest FILE]\nDefaults: local/data/exams/bank/catalog.json, local/data/exams/bank/assets, sibling audit.json. Dry run validates every asset and prints counts/checksums. --apply requires SUPABASE_SERVICE_ROLE_KEY.');
   process.exit(0);
 }
-const options = { apply: false, catalog: path.join(root, 'local/exam-bank/catalog.json'), assets: path.join(root, 'local/exam-bank/assets'), audit: null, manifest: null };
+const options = { apply: false, catalog: path.join(root, 'local/data/exams/bank/catalog.json'), assets: path.join(root, 'local/data/exams/bank/assets'), audit: null, manifest: null };
 for (let index = 0; index < args.length; index++) {
   const flag = args[index];
   if (flag === '--apply') options.apply = true;

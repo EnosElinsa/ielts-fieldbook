@@ -15,7 +15,7 @@ const url = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 function readBank(name) {
-  const privatePath = path.join(root, 'local', name);
+  const privatePath = path.join(root, 'local', 'data', 'banks', name);
   const samplePath = path.join(root, 'public', 'sample', name);
   return JSON.parse(fs.readFileSync(fs.existsSync(privatePath) ? privatePath : samplePath, 'utf8'));
 }
@@ -60,7 +60,7 @@ function contentType(name) {
 }
 
 async function uploadQuestionAssets(supabase) {
-  const dir = path.join(root, 'local', 'question-assets');
+  const dir = path.join(root, 'local', 'data', 'banks', 'question-assets');
   if (!fs.existsSync(dir)) return 0;
   const names = fs.readdirSync(dir).filter((name) => fs.statSync(path.join(dir, name)).isFile());
   const size = 8;

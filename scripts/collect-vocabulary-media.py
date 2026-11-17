@@ -39,4 +39,6 @@ if __name__=='__main__':
     titles=[file_title(url) for e in catalog['entries'] for a in ['uk','us'] if (url:=(e.get('pronunciation') or {}).get(a))]
     terms=['vegetable','fruit','apple','core','peel','strip','recipe','treat','order','bull','cock','rock','mandarin','courtship','appliance','temple','paste','democracy','warn','commitment','mantle','crust','gale','cathedral','horse','plant','earth','mountain','river','ocean','tree','leaf','flower','bird','dog','cat','table','chair','knife','bread','rice','meat','fish','milk','egg','water','cashier','kit','fitness','feature','reserve','discount','cultivation','impression','compound','discharge','concentration','fundamental','array','attitude','underlie']
     titles += ['File:En-'+a+'-'+term+'.ogg' for term in terms for a in ['uk','us']]
-    cachepath=ROOT/'local/context-media-plan/commons-audio-metadata.json';collect(titles,cachepath)
+    cachepath=ROOT/'local/data/vocabulary/context-media/commons-audio-metadata.json'
+    cachepath.parent.mkdir(parents=True, exist_ok=True)
+    collect(titles,cachepath)
