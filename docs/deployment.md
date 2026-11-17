@@ -48,6 +48,10 @@ The one-time Git title migration uses an isolated mirror and verifies every comm
 
 ## Recovery
 
+If finished tasks reappear in Planning, open the updated planner and allow its schedule save to finish. It reconciles exact saved work before carryover and preserves the work's completion time; no data migration or history deletion is needed. Work without a reliable task association, partial reviews and productive mock stages remain unfinished rather than being guessed complete. A failed save stays retryable. Check the plan, linked record, start/completion timestamps and any explicit restoration before diagnosing a remaining case. See [planning rules](actionable-planning.md#recover-missed-days).
+
+Local cleanup must retain private backups and historical public resource URLs. Retired checkout differences and their SHA256 manifests belong in ignored `local/archive/`; release logs belong in `local/logs/`. See [workspace conventions](contributing.md#local-workspace).
+
 The October 14 manual-test upgrade adds state v13 and the compatible
 `exam_annotations` table through `20261014120000_exam_annotations.sql`.
 Apply and register it before the frontend; verify its RLS, account cascade and

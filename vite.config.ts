@@ -150,6 +150,8 @@ function curriculumRuntimePlugin(): Plugin {
 
 export default defineConfig({
   plugins: [react(), privateBankPlugin(), curriculumRuntimePlugin(), vocabularyResourcesPlugin(rootDir)],
+  // Reference HTML and retired checkouts are not application entry points.
+  optimizeDeps: { entries: ['index.html'] },
   build: {
     rollupOptions: {
       output: {
@@ -165,6 +167,7 @@ export default defineConfig({
   server: {
     port: 8000,
     strictPort: true,
+    watch: { ignored: ['**/local/archive/**', '**/local/logs/**', '**/local/backups/**', '**/local/audits/**'] },
   },
   preview: {
     port: 8000,

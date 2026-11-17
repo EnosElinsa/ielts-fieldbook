@@ -80,26 +80,27 @@ export function receptivePlanPath(plan:Record<string,any>, skill:ExamSkill):stri
 
 type CompletionState = { activePlanId: string | null; plans: Record<string, any>[]; examAttempts?: ExamAttempt[]; intensiveSessions?: IntensiveSession[] };
 /** Completing a task must be driven by work done after that task started. */
-export function completeReceptivePlanIfMatched(state: CompletionState, previous?: CompletionState | null) {
+export function completeReceptivePlanIfMatched(state: CompletionState, previous?: CompletionState | null, recoverSaved = false) {
   let completed: Record<string, any> | null = null;
   for (const plan of state.plans) {
     if (!plan.target && plan.id !== state.activePlanId) continue;
-    completed = completeBoundReceptivePlan(state, plan, previous) || completed;
+    completed = completeBoundReceptivePlan(state, plan, previous, recoverSaved) || completed;
   }
   return completed;
 }
 
-function completeBoundReceptivePlan(state: CompletionState, plan: Record<string, any>, previous?: CompletionState | null) {
+function completeBoundReceptivePlan(state: CompletionState, plan: Record<string, any>, previous?: CompletionState | null, recoverSaved = false) {
   if (plan.status !== 'in_progress') return null;
   if (!plan || !plan.startedAt || !/^(reading|listening)-/.test(plan.kind)) return null;
   const skill: ExamSkill = plan.kind.startsWith('reading') ? 'reading' : 'listening';
-  const afterStart = (value?: string) => Boolean(value && Date.parse(value) >= Date.parse(plan.startedAt));
+  const afterStart = (value?: string) => Boolean(value && Date.parse(value) >= Math.max(Date.parse(plan.startedAt), Date.parse(plan.restoredAt || plan.startedAt)));
   const exactPlan = (row: Record<string,any>) => !plan.target || row.planId === plan.id;
   let linked: { id: string; completedAt?: string } | undefined;
   if (plan.kind === 'listening-intensive') {
     for (const row of state.intensiveSessions || []) {
-      if (plan.sectionId && row.sectionId !== plan.sectionId || plan.sentenceId && row.sentenceId !== plan.sentenceId) continue;
-      if (row.stage === 6 && exactPlan(row) && afterStart(row.completedAt)) { linked = row; break; }
+      const sectionId = plan.target?.sectionId || plan.sectionId, sentenceId = plan.target?.sentenceId || plan.sentenceId;
+      if (sectionId && row.sectionId !== sectionId || sentenceId && row.sentenceId !== sentenceId) continue;
+      if (!isListeningCheckPlan(plan, row.id) && row.stage === 6 && exactPlan(row) && afterStart(row.completedAt)) { linked = row; break; }
       if (row.completedAt && isListeningCheckPlan(plan, row.id)) {
         const check = row.listeningReviews?.find(check => afterStart(check.reviewedAt) && (!plan.target || check.planId === plan.id));
         if (check) { linked = { ...row, completedAt: check.reviewedAt }; break; }
@@ -112,12 +113,12 @@ function completeBoundReceptivePlan(state: CompletionState, plan: Record<string,
     }
   } else if (plan.kind.endsWith('-review')) {
     linked = state.examAttempts?.find(row => {
-      if (row.skill !== skill || row.status !== 'completed' || (plan.attemptId && row.id !== plan.attemptId) || !exactPlan(row) || plan.target && !afterStart(row.updatedAt)) return false;
+      if (row.skill !== skill || row.status !== 'completed' || ((plan.target?.attemptId || plan.attemptId) && row.id !== (plan.target?.attemptId || plan.attemptId)) || !exactPlan(row) || plan.target && !afterStart(row.updatedAt)) return false;
       const before = previous?.examAttempts?.find(prior => prior.id === row.id);
-      if (!before) return false;
+      if (!before && !(recoverSaved && plan.target?.type === 'exam-review')) return false;
       const wrong = Object.entries(row.results || {}).filter(([, correct]) => !correct).map(([id]) => id);
       const diagnosed = wrong.length > 0 && wrong.every(id => Boolean(row.errorReasons?.[id]?.trim()) && (skill !== 'reading' || Boolean(row.evidence?.[id]?.trim())));
-      const changed = JSON.stringify([row.evidence, row.errorReasons, row.keywords]) !== JSON.stringify([before.evidence, before.errorReasons, before.keywords]);
+      const changed = recoverSaved || before && JSON.stringify([row.evidence, row.errorReasons, row.keywords]) !== JSON.stringify([before.evidence, before.errorReasons, before.keywords]);
       return diagnosed && changed;
     });
   } else {
@@ -126,12 +127,15 @@ function completeBoundReceptivePlan(state: CompletionState, plan: Record<string,
       if(!plan.target)return true;
       if(row.mode!==plan.target.mode||row.sectionIds.length!==1||row.sectionIds[0]!==plan.target.sectionId)return false;
       const ids: string[] | undefined=plan.target.questionIds;
-      return !ids || ids.length>0 && JSON.stringify(ids.slice().sort())===JSON.stringify((row.questionSnapshot||[]).map(question=>question.id).sort()) && ids.every(id=>{const value=row.responses?.[id];return Array.isArray(value)?value.length>0&&value.every(item=>String(item).trim()):Boolean(String(value||'').trim());});
+      // Grading stores a result for every frozen question, including unanswered ones.
+      // Its keys let cold planning verify the exact scope without loading question content.
+      const actualIds = row.questionSnapshot?.map(question=>question.id) || (recoverSaved ? Object.keys(row.results || {}) : []);
+      return !ids || ids.length>0 && JSON.stringify(ids.slice().sort())===JSON.stringify(actualIds.sort()) && ids.every(id=>{const value=row.responses?.[id];return Array.isArray(value)?value.length>0&&value.every(item=>String(item).trim()):Boolean(String(value||'').trim());});
     });
   }
   if (!linked) return null;
   plan.status = 'completed';
-  plan.completedAt = plan.kind.endsWith('-review') ? new Date().toISOString() : linked.completedAt;
+  plan.completedAt = plan.kind.endsWith('-review') ? (linked as ExamAttempt).updatedAt || new Date().toISOString() : linked.completedAt;
   plan.linkedSessionId = linked.id;
   if (state.activePlanId === plan.id) state.activePlanId = null;
   return plan;

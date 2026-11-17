@@ -16,6 +16,7 @@ import { dayBudget, normalizePlanning } from '../domain/planningPreferences';
 import { studyPlanTitle } from './planTargets';
 import { TASK_PRACTICES } from './planningTaskOptions';
 import { planningEvidenceView } from '../domain/planningEvidence';
+import { recoverCompletedPlans } from './planningCompletion';
 
 export const planTemplates = {
   balanced: [
@@ -655,6 +656,7 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
   const writable=state;
   state=planningEvidenceView(state);
   const before=JSON.stringify(state.plans);
+  recoverCompletedPlans(state);
   retireInactiveSentenceReviews(state, now);
   const previous=(state.plans||[]).slice();
   const keys=calendarDays(now),today=keys[0],generationKey=planningSettingsKey(state.settings);

@@ -163,15 +163,19 @@ test('ordinary vocabulary loading excludes immutable session history and partial
 test('planning reads only scheduling evidence, never marks partial histories writable and retires summaries on full load',async()=>{
   const {hydrateState,ensureAccountModule,getCollectionStatuses,saveState}=await import('../../src/storage/remote');
   const {planningEvidenceView}=await import('../../src/domain/planningEvidence');
-  mocks.rows.sessions=[{id:'writing-one',payload:{id:'writing-one',date:'2026-10-01',skill:'writing',practiceMode:'timed',questionId:'q1',essay:'Private long essay',audioId:'recording'}}];
+  mocks.rows.sessions=[{id:'writing-one',payload:{id:'writing-one',date:'2026-10-01',skill:'writing',practiceMode:'timed',questionId:'q1',planId:'saved-plan',promptKey:'saved-prompt',essay:'Private long essay',audioId:'recording'}}];
   mocks.rows.assessments=[{id:'score',payload:{id:'score',sessionId:'writing-one',date:'2026-10-01',criteria:[{name:'Grammar',score:'5'}],rawText:'Long imported markdown'}}];
-  mocks.rows.exam_attempts=[{id:'reading-one',payload:{id:'reading-one',status:'paused',skill:'reading',sectionIds:['section'],answers:{one:'private'},catalogSnapshot:{large:'resource'}}}];
+  mocks.rows.exam_attempts=[{id:'reading-one',payload:{id:'reading-one',status:'paused',skill:'reading',sectionIds:['section'],responses:{one:'answer'},questionSnapshot:[{id:'one',prompt:'Large frozen question'}],answers:{one:'private'},catalogSnapshot:{large:'resource'}}}];
+  mocks.rows.intensive_sessions=[{id:'sentence',payload:{id:'sentence',planId:'original-plan',listeningReviews:[{planId:'saved-plan',reviewedAt:'2026-10-12T10:00:00Z',selfRating:4}]}}];
   const state=await hydrateState({modules:['planning']});
   expect(state.sessions).toEqual([]);expect(state.examAttempts).toEqual([]);
   const view=planningEvidenceView(state);
-  expect(view.sessions[0]).toMatchObject({id:'writing-one',skill:'writing',practiceMode:'timed'});
+  expect(view.sessions[0]).toMatchObject({id:'writing-one',skill:'writing',practiceMode:'timed',planId:'saved-plan',promptKey:'saved-prompt'});
   expect(view.sessions[0]).not.toHaveProperty('essay');
   expect(view.examAttempts[0]).not.toHaveProperty('catalogSnapshot');
+  expect(view.examAttempts[0]).not.toHaveProperty('questionSnapshot');
+  expect(view.examAttempts[0].responses).toEqual({one:'answer'});
+  expect(view.intensiveSessions[0]).toMatchObject({planId:'original-plan',listeningReviews:[{planId:'saved-plan'}]});
   expect(view.examAttempts[0]).not.toHaveProperty('answers');
   expect(view.assessments[0]).not.toHaveProperty('rawText');
   expect(getCollectionStatuses()).toMatchObject({sessions:'unloaded',assessments:'unloaded',examAttempts:'unloaded',stories:'unloaded'});

@@ -66,10 +66,10 @@ function PlanningCalendar(){
       const heading=<h3>{day===today?'Today':new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{weekday:'long'})}<span>{new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{day:'numeric',month:'short'})}</span></h3>;
       const addTask=<button type="button" className="btn line study-add-task" disabled={schedule.saving} onClick={()=>setEditor({mode:'add',dateKey:day})}><Plus size={15}/><span className="study-add-label">Add task</span></button>;
       if(!tasks.length&&!(schedule.saving&&budget))return <section className={`study-day is-empty${budget?'':' is-rest'}${day===today?' is-today':''}`} key={day}>
-        <header>{heading}<p className="study-day-empty">{budget?`No tasks yet · ${budget} min available${goal>0?` · ${goal} new words goal`:''}`:'Rest day'}</p>{addTask}</header>
+        <header className="study-day-header">{heading}<p className="study-day-empty">{budget?`No tasks yet · ${budget} min available${goal>0?` · ${goal} new words goal`:''}`:'Rest day'}</p>{addTask}</header>
       </section>;
       return <ScheduleDay className={`study-day${day===today?' is-today':''}`} key={day} current={day===today} forceOpen={tasks.some(plan=>plan.id===targetId||plan.status==='in_progress')} heading={heading} summary={`${tasks.length} ${tasks.length===1?'task':'tasks'} · ${used} min`}>
-        <header>
+        <div className="study-day-content"><header className="study-day-header">
           {heading}
           <dl className="study-day-stats" role="group" aria-label="Daily plan summary">
             <div><dt>Planned time</dt><dd className={used>budget?'study-over-budget':''}>{used} <span>/ {budget} min</span><small>{used>budget?`${used-budget} min extra`:budget?`${budget-used} min free`:'No time budget'}</small></dd></div>
@@ -78,7 +78,7 @@ function PlanningCalendar(){
           </dl>
           {addTask}
         </header>
-        {tasks.length?<div className="study-task-list">{tasks.map(plan=><PlanTask key={plan.id} plan={plan}/>)}</div>:<CardSkeleton/>}
+        {tasks.length?<div className="study-task-list">{tasks.map(plan=><PlanTask key={plan.id} plan={plan}/>)}</div>:<CardSkeleton/>}</div>
       </ScheduleDay>;
     })}</div></>}
     {editor&&<TaskEditor key={`${accountId()}:${editor.mode}:${editor.dateKey}`} {...editor} onClose={()=>setEditor(null)}/>}

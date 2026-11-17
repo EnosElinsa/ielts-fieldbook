@@ -1,12 +1,12 @@
 // These read-only rows are deliberately separate from writable collections.
 // They cannot participate in workspace diffs or replace a full history row.
 export const PLANNING_FIELDS = {
-  sessions: ['skill','type','part','practiceMode','date','assessmentId','questionId','question_id','targetErrorIds'],
+  sessions: ['skill','type','part','practiceMode','date','assessmentId','questionId','question_id','targetErrorIds','planId','promptKey'],
   assessments: ['sessionId','skill','date','criteria','overall','practiceMode','questionId','part','task','nextExercise','inventedPronunciation'],
   errors: ['code','text','resolved','nextReviewAt','sourceSessionId','sourceAssessmentId'],
   stories: ['topicIds'],
-  examAttempts: ['skill','status','sectionIds','results','errorReasons','evidence','completedAt','mode','sourceId','planId','retryOfAttemptId','updatedAt','startedAt','remainingSeconds','durationSeconds'],
-  intensiveSessions: ['nextReviewAt','sectionId','sentenceId','stage','completedAt','dictationResult','reviewEnabled'],
+  examAttempts: ['skill','status','sectionIds','results','responses','errorReasons','evidence','completedAt','mode','sourceId','planId','retryOfAttemptId','updatedAt','startedAt','remainingSeconds','durationSeconds'],
+  intensiveSessions: ['nextReviewAt','sectionId','sentenceId','stage','completedAt','dictationResult','reviewEnabled','planId','listeningReviews'],
 } as const;
 
 export type PlanningEvidenceKey = keyof typeof PLANNING_FIELDS;
