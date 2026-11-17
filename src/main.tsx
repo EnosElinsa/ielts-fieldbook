@@ -9,12 +9,14 @@ import './styles/index.css';
 import { startPerformanceTelemetry } from './lib/performanceTelemetry';
 import { PageErrorBoundary } from './components/PageErrorBoundary';
 import { installPageLoadRecovery } from './lib/pageLoadRecovery';
+import { startDiagnostics } from './lib/diagnostics';
 
 const AppRoutes = lazy(() => import('./App').then(module => ({ default: module.AppRoutes })));
 
 applyTheme(initialTheme());
 installPageLoadRecovery();
 startPerformanceTelemetry();
+startDiagnostics();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>

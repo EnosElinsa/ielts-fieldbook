@@ -31,8 +31,29 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm run check:types
       - run: npm run build
       - run: node scripts/audit-vocabulary-dictionary.mjs --check
       - run: npm run vocabulary:quality -- --check
       - run: npm run test:identities
       - run: node scripts/check-bundle-budget.mjs
+  browser:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run test:browser
+        env:
+          FIELDBOOK_BROWSER_OUTPUT: ${{ runner.temp }}/fieldbook-browser-results
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-failure-evidence
+          path: ${{ runner.temp }}/fieldbook-browser-results
+          retention-days: 7
