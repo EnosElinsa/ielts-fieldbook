@@ -766,11 +766,12 @@ test('a direct learning link assesses the explicit meaning displayed on its card
   expect(JSON.parse(assessment.searchParams.get('batchCards')!).find((ref:any)=>ref.entryId===entry.id)?.senseId).toBe(selected);
 });
 
-test('an unavailable meaning link keeps the displayed fallback available for assessment',async()=>{
+test('an unavailable explicit meaning cannot launch an assessment for a different fallback',async()=>{
   mount(`${path}?word=word-1&sense=removed-meaning`);
   await screen.findByRole('heading',{name:'Word 1'});
-  const assessment=new URL(screen.getByRole('link',{name:/^Start /}).getAttribute('href')!,'http://local.test');
-  expect(JSON.parse(assessment.searchParams.get('batchCards')!).find((ref:any)=>ref.entryId==='word-1')).toEqual({entryId:'word-1',senseId:'sense-1'});
+  expect(screen.getByText('This selected meaning could not be loaded. Retry to restore this batch.')).toBeInTheDocument();
+  expect(screen.getByRole('button',{name:/^Start /})).toBeDisabled();
+  expect(screen.queryByRole('link',{name:/^Start /})).not.toBeInTheDocument();
 });
 
 test('multiple meanings preserve explicit selection in the details return link and clear it for the next word',async()=>{

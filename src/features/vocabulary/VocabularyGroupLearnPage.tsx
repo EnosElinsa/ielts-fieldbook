@@ -343,7 +343,7 @@ export function VocabularyGroupLearnPage() {
             <div className="vocabulary-learning-progress-track" aria-hidden="true"><span style={{transform:`scaleX(${batchWords.length ? batchViewed/batchWords.length : 0})`}}/></div>
             {firstUnviewedIndex >= 0 && firstUnviewedIndex !== position ? <button className="btn text" onClick={() => navigateTo(firstUnviewedIndex)}>Continue learning this batch<ArrowRight size={14}/></button> : null}
           </div>
-          <VocabularyLearningAssessment key={`${key}:${batch}:${BATCH_SIZE}`} batch={currentBatch} assessments={assessments} groupWords={sourceWords.length} bound={boundBatch} blocked={previewingMeanings} batchUrl={batchAssessmentUrl} groupUrl={assessmentUrl}/>
+          <VocabularyLearningAssessment key={`${key}:${batch}:${BATCH_SIZE}`} batch={currentBatch} assessments={assessments} groupWords={sourceWords.length} bound={boundBatch} blocked={previewingMeanings || !selectedSense} blockedDescriptionId={previewingMeanings ? 'batch-meaning-update' : undefined} batchUrl={batchAssessmentUrl} groupUrl={assessmentUrl}/>
           <Link className="btn text" to={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}/groups/${encodeURIComponent(unitId)}/words`}>View group words<ArrowRight size={14}/></Link>
         </section>
       </div>}

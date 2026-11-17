@@ -12,13 +12,14 @@ type Props = {
   groupWords: number;
   bound: boolean;
   blocked?: boolean;
+  blockedDescriptionId?: string;
   batchUrl: (mode: VocabularyPracticeMode) => string;
   groupUrl: (mode: VocabularyPracticeMode) => string;
 };
 const wordsLabel = (count: number) => `${count} ${count === 1 ? 'word' : 'words'}`;
 
 /** Scope and question type are independent choices; only the resulting test is a link. */
-export function VocabularyLearningAssessment({ batch, assessments, groupWords, bound, blocked, batchUrl, groupUrl }: Props) {
+export function VocabularyLearningAssessment({ batch, assessments, groupWords, bound, blocked, blockedDescriptionId, batchUrl, groupUrl }: Props) {
   const id = useId();
   const [scope, setScope] = useState<'batch' | 'group'>('batch');
   const [requestedMode, setRequestedMode] = useState<VocabularyPracticeMode>();
@@ -36,7 +37,7 @@ export function VocabularyLearningAssessment({ batch, assessments, groupWords, b
   };
   if (bound && batch) return <div className="vocabulary-learning-test-picker vocabulary-assigned-test">
     <p>{wordsLabel(batch.cards.length)} · {mode?.label}</p>
-    {mode && count ? blocked ? <button className="btn primary" disabled aria-describedby="batch-meaning-update">Start {mode.label.toLowerCase()} · {wordsLabel(count)}<ArrowRight size={15}/></button> : <Link className="btn primary" to={batchUrl(mode.value)}>Start {mode.label.toLowerCase()} · {wordsLabel(count)}<ArrowRight size={15}/></Link> : null}
+    {mode && count ? blocked ? <button className="btn primary" disabled aria-describedby={blockedDescriptionId}>Start {mode.label.toLowerCase()} · {wordsLabel(count)}<ArrowRight size={15}/></button> : <Link className="btn primary" to={batchUrl(mode.value)}>Start {mode.label.toLowerCase()} · {wordsLabel(count)}<ArrowRight size={15}/></Link> : null}
     <details className="vocabulary-other-tests"><summary>Other practice</summary>
       <p>Group practice is separate from this task.</p>
       {assessments.map(item => <Link key={item.value} className="btn line" to={groupUrl(item.value)}>{item.label} · {wordsLabel(item.queue.eligibleWords)}</Link>)}
@@ -59,7 +60,7 @@ export function VocabularyLearningAssessment({ batch, assessments, groupWords, b
           })}
         </SelectField>
       </label>
-      {mode && count ? <Link className="btn primary" to={scope === 'batch' ? batchUrl(mode.value) : groupUrl(mode.value)}>Start {mode.label.toLowerCase()} · {wordsLabel(count)}<ArrowRight size={15}/></Link> : null}
+      {mode && count ? blocked && scope === 'batch' ? <button className="btn primary" disabled aria-describedby={blockedDescriptionId}>Start {mode.label.toLowerCase()} · {wordsLabel(count)}<ArrowRight size={15}/></button> : <Link className="btn primary" to={scope === 'batch' ? batchUrl(mode.value) : groupUrl(mode.value)}>Start {mode.label.toLowerCase()} · {wordsLabel(count)}<ArrowRight size={15}/></Link> : null}
     </div>
     {(partial || !mode) && <p id={`${id}-availability`} className="vocabulary-learning-availability" role="status">{partial
       ? `${count} of ${groupWords} words have suitable ${materials}. The remaining words are not included in this test.`
