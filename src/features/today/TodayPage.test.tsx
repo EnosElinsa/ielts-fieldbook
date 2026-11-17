@@ -16,6 +16,16 @@ afterEach(()=>{cleanup();vi.restoreAllMocks();vi.useRealTimers();});
 const plan=(id,skill,status='pending',day=dateKey(new Date()))=>({id,skill,kind:`${skill}-practice`,status,dateKey:day,title:`${skill} task`,description:'Selected practice',estimatedMinutes:20,completion:{description:'Submit the selected section.'}});
 const renderPage=()=>render(<MemoryRouter><TodayPage/></MemoryRouter>);
 
+test('any unfinished task today can start its exact plan without opening Planning', async () => {
+  mocks.state.plans = [plan('first', 'reading', 'in_progress'), plan('chosen', 'speaking'), plan('finished', 'writing', 'completed'), plan('skipped', 'listening', 'skipped')];
+  mocks.state.activePlanId = 'first'; const { container } = renderPage();
+  const chosen = container.querySelector('.study-work-row[data-plan-id="chosen"]');
+  await userEvent.click(within(chosen).getByRole('button', { name: 'Start speaking task' }));
+  expect(mocks.start).toHaveBeenCalledWith('chosen', { force: false, onError: expect.any(Function) });
+  expect(container.querySelector('.study-work-row[data-plan-id="finished"] button')).toBeNull();
+  expect(container.querySelector('.study-work-row[data-plan-id="skipped"] button')).toBeNull();
+});
+
 test('existing partial learning batches display their actual count in the next task and daily list',async()=>{
  mocks.state.plans=[{...plan('partial','vocabulary'),title:'Vocabulary - Learn 10 words',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',batchSize:10,cards:Array.from({length:7},(_,i)=>({entryId:`word-${i}`,senseId:'meaning'}))}}];
  renderPage();
@@ -31,9 +41,9 @@ test('held and archived tasks cannot appear as next work, inflate today or retur
  mocks.state.activePlanId='held-0';
  const {container}=renderPage();
  expect(container.querySelector('.study-next')).toHaveAttribute('data-plan-id','current');
- expect(container.querySelector('.study-summary')).toHaveTextContent('0 of 20 min done · 30 min budget');
+ expect(container.querySelector('.study-summary')).toHaveTextContent('Estimated work completed: 0 of 20 min · 30 min budget');
  expect(container.querySelector('.study-summary')).toHaveTextContent('0/1 task done');
- expect(container.querySelector('.study-summary')).not.toHaveTextContent(/min planned|estimated/);
+
  expect(screen.queryByText('listening task')).not.toBeInTheDocument();
  expect(screen.queryByText('speaking task')).not.toBeInTheDocument();
  expect(screen.queryByRole('region',{name:'Continue previous tasks'})).not.toBeInTheDocument();
@@ -62,7 +72,7 @@ test('completion summary lists the skills with tasks today',async()=>{
   mocks.state.plans=[plan('read','reading','completed'),plan('vocab','vocabulary','completed')];const {container}=renderPage();
   await waitFor(()=>expect(mocks.generate).toHaveBeenCalled());
   expect(container.querySelector('.study-summary-total')).toHaveTextContent('2/2 tasks done');
-  expect(container.querySelector('.study-summary-minutes')).toHaveTextContent('40 of 40 min done · 30 min budget · 10 min over budget');
+  expect(container.querySelector('.study-summary-minutes')).toHaveTextContent('Estimated work completed: 40 of 40 min · 30 min budget · 10 min over budget');
   expect(container.querySelector('.study-summary .study-over-budget')).toHaveTextContent('10 min over budget');
   expect(screen.getAllByText('1 done')).toHaveLength(2);
   expect(screen.getByRole('heading',{name:'Today is complete'})).toBeInTheDocument();

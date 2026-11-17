@@ -39,7 +39,7 @@ export function useStudySchedule() {
   return {saving,error,refresh};
 }
 
-export function TaskStartButton({plan, emphasis = true}) {
+export function TaskStartButton({plan, emphasis = true, taskLabel = undefined}) {
   const fb=useFieldbook();const [starting,setStarting]=useState(false);const [error,setError]=useState('');
   useEffect(()=>{setError('');},[plan.id]);
   async function start(){
@@ -49,5 +49,5 @@ export function TaskStartButton({plan, emphasis = true}) {
     catch(cause){setError(cause instanceof Error?cause.message:'The selected task could not load. Retry shortly.');}
     finally{setStarting(false);}
   }
-  return <div className="study-start-action">{error&&<p className="study-alert" role="alert">{error}</p>}<button type="button" className={`btn ${plan.status==='completed'||!emphasis?'line':'primary'}`} disabled={starting||plan.status==='skipped'} onClick={()=>void start()}>{error?<RotateCcw size={16}/>:plan.status==='completed'?<ArrowRight size={16}/>:<Play size={16}/>} {starting?'Opening...':error?'Retry task':plan.status==='completed'?'View':plan.status==='in_progress'?'Resume':'Start'}</button></div>;
+  return <div className="study-start-action">{error&&<p className="study-alert" role="alert">{error}</p>}<button type="button" aria-label={taskLabel ? `${error?"Retry":plan.status==="in_progress"?"Resume":"Start"} ${taskLabel}` : undefined} className={`btn ${plan.status==='completed'||!emphasis?'line':'primary'}`} disabled={starting||plan.status==='skipped'} onClick={()=>void start()}>{error?<RotateCcw size={16}/>:plan.status==='completed'?<ArrowRight size={16}/>:<Play size={16}/>} {starting?'Opening...':error?'Retry task':plan.status==='completed'?'View':plan.status==='in_progress'?'Resume':'Start'}</button></div>;
 }

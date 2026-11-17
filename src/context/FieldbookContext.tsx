@@ -88,7 +88,7 @@ import { normalizeVocabularyIdentities } from '../domain/vocabulary/identities';
 import { sessionSkill } from '../lib/format';
 import { attemptSections } from '../domain/desk';
 import { accountId } from '../storage/remote';
-import { differentDrafts, discardDraftRecovery, readDraftRecovery, writeDraftRecovery } from '../storage/recovery';
+import { differentDrafts, discardDraftRecovery, readDraftRecovery, writeDraftRecovery, writeDraftRecoveryEntry } from '../storage/recovery';
 import { deletePendingAudio } from '../storage/pendingAudio';
 
 const FALLBACK_QUESTIONS = [
@@ -346,7 +346,7 @@ function useFieldbookValue() {
       if (alive.current && accountId() === owner && generation === saveGeneration.current) {
         setSaveFailed(!saved && !options?.onError);
         setSaveStatus(saved ? 'saved' : 'failed');
-        if (saved && !completion && (!collections || collections.includes('drafts'))) discardDraftRecovery(owner);
+        if (saved && !completion && (!collections || collections.includes('drafts'))) discardDraftRecovery(owner, [frozen.drafts]);
       }
       return saved;
     });
@@ -1219,8 +1219,7 @@ function useFieldbookValue() {
       stateRef.current.drafts[id] = next;
       markDraftEdited(id, current, next);
       saveGeneration.current += 1;
-      const statuses = getCollectionStatuses(), recovery = statuses && statuses.drafts !== 'ready' ? readDraftRecovery(accountId())?.drafts : {};
-      writeDraftRecovery(accountId(), { ...recovery, ...stateRef.current.drafts });
+      writeDraftRecoveryEntry(accountId(), id, next);
       setSaveStatus('saving');
       setState((prev) => ({
         ...prev,
@@ -1241,8 +1240,7 @@ function useFieldbookValue() {
     stateRef.current.drafts[topicId] = next;
     markDraftEdited(topicId, current, next);
     saveGeneration.current += 1;
-    const statuses = getCollectionStatuses(), recovery = statuses && statuses.drafts !== 'ready' ? readDraftRecovery(accountId())?.drafts : {};
-    writeDraftRecovery(accountId(), { ...recovery, ...stateRef.current.drafts });
+    writeDraftRecoveryEntry(accountId(), topicId, next);
     setSaveStatus('saving');
     setState((prev) => ({ ...prev, drafts: { ...prev.drafts, [topicId]: next } }));
     return true;
@@ -1890,9 +1888,10 @@ function useFieldbookValue() {
         liveBaseline = liveDrafts;
       }
       completingAttempt.current = false;
+      const acknowledgedLiveDrafts = structuredClone(stateRef.current.drafts);
       stateRef.current = committed;
       setState(committed);
-      discardDraftRecovery(completionOwner);
+      discardDraftRecovery(completionOwner, [completionDrafts, acknowledgedLiveDrafts, committed.drafts]);
       if (speaking && pendingAttempt.audioId) void deletePendingAudio(completionOwner, question.id, pendingAttempt.part, pendingAttempt.promptKey);
       setPendingAttempt(null);
       closeModal();
