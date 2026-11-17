@@ -71,7 +71,13 @@ export function ensureReceptivePlans(state:ReceptiveState, skill:ExamSkill, chan
 export function receptivePlanPath(plan:Record<string,any>, skill:ExamSkill):string {
   if (plan.target?.type==='section' && plan.target.sectionId) return `/${skill}/${encodeURIComponent(plan.target.sectionId)}`;
   if (plan.target?.type==='exam-review') return `/${skill}/review/${encodeURIComponent(plan.target.attemptId)}`;
-  if(plan.kind==='listening-intensive'&&plan.sectionId)return `/listening/intensive/${encodeURIComponent(plan.sectionId)}${plan.sentenceId?`?sentence=${encodeURIComponent(plan.sentenceId)}`:''}`;
+  if(plan.kind==='listening-intensive'&&(plan.target?.sectionId||plan.sectionId)) {
+    const query=new URLSearchParams();
+    const sentence=plan.target?.sentenceId||plan.sentenceId;
+    if(sentence)query.set('sentence',sentence);
+    if(isListeningCheckPlan(plan))query.set('review','sentence');
+    return `/listening/intensive/${encodeURIComponent(plan.target?.sectionId||plan.sectionId)}${query.size?`?${query}`:''}`;
+  }
   if(plan.attemptId)return `/${skill}/review/${encodeURIComponent(plan.attemptId)}`;
   if(plan.kind.endsWith('review'))return `/${skill}/review`;
   if(plan.sectionId)return `/${skill}/${encodeURIComponent(plan.sectionId)}`;

@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate, useSearchParams, type LinkProps } from 
 import { accountId } from '../../storage/remote';
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { safeExamReturn } from '../../lib/examNavigation';
+import { studyReturnDelta } from '../../lib/studyNavigation';
 export { safeExamReturn } from '../../lib/examNavigation';
 
 export function ExamStudyLink({ to, returnHash, ...props }: Omit<LinkProps, 'to'> & { to: string; returnHash?: string }) {
@@ -34,8 +35,9 @@ export function ExamBackLink({ fallback, fallbackLabel = 'Back to practice' }: {
     const index = window.history.state?.idx;
     // Pop only when it leads to this exact address in this account's history.
     // A resumed module or a question anchor uses the explicit URL instead.
-    if (!location.state?.workspaceModuleRestore && origin?.owner === accountId() && origin.url === to && origin.sourceUrl === to && Number.isInteger(origin.index) && origin.index >= 0 && Number.isInteger(index) && index > origin.index) {
-      navigate(origin.index - index);
+    const delta = studyReturnDelta(origin, to, accountId(), index, Boolean(location.state?.workspaceModuleRestore));
+    if (delta !== undefined) {
+      navigate(delta);
     } else navigate(to, { replace: true });
   };
   const onClick = (event: MouseEvent<HTMLAnchorElement>) => {

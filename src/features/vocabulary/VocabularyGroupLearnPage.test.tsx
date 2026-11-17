@@ -303,6 +303,26 @@ afterEach(async()=>{vi.useRealTimers();cleanup();await act(async()=>{await Promi
 function Location(){const location=useLocation();return <output aria-label="Route">{location.pathname+location.search}</output>;}
 function mount(url=path){return render(<MemoryRouter initialEntries={[url]}><Routes><Route path="/vocabulary/wordbooks/:bookId/groups/:unitId/learn" element={<VocabularyGroupLearnPage/>}/></Routes><Location/></MemoryRouter>);}
 
+test('list layout shows only the fixed batch and selecting a word does not mark it viewed',async()=>{
+  const batch=buildLearningBatch(mocks.fb.state,'book','group',0,10,'dictation');
+  mocks.fb.state.plans=[{id:'list-plan',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',selectionPolicy:'exact',assessmentMode:'dictation',...batch.selection}}];
+  mount(`${path}?planId=list-plan`);
+  await screen.findByRole('heading',{name:'Word 1'});
+  await userEvent.click(screen.getByRole('button',{name:'List'}));
+  const list=screen.getByRole('region',{name:'Batch word list'});
+  expect(within(list).getAllByRole('listitem')).toHaveLength(10);
+  expect(within(list).queryByText('Word 11')).not.toBeInTheDocument();
+  await userEvent.click(within(list).getByRole('button',{name:'5 Word 5'}));
+  expect(screen.getByLabelText('Route')).toHaveTextContent('word=word-5');
+  expect(screen.getByLabelText('Route')).toHaveTextContent('layout=list');
+  expect(screen.getByText('Viewed 0 / 10')).toBeInTheDocument();
+  const assessment=new URL(screen.getByRole('link',{name:'Start dictation · 10 words'}).getAttribute('href')!,'https://local.test');
+  expect(JSON.parse(assessment.searchParams.get('batchCards')!)).toEqual(batch.selection.cards);
+  await userEvent.click(screen.getByRole('button',{name:'Open card'}));
+  expect(screen.getByRole('heading',{name:'Word 5'})).toBeInTheDocument();
+  expect(screen.getByRole('button',{name:'Cards'})).toHaveAttribute('aria-pressed','true');
+});
+
 test('assessment scope and type produce one explicit start link without changing learning progress', async () => {
   const before = structuredClone(mocks.fb.state);
   mount(`${path}?word=word-12&batchSize=1`);
@@ -380,7 +400,7 @@ test('a fully viewed final batch presents completion instead of dead end navigat
   await screen.findByRole('heading', { name: 'Word 12' });
   expect(screen.getByText('Batch viewed')).toBeInTheDocument();
   expect(screen.queryByRole('button', { name: 'Viewed' })).not.toBeInTheDocument();
-  expect(screen.queryByRole('button', { name: 'Next word' })).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Next word' })).toBeDisabled();
   expect(screen.getByRole('link', { name: 'Start dictation · 1 word' })).toBeInTheDocument();
   expect(screen.getByRole('progressbar', { name: 'Words viewed in this batch' })).toHaveAttribute('value', '1');
   expect(screen.getByText('1 word viewed. Ready to test your recall?')).toBeInTheDocument();

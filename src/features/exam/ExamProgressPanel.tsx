@@ -1,3 +1,4 @@
+import { ExamStudyLink } from './ExamNavigation';
 import { SelectField } from '../../components/SelectField';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -71,7 +72,7 @@ export function ExamProgressPanel({ skill, since = 0 }: { skill: ExamSkill; sinc
         {duePreview.length ? <>
           {duePreview.map(session => <div className="work-row" key={session.id}>
             <div className="work-name">{sentenceSource(session)}<small>Last dictation: {({ correct: 'Correct', partial: 'Partially correct', wrong: 'Incorrect', pending: 'Not assessed' })[session.dictationResult] || 'Not assessed'}</small></div>
-            <Link className="btn line" to={`/listening/intensive/${session.sectionId}?sentence=${encodeURIComponent(session.sentenceId)}`}>Review sentence</Link>
+            <ExamStudyLink className="btn line" to={`/listening/intensive/${session.sectionId}?sentence=${encodeURIComponent(session.sentenceId)}&review=sentence`}>Review sentence</ExamStudyLink>
           </div>)}
           <Link className="sentence-review-more" to="/listening/review">View all sentence reviews <ArrowRight size={14} aria-hidden="true" /></Link>
         </> : <p className="empty">No sentence reviews are due right now.</p>}

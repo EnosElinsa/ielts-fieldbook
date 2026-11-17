@@ -3,7 +3,7 @@ import { act, cleanup, render, screen, within, waitFor } from '@testing-library/
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 import { emptyState, dateKey } from '../../domain';
 import { PlanningPage } from './PlanningPage';
 const mocks=vi.hoisted(()=>({state:null,generate:vi.fn(),change:vi.fn(),start:vi.fn(),bulk:vi.fn()}));
@@ -12,6 +12,27 @@ vi.mock('../../storage/examCatalog',()=>({loadExamCatalog:vi.fn().mockResolvedVa
 beforeEach(()=>{vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date(2026,9,17,12));mocks.state=emptyState();mocks.generate.mockReset().mockResolvedValue(true);mocks.change.mockReset().mockResolvedValue(true);mocks.start.mockReset().mockResolvedValue(true);mocks.bulk.mockReset().mockResolvedValue(true);mocks.state.plans=[{id:'task',dateKey:dateKey(new Date()),status:'pending',skill:'writing',title:'Chart',description:'Selected question',estimatedMinutes:20}];});
 afterEach(()=>{cleanup();vi.useRealTimers();});
 const mount=()=>render(<MemoryRouter><PlanningPage/></MemoryRouter>);
+function PlanningAddress(){const location=useLocation();return <output aria-label="Planning address">{location.search+location.hash}</output>;}
+
+test('returning to Schedule keeps its range even after the linked task was completed',async()=>{
+ mocks.state.plans[0].status='completed';mocks.state.plans[0].dateKey='2026-10-25';
+ render(<MemoryRouter initialEntries={['/planning?view=schedule&date=2026-10-24#task-task']}><PlanningPage/><PlanningAddress/></MemoryRouter>);
+ expect(screen.getByRole('button',{name:'Schedule',exact:true})).toHaveAttribute('aria-pressed','true');
+ expect(screen.getByRole('navigation',{name:'Schedule dates'})).toHaveTextContent('24 – 30 Oct 2026');
+ expect(screen.getByRole('heading',{name:'Chart'})).toBeInTheDocument();
+ await userEvent.click(screen.getByRole('button',{name:'History',exact:true}));
+ expect(screen.getByLabelText('Planning address')).toHaveTextContent('view=history&date=2026-10-24');
+ await userEvent.click(screen.getByRole('button',{name:'Schedule',exact:true}));
+ expect(screen.getByRole('navigation',{name:'Schedule dates'})).toHaveTextContent('24 – 30 Oct 2026');
+});
+
+test('Planning stores tab and range changes in its returnable URL',async()=>{
+ render(<MemoryRouter initialEntries={['/planning']}><PlanningPage/><PlanningAddress/></MemoryRouter>);
+ await userEvent.click(screen.getByRole('button',{name:'Next week'}));
+ expect(screen.getByLabelText('Planning address')).toHaveTextContent('date=2026-10-24');
+ await userEvent.click(screen.getByRole('button',{name:/Waiting ·/}));
+ expect(screen.getByLabelText('Planning address')).toHaveTextContent('view=waiting');
+});
 
 test('missing a wordbook explains allocation without reporting daily goal deficits',()=>{
  mocks.state.settings.planning={newWordsPerDay:10};

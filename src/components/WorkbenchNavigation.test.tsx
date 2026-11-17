@@ -59,7 +59,7 @@ test('mobile navigation promotes planning and groups productive study under More
 });
 
 test('listening questions remains active across bank, standard practice, mock, and intensive paths', () => {
-  for (const [path, search, expected] of [['/listening', '?mode=intensive', '/listening'], ['/listening/intensive/part1', '', '/listening'], ['/listening/part1', '', '/listening'], ['/listening/mock/paper1', '', '/listening'], ['/listening/review/a1', '', '/listening/review'], ['/listening/review', '', '/listening/review'], ['/listening', '', '/listening']]) {
+  for (const [path, search, expected] of [['/listening', '?mode=intensive', '/listening'], ['/listening/intensive/part1', '', '/listening'], ['/listening/intensive/part1', '?sentence=s1&review=sentence', '/listening/review'], ['/listening/part1', '', '/listening'], ['/listening/mock/paper1', '', '/listening'], ['/listening/review/a1', '', '/listening/review'], ['/listening/review', '', '/listening/review'], ['/listening', '', '/listening']]) {
     const active = ['/listening', '/listening/review'].filter(to => studyLinkActive(to, path, search, 'listening'));
     expect(active).toEqual([expected]);
   }

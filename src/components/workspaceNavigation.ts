@@ -32,8 +32,10 @@ export function moduleFor(pathname: string, search: string, fallbackSkill: strin
   return 'today';
 }
 
-export function studyLinkActive(to: string, pathname: string, _search: string, activeModule: string) {
+export function studyLinkActive(to: string, pathname: string, search: string, activeModule: string) {
   const target = new URL(to, 'https://fieldbook.local');
+  const sentenceReview=pathname.startsWith('/listening/intensive/')&&new URLSearchParams(search).get('review')==='sentence';
+  if(sentenceReview&&(target.pathname==='/listening/review'||target.pathname==='/listening'))return target.pathname==='/listening/review';
   if (target.pathname === '/review') return pathname.startsWith('/review') && target.searchParams.get('skill') === activeModule;
   if (target.pathname.endsWith('/review')) return pathname === target.pathname || pathname.startsWith(`${target.pathname}/`);
   if (target.pathname === '/reading' || target.pathname === '/listening') return (pathname === target.pathname || pathname.startsWith(`${target.pathname}/`)) && !pathname.startsWith(`${target.pathname}/review`);

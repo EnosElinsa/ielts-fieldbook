@@ -3,7 +3,7 @@ import { CardSkeleton, InlineLoadingState } from '../../components/AsyncState';
 import { useEffect, useState } from 'react';
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { CalendarClock, Clock3, Replace, RotateCcw, SkipForward, Check, Plus, Copy, SlidersHorizontal, ArrowUp, ArrowDown, MoreHorizontal, ChevronLeft, ChevronRight, ChevronDown, BookOpen } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
@@ -25,24 +25,37 @@ import { formatDateKey } from '../../lib/format';
 export function PlanningPage(){return <AccountDataBoundary modules={['planning','vocabularyCore']} vocabularyEntryIds={[]} variant="planning" title="Planning" area="study plan"><PlanningCalendar/></AccountDataBoundary>;}
 
 function PlanningCalendar(){
-  const fb=useFieldbook();const schedule=useStudySchedule();const today=dateKey(new Date());const [anchor,setAnchor]=useState(today);const days=calendarDays(new Date(`${anchor}T12:00:00`));const [editor,setEditor]=useState(null);
-  const dateRange=new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric'}).formatRange(new Date(`${days[0]}T12:00:00`),new Date(`${days[6]}T12:00:00`));
-  const location=useLocation();useVocabularyPosition(location.pathname+location.search+location.hash,!schedule.saving);
+  const fb=useFieldbook();const schedule=useStudySchedule();const today=dateKey(new Date());const [editor,setEditor]=useState(null);
+  const location=useLocation();const [search,setSearch]=useSearchParams();useVocabularyPosition(location.pathname+location.search+location.hash,!schedule.saving);
+  const requestedDate=search.get('date');
+  const validDate=Boolean(requestedDate&&/^\d{4}-\d{2}-\d{2}$/.test(requestedDate)&&dateKey(new Date(`${requestedDate}T12:00:00`))===requestedDate);
+  const selectDate=value=>{const next=new URLSearchParams(search);next.set('date',value);setSearch(next,{replace:true,state:location.state});};
   const overdue=fb.state.plans.filter(plan=>(plan.dateKey<today||plan.onHold)&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status)).slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey));
   const history=fb.state.plans.filter(plan=>['completed','skipped'].includes(plan.status)).sort((a,b)=>-compareStudyPlans(a,b));
   const requestedView=new URLSearchParams(location.search).get('view');
-  const [tab,setTab]=useState(()=>['waiting','history'].includes(requestedView)?requestedView:'schedule');
-  useEffect(()=>{setTab(['waiting','history'].includes(requestedView)?requestedView:'schedule');},[requestedView,location.key]);
+  const selectTab=value=>{const next=new URLSearchParams(search);next.set('view',value);setSearch(next,{replace:true,state:location.state});};
   const [targetError,setTargetError]=useState('');const targetId=location.hash.startsWith('#task-')?location.hash.slice(6):'';
   const linkedTask=fb.state.plans.find(plan=>plan.id===targetId);
+  const explicitView=['schedule','waiting','history'].includes(requestedView);
+  const tab=explicitView?requestedView:linkedTask?['completed','skipped'].includes(linkedTask.status)?'history':linkedTask.dateKey<today||linkedTask.onHold?'waiting':'schedule':'schedule';
+  const anchor=validDate?requestedDate:tab==='schedule'&&linkedTask?linkedTask.dateKey:today;
+  const days=calendarDays(new Date(`${anchor}T12:00:00`));
+  const dateRange=new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric'}).formatRange(new Date(`${days[0]}T12:00:00`),new Date(`${days[6]}T12:00:00`));
   useEffect(()=>{if(!targetId||linkedTask)return;let active=true;fb.ensurePlanningRows([targetId]).then(state=>{if(active&&!state.plans.some(plan=>plan.id===targetId))setTargetError('This task is unavailable. Check its link or refresh planning.');}).catch(cause=>{if(active)setTargetError(cause.message);});return()=>{active=false;};},[targetId,Boolean(linkedTask),fb.ensurePlanningRows]);
-  useEffect(()=>{const target=linkedTask;if(!target)return;setTargetError('');if(['completed','skipped'].includes(target.status))setTab('history');else if(target.dateKey<today||target.onHold)setTab('waiting');else{setTab('schedule');setAnchor(target.dateKey);}},[location.hash,Boolean(linkedTask)]);
+  useEffect(()=>{
+    const target=linkedTask;if(!target)return;setTargetError('');
+    if(explicitView)return;
+    // Legacy task-only links locate the task once; explicit views always win on return.
+    const view=['completed','skipped'].includes(target.status)?'history':target.dateKey<today||target.onHold?'waiting':'schedule';
+    const next=new URLSearchParams(search);next.set('view',view);if(view==='schedule'&&!validDate)next.set('date',target.dateKey);
+    setSearch(next,{replace:true,state:location.state});
+  },[location.hash,Boolean(linkedTask),requestedView,validDate]);
   const focus=fb.state.plans.filter(plan=>plan.dateKey===today&&!plan.onHold&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status)).sort((a,b)=>(a.status==='in_progress'?-1:0)-(b.status==='in_progress'?-1:0)||compareStudyPlans(a,b))[0];
   const needsWordbook=!(fb.state.wordbookEnrollments||[]).length&&!fb.state.plans.some(plan=>plan.target?.mode==='learning-batch'&&!plan.onHold&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status));
   return <section className="view active study-planning"><header className="study-page-head"><div><p className="kicker">Next seven days · {fb.state.settings.dailyMinutes || 30} min per study day</p><h2>Planning</h2></div></header>
     {schedule.error&&<div className="study-alert" role="alert"><span>{schedule.error}</span><button className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}
     {targetError&&<p role="alert">{targetError}</p>}
-    <div className="study-view-bar"><nav className="study-tabs" aria-label="Planning views">{[['schedule','Schedule'],['waiting',`Waiting · ${overdue.length}`],['history','History']].map(([value,label])=><button type="button" className="btn line" aria-pressed={tab===value} key={value} onClick={()=>setTab(value)}>{label}</button>)}</nav><div className="study-sync-status">{schedule.saving&&<InlineLoadingState message="Updating schedule…" />}</div></div>
+    <div className="study-view-bar"><nav className="study-tabs" aria-label="Planning views">{[['schedule','Schedule'],['waiting',`Waiting · ${overdue.length}`],['history','History']].map(([value,label])=><button type="button" className="btn line" aria-pressed={tab===value} key={value} onClick={()=>selectTab(value)}>{label}</button>)}</nav><div className="study-sync-status">{schedule.saving&&<InlineLoadingState message="Updating schedule…" />}</div></div>
     {tab==='waiting'&&<TaskCollection tasks={overdue} kind="waiting" renderTask={plan=><PlanTask plan={plan}/>}/>}
     {tab==='history'&&<TaskCollection tasks={history} kind="history" renderTask={plan=><PlanTask plan={plan}/>}/>}
     {tab==='schedule'&&<>
@@ -51,9 +64,9 @@ function PlanningCalendar(){
     <nav className="study-date-navigation" aria-label="Schedule dates">
       <p className="study-date-range" aria-live="polite" aria-atomic="true">{dateRange}</p>
       <div className="study-date-controls">
-        <button type="button" className="btn line study-date-today" onClick={()=>setAnchor(today)}>Today</button>
-        <button type="button" className="btn line study-week-arrow" aria-label="Previous week" title="Previous week" onClick={()=>setAnchor(dateKey(addLocalDays(new Date(`${anchor}T12:00:00`),-7)))}><ChevronLeft size={18}/></button>
-        <button type="button" className="btn line study-week-arrow" aria-label="Next week" title="Next week" onClick={()=>setAnchor(dateKey(addLocalDays(new Date(`${anchor}T12:00:00`),7)))}><ChevronRight size={18}/></button>
+        <button type="button" className="btn line study-date-today" onClick={()=>selectDate(today)}>Today</button>
+        <button type="button" className="btn line study-week-arrow" aria-label="Previous week" title="Previous week" onClick={()=>selectDate(dateKey(addLocalDays(new Date(`${anchor}T12:00:00`),-7)))}><ChevronLeft size={18}/></button>
+        <button type="button" className="btn line study-week-arrow" aria-label="Next week" title="Next week" onClick={()=>selectDate(dateKey(addLocalDays(new Date(`${anchor}T12:00:00`),7)))}><ChevronRight size={18}/></button>
       </div>
     </nav>
     <div className="study-calendar" aria-busy={schedule.saving}>{days.map(day=>{
