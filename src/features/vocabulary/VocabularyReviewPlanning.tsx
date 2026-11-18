@@ -23,7 +23,16 @@ function reviewRange(plan:StudyPlan){
 export function PlannedReviewList(){
  const fb=useFieldbook();
  const tasks=((fb.state.plans||[]) as StudyPlan[]).filter(plan=>plan.skill==='vocabulary'&&plan.target?.type==='vocabulary'&&plan.target.mode==='due-review'&&!plan.archivedAt&&!plan.onHold&&['pending','in_progress'].includes(plan.status)).sort((a,b)=>a.dateKey.localeCompare(b.dateKey));
- return <section className="practice-planned-list" aria-label="Planned review"><header><h3>Planned review</h3></header>{tasks.length?<div>{tasks.map(plan=><article key={plan.id}><div><h4>{plan.title}</h4><p>{plan.target.type==='vocabulary'?modeLabel(plan.target.assessmentMode):''} · {plan.target.type==='vocabulary'&&plan.target.binding==='frozen'?`${plan.target.cards.length} fixed questions · ${new Set(plan.target.cards.map(ref=>ref.entryId)).size} words`:`Up to ${plan.quantity||plan.estimatedMinutes} questions`}</p><p>{plan.origin==='manual'?'User arranged':'System arranged'} · {formatDateKey(plan.dateKey)} · {reviewRange(plan)}</p></div><TaskStartButton plan={plan}/></article>)}</div>:<p>No planned reviews. Start a self-directed session or arrange one below.</p>}</section>;
+ const today=dateKey(new Date());
+ const current=tasks.filter(plan=>plan.dateKey<=today),upcoming=tasks.filter(plan=>plan.dateKey>today);
+ const row=(plan:StudyPlan)=><article key={plan.id}><div><h4>{plan.title}</h4><p>{plan.target.type==='vocabulary'?modeLabel(plan.target.assessmentMode):''} · {plan.target.type==='vocabulary'&&plan.target.binding==='frozen'?`${plan.target.cards.length} fixed questions · ${new Set(plan.target.cards.map(ref=>ref.entryId)).size} words`:`Up to ${plan.quantity||plan.estimatedMinutes} questions`}</p><p>{plan.origin==='manual'?'User arranged':'System arranged'} · {formatDateKey(plan.dateKey)} · {reviewRange(plan)}</p></div><TaskStartButton plan={plan}/></article>;
+ return <section className="practice-planned-list" aria-label="Planned review">
+  <header><h3>Planned review</h3><p>{current.length?`${current.length} ready today`:'No reviews planned for today.'}</p></header>
+  {current.slice(0,2).map(row)}
+  {current.length>2&&<details><summary>More ready reviews · {current.length-2}</summary>{current.slice(2).map(row)}</details>}
+  {upcoming.length>0&&<details><summary>Upcoming reviews · {upcoming.length}</summary>{upcoming.map(row)}</details>}
+  {!tasks.length&&<p>No planned reviews. Start a self-directed session or arrange one below.</p>}
+ </section>;
 }
 
 export function ScheduleVocabularyReview({controller:c}:{controller:VocabularyPracticeController}){

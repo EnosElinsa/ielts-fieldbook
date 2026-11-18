@@ -7,6 +7,13 @@
 .vocabulary-home-next .btn{margin-top:12px;}
 .vocabulary-home-next .vocabulary-home-meaning{max-width:65ch;line-height:1.65;margin-bottom:16px;}
 .vocabulary-home-next .vocabulary-next-practice{margin-bottom:0;padding-bottom:0;border-bottom:0;}
+.vocabulary-home-next.has-recommendation{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);gap:8px 32px;align-items:start;}
+.vocabulary-home-next.has-recommendation>.vocabulary-eyebrow{grid-column:1/-1;}
+.vocabulary-home-next.has-recommendation .vocabulary-next-practice{margin:12px 0 0;}
+.vocabulary-home-next.has-recommendation .vocabulary-next-practice .btn{margin:0;}
+.vocabulary-home-next.has-recommendation .vocabulary-next-practice-content p{margin:8px 0 12px;}
+.vocabulary-home-next.has-recommendation .vocabulary-home-word{min-inline-size:0;}
+@media(max-width:1000px){.vocabulary-home-next.has-recommendation{grid-template-columns:minmax(0,1fr);gap:0;}}
 .vocabulary-home-next .vocabulary-home-waiting{margin:20px 0 0;font-size:13px;line-height:1.65;}
 .vocabulary-home-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px;margin-top:20px;}
 .vocabulary-home-links a,.vocabulary-home-links a:visited{display:grid;grid-template-columns:20px minmax(0,1fr) 16px;align-items:center;gap:12px;min-height:64px;padding:16px 12px;border-bottom:1px solid var(--rule);border-radius:6px;min-width:0;color:var(--ink);font-size:14px;font-weight:600;line-height:1.5;text-decoration:none;transition:background-color 160ms ease,color 160ms ease;}

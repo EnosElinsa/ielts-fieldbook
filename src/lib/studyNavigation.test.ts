@@ -3,7 +3,7 @@ import { studyReturnDelta, studySourceUrl } from './studyNavigation';
 
 test('Planning source captures its view and preserves filters, date and task anchor',()=>{
   expect(studySourceUrl({pathname:'/planning',search:'?date=2026-11-24',hash:''},'#task-one')).toBe('/planning?date=2026-11-24&view=schedule#task-one');
-  for(const view of ['schedule','waiting','history'])expect(studySourceUrl({pathname:'/planning',search:`?view=${view}&date=2026-11-24`,hash:'#task-one'})).toBe(`/planning?view=${view}&date=2026-11-24#task-one`);
+  for(const view of ['schedule','waiting','history','task'])expect(studySourceUrl({pathname:'/planning',search:`?view=${view}&date=2026-11-24`,hash:'#task-one'})).toBe(`/planning?view=${view}&date=2026-11-24#task-one`);
   expect(studySourceUrl({pathname:'/today',search:'?view=overdue',hash:'#task-one'})).toBe('/today?view=overdue#task-one');
 });
 

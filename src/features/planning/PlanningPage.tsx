@@ -21,6 +21,8 @@ import { accountId } from '../../storage/remote';
 import { TaskCollection } from './TaskCollection';
 import { LearningTaskDetails } from './LearningTaskDetails';
 import { formatDateKey } from '../../lib/format';
+import { modeLabel } from '../vocabulary/practicePresentation';
+import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 
 export function PlanningPage(){return <AccountDataBoundary modules={['planning','vocabularyCore']} vocabularyEntryIds={[]} variant="planning" title="Planning" area="study plan"><PlanningCalendar/></AccountDataBoundary>;}
 
@@ -34,14 +36,14 @@ function PlanningCalendar(){
   const history=fb.state.plans.filter(plan=>['completed','skipped'].includes(plan.status)).sort((a,b)=>-compareStudyPlans(a,b));
   const requestedView=new URLSearchParams(location.search).get('view');
   const selectTab=value=>{const next=new URLSearchParams(search);next.set('view',value);setSearch(next,{replace:true,state:location.state});};
-  const [targetError,setTargetError]=useState('');const targetId=location.hash.startsWith('#task-')?location.hash.slice(6):'';
+  const [targetError,setTargetError]=useState(''),[targetRetry,setTargetRetry]=useState(0);const targetId=location.hash.startsWith('#task-')?location.hash.slice(6):'';
   const linkedTask=fb.state.plans.find(plan=>plan.id===targetId);
-  const explicitView=['schedule','waiting','history'].includes(requestedView);
+  const explicitView=['schedule','waiting','history','task'].includes(requestedView);
   const tab=explicitView?requestedView:linkedTask?['completed','skipped'].includes(linkedTask.status)?'history':linkedTask.dateKey<today||linkedTask.onHold?'waiting':'schedule':'schedule';
   const anchor=validDate?requestedDate:tab==='schedule'&&linkedTask?linkedTask.dateKey:today;
   const days=calendarDays(new Date(`${anchor}T12:00:00`));
   const dateRange=new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric'}).formatRange(new Date(`${days[0]}T12:00:00`),new Date(`${days[6]}T12:00:00`));
-  useEffect(()=>{if(!targetId||linkedTask)return;let active=true;fb.ensurePlanningRows([targetId]).then(state=>{if(active&&!state.plans.some(plan=>plan.id===targetId))setTargetError('This task is unavailable. Check its link or refresh planning.');}).catch(cause=>{if(active)setTargetError(cause.message);});return()=>{active=false;};},[targetId,Boolean(linkedTask),fb.ensurePlanningRows]);
+  useEffect(()=>{setTargetError('');if(!targetId||linkedTask)return;let active=true;fb.ensurePlanningRows([targetId]).then(state=>{if(active&&!state.plans.some(plan=>plan.id===targetId))setTargetError('This task is unavailable. Check its link or refresh planning.');}).catch(cause=>{if(active)setTargetError(cause.message);});return()=>{active=false;};},[targetId,Boolean(linkedTask),fb.ensurePlanningRows,targetRetry]);
   useEffect(()=>{
     const target=linkedTask;if(!target)return;setTargetError('');
     if(explicitView)return;
@@ -54,8 +56,9 @@ function PlanningCalendar(){
   const needsWordbook=!(fb.state.wordbookEnrollments||[]).length&&!fb.state.plans.some(plan=>plan.target?.mode==='learning-batch'&&!plan.onHold&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status));
   return <section className="view active study-planning"><header className="study-page-head"><div><p className="kicker">Next seven days · {fb.state.settings.dailyMinutes || 30} min per study day</p><h2>Planning</h2></div></header>
     {schedule.error&&<div className="study-alert" role="alert"><span>{schedule.error}</span><button className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}
-    {targetError&&<p role="alert">{targetError}</p>}
+    {targetError&&<div className="study-alert" role="alert"><p>{targetError}</p><button type="button" className="btn line" onClick={()=>setTargetRetry(value=>value+1)}>Retry task</button></div>}
     <div className="study-view-bar"><nav className="study-tabs" aria-label="Planning views">{[['schedule','Schedule'],['waiting',`Waiting · ${overdue.length}`],['history','History']].map(([value,label])=><button type="button" className="btn line" aria-pressed={tab===value} key={value} onClick={()=>selectTab(value)}>{label}</button>)}</nav><div className="study-sync-status">{schedule.saving&&<InlineLoadingState message="Updating schedule…" />}</div></div>
+    {tab==='task'&&<section className="study-linked-task" aria-label="Linked task"><header><h3>Linked task</h3><p>Requirements and current status for this task.</p></header>{linkedTask?<PlanTask key={linkedTask.id} plan={linkedTask} expanded/>:!targetId?<p>No task selected. Open Schedule or History to find a task.</p>:!targetError?<p role="status">Loading linked task…</p>:null}</section>}
     {tab==='waiting'&&<TaskCollection tasks={overdue} kind="waiting" renderTask={plan=><PlanTask plan={plan}/>}/>}
     {tab==='history'&&<TaskCollection tasks={history} kind="history" renderTask={plan=><PlanTask plan={plan}/>}/>}
     {tab==='schedule'&&<>
@@ -110,7 +113,7 @@ function ScheduleDay({current,forceOpen,heading,summary,className,children}){
   return <details className={`${className} study-day-foldable`} open={expanded} onToggle={event=>setExpanded(event.currentTarget.open)}><summary className="study-day-toggle">{heading}<span>{summary}<ChevronDown size={17} aria-hidden="true"/></span></summary>{children}</details>;
 }
 
-function PlanTask({plan}){
+function PlanTask({plan,expanded=false}){
   const fb=useFieldbook();const [dialog,setDialog]=useState(null);const [saving,setSaving]=useState(false);const [error,setError]=useState('');
   const completed=plan.status==='completed';
   async function change(action){setSaving(true);setError('');let feedback='';try{if(await fb.changePlan(plan.id,action,{onError:message=>{feedback=message;}}))setDialog(null);else setError(feedback||'Your task could not be saved. Retry the change.');}catch(cause){setError(cause instanceof Error?cause.message:'Your task could not be saved.');}finally{setSaving(false);}}
@@ -129,7 +132,9 @@ function PlanTask({plan}){
       <h4>{studyPlanTitle(plan)}</h4>
       <p className="study-task-meta"><span className={`study-skill study-skill-${skill}`}>{skill}</span><span><Clock3 size={14}/>{planMinutesLabel(plan)}</span><span className="study-task-status">{completed&&<Check size={14}/>}{status}</span>{plan.dateKey<dateKey(new Date())&&<span>Due {formatDateKey(plan.dateKey)}</span>}{plan.originalDateKey&&plan.originalDateKey!==plan.dateKey&&<span>Moved from {formatDateKey(plan.originalDateKey)}</span>}{plan.origin==='manual'&&<span>Added by you</span>}</p>
       <LearningTaskDetails plan={plan} batchSize={fb.state.settings.vocabulary?.learningBatchSize||10}/>
-      {hasDetails&&<details className="study-task-details"><summary>Details</summary>
+      {expanded&&<LinkedTaskRequirements plan={plan}/>}
+
+      {hasDetails&&<details className="study-task-details" open={expanded||undefined}><summary>Details</summary>
         {material&&<p className="study-task-material">{material}</p>}
         {completionDescription&&<p className="study-completion-condition"><strong>Done when</strong> {completionDescription}</p>}
         {reasons.map(reason=><p className="study-task-reason" key={reason}>{reason}</p>)}
@@ -160,4 +165,25 @@ function PlanTask({plan}){
     {dialog&&<TaskEditor key={`${accountId()}:${plan.id}:${dialog}`} mode={dialog} plan={plan} dateKey={plan.dateKey} onClose={()=>setDialog(null)}/>}
 
   </article>;
+}
+
+function LinkedTaskRequirements({plan}) {
+  const target=plan.target;
+  const vocabulary=target?.type==='vocabulary';
+  const bookId=vocabulary&&(target.bookId||target.reviewFilter?.bookId);
+  const unitId=vocabulary&&(target.unitId||target.reviewFilter?.unitId);
+  const source=[VOCABULARY_CATALOG.books.find(book=>book.id===bookId)?.title,
+    VOCABULARY_CATALOG.units.find(unit=>unit.bookId===bookId&&unit.id===unitId)?.title].filter(Boolean).join(' · ');
+  return <>
+    <dl className="study-linked-facts">
+      <div><dt>Study date</dt><dd>{formatDateKey(plan.dateKey)}</dd></div>
+      {plan.completedAt&&<div><dt>Completed</dt><dd>{new Date(plan.completedAt).toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'})}</dd></div>}
+      {vocabulary&&<>
+        <div><dt>Exercise</dt><dd>{modeLabel(target.assessmentMode||'dictation')}</dd></div>
+        <div><dt>Selection</dt><dd>{studyTargetSummary(plan)}</dd></div>
+        <div><dt>Source</dt><dd>{source||'Saved task selection'}</dd></div>
+      </>}
+    </dl>
+    {vocabulary&&<p className="study-completion-condition"><strong>Done when</strong> you submit an answer for every planned question. Incorrect answers complete the attempt and stay in mistake review.</p>}
+  </>;
 }

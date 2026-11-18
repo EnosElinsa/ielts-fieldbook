@@ -6,13 +6,46 @@ import '@testing-library/jest-dom/vitest';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import { emptyState, dateKey } from '../../domain';
 import { PlanningPage } from './PlanningPage';
-const mocks=vi.hoisted(()=>({state:null,generate:vi.fn(),change:vi.fn(),start:vi.fn(),bulk:vi.fn()}));
-vi.mock('../../context/FieldbookContext',()=>({useFieldbook:()=>({state:mocks.state,ensureUnifiedPlans:mocks.generate,changePlan:mocks.change,startPlan:mocks.start,saveBacklogPreview:mocks.bulk})}));
+const mocks=vi.hoisted(()=>({state:null,generate:vi.fn(),change:vi.fn(),start:vi.fn(),bulk:vi.fn(),rows:vi.fn()}));
+vi.mock('../../context/FieldbookContext',()=>({useFieldbook:()=>({state:mocks.state,ensureUnifiedPlans:mocks.generate,changePlan:mocks.change,startPlan:mocks.start,saveBacklogPreview:mocks.bulk,ensurePlanningRows:mocks.rows})}));
 vi.mock('../../storage/examCatalog',()=>({loadExamCatalog:vi.fn().mockResolvedValue({sections:[],papers:[]}),loadExamSections:vi.fn().mockResolvedValue({sections:[]})}));
 beforeEach(()=>{vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date(2026,9,17,12));mocks.state=emptyState();mocks.generate.mockReset().mockResolvedValue(true);mocks.change.mockReset().mockResolvedValue(true);mocks.start.mockReset().mockResolvedValue(true);mocks.bulk.mockReset().mockResolvedValue(true);mocks.state.plans=[{id:'task',dateKey:dateKey(new Date()),status:'pending',skill:'writing',title:'Chart',description:'Selected question',estimatedMinutes:20}];});
 afterEach(()=>{cleanup();vi.useRealTimers();});
 const mount=()=>render(<MemoryRouter><PlanningPage/></MemoryRouter>);
 function PlanningAddress(){const location=useLocation();return <output aria-label="Planning address">{location.search+location.hash}</output>;}
+
+test('a linked task opens its requirements without a history collection, with access to all history',async()=>{
+ mocks.state.plans=[{...mocks.state.plans[0],status:'completed',target:{type:'question',questionId:'question'}},
+   {...mocks.state.plans[0],id:'other',title:'Unrelated task',status:'completed'}];
+ render(<MemoryRouter initialEntries={['/planning?view=task#task-task']}><PlanningPage/></MemoryRouter>);
+ const task=await screen.findByRole('region',{name:'Linked task'});
+ expect(within(task).getByRole('heading',{name:'Chart'})).toBeVisible();
+ expect(within(task).getByText('Completed',{exact:true})).toBeVisible();
+ expect(task.querySelector('.study-task-details')).toHaveAttribute('open');
+ expect(screen.queryByRole('heading',{name:'Unrelated task'})).not.toBeInTheDocument();
+ expect(screen.queryByRole('button',{name:'Select this page'})).not.toBeInTheDocument();
+ await userEvent.click(screen.getByRole('button',{name:'History',exact:true}));
+ expect(screen.getByRole('heading',{name:'Unrelated task'})).toBeVisible();
+});
+
+test('a linked task retries failed direct reads without claiming the task was loaded',async()=>{
+ mocks.rows.mockReset().mockRejectedValueOnce(new Error('Connection unavailable')).mockResolvedValueOnce({plans:[]});
+ render(<MemoryRouter initialEntries={['/planning?view=task#task-unloaded']}><PlanningPage/></MemoryRouter>);
+ expect(await screen.findByRole('alert')).toHaveTextContent('Connection unavailable');
+ expect(screen.queryByRole('heading',{name:'Chart'})).not.toBeInTheDocument();
+ await userEvent.click(screen.getByRole('button',{name:'Retry task'}));
+ expect(await screen.findByRole('alert')).toHaveTextContent('This task is unavailable.');
+ expect(mocks.rows).toHaveBeenNthCalledWith(2,['unloaded']);
+});
+
+test('linked vocabulary requirements show the saved mode and completion condition',()=>{
+ mocks.state.plans=[{...mocks.state.plans[0],skill:'vocabulary',kind:'vocabulary',target:{type:'vocabulary',mode:'due-review',assessmentMode:'definition',binding:'frozen',cards:[{entryId:'one',senseId:'sense'}]}}];
+ render(<MemoryRouter initialEntries={['/planning?view=task#task-task']}><PlanningPage/></MemoryRouter>);
+ const task=screen.getByRole('region',{name:'Linked task'});
+ expect(task).toHaveTextContent('Meaning recall');
+ expect(task).toHaveTextContent('Review · 1 prompt');
+ expect(task).toHaveTextContent('submit an answer for every planned question');
+});
 
 test('returning to Schedule keeps its range even after the linked task was completed',async()=>{
  mocks.state.plans[0].status='completed';mocks.state.plans[0].dateKey='2026-10-25';

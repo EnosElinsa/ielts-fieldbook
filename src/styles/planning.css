@@ -200,3 +200,9 @@
 .study-view-bar .study-tabs { margin: 0; }
 .study-sync-status { min-height: 28px; display: flex; align-items: center; color: var(--muted); font-size: 12px; }
 @media(max-width:640px) { .study-view-bar { gap: 4px; } .study-view-bar .study-tabs { width:100%; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); } .study-view-bar .study-tabs .btn { white-space:nowrap; } .study-sync-status { width: 100%; min-height: 22px; } }
+.study-linked-task { margin-block: 24px; max-inline-size: 960px; }
+.study-linked-task > header { margin-block-end: 20px; }
+.study-linked-task > header p { color: var(--muted); font-size: 13px; }
+.study-linked-facts { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(180px,100%),1fr)); gap: 16px; margin-block: 20px; }
+.study-linked-facts dt { color: var(--muted); font-size: 12px; }
+.study-linked-facts dd { margin: 6px 0 0; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }

@@ -22,6 +22,7 @@ export function VocabularyNextPractice({recommendation,to,onPractice,busy=false,
     ? <button type="button" className={`btn ${primaryAction&&!alternative?'primary':'line'}`} disabled={busy} onClick={()=>onPractice(target)}>{busy?'Saving…':alternative?modeLabel(target):`Practise ${modeLabel(target)}`}<ArrowRight size={14} aria-hidden="true" /></button>
     : <Link className={`btn ${primaryAction&&!alternative?'primary':'line'}`} to={to(target)}>{alternative?modeLabel(target):`Practise ${modeLabel(target)}`}<ArrowRight size={14} aria-hidden="true" /></Link>;
   return <section className="vocabulary-next-practice" aria-label={title}>
+    <div className="vocabulary-next-practice-content">
     <h4>{title}</h4>
     {meaning ? <p><b>{meaning.term}</b> · {meaning.definition}</p> : null}
     <p className="vocabulary-next-practice-mode">{modeLabel(mode)}</p>
@@ -32,7 +33,11 @@ export function VocabularyNextPractice({recommendation,to,onPractice,busy=false,
         : reason==='spaced' ? `Build ${dimensions.join(' and ')} with another spaced success towards ${target==='mastered'?'Mastered':'Familiar'}. Successes count at least 24 hours apart.`
         : reason==='production' ? 'Practise using this meaning in your own sentence. Usage is tracked separately from foundation mastery.'
         : 'This exercise is due for this meaning.'}</p>
-      {action(mode)}
+    </>}
+    </div>
+    {status==='ready' && <>
+      <div className="vocabulary-next-practice-action">{action(mode)}</div>
+      <div className="vocabulary-next-practice-options">
       {(error && reason==='error') || mode==='production' || mode==='dictation' ? <details className="vocabulary-next-practice-why">
         <summary>Why this practice?</summary>
         {error && reason==='error' ? <>
@@ -43,6 +48,7 @@ export function VocabularyNextPractice({recommendation,to,onPractice,busy=false,
         {mode==='dictation' ? <p>Audio is word-level. Check that its pronunciation matches this meaning.</p> : null}
       </details> : null}
       {alternatives.length ? <details><summary>Other available exercises</summary><div className="vocabulary-next-practice-alternatives">{alternatives.map(target=><span key={target}>{action(target,true)}</span>)}</div></details> : null}
+      </div>
     </>}
   </section>;
 }

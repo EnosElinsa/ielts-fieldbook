@@ -28,6 +28,7 @@ import { examGapMatches, examGapNumber, questionPresentation, questionNumberPref
 import { stimulusDocument } from './stimulusDocument';
 import { stimulusChoiceBank } from './stimulusChoiceBank';
 import '../../styles/exam.css';
+import '../../styles/listening-practice.css';
 
 export function ExamImage({ asset, label, inline = false }: { asset?: ExamAsset; label: string; inline?: boolean }) {
   const { url, error, reload } = useExamAsset(asset);
@@ -63,18 +64,18 @@ export function examStimulusBlockIds(html: string, blockPrefix: string): string[
 export function ExamStimulus({ html, assets = [], renderGap, blockPrefix = 'stimulus', version = '' }: { html: string; assets?: ExamAsset[]; renderGap?: (number: number) => ReactNode; blockPrefix?: string; version?: string }) {
   const nodes = useMemo(() => {
     const document = stimulusDocument(html);
-    const noteParagraph = (node: Element) => node.tagName.toLowerCase() === 'p' && !node.closest('td,th') && /(?:^|[\n\r])\s*[·•]/.test((node.innerHTML || '').replace(/<br\s*\/?\s*>/gi, '\n').replace(/<[^>]+>/g, ''));
+    const noteParagraph = (node: Element) => node.tagName.toLowerCase() === 'p' && !node.closest('td,th') && /(?:^|[\n\r])\s*[·•●]/.test((node.innerHTML || '').replace(/<br\s*\/?\s*>/gi, '\n').replace(/<[^>]+>/g, ''));
     const hasNotes = Array.from(document.body.children).some(noteParagraph);
     const allowed = new Set(['p', 'div', 'span', 'strong', 'b', 'em', 'i', 'u', 'br', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'ul', 'ol', 'li', 'h3', 'h4', 'h5', 'blockquote', 'sup', 'sub']);
-    const convert = (node: Node, key: string): ReactNode => {
+    const convert = (node: Node, key: string, hiddenPrefixLength = 0): ReactNode => {
       if (node.nodeType === Node.TEXT_NODE) {
         const text = node.textContent || ''; const result: ReactNode[] = []; let offset = 0;
         for (const match of examGapMatches(text)) {
-          if (match.index! > offset) result.push(<AnnotatedText key={`${key}:${offset}`} blockId={`${blockPrefix}:${key}:${offset}`} text={text.slice(offset, match.index)} version={version} />);
+          if (match.index! > offset) result.push(<AnnotatedText key={`${key}:${offset}`} blockId={`${blockPrefix}:${key}:${offset}`} text={text.slice(offset, match.index)} version={version} hiddenPrefixLength={Math.max(0,hiddenPrefixLength-offset)} />);
           result.push(<span key={`${key}:gap:${match.index}`} className="exam-inline-gap" data-exam-gap={examGapNumber(match)} tabIndex={renderGap ? undefined : -1}>{renderGap && <wbr />}{renderGap?.(examGapNumber(match)) || (match[2] ? match[0] : `〔${examGapNumber(match)}〕`)}{renderGap && <wbr />}</span>);
           offset = match.index! + match[0].length;
         }
-        if (offset < text.length) result.push(<AnnotatedText key={`${key}:${offset}`} blockId={`${blockPrefix}:${key}:${offset}`} text={text.slice(offset)} version={version} />);
+        if (offset < text.length) result.push(<AnnotatedText key={`${key}:${offset}`} blockId={`${blockPrefix}:${key}:${offset}`} text={text.slice(offset)} version={version} hiddenPrefixLength={Math.max(0,hiddenPrefixLength-offset)} />);
         return result;
       }
       if (!(node instanceof Element)) return null;
@@ -90,14 +91,30 @@ export function ExamStimulus({ html, assets = [], renderGap, blockPrefix = 'stim
       if (noteParagraph(node)) {
         // Wrap printed note lines while keeping their original child-index keys:
         // saved annotations still point to exactly the same source text blocks.
-        const lines: { nodes: ReactNode[]; text: string }[] = [{nodes: [], text: ''}];
+        const lines: { nodes: {node:Node;key:string}[]; text: string }[] = [{nodes: [], text: ''}];
         Array.from(node.childNodes).forEach((child, index) => {
           if (child instanceof Element && child.tagName.toLowerCase() === 'br') lines.push({nodes: [], text: ''});
-          else { const line = lines[lines.length - 1]; line.nodes.push(convert(child, `${key}-${index}`)); line.text += child.textContent || ''; }
+          else { const line = lines[lines.length - 1]; line.nodes.push({node:child,key:`${key}-${index}`}); line.text += child.textContent || ''; }
         });
-        return <p key={key} className="exam-note-lines">{lines.filter(line => line.text.trim()).map((line, index) => <span key={index} className={/^\s*[·•]/.test(line.text) ? 'exam-note-item' : 'exam-note-section-title'}>{line.nodes}</span>)}</p>;
+        const regions:ReactNode[]=[];
+        let items:{key:number;content:ReactNode[];nested:ReactNode[]}[]=[];
+        const flush=()=>{if(items.length)regions.push(<ul key={`list-${items[0].key}`} className="exam-note-list">{items.map(item=><li key={item.key} className="exam-note-item">{item.content}{item.nested.length>0&&<ul className="exam-note-sublist">{item.nested}</ul>}</li>)}</ul>);items=[];};
+        lines.forEach((line,index)=>{
+          if(!line.text.trim())return;
+          const marker=/^\s*([·•●]|-(?=\s|\p{L}))\s*/u.exec(line.text);
+          // Hide only the printed marker. Its original characters remain in the
+          // source block DOM/registry, preserving saved annotation range offsets.
+          let prefix=marker?.[0].length||0;
+          const content=line.nodes.map(child=>{const hidden=prefix;prefix=Math.max(0,prefix-(child.node.textContent?.length||0));return convert(child.node,child.key,hidden);});
+          if(marker?.[1]==='-'&&items.length)items[items.length-1].nested.push(<li key={index}>{content}</li>);
+          else if(marker)items.push({key:index,content,nested:[]});
+          else {flush();regions.push(<span key={`title-${index}`} className="exam-note-section-title">{content}</span>);}
+        });
+        flush();
+        return <div key={key} className="exam-note-lines">{regions}</div>;
       }
-      const children = Array.from(node.childNodes).map((child, index) => convert(child, `${key}-${index}`));
+      let prefix=hiddenPrefixLength;
+      const children = Array.from(node.childNodes).map((child, index) => {const hidden=prefix;prefix=Math.max(0,prefix-(child.textContent?.length||0));return convert(child, `${key}-${index}`,hidden);});
       if (!allowed.has(tag)) return children;
       const props: Record<string, unknown> = {}; if (tag === 'td' || tag === 'th') { const span = Number(node.getAttribute('colspan')); if (span > 0 && span < 20) props.colSpan = span; const row = Number(node.getAttribute('rowspan')); if (row > 0 && row < 20) props.rowSpan = row; }
       if (tag === 'span' && node.textContent?.trim() === 'NB' && node.parentElement?.tagName === 'P') props.className = 'exam-instruction-label';
@@ -419,7 +436,7 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
         {unanswered.length > 0 && <button className="btn text" onClick={goToUnanswered}>Next unanswered</button>}
         {mode === 'practice' && <><button className="btn line" onClick={controller.pause} disabled={sessionLocked}>{attempt?.status === 'paused' ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}<span className="exam-tool-label">{attempt?.status === 'paused' ? 'Resume' : 'Pause'}</span></button><button className="btn line" aria-pressed={attempt?.hintsEnabled} onClick={() => update({ hintsEnabled: !attempt?.hintsEnabled })}><Compass size={15} aria-hidden="true" /><span className="exam-tool-label">Method notes</span></button></>}
         <div className="exam-toolbar-end">
-          <div className="exam-layout-controls" role="group" aria-label="Question layout"><button className="exam-layout-option" type="button" aria-label="Integrated view" title="Keep each answer with its question" aria-pressed={layout === 'integrated'} onClick={() => chooseLayout('integrated')}><Rows3 size={16} aria-hidden="true" /></button><button className="exam-layout-option" type="button" aria-label="Split view" title="Show answers in a separate panel" aria-pressed={layout === 'split'} onClick={() => chooseLayout('split')}><Columns2 size={16} aria-hidden="true" /></button></div>
+          <div className="exam-layout-controls" role="group" aria-label="Question layout"><button className="exam-layout-option" type="button" aria-label="Integrated view" title="Keep each answer with its question" aria-pressed={layout === 'integrated'} onClick={() => chooseLayout('integrated')}><Rows3 size={16} aria-hidden="true" /><span>Integrated</span></button><button className="exam-layout-option" type="button" aria-label="Split view" title="Show answers in a separate panel" aria-pressed={layout === 'split'} onClick={() => chooseLayout('split')}><Columns2 size={16} aria-hidden="true" /><span>Split</span></button></div>
           <button type="button" className="btn line" disabled={sessionLocked} onClick={() => void controller.saveAndExit()}>{controller.saving ? 'Saving…' : 'Save & exit'}</button>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild><button type="button" className="btn line exam-more-actions" aria-label="More session actions"><MoreHorizontal size={18} aria-hidden="true" /></button></DropdownMenu.Trigger>
