@@ -55,11 +55,19 @@ export function vocabularyGroupProgress(state: Partial<VocabularyStore>, group: 
 }
 export function getLearnedVocabularyIds(state: Partial<VocabularyStore>): Set<string> {
   const learned = new Set<string>();
-  (state.vocabularyStates||[]).filter(item=>Object.values(item.cards||{}).some(card=>card?.due&&Number.isFinite(new Date(card.due).getTime()))).forEach(item=>{
-    const attempts=(state.vocabularyReviews||[]).filter(review=>review.entryId===item.entryId);
-    if(!attempts.length || attempts.some(review=>String(review.response||'').trim() || review.imported && review.result!=='pending')) learned.add(item.entryId);
-  });
-  (state.vocabularyReviews || []).filter(review => String(review.response || '').trim() || (review.imported && review.result !== 'pending')).forEach(review => learned.add(review.entryId));
+  // Planning and Today can evaluate thousands of scheduled meanings on resume.
+  // Index the account history once instead of scanning it for every schedule.
+  const reviewed = new Set<string>();
+  const attempted = new Set<string>();
+  for (const review of state.vocabularyReviews || []) {
+    reviewed.add(review.entryId);
+    if (String(review.response || '').trim() || review.imported && review.result !== 'pending') attempted.add(review.entryId);
+  }
+  for (const item of state.vocabularyStates || []) {
+    if ((!reviewed.has(item.entryId) || attempted.has(item.entryId))
+      && Object.values(item.cards || {}).some(card => card?.due && Number.isFinite(new Date(card.due).getTime()))) learned.add(item.entryId);
+  }
+  attempted.forEach(id => learned.add(id));
   (state.vocabularyStates || []).filter(item => item.manualStatus && item.manualStatus !== 'new').forEach(item => learned.add(item.entryId));
   (state.vocabularyEvidence || []).filter(item => item.mode && item.verification !== 'pending' && (String(item.response || '').trim() || item.imported || (item.verification === 'objective' && !('response' in item)))).forEach(item => learned.add(item.entryId));
   (state.vocabularySessions || []).filter(session => session.status === 'submitted' && session.mode !== 'audio').forEach(session => (session.results || []).filter(result => String(result.response || '').trim()).forEach(result => learned.add(result.entryId)));

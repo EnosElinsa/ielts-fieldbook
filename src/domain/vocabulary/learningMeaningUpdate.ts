@@ -1,4 +1,4 @@
-import { catalogVocabularyEntry, hasVocabularySenseEdits, restoreVocabularyDictionaryImport } from './content';
+import { catalogVocabularyEntry, hasVocabularySenseEdits, restoreVocabularyPublicImport } from './content';
 import { vocabularyCurriculum, vocabularyCurriculumBaselines } from './curriculum';
 import { resolveVocabularyLearningContext } from './context';
 import { buildLearningBatch } from './learningBatch';
@@ -12,7 +12,7 @@ export function previewLearningMeaningUpdate(state: Partial<VocabularyStore>, se
   const cards = selection.cards.map(ref => {
     const raw = state.vocabulary?.find(entry => entry.id === ref.entryId) || catalogVocabularyEntry(ref.entryId);
     if (!raw) return ref;
-    const entry = restoreVocabularyDictionaryImport(raw);
+    const entry = restoreVocabularyPublicImport(raw);
     const old = entry.senses.find(sense => sense.id === ref.senseId);
     const syllabus = vocabularyCurriculum(entry, selection, old);
     if (syllabus?.curriculum.senses.some(sense => sense.id === ref.senseId)) return ref;
