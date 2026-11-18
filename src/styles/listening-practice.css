@@ -1,0 +1,48 @@
+/* Keep listening notes readable in both layouts without changing source blocks. */
+.exam-workspace-listening .exam-question-workspace:has(.exam-single-panel) {
+  max-inline-size: 1000px;
+  margin-inline: auto;
+}
+.exam-workspace-listening .exam-stimulus {
+  font-size: 16px;
+  line-height: 1.85;
+  background: transparent;
+  border: 0;
+  padding: 4px 0 12px;
+  overflow: visible;
+}
+.exam-workspace-listening .exam-stimulus > :is(p,div) { max-inline-size: 82ch; }
+.exam-workspace-listening .exam-stimulus p { margin-block: 0 14px; }
+.exam-workspace-listening .exam-stimulus :is(p,div):has(> :is(strong,b):only-child) {
+  margin-block: 22px 12px;
+  padding-block-end: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+.exam-workspace-listening .exam-stimulus .exam-note-title { margin-block: 20px 12px; font-size: 21px; }
+.exam-workspace-listening .exam-stimulus .exam-note-lines { gap: 8px; margin-block-end: 12px; }
+.exam-workspace-listening .exam-stimulus .exam-note-item .exam-inline-answer { margin-inline: 8px; }
+.exam-workspace-listening .exam-inline-number {
+  display: inline-grid;
+  place-items: center;
+  min-inline-size: 24px;
+  min-block-size: 24px;
+  border-radius: 6px;
+  background: var(--soft-blue);
+  font-weight: 600;
+}
+.exam-workspace-listening .exam-stimulus .exam-inline-answer .exam-gap { inline-size: 160px; }
+.exam-workspace-listening .exam-stimulus table .exam-inline-answer .exam-gap { inline-size: 100%; }
+.exam-workspace-listening .exam-inline-answer:focus-within .exam-inline-number { background: var(--blue-dark); color: white; }
+.exam-workspace-listening .exam-answer-panel .exam-gap { background: var(--surface-soft); }
+.exam-workspace-listening .exam-answer-panel .exam-question-compact { padding-block: 10px; }
+.exam-workspace-listening .exam-answer-panel .exam-number { background: var(--soft-blue); color: var(--blue); border-radius: 6px; }
+.exam-layout-option { gap: 7px; }
+@media(min-width:901px) {
+  .exam-workspace-listening .exam-layout-split { grid-template-columns: minmax(0,1.35fr) minmax(280px,.65fr); }
+}
+@media(max-width:740px) {
+  .exam-workspace-listening .exam-stimulus { font-size: 16px; }
+  .exam-workspace-listening .exam-stimulus .exam-inline-answer .exam-gap { inline-size: 132px; }
+  .exam-workspace-listening .exam-stimulus table .exam-inline-answer .exam-gap { inline-size: 100%; }
+  .exam-workspace-listening .exam-stimulus .exam-note-item .exam-inline-answer { margin-inline: 3px; }
+}

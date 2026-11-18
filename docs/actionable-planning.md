@@ -42,6 +42,8 @@ The daily schedule shows active and completed work; skipped and replanned record
 
 Planning views and date ranges are URL state (`view=schedule|waiting|history`, `date=YYYY-MM-DD`). Task return links retain that source address and task anchor; completing a task does not switch the source view to History. Legacy links with only a task anchor locate its current collection once. Explicit views take precedence.
 
+Vocabulary result links open `view=task#task-<id>` to show one linked task's requirements and current status. This view reads the complete task on demand, offers retry for failed reads, and leaves Schedule, Waiting and History available. It does not change completion evidence or rewrite saved results. Review setup shows up to two ready tasks, with further ready tasks and future reviews available in disclosures.
+
 Study return links use the browser's owned source entry when its account, address and history index match. Direct links, new tabs and restored modules fall back to the validated in-app source URL. Ordinary browser Back and modifier-click remain available; scroll restoration stays bounded and account-scoped.
 
 Due listening sentence links use `review=sentence`. A planned intensive task is limited to its assigned sentence; its target overrides incidental sentence parameters. Short listening reviews retain original dictation/recording and save only the selected sentence's listening rating. Full intensive practice remains a separate entry. Wrong or partial completed dictations enter review by default; learners can opt any sentence in or out.

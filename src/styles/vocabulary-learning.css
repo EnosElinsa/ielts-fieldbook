@@ -136,16 +136,17 @@
 .vocabulary-learning-update > div { display: flex; flex-wrap: wrap; gap: 8px; }
 .vocabulary-learning-update [role="alert"] { margin-block: 12px 0; color: var(--red); }
 
-/* Content scrolls independently; navigation never follows a changing definition height. */
-.vocabulary-learning-stage { display:grid; grid-template-rows:minmax(0,1fr) auto auto; block-size:clamp(30rem,75dvh,54rem); border:1px solid var(--rule); border-radius:12px; background:var(--sheet); }
-.vocabulary-learning-stage .vocabulary-learning-card-frame { min-block-size:0; overflow:auto; border-radius:12px 12px 0 0; scroll-padding-block:18px; overscroll-behavior:contain; }
+/* Bound the reading area while keeping word navigation stable on tall screens.
+   At either scroll boundary, wheel/touch gestures continue through the page. */
+.vocabulary-learning-stage { display:grid; grid-template-rows:minmax(0,1fr) auto auto; block-size:clamp(30rem,75dvh,44rem); border:1px solid var(--rule); border-radius:12px; background:var(--sheet); }
+.vocabulary-learning-stage .vocabulary-learning-card-frame { min-block-size:0; overflow:auto; border-radius:12px 12px 0 0; scroll-padding-block:18px; }
 .vocabulary-learning-stage .vocabulary-learning-card { border:0; border-radius:0; min-block-size:100%; }
 .vocabulary-learning-stage .vocabulary-learning-controls { margin:0; padding:12px 16px; border-block-start:1px solid var(--rule); }
 .vocabulary-learning-stage .vocabulary-learning-save-status { margin:0; padding:0 12px 8px; line-height:1.6; min-block-size:calc(1.6em + 8px); }
 .vocabulary-learning-view-options { display:flex; gap:6px; margin-block:12px; }
 .vocabulary-learning-view-options .btn { min-block-size:44px; gap:8px; }
 .vocabulary-learning-view-options [aria-pressed="true"] { color:var(--blue); background:var(--soft-blue); border-color:var(--blue); }
-.vocabulary-learning-list { min-block-size:0; overflow:auto; padding:12px; scroll-padding-block:12px; overscroll-behavior:contain; }
+.vocabulary-learning-list { min-block-size:0; overflow:auto; padding:12px; scroll-padding-block:12px; }
 .vocabulary-learning-list ol { list-style:none; margin:0; padding:0; }
 .vocabulary-learning-list li { padding:14px; border:1px solid transparent; border-radius:8px; }
 .vocabulary-learning-list li:not(:last-child) { margin-block-end:6px; }

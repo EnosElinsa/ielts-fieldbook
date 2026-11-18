@@ -54,6 +54,28 @@ test('flat imported notes have distinct section headings and answer rows while a
   for (const node of container.querySelectorAll('[data-source-block]')) expect(oldBlocks).toContain(node.getAttribute('data-source-block'));
 });
 
+test('cramped imported bullet lines become native lists without changing source text or annotation offsets', () => {
+  const html = '<p><strong>Recommended trips</strong></p><p>·a <strong>[1 ____]</strong> tour<br><span>•</span><span>best day: [2 ____]</span><br>●see the exhibition<br> -opens soon</p>';
+  const {container} = render(<ExamStimulus html={html} blockPrefix="notes" renderGap={number=><input aria-label={`Answer ${number}`}/>} />);
+  const list = screen.getAllByRole('list')[0];
+  expect(list.children).toHaveLength(3);
+  expect(list.querySelectorAll('li')).toHaveLength(4);
+  expect(list.querySelector('li ul li')).toHaveTextContent('opens soon');
+  expect(container.querySelector('[data-source-block="notes:1-0:0"]')?.textContent).toBe('·a ');
+  expect(container.querySelector('[data-source-block="notes:1-0:0"] [hidden]')).toHaveTextContent('·');
+  expect(container.querySelector('[data-source-block="notes:1-5-0:0"]')?.textContent).toBe('best day: ');
+  for (const node of container.querySelectorAll('[data-source-block]')) expect(examStimulusBlockIds(html,'notes')).toContain(node.getAttribute('data-source-block'));
+  expect(screen.getByRole('textbox',{name:'Answer 1'})).toBeInTheDocument();
+  expect(screen.getByRole('textbox',{name:'Answer 2'})).toBeInTheDocument();
+});
+
+test('source punctuation in prose and table cells does not become a note list', () => {
+  const {container} = render(<ExamStimulus html='<p>A·B and a - b remain unchanged.</p><table><tr><td>·literal cell</td></tr></table>' />);
+  expect(screen.queryByRole('list')).not.toBeInTheDocument();
+  expect(container).toHaveTextContent('A·B and a - b remain unchanged.');
+  expect(container.querySelector('td')).toHaveTextContent('·literal cell');
+});
+
 test('imported table line fragments reflow as spaced sentences and keep their source block IDs', () => {
   const html = '<table><tbody><tr><td><p><span>At the top of</span></p><p><span>a</span> <strong>[6 ____]</strong></p><p><br></p><p>Another detail</p></td></tr></tbody></table>';
   const { container } = render(<ExamStimulus html={html} blockPrefix="table" />);

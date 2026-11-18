@@ -2,13 +2,25 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { afterEach, expect, test, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/vitest';
-import { ReviewStartButton, ScheduleVocabularyReview } from './VocabularyReviewPlanning';
+import { PlannedReviewList, ReviewStartButton, ScheduleVocabularyReview } from './VocabularyReviewPlanning';
 import type { VocabularyPracticeController } from './useVocabularyPracticeController';
 
-const mocks=vi.hoisted(()=>({changePlan:vi.fn()}));
-vi.mock('../../context/FieldbookContext', () => ({useFieldbook: () => ({changePlan:mocks.changePlan})}));
+const mocks=vi.hoisted(()=>({changePlan:vi.fn(),state:{plans:[] as unknown[]}}));
+vi.mock('../../context/FieldbookContext', () => ({useFieldbook: () => ({changePlan:mocks.changePlan,state:mocks.state})}));
 vi.mock('../planning/StudySchedule', () => ({TaskStartButton: () => <button type="button">Start planned task</button>}));
-afterEach(cleanup);
+afterEach(()=>{cleanup();mocks.state.plans=[];});
+
+test('future planned reviews stay available without pushing the current review down the page',async()=>{
+ const plan={skill:'vocabulary',status:'pending',estimatedMinutes:10,target:{type:'vocabulary',mode:'due-review',assessmentMode:'dictation',binding:'dynamic'}};
+ mocks.state.plans=[{...plan,id:'today',title:'Due today',dateKey:'2000-01-01'}, {...plan,id:'future',title:'Future review',dateKey:'2099-01-01'}];
+ render(<PlannedReviewList/>);
+ expect(screen.getByRole('heading',{name:'Due today'})).toBeVisible();
+ expect(screen.getByText('Future review')).not.toBeVisible();
+ await userEvent.click(screen.getByText('Upcoming reviews · 1'));
+ expect(screen.getByRole('heading',{name:'Future review'})).toBeVisible();
+ expect(screen.getAllByRole('button',{name:'Start planned task'})).toHaveLength(2);
+ mocks.state.plans=[];
+});
 
 test('scheduled review saves the themed date and word selection, locking both while saving',async()=>{
   let finish:(value:boolean)=>void=()=>{};
