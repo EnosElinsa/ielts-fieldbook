@@ -25,7 +25,7 @@ export function SelectField({options,children,value,defaultValue,onChange,onValu
       onValueChange?.(value);
       if(onChange)onChange({target:{value,name},currentTarget:{value,name}} as React.ChangeEvent<HTMLSelectElement>);
     }}>
-    <Select.Trigger {...props as React.ButtonHTMLAttributes<HTMLButtonElement>} type="button" role={triggerRole} id={id} disabled={disabled} className={`filter-trigger select-field ${className||''}`} aria-label={label}>
+    <Select.Trigger {...props as React.ButtonHTMLAttributes<HTMLButtonElement>} type="button" role={triggerRole} aria-autocomplete={triggerRole === 'combobox' ? 'none' : undefined} aria-haspopup="listbox" id={id} disabled={disabled} className={`filter-trigger select-field ${className||''}`} aria-label={label}>
       <Select.Value placeholder="Choose an option"/><Select.Icon asChild><ChevronDown size={16} aria-hidden="true"/></Select.Icon>
     </Select.Trigger>
     <Select.Portal><Select.Content className="select-pop" position="popper" side="bottom" align="start" sideOffset={6} collisionPadding={12} sticky="always" aria-label={label}>

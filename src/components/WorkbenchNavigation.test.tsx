@@ -1,4 +1,4 @@
-import { cleanup, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, expect, test, vi } from 'vitest';
@@ -16,6 +16,41 @@ test('search routes reading and listening through skill selection', async () => 
   await user.type(screen.getByRole('combobox', { name: 'Search Fieldbook' }), 'Reading');
   await user.click(screen.getByRole('option', { name: 'Reading Page' }));
   expect(fb.setSkill).toHaveBeenCalledWith('reading', '/reading');
+});
+
+test.each([{ isComposing: true }, { keyCode: 229 }])('search leaves IME confirmation and candidate selection to the input method (%j)', async composition => {
+  const close = vi.fn();
+  render(<MemoryRouter><CommandSearch open onClose={close} /></MemoryRouter>);
+  const input = screen.getByRole('combobox', { name: 'Search Fieldbook' });
+  await userEvent.type(input, 'Reading');
+  const active = input.getAttribute('aria-activedescendant');
+  fireEvent.keyDown(input, { key: 'ArrowDown', ...composition });
+  expect(input).toHaveAttribute('aria-activedescendant', active);
+  fireEvent.keyDown(input, { key: 'Enter', ...composition });
+  expect(close).not.toHaveBeenCalled();
+  expect(fb.setSkill).not.toHaveBeenCalled();
+  fireEvent.keyDown(input, { key: 'Enter' });
+  expect(close).toHaveBeenCalledOnce();
+  expect(fb.setSkill).toHaveBeenCalledWith('reading', '/reading');
+});
+
+test('search keeps a valid active result when loaded results shrink without a query change', async () => {
+  const questions = fb.state.questions;
+  fb.state.questions = Array.from({ length: 3 }, (_, index) => ({ id: String(index), name: `Reading question ${index}` })) as any;
+  try {
+    const close = vi.fn();
+    const view = render(<MemoryRouter><CommandSearch open onClose={close} /></MemoryRouter>);
+    const input = screen.getByRole('combobox', { name: 'Search Fieldbook' });
+    await userEvent.type(input, 'Reading');
+    for (let index = 0; index < 4; index++) fireEvent.keyDown(input, { key: 'ArrowDown' });
+    fb.state = { ...fb.state, questions: [] };
+    view.rerender(<MemoryRouter><CommandSearch open onClose={close} /></MemoryRouter>);
+    const selected = screen.getByRole('option', { selected: true });
+    expect(input).toHaveAttribute('aria-activedescendant', selected.id);
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(close).toHaveBeenCalledOnce();
+    expect(fb.setSkill).toHaveBeenCalledWith('reading', '/reading/review');
+  } finally { fb.state = { ...fb.state, questions }; }
 });
 test('mobile navigation gives listening and reading direct guarded entry points', async () => {
   render(<MemoryRouter><MobileNavigation onMore={() => {}} /></MemoryRouter>);

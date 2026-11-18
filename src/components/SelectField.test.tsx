@@ -6,6 +6,15 @@ import { SelectField } from './SelectField';
 afterEach(cleanup);
 const options=[{value:'one',label:'First'},{value:'two',label:'Second'}];
 
+test.each(['button', 'combobox'] as const)('%s triggers expose only attributes supported by their role', triggerRole => {
+  render(<SelectField aria-label="Practice" triggerRole={triggerRole} value="one" options={options} />);
+  const trigger = screen.getByRole(triggerRole, { name: 'Practice' });
+  if (triggerRole === 'button') {
+    expect(trigger).not.toHaveAttribute('aria-autocomplete');
+    expect(trigger).toHaveAttribute('aria-haspopup', 'listbox');
+  } else expect(trigger).toHaveAttribute('aria-autocomplete', 'none');
+});
+
 test('keyboard selection and Escape return focus to the trigger',async()=>{
   const user=userEvent.setup();const change=vi.fn();
   render(<SelectField aria-label="Practice" defaultValue="one" options={options} onValueChange={change}/>);
