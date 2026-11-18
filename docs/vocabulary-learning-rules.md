@@ -39,7 +39,7 @@ Due for review requires a valid FSRS schedule whose date has arrived for the sel
 
 ## Fixed tasks and recovery
 
-Learning offers Cards and List layouts for the same fixed batch. List selection does not mark a word viewed or alter the batch's meaning IDs. The selected layout is retained in the learning URL. The word content scrolls independently above a stable Previous / Mark viewed / Next action row; longer definitions must not move those controls. Recall concealment applies in Cards; List is an overview with meanings visible.
+Learning offers Cards and List layouts for the same fixed batch. List selection does not mark a word viewed or alter the batch's meaning IDs. The selected layout is retained in the learning URL. The word content scrolls independently above a stable Previous / Mark viewed / Next action row; longer definitions must not move those controls. At a card or list scroll boundary, scrolling continues through the page. The learning stage has a bounded height so tall screens do not create excessive empty space below short definitions. Recall concealment applies in Cards; List is an overview with meanings visible.
 
 Learning cards display the batch's selected meaning once. Word details preserves that meaning and the return address, with dictionary references and an alternative group meaning available through disclosures. Reference browsing never creates a one-word learning batch or replaces a frozen task's assessment. Previously shared direct meaning links remain valid, including curriculum meanings absent from an older saved entry snapshot. Identical displayed definitions are not repeated merely because their sense IDs differ; their practice identities remain distinct.
 
