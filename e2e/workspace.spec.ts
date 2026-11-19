@@ -11,6 +11,30 @@ test('historical plans are visible on direct Progress entry and after visiting P
   await expect(page.getByText('Completed historical overview')).toBeVisible();
 });
 
+test('a failed historical plan request can recover in place', async ({ page }) => {
+  let failing = true;
+  let releasePlans: () => void = () => {};
+  const requestHeld = new Promise<void>(resolve => { releasePlans = resolve; });
+  await page.route(url => url.pathname === '/rest/v1/plans' && Boolean(url.searchParams.get('select')?.includes('title:')), async route => {
+    if (!failing) return route.fallback();
+    await requestHeld;
+    await route.fulfill({ status: 500, json: { message: 'Test service unavailable' }, headers: { 'access-control-allow-origin': '*' } });
+  });
+
+  await page.goto('/progress?category=writing&range=all');
+  const plans = page.getByRole('region', { name: 'Study plans' });
+  try {
+    await expect(plans.getByText('Loading study plans…')).toBeVisible();
+  } finally {
+    releasePlans();
+  }
+  await expect(plans.getByRole('alert')).toBeVisible();
+  failing = false;
+  await plans.getByRole('button', { name: 'Retry plans' }).click();
+  await expect(plans.getByText('Completed historical overview')).toBeVisible();
+  await expect(page).toHaveURL(/\/progress\?category=writing&range=all$/);
+});
+
 test('search respects IME confirmation and real Enter still navigates', async ({ page }) => {
   await page.goto('/vocabulary');
   await page.getByRole('button', { name: /Search/ }).first().click();
@@ -28,16 +52,14 @@ for (const theme of ['light', 'dark']) for (const width of [320, 390, 1440]) {
   test(`${theme} ${width}px critical pages keep accessible semantics and readable layouts`, async ({ page }) => {
     test.setTimeout(120_000);
     await page.setViewportSize({ width, height: 900 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.addInitScript(theme => localStorage.setItem('fieldbook-theme-v1', theme), theme);
     for (const path of ['/today', '/planning', '/vocabulary', '/write/questions', '/progress', '/settings/target']) {
       await page.goto(path);
       await expect(page.locator('.view.active').first()).toBeVisible();
       await expect(page.locator('h1').first()).toBeVisible();
       await expect(page.locator('[aria-busy="true"]')).toHaveCount(0, { timeout: 30000 });
-      await page.evaluate(async () => {
-        await document.fonts.ready;
-        await Promise.all(document.getAnimations().filter(animation => animation.effect?.getComputedTiming().iterations !== Infinity).map(animation => animation.finished.catch(() => {})));
-      });
+      await expect.poll(() => page.evaluate(() => document.fonts.status), { timeout: 10_000, message: `${path} fonts` }).toBe('loaded');
       const rules = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
       expect(rules.violations.filter(v => v.impact === 'serious' || v.impact === 'critical'), `${path}: ${JSON.stringify(rules.violations.map(v => ({ id: v.id, nodes: v.nodes.map(n => n.target) })))}`).toEqual([]);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), path).toBe(true);

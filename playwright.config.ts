@@ -18,7 +18,7 @@ export default defineConfig({
   webServer: {
     command: 'npm run dev -- --host 127.0.0.1 --port 5191 --strictPort',
     url: 'http://127.0.0.1:5191',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     timeout: 120_000,
     env: { VITE_SUPABASE_URL: 'https://fieldbook-audit.supabase.co', VITE_SUPABASE_ANON_KEY: 'synthetic-public-fixture', VITE_DIAGNOSTICS_ENABLED: 'false' },
   },

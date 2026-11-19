@@ -40,6 +40,10 @@ jobs:
   browser:
     needs: check
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, firefox, webkit]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -47,13 +51,13 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npx playwright install --with-deps chromium firefox webkit
-      - run: npm run test:browser
+      - run: npx playwright install --with-deps ${{ matrix.engine }}
+      - run: npm run test:browser -- --project=${{ matrix.engine }}
         env:
           FIELDBOOK_BROWSER_OUTPUT: ${{ runner.temp }}/fieldbook-browser-results
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: browser-failure-evidence
+          name: browser-failure-evidence-${{ matrix.engine }}
           path: ${{ runner.temp }}/fieldbook-browser-results
           retention-days: 7

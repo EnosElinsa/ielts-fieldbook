@@ -11,12 +11,19 @@ This change implements the concrete product and engineering fixes from the syste
 | Mobile navigation | One Study menu exposes listening, reading, writing and speaking equally; active selections and cancelled practice transitions retain focus. |
 | Vocabulary onboarding | A new learner gets one wordbook choice and a next step before the existing learning dashboard appears. |
 | Accessibility | Native date inputs, correct combobox and description-list semantics, a skip link, route heading focus, IME-safe search, readable muted text and mobile input sizes. Light and dark layouts receive automated browser checks. |
-| Draft recovery | Input writes serialize the edited draft only. Version-aware acknowledgement preserves unacknowledged edits from another tab. Legacy full recovery snapshots remain readable. |
+| Draft recovery | Input writes serialize the edited draft only. The save queue clears matching recovery versions for acknowledged draft upserts. Keeping cloud drafts clears the versions shown in the recovery prompt and offers any newer copies again. Legacy full recovery snapshots remain readable. |
 | Loading | Empty global search loads navigation results without hydrating every account module. |
 | Engineering | Three legacy TypeScript suppression files restored; a baseline gate prevents suppression growth. Browser and axe checks join CI. Dependencies with known advisories updated. |
 | Security and diagnostics | Minimal enforced security headers plus a report-only script policy. Optional numeric diagnostics redact content and identifiers at the edge; see the deployment runbook before activation. |
 
 Study state remains schema v13. No database migration or catalogue reseed is required. This delivery preserves account isolation, immutable histories, explicit completion evidence and content-addressed resources.
+
+## 19 November review follow-up
+
+- A save based on a stale tab's local baseline could return success without sending a draft. Recovery cleanup now uses the draft IDs sent with a validated commit receipt. Successful attempt submission consumes the matching recovery for that question. The recovery prompt also checks again after discarding the displayed version.
+- Progress still includes shared review and vocabulary plans in the Writing and Speaking views. Date-range changes preserve the selected plan status and restart pagination. The page controls retain keyboard focus during loading and announce the result.
+- Planning resolves encoded task IDs in linked requirements and History. A vocabulary task with frozen cards keeps its saved assessment mode when the original mode is unavailable. Starting the task can open the verified correction preview or show a retryable error.
+- Vocabulary group routes supply a level-one heading for keyboard entry. The browser matrix uses reduced motion for stable axe snapshots and exercises normal motion in the interaction tests. Each CI browser job runs one engine and retains its own failure artifacts.
 
 ## Validation
 
@@ -24,7 +31,7 @@ Run the release checks in order: `npm test`, `npm run build`, then `node scripts
 
 Browser fixtures intercept every external request and use synthetic accounts. They cover direct history entry, search composition, mobile Study focus, and serious/critical axe violations, horizontal overflow and mobile input sizes on key pages in both themes. Screenshots and traces are written outside the checkout. Automated checks supplement real assistive technology and device testing.
 
-Local acceptance on this branch: 255 test files passed, with 18,466 tests passed and one existing optional archive-resource test skipped. The production build, type-suppression gate, dictionary/quality snapshot and identity/SQL checks passed. Login JavaScript is 134,538 bytes gzip against a 300 KiB budget; the largest JavaScript asset is 391,237 bytes against a 500 KiB budget. Chrome, Firefox and WebKit each passed nine browser scenarios covering both themes at 320px, 390px and 1440px. The dependency audit reported zero known advisories, including development dependencies. These checks do not establish live deployment or operational acceptance.
+The 17 November branch snapshot passed 255 test files and 18,466 tests. The optional archive-resource test was skipped. The build, type-suppression gate, dictionary and quality checks, and identity/SQL checks passed. Login JavaScript measured 134,538 bytes gzip and the largest JavaScript asset measured 391,237 bytes. Chrome, Firefox and WebKit each passed nine local browser scenarios. The remote browser job subsequently timed out while waiting for animations in eight mobile Firefox and WebKit checks. The 19 November follow-up replaces this wait with reduced-motion emulation and a bounded font-readiness assertion.
 
 ## Operational follow-ups
 
