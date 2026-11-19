@@ -16,6 +16,8 @@
 .rail-activity-link:hover svg { color: currentColor; }
 .rail-activity-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 .mobile-more-links button.active { background: var(--soft-blue); color: var(--blue); }
+.mobile-more-links > p { margin: 0; padding: 0 12px 4px; color: var(--muted); font-size: 13px; font-weight: 600; }
+.mobile-more-links + .mobile-more-links { border-top: 1px solid var(--rule); padding-top: 12px; }
 .dropdown-item[data-disabled] { opacity: .45; cursor: not-allowed; }
 .task-chart-error { padding: 20px; border: 1px dashed var(--rule); border-radius: 8px; background: var(--surface-soft); text-align: center; }
 .task-chart-error p { margin: 0 0 12px; color: var(--muted); font-size: 13px; }
@@ -28,9 +30,8 @@
 @media (max-width: 740px) {
   .mobile-navigation { grid-template-columns:repeat(5,minmax(0,1fr)); padding-inline:6px; }
   .main > .top:has(.page-title-compact) { min-height:60px; margin-bottom:18px; padding-block:8px; }
-  .page .vocabulary-tabs { scroll-padding-inline: 6px; overscroll-behavior-x: contain; }
-  .page .vocabulary-tabs a { flex: 1 0 auto; padding: 12px 6px; min-height: 44px; text-align: center; font-size: 12px; }
   .mobile-more-links button { min-height: 44px; text-align: left; }
+  .top .import-score { width: 44px; min-width: 44px; height: 44px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -52,12 +52,12 @@ test('search keeps a valid active result when loaded results shrink without a qu
     expect(fb.setSkill).toHaveBeenCalledWith('reading', '/reading/review');
   } finally { fb.state = { ...fb.state, questions }; }
 });
-test.each(['Listening', 'Reading', 'Writing', 'Speaking'])('mobile Study offers %s equally and closes before navigating', async label => {
+test.each(['Listening', 'Reading', 'Writing', 'Speaking'])('mobile Practice offers %s equally and closes before navigating', async label => {
   const select = vi.fn(() => expect(screen.queryByRole('menu')).not.toBeInTheDocument());
   render(<MemoryRouter><MobileNavigation onMore={() => {}} onSelectModule={select} /></MemoryRouter>);
   const user = userEvent.setup();
-  await user.click(screen.getByRole('button', { name: 'Study' }));
-  const menu = screen.getByRole('menu');
+  await user.click(screen.getByRole('button', { name: 'Practice' }));
+  const menu = screen.getByRole('menu', { name: 'Practice' });
   expect(within(menu).getAllByRole('menuitem').map(item => item.textContent)).toEqual(['Listening', 'Reading', 'Writing', 'Speaking']);
   await user.click(within(menu).getByRole('menuitem', { name: label }));
   expect(select).toHaveBeenCalledWith(label.toLowerCase());
@@ -90,11 +90,11 @@ test('search remains open and dismissible while data is loading, and failed resu
   expect(close).toHaveBeenCalledOnce();
 });
 
-test('mobile navigation promotes planning and shows the active skill in Study', () => {
+test('mobile navigation promotes planning and shows the active skill in Practice', () => {
   render(<MemoryRouter initialEntries={['/review?skill=speaking']}><MobileNavigation onMore={() => {}} /></MemoryRouter>);
   const nav = screen.getByRole('navigation', { name: 'Main navigation' });
-  expect(Array.from(nav.children).map(item => item.getAttribute('aria-label') || item.textContent)).toEqual(['Today', 'Planning', 'Study: Speaking', 'Vocabulary', 'More']);
-  expect(within(nav).getByRole('button', { name: 'Study: Speaking' })).toHaveAttribute('aria-current', 'page');
+  expect(Array.from(nav.children).map(item => item.getAttribute('aria-label') || item.textContent)).toEqual(['Today', 'Planning', 'Practice: Speaking', 'Vocabulary', 'More']);
+  expect(within(nav).getByRole('button', { name: 'Practice: Speaking' })).toHaveAttribute('aria-current', 'page');
 });
 
 test('listening questions remains active across bank, standard practice, mock, and intensive paths', () => {
@@ -106,7 +106,7 @@ test('listening questions remains active across bank, standard practice, mock, a
 
 test.each(['/listening/part1', '/listening/intensive/part1', '/listening/mock/paper1', '/listening/review/a1'])('mobile listening remains active on %s', path => {
   render(<MemoryRouter initialEntries={[path]}><MobileNavigation onMore={() => {}} /></MemoryRouter>);
-  expect(screen.getByRole('button', { name: 'Study: Listening' })).toHaveAttribute('aria-current', 'page');
+  expect(screen.getByRole('button', { name: 'Practice: Listening' })).toHaveAttribute('aria-current', 'page');
 });
 
 test.each(['/settings', '/settings/audio'])('settings remains available under mobile More on %s', path => {
@@ -133,10 +133,10 @@ test('legacy listening bank canonicalization keeps filters, paging and hash', ()
 });
 
 
-test('mobile Study supports keyboard dismissal and guarded skill selection', async () => {
+test('mobile Practice supports keyboard dismissal and guarded skill selection', async () => {
   render(<MemoryRouter><MobileNavigation onMore={() => {}} /></MemoryRouter>);
   const user = userEvent.setup();
-  const trigger = screen.getByRole('button', {name:'Study'});
+  const trigger = screen.getByRole('button', {name:'Practice'});
   await user.click(trigger);
   await user.keyboard('{Escape}');
   expect(screen.queryByRole('menu')).not.toBeInTheDocument();
@@ -147,10 +147,10 @@ test('mobile Study supports keyboard dismissal and guarded skill selection', asy
   expect(screen.queryByRole('menu')).not.toBeInTheDocument();
 });
 
-test('selecting the active Study skill with the keyboard returns focus to its trigger', async () => {
+test('selecting the active Practice skill with the keyboard returns focus to its trigger', async () => {
   render(<MemoryRouter initialEntries={['/listening']}><MobileNavigation onMore={() => {}} /></MemoryRouter>);
   const user = userEvent.setup();
-  const trigger = screen.getByRole('button', {name:'Study: Listening'});
+  const trigger = screen.getByRole('button', {name:'Practice: Listening'});
   trigger.focus();
   await user.keyboard('{Enter}');
   await waitFor(() => expect(screen.getByRole('menuitem', {name:'Listening'})).toHaveFocus());
@@ -160,13 +160,13 @@ test('selecting the active Study skill with the keyboard returns focus to its tr
   await waitFor(() => expect(trigger).toHaveFocus());
 });
 
-test('a blocked Study navigation retains trigger focus while waiting for a decision', async () => {
+test('a blocked Practice navigation retains trigger focus while waiting for a decision', async () => {
   const block = (event: Event) => event.preventDefault();
   document.addEventListener('fieldbook:before-navigate', block);
   try {
     render(<MemoryRouter><MobileNavigation onMore={() => {}} /></MemoryRouter>);
     const user = userEvent.setup();
-    const trigger = screen.getByRole('button', {name:'Study'});
+    const trigger = screen.getByRole('button', {name:'Practice'});
     trigger.focus();
     await user.keyboard('{Enter}');
     await waitFor(() => expect(screen.getByRole('menuitem', {name:'Listening'})).toHaveFocus());

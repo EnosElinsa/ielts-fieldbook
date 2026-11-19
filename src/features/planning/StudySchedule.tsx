@@ -49,5 +49,8 @@ export function TaskStartButton({plan, emphasis = true, taskLabel = undefined}) 
     catch(cause){setError(cause instanceof Error?cause.message:'The selected task could not load. Retry shortly.');}
     finally{setStarting(false);}
   }
-  return <div className="study-start-action">{error&&<p className="study-alert" role="alert">{error}</p>}<button type="button" aria-label={taskLabel ? `${error?"Retry":plan.status==="in_progress"?"Resume":"Start"} ${taskLabel}` : undefined} className={`btn ${plan.status==='completed'||!emphasis?'line':'primary'}`} disabled={starting||plan.status==='skipped'} onClick={()=>void start()}>{error?<RotateCcw size={16}/>:plan.status==='completed'?<ArrowRight size={16}/>:<Play size={16}/>} {starting?'Opening...':error?'Retry task':plan.status==='completed'?'View':plan.status==='in_progress'?'Resume':'Start'}</button></div>;
+  const action = plan.status === 'completed' ? 'View' : plan.status === 'in_progress' ? 'Resume' : 'Start';
+  const label = starting ? 'Opening...' : error ? 'Retry task' : action;
+  const accessibleLabel = taskLabel ? `${starting ? 'Opening' : error ? 'Retry' : action} ${taskLabel}` : undefined;
+  return <div className="study-start-action">{error&&<p className="study-alert" role="alert">{error}</p>}<button type="button" aria-label={accessibleLabel} className={`btn ${plan.status==='completed'||!emphasis?'line':'primary'}`} disabled={starting||plan.status==='skipped'} onClick={()=>void start()}>{error?<RotateCcw size={16}/>:plan.status==='completed'?<ArrowRight size={16}/>:<Play size={16}/>} {label}</button></div>;
 }

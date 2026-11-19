@@ -1,19 +1,32 @@
 .vocabulary-tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
   border-bottom: 1px solid var(--rule);
   margin: 0 0 24px;
-  overflow-x: auto;
 }
 .vocabulary-file-picker{display:flex;align-items:center;gap:12px;width:100%;padding:12px;border:1px dashed var(--rule);border-radius:8px;background:var(--surface-soft)}
 .vocabulary-file-picker>span{font-size:13px;color:var(--muted);min-width:0;overflow-wrap:anywhere}
 .vocabulary-tabs a {
-  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  padding: 8px 14px;
   white-space: nowrap;
   color: var(--muted);
   text-decoration: none;
   border-bottom: 2px solid transparent;
   font-size: 13px;
+}
+.vocabulary-tabs a:hover {
+  color: var(--blue);
+  background: var(--surface-hover);
+}
+.vocabulary-tabs a:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: -2px;
 }
 .vocabulary-tabs a.is-active {
   color: var(--ink);
@@ -640,9 +653,12 @@
 @media (max-width: 768px) {
   .vocabulary-tabs {
     margin-bottom: 18px;
+    gap: 0;
   }
   .vocabulary-tabs a {
-    padding: 10px;
+    flex: 1 0 auto;
+    padding-inline: 2px;
+    font-size: 12px;
   }
   .vocabulary-stats > div {
     padding: 5px 14px;

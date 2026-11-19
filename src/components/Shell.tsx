@@ -339,7 +339,23 @@ export function Shell() {
         </main>
       </div>
       <MobileNavigation onMore={() => setMoreOpen(true)} onSelectModule={resumeModule} />
-      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header="Your workspace"><div className="more-modal">{secondaryLinks.length > 0 && <p className="eyebrow">{workspaceModules.find(link => link.id === module)?.label} study</p>}<div className="mobile-more-links">{secondaryLinks.map((link) => <button type="button" key={link.to} className={studyLinkActive(link.to, location.pathname, location.search, module) ? 'active' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}{workspaceModules.filter(link => ['writing', 'speaking', 'progress', 'settings'].includes(link.id)).map(link => <button type="button" key={link.id} className={module === link.id ? 'active' : undefined} onClick={() => { setMoreOpen(false); resumeModule(link.id); }}><link.Icon size={20} />{link.label}</button>)}<button type="button" onClick={() => goFromMore('/settings/account')}><UserRound size={20} />Account</button></div></div></ModalFrame>
+      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header={null}>
+        <div className="more-modal">
+          {secondaryLinks.length > 0 && <div className="mobile-more-links" role="group" aria-labelledby="more-skill-label">
+            <p id="more-skill-label">{workspaceModules.find(link => link.id === module)?.label}</p>
+            {secondaryLinks.map(link => {
+              const current = studyLinkActive(link.to, location.pathname, location.search, module);
+              return <button type="button" key={link.to} className={current ? 'active' : undefined} aria-current={current ? 'page' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>;
+            })}
+          </div>}
+          <div className="mobile-more-links" role="group" aria-label="Workspace">
+            {workspaceModules.filter(link => ['progress', 'settings'].includes(link.id)).map(link => (
+              <button type="button" key={link.id} className={module === link.id ? 'active' : undefined} aria-current={module === link.id ? 'page' : undefined} onClick={() => { setMoreOpen(false); resumeModule(link.id); }}><link.Icon size={20} aria-hidden="true" />{link.label}</button>
+            ))}
+            <button type="button" onClick={() => goFromMore('/settings/account')}><UserRound size={20} aria-hidden="true" />Account</button>
+          </div>
+        </div>
+      </ModalFrame>
       {searchOpen && <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
       <PageErrorBoundary resetKey={`${accountId()}:${fb.modal}:${legalView}`} onDismiss={() => { fb.closeModal(); setLegalView(null); }}>
       <Suspense fallback={<ModalFrame open={Boolean(fb.modal || legalView)} onClose={() => { fb.closeModal(); setLegalView(null); }} title="Opening dialog"><PanelLoadingState variant="form" message="Loading dialog…" /></ModalFrame>}>

@@ -5,11 +5,12 @@ import {VocabularyLink as Link} from './VocabularyRouteLink';
 import {dateLabel,modeLabel} from './practicePresentation';
 import './vocabulary-next-practice.css';
 
-export function VocabularyNextPractice({recommendation,to,onPractice,busy=false,primaryAction=false,title='Next practice',meaning}: {
+export function VocabularyNextPractice({recommendation,to,onPractice,busy=false,primaryAction=false,title='Next practice',headingLevel=4,meaning}: {
   recommendation: Recommendation; to: (mode: VocabularyMode)=>string;
-  onPractice?: (mode: VocabularyMode)=>void; busy?: boolean; primaryAction?: boolean; title?: string;
+  onPractice?: (mode: VocabularyMode)=>void; busy?: boolean; primaryAction?: boolean; title?: string; headingLevel?: 3 | 4;
   meaning?: {term:string;definition:string};
 }) {
+  const Heading = headingLevel === 3 ? 'h3' : 'h4';
   const {status,mode,reason,dimensions,dueAt,alternatives,target,error}=recommendation;
   const errorMessage=error && {
     spelling:'Your written answer did not match the accepted spelling. Compare the letters, then try the word again.',
@@ -23,7 +24,7 @@ export function VocabularyNextPractice({recommendation,to,onPractice,busy=false,
     : <Link className={`btn ${primaryAction&&!alternative?'primary':'line'}`} to={to(target)}>{alternative?modeLabel(target):`Practise ${modeLabel(target)}`}<ArrowRight size={14} aria-hidden="true" /></Link>;
   return <section className="vocabulary-next-practice" aria-label={title}>
     <div className="vocabulary-next-practice-content">
-    <h4>{title}</h4>
+    <Heading className="vocabulary-next-practice-title">{title}</Heading>
     {meaning ? <p><b>{meaning.term}</b> · {meaning.definition}</p> : null}
     <p className="vocabulary-next-practice-mode">{modeLabel(mode)}</p>
     {status==='waiting' ? <p>{reason==='due'?'Your next review is scheduled for ':'Your next spaced practice is available from '}<time dateTime={dueAt}>{dateLabel(dueAt!)}</time>.</p> : <>

@@ -79,7 +79,7 @@ export function CommandSearch({ open, onClose }: { open: boolean; onClose: () =>
   </div></ModalFrame>;
 }
 
-const MOBILE_LABELS = { listening: 'Listen', reading: 'Read', writing: 'Write', speaking: 'Speak', vocabulary: 'Vocab' };
+const MOBILE_LABELS = { vocabulary: 'Vocab' };
 
 export function MobileNavigation({ onMore, onSelectModule }: { onMore: () => void; onSelectModule?: (id: string) => void }) {
   const fb = useFieldbook();
@@ -111,8 +111,8 @@ export function MobileNavigation({ onMore, onSelectModule }: { onMore: () => voi
   return <nav className="mobile-navigation" aria-label="Main navigation">
     {mainLink('today')}{mainLink('planning')}
     <DropdownMenu.Root open={studyOpen} onOpenChange={open => { if (open) selectingStudy.current = false; setStudyOpen(open); }}>
-      <DropdownMenu.Trigger ref={studyTrigger} type="button" className={activeSkill ? 'active' : undefined} aria-current={activeSkill ? 'page' : undefined} aria-label={activeSkill ? `Study: ${activeSkill.label}` : 'Study'}><BookOpen size={20} aria-hidden="true"/><span>Study</span></DropdownMenu.Trigger>
-      {studyOpen && <DropdownMenu.Portal><DropdownMenu.Content className="dropdown-content mobile-study-menu" side="top" align="center" sideOffset={12} collisionPadding={12} aria-label="Study skills" onCloseAutoFocus={event => { if (selectingStudy.current) event.preventDefault(); }}>
+      <DropdownMenu.Trigger ref={studyTrigger} type="button" className={activeSkill ? 'active' : undefined} aria-current={activeSkill ? 'page' : undefined} aria-label={activeSkill ? `Practice: ${activeSkill.label}` : 'Practice'}><BookOpen size={20} aria-hidden="true"/><span>Practice</span></DropdownMenu.Trigger>
+      {studyOpen && <DropdownMenu.Portal><DropdownMenu.Content className="dropdown-content mobile-study-menu" side="top" align="center" sideOffset={12} collisionPadding={12} onCloseAutoFocus={event => { if (selectingStudy.current) event.preventDefault(); }}>
         {skills.map(({id,to,label,Icon}) => <DropdownMenu.Item key={id} className="dropdown-item" aria-current={activeModule === id ? 'page' : undefined} onSelect={() => { selectingStudy.current = true; setStudyOpen(false); setPendingStudy({id,to}); }}><Icon size={18} aria-hidden="true"/>{label}{activeModule === id && <Check className="item-check" size={16} aria-hidden="true"/>}</DropdownMenu.Item>)}
       </DropdownMenu.Content></DropdownMenu.Portal>}
     </DropdownMenu.Root>
