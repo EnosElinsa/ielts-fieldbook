@@ -8,6 +8,8 @@ Before publishing, run `npm test`, `npm run build` and `node scripts/check-bundl
 
 Run the full test suite separately from production builds and browser performance measurements. CI also checks dictionary reports, the vocabulary quality snapshot and identity/SQL compatibility. Use synthetic intercepted account fixtures for browser regressions; do not publish personal histories or authentication state.
 
+Run `npm run check:types` to prevent new `@ts-nocheck` debt; remove restored files from `scripts/typecheck-baseline.json` so coverage cannot regress. `tsc -b` also checks the Pages Function and browser tooling. Install the Playwright engines with `npx playwright install chromium firefox webkit`, then run `npm run test:browser` separately from the full test suite. Browser output defaults to the system temporary directory. CI runs the three-engine axe checks after the existing release checks.
+
 ## Local workspace
 
 Keep source in `src/`, `tests/`, `scripts/`, `public/`, `supabase/` and `docs/`. Keep temporary browser scripts, screenshots and traces outside the checkout. `node_modules/` and `dist/` are generated; retained content-addressed vocabulary resources must remain available across releases.

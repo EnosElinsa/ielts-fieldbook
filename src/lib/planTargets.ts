@@ -14,6 +14,13 @@ type Sources = {
   vocabulary: (bookId: string, unitId: string) => Promise<unknown>;
 };
 
+export function planTaskIdFromHash(hash: string): string {
+  if (!hash.startsWith('#task-')) return '';
+  const suffix = hash.slice(6);
+  try { return decodeURIComponent(suffix); }
+  catch { return suffix; }
+}
+
 export async function bindStudyPlanTargets(state: any, sources: Sources, options: {planIds?: Set<string>} = {}) {
   const catalogs = new Map<string, ExamCatalog>();
   const banks = new Map<string, any[]>();

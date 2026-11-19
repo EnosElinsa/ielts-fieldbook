@@ -157,7 +157,9 @@ export function buildAssessmentRequest(session, question) {
   const visual = image ? `visual_file: ${image}\nvisual_attachment_required: true\nvisual_filename: ${image.split('/').pop() || ''}\n` : '';
   const scope = {
     overview: 'Review the introduction and overview: accurate paraphrase, key trends, and a clear overview.',
-    outline: 'Review the position and two main points: coverage of the question, a clear position, and distinct support.',
+    outline: task === 'Task 1'
+      ? 'Review the chart outline: the main trends, two useful groups or comparisons, and relevant figures.'
+      : 'Review the position and two supporting ideas: coverage of the question, a clear position, and distinct support.',
     compare: 'Review this comparison paragraph: accurate figures, meaningful comparisons, grouping, and cohesion.',
     body: 'Review this body paragraph: a clear main idea, explanation, a relevant example, and cohesion.',
     unknown: 'Review the submitted practice only; its original practice scope is unknown.',

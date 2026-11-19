@@ -35,6 +35,11 @@ export const DEFAULT_SETTINGS = {
   vocabulary: { ...DEFAULT_VOCABULARY_PREFERENCES },
 };
 
+export type StudySettings = typeof DEFAULT_SETTINGS & {
+  favoriteExamSectionIds?: string[];
+  examPractice?: { layoutBySkill?: Partial<Record<'reading' | 'listening', 'integrated' | 'split'>> };
+};
+
 export function normalizeDraft(raw) {
   if (raw == null || typeof raw === 'boolean') {
     return { text: raw == null ? '' : String(raw), transcript: '', notes: '', parentSessionId: null, practiceMode: 'unknown', targetErrorIds: [] };
@@ -189,7 +194,7 @@ export function emptyState() {
     plans: [],
     stories: [],
     speakingTopics: [],
-    settings: clone(DEFAULT_SETTINGS),
+    settings: clone(DEFAULT_SETTINGS) as StudySettings,
     activePlanId: null,
     reviewedAt: null,
   };

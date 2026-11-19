@@ -9,7 +9,7 @@ const { persistNow, flushDraftPersist, toast, saveState } = vi.hoisted(() => ({
   persistNow: vi.fn(),
   flushDraftPersist: vi.fn(() => null),
   toast: vi.fn(),
-  saveState: { status: undefined as string | undefined, owner: 'one', type: '2', extra: null as any },
+  saveState: { status: undefined as string | undefined, owner: 'one', type: '2', mode: 'full', extra: null as any },
 }));
 vi.mock('../../storage/remote', () => ({accountId: () => saveState.owner}));
 
@@ -30,7 +30,7 @@ vi.mock('../../context/FieldbookContext', () => ({
       saveStatus: saveState.status,
       stateRef: { current: state },
       selectedQuestion: selected,
-      currentDeskMode: () => 'full',
+      currentDeskMode: () => saveState.mode,
       writingDraft: () => '',
       speakingDraft: () => ({ parentSessionId: null }),
       wordCount: (value: string) => (String(value || '').trim() ? String(value).trim().split(/\s+/).length : 0),
@@ -59,7 +59,27 @@ afterEach(() => {
   saveState.status = undefined;
   saveState.owner = 'one';
   saveState.type = '2';
+  saveState.mode = 'full';
   saveState.extra = null;
+});
+
+test('an outline shows its own word limit and explains each supporting idea', () => {
+  saveState.mode = 'outline';
+  render(<WritingDeskPage />);
+  expect(screen.getByRole('heading', { name: 'Task 2 outline' })).toBeVisible();
+  expect(screen.getByRole('textbox', { name: 'Your position' })).toHaveAccessibleDescription(/answer the question/i);
+  expect(screen.getByRole('textbox', { name: 'Second supporting idea' })).toHaveAccessibleDescription(/different reason/i);
+  expect(screen.getByText('Up to 120 words')).toBeVisible();
+  expect(screen.queryByText(/250 words/)).not.toBeInTheDocument();
+});
+
+test('a legacy chart outline asks for trends and comparisons', () => {
+  saveState.type = '1';
+  saveState.mode = 'outline';
+  render(<WritingDeskPage />);
+  expect(screen.getByRole('heading', { name: 'Task 1 outline' })).toBeVisible();
+  expect(screen.getByRole('textbox', { name: 'Overall picture' })).toHaveAccessibleDescription(/main trend/i);
+  expect(screen.queryByText(/150 words/)).not.toBeInTheDocument();
 });
 
 const task2Correction = {

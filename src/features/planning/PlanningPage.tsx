@@ -11,7 +11,7 @@ import { AccountDataBoundary } from '../../components/AccountDataBoundary';
 
 import { dateKey, addLocalDays } from '../../domain/utils';
 import { calendarDays, studyBudget, compareStudyPlans, planSkill, planMinutesLabel } from '../../lib/planTemplates';
-import { studyPlanTitle, studyTargetSummary } from '../../lib/planTargets';
+import { planTaskIdFromHash, studyPlanTitle, studyTargetSummary } from '../../lib/planTargets';
 import { receptivePlanCompletionDescription } from '../../lib/receptivePlans';
 import { TaskStartButton, useStudySchedule } from './StudySchedule';
 import '../../styles/planning.css';
@@ -36,7 +36,8 @@ function PlanningCalendar(){
   const history=fb.state.plans.filter(plan=>['completed','skipped'].includes(plan.status)).sort((a,b)=>-compareStudyPlans(a,b));
   const requestedView=new URLSearchParams(location.search).get('view');
   const selectTab=value=>{const next=new URLSearchParams(search);next.set('view',value);setSearch(next,{replace:true,state:location.state});};
-  const [targetError,setTargetError]=useState(''),[targetRetry,setTargetRetry]=useState(0);const targetId=location.hash.startsWith('#task-')?location.hash.slice(6):'';
+  const [targetError,setTargetError]=useState(''),[targetRetry,setTargetRetry]=useState(0);
+  const targetId = planTaskIdFromHash(location.hash);
   const linkedTask=fb.state.plans.find(plan=>plan.id===targetId);
   const explicitView=['schedule','waiting','history','task'].includes(requestedView);
   const tab=explicitView?requestedView:linkedTask?['completed','skipped'].includes(linkedTask.status)?'history':linkedTask.dateKey<today||linkedTask.onHold?'waiting':'schedule':'schedule';
@@ -63,7 +64,7 @@ function PlanningCalendar(){
     {tab==='history'&&<TaskCollection tasks={history} kind="history" renderTask={plan=><PlanTask plan={plan}/>}/>}
     {tab==='schedule'&&<>
     {needsWordbook&&studyBudget(fb.state.settings,today).planning.newWordsPerDay>0&&<aside className="study-wordbook-prompt"><BookOpen size={19} aria-hidden="true"/><p><strong>Choose a wordbook for new-word tasks</strong><span>Your daily word goal starts allocating words after you add a wordbook.</span></p><Link className="btn line" to="/vocabulary/wordbooks">Choose a wordbook</Link></aside>}
-    {focus&&<aside className="study-focus"><div><p className="kicker">Today's focus</p><strong>{studyPlanTitle(focus)}</strong><p>{focus.status==='in_progress'?'Continue your saved task':'Next in your schedule'} · {planMinutesLabel(focus)}</p></div><TaskStartButton plan={focus}/></aside>}
+    {focus&&<div className="study-focus"><div><p className="kicker">Today's focus</p><strong>{studyPlanTitle(focus)}</strong><p>{focus.status==='in_progress'?'Continue your saved task':'Next in your schedule'} · {planMinutesLabel(focus)}</p></div><TaskStartButton plan={focus}/></div>}
     <nav className="study-date-navigation" aria-label="Schedule dates">
       <p className="study-date-range" aria-live="polite" aria-atomic="true">{dateRange}</p>
       <div className="study-date-controls">

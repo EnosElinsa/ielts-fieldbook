@@ -52,7 +52,7 @@ Due listening sentence links use `review=sentence`. A planned intensive task is 
 
 Use `SelectField` for form fields and `FilterMenu` for toolbar filters. Both use the same Radix Select, styles and keyboard behavior. `SelectField` accepts either `options` with `onValueChange` or existing option children with `onChange`.
 
-Popup content is portaled to the body and positioned relative to the trigger in viewport coordinates. It prefers the bottom side and handles viewport collisions, scrolling and resizing. Dates retain the specialized date picker.
+Popup content is portaled to the body and positioned relative to the trigger in viewport coordinates. It prefers the bottom side and handles viewport collisions, scrolling and resizing. Date fields use native `input type="date"` controls with labels and min/max bounds; their browser UI follows the active color scheme.
 
 ## Validation scope
 

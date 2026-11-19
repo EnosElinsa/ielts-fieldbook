@@ -252,6 +252,10 @@ describe('Fieldbook UI', () => {
       renderAt('/');
       await screen.findAllByRole('heading', { level: 2, name: 'Today' });
       expect(screen.getAllByRole('heading', { level: 2, name: 'Today' })[0]).toBeTruthy();
+      const skip = screen.getByRole('link', { name: 'Skip to main content' });
+      expect(document.querySelector('a')).toBe(skip);
+      await userEvent.click(skip);
+      expect(screen.getByRole('main')).toBe(document.activeElement);
       expect(await screen.findByRole('button', { name: 'Resume' })).toBeTruthy();
     } finally { vi.useRealTimers(); }
   });

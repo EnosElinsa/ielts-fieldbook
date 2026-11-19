@@ -229,13 +229,13 @@ export function VocabularyNavigation() {
   );
 }
 
-function VocabularyLayout({ children, ready = true, embedded = false }) {
+function VocabularyLayout({ children, ready = true, embedded = false, showNavigation = true }) {
   const location = useLocation();
   useVocabularyPosition(location.pathname + location.search + location.hash, ready);
   const Container = embedded ? 'div' : 'section';
   return (
     <Container className={`${embedded ? '' : 'view active '}vocabulary-view vocabulary-workbench`}>
-      {!embedded ? <VocabularyNavigation /> : null}
+      {!embedded && showNavigation ? <VocabularyNavigation /> : null}
       {children}
     </Container>
   );
@@ -332,17 +332,28 @@ function VocabularyHomePage() {
   const href = saved ? resumeTo : due.length ? `/vocabulary/review?${new URLSearchParams({ mode: reviewMode, dueOnly: 'true', scheduledOnly:'true' })}` : nextLearningUrl;
   const action = saved ? 'Continue session' : due.length ? 'Review due words' : nextGroup ? learning?.viewedEntryIds?.length ? 'Continue learning' : 'Start learning' : 'Study wordbooks';
   const title = saved ? 'Continue your session' : due.length ? 'Words due for review' : enrollment ? enrollment.book.title : 'Choose a wordbook';
+  const hasLearningHistory = ['vocabularyStates', 'vocabularyEvidence', 'vocabularyReviews', 'vocabularyActivities', 'vocabularySessions', 'wordbookProgress'].some(key => fb.state[key]?.length);
+  const firstRun = catalogStatus === 'ready' && deviceSessions.ready && !saved && !fb.state.vocabulary.length && !fb.state.wordbookEnrollments?.length && !hasLearningHistory;
+  if (firstRun) return <VocabularyLayout showNavigation={false}>
+    <div className="page-tools"><h1>Vocabulary</h1></div>
+    <section className="vocabulary-home-next" aria-label="Get started with vocabulary">
+      <span className="vocabulary-eyebrow">Your first words</span>
+      <h2>Build your vocabulary</h2>
+      <p>Choose a wordbook, then learn your first group. Your next learning and review tasks will appear here.</p>
+      <Link className="btn primary" to="/vocabulary/wordbooks">Choose a wordbook<ArrowRight size={16} aria-hidden="true"/></Link>
+    </section>
+  </VocabularyLayout>;
   return <VocabularyLayout ready={catalogStatus !== 'loading'}>
-    <div className="page-tools"><h2>Vocabulary</h2><Link className="btn line" to="/settings/vocabulary">Practice settings</Link></div>
+    <div className="page-tools"><h1>Vocabulary</h1><Link className="btn line" to="/settings/vocabulary">Practice settings</Link></div>
     <section className={`vocabulary-home-next${showSuggestion?' has-recommendation':''}`} aria-label="Next vocabulary task">
       <span className="vocabulary-eyebrow">{saved ? `${saved.cardIds.length} words · Session saved` : showSuggestion ? 'Your saved meaning' : due.length ? `${due.length} ${reviewMode} cards due` : nextGroup ? `${selectedEntryIds.length||nextTarget.batchSize} new words selected` : 'Wordbook study'}</span>
       {showSuggestion ? <>
-        <div className="vocabulary-home-word"><h3><Link to={`/vocabulary/entry/${encodeURIComponent(suggestion.entry.id)}?${new URLSearchParams({senseId:suggestion.sense.id,returnTo:'/vocabulary'})}`}>{suggestion.entry.term}</Link></h3>
+        <div className="vocabulary-home-word"><h2><Link to={`/vocabulary/entry/${encodeURIComponent(suggestion.entry.id)}?${new URLSearchParams({senseId:suggestion.sense.id,returnTo:'/vocabulary'})}`}>{suggestion.entry.term}</Link></h2>
         <p className="vocabulary-home-meaning">{suggestion.sense.definition}</p></div>
         <VocabularyNextPractice primaryAction recommendation={suggestion.recommendation} to={mode=>practiceUrl(suggestion.entry.id,suggestion.sense.id,{},'/vocabulary',mode)}/>
         {suggestion.recommendation.status==='waiting' ? <Link className="btn line" to={nextLearningUrl}>{nextGroup?'Continue learning':'Study wordbooks'}<ArrowRight size={16} aria-hidden="true"/></Link> : null}
       </> : <>
-        <h3>{catalogStatus==='ready'||saved?title:'Your next vocabulary task'}</h3>
+        <h2>{catalogStatus==='ready'||saved?title:'Your next vocabulary task'}</h2>
         {nextGroup && !saved && !due.length && catalogStatus==='ready' ? <p>{unitPath(enrollment.book, nextGroup, enrollment.study.hierarchy)}</p> : null}
         {catalogStatus === 'loading' && !saved ? <PanelLoadingState message="Preparing your vocabulary recommendations..." /> : catalogStatus === 'error' && !saved ? <StateMessage kind="error" message="Vocabulary recommendations could not be loaded." onRetry={() => setRetry(value => value + 1)} /> : !saved&&!due.length&&nextLearning?.plan ? <TaskStartButton plan={nextLearning.plan}/> : <Link className="btn primary" to={href}>{action}<ArrowRight size={16}/></Link>}
         {!saved && !due.length && nextGroup && suggestion?.recommendation.status==='waiting' ? <p className="vocabulary-muted vocabulary-home-waiting">Next saved-meaning practice: <time dateTime={suggestion.recommendation.dueAt}>{new Date(suggestion.recommendation.dueAt).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</time>.</p> : null}
@@ -448,7 +459,7 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
   return (
     <VocabularyLayout>
       <div className="page-tools">
-        <h2>{wordsOnly ? "My words" : "Vocabulary workspace"}</h2>
+        <h1>{wordsOnly ? "My words" : "Vocabulary workspace"}</h1>
         <div className="actions">
           <button
             type="button"
@@ -468,7 +479,7 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
           </button>
         </div>
       </div>
-      <h3 className="vocabulary-section-title">My vocabulary</h3>
+      <h2 className="vocabulary-section-title">My vocabulary</h2>
       <VocabularyStats
         values={[
           ["Entries", entries.length],
@@ -748,7 +759,7 @@ export function VocabularyWordbooksPage() {
     const studied = groupStudied(fb.state, unit);
     const mastered = unit.studyEntryIds.filter(id => statusOf(fb.state, id) === "mastered").length;
     return <article className="vocabulary-study-group" key={unit.id} id={`group-${unit.id}`}>
-      <div><h4>{unit.title}</h4><p className="vocabulary-group-path">{unitPath(book, unit, study.hierarchy)}</p>
+      <div><h3>{unit.title}</h3><p className="vocabulary-group-path">{unitPath(book, unit, study.hierarchy)}</p>
         {unit.entryIds.length ? <><p>{plural(unit.entryIds.length, 'word')} · {unit.studyEntryIds.length ? `${vocabularyGroupProgress(fb.state, unit)} · ${formatCount(mastered)} mastered` : "Archived · Excluded from study"}</p>{unit.archivedCount && unit.studyEntryIds.length ? <p className="vocabulary-muted">{formatCount(unit.archivedCount)} archived {unit.archivedCount === 1 ? "word" : "words"} excluded from study</p> : null}</>
           : <p className="vocabulary-muted">{unit.totalSourceWords ? `${plural(unit.totalSourceWords, 'source word')} | ` : ""}Content pending</p>}
       </div>
@@ -773,13 +784,13 @@ export function VocabularyWordbooksPage() {
     </details>;
   };
   return <VocabularyLayout ready={!catalogBusy}>
-    <div className="page-tools"><div><h2>Wordbook study</h2><p className="vocabulary-muted">Your wordbooks and chapter progress.</p></div>
+    <div className="page-tools"><div><h1>Wordbook study</h1><p className="vocabulary-muted">Your wordbooks and chapter progress.</p></div>
     </div>
     {catalogBusy ? <PanelLoadingState message="Loading catalog..." onRetry={() => loadCatalog(selectedBook)} retryLabel="Retry catalog" /> : null}
     {catalogError ? <StateMessage kind="error" message={catalogError} onRetry={() => loadCatalog(selectedBook)} retryLabel="Retry catalog" retryDisabled={catalogBusy} /> : null}
     {book ? <>
       <VocabularyBackLink fallback="/vocabulary/wordbooks"/>
-      <div className="vocabulary-study-heading"><div><span className="vocabulary-eyebrow">Your wordbook</span><h3>{book.title}</h3><p>{wordbookDescription(book)}</p>
+      <div className="vocabulary-study-heading"><div><span className="vocabulary-eyebrow">Your wordbook</span><h2>{book.title}</h2><p>{wordbookDescription(book)}</p>
         <p className="vocabulary-muted">{plural(wordbookWordCount(study), 'word')} · {plural(study.hierarchy.filter(unit => unit.kind === "chapter").length, 'chapter')} · {plural(study.groups.length, 'group')}</p>
         <p>{formatCount(study.studied.length)}/{formatCount(study.available.length)} available groups studied</p>
       </div><div className="vocabulary-continue">
@@ -793,7 +804,7 @@ export function VocabularyWordbooksPage() {
     </> : <>
       <div className="vocabulary-books">{books(fb.state).map(item => {
         const progress = bookStudy(fb.state, item.id);
-        return <article className="vocabulary-book" key={item.id}><header><BookOpen size={22} aria-hidden="true"/><h3>{item.title}</h3></header><div className="vocabulary-book-content"><p>{wordbookDescription(item)}</p>
+        return <article className="vocabulary-book" key={item.id}><header><BookOpen size={22} aria-hidden="true"/><h2>{item.title}</h2></header><div className="vocabulary-book-content"><p>{wordbookDescription(item)}</p>
           <div className="vocabulary-muted">{plural(wordbookWordCount(progress), 'word')} · {plural(progress.hierarchy.filter(unit => unit.kind === "chapter").length, 'chapter')} · {plural(progress.groups.length, 'group')}</div>
           {enrolled(item.id) ? <div className="vocabulary-muted">{formatCount(progress.studied.length)}/{formatCount(progress.available.length)} groups studied</div> : null}
           </div><footer className="actions"><Link className="btn line" aria-label={`Open chapters: ${item.title}`} to={`/vocabulary/wordbooks/${encodeURIComponent(item.id)}`}>Open chapters<ArrowRight size={15} /></Link>
@@ -841,8 +852,8 @@ export function VocabularyWrongPage() {
   };
   return (
     <VocabularyLayout>
-      <div className="page-tools"><h2>Words to retry</h2></div>
-      <div className="vocabulary-recovery"><div><span className="vocabulary-eyebrow">Mistake review</span><h3>{wrong.length ? `${wrong.length} words to retry` : "Your retry queue"}</h3><p>Review words you answered incorrectly. Recovery needs 3 correct retries in each affected mode, with at least 24 hours between the first and last.</p></div>
+      <div className="page-tools"><h1>Words to retry</h1></div>
+      <div className="vocabulary-recovery"><div><span className="vocabulary-eyebrow">Mistake review</span><h2>{wrong.length ? `${wrong.length} words to retry` : "Your retry queue"}</h2><p>Review words you answered incorrectly. Recovery needs 3 correct retries in each affected mode, with at least 24 hours between the first and last.</p></div>
         <Link className="btn primary" to={`/vocabulary/review?${new URLSearchParams({ wrongOnly: 'true', dueOnly: 'false', ...(source !== 'all' ? { sourceType: source } : {}), ...(bookId !== 'all' ? { bookId } : {}), ...(skill !== 'all' ? { skill } : {}), ...(dimension !== 'all' ? { dimension } : {}) }).toString()}`}><RotateCcw size={16} />Retry words<ArrowRight size={15} /></Link>
       </div>
       <div className="toolbar">
@@ -980,6 +991,8 @@ export function VocabularyWrongPage() {
 }
 
 export function VocabularyProgressPage({ since: selectedSince, embedded = false }: { since?: number; embedded?: boolean } = {}) {
+  const Heading = embedded ? 'h2' : 'h1';
+  const SectionHeading = embedded ? 'h3' : 'h2';
   const fb = useFieldbook();
   const [params, setParams] = useVocabularySearchParams();
   const range = ['7', '30', '90', 'all'].includes(params.get('range')) ? params.get('range') : '30';
@@ -993,11 +1006,11 @@ export function VocabularyProgressPage({ since: selectedSince, embedded = false 
   return (
     <VocabularyLayout embedded={embedded}>
       <div className="page-tools">
-        <h2>{embedded ? 'Vocabulary activity' : 'Vocabulary progress'}</h2>
+        <Heading>{embedded ? 'Vocabulary activity' : 'Vocabulary progress'}</Heading>
         {!embedded ? <FilterMenu label="Time range" value={range} onChange={value => setParams(current => { const next = new URLSearchParams(current); next.set('range', value); return next; }, { replace: true })} options={[{ value: '7', label: 'Last 7 days' }, { value: '30', label: 'Last 30 days' }, { value: '90', label: 'Last 90 days' }, { value: 'all', label: 'All time' }]} /> : null}
       </div>
       <VocabularyStats values={[["Practice results", results.length], ["Words practised", new Set(results.map(row => row.entryId)).size], ["Success rate", `${successRate}%`], ["Due cards", getDueVocabularyReviewQueue(fb.state).length]]} />
-      <h3 className="vocabulary-section-title">Wordbook progress · All time</h3>
+      <SectionHeading className="vocabulary-section-title">Wordbook progress · All time</SectionHeading>
       <p className="vocabulary-muted">Studied counts submitted answers, including mistakes. Mastered tracks spaced meaning, listening and spelling successes; usage is separate.</p>
       <div className="vocabulary-table">
         {books(fb.state)
@@ -1030,8 +1043,8 @@ export function VocabularyProgressPage({ since: selectedSince, embedded = false 
           })}
       </div>
       <details className="vocabulary-progress-detail">
-        <summary><h3>Familiarity</h3></summary>
-      <h3 className="vocabulary-section-title">Current vocabulary · All time</h3>
+        <summary><SectionHeading>Familiarity</SectionHeading></summary>
+      <SectionHeading className="vocabulary-section-title">Current vocabulary · All time</SectionHeading>
       <VocabularyStats
         values={[
           ["Entries", entries.length],
@@ -1064,7 +1077,7 @@ export function VocabularyProgressPage({ since: selectedSince, embedded = false 
         <p className="vocabulary-muted">Success rate counts assessed results in this range. Results awaiting feedback are excluded.</p>
       </details>
       <details className="vocabulary-progress-detail">
-        <summary><h3>Learning dimensions · All time</h3></summary>
+        <summary><SectionHeading>Learning dimensions · All time</SectionHeading></summary>
       <div className="vocabulary-progress-table">
         <div className="vocabulary-progress-head">
           <span>Dimension</span>
@@ -1100,7 +1113,7 @@ export function VocabularyProgressPage({ since: selectedSince, embedded = false 
       </div>
       </details>
       <details className="vocabulary-progress-detail">
-        <summary><h3>Recent practice results</h3></summary>
+        <summary><SectionHeading>Recent practice results</SectionHeading></summary>
       {results.length ? (
         <div className="vocabulary-evidence">
           {results.slice(0, 10)
@@ -1142,7 +1155,7 @@ export function VocabularyHistoryPage() {
   const sessions=fb.loadVocabularyHistoryPage?(ready?loaded.rows:[]):local.slice(page*20,(page+1)*20);
   const total=fb.loadVocabularyHistoryPage?(ready?loaded.total:0):local.length;
   const pages=Math.max(1,Math.ceil(total/20));
-  return <VocabularyLayout><div className="page-tools vocabulary-history-tools"><h2>Vocabulary history</h2>
+  return <VocabularyLayout><div className="page-tools vocabulary-history-tools"><h1>Vocabulary history</h1>
     <label className="vocabulary-history-source">Session source<ThemedSelectField aria-label="Session source" value={source} onValueChange={value=>{setSource(value);setPage(0);}}><option value="all">All sources</option><option value="planned">All planned reviews</option><option value="automatic">System arranged</option><option value="manual">User arranged</option><option value="self-directed">Self-directed</option></ThemedSelectField></label><Link className="btn line" to="/vocabulary/review">Review vocabulary</Link></div>
     {error?<StateMessage kind="error" message={error} onRetry={()=>setRevision(value=>value+1)}/>:!ready?<PanelLoadingState message="Loading history…"/>:sessions.length ? <div className="vocabulary-history-list">{sessions.map(log => {
       const bookId = log.selection?.bookId || log.filter?.bookId;

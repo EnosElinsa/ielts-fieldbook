@@ -26,7 +26,7 @@
 }
 
 @media (max-width: 740px) {
-  .mobile-navigation { grid-template-columns:repeat(6,minmax(0,1fr)); padding-inline:6px; }
+  .mobile-navigation { grid-template-columns:repeat(5,minmax(0,1fr)); padding-inline:6px; }
   .main > .top:has(.page-title-compact) { min-height:60px; margin-bottom:18px; padding-block:8px; }
   .page .vocabulary-tabs { scroll-padding-inline: 6px; overscroll-behavior-x: contain; }
   .page .vocabulary-tabs a { flex: 1 0 auto; padding: 12px 6px; min-height: 44px; text-align: center; font-size: 12px; }
@@ -35,4 +35,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .top .page-title, .nav-children { animation: none; }
+}
+
+.mobile-study-menu .dropdown-item { min-height: 48px; font-size: 14px; }
+.mobile-study-menu .dropdown-item[aria-current="page"] { color: var(--blue); background: var(--soft-blue); }
+@media (max-width: 740px) {
+  .mobile-navigation button.active { color: var(--blue); background: var(--soft-blue); }
+  .mobile-navigation a, .mobile-navigation button { font-size: 12px; }
 }

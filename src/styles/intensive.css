@@ -14,7 +14,7 @@
 .intensive-stages .intensive-stage-number { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--surface-hover); color: var(--muted); font-weight: 700; margin-bottom: 8px; }
 .intensive-stages .intensive-stage-label { display: block; font-weight: 500; line-height: 1.4; }
 .intensive-stages li:has([aria-current=step]) { background: var(--soft-blue); border-color: color-mix(in srgb,var(--blue) 40%,var(--rule)); color: var(--blue); }
-.intensive-stages li:has([aria-current=step]) .intensive-stage-number { background: var(--blue-dark); color: #fff; }
+.intensive-stages li:has([aria-current=step]) .intensive-stage-number { background: var(--blue-fill); color: #fff; }
 .intensive-stages li.done .intensive-stage-number { color: var(--success); background: var(--soft-green); }
 .intensive-stages li.done { color: var(--blue); background: color-mix(in srgb, var(--blue) 8%, transparent); }
 .intensive-layout { display: grid; grid-template-columns: 215px minmax(0, 1fr); gap: 20px; align-items: start; }
@@ -193,7 +193,7 @@
 .intensive-step > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; border-radius: 6px; }
 .intensive-step[open] > summary { margin-bottom: 12px; }
 .intensive-step-number { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 26px; height: 26px; border-radius: 50%; background: var(--surface-hover); color: var(--muted); font-size: 12px; font-weight: 700; }
-.intensive-step.is-current .intensive-step-number { background: var(--blue-dark); color: #fff; }
+.intensive-step.is-current .intensive-step-number { background: var(--blue-fill); color: #fff; }
 .intensive-step.is-done .intensive-step-number { background: var(--soft-green); color: var(--success); }
 .intensive-step-state { flex-shrink: 0; color: var(--muted); font-size: 12px; }
 .intensive-step.is-done .intensive-step-state { color: var(--success); font-weight: 600; }

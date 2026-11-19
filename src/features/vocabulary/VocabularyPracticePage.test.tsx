@@ -166,7 +166,7 @@ test('switching review mode waits for its different teaching scope before allowi
   const teaching=vi.spyOn(releasedVocabulary,'loadReleasedVocabularyTeaching').mockResolvedValueOnce({books:[],units:[],entries:[],memberships:[]}).mockImplementation(()=>new Promise(resolve=>{release=()=>resolve({books:[],units:[],entries:[],memberships:[]});}));
   try {
     mount('?mode=definition&dueOnly=true');await readyStart();
-    const user=userEvent.setup();await user.click(screen.getByRole('button',{name:'Review mode'}));await user.click(screen.getByRole('option',{name:'Dictation'}));
+    const user=userEvent.setup();await user.click(screen.getByRole('combobox',{name:'Review mode'}));await user.click(screen.getByRole('option',{name:'Dictation'}));
     expect(teaching).toHaveBeenLastCalledWith({entryIds:['entry-1'],allowMissingEntryIds:true,force:false});
     expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled();
     await act(async()=>release());await readyStart();
@@ -212,7 +212,7 @@ test('a late previous-mode response cannot unlock the new teaching scope', async
   const teaching=vi.spyOn(releasedVocabulary,'loadReleasedVocabularyTeaching').mockImplementation(()=>new Promise(resolve=>{releases.push(()=>resolve({books:[],units:[],entries:[],memberships:[]}));}));
   try {
     mount('?mode=definition&dueOnly=true');
-    const user=userEvent.setup();await user.click(screen.getByRole('button',{name:'Review mode'}));await user.click(screen.getByRole('option',{name:'Dictation'}));
+    const user=userEvent.setup();await user.click(screen.getByRole('combobox',{name:'Review mode'}));await user.click(screen.getByRole('option',{name:'Dictation'}));
     expect(releases).toHaveLength(2);
     await act(async()=>releases[0]());
     expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled();
@@ -240,7 +240,7 @@ test('switching from due review to custom selection prepares every saved word be
   try {
     mount('?mode=definition&dueOnly=true');await readyStart();
     expect(teaching).toHaveBeenLastCalledWith({entryIds:['entry-0'],allowMissingEntryIds:true,force:false});
-    const user=userEvent.setup();await user.click(screen.getByRole('button',{name:'Review preset'}));await user.click(screen.getByRole('option',{name:'Custom selection'}));
+    const user=userEvent.setup();await user.click(screen.getByRole('combobox',{name:'Review preset'}));await user.click(screen.getByRole('option',{name:'Custom selection'}));
     await readyStart();
     expect(teaching).toHaveBeenLastCalledWith({entryIds:['entry-0','entry-1'],allowMissingEntryIds:true,force:false});
   } finally {teaching.mockRestore();}
@@ -395,7 +395,7 @@ test('single-word practice keeps its meaning and feedback without bulk settings 
   for (const name of ['Wordbook', 'Session size', 'Order']) expect(screen.queryByRole('button', { name })).not.toBeInTheDocument();
   for (const name of ['Due only', 'Mistakes only']) expect(screen.queryByRole('checkbox', { name })).not.toBeInTheDocument();
   expect(screen.getByRole('group', { name: 'Practice layout' })).toBeInTheDocument();
-  await user.click(screen.getByRole('button', { name: 'Feedback' }));
+  await user.click(screen.getByRole('combobox', { name: 'Feedback' }));
   await user.click(screen.getByRole('option', { name: 'After each answer' }));
   await user.click(await readyStart());
   expect(screen.getAllByRole('textbox')).toHaveLength(1);
@@ -429,7 +429,7 @@ test.each(['cloze', 'synonym', 'distinction'])('an unsupported single-meaning %s
   expect(JSON.stringify(fb.current.state)).toBe(before);
   const user = userEvent.setup();
   await user.click(screen.getByRole('button', { name: 'Try Meaning recall' }));
-  expect(screen.getByRole('button', { name: 'Practice mode' })).toHaveTextContent('Meaning recall');
+  expect(screen.getByRole('combobox', { name: 'Practice mode' })).toHaveTextContent('Meaning recall');
   expect(screen.getByText('Definition 0')).toBeInTheDocument();
   expect(fb.current.persistNow).not.toHaveBeenCalled();
   expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
@@ -542,7 +542,7 @@ test('planned review exposes its locked mode, full prompt count and origin witho
   for (const name of ['Review mode', 'Practice mode', 'Wordbook', 'Review preset', 'Session size', 'Order']) expect(screen.queryByRole('button', { name })).not.toBeInTheDocument();
   expect(screen.queryByRole('checkbox', { name: 'Mistakes only' })).not.toBeInTheDocument();
   expect(screen.queryByText('Mistake recovery needs 3 correct retries in the same mode, with at least 24 hours between the first and last.')).not.toBeInTheDocument();
-  expect(screen.getByRole('button', { name: 'Feedback' })).toBeInTheDocument();
+  expect(screen.getByRole('combobox', { name: 'Feedback' })).toBeInTheDocument();
   for (const name of ['Session size', 'Order']) expect(screen.queryByRole('button', { name })).not.toBeInTheDocument();
   for (const name of ['Due only', 'Mistakes only']) expect(screen.queryByRole('checkbox', { name })).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Start session' }));
@@ -653,8 +653,8 @@ test('group mode menu excludes unavailable tasks and old empty mode links recove
   groupFixture(2);
   mount('?bookId=test-book&unitId=test-group&dueOnly=false&mode=synonym');
   expect(await screen.findByText(/Synonyms has no tasks in this group/)).toBeInTheDocument();
-  expect(screen.getByRole('button',{name:'Practice mode'})).toHaveTextContent('Dictation');
-  await userEvent.setup().click(screen.getByRole('button',{name:'Practice mode'}));
+  expect(screen.getByRole('combobox',{name:'Practice mode'})).toHaveTextContent('Dictation');
+  await userEvent.setup().click(screen.getByRole('combobox',{name:'Practice mode'}));
   expect(screen.queryByRole('option',{name:/Synonyms/})).not.toBeInTheDocument();
   expect(screen.queryByRole('option',{name:/Word distinctions/})).not.toBeInTheDocument();
   expect(screen.queryByRole('option',{name:/Sentence gaps/})).not.toBeInTheDocument();
@@ -840,7 +840,7 @@ test("result filters preserve marked rows and mistake retry ignores the review b
   await user.click(screen.getByRole('button', { name: 'Submit session' }));
   await user.click(await screen.findByRole('button', { name: 'Submit anyway' }));
   await waitFor(() => expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(1));
-  await user.click(await screen.findByRole('button', { name: 'Result filter' }));
+  await user.click(await screen.findByRole('combobox', { name: 'Result filter' }));
   await user.click(await screen.findByRole('option', { name: 'Flagged' }));
   await waitFor(() => expect(screen.getAllByRole('row')).toHaveLength(2));
   await user.click(screen.getByRole('button', { name: 'Retry mistakes' }));
@@ -1437,7 +1437,7 @@ await user.click(screen.getByRole('link',{name:'Leave for words'}));await user.c
 test('submitted group stays on history across refresh and word-detail return',async()=>{
 const user=userEvent.setup();groupFixture(2);fb.current.state.settings={vocabulary:{mode:'production'}};
 const view=render(<MemoryRouter initialEntries={['/vocabulary/study?bookId=test-book&unitId=test-group&dueOnly=false']}><Routes><Route path='/vocabulary/study' element={<VocabularyPracticePage/>}/><Route path='/vocabulary/history/:sessionId' element={<VocabularyPracticePage/>}/></Routes><CurrentRoute/></MemoryRouter>);
-await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());expect(screen.getByRole('button',{name:'Practice mode'})).toHaveTextContent('Dictation');await user.click(await readyStart());await user.type(screen.getByRole('textbox',{name:'Answer 1'}),'word0');await user.type(screen.getByRole('textbox',{name:'Answer 2'}),'word1');await user.click(screen.getByRole('button',{name:'Submit session'}));
+await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());expect(screen.getByRole('combobox',{name:'Practice mode'})).toHaveTextContent('Dictation');await user.click(await readyStart());await user.type(screen.getByRole('textbox',{name:'Answer 1'}),'word0');await user.type(screen.getByRole('textbox',{name:'Answer 2'}),'word1');await user.click(screen.getByRole('button',{name:'Submit session'}));
 await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalled());const state=fb.current.persistVocabularySession.mock.calls[0][0];const id=state.vocabularySessions[0].id;expect(await screen.findByRole('table')).toBeInTheDocument();expect(await screen.findByText(`/vocabulary/history/${id}`)).toBeInTheDocument();
 const returnTo=new URL(screen.getAllByRole('link',{name:/Details/})[0].getAttribute('href')!,'https://test.test').searchParams.get('returnTo')!;expect(returnTo).toContain(`/vocabulary/history/${id}`);expect(returnTo).toContain('bookId=test-book');view.unmount();fb.current.state=state;
 render(<MemoryRouter initialEntries={[returnTo]}><Routes><Route path='/vocabulary/history/:sessionId' element={<VocabularyPracticePage/>}/></Routes><CurrentRoute/></MemoryRouter>);expect(await screen.findByRole('table')).toBeInTheDocument();expect(await screen.findByText(`/vocabulary/history/${id}`)).toBeInTheDocument();expect(screen.queryByRole('button',{name:'Start session'})).not.toBeInTheDocument();

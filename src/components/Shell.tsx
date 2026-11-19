@@ -333,7 +333,7 @@ export function Shell() {
           {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
           {fb.loadError && !fb.booted ? <StateMessage kind="error" title="Your workspace could not load" message={<>Check your connection, then retry. Work you already saved is safe.{fb.loadError !== WORKSPACE_LOAD_ERROR ? <small className="async-state-detail">{fb.loadError}</small> : null}</>} onRetry={fb.retryLoad} retryLabel="Retry" /> : null}
           {!fb.booted && !fb.loadError ? <PageLoadingState title={ownHeading ? chrome.title : undefined} message="Loading your workspace…" variant={loadingLayout(location.pathname)} onRetry={fb.retryLoad} /> : null}
-          <PageTransition transitionKey={transitionKey} key={module === 'settings' ? 'settings' : location.pathname}>
+          <PageTransition transitionKey={transitionKey} focusKey={location.pathname} skipHeadingFocus={Boolean(location.hash)} scrollRestoration={scrollRestoration} key={module === 'settings' ? 'settings' : location.pathname}>
             <WorkspaceScrollRestoration.Provider value={scrollRestoration}><Suspense fallback={<PageLoadingState title={ownHeading ? chrome.title : undefined} variant={loadingLayout(location.pathname)} message="Loading page…" />}>{fb.booted ? <WorkspaceRoute /> : null}</Suspense></WorkspaceScrollRestoration.Provider>
           </PageTransition>
         </main>

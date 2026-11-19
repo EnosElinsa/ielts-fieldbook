@@ -36,7 +36,9 @@
     "collect:exams": "node scripts/collect-exams.mjs",
     "import:exams": "node scripts/import-exams.mjs",
     "seed:exams": "node scripts/seed-exams.mjs",
-    "align:exams": "python scripts/align-exams.py"
+    "align:exams": "python scripts/align-exams.py",
+    "test:browser": "playwright test",
+    "check:types": "node scripts/check-type-safety.mjs"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.2.0",
@@ -52,10 +54,13 @@
     "react-router-dom": "^7.1.0",
     "recharts": "^3.10.1",
     "ts-fsrs": "^5.4.2",
-    "wavesurfer.js": "^8.0.2"
+    "wavesurfer.js": "^8.0.2",
+    "web-vitals": "^6.2.3"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@electric-sql/pglite": "0.5.9",
+    "@playwright/test": "^1.65.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",

@@ -1141,14 +1141,14 @@ test("failed familiarity saving remains distinct from evidence and allows retry 
   mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-02`);
   const user = userEvent.setup();
   await user.click(
-    screen.getByRole("button", { name: "Familiarity for this meaning" }),
+    screen.getByRole("combobox", { name: "Familiarity for this meaning" }),
   );
   await user.click(screen.getByRole("option", { name: "Familiar" }));
   expect(
     screen.queryByText("Familiarity could not be saved. Try again."),
   ).not.toBeInTheDocument();
   expect(
-    screen.getByRole("button", { name: "Familiarity for this meaning" }),
+    screen.getByRole("combobox", { name: "Familiarity for this meaning" }),
   ).toBeDisabled();
   expect(mocks.fb.persistNow).toHaveBeenCalledTimes(1);
   finishSave(false);
@@ -1165,7 +1165,7 @@ test("failed familiarity saving remains distinct from evidence and allows retry 
   expect(within(history).getByText("Result: Pending")).toBeInTheDocument();
   expect(JSON.stringify(mocks.fb.state)).toBe(before);
   await user.click(
-    screen.getByRole("button", { name: "Familiarity for this meaning" }),
+    screen.getByRole("combobox", { name: "Familiarity for this meaning" }),
   );
   await user.click(screen.getByRole("option", { name: "Familiar" }));
   await waitFor(() =>
@@ -1186,7 +1186,7 @@ test("a deliberate familiarity save targets the displayed new stable sense witho
   await userEvent
     .setup()
     .click(
-      screen.getByRole("button", { name: "Familiarity for this meaning" }),
+      screen.getByRole("combobox", { name: "Familiarity for this meaning" }),
     );
   await userEvent
     .setup()

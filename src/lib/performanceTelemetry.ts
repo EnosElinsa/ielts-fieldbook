@@ -1,3 +1,5 @@
+import { reportDiagnostic } from './diagnostics';
+
 type Operation = 'workspace' | 'productive' | 'vocabulary' | 'receptive' | 'save';
 type Measurement = { operation: Operation; durationMs: number; failed: boolean };
 const measurements: Measurement[] = [];
@@ -24,6 +26,8 @@ export function timeOperation(operation: Operation) {
   return (failed = false) => {
     const measurement = { operation, durationMs: Math.round(performance.now() - start), failed };
     measurements.push(measurement);
+    reportDiagnostic(operation, measurement.durationMs);
+    if (failed) reportDiagnostic(operation === 'save' ? 'save-failed' : 'module-failed');
     if (measurements.length > 100) measurements.shift();
     window.dispatchEvent(new CustomEvent('fieldbook:performance', { detail: measurement }));
   };

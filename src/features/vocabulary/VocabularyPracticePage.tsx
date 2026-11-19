@@ -31,10 +31,11 @@ export function VocabularyPracticePage() {
   return (
     <section className="view active vocabulary-view vocabulary-practice-view">
       <VocabularyNavigation />
+      {(session || resultRequested && !results) && <h1 className="sr-only">{resultRequested ? "Saved vocabulary session" : study ? "Wordbook study" : "Vocabulary review"}</h1>}
       {!results && !resultRequested && <header className="practice-heading">
         {showSetup ? <div className="practice-heading-context">
           <VocabularyBackLink fallback={study && controller.bookId !== 'all' && controller.unitId !== 'all' ? `/vocabulary/wordbooks/${encodeURIComponent(controller.bookId)}/groups/${encodeURIComponent(controller.unitId)}/words` : '/vocabulary'}/>
-          <h2>{study ? "Wordbook study" : "Vocabulary review"}</h2>
+          <h1>{study ? "Wordbook study" : "Vocabulary review"}</h1>
         </div> : session ? <div><span className="eyebrow">{study ? 'Wordbook study' : 'Vocabulary review'}</span></div> : null}
         <div className="actions">
           <IconButton

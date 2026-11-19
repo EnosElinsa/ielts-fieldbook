@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { emptyState } from '../domain';
 import { accountStoreAvailable, hydrateState, saveState, saveVocabularyImport, saveVocabularySession, loadVocabularyCatalog } from './remote';
 
@@ -20,7 +19,7 @@ export function applyBankCache() {}
 
 export function writeBankCache() {}
 
-export function downloadFile(name, text, mime) {
+export function downloadFile(name: string, text: BlobPart, mime?: string) {
   const anchor = document.createElement('a');
   anchor.href = URL.createObjectURL(new Blob([text], { type: mime || 'text/plain' }));
   anchor.download = name;

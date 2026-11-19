@@ -1,4 +1,4 @@
-import { cleanup, render, screen, act } from '@testing-library/react';
+import { cleanup, render, screen, act, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { PageTransition } from './PageTransition';
@@ -44,4 +44,23 @@ test('waits when a mounted route is still showing its full-page skeleton', async
   expect(animate).not.toHaveBeenCalled();
   await act(async () => { view.rerender(<PageTransition transitionKey="reading"><section className="view active">Reading passage</section></PageTransition>); });
   expect(animate).toHaveBeenCalledOnce();
+});
+
+test('focuses the resolved route heading even with reduced motion', async () => {
+  reduce = true;
+  const view = render(<PageTransition transitionKey="reading"><div className="async-loading-page">Loading</div></PageTransition>);
+  view.rerender(<PageTransition transitionKey="reading"><section className="view active"><h1>Reading</h1><input aria-label="Filter" value="" readOnly /></section></PageTransition>);
+  await waitFor(() => expect(screen.getByRole('heading')).toHaveFocus());
+  screen.getByLabelText('Filter').focus();
+  view.rerender(<PageTransition transitionKey="reading"><section className="view active"><h1>Reading</h1><input aria-label="Filter" value="query" readOnly /></section></PageTransition>);
+  expect(screen.getByLabelText('Filter')).toHaveFocus();
+});
+
+test.each(['restored', 'anchor', 'dialog', 'task'])('preserves %s focus and scroll destinations', async kind => {
+  const restoration = { current: { key: 'entry', restored: kind === 'restored' } };
+  render(<><button autoFocus>Previous focus</button>{kind === 'dialog' && <div role="dialog" aria-modal="true">Dialog</div>}
+    <PageTransition transitionKey="planning" scrollRestoration={restoration} skipHeadingFocus={kind === 'anchor'}><section className="view active"><h1>Planning</h1>{kind === 'task' && <button autoFocus>Exact task</button>}</section></PageTransition></>);
+  await act(async () => { await new Promise(resolve => requestAnimationFrame(resolve)); });
+  expect(screen.getByRole('heading')).not.toHaveFocus();
+  if (kind === 'task') expect(screen.getByRole('button', { name: 'Exact task' })).toHaveFocus();
 });

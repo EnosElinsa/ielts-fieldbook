@@ -22,21 +22,26 @@ test('future planned reviews stay available without pushing the current review d
  mocks.state.plans=[];
 });
 
-test('scheduled review saves the themed date and word selection, locking both while saving',async()=>{
+test('scheduled review saves the native date and word selection, locking both while saving',async()=>{
   let finish:(value:boolean)=>void=()=>{};
   mocks.changePlan.mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
   const controller={mode:'dictation',dueOnly:false,wrongOnly:false,filter:{},customCardIds:null,queue:[{entryId:'word',senseId:'meaning'}],preferences:{sessionSize:10,order:'source'}} as unknown as VocabularyPracticeController;
   render(<ScheduleVocabularyReview controller={controller}/>);
   await userEvent.click(screen.getByRole('button',{name:'Arrange for a date'}));
-  await userEvent.click(screen.getByRole('button',{name:'Study date'}));
   const today=new Date(),chosen=new Date(today.getFullYear(),today.getMonth(),today.getDate()===1?2:1);
-  await userEvent.click(screen.getByRole('button',{name:`${chosen.getDate()} ${chosen.toLocaleDateString('en-GB',{month:'long'})} ${chosen.getFullYear()}`}));
+  const chosenDate=`${chosen.getFullYear()}-${String(chosen.getMonth()+1).padStart(2,'0')}-${String(chosen.getDate()).padStart(2,'0')}`;
+  const dateField=screen.getByLabelText('Study date');
+  expect(dateField).toHaveAttribute('type','date');
+  fireEvent.change(dateField,{target:{value:chosenDate}});
+  expect(dateField).toHaveValue(chosenDate);
+  expect(dateField).toBeValid();
   await userEvent.click(screen.getByRole('combobox',{name:'Word selection'}));
   await userEvent.click(screen.getByRole('option',{name:'Keep this exact question list'}));
   await userEvent.click(screen.getByRole('button',{name:'Save review task'}));
-  expect(screen.getByRole('button',{name:'Study date'})).toBeDisabled();
+  expect(dateField).toBeDisabled();
+  expect(dateField).toHaveValue(chosenDate);
   expect(screen.getByRole('combobox',{name:'Word selection'})).toBeDisabled();
-  expect(mocks.changePlan).toHaveBeenCalledWith(null,expect.objectContaining({binding:'frozen',cards:[{entryId:'word',senseId:'meaning'}],dateKey:`${chosen.getFullYear()}-${String(chosen.getMonth()+1).padStart(2,'0')}-${String(chosen.getDate()).padStart(2,'0')}`}),{onError:expect.any(Function)});
+  expect(mocks.changePlan).toHaveBeenCalledWith(null,expect.objectContaining({binding:'frozen',cards:[{entryId:'word',senseId:'meaning'}],dateKey:chosenDate}),{onError:expect.any(Function)});
   finish(true);
   expect(await screen.findByRole('status')).toHaveTextContent('Review task saved.');
 });

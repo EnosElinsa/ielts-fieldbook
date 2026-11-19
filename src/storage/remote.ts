@@ -497,7 +497,7 @@ export async function hydrateState(options?: { modules?: AccountModule[]; prefet
   return structuredClone(accountState);
 }
 
-export async function saveState(state, onQuotaToast?: (message: string) => void, options?: { collections?: AccountCollection[] }) {
+export async function saveState(state, onQuotaToast?: (message: string) => void, options?: { collections?: AccountCollection[]; onDraftsCommitted?: (ids: string[]) => void }) {
   const expectedAccount = accountId();
   const generation = accountGeneration();
   const collections = new Set(options?.collections || Object.keys(statuses).filter(key => statuses[key] === 'ready'));
@@ -553,6 +553,7 @@ export async function saveState(state, onQuotaToast?: (message: string) => void,
     if(changes.lists.plans){planStamp=receipt.planStamp||null;for(const row of changes.lists.plans.upserts)planBaselines.set(row.id,structuredClone(row.payload));for(const id of changes.lists.plans.deletes)planBaselines.delete(id);}
     snapshot = updated;
     pendingCommit = null;
+    if (changes.drafts) options?.onDraftsCommitted?.(changes.drafts.upserts.map(row => row.id));
     return true;
   } catch (error) {
     const code = String(error?.code || '');

@@ -1,6 +1,6 @@
 .vocabulary-learning-heading { max-width: 860px; margin: 18px auto 22px; }
 .vocabulary-learning-workspace { max-width: 860px; margin-inline: auto; min-width: 0; }
-.vocabulary-learning-heading h2 { margin: 0; }
+.vocabulary-learning-heading h1 { margin: 0; }
 .vocabulary-learning-heading > p:not(.vocabulary-group-path) { color: var(--muted); max-width: 68ch; margin: 10px 0; }
 .vocabulary-group-learning-progress { display: flex; gap: 6px 20px; flex-wrap: wrap; font-size: 12px; margin-top: 14px; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 8px; }
 .vocabulary-group-learning-progress span { padding: 2px 0; }

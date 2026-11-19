@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import { StateMessage } from './AsyncState';
 import { ModalFrame } from './ModalFrame';
 import { isPageDownloadError } from '../lib/pageLoadRecovery';
+import { reportDiagnostic } from '../lib/diagnostics';
 
 type Props = { children: ReactNode; resetKey?: string; standalone?: boolean; onDismiss?: () => void };
 type State = { error: Error | null; resetKey?: string };
@@ -58,6 +59,7 @@ export class PageErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
+    reportDiagnostic('page-error');
     console.error('Workspace page failed', error, info.componentStack);
   }
 

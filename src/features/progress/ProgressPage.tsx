@@ -1,12 +1,12 @@
 // @ts-nocheck
-import { useState } from 'react';
+import { ProgressPlansPanel } from './ProgressPlansPanel';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { ArrowRight, CheckCheck, FileCheck2, PenLine, Repeat2 } from 'lucide-react';
 import { criterionBands, criterionLabel, criterionSeries, numericOveralls } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
-import { formatDate, formatDateKey, plural, sessionSkill } from '../../lib/format';
-import { planMatchesSkill } from '../../lib/planTemplates';
+import { formatDate, plural, sessionSkill } from '../../lib/format';
+
 import { Empty, FilterMenu } from '../../components/ui';
 import { VocabularyProgressPage } from '../vocabulary/VocabularyPages';
 import { ExamProgressPanel } from '../exam/ExamProgressPanel';
@@ -25,7 +25,7 @@ export function ProgressPage() {
   const update = (key, value) => setParams(current => { const next = new URLSearchParams(current); next.set(key, value); return next; }, { replace: true });
   const range = ['7','30','90','all'].includes(params.get('range')) ? params.get('range') : '30';
   const task = (skill === 'speaking' ? ['1','2','3'] : ['1','2']).includes(params.get('task')) ? params.get('task') : 'all';
-  const [status, setStatus] = useState('all');
+
   const speaking = skill === 'speaking';
   const receptive = skill === 'reading' || skill === 'listening';
   const now = new Date();
@@ -63,8 +63,8 @@ export function ProgressPage() {
   const activity = activityBuckets(sessions.map(session => session.date), since, now);
   const weeks = activity.buckets;
   const max = Math.max(1, ...weeks.map((week) => week.count));
-  const plans = fb.state.plans.filter((plan) => planMatchesSkill(plan, skill) && inRange(plan.dateKey) && (status === 'all' || status === plan.status)).slice().sort((a, b) => b.dateKey.localeCompare(a.dateKey));
-  const statusNames = { pending: 'Not started', in_progress: 'In progress', completed: 'Completed', skipped: 'Skipped' };
+
+
   return (
     <section className="view active progress-view">
       <div className="page-tools"><p>Practice results and imported feedback.</p><Link to={skill === 'vocabulary' ? '/vocabulary/review' : receptive ? `/${skill}` : `/review?skill=${skill}`} className="btn line">{skill === 'vocabulary' ? 'Review vocabulary' : receptive ? 'Open practice bank' : 'Review attempts'} <ArrowRight size={16} /></Link></div>
@@ -78,7 +78,7 @@ export function ProgressPage() {
         {[{ label: 'Practice attempts', value: sessions.length, icon: PenLine }, { label: 'Feedback received', value: assessments.length, icon: FileCheck2 }, { label: 'Rewrites & retakes', value: rewrites.length, icon: CheckCheck }, { label: 'Feedback followed by practice', value: completedLoops, icon: Repeat2 }].map(({ label, value, icon: Icon }) => <div className="progress-metric" key={label}><Icon size={18} /><strong>{value}</strong><span>{label}</span></div>)}
       </div>
       <div className="progress-score-section">
-        <div className="section-head"><div><h3>Band trend</h3><p>{plural(scores.length, 'comparable sample')}{hasTarget ? ` · Target ${target}` : ''}</p></div></div>
+        <div className="section-head"><div><h2>Band trend</h2><p>{plural(scores.length, 'comparable sample')}{hasTarget ? ` · Target ${target}` : ''}</p></div></div>
         {chartData.length ? <>
           <div className="progress-chart" role="img" aria-label={`Band score trend: ${scores.map((score) => score.overall).join(', ')}`}>
             <ResponsiveContainer width="100%" height="100%"><LineChart data={chartData} margin={{ top: 18, right: 18, bottom: 8, left: -18 }}><CartesianGrid stroke="var(--rule)" vertical={false} /><XAxis dataKey="label" tickFormatter={shortChartDate} tickLine={false} axisLine={false} tick={{ fill: 'var(--muted)', fontSize: 12 }} /><YAxis domain={[0, 9]} ticks={BAND_TICKS} interval={0} tickLine={false} axisLine={false} tick={{ fill: 'var(--muted)', fontSize: 12 }} /><Tooltip contentStyle={{ background: 'var(--sheet)', border: '1px solid var(--rule)', borderRadius: 6, color: 'var(--ink)' }} labelFormatter={(value, payload) => { const entry = payload?.[0]?.payload; return entry ? `Attempt ${entry.attempt} · ${entry.label}` : value; }} />{hasTarget ? <ReferenceLine y={target} stroke="var(--muted)" strokeDasharray="4 4" /> : null}{task === 'all' ? scoreGroups.map((group, index) => <Line key={group} type="linear" dataKey={`group${group}`} name={`${scoreGroupLabel(group)} overall`} stroke={['#2563eb', '#0d9488', '#dc526d'][index % 3]} strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} connectNulls isAnimationActive={false} />) : <Line type="linear" dataKey="overall" name="Overall" stroke="var(--blue)" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} isAnimationActive={false} />}{task !== 'all' ? keys.map((key) => <Line key={key} type="linear" dataKey={key} name={criterionLabel(key)} stroke={colors[key]} strokeWidth={1.5} dot={false} connectNulls={false} isAnimationActive={false} />) : null}</LineChart></ResponsiveContainer>
@@ -89,8 +89,8 @@ export function ProgressPage() {
         <p className="rule-note">Short exercises and historical attempts with an unknown training mode are excluded from band trends.{speaking ? ' Transcription-only feedback does not include pronunciation.' : ''}</p>
       </div>
       <div className="evidence-grid">
-        <section className="progress-section"><h3>{activity.period} practice</h3><div className="week-bars">{weeks.map((week) => <div className="week-bar" key={week.start}><span>{week.label}</span><div className="track"><div className="fill" style={{ width: `${week.count / max * 100}%` }} /></div><strong>{week.count}</strong></div>)}</div></section>
-        <section className="progress-section"><div className="section-head"><h3>Study plans</h3><FilterMenu label="Plan status" value={status} onChange={setStatus} options={[{ value: 'all', label: 'Any status' }, ...Object.entries(statusNames).map(([value, label]) => ({ value, label }))]} /></div>{plans.length ? <div className="plan-list">{plans.map((plan) => <div className="work-row" key={plan.id}><div className="work-name">{plan.title}<small>{formatDateKey(plan.dateKey)}</small></div><span className={`pill ${plan.status === 'completed' ? 'green' : ''}`}>{statusNames[plan.status]}</span></div>)}</div> : <Empty message="No plans in this range." />}</section>
+        <section className="progress-section"><h2>{activity.period} practice</h2><div className="week-bars">{weeks.map((week) => <div className="week-bar" key={week.start}><span>{week.label}</span><div className="track"><div className="fill" style={{ width: `${week.count / max * 100}%` }} /></div><strong>{week.count}</strong></div>)}</div></section>
+        <ProgressPlansPanel skill={skill} since={since} revision={fb.saveStatus} />
       </div>
       </>}
     </section>

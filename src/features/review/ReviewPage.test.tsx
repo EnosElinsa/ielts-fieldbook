@@ -31,12 +31,12 @@ test('review returns with its saved search and status filter', async () => {
   const first = mount();
   const user = userEvent.setup();
   await user.type(screen.getByRole('textbox', {name:'Search attempts'}), 'Cities');
-  await user.click(screen.getByRole('button', {name:'Attempt status'}));
+  await user.click(screen.getByRole('combobox', {name:'Attempt status'}));
   await user.click(screen.getByRole('option', {name:'Awaiting feedback'}));
   first.unmount();
   mount();
   expect(screen.getByRole('textbox', {name:'Search attempts'})).toHaveValue('Cities');
-  expect(screen.getByRole('button', {name:'Attempt status'})).toHaveTextContent('Awaiting feedback');
+  expect(screen.getByRole('combobox', {name:'Attempt status'})).toHaveTextContent('Awaiting feedback');
   expect(screen.queryByText('Education essay')).not.toBeInTheDocument();
 });
 afterEach(cleanup);
@@ -88,7 +88,7 @@ test('mistakes show the revision once with one shared subtitle', () => {
 test('filtering awaiting feedback hides assessed attempts while keeping feedback actions available', async () => {
   mount();
   const user = userEvent.setup();
-  await user.click(screen.getByRole('button', { name: 'Attempt status' }));
+  await user.click(screen.getByRole('combobox', { name: 'Attempt status' }));
   await user.click(screen.getByRole('option', { name: 'Awaiting feedback' }));
   expect(screen.getByText('Cities essay')).toBeInTheDocument();
   expect(screen.queryByText('Education essay')).not.toBeInTheDocument();

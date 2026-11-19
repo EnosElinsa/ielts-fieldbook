@@ -2,7 +2,7 @@ import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useLocation } from 'react-router-dom';
 import { useFieldbook } from '../../context/FieldbookContext';
-import { studyPlanTitle } from '../../lib/planTargets';
+import { planTaskIdFromHash, studyPlanTitle } from '../../lib/planTargets';
 import { previewBacklogChange } from '../../lib/planTemplates';
 import { dateKey } from '../../domain/utils';
 import type { StudyPlan } from '../../domain/plans';
@@ -27,7 +27,7 @@ export function TaskCollection({tasks,kind,renderTask}:{tasks:StudyPlan[];kind:'
   const [remote,setRemote]=useState({plans:[] as StudyPlan[],total:0,offset:0}),[loading,setLoading]=useState(server),[reload,setReload]=useState(0),[preparing,setPreparing]=useState(false);
   const located=useRef('');
   const filtered=useMemo(()=>tasks.filter(plan=>(filters.status==='all'?!plan.archivedAt:filters.status==='archived'?Boolean(plan.archivedAt):filters.status==='system'?!plan.archivedAt&&SYSTEM_REASONS.includes(plan.skipReason||''):filters.status==='held'?!plan.archivedAt&&Boolean(plan.onHold):plan.status===filters.status&&!plan.archivedAt&&(filters.status!=='skipped'||!SYSTEM_REASONS.includes(plan.skipReason||'')))&&(filters.skill==='all'||plan.skill===filters.skill)&&(filters.origin==='all'||(plan.origin||'automatic')===filters.origin)&&(filters.reason==='all'||plan.skipReason===filters.reason)&&(!filters.from||plan.dateKey>=filters.from)&&(!filters.to||plan.dateKey<=filters.to)),[tasks,filters]);
-  const targetId=location.hash.startsWith('#task-')?location.hash.slice(6):'';
+  const targetId = planTaskIdFromHash(location.hash);
   const targetIndex=filtered.findIndex(plan=>plan.id===targetId);
   useEffect(()=>{if(!server&&targetIndex>=0)setPage(Math.floor(targetIndex/PAGE_SIZE));},[server,targetId,targetIndex]);
   const archivedTarget=Boolean(targetId&&tasks.some(plan=>plan.id===targetId&&plan.archivedAt));

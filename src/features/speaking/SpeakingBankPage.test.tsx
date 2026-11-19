@@ -18,7 +18,7 @@ test('topic pagination spans Parts without losing matches and resets on filterin
   expect(screen.getAllByRole('article')).toHaveLength(12);
   expect(screen.getByRole('heading', { name: 'Topic 13' })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: 'Topic 24' })).toBeInTheDocument();
-  fireEvent.click(screen.getByRole('button', { name: 'Part' }));
+  fireEvent.click(screen.getByRole('combobox', { name: 'Part' }));
   fireEvent.click(screen.getByRole('option', { name: 'Part 2' }));
   expect(screen.getByLabelText('Current URL')).toHaveTextContent('?part=2');
   expect(screen.getAllByRole('article')).toHaveLength(10);

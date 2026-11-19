@@ -4,4 +4,6 @@ declare module 'virtual:vocabulary-manifest' { const url: string; export default
 interface ImportMetaEnv {
   readonly VITE_SUPABASE_URL: string;
   readonly VITE_SUPABASE_ANON_KEY: string;
+  readonly VITE_DIAGNOSTICS_ENABLED?: string;
+  readonly VITE_RELEASE_SHA?: string;
 }

@@ -929,9 +929,62 @@ test('restoring a recovery draft increments the visible draft revision signal', 
   expect(fieldbook.state.drafts.q1.text).toBe('Restored answer.');
 });
 
+test('keeping cloud drafts discards only the recovery shown before another tab edited', async () => {
+  const shown = normalizeDraft({ text: 'Draft shown when the workspace loaded.' });
+  const newer = normalizeDraft({ text: 'Draft edited later in another tab.' });
+  writeRecovery('account-1', { q1: shown });
+  await mount();
+  expect(fieldbook.recoveryDrafts).toEqual({ q1: shown });
+
+  const entry = 'fieldbook-draft-entry-v1:account-1:q1';
+  localStorage.setItem(entry, JSON.stringify({ draft: newer, savedAt: new Date().toISOString() }));
+  await act(async () => { fieldbook.resolveDraftRecovery(false); });
+
+  expect(localStorage.getItem('fieldbook-drafts-v1:account-1')).toBeNull();
+  expect(JSON.parse(localStorage.getItem(entry) || 'null')?.draft).toEqual(newer);
+  expect(fieldbook.recoveryDrafts).toEqual({ q1: newer });
+  expect(fieldbook.state.drafts.q1.text).toBe('A response that must survive.');
+
+  await act(async () => { fieldbook.resolveDraftRecovery(false); });
+  expect(localStorage.getItem(entry)).toBeNull();
+  expect(fieldbook.recoveryDrafts).toBeNull();
+});
+
 function writeRecovery(owner, drafts) {
   localStorage.setItem(`fieldbook-drafts-v1:${owner}`, JSON.stringify({ drafts, savedAt: new Date().toISOString() }));
 }
+
+test('a save with no draft commit leaves the local edit recoverable', async () => {
+  await mount();
+  await act(async () => {
+    fieldbook.setWritingDraft('q1', 'Intermediate revision');
+    fieldbook.setWritingDraft('q1', mocks.initial.drafts.q1.text);
+    expect(await fieldbook.persistNow()).toBe(true);
+  });
+  expect(readDraftRecovery('account-1')?.drafts.q1).toMatchObject({ text: mocks.initial.drafts.q1.text });
+});
+
+test('a delayed commit cannot clear a later recovery revision with identical content', async () => {
+  await mount();
+  const pending = defer();
+  mocks.saveState.mockImplementationOnce(async (_state, _feedback, options) => {
+    const saved = await pending.promise;
+    if (saved) options?.onDraftsCommitted?.(['q1']);
+    return saved;
+  });
+  let saving;
+  await act(async () => {
+    fieldbook.setWritingDraft('q1', 'Text used in both revisions');
+    saving = fieldbook.persistNow();
+  });
+  expect(mocks.saveState).toHaveBeenCalledOnce();
+  const entry = 'fieldbook-draft-entry-v1:account-1:q1';
+  const recovered = JSON.parse(localStorage.getItem(entry) || 'null');
+  const newer = { ...recovered, revision: 'another-tab', savedAt: '2026-11-20T00:00:00.000Z' };
+  localStorage.setItem(entry, JSON.stringify(newer));
+  await act(async () => { pending.resolve(true); await saving; });
+  expect(JSON.parse(localStorage.getItem(entry) || 'null')).toEqual(newer);
+});
 
 test('study settings failure keeps live settings and pending plans unchanged', async () => {
   mocks.initial.plans = [{ id: 'old-pending', status: 'pending', kind: '1' }, { id: 'started', status: 'in_progress', kind: '2' }];
@@ -1824,6 +1877,24 @@ test('Planning opens a correctable travel batch with its original targets when o
   expect(destination.pathname).toBe(`/vocabulary/wordbooks/${bookId}/groups/${unitId}/learn`);
   expect(destination.searchParams.get('planId')).toBe('legacy-flight');
   expect(fieldbook.state.plans[0].target).toEqual(target);
+});
+
+test('starting a frozen learning batch will not replace its unavailable assessment mode', async () => {
+  const bookId = 'fixed-mode-book', unitId = 'fixed-mode-group';
+  const entry = addVocabularyItem(mocks.initial, { term: 'constraint', meaning: 'A limit or restriction.' }).item;
+  const target = { type: 'vocabulary', mode: 'learning-batch', bookId, unitId, assessmentMode: 'cloze',
+    batchIndex: 0, batchSize: 1, cards: [{ entryId: entry.id, senseId: entry.senses[0].id }] };
+  VOCABULARY_CATALOG.units.push({ id: unitId, bookId, kind: 'group', entryIds: [entry.id] });
+  VOCABULARY_CATALOG.memberships.push({ id: unitId, bookId, unitId, entryId: entry.id, order: 0 });
+  try {
+    await mount('/planning');
+    await act(async () => { await fieldbook.persist(draft => { draft.plans = [{ id: 'fixed-mode-plan', kind: 'vocabulary', skill: 'vocabulary', status: 'pending', target }]; }); });
+    await act(async () => { await expect(fieldbook.startPlan('fixed-mode-plan')).rejects.toThrow(/assessment mode/); });
+    expect(fieldbook.state.plans[0]).toMatchObject({ status: 'pending', target });
+  } finally {
+    VOCABULARY_CATALOG.units = VOCABULARY_CATALOG.units.filter(unit => unit.id !== unitId);
+    VOCABULARY_CATALOG.memberships = VOCABULARY_CATALOG.memberships.filter(member => member.unitId !== unitId);
+  }
 });
 
 test('a prospective book-wide learning ordinal resolves across eligible group batches',async()=>{
