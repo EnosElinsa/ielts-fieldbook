@@ -82,6 +82,7 @@ import { safeExamReturn, withExamReturn } from '../lib/examNavigation';
 import { safeVocabularyReturn, rememberVocabularyPosition } from '../features/vocabulary/vocabularyNavigation';
 import { studySourceUrl } from '../lib/studyNavigation';
 import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
+import { previewLearningPlanMeaningUpdate } from '../domain/vocabulary/learningMeaningUpdate';
 import { completeReceptivePlanIfMatched, receptivePlanPath, isListeningCheckPlan } from '../lib/receptivePlans';
 import { bindStudyPlanTargets } from '../lib/planTargets';
 import { normalizeVocabularyIdentities } from '../domain/vocabulary/identities';
@@ -1695,11 +1696,19 @@ function useFieldbookValue() {
             return {entryId,senseId:entry.senses[0].id};
           });
         }
-        const batch=buildLearningBatch(stateRef.current,target.bookId,target.unitId,target.batchIndex||0,target.batchSize||10,target.assessmentMode,exact);
-        if(!batch.cards.length)throw new Error('The selected word batch is unavailable. Replace the task or retry.');
-        const refs=batch.cards.map(({entryId,senseId})=>({entryId,senseId}));
-        if(target.cards?.length && JSON.stringify(target.cards)!==JSON.stringify(refs))throw new Error('This word batch has changed. Replace the task or retry.');
-        target={...target,...batch.selection,type:'vocabulary',mode:'learning-batch',assessmentMode:batch.mode,cards:refs};
+        let batch: ReturnType<typeof buildLearningBatch> | undefined;
+        try {
+          batch = buildLearningBatch(stateRef.current, target.bookId, target.unitId, target.batchIndex || 0, target.batchSize || 10, target.assessmentMode, exact);
+        } catch (error) {
+          // The learning page can preview a verified replacement while the saved task still owns the original targets.
+          if (!previewLearningPlanMeaningUpdate(stateRef.current, { ...plan, target })) throw error;
+        }
+        if (batch) {
+          if (!batch.cards.length) throw new Error('The selected word batch is unavailable. Replace the task or retry.');
+          const refs = batch.cards.map(({entryId,senseId})=>({entryId,senseId}));
+          if (target.cards?.length && JSON.stringify(target.cards) !== JSON.stringify(refs)) throw new Error('This word batch has changed. Replace the task or retry.');
+          target = { ...target, ...batch.selection, type: 'vocabulary', mode: 'learning-batch', assessmentMode: batch.mode, cards: refs };
+        }
       } else {
         if (target.binding === 'dynamic' || !target.binding && !target.cards?.length) {
           if(!isAssessedReviewMode(target.assessmentMode))throw new Error('Choose an assessed recall mode.');

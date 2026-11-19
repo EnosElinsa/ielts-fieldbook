@@ -541,6 +541,16 @@ test('an explicit plant meaning keeps its identity and offers a direct route to 
   expect(mocks.fb.persistNow).not.toHaveBeenCalled();
 });
 
+test('the alternate travel teaching meaning appears only in the group comparison', async () => {
+  const flight = release.entries.find((entry: any) => entry.term === 'flight');
+  const unitId = 'ielts-vocabulary-chapter-14-group-01';
+  mocks.fb.state.vocabulary = [structuredClone(flight)];
+  mount(`/vocabulary/entry/${flight.id}?bookId=${book}&unitId=${unitId}&senseId=${flight.senses[0].id}`);
+  await userEvent.click(screen.getByText('Group meaning', { selector: 'summary' }));
+  expect(screen.getByText('A journey made by an aircraft.')).toBeVisible();
+  expect(screen.queryByText(/^Other saved meanings/)).not.toBeInTheDocument();
+});
+
 test('identical grid definitions are shown once without changing the selected sense identity', () => {
   const grid = structuredClone(release.entries.find((entry: any) => entry.term === 'grid'));
   const member = release.memberships.find((row: any) => row.entryId === grid.id && row.bookId === book);
