@@ -1,0 +1,135 @@
+{
+  "removeCorrections": [],
+  "restoreCorrections": [],
+  "removeTopics": [
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-01",
+      "entryId": "ve-1f9693f1",
+      "senseId": "kaikki:e546676a597d73e450"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-01",
+      "entryId": "ve-b99283c",
+      "senseId": "kaikki:db2b8dafef063ddd4e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-01",
+      "entryId": "ve-ee420bae",
+      "senseId": "kaikki:b6132385841b11797d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-01",
+      "entryId": "ve-31c337dd",
+      "senseId": "kaikki:3a278f6c69069dc9f7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-01",
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:cfaadb52f70626fec3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-01",
+      "entryId": "ve-7c734faf",
+      "senseId": "kaikki:8f908fee8093d011a8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-01",
+      "entryId": "ve-b6200d5",
+      "senseId": "kaikki:70f393b90f13dd96fc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-01",
+      "entryId": "ve-a7debba",
+      "senseId": "kaikki:7657c855f05cbd6847"
+    }
+  ],
+  "restoreTopicRows": [
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-01",
+      "entryId": "ve-963aa2b7",
+      "term": "passage",
+      "sense": {
+        "id": "kaikki:c0795b1c7e537e21e0",
+        "definition": "A stage or part of a journey.",
+        "example": "The final passage of the journey took us across the sea.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [
+          "sea passage",
+          "safe passage"
+        ],
+        "usage": "",
+        "register": "",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/passage#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        },
+        "distinctions": []
+      },
+      "originalSense": {
+        "id": "kaikki:584a7a0a941db848c3",
+        "definition": "A paragraph or section of text or music with particular meaning.",
+        "example": "passage of scripture",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "back passage",
+          "bird of passage",
+          "clobber passage",
+          "couldn't stop a pig in a passage",
+          "cross-passage",
+          "deck passage",
+          "finger passage",
+          "first-passage time",
+          "first passage time",
+          "forepassage",
+          "innocent passage",
+          "Lemon Tree Passage",
+          "middle passage",
+          "midpassage",
+          "Milsons Passage",
+          "multipassage",
+          "New Passage",
+          "Northeast Passage",
+          "Northwest Passage",
+          "Old Passage",
+          "passageable",
+          "passage at arms",
+          "passage boat",
+          "Passage East",
+          "passage grave",
+          "passage-house",
+          "passage house",
+          "passagemaker",
+          "passage maker",
+          "passage migrant"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/passage#English",
+        "license": "CC-BY-SA-4.0"
+      },
+      "reason": "Topic syllabus selects a different dictionary meaning and replaces the unrelated example. Editorial teaching choice for Transport and travel; original-source sense remains unconfirmed."
+    }
+  ]
+}
