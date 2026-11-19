@@ -14,10 +14,10 @@ afterEach(()=>{cleanup();vi.useRealTimers();});
 const mount=()=>render(<MemoryRouter><PlanningPage/></MemoryRouter>);
 function PlanningAddress(){const location=useLocation();return <output aria-label="Planning address">{location.search+location.hash}</output>;}
 
-test('a linked task opens its requirements without a history collection, with access to all history',async()=>{
- mocks.state.plans=[{...mocks.state.plans[0],status:'completed',target:{type:'question',questionId:'question'}},
+test('an encoded task link opens its requirements, with access to all history',async()=>{
+ mocks.state.plans=[{...mocks.state.plans[0],id:'review:1',status:'completed',target:{type:'question',questionId:'question'}},
    {...mocks.state.plans[0],id:'other',title:'Unrelated task',status:'completed'}];
- render(<MemoryRouter initialEntries={['/planning?view=task#task-task']}><PlanningPage/></MemoryRouter>);
+ render(<MemoryRouter initialEntries={['/planning?view=task#task-review%3A1']}><PlanningPage/></MemoryRouter>);
  const task=await screen.findByRole('region',{name:'Linked task'});
  expect(within(task).getByRole('heading',{name:'Chart'})).toBeVisible();
  expect(within(task).getByText('Completed',{exact:true})).toBeVisible();

@@ -21,7 +21,13 @@ export function writeDraftRecovery(accountId: string | null, drafts: Drafts) {
   try {
     // A local snapshot is not a cloud acknowledgement. Keep independent entries
     // durable even when they match: a later stale-tab snapshot can replace this base.
-    localStorage.setItem(key(accountId), JSON.stringify({ drafts, savedAt: new Date().toISOString() }));
+    if (!Object.keys(drafts).length) return;
+    let existing: Drafts = {};
+    try {
+      const previous = JSON.parse(localStorage.getItem(key(accountId)) || 'null')?.drafts;
+      if (previous && typeof previous === 'object' && !Array.isArray(previous)) existing = previous;
+    } catch { /* A damaged snapshot must not prevent future recovery. */ }
+    localStorage.setItem(key(accountId), JSON.stringify({ drafts: { ...existing, ...drafts }, savedAt: new Date().toISOString() }));
   } catch { /* Cloud saves remain available if local storage is full. */ }
 }
 export function readDraftRecovery(accountId: string | null): Recovery | null {

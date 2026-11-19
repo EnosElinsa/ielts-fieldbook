@@ -11,7 +11,7 @@ import { AccountDataBoundary } from '../../components/AccountDataBoundary';
 
 import { dateKey, addLocalDays } from '../../domain/utils';
 import { calendarDays, studyBudget, compareStudyPlans, planSkill, planMinutesLabel } from '../../lib/planTemplates';
-import { studyPlanTitle, studyTargetSummary } from '../../lib/planTargets';
+import { planTaskIdFromHash, studyPlanTitle, studyTargetSummary } from '../../lib/planTargets';
 import { receptivePlanCompletionDescription } from '../../lib/receptivePlans';
 import { TaskStartButton, useStudySchedule } from './StudySchedule';
 import '../../styles/planning.css';
@@ -36,7 +36,8 @@ function PlanningCalendar(){
   const history=fb.state.plans.filter(plan=>['completed','skipped'].includes(plan.status)).sort((a,b)=>-compareStudyPlans(a,b));
   const requestedView=new URLSearchParams(location.search).get('view');
   const selectTab=value=>{const next=new URLSearchParams(search);next.set('view',value);setSearch(next,{replace:true,state:location.state});};
-  const [targetError,setTargetError]=useState(''),[targetRetry,setTargetRetry]=useState(0);const targetId=location.hash.startsWith('#task-')?location.hash.slice(6):'';
+  const [targetError,setTargetError]=useState(''),[targetRetry,setTargetRetry]=useState(0);
+  const targetId = planTaskIdFromHash(location.hash);
   const linkedTask=fb.state.plans.find(plan=>plan.id===targetId);
   const explicitView=['schedule','waiting','history','task'].includes(requestedView);
   const tab=explicitView?requestedView:linkedTask?['completed','skipped'].includes(linkedTask.status)?'history':linkedTask.dateKey<today||linkedTask.onHold?'waiting':'schedule':'schedule';

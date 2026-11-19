@@ -290,13 +290,17 @@ function useFieldbookValue() {
     let collections = readySaveCollections();
     if (options?.collections) collections = options.collections.filter(key => !collections || collections.includes(key));
     let scopes = changedDraftScopes(frozen);
-    if (collections && !collections.includes('drafts')) scopes = [];
     if (completion) {
       const combined = new Map([...scopes, ...changedDraftScopes(stateRef.current)].map(scope => [scope.key, scope]));
       scopes = [...combined.values()].map(scope => ({ ...scope, stamp: JSON.stringify(draftScopeValue(stateRef.current, scope.id, scope.promptKey)) }));
     }
+    if (scopes.length && (!getCollectionStatuses() || getCollectionStatuses().drafts === 'ready')) {
+      const drafts = completion ? stateRef.current.drafts : frozen.drafts;
+      writeDraftRecovery(owner, Object.fromEntries([...new Set(scopes.map(scope => scope.id))]
+        .filter(id => Object.hasOwn(drafts, id)).map(id => [id, drafts[id]])));
+    }
+    if (collections && !collections.includes('drafts')) scopes = [];
     markDraftScopes(scopes, 'pending', true);
-    if (!getCollectionStatuses() || getCollectionStatuses().drafts === 'ready') writeDraftRecovery(owner, completion ? stateRef.current.drafts : frozen.drafts);
     setSaveStatus('saving');
     if (!silent) pendingAutomaticSave.current = null;
     if (silent && pendingAutomaticSave.current?.epoch === epoch) {
@@ -338,16 +342,24 @@ function useFieldbookValue() {
       }
       markDraftScopes(scopes, 'saving');
       let saved = false;
+      let committedDraftIds: string[] = [];
       const finishSave = timeOperation('save');
-      try { saved = await saveState(frozen, saveFeedback(options), {collections}); } catch { saved = false; }
+      try {
+        saved = await saveState(frozen, saveFeedback(options), {
+          collections,
+          onDraftsCommitted: ids => { committedDraftIds = ids; },
+        });
+      } catch { saved = false; }
       finally { finishSave(!saved); }
       if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
       if (saved) acknowledgeSaved(frozen, collections);
+      if (saved && committedDraftIds.length) {
+        discardDraftRecovery(owner, [Object.fromEntries(committedDraftIds.map(id => [id, frozen.drafts[id]]))]);
+      }
       markDraftScopes(scopes, saved ? 'saved' : 'failed');
       if (alive.current && accountId() === owner && generation === saveGeneration.current) {
         setSaveFailed(!saved && !options?.onError);
         setSaveStatus(saved ? 'saved' : 'failed');
-        if (saved && !completion && (!collections || collections.includes('drafts'))) discardDraftRecovery(owner, [frozen.drafts]);
       }
       return saved;
     });
@@ -1696,7 +1708,11 @@ function useFieldbookValue() {
         }
         let batch: ReturnType<typeof buildLearningBatch> | undefined;
         try {
-          batch = buildLearningBatch(stateRef.current, target.bookId, target.unitId, target.batchIndex || 0, target.batchSize || 10, target.assessmentMode, exact);
+          const candidate = buildLearningBatch(stateRef.current, target.bookId, target.unitId, target.batchIndex || 0, target.batchSize || 10, target.assessmentMode, exact);
+          if (target.cards?.length && target.assessmentMode && candidate.mode !== target.assessmentMode) {
+            throw new Error('The saved assessment mode is unavailable for this batch. Retry loading the group or replace the task.');
+          }
+          batch = candidate;
         } catch (error) {
           // The learning page can preview a verified replacement while the saved task still owns the original targets.
           if (!previewLearningPlanMeaningUpdate(stateRef.current, { ...plan, target })) throw error;
@@ -1868,7 +1884,7 @@ function useFieldbookValue() {
         const saved = await queueSave(committed, !firstCommit, true, { ...options, collections: ['drafts', 'sessions', 'errors', 'plans', 'profile', 'vocabularyStates', 'vocabularyEvidence', 'vocabularyActivities'] });
         firstCommit = false;
         if (!alive.current || accountId() !== completionOwner || loadEpoch.current !== completionEpoch) { completingAttempt.current = false; return false; }
-        if (!saved) { completingAttempt.current = false; writeDraftRecovery(completionOwner, stateRef.current.drafts); return false; }
+        if (!saved) { completingAttempt.current = false; return false; }
         const liveDrafts = structuredClone(stateRef.current.drafts);
         const mergedDrafts = structuredClone(committed.drafts);
         // Rebase only edits made during this RPC. Unchanged response fields retain
@@ -1897,10 +1913,11 @@ function useFieldbookValue() {
         liveBaseline = liveDrafts;
       }
       completingAttempt.current = false;
-      const acknowledgedLiveDrafts = structuredClone(stateRef.current.drafts);
+      const fulfilledDraftVersions = [completionDrafts, stateRef.current.drafts, committed.drafts]
+        .map(drafts => ({ [question.id]: drafts[question.id] }));
       stateRef.current = committed;
       setState(committed);
-      discardDraftRecovery(completionOwner, [completionDrafts, acknowledgedLiveDrafts, committed.drafts]);
+      discardDraftRecovery(completionOwner, fulfilledDraftVersions);
       if (speaking && pendingAttempt.audioId) void deletePendingAudio(completionOwner, question.id, pendingAttempt.part, pendingAttempt.promptKey);
       setPendingAttempt(null);
       closeModal();
@@ -2062,9 +2079,18 @@ function useFieldbookValue() {
   }, [persistNow, navigate, ensureQuestionBank, toast, closeModal, confirmReplacement]);
 
   const resolveDraftRecovery = useCallback((restore) => {
-    if (restore && recoveryDrafts) { persist((draft) => { draft.drafts = { ...draft.drafts, ...recoveryDrafts }; }); setDraftRevision((value) => value + 1); }
-    else discardDraftRecovery(accountId());
-    setRecoveryDrafts(null);
+    if (!recoveryDrafts) return;
+    if (restore) {
+      persist((draft) => { draft.drafts = { ...draft.drafts, ...recoveryDrafts }; });
+      setDraftRevision((value) => value + 1);
+      setRecoveryDrafts(null);
+      return;
+    }
+    const owner = accountId();
+    discardDraftRecovery(owner, [recoveryDrafts]);
+    const remaining = readDraftRecovery(owner);
+    const newer = remaining ? differentDrafts(remaining.drafts, stateRef.current.drafts) : {};
+    setRecoveryDrafts(Object.keys(newer).length ? newer : null);
   }, [recoveryDrafts, persist]);
 
   const value = useMemo(
