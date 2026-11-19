@@ -68,11 +68,15 @@ test('overview and outline block when a column is empty or over 120 words', () =
   const long = Array.from({ length: 121 }, () => 'word').join(' ');
   assert.deepEqual(
     writingSaveBlockers('overview', '1', long, {}, { intro: long.slice(0, 50), overview: long }),
-    ['Overview practice stays under 120 words.'],
+    ['Keep the introduction and overview to 120 words or fewer.'],
   );
   assert.deepEqual(
     writingSaveBlockers('outline', '2', '', {}, { position: 'Yes.', pointA: 'A.' }),
-    ['Fill your position and both points.'],
+    ['Add your position and both supporting ideas.'],
+  );
+  assert.deepEqual(
+    writingSaveBlockers('outline', '1', '', {}, { position: 'An upward trend.' }),
+    ['Add the overall picture and both comparisons.'],
   );
   assert.equal(
     writingSaveBlockers(
