@@ -964,6 +964,28 @@ test('a save with no draft commit leaves the local edit recoverable', async () =
   expect(readDraftRecovery('account-1')?.drafts.q1).toMatchObject({ text: mocks.initial.drafts.q1.text });
 });
 
+test('a delayed commit cannot clear a later recovery revision with identical content', async () => {
+  await mount();
+  const pending = defer();
+  mocks.saveState.mockImplementationOnce(async (_state, _feedback, options) => {
+    const saved = await pending.promise;
+    if (saved) options?.onDraftsCommitted?.(['q1']);
+    return saved;
+  });
+  let saving;
+  await act(async () => {
+    fieldbook.setWritingDraft('q1', 'Text used in both revisions');
+    saving = fieldbook.persistNow();
+  });
+  expect(mocks.saveState).toHaveBeenCalledOnce();
+  const entry = 'fieldbook-draft-entry-v1:account-1:q1';
+  const recovered = JSON.parse(localStorage.getItem(entry) || 'null');
+  const newer = { ...recovered, revision: 'another-tab', savedAt: '2026-11-20T00:00:00.000Z' };
+  localStorage.setItem(entry, JSON.stringify(newer));
+  await act(async () => { pending.resolve(true); await saving; });
+  expect(JSON.parse(localStorage.getItem(entry) || 'null')).toEqual(newer);
+});
+
 test('study settings failure keeps live settings and pending plans unchanged', async () => {
   mocks.initial.plans = [{ id: 'old-pending', status: 'pending', kind: '1' }, { id: 'started', status: 'in_progress', kind: '2' }];
   await mount();

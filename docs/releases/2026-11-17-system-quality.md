@@ -20,7 +20,7 @@ Study state remains schema v13. No database migration or catalogue reseed is req
 
 ## 19 November review follow-up
 
-- A save based on a stale tab's local baseline could return success without sending a draft. Recovery cleanup now uses the draft IDs sent with a validated commit receipt. Successful attempt submission consumes the matching recovery for that question. The recovery prompt also checks again after discarding the displayed version.
+- A save based on a stale tab's local baseline could return success without sending a draft. Recovery cleanup uses the draft IDs sent with a validated commit receipt and the local revisions captured before the save. A newer revision survives even if it contains the same text. Successful attempt submission consumes the matching recovery for that question. The recovery prompt also checks again after discarding the displayed version.
 - Progress still includes shared review and vocabulary plans in the Writing and Speaking views. Date-range changes preserve the selected plan status and restart pagination. The page controls retain keyboard focus during loading and announce the result.
 - Planning resolves encoded task IDs in linked requirements and History. A vocabulary task with frozen cards keeps its saved assessment mode when the original mode is unavailable. Starting the task can open the verified correction preview or show a retryable error.
 - Vocabulary group routes supply a level-one heading for keyboard entry. The browser matrix uses reduced motion for stable axe snapshots and exercises normal motion in the interaction tests. Each CI browser job runs one engine and retains its own failure artifacts.
