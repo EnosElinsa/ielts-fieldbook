@@ -1194,8 +1194,14 @@ function useFieldbookValue() {
 
   const activeSkill = ['writing','speaking','reading','listening'].includes(state.settings.activeSkill) ? state.settings.activeSkill : 'writing';
 
+  const standaloneQuestionId = accountRoute === '/write' ? new URLSearchParams(accountLocation.search).get('questionId') : null;
+  const standaloneWriting = Boolean(standaloneQuestionId);
+  const activePlan = state.plans.find(item => item.id === state.activePlanId);
+  const plannedWritingId = activePlan && ['1', '2', 'writing-mock'].includes(String(activePlan.kind))
+    ? activePlan.target?.questionId || activePlan.questionId : null;
+  const writingQuestionId = standaloneQuestionId || (accountRoute === '/write' ? plannedWritingId : null) || selectedQuestionId;
   const selectedQuestion =
-    state.questions.find((q) => String(q.id) === String(selectedQuestionId)) ||
+    state.questions.find((q) => String(q.id) === String(writingQuestionId)) ||
     state.questions[0] ||
     FALLBACK_QUESTIONS[0];
 
@@ -1206,9 +1212,9 @@ function useFieldbookValue() {
   const deskPart = deskPartOverride || String(selectedTopic?.part || '2');
 
   const currentDeskMode = useCallback(() => {
-    const plan = state.plans.find((item) => item.id === state.activePlanId);
-    return (plan ? inferredDeskMode(plan) : null) || activeDeskMode || 'full';
-  }, [state.plans, state.activePlanId, activeDeskMode]);
+    if (standaloneWriting) return 'full';
+    return (activePlan ? inferredDeskMode(activePlan) : null) || activeDeskMode || 'full';
+  }, [standaloneWriting, activePlan, activeDeskMode]);
 
   const openModal = useCallback((name: ModalName) => setModal(name), []);
   const closeModal = useCallback(() => { if (!completingAttempt.current) setModal(null); }, []);
@@ -1404,10 +1410,9 @@ function useFieldbookValue() {
   }, [loadGeneration]);
 
   const chooseQuestion = useCallback(
-    (id: string) => {
+    (id: string, { planned = false } = {}) => {
       setSelectedQuestionId(String(id));
-      setActiveDeskMode((mode) => mode);
-      navigate('/write');
+      navigate(planned ? '/write' : `/write?${new URLSearchParams({ questionId: String(id) })}`);
     },
     [navigate],
   );
@@ -1548,7 +1553,7 @@ function useFieldbookValue() {
       const picked = plan.questionId && plan.kind !== 'writing-mock'
         ? draft.questions.find((q) => String(q.id) === String(plan.questionId))
         : selectWritingQuestion(draft, wantedKind, draft.questions);
-      chooseQuestion((picked || draft.questions[0] || FALLBACK_QUESTIONS[0]).id);
+      chooseQuestion((picked || draft.questions[0] || FALLBACK_QUESTIONS[0]).id, { planned: true });
       attachPlan((picked || draft.questions[0] || FALLBACK_QUESTIONS[0]).id, 'writing');
     },
     [chooseQuestion, navigate, persistNow, startSpeakingPractice, toast],
@@ -1815,7 +1820,11 @@ function useFieldbookValue() {
       const path=receptivePlanPath({...plan,target},skill);const params=new URLSearchParams({planId});if(target.questionIds)params.set('questions',JSON.stringify(target.questionIds));openExamTask(`${path}${path.includes('?')?'&':'?'}${params}`);
     } else if(plan.kind==='review')navigate('/review');
     else if(skill==='speaking') {startSpeakingPractice(plan.questionId,target.part,plan.storyId); const nextPrompt = target.prompts?.find(prompt => !(plan.completedPromptKeys || []).includes(prompt.promptKey)) || target.prompts?.[0]; setQuestionIndex(Math.max(0, target.prompts?.indexOf(nextPrompt) || 0)); setSpeakingDraft(plan.questionId,{...nextPrompt,practiceMode:target.mode,targetErrorIds:plan.targetErrorIds||[]});}
-    else {chooseQuestion(plan.questionId);const existing=normalizeDraft(stateRef.current.drafts[plan.questionId]);setWritingDraft(plan.questionId,existing.text,{practiceMode:target.mode,targetErrorIds:plan.targetErrorIds||[]});navigate('/write');}
+    else {
+      const existing = normalizeDraft(stateRef.current.drafts[plan.questionId]);
+      setWritingDraft(plan.questionId, existing.text, { practiceMode: target.mode, targetErrorIds: plan.targetErrorIds || [] });
+      chooseQuestion(plan.questionId, { planned: true });
+    }
     return true;
   },[legacyStartPlan,ensureAccountModule,ensureQuestionBank,loadVocabularyCatalog,mutatePlans,navigate,startSpeakingPractice,chooseQuestion,setSpeakingDraft,setWritingDraft,accountLocation]);
 
@@ -1884,7 +1893,8 @@ function useFieldbookValue() {
       }
       else {
         const current = normalizeDraft(draft.drafts[selectedQuestion.id]);
-        draft.drafts[selectedQuestion.id] = Object.assign({}, current, { text: '', parentSessionId: null, sections: undefined });
+        draft.drafts[selectedQuestion.id] = { ...current, text: '', parentSessionId: null,
+          sections: pendingAttempt.keepPracticeNotes ? current.sections : undefined };
       }
       let committed = draft;
       let liveBaseline = completionDrafts;
@@ -1968,7 +1978,7 @@ function useFieldbookValue() {
           selectWritingQuestion(draft, '2', draft.questions) ||
           draft.questions.find((item) => item.type === '2') ||
           draft.questions[0];
-        chooseQuestion(next.id);
+        chooseQuestion(next.id, { planned: true });
         toast('Task 1 is saved. Task 2 is next, 40 minutes.');
         return;
       }
@@ -2156,6 +2166,7 @@ function useFieldbookValue() {
       activeDeskMode,
       setActiveDeskMode,
       currentDeskMode,
+      standaloneWriting,
       modal,
       openModal,
       closeModal,
@@ -2286,6 +2297,7 @@ function useFieldbookValue() {
       startTargetedPractice,
       closeModal,
       currentDeskMode,
+      standaloneWriting,
       deskPart,
       editingVocabularyId,
       editingStoryId,

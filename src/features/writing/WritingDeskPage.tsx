@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
 import { InlineLoadingState } from '../../components/AsyncState';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Tooltip from '@radix-ui/react-tooltip';
@@ -22,6 +22,17 @@ export function WritingDeskPage() {
   const owner = accountId();
   const mode = fb.currentDeskMode();
   const fragment = FRAGMENT_MODES.has(mode);
+  const task1 = String(selected.type) === '1';
+  const fieldId = useId();
+  const limit = mode === 'overview' || mode === 'outline' ? 120 : 180;
+  const paragraphPractice = mode === 'compare' || mode === 'body';
+  const lengthHint = paragraphPractice ? '40 to 180 words' : 'Up to 120 words';
+  const editorTitle = {
+    overview: 'Introduction and overview',
+    outline: task1 ? 'Task 1 outline' : 'Task 2 outline',
+    compare: 'Comparison paragraph',
+    body: 'Body paragraph',
+  }[mode] || 'Full response';
   const uiKey = `writing:desk:${selected.id}:${mode}`;
   const { confirm, dialog } = useConfirmationDialog(`${owner}:${uiKey}`);
   useWorkspaceDeskContext({skill:'writing', id:String(selected.id), mode}, saved => {
@@ -68,7 +79,7 @@ export function WritingDeskPage() {
 
   const tips = {
     overview: 'Write only the introduction and overview.',
-    outline: 'Write only the question breakdown, your position, and two points.',
+    outline: task1 ? 'Find the main trend and group the figures for comparison.' : 'Plan your answer in brief notes. You can develop these ideas into paragraphs in a full response.',
     compare: 'Make at least two real comparisons in this paragraph.',
     body: 'Write one full body paragraph and make the example clear.',
     timed: 'Use the exam time. Start the timer.',
@@ -156,7 +167,7 @@ export function WritingDeskPage() {
     const soft = writingWordSoftConfirm(mode, selected.type, text);
     if (soft && !await confirm({ title: 'Finish this response?', description: soft, confirmLabel: 'Finish practice' })) return;
     fb.setChecklistToastNeeded(false);
-    fb.setWritingDraft(selected.id, text, { sections: fragment ? sections : emptySections(), practiceMode: mode, targetErrorIds });
+    fb.setWritingDraft(selected.id, text, { sections: fragment || fb.standaloneWriting ? sections : emptySections(), practiceMode: mode, targetErrorIds });
     if (!fb.flushDraftPersist()) fb.persistNow(undefined, { collections: ['drafts'] });
     fb.setPendingAttempt({
       id: crypto.randomUUID(),
@@ -164,7 +175,8 @@ export function WritingDeskPage() {
       sections: fragment ? structuredClone(sections) : undefined,
       question: selected,
       parentSessionId: fb.state.drafts[selected.id]?.parentSessionId || null,
-      planId: fb.state.activePlanId,
+      planId: fb.standaloneWriting ? null : fb.state.activePlanId,
+      keepPracticeNotes: fb.standaloneWriting && Object.values(sections).some(value => value.trim()),
       skill: 'writing',
       reviewErrorId: correction ? correction.errorId : null,
       practiceMode: mode,
@@ -173,25 +185,27 @@ export function WritingDeskPage() {
     fb.openModal('save');
   };
 
-  const sectionField = (key, label, placeholder, minHeight = 120) => (
-    <label className="section-field" key={key}>
-      <span>{label}</span>
+  const sectionField = (key, label, help, minHeight = 120) => (
+    <div className="section-field" key={key}>
+      <label htmlFor={`${fieldId}-${key}`}>{label}</label>
+      <small id={`${fieldId}-${key}-help`}>{help}</small>
       <textarea
+        id={`${fieldId}-${key}`}
+        aria-describedby={`${fieldId}-${key}-help`}
         data-testid={`section-${key}`}
         style={{ minHeight }}
-        placeholder={placeholder}
         value={sections[key] || ''}
         onKeyDown={keyboardHistory}
         onChange={(e) => onSectionChange(key, e.target.value)}
       />
-    </label>
+    </div>
   );
 
   return (
     <Tooltip.Provider delayDuration={250}><section className={`view active writing-workspace${focused ? ' focus-workspace' : ''}`}>
       <div className="page-tools desk-tools">
         <p>
-          {selected.type === '1' ? 'Task 1 · at least 150 words · 20 minutes.' : 'Task 2 · at least 250 words · 40 minutes.'}{' '}
+          {fragment ? typeName(selected) : task1 ? 'Task 1 · at least 150 words · 20 minutes.' : 'Task 2 · at least 250 words · 40 minutes.'}{' '}
           <span className="draft-status" role="status">{fb.saveStatus === 'saving' ? 'Saving draft...' : fb.saveStatus === 'failed' || fb.saveStatus === 'error' ? 'Draft could not be saved' : fb.saveStatus === 'saved' ? 'Draft saved' : 'Autosave enabled'}</span>
         </p>
         <div className="desk-controls">
@@ -223,19 +237,7 @@ export function WritingDeskPage() {
           </div>
           <h3>{displayName(selected.name)}</h3>
           <WritingTaskPrompt prompt={selected.prompt} image={image} />
-          <div className="prompt-tip">{tips[mode] || tips.full}</div>
-          {['overview', 'outline', 'timed'].includes(mode) ? (
-            <div className="prompt-tip">
-              {mode === 'overview'
-                ? 'Introduction and overview only · under 120 words'
-                : mode === 'outline'
-                  ? 'Plan only: position and two points · under 120 words'
-                  : 'Use the exam time'}
-            </div>
-          ) : null}
-          {mode === 'compare' || mode === 'body' ? (
-            <div className="prompt-tip">One paragraph · 40 to 180 words</div>
-          ) : null}
+          {!fragment && <div className="prompt-tip">{tips[mode] || tips.full}</div>}
           {correction ? (
             <div className="prompt-tip correction-note">Use this correction at least once: {correction.detail}</div>
           ) : null}
@@ -326,7 +328,7 @@ export function WritingDeskPage() {
         </div>
         <div className={`editor${running ? ' is-writing' : ''}${mobileTab === 'answer' ? ' mobile-active' : ''}`} id="writing-answer">
           <div className="editor-head">
-            <h3>{fragment ? 'Fragment draft' : 'Draft'}</h3>
+            <h3>{editorTitle}</h3>
             <span className={`timer${running ? ' is-live' : ''}`}>{formatClock(timerSeconds)}</span>
           </div>
           <div className="editor-bar">
@@ -334,11 +336,13 @@ export function WritingDeskPage() {
               <span className="count" data-testid="word-count">
                 {words} words
               </span>
-              <span className="count">/ {wordGoal}</span>
-              <span className="word-track" aria-hidden="true">
-                <span className={`word-fill${words >= wordGoal ? ' is-met' : ''}`} style={{ width: `${wordPct}%` }} />
-              </span>
-              {words ? (
+              {fragment ? <span className="count">{lengthHint}</span> : <>
+                <span className="count">/ {wordGoal}</span>
+                <span className="word-track" aria-hidden="true">
+                  <span className={`word-fill${words >= wordGoal ? ' is-met' : ''}`} style={{ width: `${wordPct}%` }} />
+                </span>
+              </>}
+              {words && !fragment ? (
                 <span className="count">{paragraphs === 1 ? '1 paragraph' : `${paragraphs} paragraphs`}</span>
               ) : null}
             </div>
@@ -361,6 +365,7 @@ export function WritingDeskPage() {
             </div>
           </div>
           <details key={selected.id} className="writing-answer-prompt"><summary>Task prompt</summary><WritingTaskPrompt prompt={selected.prompt} image={image} /></details>
+          {fragment && <p className="writing-exercise-guide">{tips[mode]}</p>}
           {mode === 'overview' ? (
             <div className="section-fields">
               {sectionField('intro', 'Introduction', 'Paraphrase the question…', 110)}
@@ -369,9 +374,15 @@ export function WritingDeskPage() {
           ) : null}
           {mode === 'outline' ? (
             <div className="section-fields">
-              {sectionField('position', 'Position', 'Your answer to the question…', 90)}
-              {sectionField('pointA', 'Point one', 'First main idea…', 110)}
-              {sectionField('pointB', 'Point two', 'Second main idea…', 110)}
+              {task1 ? <>
+                {sectionField('position', 'Overall picture', 'State the main trend or standout feature in the chart.', 90)}
+                {sectionField('pointA', 'First comparison', 'Group related figures and note one comparison worth reporting.', 110)}
+                {sectionField('pointB', 'Second comparison', 'Identify another group or contrast and note the figures that illustrate it.', 110)}
+              </> : <>
+                {sectionField('position', 'Your position', 'Answer the question directly in one sentence. State your view if the prompt asks for it.', 90)}
+                {sectionField('pointA', 'First supporting idea', 'Note one reason and how you would explain or illustrate it.', 110)}
+                {sectionField('pointB', 'Second supporting idea', 'Choose a different reason, or address another part of the question.', 110)}
+              </>}
             </div>
           ) : null}
           {mode === 'compare' || mode === 'body' ? (
@@ -397,7 +408,9 @@ export function WritingDeskPage() {
             </div>
           ) : null}
           <div className="editor-foot">
-            <p>{words >= wordGoal ? 'Minimum length reached.' : `${wordGoal - words} words to the minimum.`}</p>
+            <p>{fragment
+              ? words > limit ? `Remove ${plural(words - limit, 'word')} to meet the limit.` : 'Focused feedback on this exercise'
+              : words >= wordGoal ? 'Minimum length reached.' : `${wordGoal - words} words to the minimum.`}</p>
             <div>
               <button
                 className="btn line"

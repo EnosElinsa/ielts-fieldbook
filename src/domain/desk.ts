@@ -94,16 +94,18 @@ export function writingSaveBlockers(
     if (!requiredFilled([fields.intro, fields.overview])) {
       blockers.push('Fill both the introduction and the overview.');
     } else if (words > 120) {
-      blockers.push('Overview practice stays under 120 words.');
+      blockers.push('Keep the introduction and overview to 120 words or fewer.');
     }
     return blockers;
   }
 
   if (mode === 'outline') {
     if (!requiredFilled([fields.position, fields.pointA, fields.pointB])) {
-      blockers.push('Fill your position and both points.');
+      blockers.push(String(taskType) === '1'
+        ? 'Add the overall picture and both comparisons.'
+        : 'Add your position and both supporting ideas.');
     } else if (words > 120) {
-      blockers.push('Outline practice stays under 120 words.');
+      blockers.push('Keep the outline to 120 words or fewer.');
     }
     return blockers;
   }

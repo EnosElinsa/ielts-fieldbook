@@ -1,6 +1,40 @@
 import AxeBuilder from '@axe-core/playwright';
 import { test, expect } from './fixture';
 
+test('question bank opens a full response even while an outline remains active', async ({ page }) => {
+  const questionId = 'sample-t2-remote-work';
+  const outline = {
+    id: 'audit-outline', kind: '2', skill: 'writing', title: 'Test outline', dateKey: '2026-11-17',
+    status: 'in_progress', deskMode: 'outline', questionId, estimatedMinutes: 5,
+    target: { type: 'question', skill: 'writing', mode: 'outline', questionId },
+  };
+  await page.route('**/rpc/load_planning_workspace', route => route.fulfill({
+    json: {
+      profile: { active_plan_id: outline.id, settings: { activeSkill: 'writing' } },
+      plans: [{ id: outline.id, payload: outline }], planStamp: '0'.repeat(32), evidence: {},
+    },
+    headers: { 'access-control-allow-origin': '*' },
+  }));
+
+  await page.goto('/write');
+  await expect(page.getByRole('heading', { name: 'Task 2 outline' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Your position' })).toHaveAccessibleDescription(/answer the question/i);
+  await expect(page.getByText('Up to 120 words')).toBeVisible();
+
+  await page.goto('/write/questions');
+  const chart = page.getByRole('article').filter({ hasText: 'Average one-way commute time' });
+  await chart.getByRole('button', { name: 'Write this' }).click();
+  await expect(page).toHaveURL(/\/write\?questionId=sample-t1-line-commute$/);
+  await expect(page.getByRole('heading', { name: 'Full response' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Writing answer' })).toBeVisible();
+  await expect(page.getByText(/^Task 1 · at least 150 words/)).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole('textbox', { name: 'Writing answer' })).toBeVisible();
+
+  await page.goto('/write');
+  await expect(page.getByRole('heading', { name: 'Task 2 outline' })).toBeVisible();
+});
+
 test('historical plans are visible on direct Progress entry and after visiting Planning', async ({ page }) => {
   await page.goto('/progress?category=writing&range=all');
   await expect(page.getByText('Completed historical overview')).toBeVisible();
