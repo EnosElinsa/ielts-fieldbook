@@ -205,9 +205,11 @@ describe('Fieldbook UI', () => {
     const modules = rail.querySelectorAll('.nav-group');
     expect(Array.from(modules).map(group => group.querySelector('a')?.getAttribute('aria-label'))).toEqual(['Today', 'Planning', 'Listening', 'Reading', 'Writing', 'Speaking', 'Vocabulary', 'Progress', 'Settings']);
     expect(within(rail).getByRole('navigation', { name: 'Writing study' }).parentElement?.querySelector('a')?.getAttribute('aria-label')).toBe('Writing');
+    await screen.findByRole('textbox', { name: 'Writing answer' });
     await user.click(within(rail).getByRole('link', { name: 'Speaking' }));
-    expect(within(rail).getByText('Stories')).toBeTruthy();
-    expect(within(rail).getByText('Practice')).toBeTruthy();
+    const speakingStudy = await within(rail).findByRole('navigation', { name: 'Speaking study' });
+    expect(within(speakingStudy).getByRole('link', { name: 'Stories' })).toBeTruthy();
+    expect(within(speakingStudy).getByRole('link', { name: 'Practice' })).toBeTruthy();
     expect(within(rail).queryByRole('navigation', { name: 'Writing study' })).toBeNull();
   });
 
