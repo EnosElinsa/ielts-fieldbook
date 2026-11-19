@@ -319,7 +319,7 @@ export function VocabularyGroupLearnPage() {
     {status === 'loading' ? <PageLoadingState message={planLoading?'Restoring your learning batch…':'Loading group words…'} onRetry={retry} retryLabel="Retry group" /> : status === 'error' ? <StateMessage kind="error" message={planUnavailable?'This learning task could not be restored. Retry to load its saved words.':'Group words could not be loaded.'} onRetry={retry} retryLabel="Retry group" /> : !book || !isGroup ? <StateMessage kind="error" message="This wordbook group is unavailable." /> : <>
       <header className="vocabulary-learning-heading">
         <p className="vocabulary-group-path">{groupPath(bookId, unitId)}</p>
-        <div className="page-tools"><h2>Learn {unit.title}</h2>{!words.length ? <Link className="btn line" to={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}/groups/${encodeURIComponent(unitId)}/words`}>View group words</Link> : null}</div>
+        <div className="page-tools"><h1>Learn {unit.title}</h1>{!words.length ? <Link className="btn line" to={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}/groups/${encodeURIComponent(unitId)}/words`}>View group words</Link> : null}</div>
         <p>Listen, learn, then test your recall.</p>
         <div className="vocabulary-group-learning-progress" aria-label="Group progress"><span>Viewed {viewed.length} / {words.length}</span><span>Mastered {mastered} / {words.length}{masteredByYou ? ` · ${masteredByYou} set by you` : ''}</span><span>{assessmentStatus}</span></div>
       </header>

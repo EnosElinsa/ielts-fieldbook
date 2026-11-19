@@ -34,7 +34,7 @@ test('all-time and any-status queries leave their filters unrestricted', async (
   const url = new URL(String(fetcher.mock.calls[0][0]));
   expect(url.searchParams.getAll('payload->>dateKey')).toEqual(['lte.2026-11-17']);
   expect(url.searchParams.has('payload->>status')).toBe(false);
-  expect(url.searchParams.get('or')).toBe('(payload->>skill.eq.speaking,and(payload->>skill.is.null,payload->>kind.in.(speaking-p1,speaking-p2,speaking-p3,stories,speaking-mock)))');
+  expect(url.searchParams.get('or')).toBe('(payload->>skill.eq.speaking,and(payload->>skill.is.null,payload->>kind.in.(speaking-p1,speaking-p2,speaking-p3,stories,speaking-mock)),payload->>kind.in.(review,vocabulary,lexicon))');
   expect(url.searchParams.get('offset')).toBe('0');
   expect(url.searchParams.get('limit')).toBe('100');
 });

@@ -1,4 +1,4 @@
-import { cleanup, render, screen, fireEvent } from '@testing-library/react';
+import { cleanup, render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
@@ -97,14 +97,20 @@ test('plan pagination stays bounded and a new status starts from the first page'
   mock.readPlans.mockImplementation(async ({ offset, status }) => ({ plans: [{ id: `page-${offset}`, title: `${status} history ${offset}`, dateKey: '2026-10-13', status: 'completed' }], total: 41, offset, limit: 20 }));
   render(<MemoryRouter initialEntries={['/progress?category=writing&range=all']}><ProgressPage /></MemoryRouter>);
   await screen.findByText('all history 0');
-  expect(screen.getByRole('button', { name: 'Previous page' })).toBeDisabled();
-  fireEvent.click(screen.getByRole('button', { name: 'Next page' }));
+  expect(screen.getByRole('button', { name: 'Previous page' })).toHaveAttribute('aria-disabled', 'true');
+  const nextPage = screen.getByRole('button', { name: 'Next page' });
+  nextPage.focus();
+  fireEvent.click(nextPage);
   await screen.findByText('all history 20');
   expect(mock.readPlans).toHaveBeenLastCalledWith(expect.objectContaining({ offset: 20, limit: 20 }));
+  expect(nextPage).toHaveFocus();
   fireEvent.click(screen.getByRole('combobox', { name: 'Plan status' }));
   fireEvent.click(screen.getByRole('option', { name: 'Completed' }));
   await screen.findByText('completed history 0');
   expect(mock.readPlans).toHaveBeenLastCalledWith(expect.objectContaining({ offset: 0, status: 'completed' }));
+  fireEvent.click(screen.getByRole('combobox', { name: 'Time range' }));
+  fireEvent.click(await screen.findByRole('option', { name: 'Last 7 days' }));
+  await waitFor(() => expect(mock.readPlans).toHaveBeenLastCalledWith(expect.objectContaining({ offset: 0, status: 'completed', from: expect.any(String) })));
   expect(mock.state.plans).toEqual([]);
 });
 
@@ -133,7 +139,7 @@ test('a reduced total clamps to the last valid page while pagination remains vis
   fireEvent.click(screen.getByRole('button', { name: 'Next page' }));
   await screen.findByText('Last valid page');
   expect(screen.getByText('Page 2 of 2 · 21 plans')).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: 'Next page' })).toBeDisabled();
+  expect(screen.getByRole('button', { name: 'Next page' })).toHaveAttribute('aria-disabled', 'true');
   expect(mock.readPlans).toHaveBeenLastCalledWith(expect.objectContaining({ offset: 20 }));
 });
 

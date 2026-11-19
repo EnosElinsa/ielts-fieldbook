@@ -22,7 +22,9 @@ export async function loadProgressPlans(options: ProgressPlanQuery) {
     : options.skill === 'vocabulary' ? 'payload->>kind.in.(vocabulary,lexicon)'
     : options.skill === 'reading' || options.skill === 'listening' ? `payload->>kind.like.${options.skill}*`
     : `or(payload->>kind.is.null,and(payload->>kind.not.in.(${speaking},vocabulary,lexicon),payload->>kind.not.like.reading*,payload->>kind.not.like.listening*))`;
-  const skillFilter = `payload->>skill.eq.${options.skill},and(payload->>skill.is.null,${legacy})`;
+  const sharedProductive = options.skill === 'writing' || options.skill === 'speaking'
+    ? ',payload->>kind.in.(review,vocabulary,lexicon)' : '';
+  const skillFilter = `payload->>skill.eq.${options.skill},and(payload->>skill.is.null,${legacy})${sharedProductive}`;
   const filter = options.status === 'pending'
     ? `and(or(${skillFilter}),or(payload->>status.eq.pending,payload->>status.is.null))` : skillFilter;
   let query = getSupabase().from('plans')

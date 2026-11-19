@@ -108,7 +108,7 @@ export function VocabularyGroupWordsPage() {
               <p className="vocabulary-group-path">
                 {groupPath(bookId, unitId)}
               </p>
-              <h2>{unit.title} words</h2>
+              <h1>{unit.title} words</h1>
               <p className="vocabulary-muted">
                 {words.length} unique words · Original source order
               </p>
