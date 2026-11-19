@@ -64,16 +64,18 @@ export function CommandSearch({ open, onClose }: { open: boolean; onClose: () =>
     const examAttempts = (fb.state.examAttempts || []).filter(row => row.status === 'completed').map(row => ({ id: `exam:${row.id}`, path: `/${row.skill}/review/${encodeURIComponent(row.id)}`, title: row.sourceId, kind: `${row.skill === 'reading' ? 'Reading' : 'Listening'} attempt`, Icon: row.skill === 'reading' ? BookOpen : Headphones, run: () => fb.setSkill(row.skill, `/${row.skill}/review/${encodeURIComponent(row.id)}`) }));
     return [...navigation, ...questions, ...topics, ...attempts, ...examAttempts, ...vocabularyEntries].filter((item) => `${item.title} ${item.kind}`.toLowerCase().includes(search)).slice(0, 12);
   }, [query, fb.state, navigate]);
-  useEffect(() => { document.getElementById(`command-${selected}`)?.scrollIntoView?.({ block: 'nearest' }); }, [selected, query, items.length]);
+  const activeIndex = Math.min(selected, Math.max(0, items.length - 1));
+  useEffect(() => { document.getElementById(`command-${activeIndex}`)?.scrollIntoView?.({ block: 'nearest' }); }, [activeIndex, query, items.length]);
   const choose = (item) => { onClose(); if (item.path) navigateWithPracticeGuard(item.path, item.run); else item.run(); };
   return <ModalFrame open={open} onClose={onClose} title="Search Fieldbook"><div className="modal command-modal">
-    <div className="command-input"><Search size={20} /><input autoFocus role="combobox" aria-autocomplete="list" aria-expanded="true" aria-label="Search Fieldbook" placeholder="Search your workspace" value={query} onChange={(e) => { setQuery(e.target.value); setSelected(0); }} aria-controls="command-results" aria-activedescendant={items[selected] ? `command-${selected}` : undefined} onKeyDown={(e) => {
-      if (e.key === 'ArrowDown') { e.preventDefault(); setSelected((v) => Math.max(0, Math.min(v + 1, items.length - 1))); }
-      if (e.key === 'ArrowUp') { e.preventDefault(); setSelected((v) => Math.max(v - 1, 0)); }
-      if (e.key === 'Enter' && !e.nativeEvent.isComposing && e.nativeEvent.keyCode !== 229 && items[selected]) { e.preventDefault(); choose(items[selected]); }
+    <div className="command-input"><Search size={20} /><input autoFocus role="combobox" aria-autocomplete="list" aria-expanded="true" aria-label="Search Fieldbook" placeholder="Search your workspace" value={query} onChange={(e) => { setQuery(e.target.value); setSelected(0); }} aria-controls="command-results" aria-activedescendant={items[activeIndex] ? `command-${activeIndex}` : undefined} onKeyDown={(e) => {
+      if (e.defaultPrevented || e.nativeEvent.isComposing || e.nativeEvent.keyCode === 229) return;
+      if (e.key === 'ArrowDown') { e.preventDefault(); setSelected(Math.max(0, Math.min(activeIndex + 1, items.length - 1))); }
+      if (e.key === 'ArrowUp') { e.preventDefault(); setSelected(Math.max(activeIndex - 1, 0)); }
+      if (e.key === 'Enter' && items[activeIndex]) { e.preventDefault(); choose(items[activeIndex]); }
     }} /></div>
     {requirements.error ? <div className="command-load-state"><p role="alert">{requirements.error}</p><button type="button" className="btn line" onClick={requirements.retry}>Retry search</button></div> : !requirements.ready && <div className="command-load-state"><InlineLoadingState message="Loading workspace results..." onRetry={requirements.retry} retryLabel="Retry search" /></div>}
-    <div className="command-results" id="command-results" role="listbox" aria-label="Search results" aria-busy={!requirements.ready}> {items.length ? items.map((item, index) => <button type="button" role="option" tabIndex={-1} aria-selected={selected === index} id={`command-${index}`} key={item.id} onMouseEnter={() => setSelected(index)} onClick={() => choose(item)}><item.Icon size={18} /><span>{item.title}<small>{item.kind}</small></span></button>) : requirements.ready ? <div className="empty">No matching results.</div> : null}</div>
+    <div className="command-results" id="command-results" role="listbox" aria-label="Search results" aria-busy={!requirements.ready}> {items.length ? items.map((item, index) => <button type="button" role="option" tabIndex={-1} aria-selected={activeIndex === index} id={`command-${index}`} key={item.id} onMouseEnter={() => setSelected(index)} onClick={() => choose(item)}><item.Icon size={18} /><span>{item.title}<small>{item.kind}</small></span></button>) : requirements.ready ? <div className="empty">No matching results.</div> : null}</div>
   </div></ModalFrame>;
 }
 

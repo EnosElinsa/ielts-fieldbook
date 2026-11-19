@@ -5,7 +5,7 @@ export type StudyReturnOrigin = { owner: string | null; url: string; sourceUrl?:
 /** An overview's tab belongs in its URL, never inferred from a task's new status. */
 export function studySourceUrl(location: Pick<Location,'pathname'|'search'|'hash'>, hash = location.hash) {
   const params = new URLSearchParams(location.search);
-  if (location.pathname === '/planning' && !['schedule','waiting','history'].includes(params.get('view') || '')) params.set('view','schedule');
+  if (location.pathname === '/planning' && !['schedule','waiting','history','task'].includes(params.get('view') || '')) params.set('view','schedule');
   return location.pathname + (params.size ? `?${params}` : '') + hash;
 }
 

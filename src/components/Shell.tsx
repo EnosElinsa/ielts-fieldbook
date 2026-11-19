@@ -24,6 +24,7 @@ import { PageErrorBoundary } from './PageErrorBoundary';
 import { PageTransition } from './PageTransition';
 import { WorkspaceScrollRestoration } from './WorkspaceScrollRestoration';
 import { SETTINGS_BACKUP_EVENT, type SettingsBackupAction } from '../features/settings/backupActions';
+import { SkipToContent } from './SkipToContent';
 
 const SettingsModal = lazy(()=>import('../features/modals/SettingsModal').then(m=>({default:m.SettingsModal})));
 const SaveModal = lazy(()=>import('../features/modals/SaveModal').then(m=>({default:m.SaveModal})));
@@ -138,6 +139,7 @@ export function Shell() {
   const location = useLocation();
   const navigate = useNavigate();
   const backupInput = useRef(null);
+  const mainContent = useRef<HTMLElement>(null);
   const [collapsed, setCollapsed] = useState(() => {
     try {
       return localStorage.getItem(RAIL_KEY) === 'collapsed';
@@ -245,11 +247,7 @@ export function Shell() {
 
   return (
     <>
-      <a className="skip-link" href="#main-content" onClick={event => {
-        event.preventDefault();
-        const target = document.querySelector<HTMLElement>('main h1') || document.getElementById('main-content');
-        if (target) { target.tabIndex = -1; target.focus(); }
-      }}>Skip to main content</a>
+      <SkipToContent targetRef={mainContent} />
       <div className={`${collapsed ? 'shell is-collapsed' : 'shell'}${speaking ? ' skill-speaking' : ''}`}>
         <Tooltip.Provider delayDuration={350}><aside className="rail">
           <div className="mark">
@@ -302,7 +300,7 @@ export function Shell() {
             {streak === null ? <Link to="/progress" className="rail-activity-link">View activity<ArrowRight size={14} aria-hidden="true"/></Link> : <strong>{streak} {streak === 1 ? 'day' : 'days'}</strong>}
           </div>
         </aside></Tooltip.Provider>
-        <main className="main" id="main-content" tabIndex={-1}>
+        <main className="main" id="workspace-content" ref={mainContent} tabIndex={-1}>
           <header className="top">
             {vocabularyOwnHeading ? <div className="page-title page-title-compact"><p className="kicker">Vocabulary</p></div> : ownHeading ? <div className="page-title page-title-compact" key={`${chrome.kicker}-${chrome.title}`}>
               <p className="kicker">{chrome.kicker}</p>

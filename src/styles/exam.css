@@ -462,7 +462,11 @@
 .exam-stimulus .exam-note-lines { display: grid; gap: 12px; margin: 0 0 12px; }
 .exam-stimulus .exam-note-section-title { display: block; padding-top: 14px; font-weight: 650; color: var(--ink); }
 .exam-stimulus .exam-note-lines:first-of-type .exam-note-section-title:first-child { padding-top: 0; }
-.exam-stimulus .exam-note-item { display: block; padding-left: 14px; text-indent: -14px; }
+.exam-stimulus .exam-note-list { margin: 0; padding-inline-start: 20px; list-style-type: disc; }
+.exam-stimulus .exam-note-list > .exam-note-item { display: list-item; padding-inline-start: 4px; text-indent: 0; margin-block: 0 10px; }
+.exam-stimulus .exam-note-list > .exam-note-item:last-child { margin-block-end: 0; }
+.exam-stimulus .exam-note-sublist { margin-block: 8px 0; padding-inline-start: 24px; list-style-type: circle; }
+.exam-stimulus .exam-note-sublist > li { padding-inline-start: 4px; margin-block: 6px 0; }
 .exam-stimulus .exam-note-item .exam-inline-answer { text-indent: 0; }
 .exam-stimulus .exam-note-item .exam-inline-answer .exam-gap { width: clamp(112px,10vw,152px); }
 .exam-choice-instructions > .exam-stimulus { margin: 10px 0 0; padding: 0; background: transparent; color: var(--muted); font-size: 13px; line-height: 1.8; }

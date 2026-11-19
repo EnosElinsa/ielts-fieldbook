@@ -253,16 +253,6 @@ export function VocabularyEntryPage() {
     next.delete("senseId");
     return `${location.pathname}?${next}`;
   };
-  const others =
-    entry?.senses.filter(
-      (sense) =>
-        sense.id !== primary?.id &&
-        ((saved && raw?.senses.some((item) => item.id === sense.id)) ||
-          resolved?.curriculum?.senses.some((item) => item.id === sense.id)) &&
-        !(
-          sense.pos === primary?.pos && sense.definition === primary?.definition
-        ),
-    ) || [];
   // Legacy top-level notes only add information when no stored sense contains it.
   // Public dictionary snapshots and learning revisions are already represented above.
   const publicEntry = raw &&
@@ -291,6 +281,14 @@ export function VocabularyEntryPage() {
   // identities or changing the learner's selected practice target.
   const alternateGroupMeaning = Boolean(groupMeaning && primary && groupMeaning.id !== primary.id &&
     (groupMeaning.pos !== primary.pos || vocabularySensePresentation(groupMeaning).definition.trim() !== vocabularySensePresentation(primary).definition.trim()));
+  const shownMeanings = [primary, alternateGroupMeaning ? groupMeaning : undefined]
+    .filter((sense): sense is VocabularySense => Boolean(sense));
+  const others = entry?.senses.filter(sense =>
+    ((saved && raw?.senses.some(item => item.id === sense.id)) ||
+      resolved?.curriculum?.senses.some(item => item.id === sense.id)) &&
+    !shownMeanings.some(shown => shown.id === sense.id ||
+      (shown.pos === sense.pos && vocabularySensePresentation(shown).definition.trim() === vocabularySensePresentation(sense).definition.trim())),
+  ) || [];
   const originalNotes = raw
     ? vocabularySensePresentation({
         id: 'original-notes',
@@ -463,7 +461,7 @@ export function VocabularyEntryPage() {
   };
   const credits = [
     ...senseCredits([
-      ...(primary ? [primary] : []),
+      ...shownMeanings,
       ...others,
       ...[...(primary ? [primary] : []), ...others].flatMap(sense => {
         const example = entry && publicVocabularyExample(entry.id, sense);
@@ -671,7 +669,7 @@ export function VocabularyEntryPage() {
           ) : null}
           <DictionarySenses
             entry={entry}
-            excludeSenses={[...(primary ? [primary] : []), ...others]}
+            excludeSenses={[...shownMeanings, ...others]}
             onSources={setDictionarySources}
           />
           <section

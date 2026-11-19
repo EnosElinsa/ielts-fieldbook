@@ -488,6 +488,9 @@ test.each(['reading', 'listening'] as const)('%s shortcuts move between answers 
   first.focus();
   fireEvent.keyDown(first, { key: 'Enter', isComposing: true });
   expect(first).toHaveFocus();
+  fireEvent.keyDown(first, { key: 'Enter', isComposing: false, keyCode: 229 });
+  await act(async () => { await new Promise<void>(resolve => requestAnimationFrame(() => resolve())); });
+  expect(first).toHaveFocus();
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   await user.keyboard('{Control>}{Enter}{/Control}');
   expect(await screen.findByRole('dialog', { name: 'Submit with unanswered questions?' })).toBeVisible();

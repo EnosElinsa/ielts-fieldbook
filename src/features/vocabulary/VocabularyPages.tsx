@@ -345,11 +345,11 @@ function VocabularyHomePage() {
   </VocabularyLayout>;
   return <VocabularyLayout ready={catalogStatus !== 'loading'}>
     <div className="page-tools"><h1>Vocabulary</h1><Link className="btn line" to="/settings/vocabulary">Practice settings</Link></div>
-    <section className="vocabulary-home-next" aria-label="Next vocabulary task">
+    <section className={`vocabulary-home-next${showSuggestion?' has-recommendation':''}`} aria-label="Next vocabulary task">
       <span className="vocabulary-eyebrow">{saved ? `${saved.cardIds.length} words · Session saved` : showSuggestion ? 'Your saved meaning' : due.length ? `${due.length} ${reviewMode} cards due` : nextGroup ? `${selectedEntryIds.length||nextTarget.batchSize} new words selected` : 'Wordbook study'}</span>
       {showSuggestion ? <>
-        <h2><Link to={`/vocabulary/entry/${encodeURIComponent(suggestion.entry.id)}?${new URLSearchParams({senseId:suggestion.sense.id,returnTo:'/vocabulary'})}`}>{suggestion.entry.term}</Link></h2>
-        <p className="vocabulary-home-meaning">{suggestion.sense.definition}</p>
+        <div className="vocabulary-home-word"><h2><Link to={`/vocabulary/entry/${encodeURIComponent(suggestion.entry.id)}?${new URLSearchParams({senseId:suggestion.sense.id,returnTo:'/vocabulary'})}`}>{suggestion.entry.term}</Link></h2>
+        <p className="vocabulary-home-meaning">{suggestion.sense.definition}</p></div>
         <VocabularyNextPractice primaryAction recommendation={suggestion.recommendation} to={mode=>practiceUrl(suggestion.entry.id,suggestion.sense.id,{},'/vocabulary',mode)}/>
         {suggestion.recommendation.status==='waiting' ? <Link className="btn line" to={nextLearningUrl}>{nextGroup?'Continue learning':'Study wordbooks'}<ArrowRight size={16} aria-hidden="true"/></Link> : null}
       </> : <>
@@ -804,13 +804,13 @@ export function VocabularyWordbooksPage() {
     </> : <>
       <div className="vocabulary-books">{books(fb.state).map(item => {
         const progress = bookStudy(fb.state, item.id);
-        return <article className="vocabulary-book" key={item.id}><BookOpen size={22} /><h2>{item.title}</h2><p>{wordbookDescription(item)}</p>
+        return <article className="vocabulary-book" key={item.id}><header><BookOpen size={22} aria-hidden="true"/><h2>{item.title}</h2></header><div className="vocabulary-book-content"><p>{wordbookDescription(item)}</p>
           <div className="vocabulary-muted">{plural(wordbookWordCount(progress), 'word')} · {plural(progress.hierarchy.filter(unit => unit.kind === "chapter").length, 'chapter')} · {plural(progress.groups.length, 'group')}</div>
           {enrolled(item.id) ? <div className="vocabulary-muted">{formatCount(progress.studied.length)}/{formatCount(progress.available.length)} groups studied</div> : null}
-          <div className="actions"><Link className="btn line" to={`/vocabulary/wordbooks/${encodeURIComponent(item.id)}`}>Open chapters<ArrowRight size={15} /></Link>
+          </div><footer className="actions"><Link className="btn line" aria-label={`Open chapters: ${item.title}`} to={`/vocabulary/wordbooks/${encodeURIComponent(item.id)}`}>Open chapters<ArrowRight size={15} /></Link>
             {!enrolled(item.id) ? <button type="button" className="btn primary" disabled={!item.entryIds.length || Boolean(joining) || catalogBusy} onClick={() => join(item.id)}><Plus size={15} />Add</button>
               : progress.next ? <Link className="btn primary" to={studyLink(progress.next)}>{progress.studied.length ? "Continue study" : "Start study"}<ArrowRight size={15} /></Link> : progress.studied.length ? <span className="pill green">All groups studied</span> : <span className="pill">{progress.groups.some(group => group.entryIds.length) ? "Words archived" : "Content pending"}</span>}
-          </div></article>;
+          </footer></article>;
       })}</div>
       {!books(fb.state).length && !catalogBusy && !catalogError ? <StateMessage message="No wordbooks available yet." /> : null}
     </>}
@@ -1169,6 +1169,6 @@ export function VocabularyHistoryPage() {
         <div className="vocabulary-history-summary"><strong>{total} {total===1?'word':'words'}</strong><small>{log.mode === 'audio' ? 'Listening activity · No mastery assessment' : `${summary.correct || 0} correct · ${summary.incorrect || 0} incorrect`}</small>{log.mode !== 'audio' && summary.pending ? <small>{summary.pending} awaiting feedback</small> : null}</div><ArrowRight size={16} />
       </Link>;
     })}</div> : <StateMessage message="Your submitted vocabulary sessions will appear here." />}
-    {ready&&!error&&pages>1&&<nav className="study-pagination vocabulary-history-pagination" aria-label="Vocabulary history pages"><button className="btn line" disabled={!page} onClick={()=>setPage(value=>value-1)}>Previous page</button><span>Page {page+1} of {pages} · {plural(total,'session')}</span><button className="btn line" disabled={page+1>=pages} onClick={()=>setPage(value=>value+1)}>Next page</button></nav>}
+    {ready&&!error&&pages>1&&<nav className="vocabulary-history-pagination" aria-label="Vocabulary history pages"><button className="btn line" disabled={!page} onClick={()=>setPage(value=>value-1)}>Previous page</button><span>Page {page+1} of {pages} · {plural(total,'session')}</span><button className="btn line" disabled={page+1>=pages} onClick={()=>setPage(value=>value+1)}>Next page</button></nav>}
   </VocabularyLayout>;
 }

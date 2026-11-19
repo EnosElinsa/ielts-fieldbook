@@ -144,20 +144,27 @@ export function hasVocabularySenseEdits(sense: VocabularySense, baselines: (Voca
  ));
 }
 
-/** Older dictionary imports materialised absent fields as empty values. Restore
+/** Older public imports/enrolments materialised absent fields as empty values. Restore
  * only an exact importer snapshot with recorded import provenance, for display.
  * Personal notes and edits to any imported field remain independent. */
-export function restoreVocabularyDictionaryImport(entry: VocabularyEntry): VocabularyEntry {
+export function restoreVocabularyPublicImport(entry: VocabularyEntry): VocabularyEntry {
  const imported = entry.sources?.some(source => {
-  if (!/^dictionary account public-dictionary; source word(?: |$)/.test(source.context || '')) return false;
-  try { const key: unknown = JSON.parse(source.id); return Array.isArray(key) && key[0] === 'dictionary' && key[1] === 'public-dictionary'; }
+  if (source.type === 'wordbook' && source.bookId && source.unitId && source.id === `${source.bookId}:${source.unitId}:${entry.id}`) return true;
+  try {
+   const key: unknown = JSON.parse(source.id);
+   if (!Array.isArray(key)) return false;
+   if (key[0] === 'dictionary' && key[1] === 'public-dictionary') return /^dictionary account public-dictionary; source word(?: |$)/.test(source.context || '');
+   return source.type === 'wordbook' && key.length === 5 && key[0] === 'guixue'
+    && key.slice(1).every(value => typeof value === 'string' && value.trim())
+    && source.context === `guixue account ${key[1]}; source word ${key[4]}`;
+  }
   catch { return false; }
  });
  if (!imported) return entry;
  const senses = entry.senses.map(sense => {
   const known = [...catalogVocabularySenses(entry.id).filter(row => row.id === sense.id), ...vocabularyReadinessBaselines(entry.id,sense.id), ...vocabularyCurriculumBaselines(entry.id,sense.id)];
   const original = known.find(row => {
-   const baseline: VocabularySense = { id:row.id, definition:row.definition, example:row.example, pos:row.pos,
+   const baseline: VocabularySense = { ...row,
     usage:row.usage || '', collocations:row.collocations || [], synonyms:row.synonyms || [], antonyms:row.antonyms || [], distinctions:row.distinctions || [] };
    return !hasVocabularySenseEdits(sense,[baseline]);
   });
@@ -204,7 +211,7 @@ export function catalogVocabularySenses(id:string):VocabularySense[] {
  return catalogVocabularyEntry(id)?.senses || vocabularyTeaching.senseBaselines[id] || [];
 }
 export function reviewedEntry(entry:VocabularyEntry):VocabularyEntry {
- entry=restoreVocabularyDictionaryImport(entry);
+ entry=restoreVocabularyPublicImport(entry);
  const existing=existingReviewedEntry(entry);
  const originals=catalogVocabularySenses(entry.id);
  const canonical=(learningSenses as Record<string,VocabularySense>)[entry.term.toLowerCase()];

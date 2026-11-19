@@ -10,24 +10,47 @@ vi.mock('../context/FieldbookContext', () => ({ useFieldbook: () => fb }));
 vi.mock('../context/ThemeContext', () => ({ useTheme: () => ({ theme: 'light', setTheme: vi.fn() }) }));
 vi.mock('../auth/AuthGate', () => ({ signOut: vi.fn() }));
 afterEach(() => { cleanup(); vi.clearAllMocks(); fb.moduleStatus = undefined; });
-test.each([{ isComposing: true }, { keyCode: 229 }])('search ignores IME confirmation Enter (%j) but accepts the next Enter', async (composition) => {
-  const close = vi.fn();
-  render(<MemoryRouter><CommandSearch open onClose={close} /></MemoryRouter>);
-  const search = screen.getByRole('combobox', { name: 'Search Fieldbook' });
-  fireEvent.change(search, { target: { value: 'Reading review' } });
-  fireEvent.keyDown(search, { key: 'Enter', ...composition });
-  expect(close).not.toHaveBeenCalled();
-  expect(fb.setSkill).not.toHaveBeenCalled();
-  fireEvent.keyDown(search, { key: 'Enter', keyCode: 13 });
-  expect(close).toHaveBeenCalledOnce();
-  expect(fb.setSkill).toHaveBeenCalledWith('reading', '/reading/review');
-});
 test('search routes reading and listening through skill selection', async () => {
   const user = userEvent.setup();
   render(<MemoryRouter><CommandSearch open onClose={() => {}} /></MemoryRouter>);
   await user.type(screen.getByRole('combobox', { name: 'Search Fieldbook' }), 'Reading');
   await user.click(screen.getByRole('option', { name: 'Reading Page' }));
   expect(fb.setSkill).toHaveBeenCalledWith('reading', '/reading');
+});
+
+test.each([{ isComposing: true }, { keyCode: 229 }])('search leaves IME confirmation and candidate selection to the input method (%j)', async composition => {
+  const close = vi.fn();
+  render(<MemoryRouter><CommandSearch open onClose={close} /></MemoryRouter>);
+  const input = screen.getByRole('combobox', { name: 'Search Fieldbook' });
+  await userEvent.type(input, 'Reading');
+  const active = input.getAttribute('aria-activedescendant');
+  fireEvent.keyDown(input, { key: 'ArrowDown', ...composition });
+  expect(input).toHaveAttribute('aria-activedescendant', active);
+  fireEvent.keyDown(input, { key: 'Enter', ...composition });
+  expect(close).not.toHaveBeenCalled();
+  expect(fb.setSkill).not.toHaveBeenCalled();
+  fireEvent.keyDown(input, { key: 'Enter' });
+  expect(close).toHaveBeenCalledOnce();
+  expect(fb.setSkill).toHaveBeenCalledWith('reading', '/reading');
+});
+
+test('search keeps a valid active result when loaded results shrink without a query change', async () => {
+  const questions = fb.state.questions;
+  fb.state.questions = Array.from({ length: 3 }, (_, index) => ({ id: String(index), name: `Reading question ${index}` })) as any;
+  try {
+    const close = vi.fn();
+    const view = render(<MemoryRouter><CommandSearch open onClose={close} /></MemoryRouter>);
+    const input = screen.getByRole('combobox', { name: 'Search Fieldbook' });
+    await userEvent.type(input, 'Reading');
+    for (let index = 0; index < 4; index++) fireEvent.keyDown(input, { key: 'ArrowDown' });
+    fb.state = { ...fb.state, questions: [] };
+    view.rerender(<MemoryRouter><CommandSearch open onClose={close} /></MemoryRouter>);
+    const selected = screen.getByRole('option', { selected: true });
+    expect(input).toHaveAttribute('aria-activedescendant', selected.id);
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(close).toHaveBeenCalledOnce();
+    expect(fb.setSkill).toHaveBeenCalledWith('reading', '/reading/review');
+  } finally { fb.state = { ...fb.state, questions }; }
 });
 test.each(['Listening', 'Reading', 'Writing', 'Speaking'])('mobile Study offers %s equally and closes before navigating', async label => {
   const select = vi.fn(() => expect(screen.queryByRole('menu')).not.toBeInTheDocument());

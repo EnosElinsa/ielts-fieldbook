@@ -94,7 +94,7 @@ export function VocabularyPracticeResults({ controller, results }: {
   const taskOutcome=controller.submissionOutcome||vocabularyTaskSubmissionOutcome(controller.state,results);
   return (
     <section className="practice-results">
-      <aside className="practice-task-outcome" role="status"><strong>{results.sourceSnapshot?.origin==='manual'?'User-arranged review':results.planId?'Planned review':'Self-directed review'}</strong><p>{taskOutcome.message}</p>{results.planId&&<Link className="btn line" to={`/planning#task-${encodeURIComponent(results.planId)}`}>View linked task<ArrowRight size={15} aria-hidden="true"/></Link>}</aside>
+      <aside className="practice-task-outcome" role="status"><strong>{results.sourceSnapshot?.origin==='manual'?'User-arranged review':results.planId?'Planned review':'Self-directed review'}</strong><p>{taskOutcome.message}</p>{results.planId&&<Link className="btn line" to={`/planning?view=task#task-${encodeURIComponent(results.planId)}`}>View task requirements<ArrowRight size={15} aria-hidden="true"/></Link>}</aside>
       <div className="practice-result-title">
         <div>
           <span>
@@ -190,12 +190,14 @@ export function VocabularyPracticeResults({ controller, results }: {
                   {row.prompt && results.mode !== 'dictation' ? <small className="practice-result-context">{row.prompt}</small> : null}
                 </th>
                 <td className="practice-response-column" data-label="Your response">
+                  <span className="practice-cell-label">Your response</span>
                   {row.response ? <>{diff?<VocabularyAnswerDiff response={row.response} expected={expected} side="actual"/>:row.response}</> : (
                     <span className="practice-unanswered">Unanswered</span>
                   )}
                 </td>
-                <td className="practice-expected-column" data-label="Expected answer"><>{diff?<VocabularyAnswerDiff response={row.response} expected={expected} side="expected"/>:row.expectedAnswer}</>{diff && expected !== row.expectedAnswer ? <details className="practice-saved-answers"><summary>Saved accepted answers</summary><span>{row.expectedAnswer}</span></details> : null}</td>
+                <td className="practice-expected-column" data-label="Expected answer"><span className="practice-cell-label">Expected answer</span><>{diff?<VocabularyAnswerDiff response={row.response} expected={expected} side="expected"/>:row.expectedAnswer}</>{diff && expected !== row.expectedAnswer ? <details className="practice-saved-answers"><summary>Saved accepted answers</summary><span>{row.expectedAnswer}</span></details> : null}</td>
                 <td data-label="Result">
+                  <span className="practice-cell-label">Result</span>
                   <span
                     className={`practice-result-badge is-${row.result}`}
                   >
@@ -210,6 +212,7 @@ export function VocabularyPracticeResults({ controller, results }: {
                   {row.explanation ? <small className="practice-result-explanation">{row.explanation}</small> : null}
                 </td>
                 <td data-label="Details">
+                  <span className="practice-cell-label">Details</span>
                   <Link
                     to={current.detail} onClick={() => rememberPosition(row.cardId)}
                   >

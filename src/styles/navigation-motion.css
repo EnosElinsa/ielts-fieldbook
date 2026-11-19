@@ -1,4 +1,7 @@
 /* Keep route motion independent from stateful forms and lazy-loading placeholders. */
+.skip-link { position: fixed; inset-block-start: max(12px, env(safe-area-inset-top, 0px)); inset-inline-start: max(12px, env(safe-area-inset-left, 0px)); z-index: 100; display: flex; align-items: center; min-block-size: 44px; max-inline-size: calc(100% - 24px); padding: 10px 16px; border: 1px solid var(--blue); border-radius: 8px; background: var(--sheet); color: var(--ink); font-size: 14px; font-weight: 600; }
+.skip-link:not(:focus) { clip-path: inset(50%); inline-size: 1px; block-size: 1px; min-block-size: 0; padding: 0; border: 0; overflow: hidden; white-space: nowrap; }
+.skip-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 .page { min-width: 0; }
 .top .page-title { animation: heading-arrive 240ms var(--ease); }
 .nav-children { animation: heading-arrive 200ms var(--ease); }
@@ -34,10 +37,6 @@
   .top .page-title, .nav-children { animation: none; }
 }
 
-
-/* The first keyboard stop bypasses repeated navigation without shifting the page. */
-.skip-link { position: fixed; inset: 12px auto auto 12px; z-index: 400; padding: 12px 16px; border-radius: 6px; background: var(--sheet); color: var(--ink); font-weight: 600; box-shadow: var(--shadow-lift); transform: translateY(-180%); }
-.skip-link:focus { transform: none; outline: 2px solid var(--blue); outline-offset: 3px; }
 .mobile-study-menu .dropdown-item { min-height: 48px; font-size: 14px; }
 .mobile-study-menu .dropdown-item[aria-current="page"] { color: var(--blue); background: var(--soft-blue); }
 @media (max-width: 740px) {

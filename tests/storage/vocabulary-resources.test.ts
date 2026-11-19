@@ -12,6 +12,16 @@ let release: ReturnType<typeof buildVocabularyResources>;
 // retaining every source, content-hash and historical-byte assertion below.
 beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 45_000);
 
+test('the travel teaching revision retains the published manifest and its resources', () => {
+  const url = '/vocabulary-resources/manifest.b7d154e9cb664848.json';
+  const bytes = release.resources.getBytes(url)!;
+  expect(createHash('sha256').update(bytes).digest('hex').slice(0, 16)).toBe('b7d154e9cb664848');
+  const previous = JSON.parse(bytes.toString('utf8'));
+  for (const resource of [previous.termIndexUrl, ...Object.values(previous.entryResources), ...Object.values(previous.entryTeachingResources), ...previous.units.flatMap((unit: any) => [unit.resource, unit.teachingResource]).filter(Boolean)] as string[]) {
+    expect(release.resources.has(resource), resource).toBe(true);
+  }
+});
+
 test('the preceding term-index manifest and its complete resources survive a group teaching revision', () => {
   const previousUrl = '/vocabulary-resources/manifest.423452d22bb3b576.json';
   const bytes = release.resources.getBytes(previousUrl);
