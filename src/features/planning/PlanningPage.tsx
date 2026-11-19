@@ -53,18 +53,16 @@ function PlanningCalendar(){
     const next=new URLSearchParams(search);next.set('view',view);if(view==='schedule'&&!validDate)next.set('date',target.dateKey);
     setSearch(next,{replace:true,state:location.state});
   },[location.hash,Boolean(linkedTask),requestedView,validDate]);
-  const focus=fb.state.plans.filter(plan=>plan.dateKey===today&&!plan.onHold&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status)).sort((a,b)=>(a.status==='in_progress'?-1:0)-(b.status==='in_progress'?-1:0)||compareStudyPlans(a,b))[0];
+  const focus=tab==='schedule'&&days.includes(today)?fb.state.plans.filter(plan=>plan.dateKey===today&&!plan.onHold&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status)).sort((a,b)=>(a.status==='in_progress'?-1:0)-(b.status==='in_progress'?-1:0)||compareStudyPlans(a,b))[0]:undefined;
   const needsWordbook=!(fb.state.wordbookEnrollments||[]).length&&!fb.state.plans.some(plan=>plan.target?.mode==='learning-batch'&&!plan.onHold&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status));
-  return <section className="view active study-planning"><header className="study-page-head"><div><p className="kicker">Next seven days · {fb.state.settings.dailyMinutes || 30} min per study day</p><h2>Planning</h2></div></header>
+  return <section className="view active study-planning"><header className="study-page-head"><h2>Planning</h2></header>
     {schedule.error&&<div className="study-alert" role="alert"><span>{schedule.error}</span><button className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}
     {targetError&&<div className="study-alert" role="alert"><p>{targetError}</p><button type="button" className="btn line" onClick={()=>setTargetRetry(value=>value+1)}>Retry task</button></div>}
-    <div className="study-view-bar"><nav className="study-tabs" aria-label="Planning views">{[['schedule','Schedule'],['waiting',`Waiting · ${overdue.length}`],['history','History']].map(([value,label])=><button type="button" className="btn line" aria-pressed={tab===value} key={value} onClick={()=>selectTab(value)}>{label}</button>)}</nav><div className="study-sync-status">{schedule.saving&&<InlineLoadingState message="Updating schedule…" />}</div></div>
+    <div className="study-view-bar"><nav className="study-tabs" aria-label="Planning views">{[['schedule','Schedule'],['waiting',`Waiting · ${overdue.length}`],['history','History']].map(([value,label])=><button type="button" className="btn line" aria-pressed={tab===value} key={value} onClick={()=>selectTab(value)}>{label}</button>)}</nav>{schedule.saving&&<div className="study-sync-status"><InlineLoadingState message="Updating schedule…" /></div>}</div>
     {tab==='task'&&<section className="study-linked-task" aria-label="Linked task"><header><h3>Linked task</h3><p>Requirements and current status for this task.</p></header>{linkedTask?<PlanTask key={linkedTask.id} plan={linkedTask} expanded/>:!targetId?<p>No task selected. Open Schedule or History to find a task.</p>:!targetError?<p role="status">Loading linked task…</p>:null}</section>}
     {tab==='waiting'&&<TaskCollection tasks={overdue} kind="waiting" renderTask={plan=><PlanTask plan={plan}/>}/>}
     {tab==='history'&&<TaskCollection tasks={history} kind="history" renderTask={plan=><PlanTask plan={plan}/>}/>}
     {tab==='schedule'&&<>
-    {needsWordbook&&studyBudget(fb.state.settings,today).planning.newWordsPerDay>0&&<aside className="study-wordbook-prompt"><BookOpen size={19} aria-hidden="true"/><p><strong>Choose a wordbook for new-word tasks</strong><span>Your daily word goal starts allocating words after you add a wordbook.</span></p><Link className="btn line" to="/vocabulary/wordbooks">Choose a wordbook</Link></aside>}
-    {focus&&<div className="study-focus"><div><p className="kicker">Today's focus</p><strong>{studyPlanTitle(focus)}</strong><p>{focus.status==='in_progress'?'Continue your saved task':'Next in your schedule'} · {planMinutesLabel(focus)}</p></div><TaskStartButton plan={focus}/></div>}
     <nav className="study-date-navigation" aria-label="Schedule dates">
       <p className="study-date-range" aria-live="polite" aria-atomic="true">{dateRange}</p>
       <div className="study-date-controls">
@@ -73,6 +71,10 @@ function PlanningCalendar(){
         <button type="button" className="btn line study-week-arrow" aria-label="Next week" title="Next week" onClick={()=>selectDate(dateKey(addLocalDays(new Date(`${anchor}T12:00:00`),7)))}><ChevronRight size={18}/></button>
       </div>
     </nav>
+    {needsWordbook&&studyBudget(fb.state.settings,today).planning.newWordsPerDay>0&&<aside className="study-wordbook-prompt">
+      <Link className="btn text" to="/vocabulary/wordbooks"><BookOpen size={16} aria-hidden="true"/>Choose a wordbook</Link>
+      <p>Set up new-word tasks for your daily goal.</p>
+    </aside>}
     <div className="study-calendar" aria-busy={schedule.saving}>{days.map(day=>{
       const tasks=fb.state.plans.filter(plan=>plan.dateKey===day&&plan.status!=='skipped'&&!plan.onHold&&!plan.archivedAt).sort(compareStudyPlans);
       const used=tasks.filter(plan=>plan.status!=='skipped').reduce((sum,plan)=>sum+Number(plan.estimatedMinutes||0),0);
@@ -95,7 +97,7 @@ function PlanningCalendar(){
           </dl></div>
           {addTask}
         </header>
-        {tasks.length?<div className="study-task-list">{tasks.map(plan=><PlanTask key={plan.id} plan={plan}/>)}</div>:<CardSkeleton/>}</div>
+        {tasks.length?<div className="study-task-list">{tasks.map(plan=><PlanTask key={plan.id} plan={plan} todayFocus={plan.id===focus?.id}/>)}</div>:<CardSkeleton/>}</div>
       </ScheduleDay>;
     })}</div></>}
     {editor&&<TaskEditor key={`${accountId()}:${editor.mode}:${editor.dateKey}`} {...editor} onClose={()=>setEditor(null)}/>}
@@ -114,7 +116,7 @@ function ScheduleDay({current,forceOpen,heading,summary,className,children}){
   return <details className={`${className} study-day-foldable`} open={expanded} onToggle={event=>setExpanded(event.currentTarget.open)}><summary className="study-day-toggle">{heading}<span>{summary}<ChevronDown size={17} aria-hidden="true"/></span></summary>{children}</details>;
 }
 
-function PlanTask({plan,expanded=false}){
+function PlanTask({plan,expanded=false,todayFocus=false}){
   const fb=useFieldbook();const [dialog,setDialog]=useState(null);const [saving,setSaving]=useState(false);const [error,setError]=useState('');
   const completed=plan.status==='completed';
   async function change(action){setSaving(true);setError('');let feedback='';try{if(await fb.changePlan(plan.id,action,{onError:message=>{feedback=message;}}))setDialog(null);else setError(feedback||'Your task could not be saved. Retry the change.');}catch(cause){setError(cause instanceof Error?cause.message:'Your task could not be saved.');}finally{setSaving(false);}}
@@ -131,7 +133,7 @@ function PlanTask({plan,expanded=false}){
   return <article id={`task-${plan.id}`} tabIndex={-1} className={`study-task study-plan-task ${plan.status}`}>
     <div className="study-plan-task-body">
       <h4>{studyPlanTitle(plan)}</h4>
-      <p className="study-task-meta"><span className={`study-skill study-skill-${skill}`}>{skill}</span><span><Clock3 size={14}/>{planMinutesLabel(plan)}</span><span className="study-task-status">{completed&&<Check size={14}/>}{status}</span>{plan.dateKey<dateKey(new Date())&&<span>Due {formatDateKey(plan.dateKey)}</span>}{plan.originalDateKey&&plan.originalDateKey!==plan.dateKey&&<span>Moved from {formatDateKey(plan.originalDateKey)}</span>}{plan.origin==='manual'&&<span>Added by you</span>}</p>
+      <p className="study-task-meta"><span className={`study-skill study-skill-${skill}`}>{skill}</span><span><Clock3 size={14}/>{planMinutesLabel(plan)}</span><span className="study-task-status">{completed&&<Check size={14}/>}{status}</span>{todayFocus&&<strong className="study-task-focus">Today's focus</strong>}{plan.dateKey<dateKey(new Date())&&<span>Due {formatDateKey(plan.dateKey)}</span>}{plan.originalDateKey&&plan.originalDateKey!==plan.dateKey&&<span>Moved from {formatDateKey(plan.originalDateKey)}</span>}{plan.origin==='manual'&&<span>Added by you</span>}</p>
       <LearningTaskDetails plan={plan} batchSize={fb.state.settings.vocabulary?.learningBatchSize||10}/>
       {expanded&&<LinkedTaskRequirements plan={plan}/>}
 

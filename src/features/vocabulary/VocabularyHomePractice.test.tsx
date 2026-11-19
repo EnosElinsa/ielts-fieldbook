@@ -38,7 +38,9 @@ function due(learning:any,mode:VocabularyMode,offset=-1000){learning.cards[mode]
 
 test('home offers useful practice for a saved meaning before choosing another wordbook and remains read-only',()=>{
  saved();const before=structuredClone(mocks.fb.state);show();
- expect(within(panel()).getByRole('heading',{name:'compass'})).toBeInTheDocument();
+ expect(screen.getByRole('heading',{name:'Vocabulary',level:1})).toBeInTheDocument();
+ expect(within(panel()).getByRole('heading',{name:'compass',level:2})).toBeInTheDocument();
+ expect(within(panel()).getByRole('heading',{name:'Next practice',level:3})).toBeInTheDocument();
  expect(within(panel()).getByText('An instrument that shows direction.')).toBeInTheDocument();
  expect(within(panel()).getByText(/No verified meaning retrieval/)).toBeInTheDocument();
  const url=new URL(within(panel()).getByRole('link',{name:/Practise Meaning recall/}).getAttribute('href')!,'https://example.test');
@@ -84,6 +86,17 @@ test('the existing due batch keeps the preferred supported mode',()=>{
  const {entry,learning}=saved();successes(entry.id,new Date(Date.now()-2*86400000).toISOString());due(learning,'definition');due(learning,'dictation');
  mocks.fb.state.settings={vocabulary:{mode:'dictation'}};show();
  expect(within(panel()).getByRole('link',{name:/Review due words/})).toHaveAttribute('href','/vocabulary/review?mode=dictation&dueOnly=true&scheduledOnly=true');
+ expect(screen.getByRole('link',{name:'Due cards 2'})).toHaveAttribute('href','/vocabulary/review?mode=dictation&dueOnly=true&scheduledOnly=true');
+});
+
+test('the retry count opens unresolved mistakes in an active mode even before they are due',()=>{
+ const {learning}=saved();
+ due(learning,'dictation',86400000);
+ learning.wrong.active=true;
+ learning.wrong.modes.dictation={active:true,successesSinceFailure:0};
+ mocks.fb.state.settings={vocabulary:{mode:'definition'}};
+ show();
+ expect(screen.getByRole('link',{name:'Words to retry 1'})).toHaveAttribute('href','/vocabulary/review?mode=dictation&wrongOnly=true&dueOnly=false');
 });
 
 test('a saved session takes priority even while teaching metadata fails',async()=>{

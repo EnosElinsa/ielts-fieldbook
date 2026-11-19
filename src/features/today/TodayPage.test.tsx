@@ -1,11 +1,12 @@
 // @ts-nocheck
-import { cleanup, render, screen, waitFor, within } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router-dom';
 import { emptyState, dateKey } from '../../domain';
 import { TodayPage } from './TodayPage';
+import { ExamBackLink } from '../exam/ExamNavigation';
 import { rememberVocabularyPosition } from '../vocabulary/vocabularyNavigation';
 
 const mocks=vi.hoisted(()=>({state:null,start:vi.fn(),generate:vi.fn(),skill:'writing'}));
@@ -16,12 +17,25 @@ afterEach(()=>{cleanup();vi.restoreAllMocks();vi.useRealTimers();});
 const plan=(id,skill,status='pending',day=dateKey(new Date()))=>({id,skill,kind:`${skill}-practice`,status,dateKey:day,title:`${skill} task`,description:'Selected practice',estimatedMinutes:20,completion:{description:'Submit the selected section.'}});
 const renderPage=()=>render(<MemoryRouter><TodayPage/></MemoryRouter>);
 
-test('any unfinished task today can start its exact plan without opening Planning', async () => {
-  mocks.state.plans = [plan('first', 'reading', 'in_progress'), plan('chosen', 'speaking'), plan('finished', 'writing', 'completed'), plan('skipped', 'listening', 'skipped')];
+test('only the next task has a primary action and other eligible rows open their exact plan', async () => {
+  mocks.state.plans = [
+    plan('first', 'reading', 'in_progress'),
+    plan('chosen', 'speaking'),
+    plan('saved', 'listening', 'in_progress'),
+    { ...plan('result', 'vocabulary', 'completed'), kind:'vocabulary', linkedSessionId:'vocabulary-session' },
+    plan('finished', 'writing', 'completed'),
+    plan('skipped', 'listening', 'skipped'),
+  ];
   mocks.state.activePlanId = 'first'; const { container } = renderPage();
-  const chosen = container.querySelector('.study-work-row[data-plan-id="chosen"]');
-  await userEvent.click(within(chosen).getByRole('button', { name: 'Start speaking task' }));
-  expect(mocks.start).toHaveBeenCalledWith('chosen', { force: false, onError: expect.any(Function) });
+  expect(screen.getByRole('button', { name: 'Resume', exact: true })).toHaveClass('primary');
+  expect(screen.queryByRole('button', { name: 'Resume reading task' })).not.toBeInTheDocument();
+  expect(container.querySelectorAll('.btn.primary')).toHaveLength(1);
+  for (const [id, name] of [['chosen', 'Start speaking task'], ['saved', 'Resume listening task'], ['result', 'View vocabulary task']]) {
+    const action = screen.getByRole('button', { name });
+    expect(action).toHaveClass('line');
+    await userEvent.click(action);
+    expect(mocks.start).toHaveBeenLastCalledWith(id, { force: false, onError: expect.any(Function) });
+  }
   expect(container.querySelector('.study-work-row[data-plan-id="finished"] button')).toBeNull();
   expect(container.querySelector('.study-work-row[data-plan-id="skipped"] button')).toBeNull();
 });
@@ -74,6 +88,9 @@ test('completion summary lists the skills with tasks today',async()=>{
   expect(container.querySelector('.study-summary-total')).toHaveTextContent('2/2 tasks done');
   expect(container.querySelector('.study-summary-minutes')).toHaveTextContent('Estimated work completed: 40 of 40 min · 30 min budget · 10 min over budget');
   expect(container.querySelector('.study-summary .study-over-budget')).toHaveTextContent('10 min over budget');
+  expect(screen.getByText('By skill').closest('details')).not.toHaveAttribute('open');
+  await userEvent.click(screen.getByText('By skill'));
+  expect(screen.getByText('By skill').closest('details')).toHaveAttribute('open');
   expect(screen.getAllByText('1 done')).toHaveLength(2);
   expect(screen.getByRole('heading',{name:'Today is complete'})).toBeInTheDocument();
   expect(container.querySelector('.study-summary')).not.toHaveTextContent(/writing/i);
@@ -134,7 +151,7 @@ test('future and completed active plans cannot displace today or an unfinished e
   mocks.state.examAttempts=[{id:'attempt-old',status:'paused',skill:'listening',mode:'practice',sourceId:'paper',sectionIds:['section'],remainingSeconds:1200,updatedAt:'2020-01-01'}];
   const {container,rerender}=renderPage();expect(within(container.querySelector('.study-next')).getByRole('heading',{name:'speaking task'})).toBeInTheDocument();
   const previous=screen.getByRole('region',{name:'Continue previous tasks'});
-  expect(within(previous).getByRole('link',{name:'Resume'})).toHaveAttribute('href','/listening/section?attempt=attempt-old');
+  expect(within(previous).getByRole('link',{name:'Resume'})).toHaveAttribute('href','/listening/section?attempt=attempt-old&returnTo=%2F%23exam-attempt-attempt-old');
   expect(within(previous).getByRole('heading',{name:'Resume Cambridge 12 · Test 2 · Part 3'})).toBeInTheDocument();
   expect(previous).toHaveTextContent(/Saved \w{3} \d{1,2} \w{3} 20\d\d · 0 answers/);
   expect(previous).not.toHaveTextContent(/min remaining|min left/);
@@ -149,7 +166,62 @@ test('a paused mock shows the time left on its clock and names its test',()=>{
   const previous=screen.getByRole('region',{name:'Continue previous tasks'});
   expect(within(previous).getByRole('heading',{name:'Resume Cambridge 12 · Test 2 mock'})).toBeInTheDocument();
   expect(previous).toHaveTextContent('20 min left');
-  expect(within(previous).getByRole('link',{name:'Resume'})).toHaveAttribute('href','/listening/mock/paper?attempt=mock-1');
+  expect(within(previous).getByRole('link',{name:'Resume'})).toHaveAttribute('href','/listening/mock/paper?attempt=mock-1&returnTo=%2F%23exam-attempt-mock-1');
+});
+
+function ResumeRoutes() {
+  return <Routes>
+    <Route path="/today" element={<TodayPage/>}/>
+    <Route path="/listening/:sectionId" element={<ExamBackLink fallback="/listening"/>}/>
+  </Routes>;
+}
+
+test('standalone resume uses the practice guard and returns to the owned Today entry', async()=>{
+  mocks.state.examAttempts=[{id:'saved:reading',status:'paused',skill:'listening',mode:'practice',sourceId:'paper',sectionIds:['section'],retryOfAttemptId:'original',updatedAt:'2026-10-16T10:00:00Z'}];
+  const before = {url:window.location.href, state:window.history.state};
+  window.history.replaceState(null, '', '/today?entry=menu');
+  const source = '/today?entry=menu#exam-attempt-saved%3Areading';
+  const guard = vi.fn(event=>event.preventDefault());
+  document.addEventListener('fieldbook:before-navigate', guard, {once:true});
+  vi.spyOn(window,'scrollTo').mockImplementation(()=>{});
+  try {
+    render(<BrowserRouter><ResumeRoutes/></BrowserRouter>);
+    const link = screen.getByRole('link',{name:'Resume'});
+    const destination = new URL(link.href);
+    expect(destination.searchParams.get('returnTo')).toBe(source);
+    expect(destination.searchParams.get('retry')).toBe('original');
+    await userEvent.click(link);
+    expect(guard).toHaveBeenCalledTimes(1);
+    expect(window.location.pathname).toBe('/today');
+    const sourceIndex = window.history.state.idx;
+    act(()=>guard.mock.calls[0][0].detail.proceed());
+    expect(window.history.state.idx).toBe(sourceIndex + 1);
+    expect(window.history.state.usr.examReturn.sourceUrl).toBe(source);
+    await userEvent.click(screen.getByRole('link',{name:'Back to Today'}));
+    const card = await screen.findByRole('article');
+    expect(card).toHaveAttribute('id','exam-attempt-saved:reading');
+    expect(window.location.pathname + window.location.search + window.location.hash).toBe(source);
+    expect(window.history.state.idx).toBe(sourceIndex);
+    await waitFor(()=>expect(card).toHaveFocus());
+  } finally {
+    document.removeEventListener('fieldbook:before-navigate', guard);
+    cleanup();
+    window.history.replaceState(before.state, '', before.url);
+  }
+});
+
+test('a direct return URL focuses the original attempt even after another session supersedes it', async()=>{
+  const attempt = {id:'original-attempt',status:'completed',skill:'listening',mode:'practice',sourceId:'paper',sectionIds:['section'],updatedAt:'2026-10-16T10:00:00Z'};
+  mocks.state.examAttempts=[attempt,{...attempt,id:'newer-attempt',status:'active',updatedAt:'2026-10-17T10:00:00Z'}];
+  const source = '/today?entry=reload#exam-attempt-original-attempt';
+  const practice = `/listening/section?${new URLSearchParams({returnTo:source})}`;
+  vi.spyOn(window,'scrollTo').mockImplementation(()=>{});
+  render(<MemoryRouter initialEntries={[practice]}><ResumeRoutes/></MemoryRouter>);
+  await userEvent.click(screen.getByRole('link',{name:'Back to Today'}));
+  const card = await screen.findByRole('article');
+  expect(card).toHaveAttribute('id','exam-attempt-original-attempt');
+  expect(within(card).getByRole('link',{name:'View result'})).toHaveAttribute('href',`/listening/review/original-attempt?${new URLSearchParams({returnTo:source})}`);
+  await waitFor(()=>expect(card).toHaveFocus());
 });
 
 test('Today next task retains a stable focus anchor for practice returns',async()=>{

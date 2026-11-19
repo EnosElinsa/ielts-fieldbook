@@ -102,12 +102,17 @@ for (const theme of ['light', 'dark']) for (const width of [320, 390, 1440]) {
   });
 }
 
-test('mobile Study gives equal access to all four skills and preserves active selection focus', async ({ page }) => {
+test('mobile Practice gives equal access to all four skills and preserves active selection focus', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/reading');
-  const study = page.getByRole('button', { name: 'Study: Reading', exact: true });
-  await study.click();
+  const practice = page.getByRole('button', { name: 'Practice: Reading', exact: true });
+  await practice.click();
   for (const name of ['Listening', 'Reading', 'Writing', 'Speaking']) await expect(page.getByRole('menuitem', { name, exact: true })).toBeVisible();
   await page.getByRole('menuitem', { name: 'Reading', exact: true }).click();
-  await expect(study).toBeFocused();
+  await expect(practice).toBeFocused();
+  await page.getByRole('button', { name: 'More', exact: true }).click();
+  const more = page.getByRole('dialog', { name: 'More' });
+  await expect(more.getByRole('group', { name: 'Reading' }).getByRole('button', { name: 'Questions' })).toBeVisible();
+  await expect(more.getByRole('group', { name: 'Workspace' }).getByRole('button', { name: 'Settings' })).toBeVisible();
+  await expect(more.getByRole('button', { name: /^(Writing|Speaking)$/ })).toHaveCount(0);
 });

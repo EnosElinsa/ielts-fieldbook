@@ -215,8 +215,11 @@ describe('Fieldbook UI', () => {
     renderAt('/write');
     await userEvent.setup().click(screen.getByRole('button', { name: 'More' }));
     const dialog = screen.getByRole('dialog', { name: 'More' });
-    for (const name of ['Questions', 'Practice', 'Review', 'Writing', 'Speaking', 'Progress', 'Settings', 'Account']) expect(within(dialog).getByRole('button', { name })).toBeTruthy();
-    for (const name of ['Today', 'Planning', 'Listening', 'Reading', 'Vocabulary']) expect(within(dialog).queryByRole('button', { name })).toBeNull();
+    const writing = within(dialog).getByRole('group', { name: 'Writing' });
+    const workspace = within(dialog).getByRole('group', { name: 'Workspace' });
+    for (const name of ['Questions', 'Practice', 'Review']) expect(within(writing).getByRole('button', { name })).toBeTruthy();
+    for (const name of ['Progress', 'Settings', 'Account']) expect(within(workspace).getByRole('button', { name })).toBeTruthy();
+    for (const name of ['Today', 'Planning', 'Listening', 'Reading', 'Writing', 'Speaking', 'Vocabulary']) expect(within(dialog).queryByRole('button', { name })).toBeNull();
   });
 
   it('keeps Speaking review selected after a direct Speaking question visit', async () => {

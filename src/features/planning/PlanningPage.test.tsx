@@ -75,6 +75,24 @@ test('missing a wordbook explains allocation without reporting daily goal defici
  expect(container.querySelector('.study-day-stats')).toHaveTextContent('Choose a wordbook');
 });
 
+test('the range controls precede prompts and only the current range identifies today’s focus',async()=>{
+ mocks.state.settings.planning={newWordsPerDay:10};
+ mount();
+ const dates=screen.getByRole('navigation',{name:'Schedule dates'});
+ const wordbook=screen.getByRole('link',{name:'Choose a wordbook'});
+ const task=screen.getByRole('heading',{name:'Chart'}).closest('article');
+ expect(dates.compareDocumentPosition(wordbook)&Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+ expect(dates.compareDocumentPosition(task)&Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+ expect(within(task).getByText("Today's focus")).toBeVisible();
+ expect(screen.getAllByRole('button',{name:'Start',exact:true})).toHaveLength(1);
+ await userEvent.click(within(dates).getByRole('button',{name:'Next week'}));
+ expect(dates).toHaveTextContent('24 – 30 Oct 2026');
+ expect(screen.queryByText(/next seven days|today's focus/i)).not.toBeInTheDocument();
+ expect(screen.queryByRole('heading',{name:'Chart'})).not.toBeInTheDocument();
+ await userEvent.click(within(dates).getByRole('button',{name:'Today'}));
+ expect(screen.getByText("Today's focus")).toBeVisible();
+});
+
 test('future mobile days unfold without losing task actions and linked tasks start expanded',async()=>{
  vi.stubGlobal('matchMedia',()=>({matches:true,addEventListener:vi.fn(),removeEventListener:vi.fn()}));
  try{
@@ -248,7 +266,7 @@ test('a legacy task without an estimate says so and adds no planned time',()=>{
  expect(task).toHaveTextContent('No time estimate');
  expect(task.querySelector('.study-skill')).toHaveTextContent(/^writing$/);
  expect(day.getByLabelText('Daily plan summary')).toHaveTextContent(/^Planned time0 \//);
- expect(container.querySelector('.study-focus')).toHaveTextContent('Next in your schedule · No time estimate');
+ expect(task).toHaveTextContent("Today's focus");
 });
 
 test('a rescheduled task reads Moved from Mon 12 Oct and keeps its details closed',()=>{

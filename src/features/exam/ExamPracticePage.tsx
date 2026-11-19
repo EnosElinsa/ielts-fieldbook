@@ -7,7 +7,7 @@ import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState, type R
 import { InlineLoadingState, PageLoadingState, StateMessage } from '../../components/AsyncState';
 import { useParams, useSearchParams } from 'react-router-dom';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { Pause, Play, Compass, Send, Columns2, Rows3, NotebookPen, Map as MapIcon, MoreHorizontal, FilePlus2, Headphones, Keyboard, Trash2 } from 'lucide-react';
+import { Pause, Play, Compass, Send, Columns2, Rows3, NotebookPen, Map as MapIcon, MoreHorizontal, FilePlus2, Headphones, Keyboard, Trash2, Check } from 'lucide-react';
 import { formatDateTime, plural } from '../../lib/format';
 import type { ExamAsset, ExamQuestion, ExamSkill } from '../../domain/exam/types';
 import { isQuestionAnswered, questionAnsweredSlots, questionEndNumber, questionLabel, questionNumberLabel, questionSlotCount, selectedExamChoices } from '../../domain/exam/questionSlots';
@@ -29,6 +29,10 @@ import { stimulusDocument } from './stimulusDocument';
 import { stimulusChoiceBank } from './stimulusChoiceBank';
 import '../../styles/exam.css';
 import '../../styles/listening-practice.css';
+
+type PracticePanel = 'source' | 'questions' | 'answers';
+const compactToolsQuery = '(max-width: 560px)';
+const singlePanelQuery = '(max-width: 900px)';
 
 export function ExamImage({ asset, label, inline = false }: { asset?: ExamAsset; label: string; inline?: boolean }) {
   const { url, error, reload } = useExamAsset(asset);
@@ -230,7 +234,7 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
       const next = new URLSearchParams(params); next.delete('attempt'); next.set('new', '1'); setParams(next);
     }
   };
-  const [activeSectionId, setActiveSectionId] = useWorkspacePageState(`exam:${skill}:${mode}:${sourceId}:${retryId || ''}:section`, ''); const [focusedQuestion, setFocusedQuestion] = useState(''); const [mobileTab, setMobileTab] = useWorkspacePageState(`exam:${skill}:${mode}:${sourceId}:tab`, skill === 'listening' ? 'questions' : 'source');
+  const [activeSectionId, setActiveSectionId] = useWorkspacePageState(`exam:${skill}:${mode}:${sourceId}:${retryId || ''}:section`, ''); const [focusedQuestion, setFocusedQuestion] = useState(''); const [mobileTab, setMobileTab] = useWorkspacePageState<PracticePanel>(`exam:${skill}:${mode}:${sourceId}:tab`, skill === 'listening' ? 'questions' : 'source', (value): value is PracticePanel => value === 'source' || value === 'questions' || value === 'answers');
   const preferredLayout = (fb.state.settings as { examPractice?: { layoutBySkill?: Partial<Record<ExamSkill, 'integrated' | 'split'>> } }).examPractice?.layoutBySkill?.[skill];
   const [layout, setLayout] = useWorkspacePageState<'integrated' | 'split'>(`exam:${skill}:${mode}:layout`, mode === 'mock' ? 'split' : preferredLayout || 'integrated', (value): value is 'integrated' | 'split' => value === 'integrated' || value === 'split');
   const [layoutError, setLayoutError] = useState('');
@@ -238,6 +242,14 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [openNotes, setOpenNotes] = useState<string[]>([]);
   const [inlineNotesId, setInlineNotesId] = useState('');
+  const [compactTools, setCompactTools] = useState(() => window.matchMedia?.(compactToolsQuery).matches ?? false);
+  useEffect(() => {
+    const media = window.matchMedia?.(compactToolsQuery);
+    if (!media) return;
+    const sync = () => setCompactTools(media.matches);
+    media.addEventListener('change', sync);
+    return () => media.removeEventListener('change', sync);
+  }, []);
   useEffect(() => { setOpenNotes([]); setInlineNotesId(''); setFocusedQuestion(''); }, [attempt?.id]);
   useEffect(() => { if (selectedIds.length && !selectedIds.includes(activeSectionId)) setActiveSectionId(selectedIds[0]); setFocusedQuestion(''); }, [sourceId, selectedIds.join('|')]);
   const activeSection = sections.find(section => section.id === activeSectionId) || sections[0]; const currentQuestions = questions.filter(question => question.sectionId === activeSection?.id); const passages = catalog.passages.filter(passage => passage.sectionId === activeSection?.id);
@@ -250,11 +262,34 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   const sourcePanel = useRef<HTMLDivElement>(null);
   const [sourceScroll, setSourceScroll] = useWorkspacePageState(`exam:${skill}:${mode}:${sourceId}:${retryId || ''}:${activeSection?.id || ''}:source-scroll`, 0, (value): value is number => typeof value === 'number' && Number.isFinite(value) && value >= 0);
   useEffect(() => {
-    if (sourcePanel.current) sourcePanel.current.scrollTop = sourceScroll;
+    if (sourcePanel.current && !window.matchMedia?.(singlePanelQuery).matches) sourcePanel.current.scrollTop = sourceScroll;
   }, [activeSection?.id, mobileTab, source.loading, metadata.loading, attempt?.id]);
+  const questionWorkspace = useRef<HTMLElement>(null);
+  const panelOffsets = useRef(new Map<string, number>());
+  const pendingPanelOffset = useRef<number | null>(null);
+  const activePanel = layout === 'integrated' && mobileTab === 'answers' ? 'questions' : mobileTab;
+  const panelOffsetKey = (panel: PracticePanel) => `${owner}:${attempt?.id}:${activeSection?.id}:${panel === 'source' ? '' : layout}:${panel}`;
+  const selectPanel = (panel: PracticePanel, restorePosition = false) => {
+    if (panel !== activePanel && skill === 'reading' && questionWorkspace.current && window.matchMedia?.(singlePanelQuery).matches) {
+      // Keep the offset within the workspace, even when controls above it change height.
+      const top = questionWorkspace.current.getBoundingClientRect().top;
+      panelOffsets.current.set(panelOffsetKey(activePanel), Math.max(0, -top));
+      const saved = panelOffsets.current.get(panelOffsetKey(panel)) ?? 0;
+      if (restorePosition && (top <= 0 || saved > 0)) pendingPanelOffset.current = saved;
+    }
+    setMobileTab(panel);
+  };
+  useLayoutEffect(() => {
+    const offset = pendingPanelOffset.current;
+    pendingPanelOffset.current = null;
+    if (offset === null || !questionWorkspace.current) return;
+    const top = questionWorkspace.current.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top + offset, behavior: 'instant' });
+  }, [activePanel]);
+  const panels: PracticePanel[] = [...(skill === 'reading' ? ['source' as const] : []), 'questions', ...(layout === 'split' ? ['answers' as const] : [])];
   const unanswered = questions.filter(question => !isQuestionAnswered(question, attempt?.responses[question.id]));
   const focusAnswer = (question: ExamQuestion) => {
-    setActiveSectionId(question.sectionId); setFocusedQuestion(question.id); setMobileTab(layout === 'split' ? 'answers' : 'questions');
+    setActiveSectionId(question.sectionId); setFocusedQuestion(question.id); selectPanel(layout === 'split' ? 'answers' : 'questions');
     requestAnimationFrame(() => { const target = document.getElementById(`exam-inline-${question.id}`) || document.getElementById(`exam-question-${question.id}`); target?.scrollIntoView?.({ block: 'center' }); const input = target?.querySelector<HTMLElement>('input:not([type="hidden"]),[role="combobox"],select,textarea') || target; input?.focus({ preventScroll: true }); });
   };
   const goToUnanswered = () => {
@@ -436,11 +471,19 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
         {unanswered.length > 0 && <button className="btn text" onClick={goToUnanswered}>Next unanswered</button>}
         {mode === 'practice' && <><button className="btn line" onClick={controller.pause} disabled={sessionLocked}>{attempt?.status === 'paused' ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}<span className="exam-tool-label">{attempt?.status === 'paused' ? 'Resume' : 'Pause'}</span></button><button className="btn line" aria-pressed={attempt?.hintsEnabled} onClick={() => update({ hintsEnabled: !attempt?.hintsEnabled })}><Compass size={15} aria-hidden="true" /><span className="exam-tool-label">Method notes</span></button></>}
         <div className="exam-toolbar-end">
-          <div className="exam-layout-controls" role="group" aria-label="Question layout"><button className="exam-layout-option" type="button" aria-label="Integrated view" title="Keep each answer with its question" aria-pressed={layout === 'integrated'} onClick={() => chooseLayout('integrated')}><Rows3 size={16} aria-hidden="true" /><span>Integrated</span></button><button className="exam-layout-option" type="button" aria-label="Split view" title="Show answers in a separate panel" aria-pressed={layout === 'split'} onClick={() => chooseLayout('split')}><Columns2 size={16} aria-hidden="true" /><span>Split</span></button></div>
+          {!compactTools && <div className="exam-layout-controls" role="group" aria-label="Question layout"><button className="exam-layout-option" type="button" aria-label="Integrated view" title="Keep each answer with its question" aria-pressed={layout === 'integrated'} onClick={() => chooseLayout('integrated')}><Rows3 size={16} aria-hidden="true" /><span>Integrated</span></button><button className="exam-layout-option" type="button" aria-label="Split view" title="Show answers in a separate panel" aria-pressed={layout === 'split'} onClick={() => chooseLayout('split')}><Columns2 size={16} aria-hidden="true" /><span>Split</span></button></div>}
           <button type="button" className="btn line" disabled={sessionLocked} onClick={() => void controller.saveAndExit()}>{controller.saving ? 'Saving…' : 'Save & exit'}</button>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild><button type="button" className="btn line exam-more-actions" aria-label="More session actions"><MoreHorizontal size={18} aria-hidden="true" /></button></DropdownMenu.Trigger>
             <DropdownMenu.Portal><DropdownMenu.Content className="dropdown-content exam-session-actions" align="end" sideOffset={6} collisionPadding={12}>
+              {compactTools && <>
+                <DropdownMenu.Label className="dropdown-label">Question layout</DropdownMenu.Label>
+                <DropdownMenu.RadioGroup value={layout} onValueChange={value => chooseLayout(value === 'split' ? 'split' : 'integrated')}>
+                  <DropdownMenu.RadioItem className="dropdown-item" value="integrated"><Rows3 size={16} aria-hidden="true" />Integrated view<DropdownMenu.ItemIndicator className="item-check"><Check size={15} aria-hidden="true" /></DropdownMenu.ItemIndicator></DropdownMenu.RadioItem>
+                  <DropdownMenu.RadioItem className="dropdown-item" value="split"><Columns2 size={16} aria-hidden="true" />Split view<DropdownMenu.ItemIndicator className="item-check"><Check size={15} aria-hidden="true" /></DropdownMenu.ItemIndicator></DropdownMenu.RadioItem>
+                </DropdownMenu.RadioGroup>
+                <DropdownMenu.Separator className="dropdown-separator" />
+              </>}
               <DropdownMenu.Label className="dropdown-label">Session</DropdownMenu.Label>
               {mode === 'practice' && <DropdownMenu.Item className="dropdown-item" disabled={sessionLocked} onSelect={() => void startNewSession()}><FilePlus2 size={16} aria-hidden="true" />New session</DropdownMenu.Item>}
               {mode === 'practice' && skill === 'listening' && activeSection && <DropdownMenu.Item className="dropdown-item" asChild><ExamStudyLink to={`/listening/intensive/${activeSection.id}`}><Headphones size={16} aria-hidden="true" />Open part intensive</ExamStudyLink></DropdownMenu.Item>}
@@ -457,16 +500,16 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
       {mode === 'practice' && attempt?.hintsEnabled && <MethodGuide skill={skill} types={activeSection?.questionTypes} onClose={() => update({ hintsEnabled: false })} />}
       {attempt?.status === 'paused' && <p className="exam-notice" role="status">Practice paused. Switching to the background pauses the timer and recording. Resume when you are ready.</p>}
       {mode === 'mock' && skill === 'listening' && attempt && <ExamMockAudio key={attempt.id} assets={mockAssets} elapsedSeconds={controller.elapsed} startPosition={attempt.audioPosition || 0} completed={attempt.status === 'completed'} onPosition={value => { if (Math.abs(value - (attempt.audioPosition || 0)) >= 3) update({ audioPosition: value }); }} />}
-      <section className="exam-question-workspace" aria-label="Questions and answers">
-      {(skill === 'reading' || layout === 'split') && <div className="exam-mobile-tabs" role="group" aria-label="Practice panels">{[...(skill === 'reading' ? ['source'] : []), 'questions', ...(layout === 'split' ? ['answers'] : [])].map(tab => <button key={tab} aria-pressed={mobileTab === tab} aria-controls={`exam-panel-${tab}`} onClick={() => setMobileTab(tab)}>{tab === 'source' ? 'Passage' : tab === 'answers' ? 'Answers' : layout === 'integrated' ? 'Questions & answers' : 'Questions'}</button>)}</div>}
-      <SourceAnnotations key={`${skill}:${activeSection?.id}`} sourceId={activeSection?.id || ''} skill={skill} mock={mode === 'mock'} disabled={disabled} questions={currentQuestions} focusedQuestion={focusedQuestion} onQuestionChange={setFocusedQuestion} onVocabulary={captureVocabulary} onRevealBlock={blockId => setMobileTab(blockId.startsWith('passage:') ? 'source' : 'questions')} onEvidence={(id, quote) => { if (attempt) update({ evidence: { ...attempt.evidence, [id]: quote } }); }}>
+      <section className="exam-question-workspace" aria-label="Questions and answers" ref={questionWorkspace}>
+      {panels.length > 1 && <div className="exam-mobile-tabs" role="group" aria-label="Practice panels">{panels.map(tab => <button key={tab} type="button" aria-pressed={activePanel === tab} aria-controls={`exam-panel-${tab}`} onClick={() => selectPanel(tab, true)}>{tab === 'source' ? 'Passage' : tab === 'answers' ? 'Answers' : layout === 'integrated' ? 'Questions & answers' : 'Questions'}</button>)}</div>}
+      <SourceAnnotations key={`${skill}:${activeSection?.id}`} sourceId={activeSection?.id || ''} skill={skill} mock={mode === 'mock'} disabled={disabled} questions={currentQuestions} focusedQuestion={focusedQuestion} onQuestionChange={setFocusedQuestion} onVocabulary={captureVocabulary} onRevealBlock={blockId => selectPanel(blockId.startsWith('passage:') ? 'source' : 'questions')} onEvidence={(id, quote) => { if (attempt) update({ evidence: { ...attempt.evidence, [id]: quote } }); }}>
         <div className={`exam-split exam-layout-${layout}${skill === 'listening' && layout === 'integrated' ? ' exam-single-panel' : ''}${skill === 'reading' && layout === 'split' ? ' exam-three-panels' : ''}`}>
-          {skill === 'reading' && <div id="exam-panel-source" ref={sourcePanel} onScroll={event => setSourceScroll(event.currentTarget.scrollTop)} className={`exam-source-panel ${mobileTab === 'source' ? 'mobile-active' : ''}`}>{activeSection && !genericSectionTitle(activeSection.title, sectionLabel, activeSection.part) && <span className="exam-eyebrow">Passage {activeSection.part}</span>}<h3>{activeSection?.title}</h3>{passages.map(passage => <ReadingPassage key={passage.id} passage={passage} />)}</div>}
-          <div id="exam-panel-questions" className={`exam-question-panel ${mobileTab === 'questions' ? 'mobile-active' : ''}`}>
+          {skill === 'reading' && <div id="exam-panel-source" ref={sourcePanel} onScroll={event => { if (!window.matchMedia?.(singlePanelQuery).matches) setSourceScroll(event.currentTarget.scrollTop); }} className={`exam-source-panel ${activePanel === 'source' ? 'mobile-active' : ''}`}>{activeSection && !genericSectionTitle(activeSection.title, sectionLabel, activeSection.part) && <span className="exam-eyebrow">Passage {activeSection.part}</span>}<h3>{activeSection?.title}</h3>{passages.map(passage => <ReadingPassage key={passage.id} passage={passage} />)}</div>}
+          <div id="exam-panel-questions" className={`exam-question-panel ${activePanel === 'questions' ? 'mobile-active' : ''}`}>
             {layout === 'integrated' ? <>{questionNavigation}{renderIntegratedQuestions()}</> : <><h3 className="exam-panel-title">Questions</h3>{currentQuestions.map(renderQuestionMaterial)}</>}
             {catalog.assets.filter(asset => asset.kind === 'image' && asset.sectionId === activeSection?.id && !embeddedAssetIds.has(asset.id) && !questions.some(question => question.assetId === asset.id)).map(asset => <ExamImage key={asset.id} asset={asset} label="Source illustration" />)}
           </div>
-          {layout === 'split' && <div id="exam-panel-answers" className={`exam-question-panel exam-answer-panel ${mobileTab === 'answers' ? 'mobile-active' : ''}`}><h3 className="exam-panel-title">Answers</h3>{questionNavigation}{currentQuestions.map((question, index) => renderAnswer(question, index))}</div>}
+          {layout === 'split' && <div id="exam-panel-answers" className={`exam-question-panel exam-answer-panel ${activePanel === 'answers' ? 'mobile-active' : ''}`}><h3 className="exam-panel-title">Answers</h3>{questionNavigation}{currentQuestions.map((question, index) => renderAnswer(question, index))}</div>}
         </div>
       </SourceAnnotations>
       </section>

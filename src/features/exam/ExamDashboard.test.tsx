@@ -36,14 +36,14 @@ test('reading today resumes a paused mock using its original attempt ID', () => 
   const data = state();
   data.examAttempts = [{ id: 'paused', skill: 'reading', sourceId: 'paper', sectionIds: ['s'], mode: 'mock', status: 'paused', updatedAt: stamp }];
   render(<MemoryRouter><TodayPage /></MemoryRouter>);
-  expect(screen.getByRole('link', { name: 'Resume' })).toHaveAttribute('href', '/reading/mock/paper?attempt=paused');
+  expect(screen.getByRole('link', { name: 'Resume' })).toHaveAttribute('href', '/reading/mock/paper?attempt=paused&returnTo=%2F%23exam-attempt-paused');
 });
 
 test('today retains wrong-only retry scope when resuming an existing part', () => {
   const data = state();
   data.examAttempts = [{ id: 'retry', skill: 'reading', sourceId: 's', sectionIds: ['s'], mode: 'practice', status: 'paused', updatedAt: stamp, retryOfAttemptId: 'original' }];
   render(<MemoryRouter><TodayPage /></MemoryRouter>);
-  expect(screen.getByRole('link', { name: 'Resume' })).toHaveAttribute('href', '/reading/s?attempt=retry&retry=original');
+  expect(screen.getByRole('link', { name: 'Resume' })).toHaveAttribute('href', '/reading/s?attempt=retry&retry=original&returnTo=%2F%23exam-attempt-retry');
 });
 
 test('progress keeps assisted practice and mock marks out of unassisted practice by default', async () => {

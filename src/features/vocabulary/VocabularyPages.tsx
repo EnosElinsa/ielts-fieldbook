@@ -4,7 +4,7 @@ import { normalizeVocabularyScope } from '../../domain/vocabulary/identities';
 import { PanelLoadingState, StateMessage } from '../../components/AsyncState';
 import { SelectField as ThemedSelectField } from '../../components/SelectField';
 import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { NavLink, useParams, useLocation } from "react-router-dom";
 import {
   ArrowLeft,
@@ -12,7 +12,6 @@ import {
   BookOpen,
   Check,
   ChevronDown,
-  History,
   Pencil,
   Plus,
   RotateCcw,
@@ -179,34 +178,11 @@ function dateLabel(value) {
       })
     : "Due now";
 }
-function revealVocabularyTab(nav: HTMLElement, tab: HTMLElement) {
-  const bounds = nav.getBoundingClientRect();
-  const target = tab.getBoundingClientRect();
-  // Scroll only this navigation strip; the document keeps its reading position.
-  if (target.right > bounds.right) nav.scrollLeft += target.right - bounds.right + 6;
-  else if (target.left < bounds.left) nav.scrollLeft -= bounds.left - target.left + 6;
-}
 export function VocabularyNavigation() {
   const { pathname } = useLocation();
   const inStudy = pathname === "/vocabulary/study";
-  const navigation = useRef<HTMLElement>(null);
-  useLayoutEffect(() => {
-    const nav = navigation.current;
-    const active = nav?.querySelector<HTMLElement>('[aria-current="page"]');
-    if (!nav || !active) return;
-    const reveal = () => revealVocabularyTab(nav, active);
-    reveal();
-    if (typeof ResizeObserver === 'undefined') return;
-    const observer = new ResizeObserver(reveal);
-    observer.observe(nav);
-    observer.observe(active);
-    return () => observer.disconnect();
-  }, [pathname]);
   return (
-    <nav className="vocabulary-tabs" aria-label="Vocabulary views" ref={navigation} onFocusCapture={event => {
-      const tab = (event.target as HTMLElement).closest('a');
-      if (tab && event.currentTarget.contains(tab)) revealVocabularyTab(event.currentTarget, tab);
-    }}>
+    <nav className="vocabulary-tabs" aria-label="Vocabulary views">
       {[
         ["/vocabulary", "Overview"],
         ["/vocabulary/wordbooks", "Wordbooks"],
@@ -307,6 +283,12 @@ function VocabularyHomePage() {
   const dueCards = guidance.dueCards;
   const reviewMode = dueCards.some(card => card.mode === mode) ? mode : dueCards[0]?.mode || mode;
   const due = dueCards.filter(card => card.mode === reviewMode);
+  const dueTo = `/vocabulary/review?${new URLSearchParams({ mode: reviewMode, dueOnly: 'true', scheduledOnly: 'true' })}`;
+  const wrongWords = getActiveWrongWords(fb.state);
+  const activeMistakeModes = wrongWords.flatMap(({ wrong }) => Object.entries(wrong.modes || {}))
+    .filter(([, mistake]) => mistake?.active).map(([mistakeMode]) => mistakeMode);
+  const retryMode = activeMistakeModes.includes(mode) ? mode : activeMistakeModes[0] || mode;
+  const retryTo = `/vocabulary/review?${new URLSearchParams({ mode: retryMode, wrongOnly: 'true', dueOnly: 'false' })}`;
   const nextLearning=useMemo(()=>nextHomeLearning(fb.state),[fb.state,fb.vocabularyCatalogRevision,practiceClock]);
   const nextTarget=nextLearning?.target;
   const selectedEntryIds=nextTarget?.entryIds||nextTarget?.cards?.map(card=>card.entryId)||[];
@@ -329,7 +311,7 @@ function VocabularyHomePage() {
     if (saved.planId) params.set('planId', saved.planId);
     resumeTo = `/vocabulary/study?${params}`;
   }
-  const href = saved ? resumeTo : due.length ? `/vocabulary/review?${new URLSearchParams({ mode: reviewMode, dueOnly: 'true', scheduledOnly:'true' })}` : nextLearningUrl;
+  const href = saved ? resumeTo : due.length ? dueTo : nextLearningUrl;
   const action = saved ? 'Continue session' : due.length ? 'Review due words' : nextGroup ? learning?.viewedEntryIds?.length ? 'Continue learning' : 'Start learning' : 'Study wordbooks';
   const title = saved ? 'Continue your session' : due.length ? 'Words due for review' : enrollment ? enrollment.book.title : 'Choose a wordbook';
   const hasLearningHistory = ['vocabularyStates', 'vocabularyEvidence', 'vocabularyReviews', 'vocabularyActivities', 'vocabularySessions', 'wordbookProgress'].some(key => fb.state[key]?.length);
@@ -337,35 +319,38 @@ function VocabularyHomePage() {
   if (firstRun) return <VocabularyLayout showNavigation={false}>
     <div className="page-tools"><h1>Vocabulary</h1></div>
     <section className="vocabulary-home-next" aria-label="Get started with vocabulary">
-      <span className="vocabulary-eyebrow">Your first words</span>
       <h2>Build your vocabulary</h2>
       <p>Choose a wordbook, then learn your first group. Your next learning and review tasks will appear here.</p>
       <Link className="btn primary" to="/vocabulary/wordbooks">Choose a wordbook<ArrowRight size={16} aria-hidden="true"/></Link>
     </section>
   </VocabularyLayout>;
-  return <VocabularyLayout ready={catalogStatus !== 'loading'}>
-    <div className="page-tools"><h1>Vocabulary</h1><Link className="btn line" to="/settings/vocabulary">Practice settings</Link></div>
+  return <VocabularyLayout ready={catalogStatus !== 'loading'} showNavigation={false}>
+    <div className="page-tools vocabulary-home-heading">
+      <h1>Vocabulary</h1>
+      <Link className="vocabulary-home-settings" to="/settings/vocabulary">Practice settings</Link>
+    </div>
+    <VocabularyNavigation />
     <section className={`vocabulary-home-next${showSuggestion?' has-recommendation':''}`} aria-label="Next vocabulary task">
-      <span className="vocabulary-eyebrow">{saved ? `${saved.cardIds.length} words · Session saved` : showSuggestion ? 'Your saved meaning' : due.length ? `${due.length} ${reviewMode} cards due` : nextGroup ? `${selectedEntryIds.length||nextTarget.batchSize} new words selected` : 'Wordbook study'}</span>
       {showSuggestion ? <>
         <div className="vocabulary-home-word"><h2><Link to={`/vocabulary/entry/${encodeURIComponent(suggestion.entry.id)}?${new URLSearchParams({senseId:suggestion.sense.id,returnTo:'/vocabulary'})}`}>{suggestion.entry.term}</Link></h2>
         <p className="vocabulary-home-meaning">{suggestion.sense.definition}</p></div>
-        <VocabularyNextPractice primaryAction recommendation={suggestion.recommendation} to={mode=>practiceUrl(suggestion.entry.id,suggestion.sense.id,{},'/vocabulary',mode)}/>
-        {suggestion.recommendation.status==='waiting' ? <Link className="btn line" to={nextLearningUrl}>{nextGroup?'Continue learning':'Study wordbooks'}<ArrowRight size={16} aria-hidden="true"/></Link> : null}
+        <VocabularyNextPractice headingLevel={3} primaryAction recommendation={suggestion.recommendation} to={mode=>practiceUrl(suggestion.entry.id,suggestion.sense.id,{},'/vocabulary',mode)}/>
+        {suggestion.recommendation.status==='waiting' ? <Link className="btn primary" to={nextLearningUrl}>{nextGroup?'Continue learning':'Study wordbooks'}<ArrowRight size={16} aria-hidden="true"/></Link> : null}
       </> : <>
         <h2>{catalogStatus==='ready'||saved?title:'Your next vocabulary task'}</h2>
-        {nextGroup && !saved && !due.length && catalogStatus==='ready' ? <p>{unitPath(enrollment.book, nextGroup, enrollment.study.hierarchy)}</p> : null}
-        {catalogStatus === 'loading' && !saved ? <PanelLoadingState message="Preparing your vocabulary recommendations..." /> : catalogStatus === 'error' && !saved ? <StateMessage kind="error" message="Vocabulary recommendations could not be loaded." onRetry={() => setRetry(value => value + 1)} /> : !saved&&!due.length&&nextLearning?.plan ? <TaskStartButton plan={nextLearning.plan}/> : <Link className="btn primary" to={href}>{action}<ArrowRight size={16}/></Link>}
+        {saved ? <p>{plural(saved.cardIds.length, 'word')} in your saved session</p> : null}
+        {!saved && !due.length && nextGroup && catalogStatus==='ready' ? <p>{unitPath(enrollment.book, nextGroup, enrollment.study.hierarchy)} · {plural(selectedEntryIds.length || nextTarget.batchSize, 'new word')}</p> : null}
+        {catalogStatus === 'loading' && !saved ? <PanelLoadingState message="Preparing your vocabulary recommendations..." /> : catalogStatus === 'error' && !saved ? <StateMessage kind="error" message="Vocabulary recommendations could not be loaded." onRetry={() => setRetry(value => value + 1)} /> : !saved&&!due.length&&nextLearning?.plan ? <TaskStartButton plan={nextLearning.plan}/> : <Link className="btn primary" to={href}>{action}<ArrowRight size={16} aria-hidden="true"/></Link>}
         {!saved && !due.length && nextGroup && suggestion?.recommendation.status==='waiting' ? <p className="vocabulary-muted vocabulary-home-waiting">Next saved-meaning practice: <time dateTime={suggestion.recommendation.dueAt}>{new Date(suggestion.recommendation.dueAt).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</time>.</p> : null}
       </>}
     </section>
-    <VocabularyStats values={[["Due cards", catalogStatus==='ready'?dueCards.length:'…'], ["Words to retry", getActiveWrongWords(fb.state).length], ["Saved words", (fb.state.vocabulary || []).filter(entry => !entry.tags.includes('archived')).length]]}/>
-    <nav className="vocabulary-home-links" aria-label="More vocabulary tasks">
-      <Link to="/vocabulary/wordbooks"><BookOpen size={18} aria-hidden="true"/><span>Wordbooks</span><ArrowRight size={16} aria-hidden="true"/></Link>
-      <Link to="/vocabulary/review"><RotateCcw size={18} aria-hidden="true"/><span>Review vocabulary</span><ArrowRight size={16} aria-hidden="true"/></Link>
-      <Link to="/vocabulary/words"><Pencil size={18} aria-hidden="true"/><span>Manage my words</span><ArrowRight size={16} aria-hidden="true"/></Link>
-      <Link to="/vocabulary/history"><History size={18} aria-hidden="true"/><span>Session history</span><ArrowRight size={16} aria-hidden="true"/></Link>
-    </nav>
+    <ul className="vocabulary-home-summary" role="list" aria-label="Vocabulary summary">
+      <li>{catalogStatus === 'ready'
+        ? <Link to={dueTo}><span>Due cards</span><strong>{formatCount(dueCards.length)}</strong></Link>
+        : <><span>Due cards</span><strong>…</strong></>}</li>
+      <li><Link to={retryTo}><span>Words to retry</span><strong>{formatCount(wrongWords.length)}</strong></Link></li>
+      <li><span>Saved words</span><strong>{formatCount((fb.state.vocabulary || []).filter(entry => !entry.tags.includes('archived')).length)}</strong></li>
+    </ul>
   </VocabularyLayout>;
 }
 

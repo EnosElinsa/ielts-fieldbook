@@ -219,18 +219,22 @@ test('first-run vocabulary gives one wordbook action and explains the next step'
 test("a learner overview retains separate wordbook study and vocabulary review entry routes", () => {
   fixture();
   fb.current.state.wordbookEnrollments = [];
-  render(<MemoryRouter><VocabularyPage /></MemoryRouter>);
-  const tasks = within(screen.getByRole('navigation', {name:'More vocabulary tasks'}));
+  render(<MemoryRouter initialEntries={['/vocabulary']}><VocabularyPage /></MemoryRouter>);
+  const tasks = within(screen.getByRole('navigation', {name:'Vocabulary views'}));
+  expect(tasks.getByRole('link', { name: 'Overview' })).toHaveAttribute('aria-current', 'page');
   expect(tasks.getByRole("link", { name: 'Wordbooks' })).toHaveAttribute("href", "/vocabulary/wordbooks");
-  expect(tasks.getByRole("link", { name: /Review vocabulary/ })).toHaveAttribute("href", "/vocabulary/review");
+  expect(tasks.getByRole("link", { name: 'Review' })).toHaveAttribute("href", "/vocabulary/review");
+  expect(tasks.getByRole('link', { name: 'My words' })).toHaveAttribute('href', '/vocabulary/words');
+  expect(tasks.getByRole('link', { name: 'History' })).toHaveAttribute('href', '/vocabulary/history');
+  expect(screen.queryByRole('navigation', {name:'More vocabulary tasks'})).not.toBeInTheDocument();
   expect(screen.getByText('Saved words')).toBeInTheDocument();
 });
 
 test('removing all words and wordbooks preserves an existing learner history overview', async () => {
   fb.current.state.vocabularySessions = [submitted(['removed-word'])];
   render(<MemoryRouter><VocabularyPage /></MemoryRouter>);
-  await waitFor(() => expect(screen.getByRole('navigation', {name:'More vocabulary tasks'})).toBeInTheDocument());
-  expect(screen.getByRole('link', {name:'Session history'})).toHaveAttribute('href','/vocabulary/history');
+  await waitFor(() => expect(screen.getByRole('navigation', {name:'Vocabulary views'})).toBeInTheDocument());
+  expect(screen.getByRole('link', {name:'History'})).toHaveAttribute('href','/vocabulary/history');
   expect(screen.queryByRole('region', {name:'Get started with vocabulary'})).not.toBeInTheDocument();
 });
 
@@ -319,30 +323,6 @@ test.each([
 test("group study keeps the wordbook navigation entry active", () => {
   render(<MemoryRouter initialEntries={["/vocabulary/study?bookId=book&unitId=first"]}><VocabularyNavigation /></MemoryRouter>);
   expect(screen.getByRole("link", { name: "Wordbooks" })).toHaveAttribute("aria-current", "page");
-});
-
-test('the active vocabulary tab is brought into its own scroll area without moving the page', () => {
-  const bounds = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function(this: HTMLElement) {
-    return { left: this.tagName === 'NAV' ? 0 : 130, right: this.tagName === 'NAV' ? 100 : 180, width: this.tagName === 'NAV' ? 100 : 50, top: 0, bottom: 44, height: 44, x: 0, y: 0, toJSON: () => ({}) };
-  });
-  try {
-    render(<MemoryRouter initialEntries={['/vocabulary/history']}><VocabularyNavigation /></MemoryRouter>);
-    expect(screen.getByRole('navigation', { name: 'Vocabulary views' }).scrollLeft).toBeGreaterThan(0);
-  } finally { bounds.mockRestore(); }
-});
-
-test('keyboard focus reveals an offscreen vocabulary tab before navigation', () => {
-  render(<MemoryRouter initialEntries={['/vocabulary/entry/word']}><VocabularyNavigation /></MemoryRouter>);
-  const nav = screen.getByRole('navigation', { name: 'Vocabulary views' });
-  const history = within(nav).getByRole('link', { name: 'History' });
-  vi.spyOn(nav, 'getBoundingClientRect').mockReturnValue({ left: 18, right: 302 } as DOMRect);
-  vi.spyOn(history, 'getBoundingClientRect').mockReturnValue({ left: 287, right: 339 } as DOMRect);
-  fireEvent.focus(history);
-  expect(nav.scrollLeft).toBe(43);
-  const overview = within(nav).getByRole('link', { name: 'Overview' });
-  vi.spyOn(overview, 'getBoundingClientRect').mockReturnValue({ left: 0, right: 63 } as DOMRect);
-  fireEvent.focus(overview);
-  expect(nav.scrollLeft).toBe(19);
 });
 
 test("failed enrollment save offers an actionable error", async () => {

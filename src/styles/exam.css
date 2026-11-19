@@ -558,6 +558,7 @@
   .exam-bank .exam-intro { margin-bottom:12px; padding-bottom:18px; }
 }
 .exam-paper-list { display: grid; gap: 14px; }
+.exam-toolbar .search::placeholder { color: var(--muted); opacity: 1; }
 .exam-bank .exam-paper { display: flex; flex-direction: column; margin-top: 0; padding: 16px 20px 6px; background: var(--sheet); border-radius: 10px; }
 .exam-bank .exam-paper > header { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding-bottom: 12px; }
 .exam-paper-title { flex: 1 1 180px; min-width: 0; }
@@ -583,13 +584,21 @@
 @container exam-parts (min-width: 480px) { .exam-part-row:has(.exam-part-actions > a + a + a) { grid-template-areas: "name actions" "meta meta" "history history"; } }
 .exam-recent-list { grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); }
 .exam-recent-list .exam-eyebrow { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-@container exam-parts (max-width: 479px) {
+@container exam-parts (350px < width < 480px) {
   /* One link: the title shares the first line with the actions. */
   .exam-part-row { grid-template-areas: "name actions" "meta meta" "history history"; row-gap: 4px; }
   /* Several links: the details come first and the actions get their own line. */
   .exam-part-row:has(.exam-part-actions > a + a) { grid-template-columns: auto minmax(0,1fr); grid-template-areas: "name meta" "actions actions" "history history"; column-gap: 12px; row-gap: 6px; }
   .exam-part-row:has(.exam-part-actions > a + a) > :is(.exam-part-name,.exam-part-meta) { align-self: baseline; }
   .exam-part-row:has(.exam-part-actions > a + a) .exam-part-status { margin-right: auto; }
+}
+@container exam-parts (max-width: 350px) {
+  .exam-part-row { grid-template-columns: minmax(0,1fr); grid-template-areas: "name" "meta" "actions" "history"; row-gap: 5px; }
+  .exam-part-actions { justify-content: flex-start; }
+  .exam-part-status { margin-inline-end: auto; padding-inline-start: 0; }
+  .exam-part-status:is(.is-active,.is-scored) { padding-inline-start: 9px; }
+  .exam-part-actions .exam-source-status { flex: 1 1 100%; max-width: none; }
+  .exam-part-actions:has(.exam-source-status) .exam-part-favourite { margin-inline-start: auto; }
 }
 @media(min-width:1200px) { .exam-paper-list { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media(max-width:740px) {
@@ -613,6 +622,7 @@
 .exam-practice-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0; padding: 8px; border: 1px solid var(--rule); border-radius: 10px; background: var(--sheet); }
 .exam-practice-toolbar .exam-part-tabs { padding-right: 4px; }
 .exam-toolbar-end { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.exam-toolbar-end > .btn { flex: none; white-space: nowrap; }
 .exam-practice-toolbar .exam-layout-option { min-width: 36px; padding: 7px; }
 .exam-more-actions { width: 38px; padding: 8px; }
 .exam-session-actions .exam-discard-action { color: var(--red); }
@@ -654,6 +664,7 @@
   /* Pause and Method notes keep their names for assistive technology; phones show the icons. */
   .exam-practice-toolbar .exam-tool-label { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
   .exam-practice-toolbar .btn:has(.exam-tool-label) { min-width: 44px; padding-inline: 10px; }
+  .exam-session-actions .dropdown-item { min-height: 44px; }
 }
 
 /* Results: one face for the score, notes folded until needed. */
@@ -717,6 +728,10 @@
 }
 @media(max-width:900px) {
   .exam-workspace-reading .exam-source-panel { position: static; min-height: 0; max-height: none; overflow: visible; }
+  .exam-workspace-reading .exam-question-workspace { --exam-panel-switch-height: 57px; overflow-anchor: none; }
+  .exam-workspace-reading .exam-mobile-tabs { position: sticky; top: 0; z-index: 5; padding-block: 6px; border-radius: 7px 7px 0 0; background: var(--sheet); }
+  .exam-workspace-reading .exam-mobile-tabs button { min-height: 44px; padding-block: 4px; }
+  .exam-workspace-reading .exam-question-nav { top: var(--exam-panel-switch-height); }
 }
 @media(max-width:560px) {
   .exam-passage p { font-size: 17px; line-height: 1.85; }
