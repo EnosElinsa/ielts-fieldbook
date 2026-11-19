@@ -58,6 +58,79 @@ test('an older frozen shed batch teaches its assigned meaning without creating a
   expect(JSON.parse(assessment.searchParams.get('batchCards')!)).toEqual(cards);
   expect(mocks.fb.state).toEqual(before);
 });
+
+function legacyTravelBatch() {
+  const released = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
+  Object.assign(VOCABULARY_CATALOG, released);
+  const bookId = 'ielts-vocabulary';
+  const unitId = 'ielts-vocabulary-chapter-14-group-01';
+  const entries = ['jet', 'flight', 'pilot'].map(term => released.entries.find((row: any) => row.term === term));
+  const cards = entries.map(entry => ({ entryId: entry.id, senseId: entry.senses[0].id }));
+  mocks.fb.state.settings.vocabulary = { mode: 'definition' };
+  return { entries, cards, bookId, unitId, url: `/vocabulary/wordbooks/${bookId}/groups/${unitId}/learn` };
+}
+
+test('an old unassigned learning link uses the travel meanings in cards, list, details and assessment', async () => {
+  const { entries, cards, bookId, unitId, url } = legacyTravelBatch();
+  const query = new URLSearchParams({ word: entries[0].id, selectedEntryIds: JSON.stringify(entries.map(entry => entry.id)), batch: '0', batchSize: '3', batchCards: JSON.stringify(cards) });
+  const before = structuredClone(mocks.fb.state);
+  mount(`${url}?${query}`);
+  await screen.findByRole('heading', { name: 'jet' });
+  expect(screen.getByText('An airplane powered by jet engines.')).toBeVisible();
+  expect(screen.getByText('The passenger jet landed safely in heavy rain.')).toBeVisible();
+  const detail = new URL(screen.getByRole('link', { name: 'Word details' }).getAttribute('href')!, 'https://local.test');
+  const expected = entries.map(entry => ({ entryId: entry.id, senseId: resolveVocabularyLearningContext(entry, { bookId, unitId }).sense!.id }));
+  expect(detail.searchParams.get('senseId')).toBe(expected[0].senseId);
+  await userEvent.click(screen.getByRole('button', { name: 'List' }));
+  const list = within(screen.getByRole('region', { name: 'Batch word list' }));
+  expect(list.getByText('A journey made by an aircraft.')).toBeVisible();
+  expect(list.getByText('A person who operates the controls of an aircraft.')).toBeVisible();
+  const assessment = new URL(screen.getByRole('link', { name: 'Start meaning recall · 3 words' }).getAttribute('href')!, 'https://local.test');
+  expect(JSON.parse(assessment.searchParams.get('batchCards')!)).toEqual(expected);
+  expect(mocks.fb.state).toEqual(before);
+});
+
+test('a direct dictionary choice stays assigned when navigating a corrected free batch', async () => {
+  const { entries, cards, url } = legacyTravelBatch();
+  const query = new URLSearchParams({ word: entries[0].id, sense: cards[0].senseId, selectedEntryIds: JSON.stringify(entries.map(entry => entry.id)), batch: '0', batchSize: '3', batchCards: JSON.stringify(cards) });
+  mount(`${url}?${query}`);
+  await screen.findByRole('heading', { name: 'jet' });
+  expect(screen.getByText(entries[0].senses[0].definition)).toBeVisible();
+  await userEvent.click(screen.getByRole('button', { name: 'Next word' }));
+  await screen.findByRole('heading', { name: 'flight' });
+  expect(screen.getByText('A journey made by an aircraft.')).toBeVisible();
+  await userEvent.click(screen.getByRole('button', { name: 'Previous word' }));
+  expect(screen.getByText(entries[0].senses[0].definition)).toBeVisible();
+});
+
+test('a planned travel batch can adopt the syllabus even when an old dictionary sense is unavailable', async () => {
+  const { entries, cards, bookId, unitId, url } = legacyTravelBatch();
+  const group = { bookId, unitId };
+  const flyer = entries[1];
+  const teaching = resolveVocabularyLearningContext(flyer, group).sense!;
+  Object.assign(VOCABULARY_CATALOG, {
+    entries: VOCABULARY_CATALOG.entries.map(entry => entry.id === flyer.id ? { ...entry, senses: [teaching] } : entry),
+  });
+  const target = { type: 'vocabulary', mode: 'learning-batch', assessmentMode: 'definition', selectionPolicy: 'exact', ...group, batchIndex: 0, batchSize: 3, cards };
+  mocks.fb.state.plans = [{ id: 'travel-task', kind: 'vocabulary', status: 'in_progress', target }];
+  vi.spyOn(vocabularySessionDrafts, 'list').mockResolvedValue([]);
+  mocks.fb.mutatePlans = vi.fn(async (mutate: (next: any) => void) => {
+    const next = structuredClone(mocks.fb.state);
+    mutate(next);
+    mocks.fb.state = next;
+    mocks.fb.stateRef.current = next;
+    return true;
+  });
+
+  mount(`${url}?planId=travel-task&word=${flyer.id}`);
+  await screen.findByRole('heading', { name: 'flight' });
+  expect(screen.getByText('A journey made by an aircraft.')).toBeVisible();
+  await userEvent.click(screen.getByRole('button', { name: 'Update batch meanings' }));
+  const assessment = new URL((await screen.findByRole('link', { name: 'Start meaning recall · 3 words' })).getAttribute('href')!, 'https://local.test');
+  expect(assessment.searchParams.get('planId')).toBe('travel-task');
+  expect(JSON.parse(assessment.searchParams.get('batchCards')!)).toEqual(entries.map(entry => ({ entryId: entry.id, senseId: resolveVocabularyLearningContext(entry, group).sense!.id })));
+  expect(mocks.fb.state.plans[0].meaningUpdates[0].before).toEqual(cards);
+});
 test('planned learning has one assigned test and keeps optional group practice separate', async () => {
   const batch=buildLearningBatch(mocks.fb.state,'book','group',0,10,'definition');
   mocks.fb.state.plans=[{id:'planned',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',...batch.selection,cards:batch.selection.cards}}];

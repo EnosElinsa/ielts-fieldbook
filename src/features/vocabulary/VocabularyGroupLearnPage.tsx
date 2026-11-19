@@ -23,9 +23,10 @@ import { getLearnedVocabularyIds, vocabularyGroupProgress } from '../../domain/v
 import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
 import { availableUnitPracticeModes } from '../../domain/vocabulary/selection';
 import { buildLearningBatch, learningBatchParams } from '../../domain/vocabulary/learningBatch';
-import { previewLearningMeaningUpdate, updateLearningPlanMeanings } from '../../domain/vocabulary/learningMeaningUpdate';
+import { currentGroupLearningRef, previewLearningPlanMeaningUpdate, updateLearningPlanMeanings } from '../../domain/vocabulary/learningMeaningUpdate';
 import { readVocabularyDraft } from '../../storage/vocabularyDrafts';
 import { vocabularySessionDrafts } from '../../storage/vocabularySessionDrafts';
+import type { StudyPlan } from '../../domain/plans';
 import type { VocabularyStore } from '../../domain/vocabulary/types';
 import { VocabularyNavigation } from './VocabularyPages';
 import { Pronunciation } from './Pronunciation';
@@ -45,6 +46,7 @@ export function VocabularyGroupLearnPage() {
   const [params, setParams] = useVocabularySearchParams();
   const latestParams = useRef(params); latestParams.current = params;
   const planId = params.get('planId');
+  const planRow = (fb.state.plans as StudyPlan[] | undefined)?.find(plan => plan.id === planId);
   const requestedPlan = vocabularyLearningPlan(fb.state, planId) || boundVocabularyAssessment(fb.state, planId);
   const boundPlan = requestedPlan?.target.bookId === bookId && requestedPlan.target.unitId === unitId ? requestedPlan : undefined;
   const exactCards=boundPlan?.target.mode==='learning-batch'&&boundPlan.target.selectionPolicy==='exact'?boundPlan.target.cards:undefined;
@@ -52,7 +54,7 @@ export function VocabularyGroupLearnPage() {
   const requestedSize = Number(boundPlan?.target.batchSize ?? params.get('batchSize'));
   const BATCH_SIZE = exactCards?.length || (Number.isSafeInteger(requestedSize) && requestedSize >= 1 && requestedSize <= 50 ? requestedSize : preferences.learningBatchSize);
   const { status: catalogStatus, retry: retryCatalog } = useVocabularyCatalog(fb.loadVocabularyCatalog, bookId, unitId);
-  const knownPlan = (fb.state.plans as {id:string}[] | undefined)?.some(plan => plan.id === planId);
+  const knownPlan = Boolean(planRow);
   const planReadKey = JSON.stringify([owner, planId]);
   const [planRead, setPlanRead] = useState<{key:string;status:'ready'|'error'}>();
   const [planRetry, setPlanRetry] = useState(0);
@@ -190,15 +192,20 @@ export function VocabularyGroupLearnPage() {
         const displayed = resolveVocabularyLearningContext(word.entry, { bookId, unitId, senseId: requestedSense }).sense;
         if (displayed) frozen = frozen.map(ref => ref.entryId === word.entry.id ? { ...ref, senseId: displayed.id } : ref);
       }
+      if (!boundPlan) {
+        const chosen = new Set(params.getAll('chosenMeaning'));
+        if (requestedSense && word) chosen.add(word.entry.id);
+        frozen = frozen.map(ref => chosen.has(ref.entryId) ? ref : currentGroupLearningRef(state, { bookId, unitId }, ref));
+      }
       frozenBatches.current.set(identity, frozen);
       return buildLearningBatch(state, bookId, unitId, boundPlan?.target.batchIndex ?? batch, boundPlan?.target.batchSize ?? BATCH_SIZE, boundPlan?.target?.assessmentMode || preferences.mode, frozen);
     } catch { return null; }
   }, [state, bookId, unitId, batch, BATCH_SIZE, batchScope, preferences.mode, status, words.length, word?.entry.id, params.toString(), boundPlan]);
   const boundBatch = Boolean(boundVocabularyAssessment(fb.state, planId) && boundPlan && currentBatch && currentBatch.mode === boundPlan.target.assessmentMode && JSON.stringify(currentBatch.selection.cards) === JSON.stringify(boundPlan.target.cards));
   const meaningUpdate = useMemo(() => {
-    if (!boundBatch || !currentBatch || completedTask || state.vocabularySessions?.some(session => session.planId === planId) || (fb.state.plans as any[])?.find(plan => plan.id === planId)?.target?.selectedMeanings?.length) return;
-    try { return previewLearningMeaningUpdate(state, currentBatch.selection, currentBatch.mode); } catch { return; }
-  }, [state, boundBatch, currentBatch, completedTask, planId]);
+    if (status !== 'ready' || !boundPlan) return;
+    try { return previewLearningPlanMeaningUpdate(state, planRow); } catch { return; }
+  }, [state, status, boundPlan, planRow]);
   const previewingMeanings = Boolean(meaningUpdate && keepTaskMeanings !== meaningUpdateKey);
   const meaningUpdateBusy = meaningUpdateStatus?.key === meaningUpdateKey && meaningUpdateStatus.busy;
   const meaningUpdateError = meaningUpdateStatus?.key === meaningUpdateKey ? meaningUpdateStatus.error : '';
@@ -206,7 +213,7 @@ export function VocabularyGroupLearnPage() {
     if (!owner || owner !== accountId() || !planId || !meaningUpdate || updatingMeanings.current) return;
     updatingMeanings.current = true;
     setMeaningUpdateStatus({key:meaningUpdateKey,busy:true});
-    const expected = structuredClone((fb.state.plans as any[])?.find(plan => plan.id === planId)?.target);
+    const expected = structuredClone(planRow?.target);
     let updated: ReturnType<typeof updateLearningPlanMeanings> | undefined;
     try {
       const drafts = await vocabularySessionDrafts.list(owner);
@@ -249,7 +256,12 @@ export function VocabularyGroupLearnPage() {
     viewedRef.current = nextViewed;
     setViewed(nextViewed); setCurrentId(nextId);
     if (nextId !== word.entry.id) setRevealedKey('');
-    const next = new URLSearchParams(params); next.set('word', nextId); if(nextId!==word.entry.id) next.delete('sense');
+    const next = new URLSearchParams(params);
+    next.set('word', nextId);
+    if (nextId !== word.entry.id) {
+      if (!boundPlan && next.has('sense') && !next.getAll('chosenMeaning').includes(word.entry.id)) next.append('chosenMeaning', word.entry.id);
+      next.delete('sense');
+    }
     const nextBatch = Math.floor(index / BATCH_SIZE);
     const nextRefs = exactCards || frozenBatches.current.get(`${batchScope}:${nextBatch}`) || words.slice(nextBatch * BATCH_SIZE, (nextBatch + 1) * BATCH_SIZE).map(row => ({entryId:row.entry.id,senseId:row.resolved.sense?.id || ''}));
     next.set('batch', String(exactCards ? boundPlan!.target.batchIndex : nextBatch)); next.set('batchSize', String(exactCards ? boundPlan!.target.batchSize : BATCH_SIZE)); next.set('batchCards', JSON.stringify(nextRefs));
@@ -314,7 +326,7 @@ export function VocabularyGroupLearnPage() {
       {!word ? <p>No active words are available in this group.</p> : <div className="vocabulary-learning-workspace">
         <div className="vocabulary-learning-batches"><span>Batch {batch+1} of {batches} · Words {batch*BATCH_SIZE+1}–{Math.min((batch+1)*BATCH_SIZE,words.length)}</span>{batches>1&&<div ref={batchNavigation} role="group" aria-label="Learning batches">{Array.from({length:batches},(_,i)=><button key={i} className="btn line" aria-label={`Batch ${i+1}: words ${i*BATCH_SIZE+1}–${Math.min((i+1)*BATCH_SIZE,words.length)}`} aria-current={batch===i?'true':undefined} onClick={()=>{if(batch!==i)navigateTo(i*BATCH_SIZE);}}>{i+1}</button>)}</div>}</div>
         {meaningUpdate && <aside className="vocabulary-learning-update" aria-label="Batch meaning update">
-          <p id="batch-meaning-update">{previewingMeanings ? `Previewing current group meanings for this ${currentBatch!.cards.length}-word task.` : 'Using the original task meanings.'}</p>
+          <p id="batch-meaning-update">{previewingMeanings ? `Previewing current group meanings for this ${meaningUpdate.batch.cards.length}-word task.` : 'Using the original task meanings.'}</p>
           <div><button className="btn primary" disabled={meaningUpdateBusy} onClick={() => void updateBatchMeanings()}>{meaningUpdateBusy ? 'Updating batch…' : 'Update batch meanings'}</button><button className="btn text" disabled={meaningUpdateBusy} onClick={() => setKeepTaskMeanings(previewingMeanings ? meaningUpdateKey : '')}>{previewingMeanings ? 'Use original task meanings' : 'Preview group meanings'}</button></div>
           {meaningUpdateError && <p role="alert">{meaningUpdateError}</p>}
         </aside>}
@@ -369,7 +381,7 @@ export function VocabularyGroupLearnPage() {
             <div className="vocabulary-learning-progress-track" aria-hidden="true"><span style={{transform:`scaleX(${batchWords.length ? batchViewed/batchWords.length : 0})`}}/></div>
             {firstUnviewedIndex >= 0 && firstUnviewedIndex !== position ? <button className="btn text" onClick={() => navigateTo(firstUnviewedIndex)}>Continue learning this batch<ArrowRight size={14}/></button> : null}
           </div>
-          <VocabularyLearningAssessment key={`${key}:${batch}:${BATCH_SIZE}`} batch={currentBatch} assessments={assessments} groupWords={sourceWords.length} bound={boundBatch} blocked={previewingMeanings || !selectedSense} blockedDescriptionId={previewingMeanings ? 'batch-meaning-update' : undefined} batchUrl={batchAssessmentUrl} groupUrl={assessmentUrl}/>
+          <VocabularyLearningAssessment key={`${key}:${batch}:${BATCH_SIZE}`} batch={previewingMeanings ? meaningUpdate!.batch : currentBatch} assessments={assessments} groupWords={sourceWords.length} bound={boundBatch || previewingMeanings} blocked={previewingMeanings || !selectedSense} blockedDescriptionId={previewingMeanings ? 'batch-meaning-update' : undefined} batchUrl={batchAssessmentUrl} groupUrl={assessmentUrl}/>
           <Link className="btn text" to={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}/groups/${encodeURIComponent(unitId)}/words`}>View group words<ArrowRight size={14}/></Link>
         </section>
       </div>}

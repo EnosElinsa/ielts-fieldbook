@@ -1803,6 +1803,29 @@ test('empty review save failure and restore retain dynamic semantics for newly e
   expect(fieldbook.state.plans[0]).toMatchObject({status:'in_progress',target:{binding:'frozen',cards:[{entryId:'newly-due'}]}});
 });
 
+test('Planning opens a correctable travel batch with its original targets when one former sense is missing', async () => {
+  const released = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
+  const curriculum = JSON.parse(readFileSync('src/domain/vocabulary/groupCurriculumTopicsB.json', 'utf8'));
+  const bookId = 'ielts-vocabulary';
+  const unitId = 'ielts-vocabulary-chapter-14-group-01';
+  const flight = released.entries.find(entry => entry.term === 'flight');
+  const teaching = curriculum.find(row => row.entryId === flight.id && row.bookId === bookId && row.unitId === unitId).sense;
+  const target = { type: 'vocabulary', mode: 'learning-batch', selectionPolicy: 'exact', assessmentMode: 'definition', bookId, unitId, batchIndex: 0, batchSize: 10, cards: [{ entryId: flight.id, senseId: flight.senses[0].id }] };
+  mocks.releasedRead.mockResolvedValue({
+    books: released.books.filter(book => book.id === bookId),
+    units: released.units.filter(unit => unit.id === unitId),
+    memberships: released.memberships.filter(member => member.unitId === unitId && member.entryId === flight.id),
+    entries: [{ ...flight, senses: [teaching] }],
+  });
+  await mount('/planning');
+  await act(async () => { await fieldbook.persist(draft => { draft.plans = [{ id: 'legacy-flight', kind: 'vocabulary', skill: 'vocabulary', status: 'pending', target }]; }); });
+  await act(async () => { expect(await fieldbook.startPlan('legacy-flight')).toBe(true); });
+  const destination = new URL(currentPath, 'https://fieldbook.local');
+  expect(destination.pathname).toBe(`/vocabulary/wordbooks/${bookId}/groups/${unitId}/learn`);
+  expect(destination.searchParams.get('planId')).toBe('legacy-flight');
+  expect(fieldbook.state.plans[0].target).toEqual(target);
+});
+
 test('a prospective book-wide learning ordinal resolves across eligible group batches',async()=>{
   const groups=[{id:'ordinal-first',bookId:'ordinal-book',kind:'group',order:1,entryIds:[]},{id:'ordinal-second',bookId:'ordinal-book',kind:'group',order:2,entryIds:[]}];
   const members=[];
