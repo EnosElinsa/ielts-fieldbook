@@ -346,22 +346,16 @@ export function WritingDeskPage() {
                 <span className="count">{paragraphs === 1 ? '1 paragraph' : `${paragraphs} paragraphs`}</span>
               ) : null}
             </div>
-            <div className="btn-row">
+            <div className="btn-row writing-editor-controls" role="group" aria-label="Writing tools">
               {iconButton('Undo', Undo2, () => restore('undo'), !history.canUndo)}
               {iconButton('Redo', Redo2, () => restore('redo'), !history.canRedo)}
               <button className="btn line" type="button" onClick={() => { if (!timerSeconds) setTimerSeconds(selected.type === '1' ? 1200 : 2400); setRunning((r) => !r); }}>
                 {running ? <Pause size={15} /> : <Play size={15} />}{running ? 'Pause' : 'Start timer'}
               </button>
-              <button
-                className="btn line"
-                type="button"
-                onClick={() => {
-                  setRunning(false);
-                  setTimerSeconds(selected.type === '1' ? 1200 : 2400);
-                }}
-              >
-                <RotateCcw size={15} /> Reset
-              </button>
+              {iconButton('Reset timer', RotateCcw, () => {
+                setRunning(false);
+                setTimerSeconds(selected.type === '1' ? 1200 : 2400);
+              })}
             </div>
           </div>
           <details key={selected.id} className="writing-answer-prompt"><summary>Task prompt</summary><WritingTaskPrompt prompt={selected.prompt} image={image} /></details>

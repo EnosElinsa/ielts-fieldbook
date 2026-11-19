@@ -1,5 +1,6 @@
 import { SelectField } from './SelectField';
 import { House, Library, PencilLine, RotateCcw, ChartNoAxesCombined, NotebookTabs, CircleUserRound, Mic2, Settings2 } from 'lucide-react';
+export { DateField } from './DateField';
 
 export function FilterMenu({ label, value, options, onChange, disabled }: {
   label:string; value:string; options:{value:string;label:string;disabled?:boolean}[];
@@ -9,17 +10,6 @@ export function FilterMenu({ label, value, options, onChange, disabled }: {
   const unknown = value != null && value !== '' && !options.some(option => option.value === value);
   const choices = unknown ? [...options, { value, label: `${label}: ${value}`, disabled: true }] : options;
   return <div className="filter-menu"><SelectField aria-label={label} value={value} options={choices} onValueChange={onChange} disabled={disabled}/></div>;
-}
-
-/** Native date editing keeps browser keyboard, locale and assistive-technology support. */
-export function DateField({ id, label, value, onChange, min, max }: {
-  id: string; label: string; value: string; onChange: (value: string) => void;
-  min?: string; max?: string;
-}) {
-  return <div className="filter-menu date-field"><input id={id} type="date" className="filter-trigger" aria-label={label}
-    value={value} min={min} max={max} onChange={event => {
-      if (event.currentTarget.validity.valid) onChange(event.currentTarget.value);
-    }} /></div>;
 }
 
 export function Empty({

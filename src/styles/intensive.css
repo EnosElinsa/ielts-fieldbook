@@ -24,7 +24,7 @@
 .intensive-layout.is-single-sentence { grid-template-columns:minmax(0,1fr); max-inline-size:1000px; margin-inline:auto; }
 .intensive-sentences { position: sticky; top: 90px; max-height: 75vh; overflow: auto; }
 .intensive-sentence { width: 100%; display: flex; justify-content: space-between; text-align: left; gap: 8px; padding: 12px 8px; border: 0; border-bottom: 1px solid var(--rule); color: inherit; background: transparent; cursor: pointer; }
-.intensive-sentence.active { background: var(--soft-blue); color: var(--blue); box-shadow: inset 3px 0 var(--blue); }
+.intensive-sentence.active { background: var(--soft-blue); color: var(--blue); font-weight: 700; }
 .intensive-sentence:hover { background: var(--surface-hover); }
 .intensive-sentence.active:hover { background: var(--soft-blue); }
 .intensive-sentence:focus-visible { outline-offset: -2px; }
@@ -217,10 +217,10 @@
 .intensive-listening-review > details { margin-top: 24px; border-top: 1px solid var(--rule); padding-top: 16px; }
 .intensive-listening-review > details > summary { min-height: 44px; cursor: pointer; }
 .intensive-review-transcript { display: grid; justify-items: start; gap: 1rem; margin-block: 1.5rem; }
-.intensive-review-transcript > blockquote { box-sizing: border-box; margin: 0; padding: 1rem 1.25rem; max-inline-size: 70ch; border-inline-start: 3px solid var(--blue); border-radius: 0 6px 6px 0; background: var(--surface-soft); font-size: 1rem; line-height: 1.75; overflow-wrap: anywhere; text-wrap: pretty; }
+.intensive-review-transcript > blockquote { box-sizing: border-box; margin: 0; padding: 1rem 1.25rem; max-inline-size: 70ch; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface-soft); font-size: 1rem; line-height: 1.75; overflow-wrap: anywhere; text-wrap: pretty; }
 .intensive-review-transcript > blockquote[hidden] { display: none; }
 .intensive-next-review { padding: 12px 14px; background: var(--soft-green); border-radius: 6px; }
-.intensive-next-review.is-due { background: var(--soft-blue); border-left: 3px solid var(--blue); }
+.intensive-next-review.is-due { background: var(--soft-blue); color: var(--blue); }
 .intensive-workbench .intensive-review-choice { display: flex; align-items: flex-start; gap: 10px; margin-block: 18px 8px; min-height: 44px; padding: 12px 14px; border: 1px solid var(--rule); border-radius: 6px; background: var(--sheet); font-size: 14px; line-height: 1.5; cursor: pointer; }
 .intensive-review-choice > input[type=checkbox] { flex: none; width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--blue-dark); }
 .intensive-review-choice > span { min-width: 0; }

@@ -142,17 +142,15 @@ test('resetting filters restores the full history, first page and empty selectio
   expect(reset).toBeDisabled();
 });
 
-test('date filters preserve ISO values, clearing and native range limits',async()=>{
+test('date filters preserve ISO values, clearing and range limits',async()=>{
   mount();await screen.findByText('Historical task 0');
-  expect(screen.getByLabelText('From')).toHaveAttribute('type','date');
+  expect(screen.getByLabelText('From')).toHaveAttribute('placeholder','YYYY-MM-DD');
   chooseDate('From','21 October 2026');
   expect(screen.getByLabelText('From')).toHaveValue('2026-10-21');
-  expect(screen.getByLabelText('To')).toHaveAttribute('min','2026-10-21');
   chooseDate('To','20 October 2026');
   expect(mocks.fb.loadPlanningHistoryPage).not.toHaveBeenLastCalledWith(expect.objectContaining({to:'2026-10-20'}));
   chooseDate('To','22 October 2026');
   await waitFor(()=>expect(mocks.fb.loadPlanningHistoryPage).toHaveBeenLastCalledWith(expect.objectContaining({from:'2026-10-21',to:'2026-10-22'})));
-  expect(screen.getByLabelText('From')).toHaveAttribute('max','2026-10-22');
   chooseDate('From','23 October 2026');
   expect(mocks.fb.loadPlanningHistoryPage).not.toHaveBeenLastCalledWith(expect.objectContaining({from:'2026-10-23'}));
   chooseDate('From','');

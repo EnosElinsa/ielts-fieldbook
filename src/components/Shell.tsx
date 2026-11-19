@@ -112,25 +112,24 @@ function pathTopicId(pathname: string) {
 
 function chromeFor(pathname: string, activeSkill: string, deskName: string, topicName: string, search = '') {
   const exam = pathname.match(EXAM_PATH);
-  if (exam) { const name = exam[1] === 'reading' ? 'Reading' : 'Listening'; return { kicker: name, title: examTitle(pathname, name) }; }
+  if (exam) return examTitle(pathname, exam[1] === 'reading' ? 'Reading' : 'Listening');
   const reviewSkill = new URLSearchParams(search).get('skill');
   const effectiveSkill = reviewSkill === 'speaking' || reviewSkill === 'writing' ? reviewSkill : activeSkill;
   const speaking = effectiveSkill === 'speaking';
-  const skillLabel = speaking ? 'Speaking' : 'Writing';
-  if (pathname.startsWith('/review/') && pathname !== '/review') return { kicker: 'Score', title: 'Score report' };
-  if (pathname.startsWith('/speak/topics/')) return { kicker: 'Speaking topic', title: topicName || 'Speaking topic' };
-  if (pathname === '/write/questions') return { kicker: 'Writing bank', title: 'Writing questions' };
-  if (pathname === '/write' || pathname.startsWith('/write?')) return { kicker: 'Writing', title: deskName || 'Writing' };
-  if (pathname === '/speak/questions') return { kicker: 'Speaking bank', title: 'Speaking questions' };
-  if (pathname === '/stories') return { kicker: 'Stories', title: 'Your stories' };
-  if (pathname === '/speak') return { kicker: 'Practice', title: topicName || 'Speaking practice' };
-  if (pathname.startsWith('/review')) return { kicker: 'Review', title: speaking ? 'Attempts and scores' : 'Essays and scores' };
-  if (pathname.startsWith('/vocabulary')) return { kicker: 'Vocabulary', title: 'Vocabulary' };
-  if (pathname.startsWith('/progress')) return { kicker: 'Progress', title: 'Progress' };
-  if (pathname.startsWith('/account')) return { kicker: 'Account', title: 'Your account' };
-  if (pathname.startsWith('/settings')) return { kicker: 'Workspace', title: 'Settings' };
-  if (pathname.startsWith('/planning')) return { kicker: 'Study', title: 'Planning' };
-  return { kicker: 'Study', title: 'Today' };
+  if (pathname.startsWith('/review/')) return 'Score report';
+  if (pathname.startsWith('/speak/topics/')) return topicName || 'Speaking topic';
+  if (pathname === '/write/questions') return 'Writing questions';
+  if (pathname === '/write') return deskName;
+  if (pathname === '/speak/questions') return 'Speaking questions';
+  if (pathname === '/stories') return 'Your stories';
+  if (pathname === '/speak') return topicName || 'Speaking practice';
+  if (pathname === '/review') return speaking ? 'Attempts and scores' : 'Essays and scores';
+  if (pathname.startsWith('/vocabulary')) return 'Vocabulary';
+  if (pathname === '/progress') return 'Progress';
+  if (pathname === '/account') return 'Your account';
+  if (pathname.startsWith('/settings')) return 'Settings';
+  if (pathname === '/planning') return 'Planning';
+  return 'Today';
 }
 
 export function Shell() {
@@ -163,14 +162,14 @@ export function Shell() {
   const deskName = (!fb.bankStatus || fb.bankStatus.writing === 'ready' ? displayName(fb.selectedQuestion?.name) : '') || 'Writing';
   const topicId = pathTopicId(location.pathname);
   const topicName = topicId ? (fb.state.speakingTopics || []).find((topic) => String(topic.id) === topicId)?.title || 'Speaking topic' : fb.selectedTopic?.title || 'Speaking practice';
-  const chrome = useMemo(
+  const title = useMemo(
     () => chromeFor(location.pathname, fb.activeSkill, deskName, topicName, location.search),
     [location.pathname, location.search, fb.activeSkill, deskName, topicName],
   );
 
   useEffect(() => {
-    document.title = `${chrome.title} · IELTS Fieldbook`;
-  }, [chrome.title]);
+    document.title = `${title} · IELTS Fieldbook`;
+  }, [title]);
 
   const toggleRail = () => {
     setCollapsed((current) => {
@@ -295,19 +294,15 @@ export function Shell() {
             </span>
             <span className="rail-toggle-label">{collapsed ? 'Expand' : 'Collapse'}</span>
           </button></RailHint>
-          <div className="rail-foot">
+          <div className="rail-foot" inert={collapsed}>
             <span>Streak</span>
             {streak === null ? <Link to="/progress" className="rail-activity-link">View activity<ArrowRight size={14} aria-hidden="true"/></Link> : <strong>{streak} {streak === 1 ? 'day' : 'days'}</strong>}
           </div>
         </aside></Tooltip.Provider>
         <main className="main" id="workspace-content" ref={mainContent} tabIndex={-1}>
-          <header className="top">
-            {vocabularyOwnHeading ? <div className="page-title page-title-compact"><p className="kicker">Vocabulary</p></div> : ownHeading ? <div className="page-title page-title-compact" key={`${chrome.kicker}-${chrome.title}`}>
-              <p className="kicker">{chrome.kicker}</p>
-              <h1 className="sr-only">{chrome.title}</h1>
-            </div> : <div className="page-title" key={`${chrome.kicker}-${chrome.title}`}>
-              <p className="kicker">{chrome.kicker}</p>
-              <h1 className="title">{chrome.title}</h1>
+          <header className={`top${ownHeading || vocabularyOwnHeading ? ' top-compact' : ''}`}>
+            {!vocabularyOwnHeading && <div className="page-title">
+              <h1 className={ownHeading ? 'sr-only' : 'title'}>{title}</h1>
             </div>}
             <div className="actions">
               <IconButton label="Search workspace" onClick={() => setSearchOpen(true)}><Search size={18} /></IconButton>
@@ -332,9 +327,9 @@ export function Shell() {
           {fb.loadError && fb.booted ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
           {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
           {fb.loadError && !fb.booted ? <StateMessage kind="error" title="Your workspace could not load" message={<>Check your connection, then retry. Work you already saved is safe.{fb.loadError !== WORKSPACE_LOAD_ERROR ? <small className="async-state-detail">{fb.loadError}</small> : null}</>} onRetry={fb.retryLoad} retryLabel="Retry" /> : null}
-          {!fb.booted && !fb.loadError ? <PageLoadingState title={ownHeading ? chrome.title : undefined} message="Loading your workspace…" variant={loadingLayout(location.pathname)} onRetry={fb.retryLoad} /> : null}
+          {!fb.booted && !fb.loadError ? <PageLoadingState title={ownHeading ? title : undefined} message="Loading your workspace…" variant={loadingLayout(location.pathname)} onRetry={fb.retryLoad} /> : null}
           <PageTransition transitionKey={transitionKey} focusKey={location.pathname} skipHeadingFocus={Boolean(location.hash)} scrollRestoration={scrollRestoration} key={module === 'settings' ? 'settings' : location.pathname}>
-            <WorkspaceScrollRestoration.Provider value={scrollRestoration}><Suspense fallback={<PageLoadingState title={ownHeading ? chrome.title : undefined} variant={loadingLayout(location.pathname)} message="Loading page…" />}>{fb.booted ? <WorkspaceRoute /> : null}</Suspense></WorkspaceScrollRestoration.Provider>
+            <WorkspaceScrollRestoration.Provider value={scrollRestoration}><Suspense fallback={<PageLoadingState title={ownHeading ? title : undefined} variant={loadingLayout(location.pathname)} message="Loading page…" />}>{fb.booted ? <WorkspaceRoute /> : null}</Suspense></WorkspaceScrollRestoration.Provider>
           </PageTransition>
         </main>
       </div>

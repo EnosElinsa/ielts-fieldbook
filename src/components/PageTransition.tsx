@@ -49,9 +49,9 @@ export function PageTransition({ transitionKey, focusKey = transitionKey, skipHe
       if (!node.querySelector('.view.active, .async-state-error, .workspace-page-error') || node.querySelector('.async-loading-page')) return;
       observer?.disconnect();
       animation = node.animate([
-        { opacity: 0, transform: 'translateY(10px)' },
-        { opacity: 1, transform: 'none' },
-      ], { duration: 280, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+        { opacity: 0.8 },
+        { opacity: 1 },
+      ], { duration: 160, easing: 'ease-out' });
     };
     observer = new MutationObserver(reveal);
     observer.observe(node, { childList: true, subtree: true });

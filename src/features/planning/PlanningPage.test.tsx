@@ -208,7 +208,7 @@ test('replace and reschedule save explicit actions',async()=>{
   const dialog=screen.getByRole('dialog');expect(within(dialog).getByLabelText('Study date')).toHaveValue(dateKey(new Date()));
   await userEvent.click(within(dialog).getByRole('button',{name:'Move task'}));expect(mocks.change).toHaveBeenLastCalledWith('task',{type:'reschedule',dateKey:dateKey(new Date()),allowOverBudget:false},{onError:expect.any(Function)});
 });
-test('the native date field saves its chosen date and cannot change during saving',async()=>{
+test('the date field saves its chosen date and cannot change during saving',async()=>{
   let finish; mocks.change.mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
   mount();await taskAction('Reschedule task');
   fireEvent.change(screen.getByLabelText('Study date'),{target:{value:dateKey(new Date())}});

@@ -285,7 +285,7 @@ describe('Fieldbook UI', () => {
     renderAt('/listening/intensive/part1');
     await waitFor(() => expect(document.title).toBe('Intensive listening · IELTS Fieldbook'));
     const header = document.querySelector('header.top') as HTMLElement;
-    expect(header.querySelector('.page-title-compact .kicker')?.textContent).toBe('Listening');
+    expect(header.classList.contains('top-compact')).toBe(true);
     expect(within(header).getByRole('heading', { level: 1, name: 'Intensive listening' }).className).toBe('sr-only');
   });
 

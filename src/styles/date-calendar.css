@@ -1,0 +1,21 @@
+.date-calendar .rdp-root {
+  --rdp-accent-color: var(--blue);
+  --rdp-accent-background-color: var(--soft-blue);
+  --rdp-day-width: clamp(34px, 12vw, 44px);
+  --rdp-day-height: var(--rdp-day-width);
+  --rdp-day_button-width: var(--rdp-day-width);
+  --rdp-day_button-height: var(--rdp-day-height);
+  --rdp-day_button-border-radius: 8px;
+  --rdp-nav_button-height: 44px;
+  --rdp-nav_button-width: 44px;
+  width: fit-content;
+  margin: 8px auto;
+}
+.date-calendar .rdp-month_caption { font-size: 1rem; font-weight: 700; }
+.date-calendar .rdp-day { padding: 0; }
+.date-calendar :is(.rdp-button_previous, .rdp-button_next) { border-radius: 6px; }
+.date-calendar :is(.rdp-button_previous, .rdp-button_next):hover:enabled { background: var(--surface-hover); }
+.date-calendar .rdp-day_button:hover:enabled { background: var(--surface-hover); }
+.date-calendar .rdp-selected .rdp-day_button,
+.date-calendar .rdp-selected .rdp-day_button:hover { background: var(--soft-blue); }
+.date-calendar .rdp-weekday { color: var(--muted); opacity: 1; }
