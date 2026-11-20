@@ -107,9 +107,11 @@ test('replacing a bound speaking mock removes all frozen scope and progress befo
   expect(plan.target).toMatchObject({ questionId: 'long', part: '2', prompts: [{ part: '2', promptText: 'Describe a friend' }] });
 });
 
-test('review summary names actual prompts with singular and plural counts',()=>{
- expect(studyTargetSummary({target:{type:'vocabulary',mode:'due-review',binding:'dynamic',cards:[],batchSize:1}})).toBe('Review · 1 prompt');
- expect(studyTargetSummary({target:{type:'vocabulary',mode:'due-review',binding:'dynamic',cards:[],batchSize:2}})).toBe('Review · 2 prompts');
+test('review summary distinguishes a forecast limit from a bound prompt count',()=>{
+ expect(studyTargetSummary({target:{type:'vocabulary',mode:'due-review',binding:'dynamic',cards:[],batchSize:1}})).toBe('Review · Up to 1 prompt');
+ expect(studyTargetSummary({target:{type:'vocabulary',mode:'due-review',binding:'dynamic',cards:[],batchSize:2}})).toBe('Review · Up to 2 prompts');
+ expect(studyTargetSummary({target:{type:'vocabulary',mode:'due-review',binding:'dynamic',cards:[]}})).toBe('Review · Prompts selected when you start');
+ expect(studyTargetSummary({target:{type:'vocabulary',mode:'due-review',binding:'frozen',cards:[{entryId:'word',senseId:'meaning'}]}})).toBe('Review · 1 prompt');
 });
 
 test('learning titles use the bound count while prospective batches show a maximum',()=>{

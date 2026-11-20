@@ -63,7 +63,7 @@ import { vocabularySourceKey } from '../domain/vocabulary/sources';
 import { collectVocabularyChoice } from '../domain/vocabulary/collection';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
-import { ensurePlans, ensureUnifiedPlans, ensureUnifiedPlansAsync, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan, applyBacklogPreview, compareStudyPlans } from '../lib/planTemplates';
+import { ensurePlans, ensureUnifiedPlans, ensureUnifiedPlansAsync, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan, applyBacklogPreview, compareStudyPlans, describeScheduleChanges, upcomingReviewTime } from '../lib/planTemplates';
 import { bindSpeakingPlan } from '../domain/plans';
 import { speakingPrompts, speakingResponseDraft, updateSpeakingResponse } from '../domain/speaking';
 import { useConfirmationDialog } from '../components/useConfirmationDialog';
@@ -1597,11 +1597,18 @@ function useFieldbookValue() {
   const refreshUnifiedPlans = useCallback(async(options?)=>{
     await Promise.all(['planning','vocabularyCore'].map(module=>ensureAccountModule(module,{entryIds:[]})));
     if(stateRef.current.wordbookEnrollments?.length)await loadVocabularyCatalog();
-    return mutatePlans(async draft=>{
+    let changes = [];
+    const saved = await mutatePlans(async draft=>{
+      const before = structuredClone(draft.plans);
       await ensureUnifiedPlansAsync(draft);
+      changes = describeScheduleChanges(before, draft.plans).filter(change =>
+        change.changeType !== 'unchanged' && (change.changeType !== 'updated' || change.from !== change.to ||
+          change.status !== change.previousStatus || change.fromMinutes !== change.toMinutes || change.requirementsChanged));
       // Resolve source material when a task starts; the overview needs no passage,
       // question-bank or audio requests and must not hold the save queue on them.
     },options,true);
+    if (saved && changes.length) options?.onChanges?.(changes);
+    return saved;
   },[ensureAccountModule,mutatePlans,loadVocabularyCatalog,ensureQuestionBank]);
 
   async function bindCurrentPlanTargets(draft, planIds?: Set<string>) {
@@ -1645,6 +1652,8 @@ function useFieldbookValue() {
     let dynamicReviewCapacity: number | undefined;
     let plan=structuredClone(stateRef.current.plans.find(row=>row.id===planId));
     if(!plan)throw new Error('Task is unavailable. Reload your plan.');
+    const available = upcomingReviewTime(plan);
+    if (available) throw new Error(`This review is expected from ${available.toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}. It remains on your plan.`);
     const skill=plan.skill || (String(plan.kind).startsWith('reading')?'reading':String(plan.kind).startsWith('listening')?'listening':String(plan.kind).startsWith('speaking')||plan.kind==='stories'?'speaking':plan.kind==='vocabulary'?'vocabulary':'writing');
     const openExamTask = (path: string) => {
       if(latestAccountLocation.current.key!==accountLocation.key

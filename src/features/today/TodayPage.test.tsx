@@ -110,7 +110,7 @@ test('plan persistence failure exposes a retry and never displays unsaved genera
 test('an empty day waits for planning and never claims unearned completion',async()=>{
   let finish; mocks.generate.mockImplementation(()=>new Promise(resolve=>{finish=resolve;}));
   renderPage();
-  expect(screen.getByRole('status')).toHaveTextContent('Preparing your plan…');
+  expect(screen.getByText('Preparing your plan…')).toBeVisible();
   expect(screen.queryByRole('heading',{name:'Today is complete'})).not.toBeInTheDocument();
   await waitFor(()=>expect(mocks.generate).toHaveBeenCalled());
   finish(true);

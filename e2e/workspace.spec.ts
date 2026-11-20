@@ -80,6 +80,38 @@ test('cold Planning reconciles a submitted 30-prompt dictation before carrying i
   await expect(page.locator('#task-carried-dictation')).toHaveCount(0);
 });
 
+test('a forecast review waits for its time and a manual overdue move needs confirmation', async ({page}) => {
+  const base = {dateKey:'2026-11-17',status:'pending',origin:'manual',estimatedMinutes:5};
+  const forecast = {...base,id:'later-review',title:'Later vocabulary review',skill:'vocabulary',kind:'vocabulary',order:-1,
+    target:{type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'dictation',cards:[],reviewAvailableAt:'2026-11-17T23:00:00Z'}};
+  const ready = {...base,id:'ready-writing',title:'Ready writing exercise',skill:'writing',kind:'1',order:1};
+  const overdue = {...ready,id:'manual-overdue',title:'Manual overdue exercise',dateKey:'2026-11-16'};
+  await page.route('**/rpc/load_planning_workspace',route=>route.fulfill({json:{
+    profile:{settings:{dailyMinutes:45,skills:['writing'],planning:{newWordsPerDay:0}},active_plan_id:null},
+    plans:[forecast,ready,overdue].map(payload=>({id:payload.id,payload})), planStamp:'0'.repeat(32),evidence:{},
+  },headers:{'access-control-allow-origin':'*'}}));
+
+  await page.goto('/today');
+  await expect(page.locator('.study-next').getByRole('heading',{name:ready.title})).toBeVisible();
+  await expect(page.locator('#task-later-review').getByText('Available at 16:00')).toBeVisible();
+  await expect(page.locator('#task-later-review').getByRole('button',{name:/start/i})).toHaveCount(0);
+  await page.goto('/planning?view=waiting');
+  const pending = page.locator('.study-selectable-task').filter({hasText:overdue.title});
+  await expect(pending.getByText(/Suggested date/)).toBeVisible();
+  await pending.getByRole('button',{name:'Preview move'}).click();
+  const dialog = page.getByRole('dialog',{name:'Review task changes'});
+  await expect(dialog.getByText('2026-11-16 → 2026-11-17')).toBeVisible();
+  const saved = page.waitForRequest(request=>request.url().endsWith('/rpc/commit_workspace_changes')
+    && JSON.stringify(request.postDataJSON()?.batch?.lists?.plans?.upserts||[]).includes(overdue.id));
+  await dialog.getByRole('button',{name:'Save task changes'}).click();
+  await saved;
+  await expect(dialog).toHaveCount(0);
+  await expect(pending).toHaveCount(0);
+  await page.getByRole('button',{name:'Schedule',exact:true}).click();
+  await page.getByRole('button',{name:'Next week'}).click();
+  await expect(page.getByText('Outside the current planning window').first()).toBeVisible();
+});
+
 test('a failed historical plan request can recover in place', async ({ page }) => {
   let failing = true;
   let releasePlans: () => void = () => {};

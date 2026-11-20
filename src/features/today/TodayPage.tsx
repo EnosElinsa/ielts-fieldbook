@@ -6,12 +6,13 @@ import { ArrowRight, CalendarDays, Check, Clock3 } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { AccountDataBoundary } from '../../components/AccountDataBoundary';
 import { dateKey } from '../../domain';
-import { nextUnifiedPlan, selectedStudySkills, compareStudyPlans, studyBudget, planSkill, planMinutesLabel } from '../../lib/planTemplates';
+import { nextUnifiedPlan, selectedStudySkills, compareStudyPlans, studyBudget, planSkill, planMinutesLabel, upcomingReviewTime } from '../../lib/planTemplates';
 import { studyPlanTitle, studyTargetSummary } from '../../lib/planTargets';
 import { examSessionUrl, unfinishedExamSession } from '../../domain/exam/sessions';
 import { withExamReturn } from '../../lib/examNavigation';
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { TaskStartButton, useStudySchedule } from '../planning/StudySchedule';
+import { ScheduleChanges } from '../planning/ScheduleChanges';
 import { needsStudySetup, StudySetup } from './StudySetup';
 import { accountId } from '../../storage/remote';
 import '../../styles/planning.css';
@@ -36,11 +37,12 @@ function canOpenTodayTask(plan) {
 }
 
 function UnifiedToday() {
-  const fb=useFieldbook();const schedule=useStudySchedule();const today=dateKey(new Date());
+  const fb=useFieldbook();const schedule=useStudySchedule();const now=schedule.now || new Date();const today=dateKey(now);
   const location=useLocation();useVocabularyPosition(location.pathname+location.search+location.hash,!schedule.saving);
   const plans=(fb.state.plans || []).filter(plan=>!plan.onHold&&!plan.archivedAt);const todays=plans.filter(plan=>plan.dateKey===today).sort(compareStudyPlans);
   const active=plans.find(plan=>plan.id===fb.state.activePlanId&&plan.status==='in_progress'&&plan.dateKey<=today);
-  const next=active || nextUnifiedPlan(todays);
+  const next=active || nextUnifiedPlan(todays,now);
+  const laterToday=todays.some(plan=>upcomingReviewTime(plan,now));
   const examAttempts = planningEvidenceView(fb.state).examAttempts || [];
   const returnedAttempt = examAttempts.find(attempt => attempt.status !== 'discarded' && location.hash === examAttemptHash(attempt.id));
   const currentAttempt = returnedAttempt || examAttempts.filter(attempt =>
@@ -77,10 +79,11 @@ function UnifiedToday() {
     <header className="study-page-head"><div><p className="kicker">{new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})}</p><h2>Today</h2></div><Link className="btn line" to="/planning"><CalendarDays size={16}/>Planning</Link></header>
     {setup && <StudySetup key={accountId()} />}
     {schedule.error && <div className="study-alert" role="alert"><span>{schedule.error}</span><button className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}
+    <ScheduleChanges changes={schedule.changes} />
     <div className={`study-today-main${setup?' is-setup':''}`}>
       <section id={next ? `task-${next.id}` : undefined} tabIndex={-1} className="study-next" aria-busy={schedule.saving} data-plan-id={next?.id}>
         <p className="kicker">{next?.dateKey<today?'Overdue · In progress':next?.status==='in_progress'?'In progress':next?'Next task':"Today's plan"}</p>
-        {!next&&schedule.saving?<PanelLoadingState variant="document" message="Preparing your plan…"/>:<h3>{(next ? studyPlanTitle(next) : '') || (schedule.error?'Plan unavailable':budget===0?'Rest day':done.length?'Today is complete':'No tasks planned yet')}</h3>}
+        {!next&&schedule.saving?<PanelLoadingState variant="document" message="Preparing your plan…"/>:<h3>{(next ? studyPlanTitle(next) : '') || (schedule.error?'Plan unavailable':laterToday?'Reviews available later today':budget===0?'Rest day':done.length?'Today is complete':'No tasks planned yet')}</h3>}
         {next&&<p>{studyTargetSummary(next)}</p>}
         {next ? <><div className="study-task-meta"><span className={`study-skill study-skill-${planSkill(next)}`}>{planSkill(next)}</span><span><Clock3 size={15}/>{planMinutesLabel(next)}</span>{next.dateKey<today&&<span>Due {formatDateKey(next.dateKey)}</span>}</div><LearningTaskDetails plan={next} batchSize={fb.state.settings.vocabulary?.learningBatchSize||10}/><p>{next.description}</p><p className="study-completion-condition">{next.completion?.description}</p><TaskStartButton key={next.id} plan={next}/></> : <>{budget===0&&<p>Rest day. You can still add a task in Planning.</p>}{upcoming&&<p>Next study day: {new Date(`${upcoming.dateKey}T00:00:00`).toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'})}</p>}<Link className="btn line" to="/planning">Open plan <ArrowRight size={16}/></Link></>}
       </section>
@@ -112,7 +115,7 @@ function UnifiedToday() {
             <strong>{title}</strong>
             <small><span>{planMinutesLabel(plan)}</span><span>{current&&plan.status==='pending' ? 'Up next' : taskStatuses[plan.status] || plan.status}</span></small>
           </div>
-          {!current&&canOpenTodayTask(plan)&&<TaskStartButton plan={plan} emphasis={false} taskLabel={title}/>}
+          {!current&&canOpenTodayTask(plan)&&<TaskStartButton plan={plan} emphasis={false} taskLabel={title} now={now}/>}
         </div>;
       })}
     </section>}

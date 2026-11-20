@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { createClient } from '@supabase/supabase-js';
 import { validateCatalog } from './lib/exam-import.mjs';
+import { readPrivateExamImage, verifyImageBytes } from './lib/exam-images.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
@@ -60,11 +61,6 @@ for (const row of [...catalog.questions, ...catalog.passages, ...catalog.assets]
   if (row.paperId && !paperIds.has(row.paperId)) mandatory.push(`Missing paper for ${row.id}.`);
   if (row.sectionId && !sectionIds.has(row.sectionId)) mandatory.push(`Missing section for ${row.id}.`);
 }
-for (const question of catalog.questions) {
-  if (question.assetId && !assetIds.has(question.assetId)) mandatory.push(`Missing question asset for ${question.id}.`);
-  for (const match of String(question.stimulusHtml || '').matchAll(/exam-asset:([^"'<>\s]+)/g)) if (!assetIds.has(match[1])) mandatory.push(`Missing stimulus asset for ${question.id}.`);
-  if (/src=["']https?:/i.test(question.stimulusHtml || '')) mandatory.push(`Unmirrored stimulus image in ${question.id}.`);
-}
 // Learning records and exported browser credentials must never enter a shared bank.
 function personal(value) {
   if (!value || typeof value !== 'object') return false;
@@ -89,7 +85,8 @@ for (const asset of catalog.assets) {
   if (!buffer.length) throw new Error(`Asset ${asset.id} is empty.`);
   if (paths.has(relative)) continue;
   paths.add(relative);
-  assets.push({ storagePath: relative, file: filename, contentType, bytes: buffer.length, sha256: sha256(buffer) });
+  if (asset.kind === 'image') verifyImageBytes(buffer, asset.id);
+  assets.push({ id:asset.id, storagePath: relative, file: filename, contentType, bytes: buffer.length, sha256: sha256(buffer) });
 }
 const manifest = { mode: options.apply ? 'apply' : 'dry-run', schemaVersion: 1, catalogSha256: sha256(bytes),
   counts: Object.fromEntries(Object.entries(tables).map(([table, rows]) => [table, rows.length])),
@@ -144,6 +141,7 @@ await workers(assets, async asset => {
       await new Promise(resolve => setTimeout(resolve, 1000 * 2 ** attempt));
     }
   }
+  if (asset.contentType.startsWith('image/')) await readPrivateExamImage(bucket, asset, asset.sha256);
   assetCount++;
   if (assetCount % 10 === 0 || assetCount === assets.length) console.log(`Assets ready: ${assetCount}/${assets.length} (${reusedCount} verified unchanged).`);
 });

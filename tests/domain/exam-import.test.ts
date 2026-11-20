@@ -40,6 +40,19 @@ test('the source image CDN is retained for private mirroring while unrelated ori
  expect(result.questions[0].stimulusHtml).not.toContain('unknown.jpg');
  expect(validateCatalog(result).errors).toContain('Missing source image question:q');
 });
+test('map validation requires a usable private image reference', () => {
+ const question = {id:'map-question',sectionId:'s',type:'map',number:16,answer:'A'};
+ const catalog = (questionPatch = {}, assets = []) => ({
+   schemaVersion:1,papers:[],sections:[{id:'s',sentences:[]}],passages:[],assets,questions:[{...question,...questionPatch}],
+ });
+ const html = { stimulusHtml:'<p><img src="exam-asset:map"></p>' };
+ expect(validateCatalog(catalog()).errors).toContain('Missing source image map-question');
+ expect(validateCatalog(catalog(html)).errors).toContain('Invalid source image reference map-question');
+ expect(validateCatalog(catalog(html,[{id:'map',kind:'audio',storagePath:'audio.mp3'}] as never[])).errors).toContain('Invalid source image reference map-question');
+ const image = [{id:'map',kind:'image',storagePath:'map.png'}] as never[];
+ expect(validateCatalog(catalog(html,image)).errors).toEqual([]);
+ expect(validateCatalog(catalog({assetId:'map'},image)).errors).toEqual([]);
+});
 test('unknown source types and malformed catalogs fail closed',()=>{
  expect(()=>normalizeSourceSection({job,detail:{0:{pages:[{sections:[{type:'999',questions:[{id:'q',sort:'1',option_names:'x'}]}]}]}}})).toThrow(/type/i);
  expect(validateCatalog({schemaVersion:1,papers:[],sections:[],questions:[{id:'q',sectionId:'missing'}],passages:[],assets:[]}).errors.length).toBeGreaterThan(0);

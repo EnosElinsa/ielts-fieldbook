@@ -122,13 +122,20 @@ export function normalizeSourceSection(raw) {
 export function validateCatalog(catalog) {
   const errors=[],warnings=[];
   const sectionIds=new Set((catalog.sections||[]).map(s=>s.id)),questionIds=new Set();
+  const assets=new Map((catalog.assets||[]).map(asset=>[asset.id,asset]));
   if(catalog.schemaVersion!==1)errors.push('Unsupported catalog version');
   for(const key of ['papers','sections','questions','passages','assets'])if(!Array.isArray(catalog[key]))errors.push(`${key} must be an array`);
   for(const q of catalog.questions||[]) {
     if(questionIds.has(q.id))errors.push(`Duplicate question ${q.id}`);questionIds.add(q.id);
     if(!sectionIds.has(q.sectionId))errors.push(`Missing section for ${q.id}`);
     if(!q.answer||(Array.isArray(q.answer)&&!q.answer.length))errors.push(`Missing answer ${q.id}`);
-    if (/<img\b(?![^>]*\bsrc="[^"]+")/i.test(q.stimulusHtml || '')) errors.push(`Missing source image ${q.id}`);
+    const images = stimulusImages(q.stimulusHtml);
+    if (q.assetId) images.push(`exam-asset:${q.assetId}`);
+    if (images.includes(null) || (q.type === 'map' && !images.length)) errors.push(`Missing source image ${q.id}`);
+    for (const source of new Set(images.filter(Boolean))) {
+      const asset = source.startsWith('exam-asset:') && assets.get(source.slice('exam-asset:'.length));
+      if (!asset || asset.kind !== 'image' || !asset.storagePath || asset.unavailable) errors.push(`Invalid source image reference ${q.id}`);
+    }
     if(q.options?.length&&!(Array.isArray(q.answer)?q.answer:[q.answer]).every(a=>q.options.includes(a)))errors.push(`Answer outside options ${q.id}`);
     if(q.maxWords!==undefined&&q.type!=='multiple') {
       const permitsNumber=/\b(?:AND\s*\/\s*OR|AND|OR)\s+A\s+NUMBER\b/i.test(q.instructions||'');
@@ -157,4 +164,14 @@ export function validateCatalog(catalog) {
     for(const sentence of s.sentences||[])if(!Number.isFinite(sentence.start)||!Number.isFinite(sentence.end)||sentence.start<0||sentence.end<=sentence.start||audio?.duration&&sentence.end>audio.duration+.25)warnings.push(`Missing/invalid timestamps ${s.id}/${sentence.id}`);
   }
   return {errors,warnings};
+}
+
+function stimulusImages(html) {
+  const sources = [];
+  function visit(node) {
+    if (node.tagName === 'img') sources.push(node.attrs.find(attr => attr.name === 'src')?.value.trim() || null);
+    for (const child of node.childNodes || []) visit(child);
+  }
+  if (/<img\b/i.test(html || '')) visit(fragment(html));
+  return sources;
 }

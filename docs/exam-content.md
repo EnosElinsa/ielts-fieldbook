@@ -51,9 +51,11 @@ Apply `supabase/migrations/20261011120000_exam_practice.sql` through the normal 
 node scripts/seed-exams.mjs --dry-run --manifest local/data/exams/bank/seed-manifest.json
 ```
 
-Dry run is the default and does not connect to Supabase. It validates the catalog, saved audit, required material, provenance, asset paths, nonempty local asset files and absence of account credentials/answers. The output records table counts, answer slots, SHA-256 of the catalog, asset byte count and a combined checksum of every asset's path and content. Missing timing remains visible in warnings. Use the manifest to review the concrete deployment payload.
+Dry run is the default and runs locally. It validates required material, provenance, asset paths and the saved audit. Map questions must reference an image record and FFmpeg must be able to decode each local image. The manifest records counts, checksums, asset size and timing warnings.
 
-To upload after reviewing the manifest, provide `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` through the deployment environment or the ignored `.env.local`/`.env` file. Existing environment variables take precedence. Never expose the service-role key as a `VITE_` variable or place it in browser code. The script prints no credentials or endpoint.
+To upload after reviewing the manifest, provide `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` through the deployment environment or the ignored `.env.local`/`.env` file. Existing environment variables take precedence. Before writing catalog rows, apply mode fetches each image via a private signed URL and compares its bytes to the decoded local file.
+
+To check the published bank, run `node --env-file=.env scripts/audit-exam-integrity.mjs --published`. This reads the shared catalog and verifies the signed response, checksum and decoded frame for every published image.
 
 ```powershell
 node scripts/seed-exams.mjs --apply
