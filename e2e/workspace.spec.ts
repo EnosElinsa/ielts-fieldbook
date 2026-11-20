@@ -116,3 +116,33 @@ test('mobile Practice gives equal access to all four skills and preserves active
   await expect(more.getByRole('group', { name: 'Workspace' }).getByRole('button', { name: 'Settings' })).toBeVisible();
   await expect(more.getByRole('button', { name: /^(Writing|Speaking)$/ })).toHaveCount(0);
 });
+
+test.describe('English date controls under a Chinese browser locale', () => {
+  test.use({ locale: 'zh-CN' });
+
+  test('exam date can be picked with the keyboard, edited and cleared', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 740 });
+    await page.goto('/settings/target');
+    const date = page.getByRole('textbox', { name: 'Exam date', exact: true });
+    const trigger = page.getByRole('button', { name: 'Open calendar for exam date' });
+    await expect(date).toHaveAttribute('placeholder', 'YYYY-MM-DD');
+    await trigger.click();
+    const calendar = page.getByRole('dialog', { name: 'Exam date' });
+    const today = calendar.getByRole('button', { name: /Today, Tuesday, 17 November 2026/ });
+    await expect(today).toBeFocused();
+    expect(await calendar.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
+    await today.press('ArrowRight');
+    await page.keyboard.press('Enter');
+    await expect(date).toHaveValue('2026-11-18');
+    await expect(trigger).toBeFocused();
+    await date.fill('2026-02-30');
+    await date.press('Tab');
+    await expect(date).toHaveValue('2026-11-18');
+    await expect(page.getByText(/Use a valid date in YYYY-MM-DD format/)).toBeVisible();
+    await date.fill('2026-12-01');
+    await expect(date).toHaveValue('2026-12-01');
+    await trigger.click();
+    await calendar.getByRole('button', { name: 'Clear date' }).click();
+    await expect(date).toHaveValue('');
+  });
+});

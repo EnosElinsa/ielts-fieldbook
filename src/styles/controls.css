@@ -47,16 +47,27 @@ label.check-field:has(input:disabled), fieldset:disabled label.check-field { opa
 .page .save-failure, .modal-workbench .save-failure {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   margin: 16px 0; padding: 14px 16px; border: 1px solid var(--rule);
-  border-inline-start: 3px solid var(--red); border-radius: 8px;
-  background: var(--sheet); color: var(--ink); font-size: 13px; line-height: 1.65;
+  border-radius: 8px;
+  background: var(--soft-red); color: var(--ink); font-size: 13px; line-height: 1.65;
 }
 .page .save-failure > span, .modal-workbench .save-failure > span { flex: 1 1 240px; min-width: 0; overflow-wrap: anywhere; }
 .page .save-failure .btn, .modal-workbench .save-failure .btn { flex: 0 0 auto; min-height: 44px; }
 fieldset.form { border: 0; padding: 0; margin: 17px 0; min-width: 0; }
 
-.date-field { min-width: 0; }
-.date-field input[type="date"] { width: 100%; min-width: 0; min-height: 44px; color-scheme: light; }
-:root[data-theme="dark"] .date-field input[type="date"] { color-scheme: dark; }
+.date-field, .date-field-control { min-width: 0; width: 100%; }
+.date-field-control { position: relative; }
+.date-field input.filter-trigger { width: 100%; min-height: 44px; padding-inline-end: 48px; font-variant-numeric: tabular-nums; }
+.date-field input::placeholder { color: var(--muted); opacity: 1; }
+.date-field .date-field-picker { position: absolute; inset-block: 0; inset-inline-end: 0; margin-block: auto; width: 44px; height: 44px; }
+.date-field .date-field-picker:focus-visible { outline-offset: -4px; }
+.date-field-notice { margin: 8px 0 0; color: var(--red); font-size: 13px; line-height: 1.5; white-space: normal; }
+.dialog-content.date-calendar { z-index: 122; width: min(360px, calc(100% - 20px)); padding: 12px; }
+.dialog-overlay.date-calendar-overlay { z-index: 121; }
+.date-calendar-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-inline-start: 4px; }
+.date-calendar-header h2 { margin: 0; font: 700 18px/1.35 Manrope, Arial, sans-serif; }
+.date-calendar-header .icon-button { min-width: 44px; min-height: 44px; }
+.date-calendar-loading { min-height: 290px; padding: 12px; color: var(--muted); font-size: 14px; }
+.date-calendar .date-calendar-clear { min-height: 44px; margin: 4px 0 0 4px; }
 @media (max-width: 740px) {
   /* Native text entry stays legible and does not trigger iOS focus zoom. */
   html body input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="hidden"]),

@@ -22,7 +22,7 @@ test('future planned reviews stay available without pushing the current review d
  mocks.state.plans=[];
 });
 
-test('scheduled review saves the native date and word selection, locking both while saving',async()=>{
+test('scheduled review saves the date and word selection, locking both while saving',async()=>{
   let finish:(value:boolean)=>void=()=>{};
   mocks.changePlan.mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
   const controller={mode:'dictation',dueOnly:false,wrongOnly:false,filter:{},customCardIds:null,queue:[{entryId:'word',senseId:'meaning'}],preferences:{sessionSize:10,order:'source'}} as unknown as VocabularyPracticeController;
@@ -31,7 +31,7 @@ test('scheduled review saves the native date and word selection, locking both wh
   const today=new Date(),chosen=new Date(today.getFullYear(),today.getMonth(),today.getDate()===1?2:1);
   const chosenDate=`${chosen.getFullYear()}-${String(chosen.getMonth()+1).padStart(2,'0')}-${String(chosen.getDate()).padStart(2,'0')}`;
   const dateField=screen.getByLabelText('Study date');
-  expect(dateField).toHaveAttribute('type','date');
+  expect(dateField).toHaveAttribute('placeholder','YYYY-MM-DD');
   fireEvent.change(dateField,{target:{value:chosenDate}});
   expect(dateField).toHaveValue(chosenDate);
   expect(dateField).toBeValid();

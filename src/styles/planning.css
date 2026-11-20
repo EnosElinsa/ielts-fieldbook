@@ -104,8 +104,6 @@
 .study-collection-empty p{max-width:50ch;margin:0;color:var(--muted);font-size:13px;line-height:1.7}
 .study-date-filters{display:contents}
 .study-collection-date{display:grid;gap:7px;min-width:0}
-.study-collection .date-field,.study-collection .date-field>.filter-trigger{width:100%}
-.study-collection .date-field>.filter-trigger{min-height:44px;font:inherit;font-size:13px}
 .study-collection fieldset:disabled .filter-trigger{opacity:.55;cursor:not-allowed}
 .study-collection :is(input,select,button):focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 .study-collection>.study-task-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:20px}
