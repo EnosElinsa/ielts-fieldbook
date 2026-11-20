@@ -416,7 +416,7 @@ export function useVocabularyPracticeController() {
   const resultRows = results?.results.filter(row => resultFilter === 'all' ||
     (resultFilter === 'incorrect' && (row.result === 'failure' || row.result === 'partial')) ||
     (resultFilter === 'unanswered' && !row.response.trim()) ||
-    (resultFilter === 'pending' && row.result === 'pending') ||
+    (resultFilter === 'pending' && row.result === 'pending' && row.errorType !== 'unanswered') ||
     (resultFilter === 'flagged' && row.flagged)) || [];
   const resultUnitId = results?.selection?.kind === 'unit' || results?.selection?.kind === 'learning-batch' ? results.selection.unitId : null;
   const nextBatch = useMemo(() => {

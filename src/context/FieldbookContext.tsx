@@ -1598,7 +1598,6 @@ function useFieldbookValue() {
     await Promise.all(['planning','vocabularyCore'].map(module=>ensureAccountModule(module,{entryIds:[]})));
     if(stateRef.current.wordbookEnrollments?.length)await loadVocabularyCatalog();
     return mutatePlans(async draft=>{
-      for(const session of draft.vocabularySessions || [])completeVocabularyPlan(draft,session);
       await ensureUnifiedPlansAsync(draft);
       // Resolve source material when a task starts; the overview needs no passage,
       // question-bank or audio requests and must not hold the save queue on them.
@@ -1795,9 +1794,14 @@ function useFieldbookValue() {
       const current=draft.plans.find(row=>row.id===planId);
       if(!current||JSON.stringify(current)!==initial)throw new Error('This task changed while loading. Retry to open the current task.');
       if(dynamicReviewCapacity!==undefined){
+        const now = new Date();
         const reserved=new Set(draft.plans.filter(row=>row.id!==planId && ['pending','in_progress'].includes(row.status) && row.target?.type==='vocabulary' && row.target.binding!=='dynamic' && row.target.assessmentMode===target.assessmentMode).flatMap(row=>(row.target.cards||[]).map(ref=>JSON.stringify([ref.entryId,ref.senseId]))));
-        const cards=selectScheduledVocabularyReview(draft,target,new Date(),dynamicReviewCapacity,current.origin==='manual'?new Set():reserved).map(({entryId,senseId})=>({entryId,senseId}));
+        const cards=selectScheduledVocabularyReview(draft,target,now,dynamicReviewCapacity,current.origin==='manual'?new Set():reserved).map(({entryId,senseId})=>({entryId,senseId}));
         noLongerDue=cards.length===0;
+        if(noLongerDue && Date.parse(target.reviewAvailableAt) > now.getTime()){
+          const available = new Date(target.reviewAvailableAt).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+          throw new Error(`This review is expected from ${available}. It remains on your plan.`);
+        }
         if(noLongerDue&&current.origin==='manual')throw new Error('No questions match this task right now. The task remains scheduled. Try its date or change its range.');
         target={...target,binding:noLongerDue?'dynamic':'frozen',cards};
         if(!noLongerDue && !isVocabularySessionSelection({kind:'planned-review',planId,cards}))throw new Error('The planned review target is invalid. Return to Planning and retry.');

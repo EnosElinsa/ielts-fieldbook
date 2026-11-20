@@ -4,7 +4,7 @@
 
 Open **Settings → Time and modules** to set the global daily budget, enabled weekdays, weekday minute overrides and focus modules. Blank weekday minutes inherit the global budget; zero minutes creates a rest day. The six settings groups also cover Learning goals, Scheduling and overdue, Vocabulary sources and balance, Practice and audio, and Appearance and account. Legacy settings URLs still open their corresponding group; one draft survives category changes.
 
-Under **Vocabulary sources and balance**, choose fixed vocabulary minutes or a percentage of each day. New accounts default to 20%; existing accounts retain an explicit legacy reservation of up to ten minutes. After protected tasks, the planner reserves time for the daily new-word target (default 10, including 0 to pause), then adds reviews. It shows the actual quantity and shortfall when time is limited. When no vocabulary work is available, the planner assigns that time to the other modules.
+Under **Vocabulary sources and balance**, choose fixed vocabulary minutes or a percentage of each day. New accounts default to 20%. Existing accounts retain an explicit legacy reservation of up to ten minutes. After protected tasks and carryover, due reviews and mistake recovery can reserve up to half the available vocabulary minutes, rounded up. The planner allocates new words up to the daily goal (default 10, or 0 to pause) and uses remaining time for review. It shows the actual quantity and shortfall when time is limited. When no vocabulary work is available, the planner assigns that time to the other modules.
 
 Under **Practice structure**, choose **Several shorter sessions** to share skill time by module weight, or **One focused session** to rotate one skill across study days. **Target task length** caps split skill sessions and automatic vocabulary review time; the focused session uses the remaining practice time instead. Vocabulary learning always follows its own daily goal and batch size, independent of this choice.
 
@@ -32,7 +32,7 @@ Planning uses Schedule, Waiting and History. Before carryover, it reconciles sta
 
 The seven-day window places eligible older unfinished tasks before generating new work. Automatic carryover defaults to at most 30% of each day's budget and also respects study days, remaining total time, module time and indivisible task size. Change the allowance under **Scheduling and overdue**. Protected future manual, started or frozen allocations remain intact after a budget reduction, even if that leaves existing overtime; automatic placement adds no further overtime. Tasks that cannot fit remain in Waiting with a reason.
 
-Unstarted automatic dynamic reviews can merge and reselect from current memory state. Untouched automatic exact learning reservations are replanned separately as described above. Manual tasks, committed fixed lists and started tasks retain their targets. Future dynamic slots reserve prompt capacity and freeze their words when opened. Reviews prioritize confirmed mistakes, recovery, valid mode-specific due schedules, foundation gaps and spaced consolidation. A completed, submitted graded attempt finishes a task even if some answers are wrong; mastery and mistake recovery remain separate.
+Untouched automatic dynamic reviews can merge and reselect from current memory state. Untouched automatic exact learning reservations are replanned separately as described above. Edited tasks, manual tasks, committed fixed lists and started tasks retain their targets. The seven-day preview places upcoming reviews on or after the local day they are due. Future dynamic slots reserve prompt capacity and bind current eligible words when started after the displayed time. Reviews prioritize confirmed mistakes, recovery, valid mode-specific due schedules, foundation gaps and spaced consolidation. A complete submission of graded answers finishes a task even if some answers are wrong.
 
 Waiting supports today, a selected date, capped automatic replan, hold, resume and skip. Started work is excluded from bulk selection until explicitly enabled. Waiting and History show 20 items per page, total counts and target-page deep links. Selecting this page differs from selecting all filtered results. Each bulk action previews both selected tasks and related schedule changes before the atomic save.
 
@@ -52,7 +52,7 @@ Due listening sentence links use `review=sentence`. A planned intensive task is 
 
 Use `SelectField` for form fields and `FilterMenu` for toolbar filters. Both use the same Radix Select, styles and keyboard behavior. `SelectField` accepts either `options` with `onValueChange` or existing option children with `onChange`.
 
-Popup content is portaled to the body and positioned relative to the trigger in viewport coordinates. It prefers the bottom side and handles viewport collisions, scrolling and resizing. Date fields use native `input type="date"` controls with labels and min/max bounds; their browser UI follows the active color scheme.
+Popup content is portaled to the body and positioned relative to the trigger in viewport coordinates. It prefers the bottom side and handles viewport collisions, scrolling and resizing. Date fields accept `YYYY-MM-DD` and offer a keyboard-accessible English calendar with min/max bounds.
 
 ## Validation scope
 

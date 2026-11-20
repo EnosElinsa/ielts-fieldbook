@@ -124,8 +124,11 @@ test('saved vocabulary assessment is reconciled before its frozen batch can carr
   const state = fixture(), cards = [{ entryId: 'word', senseId: 'sense' }];
   Object.assign(state.plans[0], { kind: 'vocabulary', skill: 'vocabulary', target: { type: 'vocabulary', mode: 'due-review', assessmentMode: 'dictation', binding: 'frozen', cards } });
   state.vocabularySessions = [{ id: 'assessment', planId: 'yesterday', status: 'submitted', mode: 'dictation', startedAt, submittedAt: completedAt, results: [{ ...cards[0], response: 'wrong answer', result: 'failure' }] }];
+  projectEvidence(state);
+  state.vocabularySessions = [];
   ensureUnifiedPlans(state, undefined, today);
   expect(state.plans.find(plan => plan.id === 'yesterday')).toMatchObject({ status: 'completed', completedAt, dateKey: '2026-11-16', linkedSessionId: 'assessment' });
+  expect(state.vocabularySessions).toEqual([]);
 });
 
 test('recovery never advances a saved mock stage or mutates shared evidence', () => {

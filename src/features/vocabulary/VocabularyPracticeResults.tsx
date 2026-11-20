@@ -133,6 +133,10 @@ export function VocabularyPracticeResults({ controller, results }: {
               <dt>Pending</dt>
               <dd>{results.summary.pending}</dd>
             </div>
+            {results.summary.unanswered ? <div>
+              <dt>Unanswered</dt>
+              <dd>{results.summary.unanswered}</dd>
+            </div> : null}
           </>
         )}
       </dl>
@@ -205,7 +209,7 @@ export function VocabularyPracticeResults({ controller, results }: {
                       ? row.response
                         ? "Listened"
                         : "Unplayed"
-                      : resultName(row.result)}
+                      : row.errorType === 'unanswered' ? 'Unanswered' : resultName(row.result)}
                   </span>
                   {results.mode === 'dictation' && row.result === 'success' && isRegionalSpellingDifference(row.expectedAnswer || row.term, row.response) ? <small className="practice-result-explanation">UK/US spelling accepted</small> : null}
                   {row.errorType ? <small className="practice-result-explanation">{row.errorType === 'unanswered' ? 'No response submitted' : row.errorType}</small> : null}

@@ -123,11 +123,13 @@ function PlanTask({plan,expanded=false,todayFocus=false}){
   const skill=planSkill(plan);const material=studyTargetSummary(plan);
   const completionDescription=receptivePlanCompletionDescription(plan);
   const status=plan.onHold&&plan.status!=='completed'?'On hold':({pending:'Not started',in_progress:'In progress',completed:'Completed',skipped:'Skipped'})[plan.status] || plan.status;
+  const reviewAt = plan.status === 'pending' ? plan.target?.reviewAvailableAt : undefined;
   const reasons=[
     plan.skipReason&&({"merged-review":"Merged into current review planning","replanned-learning":"Unstarted words returned to the current daily learning plan","bulk-skip":"Skipped in backlog","user-skipped":"Skipped by you","no-longer-due":"No review needed any more"})[plan.skipReason],
     plan.onHold&&'Held tasks stay out of automatic scheduling.',
     plan.waitingReason,
-    plan.reviewReason&&`Review reason: ${({error:'Confirmed mistake',recovery:'Mistake recovery',due:'Scheduled review is due',missing:'Build a missing skill',spaced:'Spaced consolidation'})[plan.reviewReason]||plan.reviewReason}`,
+    reviewAt && Date.parse(reviewAt)>Date.now() && `Review expected from ${new Date(reviewAt).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}.`,
+    plan.reviewReason&&`Review reason: ${({error:'Confirmed mistake',recovery:'Mistake recovery',due:'Scheduled review',missing:'Build a missing skill',spaced:'Spaced consolidation'})[plan.reviewReason]||plan.reviewReason}`,
   ].filter(Boolean);
   const hasDetails=Boolean(material||completionDescription||reasons.length);
   return <article id={`task-${plan.id}`} tabIndex={-1} className={`study-task study-plan-task ${plan.status}`}>
@@ -157,8 +159,8 @@ function PlanTask({plan,expanded=false,todayFocus=false}){
           ].map(([mode,label,Icon,disabled])=><DropdownMenu.Item key={mode} className="dropdown-item" disabled={disabled} onSelect={()=>{setError('');setDialog(mode);}}><Icon size={16}/>{label}</DropdownMenu.Item>)}
           <DropdownMenu.Separator className="dropdown-separator"/>
           <DropdownMenu.Item className="dropdown-item" disabled={completed} onSelect={()=>void change({type:plan.onHold?'resume':'hold'})}>{plan.onHold?'Return to waiting':'Hold task'}</DropdownMenu.Item>
-          <DropdownMenu.Item className="dropdown-item" onSelect={()=>void change({type:'reorder',direction:'up'})}><ArrowUp size={16}/>Move task up</DropdownMenu.Item>
-          <DropdownMenu.Item className="dropdown-item" onSelect={()=>void change({type:'reorder',direction:'down'})}><ArrowDown size={16}/>Move task down</DropdownMenu.Item>
+          <DropdownMenu.Item className="dropdown-item" disabled={completed||plan.onHold} onSelect={()=>void change({type:'reorder',direction:'up'})}><ArrowUp size={16}/>Move task up</DropdownMenu.Item>
+          <DropdownMenu.Item className="dropdown-item" disabled={completed||plan.onHold} onSelect={()=>void change({type:'reorder',direction:'down'})}><ArrowDown size={16}/>Move task down</DropdownMenu.Item>
           <DropdownMenu.Separator className="dropdown-separator"/>
           <DropdownMenu.Item className="dropdown-item study-task-skip" disabled={completed} onSelect={()=>void change({type:'skip'})}><SkipForward size={16}/>Skip task</DropdownMenu.Item>
         </DropdownMenu.Content></DropdownMenu.Portal>

@@ -5,7 +5,7 @@ import { resolveVocabularyLearningContext, VOCABULARY_CONTEXT_VERSION } from '..
 import { getVocabularyReviewQueue, normalizeVocabularyCollections } from '../../src/domain/vocabulary';
 import { learningTask } from '../../src/domain/vocabulary/content';
 import { buildUnitPracticeQueue } from '../../src/domain/vocabulary/selection';
-import { createVocabularySession, buildVocabularySessionCommit } from '../../src/domain/vocabulary/session';
+import { createVocabularySession, buildVocabularySessionCommit, updateVocabularySessionAnswer } from '../../src/domain/vocabulary/session';
 import { writeVocabularyDraft, readVocabularyDraft } from '../../src/storage/vocabularyDrafts';
 import type { VocabularyEntry, VocabularyStore } from '../../src/domain/vocabulary/types';
 
@@ -78,7 +78,7 @@ test('same-ID learner edits and personal notes survive a public content suppleme
 test('committed editorial provenance cannot authorize a canned task after learner editing', () => {
   const state = fresh([entry('stable')]);
   const cards = getVocabularyReviewQueue(state, { mode: 'synonym', dueOnly: false });
-  const session = createVocabularySession(cards, 'synonym', {});
+  const session = updateVocabularySessionAnswer(createVocabularySession(cards, 'synonym', {}), cards[0].id, 'stable');
   const committed = buildVocabularySessionCommit(state, session, cards).state;
   const saved = committed.vocabulary[0];
   const selected = saved.senses.find(sense => sense.id === cards[0].senseId)!;

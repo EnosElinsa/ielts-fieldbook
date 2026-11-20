@@ -50,7 +50,7 @@ vi.mock('../../src/lib/supabase', () => ({
             return { data: structuredClone(page), error: mocks.readError === table ? new Error('Read failed') : null };
           },
           eq: (key, value) => { rows = rows.filter(row => (key.startsWith('payload->>') ? row.payload?.[key.slice(10)] : row[key]) === value); return query; },
-          in: (key, values) => { rows = rows.filter(row => values.includes(row[key])); return query; },
+          in: (key, values) => { rows = rows.filter(row => values.includes(key.startsWith('payload->>') ? row.payload?.[key.slice(10)] : row[key])); return query; },
           order: () => { rows = rows.slice().sort((left, right) => String(left.id).localeCompare(String(right.id))); return query; },
           maybeSingle: async () => ({ data: structuredClone(table === 'profiles' ? mocks.profile : rows[0] || null), error: null }),
         };
@@ -85,6 +85,22 @@ beforeEach(() => {
   mocks.user = 'account-1';
   mocks.sessions = [];
   mocks.scopedPlans=null;mocks.planStamp='a'.repeat(32);mocks.historyRows=[];
+});
+
+test('planning reads submitted vocabulary evidence for its started tasks without loading writable session history', async () => {
+  const plan = {id:'moved-review',status:'in_progress',kind:'vocabulary',startedAt:'2026-11-19T10:00:00Z',target:{type:'vocabulary'}};
+  mocks.rows.plans.push({id:plan.id,payload:plan});
+  const evidence = {mode:'dictation',status:'submitted',startedAt:plan.startedAt,submittedAt:'2026-11-19T10:15:00Z',results:[{entryId:'word',senseId:'sense',response:'answer',result:'success'}]};
+  mocks.rows.vocabulary_sessions = [
+    {id:'linked',payload:{...evidence,planId:plan.id,cardSnapshots:[{privateSnapshot:true}]}},
+    {id:'other',payload:{...evidence,planId:'unrelated'}},
+  ];
+  const remote = await import('../../src/storage/remote');
+  await remote.hydrateState({modules:[]});
+  const {data} = await remote.ensureAccountModule('planning');
+  expect(data.planningEvidence.find(row=>row.id==='vocabularySessions').rows).toEqual([{id:'linked',planId:plan.id,...evidence}]);
+  expect(data.vocabularySessions).toBeUndefined();
+  expect(remote.getCollectionStatuses().vocabularySessions).toBe('unloaded');
 });
 
 test('stalled module reads expire and a foreground retry can load again', async () => {

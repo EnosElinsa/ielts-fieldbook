@@ -20,7 +20,7 @@ export function VocabularyPracticePage() {
   const {
     session, results, study, exitOpen, setExitOpen,
     incompleteOpen, setIncompleteOpen, saving, error, storageError, submissionPending,
-    answered, count, submit, exit, pauseSession,
+    answered, count, submit, exit, pauseSession, locked,
   } = controller;
   const location = useLocation();
   const navigate = useNavigate();
@@ -129,6 +129,7 @@ export function VocabularyPracticePage() {
             {count - answered} unanswered{" "}
             {count - answered === 1 ? "word" : "words"}
           </p>
+          <p>{locked ? 'Your planned task needs a graded answer for every prompt. Unanswered prompts keep their current review dates.' : 'Unanswered prompts keep their current review dates.'}</p>
           <div className="practice-confirm-actions">
             <button
               className="btn primary"

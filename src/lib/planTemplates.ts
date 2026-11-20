@@ -501,7 +501,7 @@ function evidenceTargetKey(task) {
 }
 
 function clearPlanBinding(plan) {
-  for (const field of ['target','targetLabel','quantity','questionId','sectionId','sentenceId','attemptId','sourceAssessmentId','targetErrorIds','driver','stage','speakingGroups','completedPromptKeys','targetPrompt']) delete plan[field];
+  for (const field of ['target','targetLabel','quantity','questionId','sectionId','sentenceId','attemptId','sourceAssessmentId','targetErrorIds','driver','stage','speakingGroups','completedPromptKeys','targetPrompt','reviewReason','waitingReason']) delete plan[field];
   plan.linkedSessionId = null;
   plan.completedAt = null;
 }
@@ -561,7 +561,7 @@ function carryBacklog(state,keys,now,selectedIds,previousDates=new Map()) {
   const backlog=state.plans.filter(plan=>plan.dateKey<today&&['pending','in_progress'].includes(plan.status)&&!plan.onHold&&!plan.archivedAt&&(!selectedIds||selectedIds.has(plan.id)))
     .sort((a,b)=>Number(startedPlan(b))-Number(startedPlan(a))||String(a.originalDateKey||a.dateKey).localeCompare(String(b.originalDateKey||b.dateKey))||a.id.localeCompare(b.id));
   for(const plan of backlog) {
-    if(plan.origin==='automatic'&&plan.target?.mode==='due-review'&&!frozenVocabularyPlan(plan)&&!startedPlan(plan)&&!plan.restoredAt) {
+    if(plan.origin==='automatic'&&plan.target?.mode==='due-review'&&!protectedSchedulePlan(plan)) {
       plan.previousStatus=plan.status;plan.status='skipped';plan.skipReason='merged-review';plan.skippedAt=new Date(now).toISOString();
       if(state.activePlanId===plan.id)state.activePlanId=null;
       continue;
@@ -639,7 +639,12 @@ export function nextHomeLearning(state, now = new Date()) {
   const settings=state.settings||{},budget=studyBudget(settings,today);
   const rows=plans.filter(plan=>plan.dateKey===today&&plan.status!=='skipped'&&!plan.onHold&&!plan.archivedAt);
   const retainedNew=rows.filter(plan=>plan.target?.mode==='learning-batch').reduce((sum,plan)=>sum+(plan.target.cards?.length||plan.target.entryIds?.length||plan.quantity||plan.target.batchSize||0),0);
-  const capacity=Math.min(Math.max(0,budget.planning.newWordsPerDay-retainedNew),remainingCapacity({...state,settings,plans},today).vocabulary);
+  const remaining = remainingCapacity({...state,settings,plans},today).vocabulary;
+  const desired = Math.min(Math.max(0,budget.planning.newWordsPerDay-retainedNew),remaining);
+  if (desired <= 0) return null;
+  const existingReview = rows.some(plan => plan.target?.mode === 'due-review');
+  const candidates = existingReview ? [] : getVocabularyPlanningCandidates(state,now,settings.vocabulary?.mode,endOfStudyDay(today));
+  const capacity = Math.min(desired, remaining - reviewReservation(candidates, remaining));
   if(capacity<=0)return null;
   const reserved=plans.filter(plan=>['pending','in_progress'].includes(plan.status)&&plan.target?.mode==='learning-batch').flatMap(plan=>plan.target.cards?.length?plan.target.cards:(plan.target.entryIds||[]).map(entryId=>({entryId})));
   const target=nextLearningTarget({...state,plans:plans.filter(plan=>plan.dateKey<=today)},new Set(),reserved,capacity);
@@ -650,9 +655,18 @@ function hasVocabularyBudget(state,now) {
   return calendarDays(now).some(key=>studyBudget(state.settings,key).vocabulary>0);
 }
 
+function endOfStudyDay(key) {
+  return new Date(`${key}T23:59:59.999`);
+}
+
+function reviewReservation(candidates, minutes) {
+  const priorityCount = candidates.filter(row => ['error','recovery','due'].includes(row.reason)).length;
+  return Math.min(priorityCount, Math.ceil(minutes / 2));
+}
+
 /** Browser entry point: yield during the expensive read-only scan, then apply the schedule atomically. */
 export async function ensureUnifiedPlansAsync(state, now = new Date()) {
-  const candidates=hasVocabularyBudget(state,now) ? await getVocabularyPlanningCandidatesAsync(state,now,state.settings.vocabulary?.mode) : [];
+  const candidates=hasVocabularyBudget(state,now) ? await getVocabularyPlanningCandidatesAsync(state,now,state.settings.vocabulary?.mode,endOfStudyDay(calendarDays(now).at(-1))) : [];
   return ensureUnifiedPlans(state,undefined,now,undefined,candidates);
 }
 
@@ -681,7 +695,7 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
   const reserved=new Set(state.plans.filter(plan=>plan.target?.mode==='learning-batch'&&plan.status!=='skipped').map(plan=>JSON.stringify([plan.target.bookId,plan.target.unitId||null,plan.target.batchIndex,plan.target.batchSize])));
   const frozenCards=state.plans.filter(plan=>['pending','in_progress'].includes(plan.status)&&plan.target?.type==='vocabulary').flatMap(plan=>(plan.target.cards?.length?plan.target.cards:(plan.target.entryIds||[]).map(entryId=>({entryId,senseId:''}))).map(card=>({...card,mode:plan.target.assessmentMode})));
   const identities=new Set(frozenCards.map(card=>cardIdentity(card)));
-  const candidateRows=preparedCandidates ?? (hasVocabularyBudget(state,now) ? getVocabularyPlanningCandidates(state,now,state.settings.vocabulary?.mode) : []);
+  const candidateRows=preparedCandidates ?? (hasVocabularyBudget(state,now) ? getVocabularyPlanningCandidates(state,now,state.settings.vocabulary?.mode,endOfStudyDay(keys.at(-1))) : []);
   const candidateIdentities=new Map(candidateRows.map(({card})=>[card,cardIdentity(card)]));
   let candidates=candidateRows.filter(({card})=>!identities.has(candidateIdentities.get(card)));
   const historical=previous.filter(plan=>(plan.originalDateKey||plan.dateKey)<today&&Number.isInteger(plan.rotationIndex)).sort((a,b)=>String(a.originalDateKey||a.dateKey).localeCompare(String(b.originalDateKey||b.dateKey))||a.rotationIndex-b.rotationIndex).pop();
@@ -706,11 +720,14 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
     const vocabularyTasks=[];
     const retainedNew=state.plans.filter(plan=>plan.dateKey===key&&plan.status!=='skipped'&&!plan.onHold&&!plan.archivedAt&&plan.target?.mode==='learning-batch').reduce((sum,plan)=>sum+(plan.target.cards?.length||plan.target.entryIds?.length||plan.quantity||plan.target.batchSize||0),0);
     let dailyNewRemaining=Math.max(0,budget.planning.newWordsPerDay-retainedNew);
-    let newAllowance=Math.min(remaining,dailyNewRemaining);
+    const dayEnd = endOfStudyDay(key).getTime();
+    let eligibleReviews = candidates.filter(row => !row.availableAt || row.availableAt <= dayEnd);
+    const reservedReviewMinutes = reviewReservation(eligibleReviews,remaining);
+    let newAllowance=Math.min(remaining - reservedReviewMinutes,dailyNewRemaining);
     let lastBookId;
     while(newAllowance>0){
       const target=nextLearningTarget(state,reserved,frozenCards,newAllowance,lastBookId,key);if(!target)break;
-      target.allocation={...target.allocation,dailyRemaining:dailyNewRemaining,minutesRemaining:remaining};
+      target.allocation={...target.allocation,dailyRemaining:dailyNewRemaining,minutesRemaining:remaining - reservedReviewMinutes};
       lastBookId=target.bookId;
       const count=target.entryIds?.length||target.cards?.length||Math.min(target.batchSize,newAllowance);if(!count)break;
       const refs=target.cards?.length?target.cards:(target.entryIds||[]).map(entryId=>({entryId,senseId:''}));
@@ -718,13 +735,20 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
       vocabularyTasks.push({skill:'vocabulary',kind:'vocabulary',title:`Vocabulary - Learn ${count} words`,description:'Learn the selected words, then submit their recall answers.',estimatedMinutes:count,quantity:count,deskMode:target.assessmentMode,target,completion:{type:'assessment',description:'Submit an answer for every selected word. Accuracy is tracked separately.'}});
       newAllowance-=count;remaining-=count;dailyNewRemaining-=count;
     }
-    while(remaining>0&&candidates.length) {
-      const mode=candidates[0].card.mode,words=new Set(),chosen=[];
-      for(const candidate of candidates)if(candidate.reason===candidates[0].reason&&candidate.card.mode===mode&&!words.has(candidate.card.entryId)&&chosen.length<Math.min(remaining,budget.planning.blockMinutes)){chosen.push(candidate);words.add(candidate.card.entryId);}
+    while(remaining>0&&eligibleReviews.length) {
+      const {reason,card:{mode}} = eligibleReviews[0];
+      const words=new Set(),chosen=[];
+      const forecastOnly = eligibleReviews[0].availableAt !== undefined;
+      for(const candidate of eligibleReviews)if(candidate.reason===reason&&candidate.card.mode===mode&&(candidate.availableAt!==undefined)===forecastOnly&&!words.has(candidate.card.entryId)&&chosen.length<Math.min(remaining,budget.planning.blockMinutes)){chosen.push(candidate);words.add(candidate.card.entryId);}
       if(!chosen.length)break;
       const reviewTask=vocabularyReviewTask(mode,chosen.length);
-      vocabularyTasks.push({...reviewTask,target:{...reviewTask.target,reviewReason:chosen[0].reason},reviewReason:chosen[0].reason});remaining-=chosen.length;
-      const consumed=new Set(chosen.map(({card})=>candidateIdentities.get(card)));candidates=candidates.filter(({card})=>!consumed.has(candidateIdentities.get(card)));
+      const availableAt = Math.max(...chosen.map(row=>row.availableAt ?? -Infinity));
+      const forecast = Number.isFinite(availableAt) ? {reviewAvailableAt:new Date(availableAt).toISOString()} : {};
+      vocabularyTasks.push({...reviewTask,target:{...reviewTask.target,reviewReason:reason,...forecast},reviewReason:reason});
+      remaining-=chosen.length;
+      const consumed=new Set(chosen.map(({card})=>candidateIdentities.get(card)));
+      eligibleReviews=eligibleReviews.filter(({card})=>!consumed.has(candidateIdentities.get(card)));
+      candidates=candidates.filter(({card})=>!consumed.has(candidateIdentities.get(card)));
     }
     vocabularyTasks.forEach((task,index)=>add(key,task,`study-${key}-vocabulary${index?`-${index+1}`:''}`,index));
     const vocabularyOrder=state.plans.filter(plan=>plan.dateKey===key&&plan.status!=='skipped'&&!plan.onHold&&!plan.archivedAt&&isVocabularyPlan(plan)).length;
@@ -913,7 +937,11 @@ export function mutateStudyPlan(state, planId, action, now = new Date()) {
       if(!['pending','in_progress'].includes(plan.status))throw new Error('Only unfinished tasks can be held.');
       plan.onHold=true;plan.heldAt=new Date(now).toISOString();
       if(state.activePlanId===plan.id)state.activePlanId=null;
-    } else if(action.type==='resume') {delete plan.onHold;}
+    } else if(action.type==='resume') {
+      if(!plan.onHold)return plan;
+      if(plan.dateKey>=dateKey(now))requireDayCapacity(state,plan.dateKey,plan.estimatedMinutes,plan.id,action.allowOverBudget);
+      delete plan.onHold;
+    }
     else if(action.type==='archive') {
       if(!['completed','skipped'].includes(plan.status))throw new Error('Only history can be archived.');
       plan.archivedAt=new Date(now).toISOString();
@@ -924,20 +952,28 @@ export function mutateStudyPlan(state, planId, action, now = new Date()) {
       requireDayCapacity(state,restoreDate,plan.estimatedMinutes,plan.id,action.allowOverBudget);
       if(restoreDate!==plan.dateKey){plan.originalDateKey=plan.originalDateKey||plan.dateKey;plan.dateKey=restoreDate;plan.rescheduledAt=new Date(now).toISOString();}
       delete plan.archivedAt;delete plan.onHold;
+      delete plan.waitingReason;
       if(plan.skipReason==='no-longer-due'&&!plan.startedAt&&plan.target?.type==='vocabulary'&&plan.target.mode==='due-review'&&!plan.target.cards?.length)plan.target.binding='dynamic';
       plan.status=plan.previousStatus==='in_progress'?'in_progress':'pending';delete plan.skipReason;delete plan.skippedAt;plan.restoredAt=new Date(now).toISOString();
     }
     else if(action.type==='reschedule') {
-      if(plan.status==='completed')throw new Error('Completed tasks cannot be rescheduled.');
+      if(!['pending','in_progress'].includes(plan.status))throw new Error('Only unfinished tasks can be rescheduled.');
       requireDayCapacity(state,action.dateKey,plan.estimatedMinutes,plan.id,action.allowOverBudget);plan.originalDateKey=plan.originalDateKey||plan.dateKey;plan.dateKey=action.dateKey;plan.rescheduledAt=new Date(now).toISOString();delete plan.onHold;
+      delete plan.waitingReason;
     } else if(action.type==='resize'||action.type==='replace') {
       if(plan.status!=='pending'||plan.startedAt)throw new Error('Only unstarted tasks can be edited.');
       if(action.type==='resize') {
         const minutes=Number(action.estimatedMinutes);
         validatePlanDuration(plan,minutes);
-        if(frozenVocabularyPlan(plan)&&minutes<plan.target.cards.length)throw new Error('The exact frozen prompts need at least one minute each.');
+        if(frozenVocabularyPlan(plan)&&minutes<(plan.target.cards?.length||plan.target.entryIds?.length||0))throw new Error('The exact frozen prompts need at least one minute each.');
         requireDayCapacity(state,plan.dateKey,minutes,plan.id,action.allowOverBudget);plan.estimatedMinutes=minutes;
-        if(plan.target?.type==='vocabulary'&&plan.target.mode==='due-review'&&!frozenVocabularyPlan(plan))Object.assign(plan,vocabularyReviewTask(plan.target.assessmentMode,minutes));
+        if(plan.target?.type==='vocabulary'&&plan.target.mode==='due-review'&&!frozenVocabularyPlan(plan)) {
+          if (plan.target.reviewType && minutes > 100) throw new Error('Schedule at most 100 questions in one review.');
+          const resized = vocabularyReviewTask(plan.target.assessmentMode,minutes);
+          plan.target = {...plan.target,batchSize:minutes};
+          plan.quantity = minutes;
+          plan.description = resized.description;
+        }
         if(plan.target?.type==='section')delete plan.target.questionIds;
       }else {
         const minutes=action.estimatedMinutes ?? (action.kind==='writing-mock'?60:action.kind==='speaking-mock'?15:plan.estimatedMinutes||studyBudget(state.settings,plan.dateKey).skill);
@@ -946,11 +982,19 @@ export function mutateStudyPlan(state, planId, action, now = new Date()) {
         clearPlanBinding(plan);Object.assign(plan,task);
       }
     }else if(action.type==='reorder') {
-      const rows=state.plans.filter(row=>row.dateKey===plan.dateKey).sort(compareStudyPlans);
+      const rows=state.plans.filter(row=>row.dateKey===plan.dateKey&&['pending','in_progress'].includes(row.status)&&!row.onHold&&!row.archivedAt).sort(compareStudyPlans);
       const index=rows.indexOf(plan);const next=index+(action.direction==='up'?-1:1);
-      if(next<0||next>=rows.length)return plan;
+      if(index<0||next<0||next>=rows.length)return plan;
+      const previous = rows.slice();
+      const existingOrders = rows.map(row => Number(row.order)||0);
+      const ordersAreUnique = new Set(existingOrders).size === rows.length;
       [rows[index],rows[next]]=[rows[next],rows[index]];
-      rows.forEach((row,order)=>{row.order=order;row.manuallyEditedAt=new Date(now).toISOString();});
+      rows.forEach((row,index)=>{
+        const order = ordersAreUnique ? existingOrders[index] : index;
+        if(row===previous[index] && (Number(row.order)||0)===order)return;
+        row.order=order;
+        row.manuallyEditedAt=new Date(now).toISOString();
+      });
     } else throw new Error('This task cannot be changed.');
   }
   if(action.type==='add'||action.type==='duplicate')plan.origin='manual';

@@ -7,6 +7,7 @@ export const PLANNING_FIELDS = {
   stories: ['topicIds'],
   examAttempts: ['skill','status','sectionIds','results','responses','errorReasons','evidence','completedAt','mode','sourceId','planId','retryOfAttemptId','updatedAt','startedAt','remainingSeconds','durationSeconds'],
   intensiveSessions: ['nextReviewAt','sectionId','sentenceId','stage','completedAt','dictationResult','reviewEnabled','planId','listeningReviews'],
+  vocabularySessions: ['planId','mode','status','startedAt','submittedAt','selection','results'],
 } as const;
 
 export type PlanningEvidenceKey = keyof typeof PLANNING_FIELDS;

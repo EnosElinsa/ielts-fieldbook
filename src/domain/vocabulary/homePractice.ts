@@ -2,10 +2,23 @@ import type {ReviewCard,VocabularyEntry,VocabularyEvidence,VocabularySense,Vocab
 import {getVocabularyNextPractice,type VocabularyNextPractice} from './nextPractice';
 import {getDueVocabularyReviewQueue} from './progress';
 import {resolveVocabularyLearningContext} from './context';
+import {getActiveWrongWords, getVocabularyReviewQueue} from './index';
+import {getLearnedVocabularyIds} from './progress';
 import type {VocabularySessionRecord} from './session';
 
 export type SavedMeaningPractice = {entry: VocabularyEntry; sense: VocabularySense; recommendation: VocabularyNextPractice};
 export type VocabularyHomePractice = {practice?: SavedMeaningPractice; dueCards: ReviewCard[]; nextChangeAt?: string};
+
+export function getVocabularyHomeRetries(store: VocabularyStore): ReviewCard[] {
+  const wrong = getActiveWrongWords(store);
+  if (!wrong.length) return [];
+  const learned = getLearnedVocabularyIds(store);
+  const entries = new Map(wrong.filter(row => learned.has(row.entryId)).map(row => [row.entryId, row.entry]));
+  const active = new Set(wrong.flatMap(row => Object.entries(row.wrong.modes)
+    .filter(([, attempt]) => attempt?.active).map(([mode]) => JSON.stringify([row.entryId,row.senseId,mode]))));
+  return getVocabularyReviewQueue({...store,vocabulary:[...entries.values()]},{dueOnly:false})
+    .filter(card => active.has(JSON.stringify([card.entryId,card.senseId,card.mode])));
+}
 
 /** Account-wide selection uses only explicit saved meanings; public defaults cannot add candidates. */
 export function getVocabularyHomePractice(store: Partial<VocabularyStore>, at: string | Date = new Date()): VocabularyHomePractice {

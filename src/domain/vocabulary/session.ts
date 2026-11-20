@@ -37,7 +37,7 @@ export type VocabularySessionResult = {
   prompt?: string; explanation?: string; contentVersion?: string; response: string; result: VocabularyResult; definition: string; example: string; errorType?: string; flagged?: boolean;
   context?: VocabularyLearningContext;
 };
-export type VocabularySessionSummary = { total: number; correct: number; incorrect: number; pending: number; listened?: number };
+export type VocabularySessionSummary = { total: number; correct: number; incorrect: number; pending: number; unanswered?: number; listened?: number };
 export type VocabularySessionRecord = {
   planId?: string;
   parentSessionId?: string;
@@ -149,6 +149,7 @@ export function buildVocabularySessionCommit<S extends VocabularyStore>(state: S
   const entriesById = new Map(targetState.vocabulary.map(entry => [entry.id, entry]));
   const catalogById = new Map((VOCABULARY_CATALOG.entries as unknown as typeof targetState.vocabulary).map(entry => [entry.id, entry]));
   const selection = session.selection?.kind === 'unit' || session.selection?.kind === 'learning-batch' ? session.selection : undefined;
+  const audio = session.mode === 'audio';
   const seen = new Set<string>();
   session.cardIds.forEach(ref => {
     if (seen.has(ref.id)) throw new Error('Vocabulary session contains duplicate cards.');
@@ -156,20 +157,24 @@ export function buildVocabularySessionCommit<S extends VocabularyStore>(state: S
     const card = byId.get(ref.id);
     if (card?.context !== undefined && (!isVocabularyLearningContext(card.context, ref) || selection && card.context.bookId !== undefined && (card.context.bookId !== selection.bookId || card.context.unitId !== selection.unitId))) throw new Error('Invalid vocabulary card context.');
     let entry = entriesById.get(ref.entryId);
+    const retainEntry = audio || Boolean(normalizeAnswer(session.answers[ref.id]?.response));
     if (!entry) {
       const catalogEntry = catalogById.get(ref.entryId);
       if (catalogEntry) {
         entry = structuredClone(catalogEntry);
-        targetState.vocabulary.push(entry);
-        entriesById.set(entry.id, entry);
+        if (retainEntry) {
+          targetState.vocabulary.push(entry);
+          entriesById.set(entry.id, entry);
+        }
       }
     }
     if (!card || card.entryId !== ref.entryId || card.senseId !== ref.senseId || !entry || entry.tags.includes('archived') || !(entry.senses.some(sense => sense.id === ref.senseId) || (session.cardSnapshots || cards).some(snapshot => snapshot.entryId === ref.entryId && snapshot.senseId === ref.senseId && snapshot.entry.senses.some(sense => sense.id === ref.senseId && (sense.id.startsWith('kaikki:') || isRegisteredRestoredVocabularySense(ref.entryId, sense) || sense.id.startsWith('editorial:') && sense.source === 'Fieldbook editorial' && isVocabularyLearningContext(snapshot.context, snapshot))))) || normalizeAnswer(card.entry.term) !== normalizeAnswer(entry.term) || ref.mode !== session.mode || (session.mode !== 'audio' && card.mode !== session.mode)) throw new Error('Vocabulary session card is stale.');
+    if (!retainEntry) return;
     if (!entry.senses.some(sense => sense.id === ref.senseId) ) { const sense = card?.entry.senses.find(item => item.id === ref.senseId); if (sense) entry.senses.push(structuredClone(sense)); }
     if (selection && !entry.sources.some(source => source.bookId === selection.bookId && source.unitId === selection.unitId)) entry.sources.push({ type: 'wordbook', id: `${selection.bookId}:${selection.unitId}:${entry.id}`, bookId: selection.bookId, unitId: selection.unitId });
   });
   const submittedAt = session.submittedAt || nowIso();
-  const audio = session.mode === 'audio';
+  const reviewIds: string[] = [];
   const results = session.cardIds.map(ref => {
     const card = byId.get(ref.id)!;
     const answer = session.answers[ref.id];
@@ -180,20 +185,32 @@ export function buildVocabularySessionCommit<S extends VocabularyStore>(state: S
         const activity = recordAudioActivity(targetState, ref.entryId, submittedAt);
         if (activity) Object.assign(activity, { id: `${session.id}:${ref.id}:audio`, sessionId: session.id });
       }
+    } else if (result.errorType === 'unanswered') {
+      result.result = 'pending';
     } else {
       const source = (selection ? card.sources?.find(source => source.bookId === selection.bookId && source.unitId === selection.unitId) : undefined) || card.sources?.find(source => matchesVocabularySource(source, session.filter, ref.senseId));
-      recordVocabularyReview(targetState, { id: `${session.id}:${ref.id}`, entryId: ref.entryId, senseId: ref.senseId, mode: card.mode, result: result.result, response: result.response, occurredAt: submittedAt, durationMs: answer?.durationMs, verification: result.result === 'pending' ? 'pending' : card.mode === 'production' ? 'self-reported' : 'objective',
+      const reviewId = `${session.id}:${ref.id}`;
+      recordVocabularyReview(targetState, { id: reviewId, entryId: ref.entryId, senseId: ref.senseId, mode: card.mode, result: result.result, response: result.response, occurredAt: submittedAt, durationMs: answer?.durationMs, verification: result.result === 'pending' ? 'pending' : card.mode === 'production' ? 'self-reported' : 'objective',
         sourceType: source?.type, sourceId: source?.id, bookId: selection?.bookId || session.filter.bookId || source?.bookId, unitId: selection?.unitId || session.filter.unitId || source?.unitId, skill: session.filter.skill || source?.skill,
       });
       const review = targetState.vocabularyReviews.find(item => item.id === `${session.id}:${ref.id}`) as unknown as Record<string, unknown> | undefined;
       if (review) review.sessionId = session.id;
+      reviewIds.push(reviewId);
       targetState.vocabularyEvidence.filter(event => event.id?.startsWith(`${session.id}:${ref.id}:`)).forEach(event => Object.assign(event, { sessionId: session.id }));
     }
     if (typeof answer?.flagged === 'boolean') result.flagged = answer.flagged;
     return result;
   });
-  const summary: VocabularySessionSummary = { total: results.length, correct: audio ? 0 : results.filter(result => result.result === 'success').length, incorrect: audio ? 0 : results.filter(result => result.result === 'failure' || result.result === 'partial').length, pending: audio ? 0 : results.filter(result => result.result === 'pending').length, ...(audio ? { listened: results.filter(result => normalizeAnswer(session.answers[result.cardId]?.response) === 'listened').length } : {}) };
-  const sessionRecord: VocabularySessionRecord = { id: session.id, mode: session.mode, status: 'submitted', startedAt: session.startedAt, submittedAt, preferences: structuredClone(session.preferences), filter: structuredClone(session.filter), summary, results: structuredClone(results), entryIds: [...new Set(session.cardIds.map(card => card.entryId))], reviewIds: session.mode === 'audio' ? [] : session.cardIds.map(card => `${session.id}:${card.id}`), updatedAt: submittedAt, ...(session.contentVersion ? { contentVersion: session.contentVersion, cardSnapshots: structuredClone(session.cardSnapshots) } : {}), ...(session.selection ? { selection: structuredClone(session.selection) } : {}) };
+  const unanswered = results.filter(result => result.errorType === 'unanswered').length;
+  const summary: VocabularySessionSummary = {
+    total: results.length,
+    correct: results.filter(result => result.result === 'success').length,
+    incorrect: results.filter(result => result.result === 'failure' || result.result === 'partial').length,
+    pending: audio ? 0 : results.filter(result => result.result === 'pending').length - unanswered,
+    ...(unanswered ? { unanswered } : {}),
+    ...(audio ? { listened: results.filter(result => normalizeAnswer(result.response) === 'listened').length } : {}),
+  };
+  const sessionRecord: VocabularySessionRecord = { id: session.id, mode: session.mode, status: 'submitted', startedAt: session.startedAt, submittedAt, preferences: structuredClone(session.preferences), filter: structuredClone(session.filter), summary, results: structuredClone(results), entryIds: [...new Set(session.cardIds.map(card => card.entryId))], reviewIds, updatedAt: submittedAt, ...(session.contentVersion ? { contentVersion: session.contentVersion, cardSnapshots: structuredClone(session.cardSnapshots) } : {}), ...(session.selection ? { selection: structuredClone(session.selection) } : {}) };
   if (session.planId) sessionRecord.planId = session.planId;
   if (session.parentSessionId) sessionRecord.parentSessionId=session.parentSessionId;
   if (session.sourceSnapshot) sessionRecord.sourceSnapshot=structuredClone(session.sourceSnapshot);

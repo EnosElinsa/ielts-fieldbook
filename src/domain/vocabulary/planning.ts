@@ -5,7 +5,7 @@ import {getLearnedVocabularyIds} from './progress';
 import type {ReviewCard,VocabularyMode,VocabularyStore} from './types';
 import type {VocabularySessionRecord} from './session';
 
-export type VocabularyPlanningCandidate = {card:ReviewCard;reason:'error'|'recovery'|'due'|'missing'|'spaced'};
+export type VocabularyPlanningCandidate = {card:ReviewCard;reason:'error'|'recovery'|'due'|'missing'|'spaced';availableAt?:number};
 
 /** Explicit specialist choices retain their assessed due queue; automatic planning stays foundation-only. */
 export function selectVocabularyPlanReview(store: Partial<VocabularyStore>, now: Date, mode: VocabularyMode, capacity: number, reserved: ReadonlySet<string> = new Set()): ReviewCard[] {
@@ -24,22 +24,22 @@ export function selectVocabularyPlanReview(store: Partial<VocabularyStore>, now:
 /** Saved, attempted meanings only. Dates and evidence are read without changing account state.
  * One opportunity per exact entry/sense/mode; preference never crosses a reason or due-date priority.
  */
-export function getVocabularyPlanningCandidates(store:Partial<VocabularyStore>,now:string|Date,preferredMode?:VocabularyMode):VocabularyPlanningCandidate[] {
-  return sortCandidates([...candidateBatches(store,now)].flat(),preferredMode);
+export function getVocabularyPlanningCandidates(store:Partial<VocabularyStore>,now:string|Date,preferredMode?:VocabularyMode,through?:Date):VocabularyPlanningCandidate[] {
+  return sortCandidates([...candidateBatches(store,now,through)].flat(),preferredMode);
 }
 
 /** Keep the browser responsive during large historical scans; the synchronous path shares every rule. */
-export async function getVocabularyPlanningCandidatesAsync(store:Partial<VocabularyStore>,now:string|Date,preferredMode?:VocabularyMode):Promise<VocabularyPlanningCandidate[]> {
+export async function getVocabularyPlanningCandidatesAsync(store:Partial<VocabularyStore>,now:string|Date,preferredMode?:VocabularyMode,through?:Date):Promise<VocabularyPlanningCandidate[]> {
   const candidates:VocabularyPlanningCandidate[]=[];
   let deadline=performance.now()+8;
-  for(const batch of candidateBatches(store,now)) {
+  for(const batch of candidateBatches(store,now,through)) {
     candidates.push(...batch);
     if(performance.now()>=deadline) {await yieldToBrowser();deadline=performance.now()+8;}
   }
   return sortCandidates(candidates,preferredMode);
 }
 
-function* candidateBatches(store:Partial<VocabularyStore>,now:string|Date):Generator<VocabularyPlanningCandidate[]> {
+function* candidateBatches(store:Partial<VocabularyStore>,now:string|Date,through?:Date):Generator<VocabularyPlanningCandidate[]> {
   const at=new Date(now).getTime();
   if (!Number.isFinite(at)) return;
   const scopes=new Map((store.vocabulary || []).filter(entry=>!entry.tags.includes('archived')).map(entry=>[entry.id,{
@@ -90,10 +90,20 @@ function* candidateBatches(store:Partial<VocabularyStore>,now:string|Date):Gener
       const distinction=states.some(state=>state.senseId===sense.id && state.wrong?.modes?.distinction?.active && state.wrong.modes.distinction.lastFailureAt);
       const cards=getVocabularyReviewQueue(snapshot,{entryId:entry.id,senseId:sense.id,now,dueOnly:false,modes:distinction?['definition','dictation','distinction']:['definition','dictation']});
       for (const foundationMode of ['definition','dictation'] as const) {
-        const recommendation=getVocabularyNextPracticeFromCards(snapshot,entry,{senseId:sense.id,now,foundationMode},cards);
-        if (recommendation?.status!=='ready' || recommendation.reason==='production') continue;
         const card=cards.find(card=>card.mode===foundationMode);
-        if (card) candidates.push({card,reason:recommendation.reason});
+        if (!card) continue;
+        const request = {senseId:sense.id,now,foundationMode};
+        let recommendation=getVocabularyNextPracticeFromCards(snapshot,entry,request,cards);
+        let availableAt: number | undefined;
+        if (through && recommendation?.status === 'waiting') {
+          const due = Date.parse(card.scheduledDueAt || '');
+          if (due > at && due <= through.getTime()) {
+            availableAt = due;
+            recommendation = getVocabularyNextPracticeFromCards(snapshot,entry,{...request,now:new Date(due)},cards);
+          }
+        }
+        if (recommendation?.status!=='ready' || recommendation.reason==='production') continue;
+        candidates.push({card,reason:recommendation.reason,...(availableAt === undefined ? {} : {availableAt})});
       }
       yield candidates;
     }
