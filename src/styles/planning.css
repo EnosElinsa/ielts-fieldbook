@@ -230,3 +230,13 @@
 .study-linked-facts { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(180px,100%),1fr)); gap: 16px; margin-block: 20px; }
 .study-linked-facts dt { color: var(--muted); font-size: 12px; }
 .study-linked-facts dd { margin: 6px 0 0; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+.study-task-availability,.study-planning-window,.study-change-list span { color: var(--muted); font-size: 13px; line-height: 1.5; }
+.study-task-availability { max-inline-size: 15ch; text-align: end; }
+.study-schedule-changes > p:empty,.study-schedule-suggestion > p:empty { margin: 0; }
+.study-schedule-changes:has(details),.study-schedule-suggestion:has(.study-suggestion-heading) { border-block: 1px solid var(--rule); margin-block: 12px; padding-block: 10px; }
+.study-schedule-changes p,.study-schedule-suggestion p,.study-planning-window { margin-block: 8px; }
+.study-schedule-changes summary { cursor: pointer; color: var(--blue); padding-block: 7px; }
+.study-change-list { display: grid; gap: 10px; padding-inline-start: 20px; }
+.study-change-list span { display: block; overflow-wrap: anywhere; }
+.study-suggestion-heading,.study-waiting-date { display: flex; gap: 8px 16px; align-items: center; flex-wrap: wrap; }
+.study-waiting-date { color: var(--muted); font-size: 13px; margin-block: 8px; }

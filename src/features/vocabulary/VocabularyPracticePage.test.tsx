@@ -348,12 +348,16 @@ test('historical session lists the part of speech for the displayed definition',
   const sense = entry.senses[0];
   fb.current.state.vocabularySessions = [{
     id:'saved-pos', mode:'dictation', status:'submitted', preferences:{}, filter:{},
-    results:[{ cardId:'card', entryId:entry.id, senseId:sense.id, term:entry.term, response:entry.term, expectedAnswer:entry.term, result:'success', definition:sense.definition, example:'' }],
+    results:[{ cardId:'card', entryId:entry.id, senseId:sense.id, term:entry.term, response:entry.term, expectedAnswer:entry.term, result:'success', definition:'Definition as tested.', example:'Example as tested.' }],
     entryIds:[entry.id], summary:{total:1,correct:1,incorrect:0,pending:0}, startedAt:'2025-01-01', submittedAt:'2025-01-01',
   }];
   mount('?sessionId=saved-pos');
-  const definition = await screen.findByText(sense.definition);
+  const definition = await screen.findByText('Definition as tested.');
   expect(definition).toHaveTextContent(/adjective/i);
+  expect(screen.getByText('Example as tested.')).toBeVisible();
+  await userEvent.click(screen.getByText('Current meaning'));
+  expect(screen.getByText(sense.definition)).toBeVisible();
+  expect(screen.getByRole('link',{name:'Details'}).getAttribute('href')).toContain(`senseId=${sense.id}`);
 });
 test('dictation uses the frozen selected reading and exposes deliberate audio recovery without grading it',async()=>{
   const raw=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8')).entries.find((e:any)=>e.term==='record');

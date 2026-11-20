@@ -152,11 +152,14 @@ test('reordering visible tasks leaves history and held tasks unchanged', () => {
   expect(state.plans[0].order).toBeGreaterThan(state.plans[3].order);
 });
 
-test('an older review explicitly adjusted by the learner retains its scope during carryover', () => {
+test('an older review explicitly adjusted by the learner retains its date and scope until approved', () => {
   const state = fixture();
   state.wordbookEnrollments = [];
   state.plans = [{id:'edited',dateKey:'2026-10-19',skill:'vocabulary',kind:'vocabulary',origin:'automatic',status:'pending',estimatedMinutes:2,manuallyEditedAt:'2026-10-19T12:00:00',target:{type:'vocabulary',mode:'due-review',assessmentMode:'dictation',binding:'dynamic',batchSize:2,cards:[]}}];
   ensureUnifiedPlans(state,undefined,now);
+  expect(state.plans.find(plan=>plan.id==='edited').dateKey).toBe('2026-10-19');
+  const preview=previewBacklogChange(state,{type:'replan',ids:['edited']},now);
+  applyBacklogPreview(state,preview,now);
   expect(state.plans.find(plan=>plan.id==='edited')).toMatchObject({status:'pending',dateKey:'2026-10-20',originalDateKey:'2026-10-19',target:{assessmentMode:'dictation',batchSize:2}});
 });
 

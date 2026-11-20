@@ -444,8 +444,16 @@ export function calendarDays(now = new Date()) {
 }
 
 export function nextUnifiedPlan(plans, now = new Date()) {
-  const sorted = plans.slice().sort(compareStudyPlans);
-  return sorted.find(plan => plan.status === 'in_progress') || sorted.find(plan => plan.status === 'pending' && plan.dateKey === dateKey(now)) || null;
+  const sorted = plans.filter(plan => !plan.onHold && !plan.archivedAt).sort(compareStudyPlans);
+  return sorted.find(plan => plan.status === 'in_progress')
+    || sorted.find(plan => plan.status === 'pending' && plan.dateKey === dateKey(now) && !upcomingReviewTime(plan, now)) || null;
+}
+
+export function upcomingReviewTime(plan, now = new Date()) {
+  const target = plan.target;
+  const at = Date.parse(target?.reviewAvailableAt ?? '');
+  if (plan.status === 'pending' && target?.type === 'vocabulary' && target.mode === 'due-review'
+    && !target.reviewType && target.binding !== 'frozen' && at > now.getTime()) return new Date(at);
 }
 
 function deterministicQuestion(state, skill, kind, sequence) {
@@ -511,19 +519,22 @@ function replaceAutomaticTarget(plan, task) {
   Object.assign(plan,task);
 }
 
-function refreshEvidenceTargets(state, keys, skills, now) {
+function refreshEvidenceTargets(state, keys, skills, now, previous, approvedId?) {
   const candidates=state.plans.filter(plan=>keys.includes(plan.dateKey)&&plan.schemaVersion===2&&plan.origin==='automatic'&&!protectedSchedulePlan(plan)&&plan.skill!=='vocabulary'&&plan.kind!=='vocabulary').slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey)||a.id.localeCompare(b.id));
   const review=reviewTask(state,skills,now,1);
   const reviewKey=review&&evidenceTargetKey(review);
   const alreadyScheduled=reviewKey&&state.plans.some(plan=>plan.status!=='skipped'&&plan.status!=='completed'&&(keys.includes(plan.dateKey)||plan.status==='in_progress')&&evidenceTargetKey(plan)===reviewKey);
   const reviewSlot=review&&candidates.find(plan=>studyDaySkills(state.settings,plan.dateKey,skills).includes(review.skill));
-  if (review&&!alreadyScheduled&&reviewSlot) {
+  const earlierSkill = reviewSlot && previous.get(reviewSlot.id);
+  const crossSkill = earlierSkill && planSkill(earlierSkill) !== review?.skill;
+  if (review&&!alreadyScheduled&&reviewSlot&&(!crossSkill || approvedId === reviewSlot.id)) {
     const plan=reviewSlot;
     const shortReview=review.target?.type==='intensive'&&review.target.reviewMode==='listening-check';
     const minutes=shortReview?Math.min(5,plan.estimatedMinutes):plan.estimatedMinutes;
     const remaining=plan.estimatedMinutes-minutes;
     const practice=shortReview&&studyBudget(state.settings,plan.dateKey).planning.multipleTasks&&remaining>=(plan.skill==='reading'?2:1) ? {...plan} : null;
     replaceAutomaticTarget(plan,{...review,estimatedMinutes:minutes});plan.order=-1;
+    if (crossSkill) plan.manuallyEditedAt = now.toISOString();
     if(practice){
       const base=`${plan.id}-practice`;let id=base,index=2;while(state.plans.some(row=>row.id===id))id=`${base}-${index++}`;
       clearPlanBinding(practice);
@@ -537,6 +548,7 @@ function refreshEvidenceTargets(state, keys, skills, now) {
     // Ordinary targets may already have a concrete question/section bound by the context.
     if (evidenceTargetKey(task)!==evidenceTargetKey(plan)) replaceAutomaticTarget(plan,task);
   }
+  return crossSkill && !alreadyScheduled ? reviewSlot.id : undefined;
 }
 
 const isVocabularyPlan=plan=>plan.skill==='vocabulary'||plan.kind==='vocabulary';
@@ -546,6 +558,7 @@ const protectedSchedulePlan=plan=>isProtectedPlan(plan)||Boolean(plan.onHold || 
   ||!isReplannableLearningPlan(plan)&&(Boolean(plan.originalDateKey)||frozenVocabularyPlan(plan));
 const cardIdentity=(card,mode=card.mode)=>JSON.stringify([card.entryId,card.senseId,mode]);
 const taskMinutes=plan=>Math.max(1,Number(plan.estimatedMinutes)||Number(plan.quantity)||1);
+export const needsCarryoverConfirmation = plan => isProtectedPlan(plan) || frozenVocabularyPlan(plan) || Boolean(plan.draft || plan.restoredAt || plan.linkedSessionId);
 
 /** Automatic allocation never spends the reserved vocabulary share on old skill work. */
 function remainingCapacity(state,key) {
@@ -556,18 +569,36 @@ function remainingCapacity(state,key) {
   return {total:Math.max(0,budget.daily-total),vocabulary:Math.max(0,Math.min(budget.vocabulary-vocabulary,budget.daily-total)),skill:Math.max(0,Math.min(budget.skill-(total-vocabulary),budget.daily-total))};
 }
 
+export function suggestedCarryoverDate(state, plan, keys = calendarDays()) {
+  return keys.find(key => {
+    const capacity = remainingCapacity(state, key);
+    const budget = studyBudget(state.settings, key);
+    const carried = state.plans.filter(row => row.id !== plan.id && row.dateKey === key && row.originalDateKey && row.status !== 'skipped' && !row.archivedAt && !row.onHold).reduce((sum,row) => sum + taskMinutes(row), 0);
+    const minutes = taskMinutes(plan);
+    return minutes + carried <= Math.floor(budget.daily * budget.planning.carryoverPercent / 100)
+      && minutes <= capacity.total && minutes <= capacity[isVocabularyPlan(plan) ? 'vocabulary' : 'skill'];
+  });
+}
+
+export function suggestWaitingTaskDate(state, plan, now = new Date()) {
+  const keys = calendarDays(now);
+  const fixed = state.plans.filter(row => !keys.includes(row.dateKey) || protectedSchedulePlan(row) || (row.origin !== 'automatic' && !/^plan-/.test(row.id)));
+  return suggestedCarryoverDate({...state, plans:fixed}, plan, keys);
+}
+
 function carryBacklog(state,keys,now,selectedIds,previousDates=new Map()) {
   const today=keys[0];
   const backlog=state.plans.filter(plan=>plan.dateKey<today&&['pending','in_progress'].includes(plan.status)&&!plan.onHold&&!plan.archivedAt&&(!selectedIds||selectedIds.has(plan.id)))
     .sort((a,b)=>Number(startedPlan(b))-Number(startedPlan(a))||String(a.originalDateKey||a.dateKey).localeCompare(String(b.originalDateKey||b.dateKey))||a.id.localeCompare(b.id));
   for(const plan of backlog) {
+    if (!selectedIds && needsCarryoverConfirmation(plan)) continue;
     if(plan.origin==='automatic'&&plan.target?.mode==='due-review'&&!protectedSchedulePlan(plan)) {
       plan.previousStatus=plan.status;plan.status='skipped';plan.skipReason='merged-review';plan.skippedAt=new Date(now).toISOString();
       if(state.activePlanId===plan.id)state.activePlanId=null;
       continue;
     }
-    const key=keys.find(key=>{const capacity=remainingCapacity(state,key),budget=studyBudget(state.settings,key);const carried=state.plans.filter(row=>row.id!==plan.id&&row.dateKey===key&&row.originalDateKey&&row.status!=='skipped'&&!row.archivedAt&&!row.onHold).reduce((sum,row)=>sum+taskMinutes(row),0);return taskMinutes(plan)+carried<=Math.floor(budget.daily*budget.planning.carryoverPercent/100)&&taskMinutes(plan)<=capacity.total&&taskMinutes(plan)<=capacity[isVocabularyPlan(plan)?'vocabulary':'skill'];});
-    if(key){delete plan.waitingReason;plan.originalDateKey=plan.originalDateKey||plan.dateKey;plan.dateKey=key;if(previousDates.get(plan.id)!==key)plan.rescheduledAt=new Date(now).toISOString();}
+    const key=suggestedCarryoverDate(state,plan,keys);
+    if(key){delete plan.waitingReason;plan.originalDateKey=plan.originalDateKey||plan.dateKey;plan.dateKey=key;if(previousDates.get(plan.id)!==key)plan.rescheduledAt=new Date(now).toISOString();if (selectedIds && needsCarryoverConfirmation(plan)) plan.manuallyEditedAt = now.toISOString();}
     else plan.waitingReason='This whole task does not fit the carryover limit and remaining module budget on the next seven study days. Choose a date, increase the limit or keep it waiting.';
   }
 }
@@ -677,6 +708,7 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
   recoverCompletedPlans(state);
   retireInactiveSentenceReviews(state, now);
   const previous=(state.plans||[]).slice();
+  const previousById=new Map(previous.map(plan=>[plan.id,{...plan}]));
   const keys=calendarDays(now),today=keys[0],generationKey=planningSettingsKey(state.settings);
   // Retire missed proposals before carryover and reservations are calculated.
   // Their words remain unlearned and join the current daily allocation again.
@@ -703,8 +735,13 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
   const add=(key,task,id,order,rotationIndex?)=>{
     if(state.plans.some(plan=>plan.id===id&&plan.status==='skipped'))return;
     let unique=id,index=2;while(state.plans.some(plan=>plan.id===unique))unique=`${id}-${index++}`;
-    const proposed={id:unique,dateKey:key,...task,order,...(rotationIndex===undefined?{}:{rotationIndex}),schemaVersion:2,generationKey,origin:'automatic',status:'pending',startedAt:null,completedAt:null,linkedSessionId:null};
     const old=previous.find(plan=>plan.id===unique&&!protectedSchedulePlan(plan));
+    if (old && old.generationKey === generationKey && !isVocabularyPlan(task) && !isVocabularyPlan(old)
+      && old.skill !== task.skill && studyDaySkills(state.settings, key, skills).includes(old.skill)
+      && (old.skill !== 'reading' || task.estimatedMinutes >= 2)) {
+      task = skillTask(state, old.skill, task.estimatedMinutes, Math.floor((old.rotationIndex || 0) / skills.length));
+    }
+    const proposed={id:unique,dateKey:key,...task,order,...(rotationIndex===undefined?{}:{rotationIndex}),schemaVersion:2,generationKey,origin:'automatic',status:'pending',startedAt:null,completedAt:null,linkedSessionId:null};
     // Preserve resource bindings when an otherwise unchanged automatic task is regenerated.
     if(old&&old.generationKey===generationKey&&old.skill===proposed.skill&&old.kind===proposed.kind&&old.deskMode===proposed.deskMode&&old.estimatedMinutes===proposed.estimatedMinutes&&evidenceTargetKey(old)===evidenceTargetKey(proposed)&&!isVocabularyPlan(old)) {
       proposed.target=old.target;proposed.questionId=old.questionId;
@@ -768,7 +805,7 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
     }
     sequence++;
   }
-  refreshEvidenceTargets(state,keys,skills,now);
+  refreshEvidenceTargets(state,keys,skills,now,previousById);
   // Retained frozen tasks and regenerated slots share one stable display order.
   state.plans.sort(compareStudyPlans);
   if(state.activePlanId&&!state.plans.some(plan=>plan.id===state.activePlanId&&!['completed','skipped'].includes(plan.status)&&!plan.onHold&&!plan.archivedAt))state.activePlanId=null;
@@ -792,18 +829,40 @@ export function previewBacklogChange(state,action,now=new Date()) {
     try {mutateStudyPlan(draft,plan.id,action.type==='reschedule'?{type:'reschedule',dateKey:action.dateKey}:{type:action.type},now);if(action.type==='skip')plan.skipReason='bulk-skip';}
     catch(cause){if(action.type!=='reschedule')throw cause;plan.waitingReason=cause.message;}
   }
-  const selectedIds=new Set(selected.map(plan=>plan.id)),beforeById=new Map(state.plans.map(plan=>[plan.id,plan])),afterById=new Map(draft.plans.map(plan=>[plan.id,plan]));
+  const selectedIds=new Set(selected.map(plan=>plan.id));
+  return {snapshot:backlogSnapshot(state,now),createdAt:now.toISOString(),action,plans:draft.plans,activePlanId:draft.activePlanId,changes:describeScheduleChanges(state.plans,draft.plans,selectedIds,today)};
+}
+
+export function describeScheduleChanges(beforePlans, afterPlans, selectedIds=new Set(), today=dateKey(new Date())) {
+  const beforeById=new Map(beforePlans.map(plan=>[plan.id,plan])),afterById=new Map(afterPlans.map(plan=>[plan.id,plan]));
   // Selection controls the requested action. Preview scope includes every
   // resulting schedule edit, including regenerated automatic slots.
   const changedIds=[...new Set([...selectedIds,...beforeById.keys(),...afterById.keys()])].filter(id=>selectedIds.has(id)||JSON.stringify(beforeById.get(id))!==JSON.stringify(afterById.get(id)));
-  const changes=changedIds.map(id=>{
+  return changedIds.map(id=>{
     const before=beforeById.get(id),after=afterById.get(id),plan=after||before;
-    return {id,title:studyPlanTitle(plan),previousTitle:before?studyPlanTitle(before):undefined,selected:selectedIds.has(id),changeType:!before?'added':!after?'removed':JSON.stringify(before)===JSON.stringify(after)?'unchanged':'updated',from:before?.dateKey||'',to:after?.dateKey||'',fromMinutes:before?.estimatedMinutes||0,toMinutes:after?.estimatedMinutes||0,status:plan.status,onHold:plan.onHold,archived:Boolean(plan.archivedAt),reason:plan.waitingReason,requirementsChanged:Boolean(before&&after&&JSON.stringify([before.target,before.completion])!==JSON.stringify([after.target,after.completion])),waiting:Boolean(after&&after.dateKey<today&&!['skipped','completed'].includes(after.status))};
+    return {id,title:studyPlanTitle(plan),previousTitle:before?studyPlanTitle(before):undefined,selected:selectedIds.has(id),changeType:!before?'added':!after?'removed':JSON.stringify(before)===JSON.stringify(after)?'unchanged':'updated',from:before?.dateKey||'',to:after?.dateKey||'',fromMinutes:before?.estimatedMinutes||0,toMinutes:after?.estimatedMinutes||0,status:plan.status,previousStatus:before?.status,onHold:plan.onHold,archived:Boolean(plan.archivedAt),reason:plan.waitingReason,requirementsChanged:Boolean(before&&after&&JSON.stringify([before.target,before.completion])!==JSON.stringify([after.target,after.completion])),waiting:Boolean(after&&after.dateKey<today&&!['skipped','completed'].includes(after.status)),skipReason:after?.skipReason};
   });
-  return {snapshot:backlogSnapshot(state,now),createdAt:new Date(now).toISOString(),action,plans:draft.plans,activePlanId:draft.activePlanId,changes};
+}
+
+export function previewScheduleReview(state, now=new Date()) {
+  const draft=planningEvidenceView({...state,plans:structuredClone(state.plans)});
+  const keys=calendarDays(now), skills=selectedStudySkills(state.settings);
+  const previous=new Map(state.plans.map(plan=>[plan.id,plan]));
+  const id=refreshEvidenceTargets(draft,keys,skills,now,previous);
+  if (!id) return null;
+  draft.plans=structuredClone(state.plans);
+  refreshEvidenceTargets(draft,keys,skills,now,previous,id);
+  draft.plans.sort(compareStudyPlans);
+  const changes=describeScheduleChanges(state.plans,draft.plans,new Set([id]),keys[0]);
+  return {snapshot:backlogSnapshot(state,now),action:{type:'review',id},plans:draft.plans,activePlanId:state.activePlanId,changes};
 }
 export function applyBacklogPreview(state,preview,now=new Date()) {
   if(backlogSnapshot(state,now)!==preview.snapshot)throw new Error('Your schedule changed. Preview the backlog again before saving.');
+  if (preview.action.type==='review') {
+    const current=previewScheduleReview(state,now);
+    if (!current || JSON.stringify(current.changes)!==JSON.stringify(preview.changes)) throw new Error('The review changed. Open the current suggestion and try again.');
+    preview=current;
+  }
   state.plans=structuredClone(preview.plans);state.activePlanId=preview.activePlanId;
 }
 

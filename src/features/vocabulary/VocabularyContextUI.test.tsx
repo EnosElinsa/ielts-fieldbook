@@ -897,14 +897,13 @@ test.each(['recovered','newer failure','missing snapshot','different meaning'] a
   showResults(record);
   expect(screen.queryByRole('region',{name:'Suggested follow-up'})).not.toBeInTheDocument();
 });
-test("historical dictation shows current group reference but frozen score and grading stay immutable", async () => {
+test("historical dictation preserves assessed meaning and offers the current group reference separately", async () => {
   const results = resultsFixture();
   const before = JSON.stringify(results);
   showResults(results);
-  expect(
-    screen.getByText(/Current learning reference updated/),
-  ).toBeInTheDocument();
-  expect(screen.getByText(/fruit.*seeds/i)).toBeInTheDocument();
+  expect(screen.getByText('An old definition.')).toBeVisible();
+  await userEvent.click(screen.getByText('Current wordbook meaning'));
+  expect(screen.getByText(/fruit.*seeds/i)).toBeVisible();
   expect(
     screen.getByRole("heading", { name: "0 of 1 correct" }),
   ).toBeInTheDocument();
@@ -912,9 +911,9 @@ test("historical dictation shows current group reference but frozen score and gr
     screen.getByRole("link", { name: "Details" }).getAttribute("href")!,
     "https://test.test",
   );
-  expect(details.searchParams.get("senseId")).toBe(
-    "editorial:core:fruit-centre",
-  );
+  expect(details.searchParams.get("senseId")).toBe(core().senses[0].id);
+  const current = new URL(screen.getByRole('link',{name:'View current meaning'}).getAttribute('href')!, 'https://test.test');
+  expect(current.searchParams.get('senseId')).toBe('editorial:core:fruit-centre');
   expect(details.searchParams.get("unitId")).toBe("ielts-vocabulary-chapter-12-group-02");
   await userEvent
     .setup()
@@ -934,7 +933,7 @@ test("non-dictation preserves frozen prompt and adds current definition separate
   showResults(results);
   expect(screen.getByText("An old definition.")).toBeInTheDocument();
   expect(screen.getByText("The original question.")).toBeInTheDocument();
-  expect(screen.getByText(/Current meaning:/)).toBeInTheDocument();
+  expect(screen.getByText('Current wordbook meaning')).toBeVisible();
   expect(document.querySelector(".practice-answer-difference")).toBeNull();
   const details = new URL(
     screen.getByRole("link", { name: "Details" }).getAttribute("href")!,

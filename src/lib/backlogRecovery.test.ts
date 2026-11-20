@@ -99,12 +99,15 @@ test('loading prospective membership rechecks exact frozen learning reservations
   expect(loaded.flatMap(plan=>plan.target.cards.map(ref=>ref.entryId))).toEqual(Array.from({length:9},(_,i)=>`reserved-late-${i+1}`));
  }finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);for(const member of members)VOCABULARY_CATALOG.memberships.splice(VOCABULARY_CATALOG.memberships.indexOf(member),1);}
 });
-test('carryover wins capacity over generated work, started first, preserving content and drafts',()=>{
+test('automatic carryover uses available capacity and started work keeps its date until approved',()=>{
  const s=setup();ensureUnifiedPlans(s,undefined,now);
  const old=task('old'),started=task('started',20,{status:'in_progress',startedAt:'2026-10-18T12:00:00',dateKey:'2026-10-18',draft:{text:'Keep every word'}}),large=task('large',21);
  s.plans.push(old,started,large);const content=structuredClone(started.target);ensureUnifiedPlans(s,undefined,now);
- expect(started.dateKey).toBe('2026-10-19');expect(old.dateKey).toBe('2026-10-21');expect(large.dateKey).toBe('2026-10-01');
- expect(started.target).toEqual(content);expect(started.draft.text).toBe('Keep every word');expect(started.originalDateKey).toBe('2026-10-18');expect(started.rescheduledAt).toBe(now.toISOString());
+ expect(started.dateKey).toBe('2026-10-18');expect(old.dateKey).toBe('2026-10-19');expect(large.dateKey).toBe('2026-10-01');
+ const preview=previewBacklogChange(s,{type:'replan',ids:['started'],includeStarted:true},now);
+ applyBacklogPreview(s,preview,now);
+ const moved=s.plans.find(row=>row.id==='started');
+ expect(moved.dateKey).toBe('2026-10-21');expect(moved.target).toEqual(content);expect(moved.draft.text).toBe('Keep every word');expect(moved.originalDateKey).toBe('2026-10-18');expect(moved.rescheduledAt).toBe(now.toISOString());
  const before=structuredClone(s);ensureUnifiedPlans(s,undefined,now);expect(s).toEqual(before);
 });
 test('pending past review slots merge with history, frozen future and started reviews survive',()=>{
@@ -166,7 +169,7 @@ test('homogeneous batching never spends capacity on a foundation gap ahead of an
 test('explicitly restored historical reviews stay actionable rather than immediately merging again',()=>{
  const s=setup();s.plans=[task('review',5,{kind:'vocabulary',skill:'vocabulary',target:{type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'definition',cards:[]}})];
  ensureUnifiedPlans(s,undefined,now);expect(s.plans.find(p=>p.id==='review').status).toBe('skipped');
- mutateStudyPlan(s,'review',{type:'restore',allowOverBudget:true},now);ensureUnifiedPlans(s,undefined,now);
+ mutateStudyPlan(s,'review',{type:'restore',dateKey:'2026-10-19',allowOverBudget:true},now);ensureUnifiedPlans(s,undefined,now);
  expect(s.plans.find(p=>p.id==='review')).toMatchObject({status:'pending',dateKey:'2026-10-19',target:{binding:'dynamic',cards:[]}});
 });
 

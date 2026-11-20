@@ -131,7 +131,7 @@ test('day summary explains saved word selections and keeps configuration in Sett
  const summary=day.getByLabelText('Daily plan summary');
  expect(summary).toHaveTextContent('Planned time50 / 90 min40 min free');
  expect(summary).toHaveTextContent('Completed20 min30 min remaining');
- expect(summary).toHaveTextContent('New words7 / 158 below daily goal');
+ expect(summary).toHaveTextContent('Planned new words7 / 158 below daily goal');
  expect(day.getByRole('heading',{name:'Vocabulary - Learn 7 words'})).toBeInTheDocument();
  expect(day.getByRole('button',{name:'Task actions: Vocabulary - Learn 7 words'})).toBeInTheDocument();
  expect(screen.queryByRole('link',{name:'Adjust vocabulary plan'})).not.toBeInTheDocument();

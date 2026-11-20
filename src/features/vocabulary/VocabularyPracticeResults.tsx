@@ -10,7 +10,7 @@ import type { VocabularySessionRecord } from "../../domain/vocabulary/session";
 import { dateLabel, modeLabel, resultName } from "./practicePresentation";
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
-import { vocabularyPartOfSpeech } from '../../domain/vocabulary/dictionaryPresentation';
+import { dictionaryDisplayText, vocabularyPartOfSpeech, vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
 import type { VocabularyEntry, VocabularyState } from '../../domain/vocabulary/types';
 import { Pronunciation } from './Pronunciation';
 import { entryUrl, practiceUrl } from './vocabularyNavigation';
@@ -69,10 +69,11 @@ export function VocabularyPracticeResults({ controller, results }: {
     const unitId = row.context?.unitId || (results.selection && 'unitId' in results.selection ? results.selection.unitId : results.filter.unitId);
     const valid = Boolean(raw && bookId && unitId && (VOCABULARY_CATALOG.memberships.some(member => member.entryId === row.entryId && member.bookId === bookId && member.unitId === unitId) || raw.sources.some(source => source.bookId === bookId && source.unitId === unitId)));
     const context = valid ? {bookId,unitId} : {};
-    const keepSense = results.mode !== 'dictation' || results.selection?.kind === 'planned-review' || (wordCounts.get(row.entryId) || 0) > 1;
-    const resolved = raw ? resolveVocabularyLearningContext(raw, {...context, ...(keepSense ? {senseId: row.senseId} : {})}) : null;
-    const senseId = keepSense ? row.senseId : resolved?.sense?.id || row.senseId;
-    return {raw,resolved,context,detail:entryUrl(row.entryId,{...context,senseId},resultReturnTo)};
+    const exact = resolveVocabularyLearningContext(raw, {...context, senseId:row.senseId}).sense;
+    const saved = snapshot?.entry.senses.find(sense=>sense.id===row.senseId)
+      || raw.senses.find(sense=>sense.id===row.senseId) || exact;
+    const resolved = valid ? resolveVocabularyLearningContext(raw,context).sense : exact;
+    return {raw,resolved,saved,context,detail:entryUrl(row.entryId,{...context,senseId:row.senseId,exactMeaning:'true'},resultReturnTo)};
   };
   const hasMistakes = results.mode !== "audio" && results.results.some(row => row.result === "failure" || row.result === "partial");
   const recoveryMode = results.mode === 'audio' ? undefined : results.mode;
@@ -172,13 +173,14 @@ export function VocabularyPracticeResults({ controller, results }: {
           </thead>
           <tbody>
             {resultRows.map((row, index) => {
-              const current = currentRow(row); const currentDefinition = current.resolved?.sense?.definition;
-              const changed = Boolean(currentDefinition && currentDefinition !== row.definition);
+              const current = currentRow(row);
+              const learning = current.resolved && vocabularySensePresentation(current.resolved);
+              const savedDefinition = dictionaryDisplayText(row.definition);
+              const savedExample = dictionaryDisplayText(row.example);
+              const partOfSpeech = vocabularyPartOfSpeech(current.saved?.pos);
+              const learningPos = vocabularyPartOfSpeech(current.resolved?.pos);
+              const changed = learning?.definition && (learning.definition !== savedDefinition || learning.example !== savedExample || learningPos !== partOfSpeech);
               const frozen = results.cardSnapshots?.find(card => card.id === row.cardId);
-              const savedSense = frozen?.entry.senses.find(sense => sense.id === row.senseId)
-                || current.raw.senses.find(sense => sense.id === row.senseId);
-              const showsCurrent = results.mode === 'dictation' && Boolean(currentDefinition);
-              const partOfSpeech = vocabularyPartOfSpeech(showsCurrent ? current.resolved?.sense?.pos : savedSense?.pos || current.resolved?.sense?.pos);
               const frozenAudio = frozen?.pronunciation !== undefined && frozen.pronunciation !== 'legacy';
               const audioEntry = frozenAudio ? frozen!.entry : {...current.raw,term:row.term};
               const expected = closestAcceptedAnswer(row.response,row.expectedAnswer,results.cardSnapshots?.find(card => card.id === row.cardId)?.task?.acceptedAnswers);
@@ -192,9 +194,15 @@ export function VocabularyPracticeResults({ controller, results }: {
                     {row.term}
                   </Link>
                   {(wordCounts.get(row.entryId) || 0) > 1 ? <small className="practice-result-meaning">Meaning {meaningNumbers.get(row.cardId)} of {wordCounts.get(row.entryId)}</small> : null}
-                  <small>{partOfSpeech && <><span className="practice-definition-pos">{partOfSpeech}</span>{' '}</>}{showsCurrent ? currentDefinition : row.definition}</small>
+                  <small>{changed && <strong>Meaning in this session · </strong>}{partOfSpeech && <><span className="practice-definition-pos">{partOfSpeech}</span>{' '}</>}{savedDefinition}</small>
+                  {changed && savedExample && <small className="practice-result-context">{savedExample}</small>}
                   <VocabularyWordbookSources sources={frozen?.sources || current.raw.sources} context={current.context} onNavigate={() => rememberPosition(row.cardId)} />
-                  {changed ? <small className="practice-current-reference">{results.mode === 'dictation' ? 'Current learning reference updated; saved grading is unchanged.' : `Current meaning: ${currentDefinition}`}</small> : null}
+                  {changed && current.resolved && <details className="practice-current-reference">
+                    <summary>Current {current.context.bookId ? 'wordbook meaning' : 'meaning'}</summary>
+                    <p>{learningPos && <><span className="practice-definition-pos">{learningPos}</span>{' '}</>}{learning.definition}</p>
+                    {learning.example && <p>{learning.example}</p>}
+                    {current.resolved.id !== row.senseId && <Link to={entryUrl(row.entryId,{...current.context,senseId:current.resolved.id,exactMeaning:'true'},resultReturnTo)} onClick={() => rememberPosition(row.cardId)}>View current meaning</Link>}
+                  </details>}
                   {current.raw ? <Pronunciation compact entry={audioEntry} sense={audioEntry.senses.find(sense=>sense.id===row.senseId) || null} options={{pronunciation:frozen?.pronunciation ?? 'legacy'}} accent={frozenAudio ? results.preferences.accent : controller.preferences.accent}/> : null}
                   {row.prompt && results.mode !== 'dictation' ? <small className="practice-result-context">{row.prompt}</small> : null}
                 </th>
