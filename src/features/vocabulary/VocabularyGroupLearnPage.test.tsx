@@ -131,6 +131,18 @@ test('a planned travel batch can adopt the syllabus even when an old dictionary 
   expect(JSON.parse(assessment.searchParams.get('batchCards')!)).toEqual(entries.map(entry => ({ entryId: entry.id, senseId: resolveVocabularyLearningContext(entry, group).sense!.id })));
   expect(mocks.fb.state.plans[0].meaningUpdates[0].before).toEqual(cards);
 });
+
+test('reopening a travel learning batch with saved assessment history teaches the current group example', async () => {
+  const { entries, cards, bookId, unitId, url } = legacyTravelBatch();
+  const target = { type:'vocabulary', mode:'learning-batch', assessmentMode:'definition', selectionPolicy:'exact', bookId, unitId, batchIndex:0, batchSize:3, cards };
+  mocks.fb.state.plans = [{ id:'past-travel', kind:'vocabulary', status:'in_progress', target }];
+  mocks.fb.state.vocabularySessions = [{ id:'saved', planId:'past-travel', status:'submitted', mode:'definition', filter:{}, results:[] }];
+  mount(`${url}?planId=past-travel&word=${entries[1].id}`);
+  await screen.findByRole('heading', { name:'flight' });
+  expect(screen.getByText('Our flight to London leaves at nine.')).toBeVisible();
+  expect(screen.queryByRole('button', { name:'Update batch meanings' })).not.toBeInTheDocument();
+  expect(mocks.fb.state.plans[0].target.cards).toEqual(cards);
+});
 test('planned learning has one assigned test and keeps optional group practice separate', async () => {
   const batch=buildLearningBatch(mocks.fb.state,'book','group',0,10,'definition');
   mocks.fb.state.plans=[{id:'planned',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',...batch.selection,cards:batch.selection.cards}}];
@@ -231,14 +243,14 @@ test.each(['save failure','saved draft','account switch'])('a meaning update pro
   expect(screen.queryByRole('link',{name:'Start dictation · 10 words'})).not.toBeInTheDocument();
 });
 
-test.each(['completed','submitted'])('a %s legacy task never offers to rewrite its historical meanings', async scenario => {
-  const {url,entry} = legacyEscalatorPlan();
+test.each(['completed','submitted'])('a %s legacy task displays current teaching without rewriting its historical meanings', async scenario => {
+  const {url} = legacyEscalatorPlan();
   if (scenario === 'completed') mocks.fb.state.plans[0].status = 'completed';
   else mocks.fb.state.vocabularySessions = [{id:'record',planId:'legacy-escalator',status:'submitted',mode:'dictation'}];
   const before = structuredClone(mocks.fb.state);
   mount(url);
   await screen.findByRole('heading',{name:'escalator'});
-  expect(within(document.getElementById('learning-meaning')!).getByText(entry.senses[0].definition)).toBeInTheDocument();
+  expect(within(document.getElementById('learning-meaning')!).getByText('A moving staircase that carries people between levels.')).toBeInTheDocument();
   expect(screen.queryByRole('button',{name:'Update batch meanings'})).not.toBeInTheDocument();
   expect(mocks.fb.state).toEqual(before);
 });

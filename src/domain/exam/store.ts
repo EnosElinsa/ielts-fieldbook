@@ -13,7 +13,7 @@ export function createExamAttempt(sections: ExamSection[], questions: ExamQuesti
     mode, status: 'active', responses: {}, evidence: {}, keywords: {}, errorReasons: {},
     questionTypes: Object.fromEntries(selected.map(question => [question.id, question.type])),
     questionSnapshot: structuredClone(selected),
-    startedAt: now, updatedAt: now, hintsEnabled: mode === 'practice', elapsedSeconds: 0,
+    startedAt: now, updatedAt: now, hintsEnabled: mode === 'practice' && first.skill === 'reading', elapsedSeconds: 0,
     ...(mode === 'mock' ? { timeLimitSeconds: first.skill === 'reading' ? sections.length >= 3 ? 3600 : sections.length * 1200 : sections.length >= 4 ? 2400 : sections.length * 600 } : {}),
     contentVersion: [...new Set(sections.map(section => section.provenance.sourceVersion))].join(','),
   };

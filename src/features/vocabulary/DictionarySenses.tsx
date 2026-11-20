@@ -9,7 +9,7 @@ import type { VocabularyEntry, VocabularySense } from "../../domain/vocabulary";
 import { accountId } from "../../storage/remote";
 import { VocabularySenseContent } from "./VocabularySenseContent";
 import { SelectField } from '../../components/SelectField';
-import { vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
+import { vocabularyPartOfSpeech, vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
 import { getVocabularyLearningPriority, isVocabularyMeaningGroup, isVocabularySpellingReference, isVocabularyUsageReference } from '../../domain/vocabulary/readiness';
 import { getVocabularySenseDiagram } from '../../domain/vocabulary/media';
 import { VocabularyDiagramDisclosure } from './VocabularyDiagramDisclosure';
@@ -18,10 +18,7 @@ import { loadTermDictionary, resetDictionaryCache } from './dictionary';
 export { resetDictionaryCache } from './dictionary';
 const key = (sense: VocabularySense) =>
   `${normalizeAnswer(sense.pos)}:${normalizeAnswer(sense.definition)}`;
-const partOfSpeech = (sense: VocabularySense) => {
-  const pos = normalizeAnswer(sense.pos);
-  return ({ adj: 'adjective', adv: 'adverb', name: 'proper name' } as Record<string, string>)[pos] || pos || 'other';
-};
+const partOfSpeech = (sense: VocabularySense) => vocabularyPartOfSpeech(sense.pos) || 'other';
 const label = (value: string) => value.replace(/^./, char => char.toUpperCase());
 export function DictionarySenses({
   entry,

@@ -25,7 +25,7 @@ import { ExamMockAudio } from './ExamMockAudio';
 import { ModalFrame } from '../../components/ModalFrame';
 import { SourceAnnotations, AnnotatedText, type SourceSelection } from './SourceAnnotations';
 import { examGapMatches, examGapNumber, questionPresentation, questionNumberPrefixLength } from './questionPresentation';
-import { stimulusDocument } from './stimulusDocument';
+import { restoredStimulusImages, stimulusDocument } from './stimulusDocument';
 import { stimulusChoiceBank } from './stimulusChoiceBank';
 import '../../styles/exam.css';
 import '../../styles/listening-practice.css';
@@ -86,7 +86,13 @@ export function ExamStimulus({ html, assets = [], renderGap, blockPrefix = 'stim
       const tag = node.tagName.toLowerCase();
       const tableLine = tag === 'p' && ['td', 'th'].includes(node.parentElement?.tagName.toLowerCase() || '');
       if (['p', 'div'].includes(tag) && !node.textContent?.trim() && !node.querySelector('img')) return tableLine ? <span key={key} className="exam-table-break" aria-hidden="true"> </span> : null;
-      if (tag === 'img') { const source = node.getAttribute('src') || ''; const asset = source.startsWith('exam-asset:') ? assets.find(row => row.id === source.slice('exam-asset:'.length) && row.kind === 'image') : undefined; return asset ? <ExamImage inline key={key} asset={asset} label={node.getAttribute('alt') || 'Source diagram'} /> : null; }
+      if (tag === 'img') {
+        const source = node.getAttribute('src') || '';
+        const asset = source.startsWith('exam-asset:') ? assets.find(row => row.id === source.slice('exam-asset:'.length) && row.kind === 'image') : undefined;
+        return asset
+          ? <ExamImage inline key={key} asset={asset} label={node.getAttribute('alt') || 'Source diagram'} />
+          : <span className="exam-missing-image" key={key}>Source image unavailable.</span>;
+      }
       if (['script', 'style', 'iframe', 'object', 'embed', 'svg', 'form', 'input'].includes(tag)) return null;
       if (tag === 'table') {
         const bank = stimulusChoiceBank(node, key);
@@ -212,7 +218,13 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   const metadata = useExamCatalog(skill); const selectedIds = useMemo(() => retryAttempt ? retryAttempt.sectionIds : metadata.catalog.sections.filter(section => section.skill === skill && (paperId ? section.paperId === paperId : section.id === sectionId)).sort((a, b) => a.part - b.part).map(section => section.id), [metadata.catalog, paperId, sectionId, skill, retryAttempt]);
   const source = useExamCatalog(skill, undefined, selectedIds); const catalog = source.catalog;
   const sections = catalog.sections.filter(section => selectedIds.includes(section.id) && section.skill === skill).sort((a, b) => a.part - b.part);
-  const questions = (requestedAttempt?.questionSnapshot || catalog.questions).filter(question => selectedIds.includes(question.sectionId) && question.skill === skill && (!retryQuestionIds || retryQuestionIds.has(question.id)) && (!plannedQuestionIds || plannedQuestionIds.has(question.id))).sort((a, b) => a.number - b.number);
+  const questionRows = useMemo(() => requestedAttempt?.questionSnapshot
+    ? requestedAttempt.questionSnapshot.map(question => {
+      const stimulusHtml = restoredStimulusImages(question.stimulusHtml, catalog.questions.find(row => row.id === question.id)?.stimulusHtml);
+      return stimulusHtml === (question.stimulusHtml || '') ? question : { ...question, stimulusHtml };
+    })
+    : catalog.questions, [requestedAttempt?.questionSnapshot, catalog.questions]);
+  const questions = questionRows.filter(question => selectedIds.includes(question.sectionId) && question.skill === skill && (!retryQuestionIds || retryQuestionIds.has(question.id)) && (!plannedQuestionIds || plannedQuestionIds.has(question.id))).sort((a, b) => a.number - b.number);
   const valid = sections.length > 0 && sections.every(section => section.status === 'ready' && catalog.questions.filter(question => question.sectionId === section.id).length > 0 && (skill === 'reading' ? catalog.passages.some(passage => passage.sectionId === section.id) : catalog.assets.some(asset => asset.kind === 'audio' && (asset.id === section.assetId || asset.sectionId === section.id || !asset.sectionId)))) && (mode !== 'mock' || (sections.length === (skill === 'reading' ? 3 : 4) && (skill !== 'listening' || catalog.assets.filter(asset => asset.kind === 'audio').every(asset => !!asset.duration))));
   const scoped = useMemo(() => valid ? { ...catalog, sections, questions } : EMPTY_EXAM_CATALOG, [catalog, selectedIds.join('|'), questions.map(question => question.id).join('|'), valid]);
   const controller = useExamAttempt(skill, sourceId, mode, scoped, params.get('attempt'), retryId, boundPlanId, params.get('new') === '1'); const { attempt, update } = controller;

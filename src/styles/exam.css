@@ -107,6 +107,9 @@
 .exam-review-reference details { border-top: 1px solid var(--rule); margin-top: 20px; padding-top: 16px; }
 .exam-review-reference summary { cursor: pointer; font-size: 12px; color: var(--muted); margin-bottom: 16px; }
 .exam-review-reference .exam-stimulus { background: transparent; padding: 0; margin: 0; line-height: 1.85; font-size: 15px; }
+.exam-review-reference .exam-stimulus + .exam-heading-list { margin-top: 16px; }
+.exam-review-reference .exam-stimulus > :is(p,div):has(em,i) { margin-block: 10px; }
+.exam-review-reference .exam-stimulus > :is(p,div):has(em,i) :is(em,i) { font-style: normal; }
 .exam-review-reference .exam-stimulus table { font-size: 14px; }
 .exam-review-reference .exam-stimulus td,.exam-review-reference .exam-stimulus th { padding: 12px; }
 .exam-review-workspace .exam-review-list { gap: 24px; min-width: 0; }
@@ -156,6 +159,7 @@
 }
 
 .exam-inline-figure { display: block; margin: 12px 0; }
+.exam-missing-image { display: block; padding-block: 8px; color: var(--muted); }
 
 .exam-submit-progress { font-size: 12px; font-variant-numeric: tabular-nums; color: var(--muted); }
 .exam-method-details>summary { cursor: pointer; color: var(--muted); font-size: 12px; padding-block: 10px; }

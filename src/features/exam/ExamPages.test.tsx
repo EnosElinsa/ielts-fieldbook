@@ -336,6 +336,21 @@ test('map answers can open the source beside the current answer and return witho
   expect(answer).toHaveTextContent('B');
 });
 
+test('resuming a saved map exercise restores the verified diagram without changing its saved answers', async () => {
+  mocks.catalog.assets = [{ id:'map', paperId:'paper', kind:'image', storagePath:'map.png', provenance }];
+  const example = { ...catalog.questions[0], type:'map', maxWords:undefined, groupId:'map', prompt:'Building', options:['A','B'], answer:'B' };
+  const old = { ...example, stimulusHtml:'<p>Label the plan below.</p><p><img alt="Library map"></p>' };
+  mocks.catalog.questions = [{ ...example, stimulusHtml:'<p>Label the plan below.</p><p><img src="exam-asset:map" alt="Library map"></p>' }, catalog.questions[1]];
+  mocks.recovery.set('one:reading:practice:section', {
+    id:'map-draft', skill:'reading', sourceId:'section', sectionIds:['section'], mode:'practice', status:'active',
+    questionSnapshot:[old, catalog.questions[1]], responses:{ q1:'A' }, evidence:{}, keywords:{}, errorReasons:{},
+    startedAt:'2026-10-15', updatedAt:'2026-10-15', elapsedSeconds:0,
+  });
+  practice('/reading/section?resume=map-draft');
+  expect(await screen.findByRole('img', { name:'Library map' })).toBeVisible();
+  expect(screen.getByRole('combobox', { name:'Answer 1' })).toHaveTextContent('A');
+});
+
 test('heading references adapt to the available panel width without undoing manual collapse on content changes', async () => {
   let resize!: (entries: { contentRect: { width: number } }[]) => void;
   const disconnect = vi.fn();

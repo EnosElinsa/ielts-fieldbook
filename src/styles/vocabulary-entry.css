@@ -26,7 +26,7 @@
  .vocabulary-entry-hero .vocabulary-entry-practice { gap: 8px; }
  .vocabulary-entry-practice .btn { flex: 1 1 130px; white-space: normal; }
 }
-.vocabulary-learning-progress > :is(h2,h3) { margin: 0 0 20px; }
+.vocabulary-view .vocabulary-learning-progress > h2 { margin: 0 0 16px; }
 .vocabulary-progress-overview { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 28px; align-items: start; }
 .vocabulary-progress-overview > .vocabulary-next-practice { margin: 0; padding: 20px; border: 1px solid var(--rule); border-radius: 10px; background: var(--sheet); }
 .vocabulary-progress-overview > .vocabulary-mastery-sense { min-width: 0; }
@@ -110,18 +110,12 @@
   align-items: center;
   gap: 6px;
   min-height: 44px;
+  margin-top: 12px;
   font-size: 13px;
   color: var(--blue);
   text-decoration: none;
 }
 .vocabulary-group-meaning-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
-.vocabulary-group-recommendation { margin: 20px 0 0; padding: 0; border-top: 1px solid var(--rule); }
-.vocabulary-group-recommendation > summary { padding-block: 14px; font-size: 13px; color: var(--muted); cursor: pointer; }
-.vocabulary-group-recommendation > div { padding-block: 4px 16px; }
-.vocabulary-group-recommendation h3 { margin: 0 0 10px; font-size: 14px; }
-.vocabulary-group-recommendation .vocabulary-definition { margin: 0 0 10px; }
-.vocabulary-group-recommendation blockquote { margin: 10px 0 14px; padding: 0; border: 0; font-size: 14px; line-height: 1.7; color: var(--muted); }
-.vocabulary-group-recommendation .vocabulary-group-meaning-link { margin-top: 4px; }
 .vocabulary-example-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
 .vocabulary-group-comparison { padding: 12px 16px; border-left: 2px solid var(--rule); }
 .vocabulary-group-comparison h4 { margin: 0 0 12px; }

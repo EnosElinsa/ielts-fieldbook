@@ -528,12 +528,9 @@ test('an explicit plant meaning keeps its identity and offers a direct route to 
   expect(screen.getByText('The pea plant climbed the garden support.')).toBeInTheDocument();
   expect(screen.queryByText('Your selected meaning')).not.toBeInTheDocument();
   expect(screen.queryByRole('img', { name: /Green peas/ })).not.toBeInTheDocument();
-  await userEvent.setup().click(screen.getByText('Group meaning', { selector: 'summary' }));
-  const target = screen.getByRole('link', { name: 'View group meaning' });
-  const comparison = target.closest('details')!;
-  expect(within(comparison).getByText('The small edible seed of the pea plant.')).toBeVisible();
-  expect(within(comparison).getByText('Add the peas to the soup near the end of cooking.')).toBeVisible();
-  expect(screen.getByRole('heading', { name: 'Selected dictionary meaning' })).toBeInTheDocument();
+  const target = screen.getByRole('link', { name: 'View wordbook meaning' });
+  expect(screen.queryByText('The small edible seed of the pea plant.')).not.toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: /^Meaning$/ })).toBeInTheDocument();
   expect(new URL(target.getAttribute('href')!, 'https://test.test').searchParams.get('returnTo')).toBe(origin);
   await userEvent.setup().click(target);
   expect(screen.getByText('The small edible seed of the pea plant.')).toBeInTheDocument();
@@ -541,14 +538,30 @@ test('an explicit plant meaning keeps its identity and offers a direct route to 
   expect(mocks.fb.persistNow).not.toHaveBeenCalled();
 });
 
-test('the alternate travel teaching meaning appears only in the group comparison', async () => {
+test('the alternate travel teaching meaning opens as the single displayed meaning', async () => {
   const flight = release.entries.find((entry: any) => entry.term === 'flight');
   const unitId = 'ielts-vocabulary-chapter-14-group-01';
   mocks.fb.state.vocabulary = [structuredClone(flight)];
   mount(`/vocabulary/entry/${flight.id}?bookId=${book}&unitId=${unitId}&senseId=${flight.senses[0].id}`);
-  await userEvent.click(screen.getByText('Group meaning', { selector: 'summary' }));
+  await userEvent.click(screen.getByRole('link', { name: 'View wordbook meaning' }));
   expect(screen.getByText('A journey made by an aircraft.')).toBeVisible();
-  expect(screen.queryByText(/^Other saved meanings/)).not.toBeInTheDocument();
+  expect(screen.getByText(/^Other saved meanings/).closest('details')).not.toHaveAttribute('open');
+});
+
+test.each([
+  ['carriage', 'We found seats in the front carriage.'],
+  ['cycle', 'The cycle was parked beside the station.'],
+  ['crew', 'The crew checked the aircraft before departure.'],
+  ['captain', 'The captain welcomed passengers aboard the ferry.'],
+  ['steward', 'The steward arranged meals for the passengers.'],
+])('a legacy card link for %s shows the current wordbook example', (term, example) => {
+  const entry = release.entries.find((row: any) => row.term === term);
+  const unitId = 'ielts-vocabulary-chapter-14-group-01';
+  const origin = `/vocabulary/wordbooks/${book}/groups/${unitId}/learn`;
+  const params = new URLSearchParams({ bookId:book, unitId, senseId:entry.senses[0].id, returnTo:origin });
+  mount(`/vocabulary/entry/${entry.id}?${params}`);
+  expect(screen.getByText(example)).toBeVisible();
+  expect(screen.queryByRole('link', {name:'View wordbook meaning'})).not.toBeInTheDocument();
 });
 
 test('identical grid definitions are shown once without changing the selected sense identity', () => {

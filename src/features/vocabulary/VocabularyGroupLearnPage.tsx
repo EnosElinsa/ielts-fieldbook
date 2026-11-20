@@ -207,6 +207,12 @@ export function VocabularyGroupLearnPage() {
     try { return previewLearningPlanMeaningUpdate(state, planRow); } catch { return; }
   }, [state, status, boundPlan, planRow]);
   const previewingMeanings = Boolean(meaningUpdate && keepTaskMeanings !== meaningUpdateKey);
+  const displayCards = useMemo(() => {
+    if (previewingMeanings) return meaningUpdate!.batch.selection.cards;
+    if (meaningUpdate || !boundPlan || (planRow?.target.type === 'vocabulary' && planRow.target.selectedMeanings?.length)) return currentBatch?.selection.cards;
+    return boundPlan.target.cards.map(ref => currentGroupLearningRef(state, {bookId, unitId}, ref));
+  }, [previewingMeanings, meaningUpdate, boundPlan, currentBatch, planRow, state, bookId, unitId]);
+  const showingUpdatedReference = !meaningUpdate && Boolean(boundPlan?.target.cards.some((ref, index) => displayCards?.[index]?.senseId !== undefined && displayCards[index].senseId !== ref.senseId));
   const meaningUpdateBusy = meaningUpdateStatus?.key === meaningUpdateKey && meaningUpdateStatus.busy;
   const meaningUpdateError = meaningUpdateStatus?.key === meaningUpdateKey ? meaningUpdateStatus.error : '';
   async function updateBatchMeanings() {
@@ -276,7 +282,8 @@ export function VocabularyGroupLearnPage() {
   }
 
   const batchSenseId=(boundPlan?.target.cards || currentBatch?.selection.cards)?.find(ref=>ref.entryId===word?.entry.id)?.senseId;
-  const selectedSenseId = previewingMeanings ? meaningUpdate!.batch.selection.cards.find(ref => ref.entryId === word?.entry.id)?.senseId : boundPlan ? batchSenseId : params.get('sense') || batchSenseId;
+  const displaySenseId = displayCards?.find(ref => ref.entryId === word?.entry.id)?.senseId || batchSenseId;
+  const selectedSenseId = boundPlan ? displaySenseId : params.get('sense') || displaySenseId;
   // Older tasks can retain a dictionary meaning outside today's teaching choices.
   const activeResolved = word && selectedSenseId ? resolveVocabularyLearningContext(word.entry, { bookId, unitId, senseId: selectedSenseId }) : word?.resolved;
   const selectedSense = activeResolved?.sense;
@@ -335,8 +342,9 @@ export function VocabularyGroupLearnPage() {
           <button type="button" className="btn line" aria-pressed={layout==='list'} onClick={()=>{const next=new URLSearchParams(params);next.set('layout','list');setParams(next,{replace:true,state:location.state});}}><List size={15} aria-hidden="true"/>List</button>
         </div>
         <div className="vocabulary-learning-stage">
+        {showingUpdatedReference && <p className="vocabulary-muted">The cards show the current wordbook meanings. Your existing assessment uses the meanings saved with the task.</p>}
         {layout==='list' ? <div ref={listRegion} className="vocabulary-learning-list" role="region" aria-label="Batch word list" tabIndex={0}><ol role="list">{batchWords.map((row,offset)=>{
-          const senseId=(previewingMeanings?meaningUpdate!.batch.selection.cards:currentBatch?.selection.cards)?.find(ref=>ref.entryId===row.entry.id)?.senseId;
+          const senseId=displayCards?.find(ref=>ref.entryId===row.entry.id)?.senseId;
           const resolved=resolveVocabularyLearningContext(row.entry,{bookId,unitId,...(senseId?{senseId}:{})});
           const content=resolved.sense?vocabularySensePresentation(resolved.sense):undefined;
           return <li key={row.entry.id} aria-current={row.entry.id===word.entry.id?'true':undefined}>
@@ -367,7 +375,7 @@ export function VocabularyGroupLearnPage() {
           {selectedSense ? <VocabularyMeaningNotes entryId={word.entry.id} sense={selectedSense} showDistinctions={reviewedNotes || groupTeachingNotes} expanded={Boolean(distinctionTask && (reviewedNotes || groupTeachingNotes))} /> : null}
           <details className="vocabulary-learning-provenance" key={`${word.entry.id}:${selectedSense?.id}`}><summary>Meaning source</summary><p>{meaningSource} See Word details for references and other meanings.</p></details>
           <div className="vocabulary-learning-reference-actions">
-          <Link className="btn text" to={entryUrl(word.entry.id,{bookId,unitId,senseId:selectedSense?.id},origin)} onClick={()=>rememberVocabularyPosition(origin,'learning-word')}>Word details<ArrowRight size={14}/></Link>
+          <Link className="btn text" to={entryUrl(word.entry.id,{bookId,unitId,senseId:selectedSense?.id,exactMeaning:'true'},origin)} onClick={()=>rememberVocabularyPosition(origin,'learning-word')}>Word details<ArrowRight size={14}/></Link>
           </div></footer></div></div> : null}
         </VocabularyLearningCard>}
         <div className={`vocabulary-learning-controls${batchComplete ? ' is-complete' : ''}`}><button className="btn line" disabled={position===0} onClick={()=>navigateTo(position-1)}><ArrowLeft size={15}/><span>Previous word</span></button>{batchComplete ? <span className="vocabulary-learning-batch-complete"><Check size={16}/>Batch viewed</span> : <button className="btn primary" disabled={viewed.includes(word.entry.id) || !meaningVisible} onClick={()=>navigateTo(Math.min(position+1,batchEnd),true)}><Check size={15}/><span>{viewed.includes(word.entry.id)?'Viewed':position===batchEnd?'Mark viewed':'Mark viewed & next'}</span></button>}<button className="btn line" disabled={position===words.length-1} onClick={()=>navigateTo(position+1)}><span>{batchComplete && position===batchEnd && position<words.length-1 ? 'Next batch' : 'Next word'}</span><ArrowRight size={15}/></button></div>
