@@ -56,7 +56,7 @@ function PlanningCalendar(){
     setSearch(next,{replace:true,state:location.state});
   },[location.hash,Boolean(linkedTask),requestedView,validDate]);
   const focus=tab==='schedule'&&days.includes(today)?nextUnifiedPlan(fb.state.plans.filter(plan=>plan.dateKey===today),now):undefined;
-  const proposal=useMemo(()=>tab==='schedule'?previewScheduleReview(fb.state,now):null,[fb.state,tab,schedule.saving,anchor,today]);
+  const proposal=useMemo(()=>tab==='schedule'?previewScheduleReview(fb.state,now):null,[fb.state,tab,schedule.saving,anchor,today,schedule.clock]);
   const needsWordbook=!(fb.state.wordbookEnrollments||[]).length&&!fb.state.plans.some(plan=>plan.target?.mode==='learning-batch'&&!plan.onHold&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status));
   return <section className="view active study-planning"><header className="study-page-head"><h2>Planning</h2></header>
     {schedule.error&&<div className="study-alert" role="alert"><span>{schedule.error}</span><button className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}

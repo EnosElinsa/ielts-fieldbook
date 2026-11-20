@@ -159,6 +159,9 @@
 }
 
 .exam-inline-figure { display: block; margin: 12px 0; }
+.exam-map-dialog-answer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; width: 100%; }
+.exam-map-dialog-answer p { display: grid; gap: 2px; margin: 0; overflow-wrap: anywhere; }
+.exam-map-dialog-answer .select-field { min-height: 44px; }
 .exam-missing-image { display: block; padding-block: 8px; color: var(--muted); }
 
 .exam-submit-progress { font-size: 12px; font-variant-numeric: tabular-nums; color: var(--muted); }

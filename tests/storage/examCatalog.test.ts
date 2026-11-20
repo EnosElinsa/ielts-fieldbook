@@ -91,8 +91,12 @@ test('signed URLs are reused but re-signed before the expiry safety window', asy
   vi.advanceTimersByTime(1);
   await resolveExamAsset(asset);
   expect(mock.signedCalls).toBe(2);
-  await resolveExamAsset(asset, { force: true });
-  expect(mock.signedCalls).toBe(3);
+  const retry = new URL(await resolveExamAsset(asset, { force: true }));
+  expect(retry.origin + retry.pathname).toBe('https://signed.example/audio');
+  expect(retry.searchParams.has('assetRetry')).toBe(true);
+  await expect(resolveExamAsset(asset)).resolves.toBe(retry.href);
+  await expect(resolveExamAsset(asset, { force: true })).resolves.not.toBe(retry.href);
+  expect(mock.signedCalls).toBe(4);
 });
 
 test('a stalled recording URL times out so retry can obtain a fresh URL', async () => {

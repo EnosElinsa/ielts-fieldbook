@@ -14,6 +14,7 @@ export const examCatalogKey = (skill?: ExamSkill, book?: number) => scopedKey('m
 export const examSectionsKey = (ids: string[]) => scopedKey('sections', selectedIds(ids));
 export const examAssetKey = (asset: ExamAsset) => scopedKey('asset-url', [asset.id, asset.storagePath]);
 export const EXAM_ASSET_REFRESH_MS = 3_540_000;
+let assetRefreshSequence = 0;
 
 const emptyCatalog = (): ExamCatalog => ({ schemaVersion: 1, papers: [], sections: [], passages: [], questions: [], assets: [] });
 const missingRelation = (error: { code?: string; message?: string }) => ['42P01', 'PGRST205'].includes(error.code || '') || /relation .* does not exist|could not find .* table/i.test(error.message || '');
@@ -134,7 +135,14 @@ async function readExamSections(ids: string[]): Promise<ExamCatalog> {
 }
 
 export function resolveExamAsset(asset: ExamAsset, options?: ReadOptions): Promise<string> {
-  return cachedRead(examAssetKey(asset), () => requestTimeout(readExamAsset(asset), 15_000), { ...options, ttlMs: EXAM_ASSET_REFRESH_MS, staleWhileRevalidate: false });
+  return cachedRead(examAssetKey(asset), async () => {
+    const assetUrl = await requestTimeout(readExamAsset(asset), 15_000);
+    if (!options?.force) return assetUrl;
+    // A fresh signature can yield the same URL, which can still hold a cached media failure.
+    const refreshed = new URL(assetUrl, globalThis.location?.href);
+    refreshed.searchParams.set('assetRetry', `${Date.now()}-${++assetRefreshSequence}`);
+    return refreshed.href;
+  }, { ...options, ttlMs: EXAM_ASSET_REFRESH_MS, staleWhileRevalidate: false });
 }
 
 async function readExamAsset(asset: ExamAsset): Promise<string> {

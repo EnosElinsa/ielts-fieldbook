@@ -16,19 +16,30 @@ const tables: Record<string, {id:string}[]> = { exam_papers:[paper], exam_sectio
 const pixel = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/2sQAAAAASUVORK5CYII=', 'base64');
 
 test('listening keeps the diagram visible beside the exercise and in the reference dialog', async ({page}) => {
+  let imageUnavailable = true;
+  let refreshedImageRequested = false;
   await page.route('**/rest/v1/exam_*', route => {
     const name = new URL(route.request().url()).pathname.split('/').at(-1)!;
     return route.fulfill({json:(tables[name] || []).map(payload => ({id:payload.id,payload})), headers:{'access-control-allow-origin':'*'}});
   });
   await page.route('**/exam-assets/fixture/*', route => {
-    if (route.request().url().endsWith('grounds.png')) return route.fulfill({contentType:'image/png', body:pixel});
+    const url = new URL(route.request().url());
+    if (url.pathname.endsWith('grounds.png')) {
+      if (imageUnavailable) return route.fulfill({status:503});
+      refreshedImageRequested ||= url.searchParams.has('assetRetry');
+      return route.fulfill({contentType:'image/png', body:pixel});
+    }
     return route.fulfill({status:204});
   });
   await page.setViewportSize({width:1440,height:900});
   await page.goto('/listening/map-section');
+  await expect(page.getByRole('alert').filter({hasText:'The source image could not load'})).toBeVisible();
+  imageUnavailable = false;
+  await page.getByRole('button', {name:'Retry image'}).click();
   const image = page.getByRole('img', {name:'Park plan'});
   await expect(image).toBeVisible();
   await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.naturalWidth)).toBeGreaterThan(0);
+  expect(refreshedImageRequested).toBe(true);
   await expect(page.getByRole('button', {name:'Method notes'})).toHaveAttribute('aria-pressed','false');
   const exercise = await page.getByRole('region', {name:'Questions and answers'}).boundingBox();
   const recording = await page.locator('.exam-practice-recording').boundingBox();
@@ -40,7 +51,17 @@ test('listening keeps the diagram visible beside the exercise and in the referen
   await page.getByRole('button', {name:'View map for question 11'}).click();
   const dialog = page.getByRole('dialog', {name:'Map reference'});
   await expect(dialog.getByRole('img', {name:'Park plan'})).toBeVisible();
+  const mapAnswer = dialog.getByRole('combobox', {name:'Answer 11'});
+  await expect(mapAnswer).toHaveText('B');
+  await mapAnswer.press('Enter');
+  await page.getByRole('option', {name:'A',exact:true}).click();
   await page.keyboard.press('Escape');
-  await expect(answer).toHaveText('B');
+  await expect(answer).toHaveText('A');
+  await expect(page.getByRole('button', {name:'View map for question 11'})).toBeFocused();
+  await page.reload();
+  await expect(answer).toHaveText('A');
+  await page.getByRole('button', {name:'Resume',exact:true}).click();
+  await page.getByRole('link', {name:/Go to question 12/}).click();
+  await expect(page.getByRole('combobox', {name:'Answer 12'})).toBeFocused();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
 });

@@ -13,6 +13,18 @@ test('local midnight and foreground return refresh a mounted schedule and clean 
  await act(async()=>{fireEvent.focus(window);});expect(mocks.refresh).toHaveBeenCalledTimes(3);
  view.unmount();fireEvent.focus(window);await vi.advanceTimersByTimeAsync(86400000);expect(mocks.refresh).toHaveBeenCalledTimes(3);
 });
+test('refreshes a mounted schedule when a sentence listening review becomes due',async()=>{
+ vi.setSystemTime(new Date(2026,9,19,12));
+ const completedAt=new Date(2026,9,18,12).toISOString();
+ mocks.state.planningEvidence=[{id:'intensiveSessions',rows:[
+   {id:'opted-out',completedAt,reviewEnabled:false,nextReviewAt:new Date(2026,9,19,12,0,0,500).toISOString()},
+   {id:'sentence',completedAt,dictationResult:'wrong',nextReviewAt:new Date(2026,9,19,12,0,1).toISOString()},
+ ]}];
+ renderHook(()=>useStudySchedule());await act(async()=>{});
+ await act(async()=>{await vi.advanceTimersByTimeAsync(999);});expect(mocks.refresh).toHaveBeenCalledTimes(1);
+ await act(async()=>{await vi.advanceTimersByTimeAsync(1);});expect(mocks.refresh).toHaveBeenCalledTimes(2);
+ expect(mocks.state.intensiveSessions).toEqual([]);
+});
 test('successful submissions and explicit edits refresh once; automatic generated rows do not loop',async()=>{
  const view=renderHook(()=>useStudySchedule());await act(async()=>{});
  mocks.state={...mocks.state,vocabularySessions:[{id:'s',status:'submitted',submittedAt:'2026-10-19T12:00:00Z'}]};view.rerender();await act(async()=>{});expect(mocks.refresh).toHaveBeenCalledTimes(2);

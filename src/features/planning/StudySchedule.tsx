@@ -1,9 +1,11 @@
 // @ts-nocheck
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Play, RotateCcw, ArrowRight } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { planningSettingsKey, upcomingReviewTime } from '../../lib/planTemplates';
 import { dateKey } from '../../domain';
+import { planningEvidenceView } from '../../domain/planningEvidence';
+import { intensiveReviewEnabled } from '../../domain/exam/intensive';
 
 export function useStudySchedule() {
   const fb=useFieldbook();const [saving,setSaving]=useState(true);const [error,setError]=useState('');
@@ -12,6 +14,19 @@ export function useStudySchedule() {
   const now=new Date(Math.max(clock.getTime(),Date.now()));
   const settingsKey=planningSettingsKey(fb.state.settings);const today=dateKey(now);
   const nextReviewAt=Math.min(Infinity,...(fb.state.plans||[]).filter(plan=>!plan.onHold&&!plan.archivedAt&&plan.dateKey<=today).map(plan=>upcomingReviewTime(plan,now)?.getTime()??Infinity));
+  const nextEvidenceReviewAt = useMemo(() => {
+    const evidence = planningEvidenceView(fb.state);
+    let next = Infinity;
+    const consider = (value) => {
+      const at = Date.parse(value);
+      if (at > clock.getTime()) next = Math.min(next, at);
+    };
+    for (const row of evidence.errors || []) if (!row.resolved) consider(row.nextReviewAt);
+    for (const row of evidence.intensiveSessions || []) {
+      if (row.completedAt && intensiveReviewEnabled(row)) consider(row.nextReviewAt);
+    }
+    return next;
+  }, [fb.state, clock]);
   const inFlight=useRef(null),rerun=useRef(false);const [revision,setRevision]=useState(0);
   const activityKey=JSON.stringify([
     (fb.state.vocabularySessions||[]).filter(row=>row.status==='submitted').map(row=>[row.id,row.submittedAt]),
@@ -35,12 +50,17 @@ export function useStudySchedule() {
   useEffect(()=>{void refresh(true);},[refresh,settingsKey,today,activityKey,revision]);
   useEffect(()=>{
     const at=new Date(),midnight=new Date(at);midnight.setHours(24,0,0,0);
-    const timer=setTimeout(()=>setClock(new Date()),Math.max(1,Math.min(nextReviewAt,midnight.getTime())-at.getTime()));
-    const foreground=()=>{if(document.visibilityState==='hidden')return;const current=new Date();setClock(current);if(dateKey(current)===today)void refresh();};
+    const wakeAt = Math.min(nextReviewAt, nextEvidenceReviewAt, midnight.getTime());
+    const timer = setTimeout(() => {
+      const current = new Date();
+      setClock(current);
+      if (nextEvidenceReviewAt <= current.getTime() && dateKey(current) === today) void refresh(true);
+    }, Math.max(1, wakeAt - at.getTime()));
+    const foreground=()=>{if(document.visibilityState==='hidden')return;const current=new Date();setClock(current);if(dateKey(current)===today)void refresh(nextEvidenceReviewAt<=current.getTime());};
     window.addEventListener('focus',foreground);document.addEventListener('visibilitychange',foreground);
     return()=>{clearTimeout(timer);window.removeEventListener('focus',foreground);document.removeEventListener('visibilitychange',foreground);};
-  },[refresh,today,nextReviewAt]);
-  return {saving,error,refresh,changes,now};
+  },[refresh,today,nextReviewAt,nextEvidenceReviewAt]);
+  return {saving,error,refresh,changes,now,clock};
 }
 
 export function TaskStartButton({plan, emphasis = true, taskLabel = undefined, now = new Date()}) {
