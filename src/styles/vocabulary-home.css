@@ -69,7 +69,7 @@
 .vocabulary-home-summary {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  max-inline-size: 480px;
+  max-inline-size: 580px;
   margin: 16px 0 0;
   padding: 0;
   list-style: none;
@@ -82,18 +82,23 @@
 .vocabulary-home-summary li,
 .vocabulary-home-summary a {
   display: grid;
-  align-content: center;
+  align-content: start;
   gap: 2px;
   min-block-size: 44px;
 }
-.vocabulary-home-summary a,
+.vocabulary-home-summary .vocabulary-home-review-counts,
 .vocabulary-home-summary li:last-child {
   padding: 6px clamp(8px, 2vw, 18px);
 }
-.vocabulary-home-summary li:first-child a {
+.vocabulary-home-summary li:first-child .vocabulary-home-review-counts {
   padding-inline-start: 4px;
 }
 .vocabulary-home-summary a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  min-block-size: 32px;
   color: var(--blue);
   text-decoration: none;
 }
@@ -101,6 +106,7 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+.vocabulary-home-summary a strong { font-size: inherit; }
 .vocabulary-home-summary strong {
   color: var(--ink);
   font-size: 22px;
@@ -124,7 +130,7 @@
   .vocabulary-home-summary {
     font-size: 12px;
   }
-  .vocabulary-home-summary a,
+  .vocabulary-home-summary .vocabulary-home-review-counts,
   .vocabulary-home-summary li:last-child {
     padding-inline: 4px;
   }

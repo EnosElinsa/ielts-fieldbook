@@ -1,9 +1,9 @@
 import { getVocabularyReviewQueue } from './index';
 import type { ReviewQueueFilter, VocabularyMode, VocabularyStore, ReviewCard } from './types';
-import { getVocabularyPlanningCandidates, selectVocabularyPlanReview } from './planning';
+import { selectVocabularyPlanReview } from './planning';
 import { orderReviewCards } from './reviewOrder';
 export type ReviewType='due'|'wrong'|'custom';
-export type ReviewScope={reviewType?:ReviewType;reviewFilter?:ReviewQueueFilter;assessmentMode:VocabularyMode;reviewReason?:string;questionOrder?:'source'|'random'|'due';selectedMeanings?:{entryId:string;senseId:string}[]};
+export type ReviewScope={reviewType?:ReviewType;reviewFilter?:ReviewQueueFilter;assessmentMode:VocabularyMode;reviewReason?:string;reviewAvailableAt?:string;questionOrder?:'source'|'random'|'due';selectedMeanings?:{entryId:string;senseId:string}[]};
 export function normalizeSelectedMeanings(value:unknown){
  if(value===undefined)return undefined;
  if(!Array.isArray(value)||!value.length||value.length>10000)throw new Error('Choose at least one word and meaning.');
@@ -23,10 +23,7 @@ export function normalizeReviewScope(value:unknown):ReviewQueueFilter{
 }
 export function selectScheduledVocabularyReview(store:Partial<VocabularyStore>,target:ReviewScope,now:Date,capacity:number,reserved:ReadonlySet<string>=new Set()):ReviewCard[]{
   if(!target.reviewType){
-    if(target.reviewReason){
-      const words=new Set<string>();
-      return getVocabularyPlanningCandidates(store,now,target.assessmentMode).filter(row=>row.reason===target.reviewReason&&row.card.mode===target.assessmentMode&&!reserved.has(JSON.stringify([row.card.entryId,row.card.senseId]))).map(row=>row.card).filter(card=>{if(words.has(card.entryId))return false;words.add(card.entryId);return true;}).slice(0,capacity);
-    }
+    if (Date.parse(target.reviewAvailableAt || '') > now.getTime()) return [];
     return selectVocabularyPlanReview(store,now,target.assessmentMode,capacity,reserved);
   }
   const scope=normalizeReviewScope(target.reviewFilter);

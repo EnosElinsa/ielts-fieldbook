@@ -239,7 +239,9 @@ function readAccountModuleRows(module: AccountModule, generation: number, owner:
 }
 
 async function readPlanningEvidence(generation:number, owner:string|null):Promise<PlanningEvidence[]> {
-  return Promise.all((Object.keys(PLANNING_FIELDS) as PlanningEvidenceKey[]).filter(key=>statuses[key]!=='ready').map(async key=>{
+  return Promise.all((Object.keys(PLANNING_FIELDS) as PlanningEvidenceKey[]).filter(key=>
+    key!=='vocabularySessions' && statuses[key]!=='ready'
+  ).map(async key=>{
     const fields=PLANNING_FIELDS[key];
     const projection=['id',...fields.map(field=>`${field}:payload->${field}`)].join(',');
     const rows=[];
@@ -251,6 +253,26 @@ async function readPlanningEvidence(generation:number, owner:string|null):Promis
     }
     return {id:key,rows};
   }));
+}
+
+async function readPlanningVocabularyEvidence(plans, generation: number, owner: string | null): Promise<PlanningEvidence[]> {
+  const ids = [...new Set<string>(plans.filter(plan => plan.kind === 'vocabulary'
+    && plan.status === 'in_progress' && plan.startedAt && plan.target?.type === 'vocabulary').map(plan => plan.id))];
+  if (!ids.length) return [];
+  const projection = ['id', ...PLANNING_FIELDS.vocabularySessions.map(field => `${field}:payload->${field}`)].join(',');
+  const rows = [];
+  for (let start = 0; start < ids.length; start += 40) {
+    const batch = ids.slice(start, start + 40);
+    for (let offset = 0; ; offset += PAGE) {
+      const {data,error} = await requestTimeout(Promise.resolve(getSupabase().from(USER_TABLES.vocabularySessions)
+        .select(projection).in('payload->>planId',batch).eq('payload->>status','submitted').order('id',{ascending:true}).range(offset,offset+PAGE-1)),15_000);
+      assertAccount(generation,owner);
+      if (error) throw error;
+      rows.push(...(data || []).map(row => Object.fromEntries(Object.entries(row).filter(([,value]) => value != null))));
+      if (!data || data.length < PAGE) break;
+    }
+  }
+  return [{id:'vocabularySessions', rows:normalizeVocabularyIdentities({vocabularySessions:rows}).vocabularySessions}];
 }
 
 export async function ensureAccountModule(module: AccountModule) {
@@ -271,9 +293,12 @@ export async function ensureAccountModule(module: AccountModule) {
     if(planningLoaded)return result();
     if(moduleLoads.has(module))return moduleLoads.get(module);
     const generation=accountGeneration(),owner=accountId();
-    const request=readAccountModuleRows(module,generation,owner,true).then(([rows])=>{
+    const request=Promise.all([
+      readAccountModuleRows(module,generation,owner,true),
+      readPlanningVocabularyEvidence(accountState.plans,generation,owner),
+    ]).then(([[rows], vocabularyEvidence])=>{
       assertAccount(generation,owner);
-      accountState.planningEvidence=rows.filter(row=>statuses[row.id]!=='ready');planningLoaded=true;
+      accountState.planningEvidence=[...rows.filter(row=>statuses[row.id]!=='ready'), ...vocabularyEvidence];planningLoaded=true;
       return result();
     }).finally(()=>{if(generation===accountGeneration()&&owner===accountId())moduleLoads.delete(module);});
     moduleLoads.set(module,request);return request;
@@ -432,14 +457,19 @@ export async function refreshPlanningState() {
   const owner=accountId(),generation=accountGeneration();
   if(!owner||!accountReady)throw new Error('Sign in to refresh planning.');
   const workspace=await readPlanningWorkspace();const {profile,plans}=workspace;
-  assertAccount(generation,owner);planStamp=workspace.planStamp;
+  assertAccount(generation,owner);
   const raw={settings:profile?.settings||{},activePlanId:profile?.active_plan_id||null,reviewedAt:profile?.reviewed_at||null,plans:rowsToList(plans)};
   const normalized=migrateState({...emptyState(),...raw});
+  const vocabularyEvidence=await readPlanningVocabularyEvidence(normalized.plans,generation,owner);
+  assertAccount(generation,owner);planStamp=workspace.planStamp;
   profileBaseline=profile?{settings:raw.settings,activePlanId:raw.activePlanId,reviewedAt:raw.reviewedAt}:null;
   planBaselines=new Map(plans.map(row=>[row.id,structuredClone(row.payload)]));
   pendingCommit=null;snapshot.profile=profileStamp(normalized);snapshot.lists.plans=structuredClone(normalized.plans);
   Object.assign(accountState,{settings:normalized.settings,activePlanId:normalized.activePlanId,reviewedAt:normalized.reviewedAt,plans:normalized.plans});
-  return structuredClone({settings:normalized.settings,activePlanId:normalized.activePlanId,reviewedAt:normalized.reviewedAt,plans:normalized.plans});
+  if (planningLoaded || vocabularyEvidence.length) {
+    accountState.planningEvidence=[...(accountState.planningEvidence||[]).filter(row=>row.id!=='vocabularySessions'),...vocabularyEvidence];
+  }
+  return structuredClone({settings:normalized.settings,activePlanId:normalized.activePlanId,reviewedAt:normalized.reviewedAt,plans:normalized.plans,...(accountState.planningEvidence?{planningEvidence:accountState.planningEvidence}:{})});
 }
 
 export async function hydrateState(options?: { modules?: AccountModule[]; prefetchModules?: AccountModule[]; prefetchBanks?: ('writing' | 'speaking')[] }) {

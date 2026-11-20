@@ -45,6 +45,41 @@ test('historical plans are visible on direct Progress entry and after visiting P
   await expect(page.getByText('Completed historical overview')).toBeVisible();
 });
 
+test('cold Planning reconciles a submitted 30-prompt dictation before carrying it forward', async ({ page }) => {
+  const cards = Array.from({length:30}, (_, index) => ({entryId:`saved-word-${index}`,senseId:'main'}));
+  const plan = {
+    id:'carried-dictation', title:'Vocabulary - Due recall', kind:'vocabulary', skill:'vocabulary',
+    dateKey:'2026-11-17', originalDateKey:'2026-11-16', estimatedMinutes:30,
+    origin:'automatic', status:'in_progress', startedAt:'2026-11-16T17:00:00Z', rescheduledAt:'2026-11-17T16:00:00Z',
+    target:{type:'vocabulary',mode:'due-review',binding:'frozen',assessmentMode:'dictation',cards},
+  };
+  const completion = {
+    id:'saved-dictation', planId:plan.id, mode:'dictation', status:'submitted',
+    startedAt:'2026-11-16T17:02:00Z', submittedAt:'2026-11-16T17:30:00Z',
+    results:cards.map(card=>({...card,response:'An attempt',result:'success'})),
+  };
+  await page.route('**/rpc/load_planning_workspace', route => route.fulfill({json:{
+    profile:{settings:{dailyMinutes:45,activeSkill:'writing'},active_plan_id:plan.id},
+    plans:[{id:plan.id,payload:plan}],planStamp:'0'.repeat(32),
+  },headers:{'access-control-allow-origin':'*'}}));
+  await page.route('**/rest/v1/vocabulary_sessions?*', route => {
+    const params = new URL(route.request().url()).searchParams;
+    return params.get('payload->>planId')?.includes(plan.id)
+      ? route.fulfill({json:[completion],headers:{'access-control-allow-origin':'*'}})
+      : route.fallback();
+  });
+  const committed = page.waitForRequest(request => request.url().endsWith('/rpc/commit_workspace_changes')
+    && JSON.stringify(request.postDataJSON()?.batch?.lists?.plans?.upserts || []).includes(completion.id));
+  await page.goto('/planning');
+  const request = await committed;
+  const batch: { lists: { plans: { upserts: { id: string; payload: unknown }[] } } } = request.postDataJSON().batch;
+  expect(Object.keys(batch.lists).every(key=>key==='plans')).toBe(true);
+  expect(batch.lists.plans.upserts.find(row=>row.id===plan.id)?.payload).toMatchObject({
+    status:'completed',dateKey:'2026-11-16',linkedSessionId:completion.id,completedAt:completion.submittedAt,
+  });
+  await expect(page.locator('#task-carried-dictation')).toHaveCount(0);
+});
+
 test('a failed historical plan request can recover in place', async ({ page }) => {
   let failing = true;
   let releasePlans: () => void = () => {};

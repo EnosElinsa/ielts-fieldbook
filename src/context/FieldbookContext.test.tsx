@@ -2031,7 +2031,7 @@ test.each(['due-review','learning-batch'])('settings save uses canonical regener
   const frozen={id:'settings-frozen',dateKey:'2099-01-01',origin:'automatic',status:'pending',kind:'vocabulary',skill:'vocabulary',estimatedMinutes:1,target:{type:'vocabulary',binding:'frozen',mode,assessmentMode:'definition',cards:[{entryId:'word',senseId:'sense'}]},draft:{answer:'Keep the frozen answer'}};
   const carry={id:'settings-carry',dateKey:'2000-01-01',origin:'automatic',status:'pending',kind:'1',skill:'writing',estimatedMinutes:10,target:{type:'question',skill:'writing',questionId:'q1',mode:'overview'}};
   const started={...carry,id:'settings-started',dateKey:'2099-01-01',status:'in_progress',startedAt:'2026-10-01T00:00:00Z',draft:{text:'Keep started work'}};
-  const staleReview={...frozen,id:'settings-stale',dateKey:'2000-01-01',target:{...frozen.target,mode:'due-review',binding:'dynamic',cards:[]}};
+  const staleReview={...frozen,id:'settings-stale',dateKey:'2000-01-01',draft:undefined,target:{...frozen.target,mode:'due-review',binding:'dynamic',cards:[]}};
   await act(async()=>{await fieldbook.persist(draft=>{draft.plans.push(frozen,carry,staleReview,started);draft.activePlanId=staleReview.id;});});
   const before=structuredClone(fieldbook.state),expected=structuredClone(before);expected.settings.dailyMinutes=60;ensureUnifiedPlans(expected);
   mocks.saveState.mockResolvedValueOnce(false);

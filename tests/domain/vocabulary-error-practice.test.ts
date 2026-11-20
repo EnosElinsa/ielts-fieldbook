@@ -56,10 +56,16 @@ test('an unclassified authored option gets neutral choice feedback rather than a
   expect(recommend()).toMatchObject({reason:'error',mode:'distinction',error:{kind:'choice'}});
 });
 
-test.each(['','some arbitrary free text'])('an unconfirmed response %j retains ordinary recovery without a specific diagnosis',response=>{
-  const {recommend}=failed('distinction',response,'kaikki:2114daefbbfa5151d9');
+test('an unconfirmed submitted answer retains ordinary recovery without a specific diagnosis',()=>{
+  const {recommend}=failed('distinction','some arbitrary free text','kaikki:2114daefbbfa5151d9');
   expect(recommend()).toMatchObject({mode:'distinction',reason:'recovery'});
   expect(recommend()).not.toHaveProperty('error');
+});
+
+test('a blank distinction answer does not trigger recovery or schedule a card',()=>{
+  const {store,recommend}=failed('distinction','','kaikki:2114daefbbfa5151d9');
+  expect(store.vocabularyStates.every(state=>!state.wrong.active&&Object.keys(state.cards).length===0)).toBe(true);
+  expect(recommend()?.reason).not.toBe('recovery');
 });
 
 test('a personal replacement cannot inherit a public meaning-choice binding',()=>{

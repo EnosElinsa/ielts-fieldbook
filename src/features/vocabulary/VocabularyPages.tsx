@@ -33,8 +33,9 @@ import { useVocabularyLocalDrafts } from './useVocabularyLocalDrafts';
 import { nextHomeLearning } from '../../lib/planTemplates';
 import { TaskStartButton } from '../planning/StudySchedule';
 import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
-import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
-import { getVocabularyHomePractice } from '../../domain/vocabulary/homePractice';
+import { normalizeVocabularyPreferences, VOCABULARY_PRACTICE_MODES } from '../../domain/vocabulary/preferences';
+import { getVocabularyHomePractice, getVocabularyHomeRetries } from '../../domain/vocabulary/homePractice';
+import { oneQuestionPerWord } from '../../domain/vocabulary/reviewOrder';
 import { loadReleasedVocabularyTeaching } from '../../storage/vocabularyCatalog';
 import { VocabularyNextPractice } from './VocabularyNextPractice';
 import { Pronunciation } from './Pronunciation';
@@ -282,13 +283,19 @@ function VocabularyHomePage() {
   const mode = preferences.mode === 'audio' ? 'definition' : preferences.mode;
   const dueCards = guidance.dueCards;
   const reviewMode = dueCards.some(card => card.mode === mode) ? mode : dueCards[0]?.mode || mode;
+  const retries = useMemo(() => catalogStatus === 'ready' ? getVocabularyHomeRetries(fb.state) : [],
+    [fb.state,catalogStatus,fb.vocabularyCatalogRevision]);
+  const dueLink = mode => `/vocabulary/review?${new URLSearchParams({mode,dueOnly:'true',scheduledOnly:'true'})}`;
+  const retryLink = mode => `/vocabulary/review?${new URLSearchParams({mode,wrongOnly:'true',dueOnly:'false'})}`;
   const due = dueCards.filter(card => card.mode === reviewMode);
-  const dueTo = `/vocabulary/review?${new URLSearchParams({ mode: reviewMode, dueOnly: 'true', scheduledOnly: 'true' })}`;
-  const wrongWords = getActiveWrongWords(fb.state);
-  const activeMistakeModes = wrongWords.flatMap(({ wrong }) => Object.entries(wrong.modes || {}))
-    .filter(([, mistake]) => mistake?.active).map(([mistakeMode]) => mistakeMode);
-  const retryMode = activeMistakeModes.includes(mode) ? mode : activeMistakeModes[0] || mode;
-  const retryTo = `/vocabulary/review?${new URLSearchParams({ mode: retryMode, wrongOnly: 'true', dueOnly: 'false' })}`;
+  const dueTo = dueLink(reviewMode);
+  const reviewLinks = (cards, makeLink) => VOCABULARY_PRACTICE_MODES.flatMap(({value,label}) => {
+    const matching = cards.filter(card => card.mode === value);
+    const count = value === 'dictation' ? oneQuestionPerWord(matching).length : matching.length;
+    return count ? [<Link key={value} to={makeLink(value)}><span>{label}</span> <strong>{formatCount(count)}</strong></Link>] : [];
+  });
+  const dueLinks = reviewLinks(dueCards,dueLink);
+  const retryLinks = reviewLinks(retries,retryLink);
   const nextLearning=useMemo(()=>nextHomeLearning(fb.state),[fb.state,fb.vocabularyCatalogRevision,practiceClock]);
   const nextTarget=nextLearning?.target;
   const selectedEntryIds=nextTarget?.entryIds||nextTarget?.cards?.map(card=>card.entryId)||[];
@@ -345,10 +352,12 @@ function VocabularyHomePage() {
       </>}
     </section>
     <ul className="vocabulary-home-summary" role="list" aria-label="Vocabulary summary">
-      <li>{catalogStatus === 'ready'
-        ? <Link to={dueTo}><span>Due cards</span><strong>{formatCount(dueCards.length)}</strong></Link>
-        : <><span>Due cards</span><strong>…</strong></>}</li>
-      <li><Link to={retryTo}><span>Words to retry</span><strong>{formatCount(wrongWords.length)}</strong></Link></li>
+      <li><div role="group" aria-label="Due cards" className="vocabulary-home-review-counts"><span>Due cards</span>{catalogStatus === 'ready'
+        ? dueLinks.length ? dueLinks : <strong>0</strong>
+        : <strong>…</strong>}</div></li>
+      <li><div role="group" aria-label="Words to retry" className="vocabulary-home-review-counts"><span>Words to retry</span>{catalogStatus === 'ready'
+        ? retryLinks.length ? retryLinks : <strong>0</strong>
+        : <strong>…</strong>}</div></li>
       <li><span>Saved words</span><strong>{formatCount((fb.state.vocabulary || []).filter(entry => !entry.tags.includes('archived')).length)}</strong></li>
     </ul>
   </VocabularyLayout>;

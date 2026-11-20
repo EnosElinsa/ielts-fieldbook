@@ -116,8 +116,11 @@ describe('vocabulary sessions', () => {
     session = { ...session, submittedAt: '2026-10-10T10:00:00.000Z' };
     const commit = buildVocabularySessionCommit(state, session, cards);
     expect(state.vocabularyReviews).toHaveLength(0);
-    expect(commit.state.vocabularyReviews).toHaveLength(2);
-    expect(commit.summary).toEqual({ total: 2, correct: 1, incorrect: 1, pending: 0 });
+    expect(commit.state.vocabularyReviews).toHaveLength(1);
+    expect(commit.summary).toEqual({ total: 2, correct: 1, incorrect: 0, pending: 0, unanswered: 1 });
+    expect(commit.results.find(row => row.entryId !== bank.entryId)).toMatchObject({result:'pending', errorType:'unanswered'});
+    expect(commit.state.vocabularyStates.filter(row => row.entryId !== bank.entryId)).toEqual(state.vocabularyStates.filter(row => row.entryId !== bank.entryId));
+    expect(commit.sessionRecord.reviewIds).toEqual(commit.state.vocabularyReviews.map(row => row.id));
     const learning = commit.state.vocabularyStates.find(row => row.entryId === bank.entryId && row.senseId === bank.senseId)!;
     expect(learning.manualStatus).toBe('familiar');
     expect(learning.dimensions.meaning.successes).toBe(0);
@@ -128,7 +131,8 @@ describe('vocabulary sessions', () => {
 
   test('rebuilding an already persisted session keeps one review and one summary per card', () => {
     const { state, cards } = fixture();
-    const session = { ...createVocabularySession(cards, 'dictation', {}), submittedAt: '2026-10-10T10:00:00.000Z' };
+    let session = { ...createVocabularySession(cards, 'dictation', {}), submittedAt: '2026-10-10T10:00:00.000Z' };
+    for (const card of session.cardIds) session = { ...updateVocabularySessionAnswer(session, card.id, 'answer'), submittedAt: session.submittedAt };
     const first = buildVocabularySessionCommit(state, session, cards);
     const retry = buildVocabularySessionCommit(first.state, session, cards);
     expect(retry.state.vocabularyReviews).toHaveLength(2);
@@ -164,7 +168,8 @@ describe('vocabulary sessions', () => {
 
   test('batch review events retain source and session ownership and one preparation timestamp', () => {
     const { state, cards } = fixture();
-    const session = { ...createVocabularySession(cards, 'dictation', {}, { bookId: 'b', unitId: 'u' }), submittedAt: '2026-10-10T11:00:00.000Z' };
+    let session = { ...createVocabularySession(cards, 'dictation', {}, { bookId: 'b', unitId: 'u' }), submittedAt: '2026-10-10T11:00:00.000Z' };
+    for (const card of session.cardIds) session = { ...updateVocabularySessionAnswer(session, card.id, 'answer'), submittedAt: session.submittedAt };
     const commit = buildVocabularySessionCommit(state, session, cards);
     expect(commit.state.vocabularyReviews[0]).toMatchObject({ sessionId: session.id, bookId: 'b', unitId: 'u', occurredAt: session.submittedAt });
     expect(commit.state.vocabularyEvidence[0]).toMatchObject({ sessionId: session.id, occurredAt: session.submittedAt });

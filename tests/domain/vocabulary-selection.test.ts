@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { VOCABULARY_CATALOG } from '../../src/domain/vocabulary/catalog';
 import { buildUnitPracticeQueue } from '../../src/domain/vocabulary/selection';
-import { buildVocabularySessionCommit, createVocabularySession } from '../../src/domain/vocabulary/session';
+import { buildVocabularySessionCommit, createVocabularySession, updateVocabularySessionAnswer } from '../../src/domain/vocabulary/session';
 import { readVocabularyDraft, writeVocabularyDraft } from '../../src/storage/vocabularyDrafts';
 import type { VocabularyEntry, VocabularyStore } from '../../src/domain/vocabulary/types';
 
@@ -59,15 +59,15 @@ describe('whole source unit selection', () => {
     expect(writeVocabularyDraft('whole-group', session)).toBe(true);
     expect(readVocabularyDraft('whole-group')?.cardIds).toHaveLength(total);
     const commit = buildVocabularySessionCommit(state, session, queue.cards);
-    expect(commit.state.vocabulary).toHaveLength(total);
-    expect(commit.state.vocabularyReviews).toHaveLength(total);
+    expect(commit.state.vocabulary).toHaveLength(0);
+    expect(commit.state.vocabularyReviews).toHaveLength(0);
     expect(commit.summary.total).toBe(total);
     expect(commit.state.wordbookProgress).toHaveLength(0);
-    expect(commit.summary.incorrect).toBe(total);
+    expect(commit.summary).toMatchObject({incorrect:0,unanswered:total});
     expect(commit.sessionRecord.results.every(result => result.response === '')).toBe(true);
     expect(state).toEqual(before);
     const retry = buildVocabularySessionCommit(commit.state, session, queue.cards);
-    expect(retry.state.vocabularyReviews).toHaveLength(total);
+    expect(retry.state.vocabularyReviews).toHaveLength(0);
     expect(retry.state.vocabularySessions).toHaveLength(1);
   });
 
@@ -118,7 +118,7 @@ describe('whole source unit selection', () => {
     personal.sources = [{ type: 'personal', id: 'my-note' }]; personal.senses[0].definition = 'My definition.';
     state.vocabulary.push(personal);
     const updated = buildUnitPracticeQueue(state, 'ielts-vocabulary', 'ielts-vocabulary-chapter-01-group-01', 'dictation');
-    const session = createVocabularySession(updated.cards, 'dictation', {}, {}, { kind: 'unit', bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01' });
+    const session = updateVocabularySessionAnswer(createVocabularySession(updated.cards, 'dictation', {}, {}, { kind: 'unit', bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01' }), updated.cards[0].id, 'atmosphere');
     const committed = buildVocabularySessionCommit(state, session, updated.cards);
     expect(committed.state.vocabulary[0].senses[0].definition).toBe('My definition.');
     expect(committed.state.vocabulary[0].sources).toContainEqual(expect.objectContaining({ bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01' }));
@@ -141,7 +141,7 @@ describe('whole source unit selection', () => {
   test('ignores future due dates when practicing a whole source group', () => {
     const state = fresh();
     const queue = buildUnitPracticeQueue(state, 'ielts-vocabulary', 'ielts-vocabulary-chapter-01-group-01', 'dictation');
-    const session = createVocabularySession(queue.cards, 'dictation', {}, {}, { kind: 'unit', bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01' });
+    const session = updateVocabularySessionAnswer(createVocabularySession(queue.cards, 'dictation', {}, {}, { kind: 'unit', bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01' }), queue.cards[0].id, 'atmosphere');
     const committed = buildVocabularySessionCommit(state, session, queue.cards);
     committed.state.vocabularyStates.forEach(learning => { if (learning.cards.dictation) learning.cards.dictation.due = new Date('2099-01-01'); });
     expect(buildUnitPracticeQueue(committed.state, 'ielts-vocabulary', 'ielts-vocabulary-chapter-01-group-01', 'dictation').cards).toHaveLength(55);

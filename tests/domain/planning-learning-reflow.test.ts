@@ -81,7 +81,8 @@ test('replanning excludes words learned since the old allocation', () => {
   recordVocabularyReview(state, {entryId: 'word-0', senseId: 'one', mode: 'definition', result: 'success', response: 'Meaning 0', occurredAt: '2026-11-15T12:00:00'});
   const evidence = structuredClone([state.vocabularyStates, state.vocabularyReviews, state.vocabularyEvidence]);
   ensureUnifiedPlans(state, undefined, now);
-  expect(todayLearning(state).flatMap((plan: any) => plan.target.entryIds)).toEqual(catalog.entries.slice(1,21).map(entry => entry.id));
+  expect(todayLearning(state).flatMap((plan: any) => plan.target.entryIds)).toEqual(catalog.entries.slice(1,20).map(entry => entry.id));
+  expect(state.plans.some(plan=>plan.dateKey==='2026-11-16'&&plan.reviewReason==='due')).toBe(true);
   expect([state.vocabularyStates, state.vocabularyReviews, state.vocabularyEvidence]).toEqual(evidence);
 });
 

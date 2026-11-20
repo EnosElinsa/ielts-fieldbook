@@ -728,8 +728,11 @@ test("235-word group submits one frozen full-group attempt beyond the old cap", 
   mount('?bookId=test-book&unitId=test-group&dueOnly=false');
   await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
   await user.click(await readyStart());
+  for (let page = 0; page < 5; page++) {
+    for (const field of screen.getAllByRole('textbox')) fireEvent.change(field,{target:{value:'attempt'}});
+    if (page < 4) await user.click(screen.getByRole('button',{name:'Next page'}));
+  }
   await user.click(await screen.findByRole('button', { name: 'Submit session' }));
-  await user.click(await screen.findByRole('button', { name: 'Submit anyway' }));
   await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(1));
   const [prepared] = fb.current.persistVocabularySession.mock.calls[0];
   expect(prepared.vocabularyReviews).toHaveLength(235);
@@ -837,8 +840,10 @@ test("result filters preserve marked rows and mistake retry ignores the review b
   await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
   await user.click(await readyStart());
   await user.click(await screen.findByRole('button', { name: 'Flag word 1' }));
+  for (const field of screen.getAllByRole('textbox')) fireEvent.change(field,{target:{value:'wrong answer'}});
+  await user.click(screen.getByRole('button',{name:'Next page'}));
+  for (const field of screen.getAllByRole('textbox')) fireEvent.change(field,{target:{value:'wrong answer'}});
   await user.click(screen.getByRole('button', { name: 'Submit session' }));
-  await user.click(await screen.findByRole('button', { name: 'Submit anyway' }));
   await waitFor(() => expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(1));
   await user.click(await screen.findByRole('combobox', { name: 'Result filter' }));
   await user.click(await screen.findByRole('option', { name: 'Flagged' }));
@@ -1049,7 +1054,7 @@ test("confirms unanswered cards before submitting and keeps production pending",
     fb.current.persistVocabularySession.mock.calls[0][0].vocabularyReviews.map(
       (review: any) => review.result,
     ),
-  ).toEqual(["pending", "failure"]);
+  ).toEqual(["pending"]);
   expect(await screen.findByText("Pending", { selector: "dt" })).toBeInTheDocument();
 });
 

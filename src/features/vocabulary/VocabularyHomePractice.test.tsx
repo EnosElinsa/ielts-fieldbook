@@ -86,7 +86,8 @@ test('the existing due batch keeps the preferred supported mode',()=>{
  const {entry,learning}=saved();successes(entry.id,new Date(Date.now()-2*86400000).toISOString());due(learning,'definition');due(learning,'dictation');
  mocks.fb.state.settings={vocabulary:{mode:'dictation'}};show();
  expect(within(panel()).getByRole('link',{name:/Review due words/})).toHaveAttribute('href','/vocabulary/review?mode=dictation&dueOnly=true&scheduledOnly=true');
- expect(screen.getByRole('link',{name:'Due cards 2'})).toHaveAttribute('href','/vocabulary/review?mode=dictation&dueOnly=true&scheduledOnly=true');
+ expect(screen.getByRole('link',{name:'Dictation 1'})).toHaveAttribute('href','/vocabulary/review?mode=dictation&dueOnly=true&scheduledOnly=true');
+ expect(screen.getByRole('link',{name:'Meaning recall 1'})).toHaveAttribute('href','/vocabulary/review?mode=definition&dueOnly=true&scheduledOnly=true');
 });
 
 test('the retry count opens unresolved mistakes in an active mode even before they are due',()=>{
@@ -96,7 +97,7 @@ test('the retry count opens unresolved mistakes in an active mode even before th
  learning.wrong.modes.dictation={active:true,successesSinceFailure:0};
  mocks.fb.state.settings={vocabulary:{mode:'definition'}};
  show();
- expect(screen.getByRole('link',{name:'Words to retry 1'})).toHaveAttribute('href','/vocabulary/review?mode=dictation&wrongOnly=true&dueOnly=false');
+ expect(within(screen.getByRole('group',{name:'Words to retry'})).getByRole('link',{name:'Dictation 1'})).toHaveAttribute('href','/vocabulary/review?mode=dictation&wrongOnly=true&dueOnly=false');
 });
 
 test('a saved session takes priority even while teaching metadata fails',async()=>{

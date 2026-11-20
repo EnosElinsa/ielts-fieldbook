@@ -85,6 +85,81 @@ test('review pressure does not consume the daily reserved new-word target', () =
   expect(today.every(plan => plan.skill === 'vocabulary')).toBe(true);
 });
 
+test('a seven-day preview reserves due vocabulary on its local date even before the due hour', async () => {
+  const state = fixture();
+  state.wordbookEnrollments = [];
+  state.settings.planning.newWordsPerDay = 0;
+  const entry = state.vocabulary[0];
+  const common = {entryId:entry.id, senseId:entry.senses[0].id, result:'success' as const, response:entry.term, occurredAt:'2026-10-18T12:00:00'};
+  const learning = recordVocabularyReview(state, {...common, mode:'definition'});
+  recordVocabularyReview(state, {...common, mode:'dictation'});
+  const due = new Date('2026-10-21T15:00:00');
+  learning.cards.definition!.due = due;
+  learning.cards.dictation!.due = new Date('2026-11-05T12:00:00');
+  const asyncState = structuredClone(state);
+  ensureUnifiedPlans(state,undefined,now);
+  await ensureUnifiedPlansAsync(asyncState,now);
+  const plans = state.plans.filter(plan => plan.target?.mode === 'due-review');
+  expect(plans).toHaveLength(1);
+  expect(plans[0]).toMatchObject({dateKey:'2026-10-21',target:{assessmentMode:'definition',reviewAvailableAt:due.toISOString(),binding:'dynamic',cards:[]}});
+  expect(asyncState.plans).toEqual(state.plans);
+  expect(selectScheduledVocabularyReview(state,plans[0].target,new Date(due.getTime()-1),1)).toEqual([]);
+  expect(selectScheduledVocabularyReview(state,plans[0].target,due,1)).toHaveLength(1);
+});
+
+test('due cards have room even when the daily new-word goal would use the entire vocabulary budget', () => {
+  const state = fixture();
+  state.settings.planning.newWordsPerDay = 10;
+  state.settings.planning.vocabularyPercent = 20;
+  const entry = addVocabularyItem(state,{term:'retention word',meaning:'A personal review word.'}).item!;
+  const learning = recordVocabularyReview(state,{entryId:entry.id,mode:'definition',result:'success',response:entry.term,occurredAt:'2026-10-18T12:00:00'});
+  learning.cards.definition!.due = new Date('2026-10-19T12:00:00');
+  expect(nextHomeLearning(state,now)?.target.entryIds).toHaveLength(3);
+  ensureUnifiedPlans(state,undefined,now);
+  const today = state.plans.filter(plan => plan.dateKey === '2026-10-20');
+  expect(today.filter(plan => plan.reviewReason === 'due')).toHaveLength(1);
+  expect(today.filter(plan => plan.target?.mode === 'learning-batch').reduce((sum,plan)=>sum+plan.quantity,0)).toBe(3);
+});
+
+test('an automatic review can still select a due card whose reason changed to mistake recovery', () => {
+  const state = fixture();
+  const entry = state.vocabulary[0];
+  const learning = recordVocabularyReview(state,{entryId:entry.id,mode:'dictation',result:'failure',response:'wrong',occurredAt:'2026-10-18T12:00:00'});
+  const cards = selectScheduledVocabularyReview(state,{assessmentMode:'dictation',reviewReason:'due'},now,1);
+  expect(cards.map(card => card.senseId)).toEqual([learning.senseId]);
+});
+
+test('adjusting a scoped review keeps its type, sorting, and exact scope', () => {
+  const state = fixture();
+  const plan = mutateStudyPlan(state,null,{
+    type:'add',skill:'vocabulary',practice:'due-review',dateKey:'2026-10-21',estimatedMinutes:4,
+    assessmentMode:'definition',reviewType:'custom',binding:'dynamic',reviewFilter:{bookId:'book-a'},
+    selectedMeanings:[{entryId:'a',senseId:'one'}],questionOrder:'random',
+  },now);
+  const {target,title,completion} = structuredClone(plan);
+  mutateStudyPlan(state,plan.id,{type:'resize',estimatedMinutes:2},now);
+  expect(plan).toMatchObject({target:{...target,batchSize:2},title,completion,quantity:2,estimatedMinutes:2});
+});
+
+test('reordering visible tasks leaves history and held tasks unchanged', () => {
+  const state = fixture();
+  const day = '2026-10-20';
+  const make = (id:string,order:number,patch={}) => ({id,dateKey:day,skill:'writing',status:'pending',origin:'automatic',estimatedMinutes:5,order,...patch});
+  state.plans = [make('first',0),make('completed',1,{status:'completed'}),make('held',2,{onHold:true}),make('second',3)];
+  const history = structuredClone(state.plans.slice(1,3));
+  mutateStudyPlan(state,'first',{type:'reorder',direction:'down'},now);
+  expect(state.plans.slice(1,3)).toEqual(history);
+  expect(state.plans[0].order).toBeGreaterThan(state.plans[3].order);
+});
+
+test('an older review explicitly adjusted by the learner retains its scope during carryover', () => {
+  const state = fixture();
+  state.wordbookEnrollments = [];
+  state.plans = [{id:'edited',dateKey:'2026-10-19',skill:'vocabulary',kind:'vocabulary',origin:'automatic',status:'pending',estimatedMinutes:2,manuallyEditedAt:'2026-10-19T12:00:00',target:{type:'vocabulary',mode:'due-review',assessmentMode:'dictation',binding:'dynamic',batchSize:2,cards:[]}}];
+  ensureUnifiedPlans(state,undefined,now);
+  expect(state.plans.find(plan=>plan.id==='edited')).toMatchObject({status:'pending',dateKey:'2026-10-20',originalDateKey:'2026-10-19',target:{assessmentMode:'dictation',batchSize:2}});
+});
+
 test('automatic carryover is bounded and never merges a manually selected review', () => {
   const state = fixture(); state.wordbookEnrollments = [];
   state.plans = [
