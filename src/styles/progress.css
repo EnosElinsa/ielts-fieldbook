@@ -18,4 +18,7 @@
 .exam-progress-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; max-width: 100%; }
 .exam-progress-filter label { font: 500 13px/1.4 Manrope,Arial,sans-serif; color: var(--muted); }
 .exam-progress-filter .select-field { min-height: 44px; }
+.exam-progress-evidence { margin-bottom: 24px; }
+.exam-progress-review-action { border-top: 1px solid var(--rule); padding-top: 12px; }
+.exam-progress-review-action .btn { min-height: 44px; }
 .study-pagination .btn[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }

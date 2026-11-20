@@ -54,8 +54,20 @@ export function ExamProgressPanel({ skill, since = 0 }: { skill: ExamSkill; sinc
     <section className="progress-score-section"><h3>Accuracy by question type</h3>{typeRows.length ? <div className="progress-score-table"><table><thead><tr><th>Question type</th><th>Marks</th><th>Accuracy</th></tr></thead><tbody>{typeRows.map(([type, row]) => <tr key={type}><td>{QUESTION_TYPE_NAMES[type as QuestionType] || type}</td><td>{row.correct} / {row.total}</td><td>{percent(row.correct, row.total)}</td></tr>)}</tbody></table></div> : <Empty message="Complete a part to see which question types need work." />}
       <p className="rule-note">Pooled multiple-choice questions contribute their individual marks. Supported practice and mocks are recorded separately below.</p>
     </section>
-    <div className="evidence-grid"><section className="progress-section"><h3>{activity.period} accuracy</h3><div className="week-bars">{weeks.map(week => <div className="week-bar" key={week.start}><span>{week.label}</span><div className="track"><div className="fill" style={{ width: `${week.stats.accuracy * 100}%` }} /></div><strong>{week.stats.total ? `${week.stats.correct}/${week.stats.total}` : '—'}</strong></div>)}</div><p className="rule-note">Marks earned / available in the selected range.</p></section>
-      <section className="progress-section"><h3>Error reasons</h3>{Object.keys(stats.errors).length ? <div className="band-list">{Object.entries(stats.errors).sort((left, right) => right[1] - left[1]).map(([reason, count]) => <div className="band-row" key={reason}><span>{reason}</span><strong>{count}</strong></div>)}</div> : <p className="empty">Tag your mistakes during review to see recurring causes.</p>}{wrong.length > 0 && <Link className="btn line" to={`/${skill}/review/${wrong[wrong.length - 1].id}`}>Review recent mistakes<ArrowRight size={15} aria-hidden="true" /></Link>}</section></div>
+    <div className="evidence-grid exam-progress-evidence"><section className="progress-section"><h3>{activity.period} accuracy</h3><div className="week-bars">{weeks.map(week => <div className="week-bar" key={week.start}><span>{week.label}</span><div className="track"><div className="fill" style={{ width: `${week.stats.accuracy * 100}%` }} /></div><strong>{week.stats.total ? `${week.stats.correct}/${week.stats.total}` : '—'}</strong></div>)}</div><p className="rule-note">Marks earned / available in the selected range.</p></section>
+      <section className="progress-section">
+        <h3>Error reasons</h3>
+        {Object.keys(stats.errors).length ? <div className="band-list">
+          {Object.entries(stats.errors).sort((left, right) => right[1] - left[1]).map(([reason, count]) =>
+            <div className="band-row" key={reason}><span>{reason}</span><strong>{count}</strong></div>)}
+        </div> : <p className="empty">Tag your mistakes during review to see recurring causes.</p>}
+        {wrong.length > 0 && <div className="exam-progress-review-action">
+          <Link className="btn line" to={`/${skill}/review/${wrong[wrong.length - 1].id}`}>
+            Review recent mistakes<ArrowRight size={15} aria-hidden="true" />
+          </Link>
+        </div>}
+      </section>
+    </div>
     <section className="progress-section"><h3>Attempt history</h3>{completed.length ? <div className="progress-score-table"><table><thead><tr><th>Date</th><th>Practice</th><th>Marks</th><th>Time</th><th>Review</th></tr></thead><tbody>{completed.slice().reverse().map(attempt => <tr key={attempt.id}><td>{date(attempt.completedAt || attempt.startedAt)}</td><td>{attempt.mode === 'mock' ? 'Full mock' : attempt.retryOfAttemptId ? 'Retry' : skill === 'reading' ? 'Passage practice' : 'Part practice'}{attempt.answerRevealed ? ' · supported' : ''}</td><td>{typeof attempt.score === 'number' && typeof attempt.total === 'number' && attempt.total > 0 ? String(attempt.score) + ' / ' + attempt.total : '—'}</td><td>{studyMinutes(attempt.elapsedSeconds)}</td><td><Link to={`/${skill}/review/${attempt.id}`}>Review attempt</Link></td></tr>)}</tbody></table></div> : <Empty message="No completed attempts in this range." />}</section>
     {skill === 'listening' && <section className="progress-section">
       <div className="section-head"><h3>Intensive listening</h3></div>
