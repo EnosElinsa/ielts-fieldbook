@@ -1,0 +1,1196 @@
+{
+  "removeCorrections": [],
+  "restoreCorrections": [],
+  "removeCorrectionVariants": [
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:8c465d139a2a6833b4",
+      "variantId": "dictionary-example:f02384e9933190da546f570e15b332bac2090cbe711ecd505918d1009f96187f"
+    },
+    {
+      "entryId": "ve-54c9626d",
+      "senseId": "kaikki:14f69eb8e2a2d2b07c",
+      "variantId": "dictionary-example:13400c1f5445677a44e55a27f38f5bc347e69259edd213a1636a69b698b354d7"
+    },
+    {
+      "entryId": "ve-54c9626d",
+      "senseId": "kaikki:1c3960132fa635c659",
+      "variantId": "dictionary-example:8c91a4cf0d918f1b187aa04e94b3192e1c43d01bb3411e12bee33ab2073863a5"
+    },
+    {
+      "entryId": "ve-54c9626d",
+      "senseId": "kaikki:537aaaa800d8b2c8a4",
+      "variantId": "dictionary-example:5bfcf7735cc85d6f1d529482d8fb52b1d5035de79559f7a81e57d066d48ba895"
+    },
+    {
+      "entryId": "ve-54c9626d",
+      "senseId": "kaikki:96da12ea83ef6fdf7f",
+      "variantId": "dictionary-example:cb9b7001e1bafdda51c252b85994cf51d4b8112c394c79b14937c6b9d0488a1c"
+    },
+    {
+      "entryId": "ve-54c9626d",
+      "senseId": "kaikki:f2235471c6efb0cf7c",
+      "variantId": "dictionary-example:098bc58676e11fd6da44b736246bd505d2ae0b10112ee09f991d1e308ea92a93"
+    },
+    {
+      "entryId": "ve-54c9626d",
+      "senseId": "kaikki:fc5e7f02644687cabc",
+      "variantId": "dictionary-example:777c17de641eda877458f2713000d6e3cdd8799138fcd94dd08d75aff9077a08"
+    },
+    {
+      "entryId": "ve-a51fe522",
+      "senseId": "kaikki:8ef16293938afba5cb",
+      "variantId": "dictionary-example:18ff377c5cb393fada2eb43fd56cb3c224cf06b6c42826bb6a71fa8e8231459d"
+    },
+    {
+      "entryId": "ve-77c31b39",
+      "senseId": "kaikki:0d1e973a8980cc737e",
+      "variantId": "dictionary-example:44890346a1c2a9c90e15f97b556a8b24b5bb4f8d5d79b89de8d5f4a0927126a5"
+    },
+    {
+      "entryId": "ve-77c31b39",
+      "senseId": "kaikki:4ec257db3fcc6421d5",
+      "variantId": "dictionary-example:5dd2afb8913cece46bc68dfca3d10c082e1ab801d5f9bb0bb32d7aab7bd736db"
+    },
+    {
+      "entryId": "ve-77c31b39",
+      "senseId": "kaikki:99acc66f16f593c2b5",
+      "variantId": "dictionary-example:e207ad36f9eb586aef1c64d0fe0a63207bf80b3629e96ef200c9344014988152"
+    },
+    {
+      "entryId": "ve-77c31b39",
+      "senseId": "kaikki:9d5438e307c23a45d8",
+      "variantId": "dictionary-example:33950b1819dd06be34964124c2cbb4e20beb0d1ebdb3e160f6b80f447884dfdf"
+    },
+    {
+      "entryId": "ve-77c31b39",
+      "senseId": "kaikki:d68174f832d28e2d3e",
+      "variantId": "dictionary-example:84f08d23376a696032bc65279b27e0d55169dc16018a3c4795ea66ead978eba5"
+    },
+    {
+      "entryId": "ve-77c31b39",
+      "senseId": "kaikki:ea563f8a167dd1992e",
+      "variantId": "dictionary-example:94afc591638ececbef593814cbdbe03937ed06d0a477fb4ce66a92a85287bd40"
+    },
+    {
+      "entryId": "ve-45050954",
+      "senseId": "kaikki:e5ef62bb15b0525b51",
+      "variantId": "dictionary-example:5fba71dce8bd5e68f08f8f155c7746bbc05f0fb26c7a8bc98d437a5b4a03d09d"
+    },
+    {
+      "entryId": "ve-7a702f00",
+      "senseId": "kaikki:0c192026eb55bc676a",
+      "variantId": "dictionary-example:7abf08a6999beabe7c07dee53710bdb918e93a1ee053b66546dd8ec20131d7ea"
+    },
+    {
+      "entryId": "ve-7a702f00",
+      "senseId": "kaikki:3643fdad54f88cfe0a",
+      "variantId": "dictionary-example:8c0482d1426538a08bd9ef2975aac537bd0c1e2bbfbcd6da02c1dcc33435d8d5"
+    },
+    {
+      "entryId": "ve-7a702f00",
+      "senseId": "kaikki:6edd8c5a5a475c418f",
+      "variantId": "dictionary-example:044fd3eb97564ebe13f41761ae8d6f4bc49ad797c6c6cb26f53d1f4e0d6138e8"
+    },
+    {
+      "entryId": "ve-7a702f00",
+      "senseId": "kaikki:701d6d90f47f30f3cd",
+      "variantId": "dictionary-example:8b8c6892746ad761e4af192a8b45a56fdfc3ebc9d408e4357d869f35214b47b1"
+    },
+    {
+      "entryId": "ve-7a702f00",
+      "senseId": "kaikki:79f6b7c4f79621a113",
+      "variantId": "dictionary-example:30695cb3e225085462703638437ded3b38af5bc83e7afbb89a9d3b14216b5b06"
+    },
+    {
+      "entryId": "ve-7a702f00",
+      "senseId": "kaikki:b0ffce6b01c45d6138",
+      "variantId": "dictionary-example:a4174ae4c9d4046865d50d84527f3d14926ee1c8cabcb336bd56664f87cb6544"
+    },
+    {
+      "entryId": "ve-7a702f00",
+      "senseId": "kaikki:b30df7da43dad6c28d",
+      "variantId": "dictionary-example:fbec453afe0b89ef14a5f44653351d8493ab5c8b9b86477dbe156c20d49df42f"
+    },
+    {
+      "entryId": "ve-7a702f00",
+      "senseId": "kaikki:cc2344590cedd8da36",
+      "variantId": "dictionary-example:e380a45bd97a5065d305628167399065987dcd2c8737b439f9e269170bed7fd0"
+    },
+    {
+      "entryId": "ve-7a702f00",
+      "senseId": "kaikki:eda9dd0b1aed03e839",
+      "variantId": "dictionary-example:c22e729e81901234a16fae7cd06c15baedfec7c943bd565fabb4afd4dee6538e"
+    },
+    {
+      "entryId": "ve-7a702f00",
+      "senseId": "kaikki:f010ab3cc6f5b0f574",
+      "variantId": "dictionary-example:04ce7d1640c3e73ede178ddac976ad660a2dc15997e5f06507146f130d5ff86d"
+    },
+    {
+      "entryId": "ve-a6930e4",
+      "senseId": "kaikki:8bd010507a73c6cd5c",
+      "variantId": "dictionary-example:503a6b1977cba0014eec7ad65d51837382b0adfac6af75f0313eb19645ddde03"
+    },
+    {
+      "entryId": "ve-c96a8507",
+      "senseId": "kaikki:2273a8aa733f8d63ff",
+      "variantId": "dictionary-example:5b44d05429d956b4846230dd6da4b9e3488c98ad316fd84c3595d46f9a3556a2"
+    },
+    {
+      "entryId": "ve-c96a8507",
+      "senseId": "kaikki:704d5d4b5a22c13b51",
+      "variantId": "dictionary-example:03b0dddba9a5deea31b1ff6fba88f46a6e235ffb384c38b7ec5c9cd95c3bc448"
+    },
+    {
+      "entryId": "ve-c96a8507",
+      "senseId": "kaikki:70fb2f1db5dc462f50",
+      "variantId": "dictionary-example:17074241b98934dd114d28f0ffd81747c00d1cf28b735b40cf45cb48c96e6582"
+    },
+    {
+      "entryId": "ve-c96a8507",
+      "senseId": "kaikki:7ae58865e693584a2b",
+      "variantId": "dictionary-example:c06eadfdf1e123ee31354d1c95ecc72e9f76bfd7066a997cc74653011525f7a5"
+    },
+    {
+      "entryId": "ve-c96a8507",
+      "senseId": "kaikki:ceedecdc767821a5c0",
+      "variantId": "dictionary-example:7704d29cc627d25b72b0724ec68918554650d978ffce72633d13cc6508e8d759"
+    },
+    {
+      "entryId": "ve-c96a8507",
+      "senseId": "kaikki:d2b3cd4f3a50f58fbf",
+      "variantId": "dictionary-example:101443dce2f6de26726a33d8dfe671213b8004c61597afb373fb2e5ae7917215"
+    },
+    {
+      "entryId": "ve-67e0d900",
+      "senseId": "kaikki:81a53dcf456814623a",
+      "variantId": "dictionary-example:2024782c46a14ebdfe72f1863a983dc772e7ecc13e71140c58447949a3055499"
+    },
+    {
+      "entryId": "ve-67e0d900",
+      "senseId": "kaikki:c50e2e81c5770ac924",
+      "variantId": "dictionary-example:cc33ac2c0660e8d35d30301279bce3843784c227f3aec25c7455fe6438516190"
+    },
+    {
+      "entryId": "ve-f6bc916",
+      "senseId": "kaikki:be3cf205b572ee71ad",
+      "variantId": "dictionary-example:edd84e1eab418691932ca1c636d528fa4a6ff81a1ed1fc25d4133566067b5426"
+    },
+    {
+      "entryId": "ve-eebf51db",
+      "senseId": "kaikki:5bf753a01adb8f2ec8",
+      "variantId": "dictionary-example:08a5603ed60ff0fff3a4ca75b5b633dc3f97859cf95d8059b78835375d5e3c2d"
+    },
+    {
+      "entryId": "ve-7c7902bd",
+      "senseId": "kaikki:22fb6aa9eaa1b0768b",
+      "variantId": "dictionary-example:962668c40a8996a7496f35cbc65e4634860f86cb542a682850d6d58f4112181e"
+    },
+    {
+      "entryId": "ve-7c7902bd",
+      "senseId": "kaikki:5f678e3d061ef49a14",
+      "variantId": "dictionary-example:0214caa2af21f9e9a109f1ab28372df2c8647dc2878e9f902384fb82581d6573"
+    },
+    {
+      "entryId": "ve-b9948da",
+      "senseId": "kaikki:b1399883003d3c6e18",
+      "variantId": "dictionary-example:f718e7821746fb7d148185712a53700021f8aaf9850e7f9118e2cb7e21170ed9"
+    },
+    {
+      "entryId": "ve-b9948da",
+      "senseId": "kaikki:cd186ba8350355e065",
+      "variantId": "dictionary-example:2b91985d7ca0ea68247b73e32d23293e569208443d114040d6a3d73b981c5c8b"
+    },
+    {
+      "entryId": "ve-b9948da",
+      "senseId": "kaikki:fc838cefb259e1938b",
+      "variantId": "dictionary-example:dae4b875410aa621525c70a98b3c4df92544939cb7d4b20364c155fd29e7d034"
+    },
+    {
+      "entryId": "ve-7d863dca",
+      "senseId": "kaikki:bf508414bb5281111a",
+      "variantId": "dictionary-example:d943dfc9e93a71d623cae1a90426ca314e6353fb3aa3f813c341935ec4f25754"
+    },
+    {
+      "entryId": "ve-2e4df764",
+      "senseId": "kaikki:2cc782b3bb727282c7",
+      "variantId": "dictionary-example:6821b47bc5d78815b42bcbfb22ad4b1e9306554c9f11ff9caf2d030885ca60f9"
+    },
+    {
+      "entryId": "ve-2e4df764",
+      "senseId": "kaikki:b285f665bfe8d74eda",
+      "variantId": "dictionary-example:9852037e791099fd635b8d2ec234726e225fb6e567febf126e55af468f70622e"
+    },
+    {
+      "entryId": "ve-2e4df764",
+      "senseId": "kaikki:cd64cfd49161be72d7",
+      "variantId": "dictionary-example:0155878df3b04310e2cc0defed37b75c7ef650750f1f59a331a6aa176262e382"
+    },
+    {
+      "entryId": "ve-7ca80e3b",
+      "senseId": "kaikki:15f4862858de1a4f5e",
+      "variantId": "dictionary-example:6c2be1a4733c85b32b646a9e9651c7ce397d165f3a6031830fb1b735f55715e9"
+    },
+    {
+      "entryId": "ve-ac73768",
+      "senseId": "kaikki:bc5415e007b0b107e6",
+      "variantId": "dictionary-example:3e7e969e0143d726d95ed3177d3dd553774e65f4d9e3d1f6b78d657f4c1b7161"
+    },
+    {
+      "entryId": "ve-b623649",
+      "senseId": "kaikki:3be5d488184317d3f7",
+      "variantId": "dictionary-example:1ef50b48864c2896145a656f038db7249335700cba58019921cd216bb623c7ab"
+    },
+    {
+      "entryId": "ve-9281dac",
+      "senseId": "kaikki:0456b4a4a8153125dd",
+      "variantId": "dictionary-example:f7dba6abd055c818b84b073caed7908596af25a8fe6c275012a7d868576475d1"
+    },
+    {
+      "entryId": "ve-9281dac",
+      "senseId": "kaikki:746067525b00610957",
+      "variantId": "dictionary-example:6556a7e0b8e83b0623dd7cff924d165ff2ae5ddc9797f659943daba7cd3bf381"
+    },
+    {
+      "entryId": "ve-5d26c591",
+      "senseId": "kaikki:d86638b34d78ea2cbd",
+      "variantId": "dictionary-example:394c027d0d965a6ebabb698b2c6cd98dad9cdf0ceb4a75772c7bb0cf109c13ff"
+    },
+    {
+      "entryId": "ve-8f4648b",
+      "senseId": "kaikki:d57f18653177a3fd8b",
+      "variantId": "dictionary-example:875fde061ed3d9f101a7d6d504bf7b189a56d7bdb8eb35bb4c1169f61f845a11"
+    },
+    {
+      "entryId": "ve-a13f482",
+      "senseId": "kaikki:bb7ed13de313eed58a",
+      "variantId": "dictionary-example:703c43cc010df86d02fddf19c05f49f05b87897cb2b2068737c1f472fc15ca8f"
+    },
+    {
+      "entryId": "ve-b8993f1",
+      "senseId": "kaikki:819b42718e40d0fe29",
+      "variantId": "dictionary-example:2eeaa63cf5dbabb706472d3eb950da1c36ecbd6a714ed85a6b76eb4e84207bf4"
+    },
+    {
+      "entryId": "ve-b8993f1",
+      "senseId": "kaikki:aab153eccbe2d7217d",
+      "variantId": "dictionary-example:9e4bfbd65f18fd3d4ef9451d73ca61c70224d1723c7eac1f15307e7c3b27364f"
+    },
+    {
+      "entryId": "ve-b8993f1",
+      "senseId": "kaikki:f93d6ffe0d5263f74b",
+      "variantId": "dictionary-example:80dbcf4d27e02bdb2dc1d4150add41130f20160a68ee97d14338560aad6bd17a"
+    },
+    {
+      "entryId": "ve-b8733bf",
+      "senseId": "kaikki:7bc85d66920aa6c8e9",
+      "variantId": "dictionary-example:1f0cb704a9029e7bea72604a6bc3ba74555af238398cabd5c496d40f7df24f8d"
+    },
+    {
+      "entryId": "ve-b8733bf",
+      "senseId": "kaikki:89e75006640934126d",
+      "variantId": "dictionary-example:86719d92924f1dd3d3e963bdc53c78fcd56083a91eb3a6d954c85db63ca8e1a4"
+    },
+    {
+      "entryId": "ve-b8733bf",
+      "senseId": "kaikki:e8f6388671209e2b26",
+      "variantId": "dictionary-example:85a0f4919c817a8ef1ce52e14f92ea923ddb114a28c04a79b37f6a7504dd10c1"
+    },
+    {
+      "entryId": "ve-1743334f",
+      "senseId": "kaikki:32521e5f4c8bd6ff55",
+      "variantId": "dictionary-example:6219b73a86f32e0e7f2d1381701c125f3598b24d227db241cc25c95aa712f05c"
+    },
+    {
+      "entryId": "ve-178e96bb",
+      "senseId": "kaikki:e3ecc229846c5f5a55",
+      "variantId": "dictionary-example:13f2ffa1d08bfc5e26ba411e0383819f5d564849ebbfbee02e23f4e766f0c541"
+    },
+    {
+      "entryId": "ve-a210fb8",
+      "senseId": "kaikki:99a0dc2f952e160c83",
+      "variantId": "dictionary-example:b5ca7732a87b17761248a05aeb2637d14cabc387a66ade62d6682386fafa83e9"
+    },
+    {
+      "entryId": "ve-6ed1b8b5",
+      "senseId": "kaikki:f3da75d84a6c3fd1e0",
+      "variantId": "dictionary-example:433e3fdac351ec57350bd20a4ebc52154a279957a5dd818c328791ca9fa854f2"
+    },
+    {
+      "entryId": "ve-2ac9a09b",
+      "senseId": "kaikki:28daa1cf2d287f27a6",
+      "variantId": "dictionary-example:190bb44a3af65be7200a8724dc1d4911612ba0cc777e9a533e74bae8fe3b9281"
+    },
+    {
+      "entryId": "ve-2ac9a09b",
+      "senseId": "kaikki:bfd738c3a3a9a692d5",
+      "variantId": "dictionary-example:d9604f01871d3f878eafab4449bc6639123d1094d8438dd7d4395e61db333f40"
+    },
+    {
+      "entryId": "ve-f39a571c",
+      "senseId": "kaikki:45efd93bfb26d102ec",
+      "variantId": "dictionary-example:3ed4d47c23abcdd938a9f535d50c3f5a5ee4029f02cbde2513916269d8bc5a5e"
+    },
+    {
+      "entryId": "ve-a7de8b4",
+      "senseId": "kaikki:acfc54ea3bfb3d9387",
+      "variantId": "dictionary-example:5d78bb0f99fe4be465d475f083dacfc40c45aeb7ba1596f3ba2016c7b2e31df5"
+    },
+    {
+      "entryId": "ve-5a3f7f1a",
+      "senseId": "kaikki:00757a281210195750",
+      "variantId": "dictionary-example:a9a91c09b51ee4aedae488af19dfc6c7bb36b75c6f5a5102d54743b5008f33a6"
+    },
+    {
+      "entryId": "ve-5a3f7f1a",
+      "senseId": "kaikki:2caf2a2447f56d3c99",
+      "variantId": "dictionary-example:56b6c64144d1137333446820d292a6fe644ca03832c749968be79b1d3f4750e6"
+    },
+    {
+      "entryId": "ve-5a3f7f1a",
+      "senseId": "kaikki:3c513375e6c2921c6d",
+      "variantId": "dictionary-example:247b58ac73c3608a4bd1cf1d4e20172e8a84433d74bbd200c2b326bd52f81dec"
+    },
+    {
+      "entryId": "ve-a7e0c7f",
+      "senseId": "kaikki:269d532c566c8236b3",
+      "variantId": "dictionary-example:a4d230e4c7f944d40c436fdadba29540c9275877f9a4281ac63c9e71537362f5"
+    },
+    {
+      "entryId": "ve-a7e0c7f",
+      "senseId": "kaikki:69a754c04f02e80c03",
+      "variantId": "dictionary-example:e1b47a9a99e8f92f758662b69798cd74f5cb402458b924aa14522efe1386fc84"
+    },
+    {
+      "entryId": "ve-a7e0c7f",
+      "senseId": "kaikki:75d90d9aa67bca2d89",
+      "variantId": "dictionary-example:3f59144fd88db6d60c05baf73327d07829b92129616d1af0553461c48ec37680"
+    },
+    {
+      "entryId": "ve-a7f8ff3",
+      "senseId": "kaikki:ce42754f3258d174ca",
+      "variantId": "dictionary-example:abe8ceb8b40d82445c6466d08374aa7f1012508dfdccdab074fbad30275448eb"
+    },
+    {
+      "entryId": "ve-5a710a11",
+      "senseId": "kaikki:8898d6e52142e4e731",
+      "variantId": "dictionary-example:6c660cc6635d2e521278292e07e0a1ca05f7aeb38a6bb0d94e653fb3b91b4368"
+    },
+    {
+      "entryId": "ve-5a710a11",
+      "senseId": "kaikki:d45d149e5bd4745445",
+      "variantId": "dictionary-example:1b9bb416574d80291d913c2b4cc2aebccbee07e8445f431d1fcd97ee0a3e670f"
+    },
+    {
+      "entryId": "ve-5a6760f3",
+      "senseId": "kaikki:39ee28f4ba0cc1b784",
+      "variantId": "dictionary-example:7212d1aa3a37f9e0cb95645b19de9e432aab7c4974f170ff52a6b69daf3a234e"
+    },
+    {
+      "entryId": "ve-a88c52c",
+      "senseId": "kaikki:889a31d0189bf295d8",
+      "variantId": "dictionary-example:00ac9527b12e2823232bfaf2abb1a444931aa960c3f7c9db97d9ae7756ccccc9"
+    },
+    {
+      "entryId": "ve-7c70c16d",
+      "senseId": "kaikki:93d7de5359146e6be1",
+      "variantId": "dictionary-example:95e718ce16e78f563e563616cf128dd5ba3a471cbaaf2a3225d4b8893c1a4272"
+    },
+    {
+      "entryId": "ve-d14d2c98",
+      "senseId": "kaikki:c0b839b31a17f327ec",
+      "variantId": "dictionary-example:bc0c3bc0fbe63e7664080892d46aa98e68d3e2cb633fe944854656551a5691d7"
+    },
+    {
+      "entryId": "ve-d14d6405",
+      "senseId": "kaikki:1e3ff4bad98d279669",
+      "variantId": "dictionary-example:9ccc32d0b58eea38b081d98929eebd75dafc4f2f85efac2e2246c322151923ed"
+    },
+    {
+      "entryId": "ve-d14d87f9",
+      "senseId": "kaikki:1571ba541310383f45",
+      "variantId": "dictionary-example:66f3ae7ca69b0bb54eac446510ee893ad6990a850ca2a9148026087d87846dbd"
+    },
+    {
+      "entryId": "ve-7c70c240",
+      "senseId": "kaikki:244049ce201da9db5b",
+      "variantId": "dictionary-example:cb75ce2d155e5ab5fa79a8fae61281eaa89f1b8a2b7f70659cc78d6937706f48"
+    },
+    {
+      "entryId": "ve-7c70c240",
+      "senseId": "kaikki:2a65e17a204621a409",
+      "variantId": "dictionary-example:ac27982852c3b3ac49e01a59e03f60e8b7ea1d3d3ad8e1c80c17fe05ebd6b829"
+    },
+    {
+      "entryId": "ve-7c70c240",
+      "senseId": "kaikki:34265ac8713b537b2d",
+      "variantId": "dictionary-example:5389ff6095f01e8377fdd46384de9804c0cef28796f283df94324b9a4a23ae7d"
+    },
+    {
+      "entryId": "ve-5baa4fc9",
+      "senseId": "kaikki:0cf331d976718f3c90",
+      "variantId": "dictionary-example:2c78a2aa7f75a511f8a31a076fc2f5b144523784fa6a4b0c0a363a0750141697"
+    },
+    {
+      "entryId": "ve-5baa4fc9",
+      "senseId": "kaikki:964a23837b01870ee0",
+      "variantId": "dictionary-example:2a0b87314f261837c6f4e1dc69e973c92cde1a6283794885581f0fd1f656e3a2"
+    },
+    {
+      "entryId": "ve-e509a67c",
+      "senseId": "kaikki:d470dafa6666682d78",
+      "variantId": "dictionary-example:24332a0f2706a07a92861ddea217796d030fb0e214844d7ba2327cd9ec89a75b"
+    },
+    {
+      "entryId": "ve-7b7715c4",
+      "senseId": "kaikki:e9d4683fa33ca61747",
+      "variantId": "dictionary-example:bf1706ff810007355f7777063340b639b30766f0ff747785c51e4c227b1861cc"
+    },
+    {
+      "entryId": "ve-ea59c8cd",
+      "senseId": "kaikki:1e330cb4e1d77347ea",
+      "variantId": "dictionary-example:f26e9d6b7860ebc986c074a758a4fbef7a08734febe839a6f57977d294c80e67"
+    },
+    {
+      "entryId": "ve-a8db07c",
+      "senseId": "kaikki:edad5636da83dc2bf8",
+      "variantId": "dictionary-example:bea8608bfc652aa701324bc7005ce8e7db13dcf653e8d9e59577855c5f4267da"
+    },
+    {
+      "entryId": "ve-50bf9f6d",
+      "senseId": "kaikki:c4698931fa73f1bf64",
+      "variantId": "dictionary-example:2a7f880ea6c1622c4e8285c275d52359a0e34137b2d99c4afbd4039a9c85b6a7"
+    },
+    {
+      "entryId": "ve-a8ba060",
+      "senseId": "kaikki:0e36683f22f0b8f3d7",
+      "variantId": "dictionary-example:ac84325d3924533630811e6667c3edd3c35c0a7a7a7364528eb26f910b77503f"
+    },
+    {
+      "entryId": "ve-a8ba060",
+      "senseId": "kaikki:15a423bdd92adef266",
+      "variantId": "dictionary-example:e4594bdcc87677f8aaa4fe92354e7dd38ed06f25c68d1a4c9002f1b5b6055e9f"
+    },
+    {
+      "entryId": "ve-a8ba060",
+      "senseId": "kaikki:1f96935381b0ba11dc",
+      "variantId": "dictionary-example:6f599e9bf085689edd93054403fa0a536d8dc00f008ec252dad2c9d498514285"
+    },
+    {
+      "entryId": "ve-a8b6eec",
+      "senseId": "kaikki:ab18a1cbcf29a6111c",
+      "variantId": "dictionary-example:9a2ff95ad7ba83d5b82179bcb2fcf309ed85472eee9fd119adc8ddcfd9020469"
+    },
+    {
+      "entryId": "ve-7c70da68",
+      "senseId": "kaikki:fba6aa55356e2a1ac9",
+      "variantId": "dictionary-example:bf712874b85d27e98e4c4ec980a35824d8ee3ad0e891419260f71c6c4fcb8e29"
+    },
+    {
+      "entryId": "ve-dd2afbe4",
+      "senseId": "kaikki:2bb1e91f0995c4cfbe",
+      "variantId": "dictionary-example:3b751c297051de07d3253f0d25f0e10e9df39efbf75dd72e21ef5dec7840e2af"
+    },
+    {
+      "entryId": "ve-dd2d8716",
+      "senseId": "kaikki:380515e8c5bd7a62c6",
+      "variantId": "dictionary-example:da906f02380c968585a122cfe8265fda5594e264de0178d51da339432a6e67bd"
+    },
+    {
+      "entryId": "ve-5c0921b4",
+      "senseId": "kaikki:1a8ee819bf2d8e2e32",
+      "variantId": "dictionary-example:bef34ef0f309c58dfa06f5702bf39e4994c6962a868bd98b01ba006468225586"
+    },
+    {
+      "entryId": "ve-fcd12e8a",
+      "senseId": "kaikki:fe3564b134bd232734",
+      "variantId": "dictionary-example:1186e176ed55a0c9a614795dd6915d37078c92b2e3f972a993ad82b75ea34b06"
+    },
+    {
+      "entryId": "ve-c36f9c7d",
+      "senseId": "kaikki:84324f7d4ee2b6cc71",
+      "variantId": "dictionary-example:bb9cdeed2d737801bf46aaeabaf269a52e7e679854b0a23b23d844f5dcfbdea0"
+    },
+    {
+      "entryId": "ve-55472f47",
+      "senseId": "kaikki:3988d3448881ac9462",
+      "variantId": "dictionary-example:1a1aedb5042573139471dde953b3ded7cb7e6073d63a4f534887e7924bc567c5"
+    },
+    {
+      "entryId": "ve-da473a1b",
+      "senseId": "kaikki:65556309f68ed535c2",
+      "variantId": "dictionary-example:517faf43633adc7935f45d8f8ebaafe8320fe9225bc2f23e034c497fee10afec"
+    },
+    {
+      "entryId": "ve-da473a1b",
+      "senseId": "kaikki:806f56d24c690213ce",
+      "variantId": "dictionary-example:e619c2b24731a42404ac13c1370f6983154a56f2a5b5b2621f1dedaebffd293f"
+    },
+    {
+      "entryId": "vocab:conservation",
+      "senseId": "kaikki:f3d53ff328c99d9cb6",
+      "variantId": "dictionary-example:b936d5a78d457e2aa7a97d8e13d71b3e72eb19d7b25f45df395a89c8fda7e93e"
+    },
+    {
+      "entryId": "ve-dd8bd711",
+      "senseId": "kaikki:64baf5817302fda653",
+      "variantId": "dictionary-example:112ae884eaaebdb63d7bbcabe68b218e817fa094838cd4558e41325b2d48e93e"
+    },
+    {
+      "entryId": "ve-b874c79",
+      "senseId": "kaikki:f5142a038966e8b6ac",
+      "variantId": "dictionary-example:f895265695ea930cccd404eb5e07229903af8031c21c9756e4e4b10f53809748"
+    },
+    {
+      "entryId": "ve-7c70dbbe",
+      "senseId": "kaikki:171d3c161fb99a4411",
+      "variantId": "dictionary-example:27a4bcda8b280e293972618ecc2e5edccbd78828167d70dc8bb2fdadf39e5dcd"
+    },
+    {
+      "entryId": "ve-7c70dbbe",
+      "senseId": "kaikki:52c7fe6d382b5669bb",
+      "variantId": "dictionary-example:6e9f74e0af57b074c1f177bca8caa7058c2cc25a4d4960de5c2ecac3dd61ff7e"
+    },
+    {
+      "entryId": "ve-a8c6308",
+      "senseId": "kaikki:114072889517b95fac",
+      "variantId": "dictionary-example:1906f72f88b4885e0ae121a26f1ba118d56a7ac620225e4a838593d85f8e1e8a"
+    },
+    {
+      "entryId": "ve-a8c6308",
+      "senseId": "kaikki:18a6546f1bcc5828f6",
+      "variantId": "dictionary-example:eb8d07307646db9846c105aa19265e1598d9c55b741f0fb269c1ed00de9531c2"
+    },
+    {
+      "entryId": "ve-a8c6308",
+      "senseId": "kaikki:1a17d09332dff8498d",
+      "variantId": "dictionary-example:7493190e854f9744fd98b68e617176db0f2ccf811c4965610d709fdb83b1a65a"
+    },
+    {
+      "entryId": "ve-7c6aeb69",
+      "senseId": "kaikki:433e69991a25202935",
+      "variantId": "dictionary-example:40d66a1114e9e1c2e20c1d5bbd9b7f9e2df178decddba1b602af72182c37af2c"
+    },
+    {
+      "entryId": "ve-9cd6849",
+      "senseId": "kaikki:4e86215d3b1200bcb1",
+      "variantId": "dictionary-example:61c99408f73ece7296f8a9403a489c766477564f6d1920bcbb2944f610f2d3d4"
+    },
+    {
+      "entryId": "ve-9cd6849",
+      "senseId": "kaikki:5af7c2225d92b4d2ce",
+      "variantId": "dictionary-example:be58a9890f2ceb03bda192bfdf3b4b0f039bea90f3a59d68f95bbfddb1544066"
+    },
+    {
+      "entryId": "ve-7c6b136c",
+      "senseId": "kaikki:06c8cd114205d6ff2b",
+      "variantId": "dictionary-example:a4cd6f16efb5a52412ad788548c11711eb5a1dfb00273ef75a7ae54544d1fb8e"
+    },
+    {
+      "entryId": "ve-7c6b136c",
+      "senseId": "kaikki:171522d8b37a4f4044",
+      "variantId": "dictionary-example:6ee8e034e0a93ca84978add0847803bb77d53a231725ae83f7000fef4e2340c4"
+    },
+    {
+      "entryId": "ve-7c6b136c",
+      "senseId": "kaikki:17ab6f804ec182ce17",
+      "variantId": "dictionary-example:578cd39747c23022f4bda38fb8358b249b25735f2dcae834a6eaf8ff079ca652"
+    },
+    {
+      "entryId": "ve-7c6e14c2",
+      "senseId": "kaikki:7224e58ae5130fdc94",
+      "variantId": "dictionary-example:68bfa3e51362d93653563bf89ab96587ae8adfd649da89be2311d300e0c34e33"
+    },
+    {
+      "entryId": "ve-7c6e14c2",
+      "senseId": "kaikki:a91ea1c7380d933ed3",
+      "variantId": "dictionary-example:0354775d72be90f0a8a09fe9e051436d8db1f948bb76434a752851c515ef71db"
+    },
+    {
+      "entryId": "ve-b8737f2",
+      "senseId": "kaikki:4cc46ab5d93b8ad33d",
+      "variantId": "dictionary-example:ce1429dd2fb0b38226af7754d3f2cd5b250003bfcb33e673e80592d870b405d0"
+    },
+    {
+      "entryId": "ve-b8737f2",
+      "senseId": "kaikki:aa9d3498590a8d12d5",
+      "variantId": "dictionary-example:d19886a9778683a734568499621558433251d19376b0a99de89154574acc28a2"
+    },
+    {
+      "entryId": "ve-7c6e427a",
+      "senseId": "kaikki:0561944526a111c6d2",
+      "variantId": "dictionary-example:e91e31d58f68aa151cb4d2680423bf2dc097462bd0f1561df1b77f88e7051233"
+    },
+    {
+      "entryId": "ve-7c6e427a",
+      "senseId": "kaikki:058381614c33cf1f5d",
+      "variantId": "dictionary-example:9fb5787f02019cb0d951f8efd2ce5ed967cf91786925d067b0fe28d84e80f928"
+    },
+    {
+      "entryId": "ve-7c6e427a",
+      "senseId": "kaikki:1e52bceaaca5325b49",
+      "variantId": "dictionary-example:c2ecebbd8f5a4430eec493e7c95c9bdd9d7bcedfcf661fc29e354bcc87ffb314"
+    },
+    {
+      "entryId": "ve-b873856",
+      "senseId": "kaikki:0c471ab3d6817cbf88",
+      "variantId": "dictionary-example:bdfd6abaa9c0a539da8e982fd69887134fc28940fd6719ed8d33d4dd7478f1f2"
+    },
+    {
+      "entryId": "ve-b873856",
+      "senseId": "kaikki:25f9c06c5ef20fbbd4",
+      "variantId": "dictionary-example:6b2bd524605625327f409e8dbddaff0d4c00e20adbe3b7e5c240cead202e4061"
+    },
+    {
+      "entryId": "ve-b873856",
+      "senseId": "kaikki:287a4bb03e56c2b755",
+      "variantId": "dictionary-example:261ca8b2928ba17de0770d627f9fa121bcbfc68d0695e547b05ac246a9b90324"
+    },
+    {
+      "entryId": "ve-7c6e2c77",
+      "senseId": "kaikki:1739aae8fb9d785394",
+      "variantId": "dictionary-example:9a007430406726da17fe9efff138fa70192c86a6146c8afe685f07b5bf43c33d"
+    },
+    {
+      "entryId": "ve-7c6e3af1",
+      "senseId": "kaikki:6d642cf99caf36e69e",
+      "variantId": "dictionary-example:5bf3df5742a447897ba18fd934d6047572e3af3e077f2a01f8c563d727c86e58"
+    },
+    {
+      "entryId": "ve-7c6e3af1",
+      "senseId": "kaikki:938b853dc8d1f93cc6",
+      "variantId": "dictionary-example:c0eaac8781a834bdef96786e1dc094b6fd10fedb27bb9f14fd6a0b7136ff5e00"
+    },
+    {
+      "entryId": "ve-b873b33",
+      "senseId": "kaikki:09d86cdf4c11a8123c",
+      "variantId": "dictionary-example:5f425ce0f4d7f456d55c4f5f9bfbe6f2a7e4d686d1abfc01cb07a319461111f7"
+    },
+    {
+      "entryId": "ve-b873b33",
+      "senseId": "kaikki:5b12b4a418f1b29f0c",
+      "variantId": "dictionary-example:7bd5dc9255a31a5dd9b192669a5af83e6a9bdbbb5dd094bb0b690a55ce24b499"
+    },
+    {
+      "entryId": "ve-596e6d",
+      "senseId": "kaikki:0fe08fa965235518c4",
+      "variantId": "dictionary-example:04498cf835dc97a7109698c365d8703d87aea1592e2fc0ff7234da481e00853a"
+    },
+    {
+      "entryId": "ve-596e6d",
+      "senseId": "kaikki:2cab82405549c28955",
+      "variantId": "dictionary-example:18d75e9ff63f97e4a4750acf3d9d7b9d573f50ee35ab257313516c2f3233939c"
+    },
+    {
+      "entryId": "ve-596e6d",
+      "senseId": "kaikki:84f69f3b47327df061",
+      "variantId": "dictionary-example:cf9f4a032ce018864af1272f70aec9f9ba78ae0a44d3c6000e1fd050ab36acbf"
+    },
+    {
+      "entryId": "ve-7c716d46",
+      "senseId": "kaikki:839e53b64a1bd0446f",
+      "variantId": "dictionary-example:4b9aa2c4a7a597ebcbcdee0521ef7243ec658234fb84d2a09b587493c1a72ac1"
+    },
+    {
+      "entryId": "ve-7c716d46",
+      "senseId": "kaikki:ce2fb83bc30ea4eb65",
+      "variantId": "dictionary-example:58d840645ee640cd2a6ca6d1907235a905c43e32a85ec7e01b850d2c99001a6d"
+    },
+    {
+      "entryId": "ve-7c71348a",
+      "senseId": "kaikki:705fe727b0a20245c0",
+      "variantId": "dictionary-example:90c04987120fb56c90069746281da6dfec7ab29e892b90a7136aaf5ddd7a963d"
+    },
+    {
+      "entryId": "ve-7c71348a",
+      "senseId": "kaikki:77cf3dbc8e9a8e932c",
+      "variantId": "dictionary-example:36df968a673bf53e44d17461b669d28509ecbd65a45c85bdbd8fed65b4a47d9a"
+    },
+    {
+      "entryId": "ve-7c71348a",
+      "senseId": "kaikki:86189927df6ead01f8",
+      "variantId": "dictionary-example:7ef89802b09857a05a00bccbaf2b1f82122f6034e886240f141ade07122cf0c3"
+    },
+    {
+      "entryId": "ve-7c74da27",
+      "senseId": "kaikki:0ef1c5f172850ee0aa",
+      "variantId": "dictionary-example:9802a44b8bc5a369804bfa9c5538b5d2d198f4dbff82e99fcac027ec25a0ee02"
+    },
+    {
+      "entryId": "ve-7c74da27",
+      "senseId": "kaikki:26a34744745e8b97bf",
+      "variantId": "dictionary-example:da835f531541c65cfc16b4b87744ae88bc4368f27c2f7a288a5a66c605ad510c"
+    },
+    {
+      "entryId": "ve-7c74da27",
+      "senseId": "kaikki:2fdda5df938d841a18",
+      "variantId": "dictionary-example:74c4f4557b05e3f0a3a2fcb7b824da17d2b35036bb50062d9e89da24dd7bf01e"
+    },
+    {
+      "entryId": "ve-7c75129e",
+      "senseId": "kaikki:126e595ec10eb8da5a",
+      "variantId": "dictionary-example:070988547d311301cf7ac20b4b915b585d1066843946ae12d426487627282b0f"
+    },
+    {
+      "entryId": "ve-b876d32",
+      "senseId": "kaikki:51d3a81920e8bf36e8",
+      "variantId": "dictionary-example:194f726ad9b84817d28b2c65bc9ae1df12f41f82413fb660437f1024c301a29e"
+    },
+    {
+      "entryId": "ve-b876d32",
+      "senseId": "kaikki:635f61bc401a3ea1d5",
+      "variantId": "dictionary-example:bc4a72106fbd1c38ca9146abf9756bb15a651cf0952a200a0b6557c8c9dcfc68"
+    },
+    {
+      "entryId": "ve-7c6f3cc2",
+      "senseId": "kaikki:28fcb3530f5cfabc22",
+      "variantId": "dictionary-example:b7ed6aad89cff5b4589695ab32b91973250df988541ec007798dcd64652356d4"
+    },
+    {
+      "entryId": "ve-7c6f3cc2",
+      "senseId": "kaikki:2fee28f3ab4265aa3e",
+      "variantId": "dictionary-example:957282475642c02bae2342b9ec1ef0db9b429df378786184f20e03dc4926e06c"
+    },
+    {
+      "entryId": "ve-7c6f3cc2",
+      "senseId": "kaikki:72a470130153d024d0",
+      "variantId": "dictionary-example:2804c36f5e455ca33dc36327b1a5a1f4aeaccd1c1911eadb1f206b9d43062124"
+    },
+    {
+      "entryId": "ve-a594bd3",
+      "senseId": "kaikki:6069d4912a904da415",
+      "variantId": "dictionary-example:02f9f881209a98a5630c434adbefaae2ca157a5ae2163a81cc64eaee6d9e34c6"
+    },
+    {
+      "entryId": "ve-a594bd3",
+      "senseId": "kaikki:9dc1523c25d8caf564",
+      "variantId": "dictionary-example:d7dd92a9116c145dab6231b5e622c24de8c121f3334ef8fa06363328653e033d"
+    },
+    {
+      "entryId": "ve-a594bd3",
+      "senseId": "kaikki:c3a8b66542ce4252da",
+      "variantId": "dictionary-example:2d31f36e3d5c67297b5db0efb3ebd46681ae7cfa072f0356428120b0712a30a3"
+    },
+    {
+      "entryId": "ve-7c6f1bd2",
+      "senseId": "kaikki:0a919dad4070382cbf",
+      "variantId": "dictionary-example:54c25a41e8dff2da456f152c33f9a8c912ee419ddeb169accafad09276f2e5ce"
+    },
+    {
+      "entryId": "ve-7c6f1bd2",
+      "senseId": "kaikki:37771bda698a230ab5",
+      "variantId": "dictionary-example:35867494abff7878620a01ef9bec759c402d113e19e4c93c525bd6b1509a17ac"
+    },
+    {
+      "entryId": "ve-7c6f1bd2",
+      "senseId": "kaikki:412f9443829b095fa0",
+      "variantId": "dictionary-example:eb19b6732308b6802f90bb3b4186113b6b382c0dcc2b2465b2bc27e10ead218e"
+    },
+    {
+      "entryId": "ve-7c6f1ccb",
+      "senseId": "kaikki:0aad4fdf42ec649b04",
+      "variantId": "dictionary-example:51ab95fe2fae3af321edc2401f4dda75d330722e77ac64bbb512cb79a77be10c"
+    },
+    {
+      "entryId": "ve-7c6f1ccb",
+      "senseId": "kaikki:0d3e314f88f0477e07",
+      "variantId": "dictionary-example:cd66e3f0ec894488bbc003b1fea995d2f4009453ea947dff432c53cda37db130"
+    },
+    {
+      "entryId": "ve-7c6fbb70",
+      "senseId": "kaikki:269334a3fa77942b85",
+      "variantId": "dictionary-example:e1482f8288cbf5df2717379cc80b44c111bd92ac9a0c3360c890d86191b52929"
+    },
+    {
+      "entryId": "ve-7c6fbb70",
+      "senseId": "kaikki:3aaba21b4a63a88ae1",
+      "variantId": "dictionary-example:4bd9446494eb9de6b878a248c1651dddb3735b39d88d9e676cc43102033ed225"
+    },
+    {
+      "entryId": "ve-7c75f3b4",
+      "senseId": "kaikki:0fa74126756d871da3",
+      "variantId": "dictionary-example:01b39f4f1def8b3ec056c47ae69e3028fbaca0f7987491e9297878b582dbc854"
+    },
+    {
+      "entryId": "ve-7c75f3b4",
+      "senseId": "kaikki:29f1aaed30b49d485c",
+      "variantId": "dictionary-example:9adb231b9ca929cab050ed430d14839f4b02ab06a5fefb72398ff74bd1f5583c"
+    },
+    {
+      "entryId": "ve-7c75f3b4",
+      "senseId": "kaikki:5d69eb21345617dec6",
+      "variantId": "dictionary-example:59a79da25e919935c1d324bbc76af1a07dc3a3e4d9b480476f28cbeeeeeb8599"
+    },
+    {
+      "entryId": "ve-b2596a2",
+      "senseId": "kaikki:78667224211535f6f9",
+      "variantId": "dictionary-example:1c25ada352bf9e30a032e035e5f5212194cb64c98eb42c3f1cb8cd6869e39c43"
+    },
+    {
+      "entryId": "ve-b2596a2",
+      "senseId": "kaikki:b1ad522411fddacb32",
+      "variantId": "dictionary-example:0a7c6a5a989f523c7d4bdae68cdca39b4d9e53905506b57daabad891f93e58d6"
+    },
+    {
+      "entryId": "ve-b2596a2",
+      "senseId": "kaikki:c7b5fca0b56e7a0ccd",
+      "variantId": "dictionary-example:9600bf7de0ab6c55630ec3c9af6b2341773481ce9c5b310cb6f9b1f324cb1dd7"
+    },
+    {
+      "entryId": "ve-7c757d80",
+      "senseId": "kaikki:2827051cd28ae7b02c",
+      "variantId": "dictionary-example:22c57a36c7c424b0fe8d37c7dccf6e255a444e847babc678e57755a7f223de80"
+    },
+    {
+      "entryId": "ve-7c757d80",
+      "senseId": "kaikki:2843722fb5eed59df7",
+      "variantId": "dictionary-example:96fefa3f0d7727e8f29a80c867fa173fd75a7a258046adc8b60f907abd55179b"
+    },
+    {
+      "entryId": "ve-7c757d80",
+      "senseId": "kaikki:35dd523e48f0db8050",
+      "variantId": "dictionary-example:cd653450c2ffc611660660fce9f18efa9568d38be412da2d37515aaae7a3adbf"
+    },
+    {
+      "entryId": "ve-52686ab7",
+      "senseId": "kaikki:2a79a86a95231e89fa",
+      "variantId": "dictionary-example:6f584d63034512bf381a39af66624d07fab059a4951ef2bf2b459a45141594b3"
+    },
+    {
+      "entryId": "ve-52686ab7",
+      "senseId": "kaikki:3d2a02eedf504a4cdd",
+      "variantId": "dictionary-example:7a92d473a9ad246a3c90146f1e0a2d7d55b8d24f3710d4007b810403e8a27b5b"
+    },
+    {
+      "entryId": "ve-52686ab7",
+      "senseId": "kaikki:8675537d915c7a5ddf",
+      "variantId": "dictionary-example:756fa1c63bf5bd321a59fadd1045c047e70e1245eb948f3c5db468386035e760"
+    },
+    {
+      "entryId": "ve-7e985a8f",
+      "senseId": "kaikki:1bb94f297b94cf6482",
+      "variantId": "dictionary-example:6bc35b44e58e6ea17d7908931a105f8b3804ba8c0910cbe63a7d654bec45802a"
+    },
+    {
+      "entryId": "ve-7e985a8f",
+      "senseId": "kaikki:1f2ec0d9fccf9d24c1",
+      "variantId": "dictionary-example:0de7cb63cd73f4863c1a47db0aa8257cb6e825102c3bb1813954baf39c245a23"
+    },
+    {
+      "entryId": "ve-7e985a8f",
+      "senseId": "kaikki:2d304142d6b953708d",
+      "variantId": "dictionary-example:9b78abd2e99afacb50f5f1dcc8563a9dae24830eff7a263fc7e7ebd74c04867d"
+    },
+    {
+      "entryId": "ve-7c792a97",
+      "senseId": "kaikki:0a1763c5406dafd937",
+      "variantId": "dictionary-example:221f7ace73697d0ee2fe1d76a7f21cd0233a4b29b2f634e553c1d21e673879c7"
+    },
+    {
+      "entryId": "ve-7c792a97",
+      "senseId": "kaikki:1ad093af58109e8b4d",
+      "variantId": "dictionary-example:8e4e74343e33921d82f1df654337087cfa159762cc03e10a4b4352ab75a62c06"
+    },
+    {
+      "entryId": "ve-7c792a97",
+      "senseId": "kaikki:25d824d46670765bb2",
+      "variantId": "dictionary-example:13baba03786d80fb8b4170d9fde588512c33cbb5cd5d7850855e13dff97ecb66"
+    },
+    {
+      "entryId": "ve-b9925e7",
+      "senseId": "kaikki:00254addfa86b1a792",
+      "variantId": "dictionary-example:fa049a4b924f50d042a2122c2e4d84bc8f768cb3d7299b5d3bacd4af1eea9eef"
+    },
+    {
+      "entryId": "ve-b9925e7",
+      "senseId": "kaikki:0ad078f8480d5b335b",
+      "variantId": "dictionary-example:dc63b8f1d89fe8a6f79df80357fd625ae83dbf1a3b0651d9bac0bd9581397722"
+    },
+    {
+      "entryId": "ve-b9925e7",
+      "senseId": "kaikki:10141a15de70a09594",
+      "variantId": "dictionary-example:e1fb0d76909f88d2ca1cf2aa3e1f44938092ca88683feb110e44d6273e2bde56"
+    },
+    {
+      "entryId": "ve-b87896c",
+      "senseId": "kaikki:148a169cfe40905ca5",
+      "variantId": "dictionary-example:a256bdb5bdb1d24ff047b441e92dee595eaeca282ce2c29603e3f39c05b88645"
+    },
+    {
+      "entryId": "ve-b87896c",
+      "senseId": "kaikki:3d4339831116955a69",
+      "variantId": "dictionary-example:96aaa9c23cb2ff624ea0889638122c5b7dff89e503cd0ff15a0f9aaf64aabd77"
+    },
+    {
+      "entryId": "ve-80ac4b15",
+      "senseId": "kaikki:008d8793c7f466a067",
+      "variantId": "dictionary-example:647469f9913e231f5f3c560f6e4ed93c631c449a1b61e59a674e075ae8bde7c6"
+    },
+    {
+      "entryId": "ve-80ac4b15",
+      "senseId": "kaikki:2f402e4629e74b9f68",
+      "variantId": "dictionary-example:2e1cc799f4922fb7904f916bf1bf2413a532c7f7e2481e645d57d5aa38f3c7f9"
+    },
+    {
+      "entryId": "ve-80ac4b15",
+      "senseId": "kaikki:5f51e9d3ff1010c677",
+      "variantId": "dictionary-example:3f641c2522abd2d0a8613518ee457da2caf38a099f2ed6f330a268e845f2cca3"
+    },
+    {
+      "entryId": "ve-95087598",
+      "senseId": "kaikki:038d6d8a4f5a46afd9",
+      "variantId": "dictionary-example:c5a4665f2d97fc59bdc4f21333866c568bec4512b51d2cae1c203b3cda0fcacf"
+    },
+    {
+      "entryId": "ve-95087598",
+      "senseId": "kaikki:1380abc3a05969e216",
+      "variantId": "dictionary-example:b42e836f30289000d932cc0e6a454ec6c6076f3ba6b66c0f13956327390e306a"
+    },
+    {
+      "entryId": "ve-95087598",
+      "senseId": "kaikki:43446a6399b624198f",
+      "variantId": "dictionary-example:1e354f91661b73c4200013842489f43259b6c36e3ecdda9a6c5a542426f4ee8c"
+    },
+    {
+      "entryId": "ve-b878f27",
+      "senseId": "kaikki:13bf39f881c38766b4",
+      "variantId": "dictionary-example:10ddab9efaea074c454fb195e6004c72f5397b717708d0053b11092d94b1e06b"
+    },
+    {
+      "entryId": "ve-b878f27",
+      "senseId": "kaikki:1c5ca6417b9a09c045",
+      "variantId": "dictionary-example:585c65dba0aa64bc2e80721046016b46f2a123ecf4faadf74c7d9047b373b07b"
+    },
+    {
+      "entryId": "ve-b878f27",
+      "senseId": "kaikki:26b05f733881faf524",
+      "variantId": "dictionary-example:2b0910895b7ed30802c3352d59b03c9acf641d9f81025f4f4f2e87500b8a98d7"
+    },
+    {
+      "entryId": "ve-baefa97",
+      "senseId": "kaikki:47757569d067683dd0",
+      "variantId": "dictionary-example:6f3ffd34b8ddaed7e73e3e7f50aa2c9b96393fd2c665cf74a6f7f82bb94a013c"
+    },
+    {
+      "entryId": "ve-baefa97",
+      "senseId": "kaikki:571b8518568aa0e862",
+      "variantId": "dictionary-example:61da8bc8178988b234bba92bc5b8af2bd03014c0dea312e7d6c44e634921dfcc"
+    },
+    {
+      "entryId": "ve-baefa97",
+      "senseId": "kaikki:7316e8e58ed6555e92",
+      "variantId": "dictionary-example:ffdc2a5256de63bb5fb4ec3745336cd764b5430daacd905234c8000909581243"
+    },
+    {
+      "entryId": "ve-7c79aa86",
+      "senseId": "kaikki:58d09968bbe1197f82",
+      "variantId": "dictionary-example:2434b1f8c5cdaef387587933f68faed9fa095cda42fe4cf90ebff4e788227932"
+    },
+    {
+      "entryId": "ve-7c79a87e",
+      "senseId": "kaikki:3c5d17cf61101b549d",
+      "variantId": "dictionary-example:783164dfdab403d19886cb09578f3e33bbbdd9b4c791086b639d1b47b42fda3d"
+    },
+    {
+      "entryId": "ve-7c79a87e",
+      "senseId": "kaikki:4e03af1813c1385cb3",
+      "variantId": "dictionary-example:03e5c0dae6ce38b453a997e44362d8e1a1cd64048577299866048f62cf23a4ec"
+    },
+    {
+      "entryId": "ve-b9fef09",
+      "senseId": "kaikki:14b77320c268d1bcbd",
+      "variantId": "dictionary-example:1f565c1327bb7403dccd60e82c3f449645386c7461c2d43dcc1a649601d6f608"
+    },
+    {
+      "entryId": "ve-b9fef09",
+      "senseId": "kaikki:bf569d874db49b557b",
+      "variantId": "dictionary-example:ffd33a7651d73050f00c4c72e41ef99723c16fd603d88df8663ae0b108594c27"
+    },
+    {
+      "entryId": "ve-7c793657",
+      "senseId": "kaikki:0a3933a4360143d4ed",
+      "variantId": "dictionary-example:d96c5999778ad1b519265465c5ed7ed3251306c598c48a1f287b36fba492407a"
+    },
+    {
+      "entryId": "ve-7c793657",
+      "senseId": "kaikki:115afb7c8f902e2604",
+      "variantId": "dictionary-example:8ca91167c76dd36f7979814d84ad6859ab47d7b0e7b5279c1ef519533aeb5760"
+    },
+    {
+      "entryId": "ve-73a0cae7",
+      "senseId": "kaikki:11603bb541e6d54b9b",
+      "variantId": "dictionary-example:45bf1679caecf38d2ff587590524c09067b91db7ff04bab793981c059fa5d847"
+    },
+    {
+      "entryId": "ve-73a0cae7",
+      "senseId": "kaikki:2c6c8f885e6d5a9e07",
+      "variantId": "dictionary-example:e16aeec2b061a9600c16356255b574d24344d9288e8e38eefbb1fe89fd1597b9"
+    },
+    {
+      "entryId": "ve-73a0cae7",
+      "senseId": "kaikki:2feecf485896717b3b",
+      "variantId": "dictionary-example:5ac8cb20db7813ceedb0a26b7a428f7170c43d6c83f51c7daa5ffe0748b92d37"
+    },
+    {
+      "entryId": "ve-73a0cae7",
+      "senseId": "kaikki:64827599ee777d9078",
+      "variantId": "dictionary-example:22e83be28c6de622dbc77b1dcc8f2798a6de25e7f63e95910f971bd1498fb895"
+    },
+    {
+      "entryId": "ve-ba00a1a",
+      "senseId": "kaikki:9e7101f1bc8cf8855e",
+      "variantId": "dictionary-example:2c9cbc73834d120393aec055fe7ad4e84daa24c68efe23c310c83736eee0db19"
+    },
+    {
+      "entryId": "ve-7c73a13e",
+      "senseId": "kaikki:2a2edeb990ff208d8d",
+      "variantId": "dictionary-example:f043982066a59b8bc1c124cd0441a8c40cdccfc8640a8f976a0ad3d3930bcc13"
+    },
+    {
+      "entryId": "ve-7c73af33",
+      "senseId": "kaikki:2e85befd2914426d25",
+      "variantId": "dictionary-example:c81c7ffbfb677aa8ba90f659854baa345389bdd4fb0420131433d9f3f14b9b74"
+    },
+    {
+      "entryId": "ve-7c73af33",
+      "senseId": "kaikki:33423bd254bc5a3ed9",
+      "variantId": "dictionary-example:6330f6e34b957f1c40575000404fe211f7237387fc066e2d4baf7dd30916198a"
+    },
+    {
+      "entryId": "ve-b87632e",
+      "senseId": "kaikki:30ed7c26b190b2b94e",
+      "variantId": "dictionary-example:827fe12564592e63e9b35ba0b97296a90256b836981eea9c82279ac4fe8d2fc1"
+    },
+    {
+      "entryId": "ve-b87632e",
+      "senseId": "kaikki:4ae2ce6a6a1aa3d34a",
+      "variantId": "dictionary-example:a70ec15bc48911098c8dc1841f12eab12ec93ab7b8a4803138f807ff9587dd6a"
+    },
+    {
+      "entryId": "ve-aece580",
+      "senseId": "kaikki:2cdf32c6e241717542",
+      "variantId": "dictionary-example:cebf39b863a890e54d31abe762eb0b967c34e5a9a69c76593d40ae71c00f2344"
+    },
+    {
+      "entryId": "ve-aece580",
+      "senseId": "kaikki:d39e593be5762bfca6",
+      "variantId": "dictionary-example:3b00fec60842f17d3cc0eee7a136507a61435177732b5bb279cda8e38b077f6c"
+    },
+    {
+      "entryId": "ve-aece580",
+      "senseId": "kaikki:dd892aa6c91066de1c",
+      "variantId": "dictionary-example:da03c70a7366270e134378cf4014f343fc547f91e753fbe59b133facbd9e6558"
+    },
+    {
+      "entryId": "ve-add43aa",
+      "senseId": "kaikki:5d27cdad7fb82a4bd2",
+      "variantId": "dictionary-example:21b208d6d62a3c1d02b28818e640696d70e2fb67a6bcdcd6ccbf328fc1fbea5f"
+    },
+    {
+      "entryId": "ve-add43aa",
+      "senseId": "kaikki:7c51f1ee0fa45c2d59",
+      "variantId": "dictionary-example:01fddb0a903f80e259ff4b9acd84aa4fa659b1f2eff1a4d66b9c54ec741c35bd"
+    },
+    {
+      "entryId": "ve-1fc79fee",
+      "senseId": "kaikki:055b6054889bb40b14",
+      "variantId": "dictionary-example:ee0255dc88fae066eed505ab539778f45bcedbdcd10ff54612667903bab2d170"
+    },
+    {
+      "entryId": "ve-1fc79fee",
+      "senseId": "kaikki:2f9f6c3a228009ea05",
+      "variantId": "dictionary-example:af20cd54714ad016ac43ec0d1cbddf888f822625b4de5340c7cff89e94e9e551"
+    },
+    {
+      "entryId": "ve-1fc79fee",
+      "senseId": "kaikki:3f3914a2724b12a3c7",
+      "variantId": "dictionary-example:5bddb247a09a1a6f088a6c470670a177005feff0f435c66fbae965bced197673"
+    },
+    {
+      "entryId": "ve-add5573",
+      "senseId": "kaikki:b15657a53def79a200",
+      "variantId": "dictionary-example:e6d0aa12b026168e4778271f66484fe51f74d9584a1d9707a38106c288ee2e54"
+    },
+    {
+      "entryId": "ve-7c736f58",
+      "senseId": "kaikki:1104e4ea559375ae3a",
+      "variantId": "dictionary-example:8da5833f4e2096bb5aa22de8fdb1190f80c40f7f4db9fd012442f63b6d11c840"
+    },
+    {
+      "entryId": "ve-7c736f58",
+      "senseId": "kaikki:2506cf5d8e4aad44f0",
+      "variantId": "dictionary-example:e66f96ebc741370c65fe0318ca34928fc23dbd3adff13ebaf442cac09c134b46"
+    },
+    {
+      "entryId": "ve-7c737f9d",
+      "senseId": "kaikki:06c6f142a6eafc1b38",
+      "variantId": "dictionary-example:b3b37a9efe803655db726c0f3e421812f7e75323eef0c4e771dd5d642cf4978c"
+    },
+    {
+      "entryId": "ve-7c737f9d",
+      "senseId": "kaikki:0e0f752aac99c5d91e",
+      "variantId": "dictionary-example:0da55cba953c282beb4780c18573db178b5a2d724a2512b282f25d16c6f55610"
+    },
+    {
+      "entryId": "ve-7c737f9d",
+      "senseId": "kaikki:294c6655d3dccc23f2",
+      "variantId": "dictionary-example:541d46d3afdfb8077375db855357196ed4d4f8542180d66ecf667866e1b1ca64"
+    },
+    {
+      "entryId": "ve-7c7756f4",
+      "senseId": "kaikki:30039cba29f289bc2a",
+      "variantId": "dictionary-example:428be05b569344a8733949be4084f05a0ed70fc59645202ab399d7931ccce3b2"
+    },
+    {
+      "entryId": "ve-b877eaa",
+      "senseId": "kaikki:5d94dfe05fe4ecda06",
+      "variantId": "dictionary-example:c9b198917682c3fc06b48fbe9c38fce553e112a1df8a2123395123fa9ea73b90"
+    },
+    {
+      "entryId": "ve-b877eaa",
+      "senseId": "kaikki:97f436a72efa85e1e2",
+      "variantId": "dictionary-example:dc5c953d85c48b1c5ec6713cf17b3013731ffba5d4f2d934d1ea12481a2dff29"
+    },
+    {
+      "entryId": "ve-7c7777fa",
+      "senseId": "kaikki:a48052709a70ce548b",
+      "variantId": "dictionary-example:1c1746048f346f11afed3b4ed94890b5e2ef20f0c05c91c8948ff67cdb304ae9"
+    },
+    {
+      "entryId": "ve-7c7777fa",
+      "senseId": "kaikki:d07457cfd7dbc59136",
+      "variantId": "dictionary-example:8c96f429787214376af60cc9af74723a25d2aa6f42244ce8f1ef3b41eaa88696"
+    },
+    {
+      "entryId": "ve-7c777631",
+      "senseId": "kaikki:17dee0c3eceef6f446",
+      "variantId": "dictionary-example:b7d2fca9a9925eb87a25c2a91439b7513905d4265ddb20e5837c39ea641ee3c8"
+    },
+    {
+      "entryId": "ve-7c778e24",
+      "senseId": "kaikki:8a2fa88bd57e236671",
+      "variantId": "dictionary-example:edc991832f24d6129b76cae6c951a11ce954b28f1820fe2a51ab8eeb3c7c7c41"
+    },
+    {
+      "entryId": "ve-7c778e24",
+      "senseId": "kaikki:90ef839d91abb273c4",
+      "variantId": "dictionary-example:0030fe2c45ea10aafc6e6da860fd1d5f1d6fa72267f6862ae13d85ce06781d31"
+    },
+    {
+      "entryId": "ve-7c778e24",
+      "senseId": "kaikki:957019d93aa311c3c0",
+      "variantId": "dictionary-example:e5552ccfe4fbd3e545ce8a5db632d52ad2f6b703d314e093f4d4190d48d38b78"
+    },
+    {
+      "entryId": "ve-b56a898",
+      "senseId": "kaikki:91b26439f625ed379d",
+      "variantId": "dictionary-example:d680dcb27a7ff3a4390f45b07df0806b60fce1253c9aec08ad7b98521b991b37"
+    },
+    {
+      "entryId": "ve-b56a898",
+      "senseId": "kaikki:db7be64de7e85ee75d",
+      "variantId": "dictionary-example:93b43f1b7aba2cdf867a22a0a26d7d80e7190c652057e6abb1afc7ecea9a69b6"
+    }
+  ]
+}

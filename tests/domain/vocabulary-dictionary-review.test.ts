@@ -18,6 +18,19 @@ const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'
 const entry = catalog.entries.find((e: VocabularyEntry) => e.term === 'bank') as VocabularyEntry;
 const raw = JSON.parse(readFileSync(`public/dictionary/${index.bank}`, 'utf8')).senses.find((s: VocabularySense) => s.id === 'kaikki:c130710755a265600e') as VocabularySense;
 
+test('the dictionary example pilot supplements only the reviewed source identities', () => {
+  const rows = corrections.filter(row => 'variantId' in row && row.variantId?.startsWith('dictionary-example:'));
+  expect(rows).toHaveLength(238);
+  for (const row of rows) {
+    const source = row.originalSense as VocabularySense;
+    const resolved = supplementVocabularySense(row.entryId, source, [source], hasVocabularySenseEdits);
+    expect(resolved).toMatchObject({ id: row.senseId, definition: source.definition, pos: source.pos, example: row.example });
+    expect(supplementVocabularySense(row.entryId, source, [source], hasVocabularySenseEdits, { kind: 'default' })).toEqual(source);
+    const personal = { ...source, example: 'An example I wrote for this sense.' };
+    expect(supplementVocabularySense(row.entryId, personal, [source], hasVocabularySenseEdits, { kind: 'dictionary-source' }, source)).toEqual(personal);
+  }
+});
+
 test('the clarified pattern choices upgrade an untouched saved task while preserving a custom exercise', () => {
   const row = previousPatternTask.restoreCorrections[0];
   const previous = { ...row.originalSense, definition: row.definition, example: row.example, usage: row.usage, collocations: row.collocations, distinctions: row.distinctions, distinctionTask: row.distinctionTask, synonyms: row.synonyms, antonyms: row.antonyms, wordFamily: row.wordFamily, register: row.register } as VocabularySense;

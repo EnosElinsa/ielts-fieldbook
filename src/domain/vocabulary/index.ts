@@ -112,7 +112,8 @@ export function addVocabularyItem(state: Partial<VocabularyStore>, input: Partia
     if (raw.distinctionTask && english(raw.distinctionTask.prompt) && english(raw.distinctionTask.answer)) sense.distinctionTask = { prompt: english(raw.distinctionTask.prompt), answer: english(raw.distinctionTask.answer), options: englishList(raw.distinctionTask.options), explanation: english(raw.distinctionTask.explanation) };
     if (raw.wordFamily) sense.wordFamily = englishList(raw.wordFamily);
     if (raw.register) sense.register = english(raw.register);
-    if (raw.editorial) sense.editorial = { source: english(raw.editorial.source), license: english(raw.editorial.license), attribution: english(raw.editorial.attribution) };
+    if (raw.editorial) sense.editorial = { source: english(raw.editorial.source), license: english(raw.editorial.license), attribution: english(raw.editorial.attribution),
+      ...(raw.editorial.sourceUrl && raw.editorial.example ? {sourceUrl: english(raw.editorial.sourceUrl), example: english(raw.editorial.example)} : {}) };
   });
   if (input.pronunciation && !Array.isArray(input.pronunciation)) item.pronunciation = { ipa: english(input.pronunciation.ipa), uk: english(input.pronunciation.uk), us: english(input.pronunciation.us) };
   return { item, duplicate, invalid: false };

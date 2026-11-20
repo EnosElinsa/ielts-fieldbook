@@ -564,6 +564,23 @@ test.each([
   expect(screen.queryByRole('link', {name:'View wordbook meaning'})).not.toBeInTheDocument();
 });
 
+test('a reused dictionary example displays its exact licensed source revision', async () => {
+  const entry = release.entries.find((row: any) => row.term === 'side');
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.side}`, 'utf8'));
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok:true, json:async()=>url.endsWith('index.json') ? { side:index.side } : dictionary })));
+  mount(`/vocabulary/entry/${entry.id}?senseId=kaikki%3A4e03af1813c1385cb3&exactMeaning=true`);
+  expect(await screen.findByText('I generally sleep on my side.')).toBeVisible();
+  const credits = screen.getByText('Sources & licenses').closest('details')!;
+  await userEvent.click(within(credits).getByText('Sources & licenses'));
+  const example = within(credits).getByText('English Wiktionary example').closest('li')!;
+  expect(within(example).getByText('English Wiktionary contributors')).toBeVisible();
+  expect(within(example).getByRole('link', { name: 'CC-BY-SA-4.0' })).toBeVisible();
+  expect(within(example).getByRole('link', { name: 'Example source revision' })).toHaveAttribute(
+    'href', 'https://en.wiktionary.org/w/index.php?title=side&oldid=95717590',
+  );
+});
+
 test('identical grid definitions are shown once without changing the selected sense identity', () => {
   const grid = structuredClone(release.entries.find((entry: any) => entry.term === 'grid'));
   const member = release.memberships.find((row: any) => row.entryId === grid.id && row.bookId === book);

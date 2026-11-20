@@ -4,6 +4,7 @@ import { sanitizeVocabularyMediaUrl } from "../../domain/vocabulary/media";
 import { VOCABULARY_CONTEXT_VERSION } from "../../domain/vocabulary/context";
 export type VocabularyCredit = MediaCredit & {
   source: string;
+  sourceLabel?: string;
 };
 const licenses: Record<string, string> = {
   "CC-BY-4.0": "https://creativecommons.org/licenses/by/4.0/",
@@ -25,15 +26,16 @@ export function senseCredits(senses: VocabularySense[]): VocabularyCredit[] {
           },
         ]
       : []),
-    ...(sense.editorial
+    ...(sense.editorial && (sense.editorial.example === undefined || sense.editorial.example === sense.example)
       ? [
           {
             source: sense.editorial.source,
             author: sense.editorial.attribution,
             license: sense.editorial.license,
             licenseUrl: licenses[sense.editorial.license] || "",
-            sourceUrl: "",
-            changes: `Definition, example and learning notes edited in supplement ${VOCABULARY_CONTEXT_VERSION}.`,
+            sourceUrl: sanitizeVocabularyMediaUrl(sense.editorial.sourceUrl || "") || "",
+            ...(sense.editorial.example && {sourceLabel: "Example source revision"}),
+            changes: sense.editorial.example ? "" : `Definition, example and learning notes edited in supplement ${VOCABULARY_CONTEXT_VERSION}.`,
           },
         ]
       : []),
@@ -52,6 +54,7 @@ export function VocabularyCredits({
           credit.author,
           credit.license,
           credit.changes,
+          credit.sourceLabel,
         ]),
         credit,
       ]),
@@ -81,7 +84,7 @@ export function VocabularyCredits({
                   {" "}
                   ·{" "}
                   <a href={credit.sourceUrl} target="_blank" rel="noreferrer">
-                    Source
+                    {credit.sourceLabel || "Source"}
                   </a>
                 </>
               ) : null}

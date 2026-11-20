@@ -143,7 +143,17 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
     if(!entry || value.sourceHash!==null && (!original || hash(original)!==value.sourceHash || hash(row.originalSense)!==value.sourceHash) || value.sourceView && (!original || value.sourceHash===null)) errors.push('Variant source binding mismatch: '+row.entryId+'/'+row.senseId+'/'+row.variantId);
     const before=(Array.isArray(row.previousSenses)?row.previousSenses:[]).find(sense=>fingerprint(project(sense))===fingerprint(value.beforeContent) && fingerprint(sense)===value.beforeDisplayHash);
     if(!before) errors.push('Variant before display fingerprint mismatch: '+row.variantId);
-    else if(fingerprint({...Object.fromEntries(Object.entries(before).filter(([field])=>!editable.includes(field))),...value.afterContent,editorial:{source:'Fieldbook core content review',license:'CC-BY-4.0',attribution:'Fieldbook editorial contributors'}})!==value.afterDisplayHash) errors.push('Variant after display fingerprint mismatch: '+row.variantId);
+    else if(fingerprint({...Object.fromEntries(Object.entries(before).filter(([field])=>!editable.includes(field))),...value.afterContent,editorial:row.exampleCredit ?? {source:'Fieldbook core content review',license:'CC-BY-4.0',attribution:'Fieldbook editorial contributors'}})!==value.afterDisplayHash) errors.push('Variant after display fingerprint mismatch: '+row.variantId);
+    if (row.exampleCredit !== undefined) {
+      const credit = row.exampleCredit;
+      let revision;
+      try { revision = new URL(credit?.sourceUrl); } catch { /* Report below. */ }
+      if (!credit || !value.sourceView || credit.example !== row.example || !credit.example?.trim() || credit.source !== 'English Wiktionary example' ||
+          credit.license !== original?.license || credit.attribution !== original?.attribution || !credit.license || !credit.attribution ||
+          revision?.origin !== 'https://en.wiktionary.org' || revision.pathname !== '/w/index.php' || revision.username || revision.password ||
+          revision.searchParams.get('title') !== dictionarySourcePage(original, dictionaryTerm(entry)) || !/^[1-9]\d*$/.test(revision.searchParams.get('oldid') || '') ||
+          credit.sourceUrl !== row.referenceUrl) errors.push('Invalid source example credit: '+row.variantId);
+    }
   }
   const variantLearningPriorities={general:0,specialist:0,historical:0,'proper-name':0};
   const learningPriorities = { general: 0, specialist: 0, historical: 0, 'proper-name': 0 };
