@@ -1088,10 +1088,13 @@ test('a perfect listening result needs no review save until notes actually chang
   await user.click(within(document.getElementById('exam-review-q1')!).getByText('Add review notes'));
   await user.type(screen.getByRole('textbox', { name: 'Evidence for question 1' }), 'My optional note');
   expect(save).toBeEnabled();
-  expect(save.parentElement).toContainElement(screen.getByText('Unsaved review notes'));
+  const status = within(save.parentElement!).getByRole('status');
+  expect(status).toHaveTextContent('Unsaved review notes');
   await user.click(save);
   await waitFor(() => expect(save).toBeDisabled());
-  expect(save.parentElement).toContainElement(screen.getByText('Review notes saved'));
+  expect(save).toHaveAccessibleName('Review notes saved');
+  expect(status).toHaveClass('sr-only');
+  expect(status).toHaveTextContent('Review notes saved');
   expect(mocks.fb.toast).not.toHaveBeenCalled();
 });
 
@@ -1132,7 +1135,7 @@ test('a bound listening mistake review explains its requirement and saves reason
     await user.click(screen.getByRole('option', { name: 'Wrong detail' }));
   }
   await user.click(screen.getByRole('button', { name: 'Save review notes' }));
-  await waitFor(() => expect(screen.getByRole('button', { name: 'Save review notes' })).toBeDisabled());
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Review notes saved' })).toBeDisabled());
   expect(screen.getByText('Review task complete.')).toBeInTheDocument();
   expect(mocks.fb.state.examAttempts[0]).toMatchObject({ planId: 'mistake-review', score: 0, errorReasons: { q1: 'Wrong detail', q2: 'Wrong detail' } });
   expect(mocks.fb.state.examAttempts[0].evidence).toEqual({ q1: '', q2: '' });
@@ -1149,7 +1152,7 @@ test('review filters wrong answers, keeps local notes across navigation and clea
   await user.click(screen.getByRole('button', { name: 'All answers (2)' }));
   expect(screen.getByRole('heading', { name: 'The garden opened in _____.' })).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: 'Save review notes' }));
-  await waitFor(() => expect(screen.getByRole('button', { name: 'Save review notes' })).toHaveClass('btn line'));
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Review notes saved' })).toHaveClass('btn line'));
   expect(mocks.fb.state.examAttempts[0].evidence.q2).toBe('Fresh proof');
   expect(mocks.recovery.has('one:review:saved')).toBe(false);
 });

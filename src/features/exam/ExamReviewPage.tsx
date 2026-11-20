@@ -5,7 +5,7 @@ import { SelectField } from '../../components/SelectField';
 import { PageLoadingState, StateMessage } from '../../components/AsyncState';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Link, useNavigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
-import { RotateCcw, Bookmark, Headphones, Save, LocateFixed } from 'lucide-react';
+import { RotateCcw, Bookmark, Check, Headphones, Save, LocateFixed } from 'lucide-react';
 import type { ExamAttempt, ExamQuestion, ExamSkill } from '../../domain/exam/types';
 import { gradeQuestion } from '../../domain/exam';
 import { useFieldbook } from '../../context/FieldbookContext';
@@ -117,6 +117,7 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
     ? visibleRows.find(question => question.id === evidenceId) || visibleRows[0] : undefined;
   const dirty = Object.keys(annotations).length > 0;
   const hasSavedNotes = savedThisVisit || [attempt.evidence, attempt.keywords, attempt.errorReasons].some(fields => Object.values(fields || {}).some(value => value.trim()));
+  const showSaved = !dirty && !saving && hasSavedNotes;
   const reviewPlanId = params.get('planId') || attempt.planId;
   const reviewPlan = ((fb.state.plans || []) as Record<string, any>[]).find(plan => plan.kind === `${skill}-review` && ['in_progress', 'completed'].includes(plan.status) && plan.id === reviewPlanId && (plan.target?.attemptId || plan.attemptId) === attempt.id);
   const completionDescription = reviewPlan?.status === 'completed' ? 'Review task complete.' : reviewPlan ? skill === 'reading' ? 'Save passage evidence and an error reason for each wrong answer.' : 'Save an error reason for each wrong answer.' : '';
@@ -160,9 +161,14 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
 </div>
 </div>
 <div className="exam-review-actions">
-<div className="exam-review-summary"><p>{wrong.length ? `${wrong.length} ${hasPooled ? 'answer group' : 'question'}${wrong.length === 1 ? '' : 's'} to review` : 'All answers correct'}</p>{completionDescription && <p>{completionDescription}</p>}</div><div className="exam-review-save"><button className={dirty ? 'btn primary' : 'btn line'} disabled={saving || !dirty} onClick={() => void saveNotes()}>
-<Save size={15} />{saving ? 'Saving…' : 'Save review notes'}</button>
-<span role="status">{saving ? 'Saving notes…' : dirty ? 'Unsaved review notes' : hasSavedNotes ? 'Review notes saved' : ''}</span></div>
+<div className="exam-review-summary"><p>{wrong.length ? `${wrong.length} ${hasPooled ? 'answer group' : 'question'}${wrong.length === 1 ? '' : 's'} to review` : 'All answers correct'}</p>{completionDescription && <p>{completionDescription}</p>}</div>
+<div className="exam-review-save">
+  <button type="button" className={dirty ? 'btn primary' : 'btn line'} data-saved={showSaved || undefined} disabled={saving || !dirty} onClick={() => void saveNotes()}>
+    {showSaved ? <Check size={15} aria-hidden="true" /> : <Save size={15} aria-hidden="true" />}
+    {saving ? 'Saving…' : showSaved ? 'Review notes saved' : 'Save review notes'}
+  </button>
+  <span className="sr-only" role="status">{saving ? '' : dirty ? 'Unsaved review notes' : savedThisVisit ? 'Review notes saved' : ''}</span>
+</div>
 </div>{saveError && <p role="alert" className="exam-notice">{saveError}</p>}<div className="exam-review-tools">{wrong.length > 0 && <details className="exam-review-retry"><summary>Optional practice</summary><p>Answer only the missed questions with fresh evidence. This is a new practice attempt; your original score stays unchanged.</p><button className="btn line" disabled={dirty || saving} onClick={retry}><RotateCcw size={15} />Retry wrong answers</button>{dirty && <p>Save your notes before starting.</p>}</details>}{attempt.sectionIds.length > 1 && <nav className="exam-part-tabs" aria-label="Result Parts">{attempt.sectionIds.map((id, i) => { const section = catalog.sections.find(row => row.id === id); return <button type="button" key={id} aria-pressed={sectionId === id} className={sectionId === id ? 'active' : ''} onClick={() => setSelectedSection(id)}>{skill === 'reading' ? 'Passage' : 'Part'} {section?.part || i + 1}</button>; })}</nav>}{catalog.sections.some(row => row.id === sectionId) && <details className="exam-review-vocabulary"><summary>Vocabulary from this part</summary><PartVocabularyPanel key={`${owner}:${attempt.id}:${sectionId}`} catalog={catalog} attempt={attempt} sectionId={sectionId} /></details>}<ExamSessionHistory sessions={sessions.filter(row => row.mode === attempt.mode && row.sourceId === attempt.sourceId)} currentId={attempt.id} /></div>
 <div className="exam-review-filter">
 <div className="exam-part-tabs" role="group" aria-label="Answers to review">
