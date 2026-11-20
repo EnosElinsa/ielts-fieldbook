@@ -10,6 +10,7 @@ import type { VocabularySessionRecord } from "../../domain/vocabulary/session";
 import { dateLabel, modeLabel, resultName } from "./practicePresentation";
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
+import { vocabularyPartOfSpeech } from '../../domain/vocabulary/dictionaryPresentation';
 import type { VocabularyEntry, VocabularyState } from '../../domain/vocabulary/types';
 import { Pronunciation } from './Pronunciation';
 import { entryUrl, practiceUrl } from './vocabularyNavigation';
@@ -174,6 +175,10 @@ export function VocabularyPracticeResults({ controller, results }: {
               const current = currentRow(row); const currentDefinition = current.resolved?.sense?.definition;
               const changed = Boolean(currentDefinition && currentDefinition !== row.definition);
               const frozen = results.cardSnapshots?.find(card => card.id === row.cardId);
+              const savedSense = frozen?.entry.senses.find(sense => sense.id === row.senseId)
+                || current.raw.senses.find(sense => sense.id === row.senseId);
+              const showsCurrent = results.mode === 'dictation' && Boolean(currentDefinition);
+              const partOfSpeech = vocabularyPartOfSpeech(showsCurrent ? current.resolved?.sense?.pos : savedSense?.pos || current.resolved?.sense?.pos);
               const frozenAudio = frozen?.pronunciation !== undefined && frozen.pronunciation !== 'legacy';
               const audioEntry = frozenAudio ? frozen!.entry : {...current.raw,term:row.term};
               const expected = closestAcceptedAnswer(row.response,row.expectedAnswer,results.cardSnapshots?.find(card => card.id === row.cardId)?.task?.acceptedAnswers);
@@ -187,7 +192,7 @@ export function VocabularyPracticeResults({ controller, results }: {
                     {row.term}
                   </Link>
                   {(wordCounts.get(row.entryId) || 0) > 1 ? <small className="practice-result-meaning">Meaning {meaningNumbers.get(row.cardId)} of {wordCounts.get(row.entryId)}</small> : null}
-                  <small>{results.mode === 'dictation' ? currentDefinition || row.definition : row.definition}</small>
+                  <small>{partOfSpeech && <><span className="practice-definition-pos">{partOfSpeech}</span>{' '}</>}{showsCurrent ? currentDefinition : row.definition}</small>
                   <VocabularyWordbookSources sources={frozen?.sources || current.raw.sources} context={current.context} onNavigate={() => rememberPosition(row.cardId)} />
                   {changed ? <small className="practice-current-reference">{results.mode === 'dictation' ? 'Current learning reference updated; saved grading is unchanged.' : `Current meaning: ${currentDefinition}`}</small> : null}
                   {current.raw ? <Pronunciation compact entry={audioEntry} sense={audioEntry.senses.find(sense=>sense.id===row.senseId) || null} options={{pronunciation:frozen?.pronunciation ?? 'legacy'}} accent={frozenAudio ? results.preferences.accent : controller.preferences.accent}/> : null}

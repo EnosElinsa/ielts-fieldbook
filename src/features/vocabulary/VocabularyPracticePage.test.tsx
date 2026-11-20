@@ -342,6 +342,19 @@ test('historical dictation labels separate meanings of a repeated word without d
   expect(screen.getByRole('heading', { name:'2 of 2 correct' })).toBeInTheDocument();
   expect(fb.current.state.vocabularySessions).toEqual(before);
 });
+
+test('historical session lists the part of speech for the displayed definition', async () => {
+  const [entry] = fb.current.state.vocabulary;
+  const sense = entry.senses[0];
+  fb.current.state.vocabularySessions = [{
+    id:'saved-pos', mode:'dictation', status:'submitted', preferences:{}, filter:{},
+    results:[{ cardId:'card', entryId:entry.id, senseId:sense.id, term:entry.term, response:entry.term, expectedAnswer:entry.term, result:'success', definition:sense.definition, example:'' }],
+    entryIds:[entry.id], summary:{total:1,correct:1,incorrect:0,pending:0}, startedAt:'2025-01-01', submittedAt:'2025-01-01',
+  }];
+  mount('?sessionId=saved-pos');
+  const definition = await screen.findByText(sense.definition);
+  expect(definition).toHaveTextContent(/adjective/i);
+});
 test('dictation uses the frozen selected reading and exposes deliberate audio recovery without grading it',async()=>{
   const raw=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8')).entries.find((e:any)=>e.term==='record');
   const row=JSON.parse(readFileSync('src/domain/vocabulary/readinessCorrections.json','utf8')).find((r:any)=>r.senseId==='kaikki:5386f9871d2cf75669');

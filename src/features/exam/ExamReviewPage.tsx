@@ -24,6 +24,7 @@ import { QuestionEvidence } from './QuestionEvidence';
 import { readingQuestionPrompt } from './ReadingPassage';
 import { questionReviewContent } from './questionReview';
 import { ExamAcceptedAnswer } from './ExamAcceptedAnswer';
+import { restoredStimulusImages } from './stimulusDocument';
 
 /** Note fields stay folded away until a learner adds notes; saved notes keep them open. */
 function ReviewNotes({ hasNotes, children }: { hasNotes: boolean; children: ReactNode }) {
@@ -63,7 +64,16 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
   const [savedThisVisit, setSavedThisVisit] = useState(false);
   useEffect(() => { generation.current += 1; setAnnotations(readExamRecovery<Record<string, { evidence: string; keywords: string; reason: string }>>(owner, recoveryKey) || {}); setSaving(false); setSaveError(''); setSavedThisVisit(false); }, [owner, attemptId, recoveryKey]);
   const { catalog, loading, error, reload } = useExamCatalog(skill, undefined, attempt?.sectionIds || []);
-  const questions = useMemo(() => attempt ? (attempt.questionSnapshot || catalog.questions.filter(question => attempt.questionTypes ? !!attempt.questionTypes[question.id] : attempt.sectionIds.includes(question.sectionId))).slice().sort((a, b) => a.number - b.number) : [], [catalog.questions, attempt]);
+  const questions = useMemo(() => {
+    if (!attempt) return [];
+    const rows = attempt.questionSnapshot
+      ? attempt.questionSnapshot.map(question => {
+        const stimulusHtml = restoredStimulusImages(question.stimulusHtml, catalog.questions.find(row => row.id === question.id)?.stimulusHtml);
+        return stimulusHtml === (question.stimulusHtml || '') ? question : { ...question, stimulusHtml };
+      })
+      : catalog.questions.filter(question => attempt.questionTypes ? !!attempt.questionTypes[question.id] : attempt.sectionIds.includes(question.sectionId));
+    return rows.sort((a, b) => a.number - b.number);
+  }, [catalog.questions, attempt]);
   const restoredAnchor = useRef('');
   useEffect(() => {
     const anchorKey = `${identity}:${location.hash}`;

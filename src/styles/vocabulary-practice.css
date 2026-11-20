@@ -755,6 +755,11 @@
   max-inline-size: 65ch;
   line-height: 1.6;
 }
+.practice-definition-pos {
+  margin-inline-end: .55em;
+  font-style: italic;
+  font-weight: 650;
+}
 .practice-results tbody td > a {
   display: inline-flex;
   align-items: center;

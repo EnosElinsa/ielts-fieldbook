@@ -30,3 +30,16 @@ export function stimulusDocument(html: string): Document {
   }
   return parsed;
 }
+/** Restore missing image links in an older question without changing its saved text. */
+export function restoredStimulusImages(saved?: string, current?: string): string {
+  if (!saved || !current || !/<img\b(?![^>]*\bsrc="[^"]+")[^>]*>/i.test(saved)) return saved || '';
+  const omitImageLinks = (html: string) => html.replace(/(<img\b[^>]*?) src="exam-asset:[^"]+"/gi, '$1');
+  if (omitImageLinks(saved) !== omitImageLinks(current)) return saved;
+  // Only fill empty links. Existing links remain part of the saved reference.
+  const currentImages = [...current.matchAll(/<img\b[^>]*>/gi)];
+  let index = 0;
+  return saved.replace(/<img\b[^>]*>/gi, tag => {
+    const replacement = currentImages[index++][0];
+    return /\bsrc="[^"]+"/i.test(tag) ? tag : replacement;
+  });
+}

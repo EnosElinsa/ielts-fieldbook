@@ -4,6 +4,7 @@ export const hash = value => createHash('sha256').update(typeof value === 'strin
 const allowed = new Set(['p','div','section','span','strong','b','em','i','u','br','table','thead','tbody','tr','td','th','ul','ol','li','h1','h2','h3','h4','sup','sub','img']);
 const escape = text => String(text).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const fragment = value => parseFragment(String(value || '').replaceAll('\\"','"'));
+const sourceImageUrl = /^https:\/\/(?:(?:resource|uimg|img1|static)\.gximg\.cn\/|tz-oss1\.oss-cn-qingdao\.aliyuncs\.com\/exam\/)/;
 export function htmlText(value) {
   function read(node) {
     if(node.nodeName==='#text')return node.value;
@@ -16,9 +17,10 @@ export function safeHtml(value) {
   function render(node) {
     if(node.nodeName==='#text')return escape(node.value).replace(/#####-(\d+)-#####/g,'<strong>[$1 ____]</strong>').replace(/\^+_[\s\S]*?_\^+/g,'');
     if(['script','style','iframe','object','embed','form'].includes(node.tagName))return '';
+    if (node.tagName === 'img' && ['width', 'height'].every(name => node.attrs?.some(attr => attr.name === name && attr.value === '0'))) return '<span></span>';
     const inner=(node.childNodes||[]).map(render).join('');
     if(!allowed.has(node.tagName))return inner;
-    const attrs=(node.attrs||[]).filter(a=>['colspan','rowspan','alt'].includes(a.name)||a.name==='src'&&/^https:\/\/(?:resource|uimg|img1|static)\.gximg\.cn\//.test(a.value)).map(a=>` ${a.name}="${escape(a.value)}"`).join('');
+    const attrs=(node.attrs||[]).filter(a=>['colspan','rowspan','alt'].includes(a.name)||node.tagName==='img'&&a.name==='src'&&sourceImageUrl.test(a.value)).map(a=>` ${a.name}="${escape(a.value)}"`).join('');
     return `<${node.tagName}${attrs}>${inner}${['br','img'].includes(node.tagName)?'':`</${node.tagName}>`}`;
   }
   return render(fragment(value));
@@ -126,6 +128,7 @@ export function validateCatalog(catalog) {
     if(questionIds.has(q.id))errors.push(`Duplicate question ${q.id}`);questionIds.add(q.id);
     if(!sectionIds.has(q.sectionId))errors.push(`Missing section for ${q.id}`);
     if(!q.answer||(Array.isArray(q.answer)&&!q.answer.length))errors.push(`Missing answer ${q.id}`);
+    if (/<img\b(?![^>]*\bsrc="[^"]+")/i.test(q.stimulusHtml || '')) errors.push(`Missing source image ${q.id}`);
     if(q.options?.length&&!(Array.isArray(q.answer)?q.answer:[q.answer]).every(a=>q.options.includes(a)))errors.push(`Answer outside options ${q.id}`);
     if(q.maxWords!==undefined&&q.type!=='multiple') {
       const permitsNumber=/\b(?:AND\s*\/\s*OR|AND|OR)\s+A\s+NUMBER\b/i.test(q.instructions||'');

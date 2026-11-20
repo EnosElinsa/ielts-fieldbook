@@ -1,8 +1,10 @@
 /* Keep listening notes readable in both layouts without changing source blocks. */
-.exam-workspace-listening .exam-question-workspace:has(.exam-single-panel) {
-  max-inline-size: 1000px;
-  margin-inline: auto;
+.exam-workspace-listening .exam-single-panel .exam-question { padding-block: 16px; }
+.exam-workspace-listening .exam-question .exam-prompt {
+  font: inherit;
+  font-weight: 650;
 }
+.exam-workspace-listening .exam-group-map .exam-stimulus { padding-block-end: 0; }
 .exam-workspace-listening .exam-stimulus {
   font-size: 16px;
   line-height: 1.85;

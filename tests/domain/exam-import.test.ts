@@ -33,6 +33,13 @@ test('reading answer-sheet boxes never turn word gaps into a leaked choice list'
  const result=normalizeSourceSection({job:{...job,classify:2},detail:{0:{content:'A source paragraph.',pages:[{desc:'Complete the summary. Choose ONE WORD ONLY from the passage. Write your answers in boxes 21-24 on your answer sheet.',sections:[{type:'15',questions:[{id:'q',sort:'21',title:'21',option_ids:'a',option_names:'birds'}],options:[{id:'a',title:'birds'}]}]}]}},report:{data:{}}});
  expect(result.questions[0]).toMatchObject({answer:'birds',options:undefined,maxWords:1});
 });
+test('the source image CDN is retained for private mirroring while unrelated origins are excluded', () => {
+ const source = 'https://tz-oss1.oss-cn-qingdao.aliyuncs.com/exam/test-map.jpg';
+ const result = normalizeSourceSection({job,detail:{0:{pages:[{desc:'Label the plan below.',content:`<img src="${source}"><img src="https://tz-oss1.oss-cn-qingdao.aliyuncs.com/other/unknown.jpg">`,sections:[{type:'10',questions:[{id:'q',sort:'1',title:'1',option_names:'ferry'}]}]}]}}});
+ expect(result.questions[0].stimulusHtml).toContain(`src="${source}"`);
+ expect(result.questions[0].stimulusHtml).not.toContain('unknown.jpg');
+ expect(validateCatalog(result).errors).toContain('Missing source image question:q');
+});
 test('unknown source types and malformed catalogs fail closed',()=>{
  expect(()=>normalizeSourceSection({job,detail:{0:{pages:[{sections:[{type:'999',questions:[{id:'q',sort:'1',option_names:'x'}]}]}]}}})).toThrow(/type/i);
  expect(validateCatalog({schemaVersion:1,papers:[],sections:[],questions:[{id:'q',sectionId:'missing'}],passages:[],assets:[]}).errors.length).toBeGreaterThan(0);

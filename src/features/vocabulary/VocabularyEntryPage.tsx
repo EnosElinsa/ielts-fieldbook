@@ -30,6 +30,7 @@ import type {
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { catalogVocabularySenses, hasVocabularySenseEdits, publicVocabularyExample } from "../../domain/vocabulary/content";
 import { resolveVocabularyLearningContext } from "../../domain/vocabulary/context";
+import { currentGroupLearningRef } from "../../domain/vocabulary/learningMeaningUpdate";
 import {
   aggregateMediaCredits,
   getVocabularyIllustration,
@@ -43,7 +44,7 @@ import { getVocabularyMastery } from "../../domain/vocabulary/mastery";
 import { getVocabularyNextPractice } from '../../domain/vocabulary/nextPractice';
 import { VocabularyNextPractice } from './VocabularyNextPractice';
 import { vocabularyLearningTimeline } from "../../domain/vocabulary/timeline";
-import { vocabularySensePresentation } from "../../domain/vocabulary/dictionaryPresentation";
+import { vocabularyPartOfSpeech, vocabularySensePresentation } from "../../domain/vocabulary/dictionaryPresentation";
 import { isVocabularyMeaningGroup, isVocabularyPracticeReference, isVocabularySpellingReference, isVocabularyUsageReference, vocabularyReadinessBaselines } from '../../domain/vocabulary/readiness';
 import { VocabularySenseContent } from "./VocabularySenseContent";
 import { VocabularySourceLinks } from './VocabularySourceLinks';
@@ -90,7 +91,8 @@ export function VocabularyEntryPage() {
   const navigate = useNavigate();
   const bookId = params.get("bookId") || undefined;
   const unitId = params.get("unitId") || undefined;
-  const requestedSense = params.get("senseId") || undefined;
+  const linkedSense = params.get("senseId") || undefined;
+  const {to: returnTo} = useVocabularyReturn();
   const { status, retry } = useVocabularyCatalog(
     fb.loadVocabularyCatalog,
     bookId,
@@ -152,6 +154,11 @@ export function VocabularyEntryPage() {
       )),
   );
   const context = validGroup ? { bookId, unitId } : {};
+  const requestedSense = useMemo(() => {
+    if (!raw || !linkedSense || !validGroup || !bookId || !unitId || params.get('exactMeaning') === 'true' ||
+        !/^\/vocabulary\/wordbooks\/[^/]+\/groups\/[^/?]+\/learn(?=[?#]|$)/.test(returnTo)) return linkedSense;
+    return currentGroupLearningRef(state, {bookId, unitId}, {entryId:raw.id, senseId:linkedSense}).senseId;
+  }, [raw, linkedSense, validGroup, bookId, unitId, returnTo, params, state, fb.vocabularyCatalogRevision]);
   const baseResolved = useMemo(
     () =>
       raw
@@ -185,7 +192,6 @@ export function VocabularyEntryPage() {
     ? resolveVocabularyLearningContext({ ...raw, senses: [...raw.senses, selectedDictionarySense] }, { ...context, senseId: requestedSense })
     : baseResolved,
   [baseResolved, raw, needsLookup, selectedDictionarySense, bookId, unitId, validGroup, requestedSense]);
-  const {to: returnTo} = useVocabularyReturn();
   const returnLabel = location.state?.vocabularyReturn ? vocabularyReturnLabel(returnTo) :
     returnTo === "/vocabulary"
       ? "My vocabulary"
@@ -400,11 +406,11 @@ export function VocabularyEntryPage() {
       >
         <div className="vocabulary-sense-head">
           <h2>
-            {isVocabularyMeaningGroup(entry!.id, sense) ? "Meaning group" : isVocabularyUsageReference(entry!.id, sense) ? "Usage reference" : main && alternateGroupMeaning ? personalNotes ? "Your selected meaning" : "Selected dictionary meaning" : main ? "Meaning" : sense.pos || "Other meaning"}
+            {isVocabularyMeaningGroup(entry!.id, sense) ? "Meaning group" : isVocabularyUsageReference(entry!.id, sense) ? "Usage reference" : "Meaning"}
           </h2>
         </div>
-        {sense.pos ? (
-          <span className="vocabulary-part-of-speech">{sense.pos}</span>
+        {vocabularyPartOfSpeech(sense.pos) ? (
+          <span className="vocabulary-part-of-speech">{vocabularyPartOfSpeech(sense.pos)}</span>
         ) : null}
         <VocabularySenseContent entryId={entry?.id} sense={sense} learningExample={entry ? publicVocabularyExample(entry.id, sense) : undefined} showLearningNotes={!personalNotes && Boolean(sense.editorial || main && resolved?.contentReviewed)} />
         {personalNotes &&
@@ -616,26 +622,22 @@ export function VocabularyEntryPage() {
               {primary ? (
                 <>
                   {renderSense(primary, true)}
-                  {alternateGroupMeaning && groupMeaning ? <details className="vocabulary-group-recommendation">
-                    <summary>Group meaning</summary>
-                    <div>
-                    <VocabularySenseContent entryId={entry?.id} sense={groupMeaning} />
+                  {alternateGroupMeaning ? (
                     <Link className="btn line vocabulary-group-meaning-link" to={`${location.pathname}?${groupMeaningParams}`}>
-                      View group meaning <ArrowRight size={14} aria-hidden="true" />
+                      View wordbook meaning <ArrowRight size={14} aria-hidden="true" />
                     </Link>
-                    </div>
-                  </details> : null}
+                  ) : null}
                   {visualPresentation === 'supplementary' && resolved ? <VocabularyLearningVisual resolved={resolved} /> : null}
-                  <div className="vocabulary-meaning-meta">
-                    {personalMeaning || resolved?.curriculumCurrent || resolved?.reviewed ? <details className="vocabulary-context-notice">
+                  {personalMeaning || resolved?.curriculumCurrent || resolved?.reviewed ? <div className="vocabulary-meaning-meta">
+                    <details className="vocabulary-context-notice">
                       <summary>Meaning source</summary>
                       <p>{personalMeaning ? 'Your saved meaning and notes.' : resolved?.curriculumCurrent ? resolved.curriculum?.explanation : resolved?.reviewed ? 'Selected from the listening passage. The example is written for practice.' : 'A dictionary meaning of this word.'}</p>
                       {personalMeaning && groupMeaning?.id === primary.id && !resolved?.curriculumCurrent ? <div className="vocabulary-group-comparison">
                         <h4>Group meaning</h4>
                         <VocabularySenseContent entryId={entry?.id} sense={groupMeaning} />
                       </div> : null}
-                    </details> : null}
-                  </div>
+                    </details>
+                  </div> : null}
                 </>
               ) : (
                 <section className="vocabulary-sense">
@@ -660,8 +662,9 @@ export function VocabularyEntryPage() {
               <ul>{others.map(sense => {
                 const next = new URLSearchParams(params);
                 next.set('senseId', sense.id);
+                next.set('exactMeaning', 'true');
                 return <li key={sense.id}><Link to={`${location.pathname}?${next}`}>
-                  <span><small>{({adj:'Adjective',adv:'Adverb',name:'Proper name'} as Record<string,string>)[sense.pos || ''] || label(sense.pos || 'Meaning')}</small>{vocabularySensePresentation(sense).definition}</span>
+                  <span><small>{label(vocabularyPartOfSpeech(sense.pos) || 'Meaning')}</small>{vocabularySensePresentation(sense).definition}</span>
                   <ArrowRight size={16} aria-hidden="true" />
                 </Link></li>;
               })}</ul>

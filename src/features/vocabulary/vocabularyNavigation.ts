@@ -71,6 +71,7 @@ export function entryUrl(
     bookId?: string;
     unitId?: string;
     senseId?: string;
+    exactMeaning?: 'true';
   },
   returnTo: string,
 ) {

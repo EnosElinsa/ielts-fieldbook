@@ -1,5 +1,11 @@
 import type { VocabularySense } from "./types";
 
+export function vocabularyPartOfSpeech(pos?: string): string {
+  const value = pos?.trim().toLowerCase() || '';
+  return ({ adj: 'adjective', adv: 'adverb', name: 'proper name', prep: 'preposition', conj: 'conjunction' } as Record<string, string>)[value]
+    || (['word', 'other', 'unknown'].includes(value) ? '' : value);
+}
+
 /** Display-only cleanup: source material and learner notes are never rewritten. */
 export function dictionaryDisplayText(value: string | undefined): string {
   return (value || "")
