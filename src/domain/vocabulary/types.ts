@@ -17,7 +17,7 @@ export type VocabularySense = {
   synonyms?: string[]; antonyms?: string[]; distinctions?: string[]; source?: string; license?: string; attribution?: string; sourceUrl?: string;
   distinctionTask?: { prompt: string; options: string[]; answer: string; explanation: string };
   wordFamily?: string[]; register?: string;
-  editorial?: { source: string; license: string; attribution: string };
+  editorial?: { source: string; license: string; attribution: string; sourceUrl?: string; example?: string };
 };
 export type VocabularyEntry = {
   id: string; term: string; category: 'word' | 'phrase' | 'sentence'; meaning: string; example: string;

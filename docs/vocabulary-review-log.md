@@ -9,6 +9,12 @@ The pronunciation continuation adds47 exact bindings for permit,reject,suspect,p
 
 The October 17 review follows dictionary selection through saving, practice and return navigation. The existing system already preserves separate meanings, dated evidence in four skills, FSRS scheduling, source attribution, personal edits and frozen sessions. Improvements should make the next useful learning action clearer without weakening those guarantees.
 
+## Supplementary dictionary examples — 2026-11-20
+
+The first 300 reviewed records contribute 205 examples and 33 reading notes to exact dictionary senses. The two original Wiktionary examples, for the side of the torso and a store of supplies, carry their version links and CC-BY-SA-4.0 attribution. Reading notes appear with their label and are excluded from sentence gaps. The local review package records 19 source headings or cross-references and 43 cases awaiting further evidence.
+
+The displayed dictionary gap is 15,247 senses. The separate full-review ledger has 9,551 records, and all 9,117 current learning variants still display an example or reading note. Each addition carries its original source fingerprint, the exact preceding content and a reversal entry for the previous public resource URLs.
+
 ## Unified delivery — 2026-10-20
 
 The approved [unified implementation ledger](unified-learning-implementation.md) replaces the previous two plans and retains every requirement, its evidence, dependencies and remaining work. It covers Planning, six-group Settings, planned and self-directed Review, account/session IndexedDB drafts, input responsiveness, atomic conflict guards, scoped loading and dictionary review. A new feedback item never removes an older requirement.

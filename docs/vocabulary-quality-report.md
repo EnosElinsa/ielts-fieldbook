@@ -2,7 +2,7 @@
 
 Generated with `npm run vocabulary:quality` from checked-in public data and the actual learning-context and exercise resolvers. No account data or external services are read.
 
-Source snapshot: `5e2948d73505edbe73d181cb5b9aa5762828d1f4b03c577858ceb3d0b286091b`.
+Source snapshot: `91b0663d61817f039dd5ac2b74653b9eb867242568faff6bff75648c09d333b2`.
 
 ## Coverage
 
@@ -35,15 +35,15 @@ Learning variants preserve exact content and provenance. A word can have a defau
 | --- | --- | ---: | ---: | ---: |
 | missing-definition | content-review | 0 | 0 | 0 |
 | missing-pos | content-review | 0 | 0 | 0 |
-| missing-example | content-review | 0 | 0 | 15485 |
+| missing-example | content-review | 0 | 0 | 15247 |
 | source-markup | content-review | 0 | 0 | 1 |
-| relation-example | content-review | 0 | 0 | 213 |
+| relation-example | content-review | 0 | 0 | 207 |
 | reference-example | content-review | 0 | 0 | 18 |
 | truncated-example | content-review | 0 | 0 | 2063 |
 | archaic-example | content-review | 0 | 0 | 1341 |
 | example-fragment-signal | content-review | 0 | 283 | 3636 |
-| missing-collocations | enrichment | 5466 | 5466 | 43098 |
-| missing-distinctions | enrichment | 7496 | 7496 | 43272 |
+| missing-collocations | enrichment | 5466 | 5466 | 43065 |
+| missing-distinctions | enrichment | 7496 | 7496 | 43239 |
 | duplicate-gloss | content-review | 0 | 0 | 24 |
 | no-cloze-task | enrichment | 1281 | 1281 | Not scanned |
 | no-distinction-task | enrichment | 8720 | 8720 | Not scanned |

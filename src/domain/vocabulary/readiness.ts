@@ -79,7 +79,7 @@ export function applyVocabularyContentVariant(entryId:string,publicSense:Vocabul
  // Replace the whole editable snapshot: absent optional teaching stays absent.
  const result={...learnerSense,...publicSense};
  for(const field of vocabularyEditableSenseFields) delete (result as unknown as Record<string,unknown>)[field];
- return markVocabularyContentScope({...result,...row.contentVariant.afterContent,editorial},scope);
+ return markVocabularyContentScope({...result,...row.contentVariant.afterContent,editorial:row.exampleCredit || editorial},scope);
 }
 
 const learningPriorities = new Set<VocabularyLearningPriority>(['general', 'specialist', 'historical', 'proper-name']);
