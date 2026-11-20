@@ -837,6 +837,19 @@ function showResults(results: any) {
   );
 }
 
+test('a legacy result keeps its saved teaching without borrowing the current part of speech', () => {
+  const record = resultsFixture();
+  const raw = structuredClone(core());
+  raw.senses[0].pos = 'verb';
+  raw.senses[0].definition = 'To remove the centre.';
+  raw.senses[0].example = 'Core the apple.';
+  mocks.fb.state.vocabulary = [raw];
+  showResults(record);
+  const historical = screen.getByText('An old definition.');
+  expect(historical).not.toHaveTextContent(/verb/i);
+  expect(screen.getByText('Old example.')).toBeVisible();
+});
+
 test('result playback uses the frozen reading and original accent after the current word has changed',async()=>{
   const correction=JSON.parse(readFileSync('src/domain/vocabulary/readinessCorrections.json','utf8')).find((row:any)=>row.senseId==='kaikki:5386f9871d2cf75669');
   const raw=structuredClone(release.entries.find((e:any)=>e.term==='record'));

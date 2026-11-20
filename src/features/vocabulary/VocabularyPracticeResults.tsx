@@ -70,8 +70,7 @@ export function VocabularyPracticeResults({ controller, results }: {
     const valid = Boolean(raw && bookId && unitId && (VOCABULARY_CATALOG.memberships.some(member => member.entryId === row.entryId && member.bookId === bookId && member.unitId === unitId) || raw.sources.some(source => source.bookId === bookId && source.unitId === unitId)));
     const context = valid ? {bookId,unitId} : {};
     const exact = resolveVocabularyLearningContext(raw, {...context, senseId:row.senseId}).sense;
-    const saved = snapshot?.entry.senses.find(sense=>sense.id===row.senseId)
-      || raw.senses.find(sense=>sense.id===row.senseId) || exact;
+    const saved = snapshot?.entry.senses.find(sense=>sense.id===row.senseId);
     const resolved = valid ? resolveVocabularyLearningContext(raw,context).sense : exact;
     return {raw,resolved,saved,context,detail:entryUrl(row.entryId,{...context,senseId:row.senseId,exactMeaning:'true'},resultReturnTo)};
   };
@@ -179,7 +178,7 @@ export function VocabularyPracticeResults({ controller, results }: {
               const savedExample = dictionaryDisplayText(row.example);
               const partOfSpeech = vocabularyPartOfSpeech(current.saved?.pos);
               const learningPos = vocabularyPartOfSpeech(current.resolved?.pos);
-              const changed = learning?.definition && (learning.definition !== savedDefinition || learning.example !== savedExample || learningPos !== partOfSpeech);
+              const changed = learning?.definition && (learning.definition !== savedDefinition || learning.example !== savedExample || Boolean(partOfSpeech && learningPos !== partOfSpeech));
               const frozen = results.cardSnapshots?.find(card => card.id === row.cardId);
               const frozenAudio = frozen?.pronunciation !== undefined && frozen.pronunciation !== 'legacy';
               const audioEntry = frozenAudio ? frozen!.entry : {...current.raw,term:row.term};
@@ -195,7 +194,7 @@ export function VocabularyPracticeResults({ controller, results }: {
                   </Link>
                   {(wordCounts.get(row.entryId) || 0) > 1 ? <small className="practice-result-meaning">Meaning {meaningNumbers.get(row.cardId)} of {wordCounts.get(row.entryId)}</small> : null}
                   <small>{changed && <strong>Meaning in this session · </strong>}{partOfSpeech && <><span className="practice-definition-pos">{partOfSpeech}</span>{' '}</>}{savedDefinition}</small>
-                  {changed && savedExample && <small className="practice-result-context">{savedExample}</small>}
+                  {savedExample && <small className="practice-result-context">{savedExample}</small>}
                   <VocabularyWordbookSources sources={frozen?.sources || current.raw.sources} context={current.context} onNavigate={() => rememberPosition(row.cardId)} />
                   {changed && current.resolved && <details className="practice-current-reference">
                     <summary>Current {current.context.bookId ? 'wordbook meaning' : 'meaning'}</summary>

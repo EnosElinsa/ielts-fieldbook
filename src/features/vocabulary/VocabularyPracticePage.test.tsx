@@ -346,9 +346,12 @@ test('historical dictation labels separate meanings of a repeated word without d
 test('historical session lists the part of speech for the displayed definition', async () => {
   const [entry] = fb.current.state.vocabulary;
   const sense = entry.senses[0];
+  const card = getVocabularyReviewQueue(fb.current.state, { entryId: entry.id, senseId: sense.id, mode: 'dictation', dueOnly: false })[0];
+  const assessedSense = { ...sense, definition: 'Definition as tested.', example: 'Example as tested.' };
   fb.current.state.vocabularySessions = [{
     id:'saved-pos', mode:'dictation', status:'submitted', preferences:{}, filter:{},
-    results:[{ cardId:'card', entryId:entry.id, senseId:sense.id, term:entry.term, response:entry.term, expectedAnswer:entry.term, result:'success', definition:'Definition as tested.', example:'Example as tested.' }],
+    cardSnapshots:[{ ...card, entry:{ ...entry, senses:[assessedSense] } }],
+    results:[{ cardId:card.id, entryId:entry.id, senseId:sense.id, term:entry.term, response:entry.term, expectedAnswer:entry.term, result:'success', definition:assessedSense.definition, example:assessedSense.example }],
     entryIds:[entry.id], summary:{total:1,correct:1,incorrect:0,pending:0}, startedAt:'2025-01-01', submittedAt:'2025-01-01',
   }];
   mount('?sessionId=saved-pos');
