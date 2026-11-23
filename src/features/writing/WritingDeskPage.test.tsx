@@ -27,7 +27,7 @@ vi.mock('../../context/FieldbookContext', () => ({
     };
     return {
       state,
-      saveStatus: saveState.status,
+      draftSaveStatus: () => saveState.status || 'saved',
       stateRef: { current: state },
       selectedQuestion: selected,
       currentDeskMode: () => saveState.mode,
@@ -250,11 +250,18 @@ test('focus mode is reversible and the panel width preference survives remountin
   await userEvent.click(screen.getByRole('button', { name: 'Enter focus mode' }));
   fireEvent.keyDown(window, { key: 'Escape' });
   expect(view.container.querySelector('.focus-workspace')).not.toBeInTheDocument();
-  fireEvent.change(screen.getByRole('slider', { name: 'Prompt panel width' }), { target: { value: '48' } });
-  expect(localStorage.getItem('fieldbook.writingSplit')).toBe('48');
+  const layout = screen.getByRole('button', { name: 'Wider prompt' });
+  expect(layout).toHaveAttribute('aria-pressed', 'false');
+  await userEvent.click(layout);
+  expect(layout).toHaveAttribute('aria-pressed', 'true');
+  expect(localStorage.getItem('fieldbook.writingSplit')).toBe('50');
+  expect(persistNow).not.toHaveBeenCalled();
   view.unmount();
   render(<WritingDeskPage />);
-  expect(screen.getByRole('slider', { name: 'Prompt panel width' })).toHaveValue('48');
+  const restored = screen.getByRole('button', { name: 'Wider prompt' });
+  expect(restored).toHaveAttribute('aria-pressed', 'true');
+  await userEvent.click(restored);
+  expect(restored).toHaveAttribute('aria-pressed', 'false');
 });
 
 test('Save draft toasts only after the account write succeeds', async () => {

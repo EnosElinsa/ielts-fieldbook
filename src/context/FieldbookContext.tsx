@@ -1835,11 +1835,13 @@ function useFieldbookValue() {
     else if(skill==='speaking') {startSpeakingPractice(plan.questionId,target.part,plan.storyId); const nextPrompt = target.prompts?.find(prompt => !(plan.completedPromptKeys || []).includes(prompt.promptKey)) || target.prompts?.[0]; setQuestionIndex(Math.max(0, target.prompts?.indexOf(nextPrompt) || 0)); setSpeakingDraft(plan.questionId,{...nextPrompt,practiceMode:target.mode,targetErrorIds:plan.targetErrorIds||[]});}
     else {
       const existing = normalizeDraft(stateRef.current.drafts[plan.questionId]);
-      setWritingDraft(plan.questionId, existing.text, { practiceMode: target.mode, targetErrorIds: plan.targetErrorIds || [] });
+      if (setWritingDraft(plan.questionId, existing.text, { practiceMode: target.mode, targetErrorIds: plan.targetErrorIds || [] })) {
+        scheduleDraftPersist();
+      }
       chooseQuestion(plan.questionId, { planned: true });
     }
     return true;
-  },[legacyStartPlan,ensureAccountModule,ensureQuestionBank,loadVocabularyCatalog,mutatePlans,navigate,startSpeakingPractice,chooseQuestion,setSpeakingDraft,setWritingDraft,accountLocation]);
+  },[legacyStartPlan,ensureAccountModule,ensureQuestionBank,loadVocabularyCatalog,mutatePlans,navigate,startSpeakingPractice,chooseQuestion,setSpeakingDraft,setWritingDraft,scheduleDraftPersist,accountLocation]);
 
   const saveAttempt = useCallback(
     async (exportForReview: boolean, saveFields: { focus: string; next: string; errors: string }, options?) => {

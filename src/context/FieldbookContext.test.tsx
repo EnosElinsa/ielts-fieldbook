@@ -855,10 +855,14 @@ test('delayed speaking completion cancels scheduled autosave and retains recover
 
 test('starting a targeted plan seeds the chosen draft with its mode and all target errors', async () => {
   mocks.initial.plans = [{ id: 'target-plan', kind: '1', dateKey: '2099-01-01', status: 'pending', questionId: 'q1', deskMode: 'overview', targetErrorIds: ['error-a', 'error-b'] }];
-  await mount();
+  await mount(); vi.useFakeTimers();
   await act(async () => { fieldbook.startPlan('target-plan'); });
   expect(fieldbook.state.drafts.q1).toMatchObject({ text: 'A response that must survive.', practiceMode: 'overview', targetErrorIds: ['error-a', 'error-b'] });
   expect(fieldbook.state.activePlanId).toBe('target-plan');
+  expect(fieldbook.draftSaveStatus('q1')).toBe('pending');
+  await act(async () => { await vi.advanceTimersByTimeAsync(1500); });
+  expect(fieldbook.draftSaveStatus('q1')).toBe('saved');
+  expect(mocks.saveState.mock.lastCall?.[2]).toMatchObject({ collections: ['drafts'] });
 });
 
 test('a newer draft edit survives a delayed completion snapshot', async () => {
