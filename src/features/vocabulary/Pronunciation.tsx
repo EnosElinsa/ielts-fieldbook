@@ -14,6 +14,7 @@ export function playbackMessage(result: VocabularyPlaybackResult): string {
   if (result.reason === 'sense-recording-failed') return `The matching ${result.accent?.toUpperCase()} recording could not play. Retry, or use device voice with an unverified reading.`;
   if (result.fallbackReason?.startsWith('recording-')) return `${result.accent?.toUpperCase() || 'Word'} pronunciation could not play. Try again or choose another accent.`;
   if (result.reason === 'target-voice-unavailable') return `No ${result.accent?.toUpperCase()} voice is available on this device. Choose a matching voice in device settings or explicitly play another recording.`;
+  if (result.reason === 'device-voice-unsupported') return 'Device voice is unavailable in this browser. Try a recording or another browser.';
   if (result.reason === 'device-voice-failed') return `The ${result.accent?.toUpperCase() || 'English'} device voice could not play. Try again or choose another accent.`;
   if (result.reason === 'recording-failed') return 'This recording could not play. Try it again or choose another pronunciation.';
   if (result.reason === 'blocked') return 'Playback was blocked. Press Play again to retry.';
@@ -61,7 +62,8 @@ export function Pronunciation({ entry, sense: selectedSense, accent = 'uk', opti
     const action = deviceOnly ? `device:${requestedAccent}` : recording?.url || (requestedAccent === accent ? 'target' : `accent:${requestedAccent}`);
     const attempt = ++playAttempt.current;
     if (activeAction === action) { player.stop(); setActiveAction(null); setPlayback(null); setMessage('Stopped.'); return; }
-    const token = generation.current; setActiveAction(action); setMessage(''); setPlayback(null); setFailedAccent(undefined);
+    const token = generation.current; setActiveAction(action); setMessage(''); setPlayback(null);
+    if (!recording && !deviceOnly) setFailedAccent(undefined);
     const result = await player.play(entry, { ...options, sense, accent: requestedAccent, recording, deviceOnly: deviceOnly || options.deviceOnly });
     if (token !== generation.current || attempt !== playAttempt.current) return;
     setActiveAction(null); setPlayback(result); setMessage(playbackMessage(result));
@@ -70,9 +72,12 @@ export function Pronunciation({ entry, sense: selectedSense, accent = 'uk', opti
   const visibleMessage = !compact && playback?.ok
     ? `${playback.accent === 'uk' ? 'British' : playback.accent === 'us' ? 'American' : playback.accent === 'other' ? 'Other accent' : 'Unverified accent'} · ${playback.source === 'speech' ? 'Device voice' : 'Recorded pronunciation'}${playback.senseMatch === 'matched' ? ' · matches this meaning' : playback.senseMatch === 'unverified' ? ' · reading unverified' : playback.senseMatch === 'legacy' && readingSensitive ? ' · meaning match not saved' : ''}`
     : message;
-  const recovery = Boolean(playback && !playback.ok && playback.reason !== 'cancelled' || others.some(recording => recording.url === activeAction) || activeAction?.startsWith('device:') || playback?.senseMatch === 'unverified');
-  const alternatives = others.filter(recording => pronunciation.required || recording.url === activeAction ||
-    (recording.accent !== (failedAccent ?? accent) && (!compact || recording.status === 'verified')));
+  const recovery = Boolean(failedAccent || playback && !playback.ok && playback.reason !== 'cancelled' || others.some(recording => recording.url === activeAction) || activeAction?.startsWith('device:') || playback?.senseMatch === 'unverified');
+  const alternatives = others.filter(recording => {
+    if (pronunciation.required || recording.url === activeAction) return true;
+    if (recording.status === 'unknown' && recording.wordformConfirmed === true) return true;
+    return recording.accent !== (failedAccent ?? accent) && (!compact || recording.status === 'verified');
+  });
   const regionalIpa = pronunciation.group?.ipa[accent];
   const ipa = pronunciationIpa(entry, sense, accent, options.pronunciation);
   return <div className={`vocabulary-pronunciation${compact ? ' is-compact' : ''}`}>

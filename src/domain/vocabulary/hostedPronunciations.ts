@@ -1,6 +1,27 @@
 import type { VocabularyRecording } from './media';
 
 export const hostedPronunciations: Partial<Record<string, { term: string; recording: VocabularyRecording }>> = {
+  've-3cd002f2': {
+    term: 'hierarchy',
+    recording: {
+      url: '/vocabulary-media/recordings/hierarchy-us.f908ad9f8e19bf06.mp3',
+      aliases: [
+        'https://upload.wikimedia.org/wikipedia/commons/7/79/En-us-hierarchy.ogg',
+        'https://upload.wikimedia.org/wikipedia/commons/transcoded/7/79/En-us-hierarchy.ogg/En-us-hierarchy.ogg.mp3',
+      ],
+      title: 'File:En-us-hierarchy.ogg',
+      accent: 'us',
+      status: 'verified',
+      availability: 'http-audio',
+      wordformConfirmed: true,
+      sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:En-us-hierarchy.ogg&oldid=1229137074',
+      author: 'DroEsperanto',
+      license: 'Public domain (released by the author)',
+      licenseUrl: 'https://commons.wikimedia.org/w/index.php?title=File:En-us-hierarchy.ogg&oldid=1229137074#Licensing',
+      changes: 'Hosted copy of the Commons MP3 transcode.',
+      reason: 'The author released this recording into the public domain and identified it as American English.',
+    },
+  },
   "ve-45258119": {
     "term": "materialism",
     "recording": {
