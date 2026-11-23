@@ -508,7 +508,7 @@ test('an explicitly selected river meaning displays its diagram and learning not
   const river = JSON.parse(readFileSync(`public/dictionary/${index.bank}`, 'utf8')).senses.find((sense: any) => sense.id === 'kaikki:c130710755a265600e');
   mocks.fb.state.vocabulary = [{ ...bank, senses: [river, ...bank.senses] }];
   mount(`/vocabulary/entry/${bank.id}?senseId=${encodeURIComponent(river.id)}`);
-  expect(screen.getByText('We sat on the bank of the river and watched the boats.')).toBeInTheDocument();
+  expect(screen.getByText((_, node) => node?.matches('blockquote') === true && node.textContent === 'We sat on the bank of the river and watched the boats.')).toBeInTheDocument();
   expect(await screen.findByRole('img', { name: 'bank: Land beside a flowing river' })).toBeInTheDocument();
 });
 
@@ -525,7 +525,7 @@ test('an explicit plant meaning keeps its identity and offers a direct route to 
   const pea = release.entries.find((entry: any) => entry.term === 'pea');
   const origin = '/vocabulary/history?bookId=ielts-vocabulary';
   mount(`/vocabulary/entry/${pea.id}?bookId=${book}&unitId=ielts-vocabulary-chapter-12-group-02&senseId=${pea.senses[0].id}&returnTo=${encodeURIComponent(origin)}`);
-  expect(screen.getByText('The pea plant climbed the garden support.')).toBeInTheDocument();
+  expect(screen.getByText((_, node) => node?.matches('blockquote') === true && node.textContent === 'The pea plant climbed the garden support.')).toBeInTheDocument();
   expect(screen.queryByText('Your selected meaning')).not.toBeInTheDocument();
   expect(screen.queryByRole('img', { name: /Green peas/ })).not.toBeInTheDocument();
   const target = screen.getByRole('link', { name: 'View wordbook meaning' });
@@ -560,7 +560,7 @@ test.each([
   const origin = `/vocabulary/wordbooks/${book}/groups/${unitId}/learn`;
   const params = new URLSearchParams({ bookId:book, unitId, senseId:entry.senses[0].id, returnTo:origin });
   mount(`/vocabulary/entry/${entry.id}?${params}`);
-  expect(screen.getByText(example)).toBeVisible();
+  expect(screen.getByText((_, node) => node?.matches('blockquote') === true && node.textContent === example)).toBeVisible();
   expect(screen.queryByRole('link', {name:'View wordbook meaning'})).not.toBeInTheDocument();
 });
 
@@ -570,7 +570,7 @@ test('a reused dictionary example displays its exact licensed source revision', 
   const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.side}`, 'utf8'));
   vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok:true, json:async()=>url.endsWith('index.json') ? { side:index.side } : dictionary })));
   mount(`/vocabulary/entry/${entry.id}?senseId=kaikki%3A4e03af1813c1385cb3&exactMeaning=true`);
-  expect(await screen.findByText('I generally sleep on my side.')).toBeVisible();
+  expect(await screen.findByText((_, node) => node?.matches('blockquote') === true && node.textContent === 'I generally sleep on my side.')).toBeVisible();
   const credits = screen.getByText('Sources & licenses').closest('details')!;
   await userEvent.click(within(credits).getByText('Sources & licenses'));
   const example = within(credits).getByText('English Wiktionary example').closest('li')!;
@@ -603,7 +603,7 @@ test('an empty personal example can show a separate public learning example for 
   mount(`/vocabulary/entry/${pea.id}?bookId=${book}&unitId=ielts-vocabulary-chapter-12-group-02`);
   const primary = document.querySelector('.vocabulary-primary-meaning')!;
   expect(within(primary as HTMLElement).getByText('Learning example')).toBeInTheDocument();
-  expect(within(primary as HTMLElement).getByText('The pea plant climbed the garden support.')).toBeInTheDocument();
+  expect(within(primary as HTMLElement).getByText((_, node) => node?.matches('blockquote') === true && node.textContent === 'The pea plant climbed the garden support.')).toBeInTheDocument();
   expect(within(screen.getByText('Sources & licenses').closest('details')!).getByText('Fieldbook core content review')).toBeInTheDocument();
   expect(screen.getByText('My garden vocabulary.')).toBeInTheDocument();
   expect(screen.queryByText('Example not available yet')).not.toBeInTheDocument();
@@ -625,7 +625,7 @@ test('a personal changed meaning never borrows an example from a different meani
 test('public dictionary snapshots are not presented as personal original notes', () => {
   const raw=release.entries.find((entry:any)=>entry.term==='supplement');
   mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-03`);
-  expect(screen.getByText('A vitamin supplement can help address a diagnosed deficiency.')).toBeInTheDocument();
+  expect(screen.getByText((_, node) => node?.matches('blockquote') === true && node.textContent === 'A vitamin supplement can help address a diagnosed deficiency.')).toBeInTheDocument();
   expect(screen.queryByText('Original notes')).not.toBeInTheDocument();
   expect(screen.queryByText(/Thesaurus:adjunct/)).not.toBeInTheDocument();
 });

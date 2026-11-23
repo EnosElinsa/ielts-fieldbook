@@ -77,7 +77,7 @@ test('an old unassigned learning link uses the travel meanings in cards, list, d
   mount(`${url}?${query}`);
   await screen.findByRole('heading', { name: 'jet' });
   expect(screen.getByText('An airplane powered by jet engines.')).toBeVisible();
-  expect(screen.getByText('The passenger jet landed safely in heavy rain.')).toBeVisible();
+  expect(screen.getByText((_, node) => node?.matches('.vocabulary-learning-example p') === true && node.textContent === 'The passenger jet landed safely in heavy rain.')).toBeVisible();
   const detail = new URL(screen.getByRole('link', { name: 'Word details' }).getAttribute('href')!, 'https://local.test');
   const expected = entries.map(entry => ({ entryId: entry.id, senseId: resolveVocabularyLearningContext(entry, { bookId, unitId }).sense!.id }));
   expect(detail.searchParams.get('senseId')).toBe(expected[0].senseId);
@@ -139,7 +139,7 @@ test('reopening a travel learning batch with saved assessment history teaches th
   mocks.fb.state.vocabularySessions = [{ id:'saved', planId:'past-travel', status:'submitted', mode:'definition', filter:{}, results:[] }];
   mount(`${url}?planId=past-travel&word=${entries[1].id}`);
   await screen.findByRole('heading', { name:'flight' });
-  expect(screen.getByText('Our flight to London leaves at nine.')).toBeVisible();
+  expect(screen.getByText((_, node) => node?.matches('.vocabulary-learning-example p') === true && node.textContent === 'Our flight to London leaves at nine.')).toBeVisible();
   expect(screen.queryByRole('button', { name:'Update batch meanings' })).not.toBeInTheDocument();
   expect(mocks.fb.state.plans[0].target.cards).toEqual(cards);
 });
@@ -914,7 +914,7 @@ test('paste learning card uses the existing complete reviewed meaning, example a
   const paste=released.entries.find((e:any)=>e.term==='paste');
   mount(`/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-12-group-02/learn?word=${paste.id}`);
   await screen.findByRole('heading',{name:'paste'});
-  expect(screen.getByText('Mix the flour and water into a smooth paste.')).toBeInTheDocument();
+  expect(screen.getByText((_, node) => node?.matches('.vocabulary-learning-example p') === true && node.textContent === 'Mix the flour and water into a smooth paste.')).toBeInTheDocument();
   expect(screen.getByText('tomato paste')).toBeInTheDocument();
   expect(screen.queryByText('A soft moist mixture, in particular:')).not.toBeInTheDocument();
 });
@@ -928,7 +928,7 @@ test('law-group teaching shows useful contrasts and opens practice for the exact
   mount(url);
   await screen.findByRole('heading',{name:'controversy'});
   expect(screen.getByText('Strong public disagreement about an issue.')).toBeVisible();
-  expect(screen.getByText('The proposed policy caused controversy among residents.')).toBeVisible();
+  expect(screen.getByText((_, node) => node?.matches('.vocabulary-learning-example p') === true && node.textContent === 'The proposed policy caused controversy among residents.')).toBeVisible();
   expect(screen.getByRole('heading',{name:'Compare meanings'})).toBeVisible();
   expect(screen.getByText(/A debate is an exchange of opposing arguments/)).toBeVisible();
   const practice=new URL(screen.getByRole('link',{name:'Practise word distinctions'}).getAttribute('href')!,'https://local.test');

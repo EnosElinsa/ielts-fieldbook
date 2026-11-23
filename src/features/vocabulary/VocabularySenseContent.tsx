@@ -2,8 +2,10 @@ import type { VocabularySense } from "../../domain/vocabulary/types";
 import { vocabularySensePresentation } from "../../domain/vocabulary/dictionaryPresentation";
 import { isVocabularyMeaningGroup, isVocabularyReadingNote, isVocabularyUsageReference } from '../../domain/vocabulary/readiness';
 import { VocabularyMeaningNotes } from './VocabularyMeaningNotes';
+import { reviewedExampleForm } from '../../domain/vocabulary/content';
+import { VocabularyExampleText } from './VocabularyExampleText';
 
-export function VocabularySenseContent({ sense, entryId, learningExample, showMissingExample = false, showLearningNotes = false }: { sense: VocabularySense; entryId?: string; learningExample?: { example: string; sense: VocabularySense }; showMissingExample?: boolean; showLearningNotes?: boolean }) {
+export function VocabularySenseContent({ sense, entryId, term, learningExample, showMissingExample = false, showLearningNotes = false }: { sense: VocabularySense; entryId?: string; term?: string; learningExample?: { example: string; sense: VocabularySense }; showMissingExample?: boolean; showLearningNotes?: boolean }) {
   const content = vocabularySensePresentation(sense);
   const meaningGroup = Boolean(entryId && isVocabularyMeaningGroup(entryId, sense));
   const usageReference = Boolean(entryId && isVocabularyUsageReference(entryId, sense));
@@ -12,6 +14,7 @@ export function VocabularySenseContent({ sense, entryId, learningExample, showMi
     learningExample.sense.definition === sense.definition && learningExample.sense.pos === sense.pos ? learningExample : undefined;
   const example = content.example || matchingExample?.example;
   const fallbackReadingNote = Boolean(!content.example && entryId && matchingExample && isVocabularyReadingNote(entryId, matchingExample.sense));
+  const form = entryId && term ? reviewedExampleForm(entryId, term, (content.example ? sense : matchingExample?.sense) ?? sense) : undefined;
   return (
     <>
       <p className="vocabulary-definition">
@@ -19,7 +22,7 @@ export function VocabularySenseContent({ sense, entryId, learningExample, showMi
       </p>
       {example ? <>
         {readingNote || fallbackReadingNote ? <p className="vocabulary-example-label">Reading note</p> : !content.example ? <p className="vocabulary-example-label">Learning example</p> : null}
-        <blockquote>{example}</blockquote>
+        <blockquote><VocabularyExampleText text={example} term={readingNote || fallbackReadingNote ? undefined : term} form={form} /></blockquote>
       </> : showMissingExample ? <p className="vocabulary-muted">A learning example has not been added for this meaning yet.</p> : null}
       {showLearningNotes && sense.collocations?.length ? <div className="vocabulary-detail">
         <h4>{meaningGroup ? 'Examples of grouped uses' : usageReference ? 'Related phrases' : readingNote ? 'Reading cues' : 'Collocations'}</h4><p>{sense.collocations.join(' · ')}</p>

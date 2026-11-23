@@ -118,7 +118,19 @@ reviewed['solely'] = {definition:'Only and not for anything else.',example:'The 
 reviewed['tremendous'] = {definition:'Very great in amount or degree.',example:'The project required tremendous effort.',answers:['enormous'],explanation:'In this context, enormous expresses the meaning of tremendous.'};
 reviewed['unbiased'] = {definition:'Not favouring any particular side.',example:'The panel must provide an unbiased assessment.',answers:['impartial'],explanation:'In this context, impartial expresses the meaning of unbiased.'};
 export function escapePattern(text: string) { return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
-export function concealWord(text: string, answer: string) { return text.replace(new RegExp(`(?<![\\p{L}\\p{N}_])${escapePattern(answer)}(?![\\p{L}\\p{N}_])`, 'giu'), '_____'); }
+export function vocabularyWordPattern(word: string, alternative?: string): RegExp {
+ const forms = alternative ? [word, alternative].sort((a, b) => b.length - a.length) : [word];
+ return new RegExp(`(?<![\\p{L}\\p{N}_])(?:${forms.map(escapePattern).join('|')})(?![\\p{L}\\p{N}_])`, 'giu');
+}
+export function concealWord(text: string, answer: string) { return text.replace(vocabularyWordPattern(answer), '_____'); }
+
+/** A reviewed inflected form belongs to its original word, meaning and sentence. */
+export function reviewedExampleForm(entryId: string, term: string, sense: VocabularySense): string | undefined {
+ if (sense.source === 'Personal note') return;
+ return sentenceGapForms.find(row =>
+  row.entryId === entryId && row.senseId === sense.id && row.term === term.toLowerCase() &&
+  row.definition === sense.definition && row.pos === sense.pos && row.example === sense.example)?.form;
+}
 const editableSenseFields = ['definition', 'example', 'pos', 'collocations', 'usage', 'synonyms', 'antonyms', 'distinctions', 'distinctionTask', 'wordFamily', 'register'] as const;
 const comparableText = (value: unknown) => typeof value === 'string' ? value.trim() : '';
 const comparableList = (value: unknown) => Array.isArray(value) ? [...new Set(value.map(comparableText).filter(text => text && !/\p{Script=Han}/u.test(text)))] : [];
@@ -295,12 +307,10 @@ export function learningTask(entry: VocabularyEntry, sense: VocabularySense, mod
  if (mode === 'cloze') {
   if (isVocabularyReadingNote(entry.id, sense)) return;
   // A form belongs to one reviewed sentence and meaning, never to every use of the headword.
-  const authored = sense.source !== 'Personal note' ? sentenceGapForms.find(row =>
-   row.entryId === entry.id && row.senseId === sense.id && row.term === entry.term.toLowerCase() &&
-   row.definition === sense.definition && row.pos === sense.pos && row.example === sense.example) : undefined;
+  const authored = reviewedExampleForm(entry.id, entry.term, sense);
   if (authored) {
-   const prompt = concealWord(sense.example, authored.form);
-   if (prompt !== sense.example) return { prompt, acceptedAnswers: [authored.form], explanation: `The context uses “${authored.form}”.` };
+   const prompt = concealWord(sense.example, authored);
+   if (prompt !== sense.example) return { prompt, acceptedAnswers: [authored], explanation: `The context uses “${authored}”.` };
   }
   const context = item && primary ? item.example : sense.example;
   const candidates = item && primary ? item.forms || [entry.term] : [entry.term];
