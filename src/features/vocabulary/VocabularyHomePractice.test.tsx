@@ -104,7 +104,8 @@ test('a saved session takes priority even while teaching metadata fails',async()
  const {learning}=saved();learning.wrong.active=true;learning.wrong.modes.dictation={active:true,successesSinceFailure:0};
  mocks.draft={id:'home-session',mode:'cloze',cardIds:[{id:'frozen'}],planId:'plan-home'};
  mocks.fb.loadVocabularyCatalog=vi.fn(async()=>false);show();await act(async()=>{});
- expect(within(panel()).getByRole('link',{name:/Continue session/})).toHaveAttribute('href','/vocabulary/review?resume=true&mode=cloze&resumeSessionId=home-session&planId=plan-home');
+ expect(within(panel()).getByRole('link',{name:'Continue practice'})).toHaveAttribute('href','/vocabulary/review?resume=true&mode=cloze&resumeSessionId=home-session&planId=plan-home');
+ expect(within(panel()).getByText('1 word · Sentence gaps')).toBeInTheDocument();
  expect(within(panel()).queryByText(/No verified/)).not.toBeInTheDocument();
 });
 

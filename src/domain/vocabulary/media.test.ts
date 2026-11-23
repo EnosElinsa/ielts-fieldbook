@@ -4,6 +4,7 @@ import { resolveVocabularyLearningContext } from './context';
 import supplements from './contextSenseOverlay.json';
 import type { VocabularyEntry } from './types';
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import type { VocabularyMedia } from './media';
 const core = { id: 've-7c70dbbe', term: 'core', senses: [supplements.bindings.find(item => item.entryId === 've-7c70dbbe' && item.unitId === 'ielts-vocabulary-chapter-01-group-01')!.originalSense] } as unknown as VocabularyEntry;
 afterEach(() => vi.unstubAllGlobals());
@@ -58,6 +59,22 @@ describe('sense-bound vocabulary media', () => {
  test('preserves functional and signed query bytes while dropping only known tracking and fragments', () => {
   const legacy = legacyVocabularyRecordings({ pronunciation: { uk: 'https://example.org/pronounce?word=core&accent=uk&utm_source=commons&signature=a%2fb%20c&tracking=keep&gclid=drop#player' } } as VocabularyEntry);
   expect(legacy[0].url).toBe('https://example.org/pronounce?word=core&accent=uk&signature=a%2fb%20c&tracking=keep');
+ });
+ test('uses the verified materialism recording even when the external metadata is stale or unavailable', async () => {
+  const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8')) as { entries: VocabularyEntry[] };
+  const entry = catalog.entries.find(item => item.term === 'materialism')!;
+  const shard = JSON.parse(readFileSync(`public/vocabulary-media/audio/${vocabularyMediaShard(entry.id)}.json`, 'utf8'));
+  vi.stubGlobal('fetch', vi.fn()
+    .mockResolvedValueOnce({ ok: true, json: async () => shard })
+    .mockRejectedValueOnce(new Error('Offline')));
+  const online = await getVocabularyMedia(entry, { retry: true });
+  const unavailable = await getVocabularyMedia(entry, { retry: true });
+  expect(online.recordings).toHaveLength(1);
+  expect(unavailable.recordings).toEqual(online.recordings);
+  const [recording] = online.recordings;
+  expect(recording).toMatchObject({ accent: 'us', status: 'verified', wordformConfirmed: true, author: 'Steve Shives', license: 'CC0 1.0' });
+  const hash = createHash('sha256').update(readFileSync(`public${recording.url}`)).digest('hex').slice(0, 16);
+  expect(recording.url).toBe(`/vocabulary-media/recordings/materialism-us.${hash}.mp3`);
  });
  test.each(['ve-eab4f1ac', 've-b8747f4'])('reconciles real rejected wordform aliases for %s without creating an unknown alternative', async id => {
   const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8')) as { entries: VocabularyEntry[] };

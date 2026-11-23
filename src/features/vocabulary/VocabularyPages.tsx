@@ -318,9 +318,10 @@ function VocabularyHomePage() {
     if (saved.planId) params.set('planId', saved.planId);
     resumeTo = `/vocabulary/study?${params}`;
   }
-  const href = saved ? resumeTo : due.length ? dueTo : nextLearningUrl;
-  const action = saved ? 'Continue session' : due.length ? 'Review due words' : nextGroup ? learning?.viewedEntryIds?.length ? 'Continue learning' : 'Start learning' : 'Study wordbooks';
-  const title = saved ? 'Continue your session' : due.length ? 'Words due for review' : enrollment ? enrollment.book.title : 'Choose a wordbook';
+  const href = due.length ? dueTo : nextLearningUrl;
+  const action = due.length ? 'Review due words' : nextGroup ? learning?.viewedEntryIds?.length ? 'Continue learning' : 'Start learning' : 'Study wordbooks';
+  const title = due.length ? 'Words due for review' : enrollment ? enrollment.book.title : 'Choose a wordbook';
+  const savedMode = saved && VOCABULARY_PRACTICE_MODES.find(({value}) => value === saved.mode)?.label;
   const hasLearningHistory = ['vocabularyStates', 'vocabularyEvidence', 'vocabularyReviews', 'vocabularyActivities', 'vocabularySessions', 'wordbookProgress'].some(key => fb.state[key]?.length);
   const firstRun = catalogStatus === 'ready' && deviceSessions.ready && !saved && !fb.state.vocabulary.length && !fb.state.wordbookEnrollments?.length && !hasLearningHistory;
   if (firstRun) return <VocabularyLayout showNavigation={false}>
@@ -337,18 +338,23 @@ function VocabularyHomePage() {
       <Link className="vocabulary-home-settings" to="/settings/vocabulary">Practice settings</Link>
     </div>
     <VocabularyNavigation />
-    <section className={`vocabulary-home-next${showSuggestion?' has-recommendation':''}`} aria-label="Next vocabulary task">
-      {showSuggestion ? <>
+    <section className={`vocabulary-home-next${saved ? ' has-draft' : showSuggestion ? ' has-recommendation' : ''}`} aria-label="Next vocabulary task">
+      {saved ? <>
+        <div>
+          <h2>Saved practice</h2>
+          <p>{plural(saved.cardIds.length, 'word')}{savedMode ? ` · ${savedMode}` : ''}</p>
+        </div>
+        <Link className="btn primary" to={resumeTo}>Continue practice<ArrowRight size={16} aria-hidden="true"/></Link>
+      </> : showSuggestion ? <>
         <div className="vocabulary-home-word"><h2><Link to={`/vocabulary/entry/${encodeURIComponent(suggestion.entry.id)}?${new URLSearchParams({senseId:suggestion.sense.id,returnTo:'/vocabulary'})}`}>{suggestion.entry.term}</Link></h2>
         <p className="vocabulary-home-meaning">{suggestion.sense.definition}</p></div>
         <VocabularyNextPractice headingLevel={3} primaryAction recommendation={suggestion.recommendation} to={mode=>practiceUrl(suggestion.entry.id,suggestion.sense.id,{},'/vocabulary',mode)}/>
         {suggestion.recommendation.status==='waiting' ? <Link className="btn primary" to={nextLearningUrl}>{nextGroup?'Continue learning':'Study wordbooks'}<ArrowRight size={16} aria-hidden="true"/></Link> : null}
       </> : <>
-        <h2>{catalogStatus==='ready'||saved?title:'Your next vocabulary task'}</h2>
-        {saved ? <p>{plural(saved.cardIds.length, 'word')} in your saved session</p> : null}
-        {!saved && !due.length && nextGroup && catalogStatus==='ready' ? <p>{unitPath(enrollment.book, nextGroup, enrollment.study.hierarchy)} · {plural(selectedEntryIds.length || nextTarget.batchSize, 'new word')}</p> : null}
-        {catalogStatus === 'loading' && !saved ? <PanelLoadingState message="Preparing your vocabulary recommendations..." /> : catalogStatus === 'error' && !saved ? <StateMessage kind="error" message="Vocabulary recommendations could not be loaded." onRetry={() => setRetry(value => value + 1)} /> : !saved&&!due.length&&nextLearning?.plan ? <TaskStartButton plan={nextLearning.plan}/> : <Link className="btn primary" to={href}>{action}<ArrowRight size={16} aria-hidden="true"/></Link>}
-        {!saved && !due.length && nextGroup && suggestion?.recommendation.status==='waiting' ? <p className="vocabulary-muted vocabulary-home-waiting">Next saved-meaning practice: <time dateTime={suggestion.recommendation.dueAt}>{new Date(suggestion.recommendation.dueAt).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</time>.</p> : null}
+        <h2>{catalogStatus==='ready'?title:'Your next vocabulary task'}</h2>
+        {!due.length && nextGroup && catalogStatus==='ready' ? <p>{unitPath(enrollment.book, nextGroup, enrollment.study.hierarchy)} · {plural(selectedEntryIds.length || nextTarget.batchSize, 'new word')}</p> : null}
+        {catalogStatus === 'loading' ? <PanelLoadingState message="Preparing your vocabulary recommendations..." /> : catalogStatus === 'error' ? <StateMessage kind="error" message="Vocabulary recommendations could not be loaded." onRetry={() => setRetry(value => value + 1)} /> : !due.length && nextLearning?.plan ? <TaskStartButton plan={nextLearning.plan}/> : <Link className="btn primary" to={href}>{action}<ArrowRight size={16} aria-hidden="true"/></Link>}
+        {!due.length && nextGroup && suggestion?.recommendation.status==='waiting' ? <p className="vocabulary-muted vocabulary-home-waiting">Next saved-meaning practice: <time dateTime={suggestion.recommendation.dueAt}>{new Date(suggestion.recommendation.dueAt).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</time>.</p> : null}
       </>}
     </section>
     <ul className="vocabulary-home-summary" role="list" aria-label="Vocabulary summary">

@@ -109,6 +109,14 @@ describe('vocabulary playback', () => {
     expect(vi.getTimerCount()).toBe(0);
   });
 
+  test('a failed alternative recording does not play a different device voice', async () => {
+    const result = controllerFor().play(entry, { accent: 'uk', recording: recordings[1] });
+    await vi.advanceTimersByTimeAsync(0);
+    FakeAudio.instances[0].onerror!();
+    await expect(result).resolves.toMatchObject({ ok: false, reason: 'recording-failed', recording: recordings[1] });
+    expect(utterances).toHaveLength(0);
+  });
+
   test('speaks explicit example text without playing the word recording', async () => {
     const controller = controllerFor();
     const result = controller.play(entry, { accent: 'us', text: 'A significant change.', rate: 1.1, volume: 0.8 });

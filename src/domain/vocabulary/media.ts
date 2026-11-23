@@ -3,6 +3,7 @@ import type { ResolvedVocabularyLearningContext } from './context';
 import { vocabularySensePresentation } from './dictionaryPresentation';
 import imageManifest from './illustrations.json';
 import senseDiagrams from './senseDiagrams.json';
+import { hostedPronunciations } from './hostedPronunciations';
 export type VocabularyAccent = 'uk' | 'us';
 export type MediaCredit = { sourceUrl: string; author: string; license: string; licenseUrl: string; changes: string };
 export type VocabularyRecording = MediaCredit & { url: string; aliases?: string[]; title: string; accent: VocabularyAccent | 'other' | 'unknown'; status: 'verified' | 'unknown' | 'rejected' | 'missing'; availability: 'http-audio' | 'metadata-only' | 'network-unverified' | 'failed'; reason: string; wordformConfirmed?: boolean };
@@ -33,9 +34,13 @@ export function legacyVocabularyRecordings(entry: VocabularyEntry): VocabularyRe
   });
 }
 function withLegacy(entry: VocabularyEntry, media: VocabularyMedia): VocabularyMedia {
+  const hosted = hostedPronunciations[entry.id];
+  const recordings = hosted && hosted.term === entry.term.trim().toLowerCase()
+    ? [hosted.recording, ...media.recordings.filter(item => item.title !== hosted.recording.title)]
+    : media.recordings;
   // An alias shares the canonical file's rejection/wordform evidence, never a new candidate.
-  const known = new Set(media.recordings.flatMap(item => [item.url, ...(item.aliases || [])]).map(sanitizeVocabularyMediaUrl).filter(Boolean));
-  return { ...media, recordings: [...media.recordings, ...legacyVocabularyRecordings(entry).filter(item => !known.has(item.url))] };
+  const known = new Set(recordings.flatMap(item => [item.url, ...(item.aliases || [])]).map(sanitizeVocabularyMediaUrl).filter(Boolean));
+  return { ...media, recordings: [...recordings, ...legacyVocabularyRecordings(entry).filter(item => !known.has(item.url))] };
 }
 const shards = new Map<string, Promise<Record<string, VocabularyMedia>>>();
 export function vocabularyMediaShard(id: string) { let hash = 0; for (const char of id) hash = (hash * 31 + char.charCodeAt(0)) >>> 0; return (hash % 16).toString(16); }
