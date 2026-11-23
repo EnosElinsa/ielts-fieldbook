@@ -266,7 +266,7 @@ export function DictionarySenses({
                     {saving === sense.id ? "Saving…" : "Practise this sense"}
                   </button>}
                 </div>
-                <VocabularySenseContent entryId={entry.id} sense={sense} showLearningNotes />
+                <VocabularySenseContent entryId={entry.id} term={entry.term} sense={sense} showLearningNotes />
                 {diagram ? <VocabularyDiagramDisclosure diagram={diagram} number={meaningNumbers.get(sense.id)} /> : null}
               </section>
             );})}

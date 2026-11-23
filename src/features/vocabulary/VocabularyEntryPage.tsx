@@ -412,7 +412,7 @@ export function VocabularyEntryPage() {
         {vocabularyPartOfSpeech(sense.pos) ? (
           <span className="vocabulary-part-of-speech">{vocabularyPartOfSpeech(sense.pos)}</span>
         ) : null}
-        <VocabularySenseContent entryId={entry?.id} sense={sense} learningExample={entry ? publicVocabularyExample(entry.id, sense) : undefined} showLearningNotes={!personalNotes && Boolean(sense.editorial || main && resolved?.contentReviewed)} />
+        <VocabularySenseContent entryId={entry?.id} term={entry?.term} sense={sense} learningExample={entry ? publicVocabularyExample(entry.id, sense) : undefined} showLearningNotes={!personalNotes && Boolean(sense.editorial || main && resolved?.contentReviewed)} />
         {personalNotes &&
         sense.collocations?.length ? (
           <div className="vocabulary-detail">
@@ -634,7 +634,7 @@ export function VocabularyEntryPage() {
                       <p>{personalMeaning ? 'Your saved meaning and notes.' : resolved?.curriculumCurrent ? resolved.curriculum?.explanation : resolved?.reviewed ? 'Selected from the listening passage. The example is written for practice.' : 'A dictionary meaning of this word.'}</p>
                       {personalMeaning && groupMeaning?.id === primary.id && !resolved?.curriculumCurrent ? <div className="vocabulary-group-comparison">
                         <h4>Group meaning</h4>
-                        <VocabularySenseContent entryId={entry?.id} sense={groupMeaning} />
+                        <VocabularySenseContent entryId={entry?.id} term={entry?.term} sense={groupMeaning} />
                       </div> : null}
                     </details>
                   </div> : null}

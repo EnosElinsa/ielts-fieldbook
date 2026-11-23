@@ -2,10 +2,22 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, expect, test } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { VocabularySenseContent } from './VocabularySenseContent';
+import { VocabularyExampleText } from './VocabularyExampleText';
 import corrections from '../../domain/vocabulary/readinessCorrections.json';
 import { supplementVocabularySense } from '../../domain/vocabulary/readiness';
 import type { VocabularySense } from '../../domain/vocabulary/types';
 afterEach(cleanup);
+
+test.each([
+  ['A BILATERAL meeting and a nonbilateral proposal.', 'bilateral', undefined, ['BILATERAL']],
+  ['They began before the new course could begin.', 'begin', 'began', ['began', 'begin']],
+  ['“In spite of” the rain, they left.', 'in spite of', undefined, ['In spite of']],
+  ['The class started on time.', 'begin', undefined, []],
+])('highlights only the headword or a reviewed form in %s', (text, term, form, expected) => {
+  const { container } = render(<p><VocabularyExampleText text={text} term={term} form={form} /></p>);
+  expect(container.textContent).toBe(text);
+  expect([...container.querySelectorAll('mark')].map(node => node.textContent)).toEqual(expected);
+});
 
 test('an exact-bound historical reading explanation is labelled and does not turn a learner’s replacement sentence into a reading note', () => {
   const row = corrections.find(row => row.entryId === 've-649a8d90' && row.senseId === 'kaikki:a0e69a49931b08846d')!;

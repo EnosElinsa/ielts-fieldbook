@@ -1,0 +1,32 @@
+[
+  {
+    "entryId": "ve-fb7e2f4d",
+    "term": "bilateral",
+    "senseId": "kaikki:942dde563655cf48a1",
+    "definition": "Having two sides.",
+    "pos": "adj",
+    "source": "English Wiktionary via Kaikki.org",
+    "sourceExample": "General Wego W.K. Chiang, secretary general of the National Security Council, said that the visit of El Salvador Vice President Merino to Taipei on behalf of President Alfredo Cristiani was in response to an invitation of the ROC [Republic of China] Government which hopes to further strengthen bilateral relations between the two countries.",
+    "example": "The two countries held bilateral talks on trade."
+  },
+  {
+    "entryId": "ve-3cd002f2",
+    "term": "hierarchy",
+    "senseId": "kaikki:152a4511b4c57bb791",
+    "definition": "A body of authoritative officials organized in nested ranks.",
+    "pos": "noun",
+    "source": "English Wiktionary via Kaikki.org",
+    "sourceExample": "Gay men and bisexuals were blamed for the [AIDS] epidemic for much the same reason that the church hierarchy in the Middle Ages accused Jewish people of creating bubonic plague by \"poisoning the wells.\"",
+    "example": "The military hierarchy met to review the new command structure."
+  },
+  {
+    "entryId": "ve-45258119",
+    "term": "materialism",
+    "senseId": "kaikki:f8770ce87683a8f4fb",
+    "definition": "Constant concern over material possessions and wealth; a great or excessive regard for worldly concerns.",
+    "pos": "noun",
+    "source": "English Wiktionary via Kaikki.org",
+    "sourceExample": "We accept that a third of the population live on the poverty line. We accept that only a handful of the most exceptional of the children of the poor will make it through to a third-level education. We accept massive examples of greed and dishonesty in public life. We except the values of materialism. What do we expect then—to be left un-harassed, we who have all the privileges?",
+    "example": "The novel criticises materialism by showing how the pursuit of wealth damages a family."
+  }
+]

@@ -152,7 +152,7 @@ test('source headings remain in All meanings without being offered as meanings t
   const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.address}`, 'utf8'));
   vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? index : dictionary })));
   render(<MemoryRouter><DictionarySenses entry={entry} excludeSenses={[]} /></MemoryRouter>);
-  await screen.findByText('Please write the return address on the envelope.');
+  await screen.findByText((_, node) => node?.matches('blockquote') === true && node.textContent === 'Please write the return address on the envelope.');
   fireEvent.click(screen.getByText(/Other dictionary meanings/));
   expect(screen.queryByText('Source grouping: uses involving direction, communication and location.')).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: /^All meanings/ }));
@@ -235,7 +235,7 @@ test('bank keeps reference reading notes in All meanings without presenting them
   const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.bank}`, 'utf8'));
   vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { bank: index.bank } : dictionary })));
   render(<MemoryRouter><DictionarySenses entry={{ ...entry, id: 've-7c704483', term: 'bank' }} excludeSenses={[]} /></MemoryRouter>);
-  await screen.findByText('We sat on the bank of the river and watched the boats.');
+  await screen.findByText((_, node) => node?.matches('blockquote') === true && node.textContent === 'We sat on the bank of the river and watched the boats.');
   fireEvent.click(screen.getByText(/Other dictionary meanings/));
   expect(screen.queryByText('A surname.')).not.toBeInTheDocument();
   expect(screen.queryByText('A family name.')).not.toBeInTheDocument();

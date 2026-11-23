@@ -13,11 +13,13 @@ import { useFieldbook } from '../../context/FieldbookContext';
 import { accountId } from '../../storage/remote';
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
-import { catalogVocabularyEntry, hasVocabularySenseEdits, learningTask } from '../../domain/vocabulary/content';
+import { catalogVocabularyEntry, hasVocabularySenseEdits, learningTask, reviewedExampleForm } from '../../domain/vocabulary/content';
 import { vocabularyPartOfSpeech, vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
 import { getVocabularyVisualPresentation } from '../../domain/vocabulary/visualPresentation';
 import { VocabularyMeaningNotes } from './VocabularyMeaningNotes';
-import { hasVocabularyReadinessNotes } from '../../domain/vocabulary/readiness';
+import { hasVocabularyReadinessNotes, isVocabularyReadingNote } from '../../domain/vocabulary/readiness';
+import conciseLearningExamples from '../../domain/vocabulary/conciseLearningExamples.json';
+import { VocabularyExampleText } from './VocabularyExampleText';
 import { getVocabularyMastery } from '../../domain/vocabulary/mastery';
 import { getLearnedVocabularyIds, vocabularyGroupProgress } from '../../domain/vocabulary/progress';
 import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
@@ -303,6 +305,12 @@ export function VocabularyGroupLearnPage() {
   const visualPresentation = activeResolved ? getVocabularyVisualPresentation(activeResolved) : 'none';
   const hasVisual = visualPresentation === 'inline';
   const presentation = selectedSense ? vocabularySensePresentation(selectedSense) : undefined;
+  const readingNote = Boolean(word && selectedSense && isVocabularyReadingNote(word.entry.id, selectedSense));
+  const conciseExample = word && selectedSense && !readingNote ? conciseLearningExamples.find(row =>
+    row.entryId === word.entry.id && row.term === word.entry.term && row.senseId === selectedSense.id &&
+    row.definition === selectedSense.definition && row.pos === selectedSense.pos &&
+    row.source === selectedSense.source && row.sourceExample === selectedSense.example) : undefined;
+  const exampleForm = word && selectedSense ? reviewedExampleForm(word.entry.id, word.entry.term, selectedSense) : undefined;
   const publicEntry = word ? catalogVocabularyEntry(word.entry.id) : undefined;
   const publicSense = publicEntry && selectedSense ? resolveVocabularyLearningContext(publicEntry, { bookId, unitId, senseId:selectedSense.id }).sense : undefined;
   const reviewedNotes = Boolean(word && selectedSense && hasVocabularyReadinessNotes(word.entry.id, selectedSense));
@@ -365,7 +373,16 @@ export function VocabularyGroupLearnPage() {
           {!meaningVisible ? <div className="vocabulary-learning-reveal"><p>Recall the meaning and think of a sentence before checking.</p><button className="btn primary" aria-controls="learning-meaning" onClick={() => { setRevealedKey(learningCardKey); requestAnimationFrame(() => document.getElementById('learning-meaning')?.focus({ preventScroll:true })); }}>Reveal meaning<ArrowRight size={15}/></button></div> : null}
           {meaningVisible ? <div id="learning-meaning" tabIndex={-1} className={`vocabulary-learning-content${hasVisual ? ' has-visual' : ''}`}><div className="vocabulary-learning-copy"><div className="vocabulary-learning-primary"><div className="vocabulary-learning-definition"><small>{selectedSense?.pos || 'Meaning'}</small>{presentation?.definition ? <p>{presentation.definition}</p> : <StateMessage kind="error" message="This selected meaning could not be loaded. Retry to restore this batch." onRetry={retry} retryLabel="Retry meaning" />}</div>
 
-          {presentation?.example ? <div className="vocabulary-learning-example"><h4>Example</h4><p>{presentation.example}</p></div> : null}
+          {presentation?.example ? <>
+            <div className="vocabulary-learning-example">
+              <h4>{readingNote ? 'Reading note' : conciseExample ? 'Learning example' : 'Example'}</h4>
+              <p><VocabularyExampleText text={conciseExample?.example || presentation.example} term={readingNote ? undefined : word.entry.term} form={conciseExample ? undefined : exampleForm} /></p>
+            </div>
+            {conciseExample && <details className="vocabulary-learning-provenance vocabulary-learning-source-example" key={selectedSense?.id}>
+              <summary>Dictionary example</summary>
+              <p><VocabularyExampleText text={presentation.example} term={word.entry.term} form={exampleForm} /></p>
+            </details>}
+          </> : null}
           {hasVisual && activeResolved ? <VocabularyLearningVisual resolved={activeResolved} /> : null}
           </div><div className="vocabulary-learning-secondary">
           {reliableCollocations && selectedSense?.collocations?.length ? <div className="vocabulary-learning-collocations"><h4>Common combinations</h4><ul>{selectedSense.collocations.map(item=><li key={item}>{item}</li>)}</ul></div> : null}

@@ -22,6 +22,9 @@ import { VocabularySourceLinks, VocabularyWordbookSources } from './VocabularySo
 import type { VocabularySessionResult } from '../../domain/vocabulary/session';
 import type { VocabularyPracticeController } from "./useVocabularyPracticeController";
 import { vocabularyTaskSubmissionOutcome } from '../../domain/vocabulary/submissionOutcome';
+import { reviewedExampleForm } from '../../domain/vocabulary/content';
+import { isVocabularyReadingNote } from '../../domain/vocabulary/readiness';
+import { VocabularyExampleText } from './VocabularyExampleText';
 
 export function VocabularyPracticeResults({ controller, results }: {
   controller: VocabularyPracticeController;
@@ -176,6 +179,8 @@ export function VocabularyPracticeResults({ controller, results }: {
               const learning = current.resolved && vocabularySensePresentation(current.resolved);
               const savedDefinition = dictionaryDisplayText(row.definition);
               const savedExample = dictionaryDisplayText(row.example);
+              const savedForm = current.saved && row.example === current.saved.example ? reviewedExampleForm(row.entryId, row.term, current.saved) : undefined;
+              const savedReadingNote = current.saved && row.example === current.saved.example && isVocabularyReadingNote(row.entryId, current.saved);
               const partOfSpeech = vocabularyPartOfSpeech(current.saved?.pos);
               const learningPos = vocabularyPartOfSpeech(current.resolved?.pos);
               const changed = learning?.definition && (learning.definition !== savedDefinition || learning.example !== savedExample || Boolean(partOfSpeech && learningPos !== partOfSpeech));
@@ -194,12 +199,12 @@ export function VocabularyPracticeResults({ controller, results }: {
                   </Link>
                   {(wordCounts.get(row.entryId) || 0) > 1 ? <small className="practice-result-meaning">Meaning {meaningNumbers.get(row.cardId)} of {wordCounts.get(row.entryId)}</small> : null}
                   <small>{changed && <strong>Meaning in this session · </strong>}{partOfSpeech && <><span className="practice-definition-pos">{partOfSpeech}</span>{' '}</>}{savedDefinition}</small>
-                  {savedExample && <small className="practice-result-context">{savedExample}</small>}
+                  {savedExample && <small className="practice-result-context"><VocabularyExampleText text={savedExample} term={savedReadingNote ? undefined : row.term} form={savedForm} /></small>}
                   <VocabularyWordbookSources sources={frozen?.sources || current.raw.sources} context={current.context} onNavigate={() => rememberPosition(row.cardId)} />
                   {changed && current.resolved && <details className="practice-current-reference">
                     <summary>Current {current.context.bookId ? 'wordbook meaning' : 'meaning'}</summary>
                     <p>{learningPos && <><span className="practice-definition-pos">{learningPos}</span>{' '}</>}{learning.definition}</p>
-                    {learning.example && <p>{learning.example}</p>}
+                    {learning.example && <p><VocabularyExampleText text={learning.example} term={isVocabularyReadingNote(row.entryId, current.resolved) ? undefined : current.raw.term} form={reviewedExampleForm(row.entryId, current.raw.term, current.resolved)} /></p>}
                     {current.resolved.id !== row.senseId && <Link to={entryUrl(row.entryId,{...current.context,senseId:current.resolved.id,exactMeaning:'true'},resultReturnTo)} onClick={() => rememberPosition(row.cardId)}>View current meaning</Link>}
                   </details>}
                   {current.raw ? <Pronunciation compact entry={audioEntry} sense={audioEntry.senses.find(sense=>sense.id===row.senseId) || null} options={{pronunciation:frozen?.pronunciation ?? 'legacy'}} accent={frozenAudio ? results.preferences.accent : controller.preferences.accent}/> : null}
