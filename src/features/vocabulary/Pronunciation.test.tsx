@@ -93,6 +93,23 @@ describe('pronunciation controls', () => {
   fireEvent.click(screen.getByRole('button',{name:'Play UK pronunciation of record'}));
   expect(await screen.findByRole('button',{name:'US — Dvortygirl'})).toBeDefined();
  });
+ test('a compact list offers a confirmed word recording after device voice fails', async () => {
+  const recording = {
+    url: 'https://example.org/hierarchy.ogg', accent: 'uk', status: 'unknown',
+    availability: 'metadata-only', wordformConfirmed: true, author: 'Speaker',
+  };
+  state.load.mockResolvedValue({ recordings: [recording, { ...recording, url: 'https://example.org/another-word.ogg', wordformConfirmed: false, author: 'Other speaker' }] });
+  state.play.mockResolvedValueOnce({ ok: false, reason: 'target-voice-unavailable', accent: 'uk' })
+    .mockResolvedValue({ ok: true, source: 'recording', accent: 'uk', recording });
+  render(<Pronunciation compact entry={entry} />);
+  fireEvent.click(screen.getByRole('button', { name: 'Play UK pronunciation of vegetable' }));
+  const alternate = await screen.findByRole('button', { name: 'UK — Speaker' });
+  expect(screen.queryByRole('button', { name: /Other speaker/ })).toBeNull();
+  fireEvent.click(alternate);
+  await waitFor(() => expect(screen.getByRole('status').textContent).toBe('UK recording'));
+  expect(state.play).toHaveBeenLastCalledWith(entry, expect.objectContaining({ recording }));
+  expect(screen.getByRole('button', { name: 'UK — Speaker' })).toBe(alternate);
+ });
  test('delayed metadata retry ignores an older response and exposes a recoverable failure', async () => {
   vi.useFakeTimers();
   let finishOld!: (value: any) => void;

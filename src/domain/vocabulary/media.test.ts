@@ -60,9 +60,12 @@ describe('sense-bound vocabulary media', () => {
   const legacy = legacyVocabularyRecordings({ pronunciation: { uk: 'https://example.org/pronounce?word=core&accent=uk&utm_source=commons&signature=a%2fb%20c&tracking=keep&gclid=drop#player' } } as VocabularyEntry);
   expect(legacy[0].url).toBe('https://example.org/pronounce?word=core&accent=uk&signature=a%2fb%20c&tracking=keep');
  });
- test('uses the verified materialism recording even when the external metadata is stale or unavailable', async () => {
+ test.each([
+  ['materialism', 'Steve Shives', 'CC0 1.0'],
+  ['hierarchy', 'DroEsperanto', 'Public domain (released by the author)'],
+ ])('uses the verified %s recording even when the external metadata is stale or unavailable', async (term, author, license) => {
   const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8')) as { entries: VocabularyEntry[] };
-  const entry = catalog.entries.find(item => item.term === 'materialism')!;
+  const entry = catalog.entries.find(item => item.term === term)!;
   const shard = JSON.parse(readFileSync(`public/vocabulary-media/audio/${vocabularyMediaShard(entry.id)}.json`, 'utf8'));
   vi.stubGlobal('fetch', vi.fn()
     .mockResolvedValueOnce({ ok: true, json: async () => shard })
@@ -72,9 +75,9 @@ describe('sense-bound vocabulary media', () => {
   expect(online.recordings).toHaveLength(1);
   expect(unavailable.recordings).toEqual(online.recordings);
   const [recording] = online.recordings;
-  expect(recording).toMatchObject({ accent: 'us', status: 'verified', wordformConfirmed: true, author: 'Steve Shives', license: 'CC0 1.0' });
+  expect(recording).toMatchObject({ accent: 'us', status: 'verified', wordformConfirmed: true, author, license });
   const hash = createHash('sha256').update(readFileSync(`public${recording.url}`)).digest('hex').slice(0, 16);
-  expect(recording.url).toBe(`/vocabulary-media/recordings/materialism-us.${hash}.mp3`);
+  expect(recording.url).toBe(`/vocabulary-media/recordings/${term}-us.${hash}.mp3`);
  });
  test.each(['ve-eab4f1ac', 've-b8747f4'])('reconciles real rejected wordform aliases for %s without creating an unknown alternative', async id => {
   const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8')) as { entries: VocabularyEntry[] };

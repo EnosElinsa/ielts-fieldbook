@@ -5,12 +5,13 @@ import { createHash } from 'node:crypto';
 import { buildVocabularyResources, vocabularyResourceHeaders } from '../../scripts/vocabularyResources';
 
 let release: ReturnType<typeof buildVocabularyResources>;
+const resourceBuildTimeout = 75_000;
 // Every assertion reads the same release. Generate it once; the determinism test
 // still compares a second independent build of the complete retained corpus.
 // This includes every archived teaching release, not only the current pack.
-// A complete build took 17.5 s on CI; allow shared-runner variation while
-// retaining every source, content-hash and historical-byte assertion below.
-beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 45_000);
+// Full-suite runs have taken around 50 s for a single build. These checks
+// verify content and historical bytes; the bundle budget is checked separately.
+beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, resourceBuildTimeout);
 
 test('the travel teaching revision retains the published manifest and its resources', () => {
   const url = '/vocabulary-resources/manifest.b7d154e9cb664848.json';
@@ -167,9 +168,7 @@ test('resources use deterministic content-addressed URLs', () => {
     expect(url).toMatch(/^\/[a-zA-Z0-9._/-]+$/);
     expect(decodeURIComponent(url)).toBe(url);
   }
-// The expanded retained corpus took 31.8 s on CI. This is a correctness check,
-// not a runtime speed budget; use the same allowance as the complete-build hook.
-}, 45_000);
+}, resourceBuildTimeout);
 
 test('shared serialized sections preserve native JSON bytes in manifests and source/teaching packs', () => {
   const manifest = release.manifest;

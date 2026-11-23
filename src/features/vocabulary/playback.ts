@@ -71,14 +71,19 @@ export function createVocabularyPlayback(loadMedia = getVocabularyMedia): { play
   }
 
   async function speech(text: string, accent: 'uk' | 'us', rate: number, volume: number, token: number): Promise<VocabularyPlaybackResult> {
-    const voice = await waitForVoice(accent, token);
+    const failed: VocabularyPlaybackResult = { ok: false, source: 'none', reason: 'device-voice-failed', accent };
+    if (typeof speechSynthesis === 'undefined' || typeof SpeechSynthesisUtterance === 'undefined') {
+      return { ok: false, source: 'none', reason: 'device-voice-unsupported', accent };
+    }
+    let voice: SpeechSynthesisVoice | undefined;
+    try { voice = await waitForVoice(accent, token); } catch { return failed; }
     if (token !== generation) return cancelled();
     if (!voice) return { ok: false, source: 'none', reason: 'target-voice-unavailable', accent };
+    let utterance: SpeechSynthesisUtterance;
+    try { utterance = new SpeechSynthesisUtterance(text); } catch { return failed; }
     return new Promise(resolve => {
       if (token !== generation) { resolve(cancelled()); return; }
-      if (typeof speechSynthesis === 'undefined' || typeof SpeechSynthesisUtterance === 'undefined') { resolve({ ok: false, source: 'none', reason: 'unavailable' }); return; }
       const synth = speechSynthesis;
-      const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = accent === 'uk' ? 'en-GB' : 'en-US';
       utterance.rate = rate; utterance.volume = volume;
       utterance.voice = voice;
@@ -93,11 +98,11 @@ export function createVocabularyPlayback(loadMedia = getVocabularyMedia): { play
         resolve(result);
       };
       const cancel = () => finish(cancelled());
-      const timer = setTimeout(() => finish({ ok: false, source: 'none', reason: 'timeout' }), 20000);
+      const timer = setTimeout(() => finish(failed), 20000);
       cancelStep = cancel;
       utterance.onend = () => finish(token === generation ? { ok: true, source: 'speech', accent, voice: voice.name } : cancelled());
-      utterance.onerror = event => finish({ ok: false, source: 'none', reason: event.error === 'not-allowed' ? 'blocked' : 'device-voice-failed', accent });
-      try { synth.speak(utterance); } catch { finish({ ok: false, source: 'none', reason: 'device-voice-failed', accent }); }
+      utterance.onerror = event => finish(event.error === 'not-allowed' ? { ...failed, reason: 'blocked' } : failed);
+      try { synth.speak(utterance); } catch { finish(failed); }
     });
   }
 

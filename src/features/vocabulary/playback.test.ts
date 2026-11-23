@@ -206,6 +206,11 @@ describe('vocabulary playback', () => {
     await expect(result).resolves.toMatchObject({ ok: false, reason: 'target-voice-unavailable', accent: 'uk' });
     expect(utterances).toHaveLength(0);
   });
+  test('identifies a browser voice service that throws while loading the voice list', async () => {
+    vi.spyOn(speechSynthesis, 'getVoices').mockImplementation(() => { throw new Error('Speech service offline'); });
+    await expect(controllerFor().play(entry, { accent: 'uk', deviceOnly: true }))
+      .resolves.toMatchObject({ ok: false, reason: 'device-voice-failed', accent: 'uk' });
+  });
   test('waits for asynchronously loaded matching voices', async () => {
     const get = vi.spyOn(speechSynthesis, 'getVoices').mockReturnValue([]);
     let changed: (() => void) | undefined;
