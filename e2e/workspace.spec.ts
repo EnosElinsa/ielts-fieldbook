@@ -1,6 +1,47 @@
 import AxeBuilder from '@axe-core/playwright';
 import { test, expect } from './fixture';
 
+test('writing status belongs to the open draft while another answer is saving', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 990 });
+  const questionId = 'sample-t2-remote-work';
+  let saving = false;
+  let release = () => {};
+  const holdSave = new Promise<void>(resolve => { release = resolve; });
+  await page.route('**/rpc/commit_workspace_changes', async route => {
+    const drafts = route.request().postDataJSON()?.batch?.drafts?.upserts || [];
+    if (drafts.some((row: { id: string }) => row.id === questionId)) {
+      saving = true;
+      await holdSave;
+    }
+    await route.fallback();
+  });
+  try {
+    await page.goto(`/write?questionId=${questionId}`);
+    await page.getByRole('textbox', { name: 'Writing answer' }).fill('A synthetic answer.');
+    await expect.poll(() => saving).toBe(true);
+    await expect(page.locator('.draft-status')).toHaveText('Saving draft...');
+    await page.locator('a[href="/write/questions"]').first().click();
+    const otherQuestion = page.getByRole('article').filter({ has: page.getByRole('heading', { name: 'Funding for public art' }) });
+    await otherQuestion.getByRole('button', { name: 'Write this' }).click();
+    await expect(page).toHaveURL(/questionId=sample-t2-public-art$/);
+    const answer = page.getByRole('textbox', { name: 'Writing answer' });
+    const status = page.locator('.draft-status');
+    await expect(answer).toHaveValue('');
+    await expect(status).toHaveText('Autosave enabled');
+    const prompt = page.locator('#writing-prompt');
+    const previousWidth = (await prompt.boundingBox())!.width;
+    const layout = page.getByRole('button', { name: 'Wider prompt' });
+    await layout.focus();
+    await layout.press('Space');
+    await expect(layout).toHaveAttribute('aria-pressed', 'true');
+    expect((await prompt.boundingBox())!.width).toBeGreaterThan(previousWidth);
+    await expect(status).toHaveText('Autosave enabled');
+    await expect(answer).toHaveValue('');
+  } finally {
+    release();
+  }
+});
+
 test('question bank opens a full response even while an outline remains active', async ({ page }) => {
   const questionId = 'sample-t2-remote-work';
   const outline = {

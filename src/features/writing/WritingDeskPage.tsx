@@ -15,6 +15,12 @@ import { navigateTabs } from '../../lib/tabNavigation';
 import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 
 const FRAGMENT_MODES = new Set(['overview', 'outline', 'compare', 'body']);
+const DRAFT_STATUS_LABELS = {
+  unsaved: 'Draft has unsaved changes',
+  pending: 'Waiting to save draft...',
+  saving: 'Saving draft...',
+  failed: 'Draft could not be saved',
+};
 
 export function WritingDeskPage() {
   const fb = useFieldbook();
@@ -50,9 +56,9 @@ export function WritingDeskPage() {
   const [checks, setChecks] = useWorkspacePageState(`${uiKey}:checks`, {}, value => Boolean(value && typeof value === 'object' && Object.values(value).every(item => typeof item === 'boolean')));
   const [focused, setFocused] = useState(false);
   const [mobileTab, setMobileTab] = useWorkspacePageState(`${uiKey}:mobileTab`, 'answer', value => value === 'answer' || value === 'prompt');
-  const [split, setSplit] = useState(() => {
-    try { return Math.max(30, Math.min(55, Number(localStorage.getItem('fieldbook.writingSplit')) || 40)); }
-    catch { return 40; }
+  const [widerPrompt, setWiderPrompt] = useState(() => {
+    try { return Number(localStorage.getItem('fieldbook.writingSplit')) >= 45; }
+    catch { return false; }
   });
   const history = useDraftHistory({ essay, sections });
 
@@ -102,6 +108,8 @@ export function WritingDeskPage() {
   const image = safeImage(selected.image);
   const composed = fragment ? composeEssay(mode, sections, essay) : essay;
   const words = fb.wordCount(composed);
+  const draftStatus = fb.draftSaveStatus(selected.id);
+  const draftStatusLabel = DRAFT_STATUS_LABELS[draftStatus] || (words ? 'Draft saved' : 'Autosave enabled');
   const wordGoal = String(selected.type) === '1' ? 150 : 250;
   const wordPct = Math.min(100, Math.round((words / wordGoal) * 100));
   const paragraphs = String(composed || '')
@@ -206,9 +214,23 @@ export function WritingDeskPage() {
       <div className="page-tools desk-tools">
         <p>
           {fragment ? typeName(selected) : task1 ? 'Task 1 · at least 150 words · 20 minutes.' : 'Task 2 · at least 250 words · 40 minutes.'}{' '}
-          <span className="draft-status" role="status">{fb.saveStatus === 'saving' ? 'Saving draft...' : fb.saveStatus === 'failed' || fb.saveStatus === 'error' ? 'Draft could not be saved' : fb.saveStatus === 'saved' ? 'Draft saved' : 'Autosave enabled'}</span>
+          <span className="draft-status" role="status">{draftStatusLabel}</span>
         </p>
         <div className="desk-controls">
+          <button
+            type="button"
+            className="btn line writing-prompt-width"
+            aria-pressed={widerPrompt}
+            aria-controls="writing-prompt"
+            onClick={() => {
+              const next = !widerPrompt;
+              setWiderPrompt(next);
+              try { localStorage.setItem('fieldbook.writingSplit', next ? '50' : '40'); }
+              catch { /* Browser preference is optional. */ }
+            }}
+          >
+            Wider prompt
+          </button>
           {iconButton(focused ? 'Exit focus mode' : 'Enter focus mode', focused ? Minimize2 : Expand, () => setFocused((value) => !value))}
           <button
             className="btn text"
@@ -229,12 +251,9 @@ export function WritingDeskPage() {
           {['prompt', 'answer'].map((tab) => <button key={tab} id={`writing-tab-${tab}`} type="button" className={mobileTab === tab ? 'active' : ''} role="tab" tabIndex={mobileTab === tab ? 0 : -1} aria-selected={mobileTab === tab} aria-controls={`writing-${tab}`} onKeyDown={navigateTabs} onClick={() => setMobileTab(tab)}>{tab === 'prompt' ? 'Prompt' : 'Answer'}</button>)}
         </div>
       </div>
-      <div className="desk-stack" style={{ '--prompt-share': `${split}fr`, '--answer-share': `${100 - split}fr` }}>
+      <div className={`desk-stack${widerPrompt ? ' writing-prompt-wide' : ''}`}>
         <div className={`prompt${mobileTab === 'prompt' ? ' mobile-active' : ''}`} id="writing-prompt">
-          <div className="prompt-head">
-            <span className="pill blue">{typeName(selected)}</span>
-            <label className="split-control">Width<input type="range" aria-label="Prompt panel width" min="30" max="55" value={split} onChange={(event) => { const value = Number(event.target.value); setSplit(value); try { localStorage.setItem('fieldbook.writingSplit', String(value)); } catch { /* Browser preference is optional. */ } }} /><span>{split}%</span></label>
-          </div>
+          <span className="pill blue">{typeName(selected)}</span>
           <h3>{displayName(selected.name)}</h3>
           <WritingTaskPrompt prompt={selected.prompt} image={image} />
           {!fragment && <div className="prompt-tip">{tips[mode] || tips.full}</div>}
@@ -416,7 +435,7 @@ export function WritingDeskPage() {
                   if (saved) fb.toast('Draft saved.');
                 }}
               >
-                <Save size={16} /> {fb.saveStatus === 'failed' || fb.saveStatus === 'error' ? 'Retry save' : 'Save draft'}
+                <Save size={16} /> {draftStatus === 'failed' ? 'Retry save' : 'Save draft'}
               </button>
               <button className="btn primary" type="button" onClick={openSave} data-testid="writing-finished">
                 Finish practice <ArrowRight size={16} />
