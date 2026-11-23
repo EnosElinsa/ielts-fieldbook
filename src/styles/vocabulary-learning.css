@@ -155,6 +155,7 @@
 .vocabulary-learning-list-word > span { color:var(--muted); font-size:12px; min-inline-size:20px; }
 .vocabulary-learning-list-word strong { font-size:19px; min-inline-size:0; overflow-wrap:anywhere; }
 .vocabulary-learning-list li > p { margin:2px 0 4px 32px; line-height:1.65; }
+.vocabulary-learning-list-pos { margin-inline-end: .45em; color: var(--muted); font-size: .85em; }
 .vocabulary-learning-list-actions { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-inline-start:32px; }
 .vocabulary-learning-list-actions .btn { min-block-size:44px; }
 .vocabulary-learning-stage :is(button,a,[tabindex]):focus-visible { outline:2px solid var(--blue); outline-offset:3px; }

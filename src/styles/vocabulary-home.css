@@ -44,6 +44,13 @@
   max-inline-size: 100%;
   white-space: normal;
 }
+.vocabulary-home-next.has-draft {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+}
+.vocabulary-home-next.has-draft p { margin: 0; color: var(--muted); }
 .vocabulary-home-next.has-recommendation {
   display: grid;
   grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
@@ -69,7 +76,6 @@
 .vocabulary-home-summary {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  max-inline-size: 580px;
   margin: 16px 0 0;
   padding: 0;
   list-style: none;
@@ -88,6 +94,8 @@
 }
 .vocabulary-home-summary .vocabulary-home-review-counts,
 .vocabulary-home-summary li:last-child {
+  display: grid;
+  gap: 6px;
   padding: 6px clamp(8px, 2vw, 18px);
 }
 .vocabulary-home-summary li:first-child .vocabulary-home-review-counts {
@@ -98,7 +106,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 4px;
-  min-block-size: 32px;
+  min-block-size: 44px;
+  max-inline-size: 260px;
   color: var(--blue);
   text-decoration: none;
 }
@@ -128,10 +137,13 @@
 }
 @media (max-width: 380px) {
   .vocabulary-home-summary {
-    font-size: 12px;
+    grid-template-columns: minmax(0, 1fr);
   }
+  .vocabulary-home-summary li + li { border-inline-start: 0; border-block-start: 1px solid var(--rule); }
+  .vocabulary-home-summary a { max-inline-size: none; }
   .vocabulary-home-summary .vocabulary-home-review-counts,
+  .vocabulary-home-summary li:first-child .vocabulary-home-review-counts,
   .vocabulary-home-summary li:last-child {
-    padding-inline: 4px;
+    padding: 12px 4px;
   }
 }

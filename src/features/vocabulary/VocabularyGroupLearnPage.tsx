@@ -350,7 +350,7 @@ export function VocabularyGroupLearnPage() {
           const partOfSpeech=vocabularyPartOfSpeech(resolved.sense?.pos);
           return <li key={row.entry.id} aria-current={row.entry.id===word.entry.id?'true':undefined}>
             <button type="button" className="vocabulary-learning-list-word" onClick={()=>navigateTo(batch*BATCH_SIZE+offset)}><span>{batch*BATCH_SIZE+offset+1}</span><strong>{row.entry.term}</strong>{viewedSet.has(row.entry.id)?<Check size={15} aria-label="Viewed"/>:null}</button>
-            <p>{partOfSpeech&&<><em>{partOfSpeech}</em>{' '}</>}{content?.definition||'Selected meaning unavailable'}</p>
+            <p>{partOfSpeech && <><em className="vocabulary-learning-list-pos">{partOfSpeech}</em>{' '}</>}{content?.definition || 'Selected meaning unavailable'}</p>
             {row.entry.id===word.entry.id?<div className="vocabulary-learning-list-actions"><Pronunciation entry={row.entry} sense={resolved.sense||null} accent={preferences.accent} compact/><button type="button" className="btn text" onClick={()=>{const next=new URLSearchParams(params);next.delete('layout');setParams(next,{replace:true,state:location.state});}}>Open card<ArrowRight size={14} aria-hidden="true"/></button></div>:null}
           </li>;
         })}</ol></div> : <VocabularyLearningCard cardKey={learningCardKey} position={position}>

@@ -96,8 +96,8 @@ export function createVocabularyPlayback(loadMedia = getVocabularyMedia): { play
       const timer = setTimeout(() => finish({ ok: false, source: 'none', reason: 'timeout' }), 20000);
       cancelStep = cancel;
       utterance.onend = () => finish(token === generation ? { ok: true, source: 'speech', accent, voice: voice.name } : cancelled());
-      utterance.onerror = event => finish({ ok: false, source: 'none', reason: event.error === 'not-allowed' ? 'blocked' : 'failed' });
-      try { synth.speak(utterance); } catch { finish({ ok: false, source: 'none', reason: 'failed' }); }
+      utterance.onerror = event => finish({ ok: false, source: 'none', reason: event.error === 'not-allowed' ? 'blocked' : 'device-voice-failed', accent });
+      try { synth.speak(utterance); } catch { finish({ ok: false, source: 'none', reason: 'device-voice-failed', accent }); }
     });
   }
 
@@ -161,6 +161,7 @@ export function createVocabularyPlayback(loadMedia = getVocabularyMedia): { play
           if (last.ok) last = { ...last, accent: selected?.accent, recording: selected, ...(pronunciation.required ? { senseMatch: 'matched' as const } : pronunciation.legacy ? { senseMatch: 'legacy' as const } : {}) };
           else if (!['cancelled', 'blocked'].includes(last.reason || '')) {
             if (recordingEligible && pronunciation.required) { finish({ ...last, reason: 'sense-recording-failed', accent: selected?.accent }); return; }
+            if (options.recording && selected) { finish({ ...last, reason: 'recording-failed', recording: selected }); return; }
             const fallbackReason = url ? `recording-${last.reason}` : recordingEligible ? 'target-recording-unavailable' : undefined;
             last = { ...await speech(text, accent, rate, volume, token), ...(fallbackReason ? { fallbackReason } : {}), ...(pronunciation.required ? { senseMatch: 'unverified' as const } : pronunciation.legacy ? { senseMatch: 'legacy' as const } : {}) };
           }
