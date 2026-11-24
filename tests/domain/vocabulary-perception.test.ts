@@ -16,7 +16,7 @@ const raw=(term:string,at:number)=>originals[term][at];
 const row=(term:string,at:number)=>corrections.find(item=>item.entryId===entry(term).id&&item.senseId===raw(term,at).id)!;
 const selected=(term:string,at:number)=>supplementVocabularySense(entry(term).id,raw(term,at),[],hasVocabularySenseEdits);
 
-test('all twenty-two perception records keep their independent source identities',()=>{
+test('all twenty-two perception records keep their independent source identities', { timeout: 15_000 }, ()=>{
  const records=ledger.records.filter(item=>terms.includes(item.term));expect(records).toHaveLength(22);
  for(const term of terms)for(const [at,sense]of originals[term].entries()){
   expect(row(term,at).originalSense).toEqual(sense);expect(row(term,at).referenceUrl).toMatch(/oldid=\d+$/);

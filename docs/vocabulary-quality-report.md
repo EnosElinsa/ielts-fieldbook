@@ -2,7 +2,7 @@
 
 Generated with `npm run vocabulary:quality` from checked-in public data and the actual learning-context and exercise resolvers. No account data or external services are read.
 
-Source snapshot: `c32cb6e1a2dd584b19ab3e740c6db704a0d4e0bab4f28b6f4e99421d9a813b68`.
+Source snapshot: `6d2ff518888360c8f4803e221cfec58376922121016a0321bc3ffe8d1e69998b`.
 
 ## Coverage
 
@@ -14,16 +14,16 @@ Source snapshot: `c32cb6e1a2dd584b19ab3e740c6db704a0d4e0bab4f28b6f4e99421d9a813b
 | Existing editorial reviews | 9551 |
 | Dictionary senses still pending | 42601 |
 | Words with a resolved learning meaning | 7021 |
-| Distinct learning-content variants | 9132 |
+| Distinct learning-content variants | 10064 |
 | Default/group learning contexts, including multiple-meaning lessons | 16296 |
-| Learning variants with a displayed example or reading note | 9132 |
-| Learning variants with collocations or reading cues | 3622 |
-| Learning variants with distinction notes | 1584 |
-| Learning variants supporting sentence gaps | 7794 |
-| Learning variants supporting distinction questions | 340 |
+| Learning variants with a displayed example or reading note | 10064 |
+| Learning variants with collocations or reading cues | 3698 |
+| Learning variants with distinction notes | 1655 |
+| Learning variants supporting sentence gaps | 8667 |
+| Learning variants supporting distinction questions | 360 |
 | Learning variants with content-review signals | 0 |
-| Learning variants without content-review signals | 9132 |
-| Learning variants with enrichment opportunities | 8754 |
+| Learning variants without content-review signals | 10064 |
+| Learning variants with enrichment opportunities | 9666 |
 | Exact-content decisions retaining valid examples | 285 |
 | Source groups sharing a normalised definition and POS within one word | 12 |
 
@@ -42,11 +42,11 @@ Learning variants preserve exact content and provenance. A word can have a defau
 | truncated-example | content-review | 0 | 0 | 2063 |
 | archaic-example | content-review | 0 | 0 | 1341 |
 | example-fragment-signal | content-review | 0 | 283 | 3636 |
-| missing-collocations | enrichment | 5466 | 5466 | 43065 |
-| missing-distinctions | enrichment | 7512 | 7512 | 43239 |
+| missing-collocations | enrichment | 6322 | 6322 | 43065 |
+| missing-distinctions | enrichment | 8373 | 8373 | 43239 |
 | duplicate-gloss | content-review | 0 | 0 | 24 |
-| no-cloze-task | enrichment | 1281 | 1281 | Not scanned |
-| no-distinction-task | enrichment | 8735 | 8735 | Not scanned |
+| no-cloze-task | enrichment | 1340 | 1340 | Not scanned |
+| no-distinction-task | enrichment | 9647 | 9647 | Not scanned |
 
 These signals are candidates for review, not proven linguistic defects. A phrase can be a valid example; an old quotation can be appropriate reading material; two glosses can belong to distinct source identities. Typed reading notes and reference records do not require sentence gaps. Exercise availability is scanned for learning variants only, not every reference meaning. The availability of a question is not proof of its semantic quality. No missing-diagram signal is generated.
 
@@ -73,10 +73,10 @@ Content-review signals precede enrichment opportunities in the visible work queu
 | depression | kaikki:9ef42cf9e4e4ef2611 | no-distinction-task | 5 |
 | drought | general | no-distinction-task | 5 |
 | drum | kaikki:49fa3250de7cd11e4f | no-cloze-task, no-distinction-task | 5 |
-| exchange | kaikki:a0380dbcf881c102a9 | no-distinction-task | 5 |
 | exploit | kaikki:4a2aeed70f747bd282 | no-cloze-task, no-distinction-task | 5 |
 | faculty | kaikki:1a7888a33c08b8e60c | no-distinction-task | 5 |
 | ferry | kaikki:bdb67cb1cf9fe4b097 | no-distinction-task | 5 |
 | freeze | kaikki:d088feb15fadbd8685 | no-cloze-task, no-distinction-task | 5 |
+| landmark | kaikki:8b7e69c5ac9428d1ec | no-distinction-task | 5 |
 
 The complete fingerprinted queue is generated at `local/audits/vocabulary-quality.json`. It is an offline work artifact, not a published dictionary or an approval ledger. Export bounded packages by problem type using the workflow in [vocabulary-bulk-workflow.md](vocabulary-bulk-workflow.md).

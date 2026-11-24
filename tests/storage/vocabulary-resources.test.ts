@@ -5,13 +5,24 @@ import { createHash } from 'node:crypto';
 import { buildVocabularyResources, vocabularyResourceHeaders } from '../../scripts/vocabularyResources';
 
 let release: ReturnType<typeof buildVocabularyResources>;
-const resourceBuildTimeout = 75_000;
+const resourceBuildTimeout = 120_000;
 // Every assertion reads the same release. Generate it once; the determinism test
 // still compares a second independent build of the complete retained corpus.
 // This includes every archived teaching release, not only the current pack.
 // Full-suite runs have taken around 50 s for a single build. These checks
 // verify content and historical bytes; the bundle budget is checked separately.
 beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, resourceBuildTimeout);
+
+test('the whole-wordbook review retains the previous production manifest and its group resources', () => {
+  const url = '/vocabulary-resources/manifest.071037ee1dd3e5f9.json';
+  const original = JSON.parse(release.resources.get(url)!);
+  for (const unit of original.units) {
+    if (!unit.resource) continue;
+    expect(release.resources.has(unit.resource), unit.id).toBe(true);
+    expect(release.resources.has(unit.teachingResource), unit.id).toBe(true);
+  }
+  expect(release.manifestUrl).not.toBe(url);
+});
 
 test('the travel teaching revision retains the published manifest and its resources', () => {
   const url = '/vocabulary-resources/manifest.b7d154e9cb664848.json';

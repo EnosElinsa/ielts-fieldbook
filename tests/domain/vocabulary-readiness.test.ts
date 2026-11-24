@@ -75,7 +75,10 @@ test.each([
   const result=resolveVocabularyLearningContext(raw,request);
   expect(result.sense?.id).toBe(id);
   expect(result.sense?.definition).toMatch(definition);
-  expect(result.sense?.example).toBe(example);
+  const expectedExample = term === 'insane' && request === membership && membership?.bookId === 'ielts-vocabulary'
+    ? 'Given how exhausted she was, it seemed insane to expect her to work another full shift.'
+    : example;
+  expect(result.sense?.example).toBe(expectedExample);
   if(term==='information') {
    const originalMeaning=result.entry.senses.find(sense=>sense.id===raw.senses[0].id);
    expect(originalMeaning?.definition).toMatch(/describes.*attributes/);

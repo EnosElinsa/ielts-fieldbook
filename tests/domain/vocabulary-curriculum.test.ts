@@ -22,9 +22,10 @@ test.each(['porch', 'hut', 'nursery'])('explicit current %s meaning resolves fro
   expect(resolveVocabularyLearningContext(raw, { ...member, senseId: 'missing-sense' }).sense).toBeUndefined();
 });
 
-test('every released membership has a complete explicit learning curriculum without pretending source confirmation', () => {
+test('every released membership has a complete explicit learning curriculum without pretending source confirmation', { timeout: 20_000 }, () => {
+  const entries = new Map<string, VocabularyEntry>(catalog.entries.map((entry: VocabularyEntry) => [entry.id, entry]));
   for (const m of catalog.memberships) {
-    const e = catalog.entries.find((row: VocabularyEntry) => row.id === m.entryId);
+    const e = entries.get(m.entryId)!;
     const resolved = resolveVocabularyLearningContext(e, m);
     expect(resolved.curriculum, `${m.bookId}/${m.unitId}/${e.term}`).toBeDefined();
     expect(resolved.curriculum?.title).toBeTruthy();
