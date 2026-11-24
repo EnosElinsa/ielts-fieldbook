@@ -354,9 +354,11 @@ test('practising a linked dictionary meaning saves only that sense before naviga
   expect(draft.vocabulary[0].senses.map((sense: any) => sense.id)).toEqual([linkedMeaning.id]);
   expect(draft.vocabularyEvidence).toEqual([]);
   expect(draft.vocabularyReviews).toEqual([]);
-  const route = new URL(screen.getByLabelText('Current route').textContent!, 'https://example.test');
-  expect(route.pathname).toBe('/vocabulary/review');
-  expect(route.searchParams.get('senseId')).toBe(linkedMeaning.id);
+  await waitFor(() => {
+    const route = new URL(screen.getByLabelText('Current route').textContent!, 'https://example.test');
+    expect(route.pathname).toBe('/vocabulary/review');
+    expect(route.searchParams.get('senseId')).toBe(linkedMeaning.id);
+  });
 });
 
 test('a failed linked-meaning save stays on the detail page and can be retried', async () => {

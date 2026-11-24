@@ -5,7 +5,7 @@ import { resolveVocabularyLearningContext } from '../../src/domain/vocabulary/co
 import { getVocabularyReviewQueue, normalizeVocabularyCollections } from '../../src/domain/vocabulary';
 import { currentGroupLearningRef } from '../../src/domain/vocabulary/learningMeaningUpdate';
 import { vocabularyCurriculum } from '../../src/domain/vocabulary/curriculum';
-import { reviewedEntry } from '../../src/domain/vocabulary/content';
+import { learningTask, reviewedEntry } from '../../src/domain/vocabulary/content';
 import corrections from '../../src/domain/vocabulary/readinessCorrections.json';
 import type { VocabularyEntry } from '../../src/domain/vocabulary/types';
 
@@ -17,6 +17,27 @@ afterEach(() => Object.assign(VOCABULARY_CATALOG, structuredClone(initial)));
 
 const travel = { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-14-group-01' };
 const government = { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-15-group-01' };
+
+test('the architecture group teaches the architectural arch and preserves explicit older meanings', () => {
+  const entry = legacyEntry('arch', 'wordbook');
+  const original = resolveVocabularyLearningContext(entry).sense!;
+  const resolved = resolveVocabularyLearningContext(entry, group);
+  expect(resolved.sense).toMatchObject({
+    id: 'kaikki:e1189a58e1b7de8b1f',
+    pos: 'noun',
+    example: 'A brick arch frames the entrance to the courtyard.',
+  });
+  expect(learningTask(resolved.entry, resolved.sense!, 'cloze')).toMatchObject({
+    prompt: 'A brick _____ frames the entrance to the courtyard.',
+    acceptedAnswers: ['arch'],
+  });
+  const previous = { entryId: entry.id, senseId: original.id };
+  expect(resolveVocabularyLearningContext(entry, { ...group, senseId: original.id }).sense?.definition).toBe('An inverted U shape.');
+  expect(currentGroupLearningRef({ vocabulary: [entry] }, group, previous).senseId).toBe(resolved.sense!.id);
+
+  entry.senses.find(sense => sense.id === original.id)!.definition = 'The shape I noted in class.';
+  expect(currentGroupLearningRef({ vocabulary: [entry] }, group, previous)).toEqual(previous);
+});
 
 test.each([
   ['organisation', 'A group of people working together for a particular purpose.', 'The organisation provides advice to local councils.'],

@@ -1,0 +1,5598 @@
+{
+  "removeCorrections": [],
+  "restoreCorrections": [],
+  "removeTopics": [
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-f169a30a",
+      "senseId": "kaikki:a49662054c5146ef4f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-8d12796b",
+      "senseId": "kaikki:c44d534d193ae3abdd"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-7c6e68be",
+      "senseId": "kaikki:aeeef52015ed860868"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-b61281c7",
+      "senseId": "kaikki:6461e2f617f86839de"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-71c55b81",
+      "senseId": "kaikki:a626832b253d08f5f0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-a66d902",
+      "senseId": "kaikki:bf48d000b0a8c1bf80"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-2de9a835",
+      "senseId": "kaikki:83bf31711712cb9cdb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-56b8236b",
+      "senseId": "kaikki:f7aa8d3291cddd44f9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-b875e1d",
+      "senseId": "kaikki:32b5e9de2598c4059c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-ad6455a",
+      "senseId": "kaikki:9788703c8da930277f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-c77cfe9e",
+      "senseId": "kaikki:000dbf3a7a47758325"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-7c7996d3",
+      "senseId": "kaikki:51ae488cdf3ce1c09d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-a75cd199",
+      "senseId": "kaikki:fbe6dca085a9a76607"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-79aac2e8",
+      "senseId": "kaikki:c5721ff3c59f29c907"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
+      "entryId": "ve-3b45a7dc",
+      "senseId": "kaikki:97a771919d3ce9f715"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-02",
+      "entryId": "ve-7c6df006",
+      "senseId": "kaikki:0286870ac8114fb2ed"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-02",
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:23c53eb2c991ed791c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-02",
+      "entryId": "ve-ba6a0852",
+      "senseId": "kaikki:efd3cc813111180050"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-02",
+      "entryId": "ve-5eea93ee",
+      "senseId": "kaikki:def6070d850ac9dfe0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-02",
+      "entryId": "ve-9f09398c",
+      "senseId": "kaikki:aa5f64a3f0ba1a0e7e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-02",
+      "entryId": "ve-ba05add",
+      "senseId": "kaikki:5e88196629623b7b66"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-03",
+      "entryId": "ve-7c6adbfd",
+      "senseId": "kaikki:9448773970e5d47c43"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-03",
+      "entryId": "ve-d888eb7f",
+      "senseId": "kaikki:45a6f893c84b5e42db"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-03",
+      "entryId": "ve-73da63ae",
+      "senseId": "kaikki:5238741509914d15c7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-03",
+      "entryId": "ve-7c7752ac",
+      "senseId": "kaikki:9fda1e72bcd1792b27"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-04",
+      "entryId": "ve-3dc0c915",
+      "senseId": "kaikki:d7475af04266cc0f60"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-04",
+      "entryId": "ve-ad3cd797",
+      "senseId": "kaikki:5703242896099cffb8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-04",
+      "entryId": "ve-42d30d2e",
+      "senseId": "kaikki:15469cf154414a6823"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-04",
+      "entryId": "ve-a78d9a34",
+      "senseId": "kaikki:21bcf46bd83c4a7df8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-04",
+      "entryId": "ve-5e1011a5",
+      "senseId": "kaikki:679e2ed7ec86d87b17"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-04",
+      "entryId": "ve-3755d106",
+      "senseId": "kaikki:f9290fe771b4e6ab57"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-04",
+      "entryId": "ve-656ad43",
+      "senseId": "kaikki:dbace7e97d162797c0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-04",
+      "entryId": "ve-c23482f1",
+      "senseId": "kaikki:969a5dc534302c512c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-04",
+      "entryId": "ve-59dc071a",
+      "senseId": "kaikki:0bc6ff572e32008d3f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-04",
+      "entryId": "ve-aecb90c",
+      "senseId": "kaikki:97f52ec20bbc855730"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-05",
+      "entryId": "ve-4662bce3",
+      "senseId": "kaikki:873af1d1178872a3b8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-05",
+      "entryId": "ve-22e5c397",
+      "senseId": "kaikki:addc200bf137711559"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-05",
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:51611f88bd16de13de"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-05",
+      "entryId": "ve-9cd4975",
+      "senseId": "kaikki:217525d78d37eb077a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-05",
+      "entryId": "ve-7c6b12aa",
+      "senseId": "kaikki:7b8bfd4a16952f0330"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-05",
+      "entryId": "ve-28d1c2f0",
+      "senseId": "kaikki:e561324756c4d5522b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-05",
+      "entryId": "ve-6413cd4a",
+      "senseId": "kaikki:16813c728892645120"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-05",
+      "entryId": "ve-a369275",
+      "senseId": "kaikki:1f50a63af782e5bc0b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-05",
+      "entryId": "ve-a364435",
+      "senseId": "kaikki:2fc412b5dd0e27ec20"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-05",
+      "entryId": "ve-b873ab0",
+      "senseId": "kaikki:68716680e67a901764"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-05",
+      "entryId": "ve-7c6ee1cc",
+      "senseId": "kaikki:59fde941df23b5496d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-05",
+      "entryId": "ve-ca013d14",
+      "senseId": "kaikki:191551c59a63ec8392"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-05",
+      "entryId": "ve-7c757d40",
+      "senseId": "kaikki:62caaa9cf37c9a808c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-a69a7b23",
+      "senseId": "kaikki:276f1c43942c06bc13"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-5200cb3d",
+      "senseId": "kaikki:e4569309c3ed4a53b6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-a6374d77",
+      "senseId": "kaikki:6d929ecf93242b83eb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-1f5e0ae6",
+      "senseId": "kaikki:afa52c472a960e6b70"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-e5b112d1",
+      "senseId": "kaikki:b283f54e0b2770f596"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "vocab:fluctuate",
+      "senseId": "general"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-51a8dcb9",
+      "senseId": "kaikki:e9679f2d61bfd3724a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-55f24c81",
+      "senseId": "kaikki:233af7639124f2f861"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-bcbe1541",
+      "senseId": "kaikki:7869d140819034d0f0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-6d117f1a",
+      "senseId": "kaikki:330be53c2a04930b23"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-de2e2727",
+      "senseId": "kaikki:243513125fc8b663b9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-6105083d",
+      "senseId": "kaikki:127d380a3f01afa16e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-6d24f1df",
+      "senseId": "kaikki:397067e66b41ea35d3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-f6d1be08",
+      "senseId": "kaikki:2d0e8bdabecd73ef76"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-528e9bd8",
+      "senseId": "kaikki:7a170c72a4294d20cd"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-516f662f",
+      "senseId": "kaikki:45c9e8682870efbdfc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-ba21f46",
+      "senseId": "kaikki:f8baf88b5c484f382a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
+      "entryId": "ve-b9fedab",
+      "senseId": "kaikki:28133e961d2a080c91"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-7c6d9d4e",
+      "senseId": "kaikki:69c6954e11cde1fed5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-f32a0040",
+      "senseId": "kaikki:94315bac910dd82a91"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-85de31dc",
+      "senseId": "kaikki:5add907970d3062e3a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-7365097a",
+      "senseId": "kaikki:f3b97732c966ae210e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-247a9a04",
+      "senseId": "kaikki:8eb5ec87a0dd426382"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-8366cba8",
+      "senseId": "kaikki:b1a831f5de690f1a08"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-8cafeb9c",
+      "senseId": "kaikki:94ade0eb6770a24224"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-4564bf85",
+      "senseId": "kaikki:271cd5fdcc18e989c6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-465d5bbf",
+      "senseId": "kaikki:4ff655d8fa4c988267"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-e5558d69",
+      "senseId": "kaikki:3e216252e3291fe3e2"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-7c6f232e",
+      "senseId": "kaikki:115a98002b09bdf6fa"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-4058fa13",
+      "senseId": "kaikki:9612b1d966887f81af"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-2de758e6",
+      "senseId": "kaikki:8736f812757c759d6a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-97c59bee",
+      "senseId": "kaikki:ac17a27957f75d6573"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-2ac65b87",
+      "senseId": "kaikki:77394bb90c11bca97a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-315a532f",
+      "senseId": "kaikki:9b62851048ed86180f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-c7a8e415",
+      "senseId": "kaikki:2ad9bbd2cd5e10d135"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-56580b4d",
+      "senseId": "kaikki:41b1c57e4581e30164"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-ba01d26",
+      "senseId": "kaikki:051a9e4198a1fb5ec9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-d6ea8980",
+      "senseId": "kaikki:64d338267d00927dca"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-aeb7a0a",
+      "senseId": "kaikki:0f27236fd08accb8cc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-ae10d51",
+      "senseId": "kaikki:0bbbf661e80b13bc81"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-7621a988",
+      "senseId": "kaikki:f58880f2f09a21d63c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-02",
+      "entryId": "ve-7c776516",
+      "senseId": "kaikki:f0da00a60b93518006"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-6670f7d6",
+      "senseId": "kaikki:1dc6dc72e1b5375582"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-db0a35fc",
+      "senseId": "kaikki:bf72a12255c7fb4c03"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-a8ef1e8",
+      "senseId": "kaikki:de689af86961843679"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-a8e95a8",
+      "senseId": "kaikki:5a31a92ab4005535af"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-7c70f12d",
+      "senseId": "kaikki:52fcff2fda3f9392ee"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-42dbc20c",
+      "senseId": "kaikki:1a1037eef8a7253e1c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-1640bca6",
+      "senseId": "kaikki:077666494d9a99258b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-6189518c",
+      "senseId": "kaikki:4ad55a3022b6a4110b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-b8737e4",
+      "senseId": "kaikki:fc1d3de94d7f5f7b58"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-a364613",
+      "senseId": "kaikki:f1a38526ea3228fb77"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-996a1256",
+      "senseId": "kaikki:5f985645760d12620e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-574b2bff",
+      "senseId": "kaikki:3c2f9872e770ffab51"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-b1550fa1",
+      "senseId": "kaikki:882f4d06dcd399d025"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-fd602f0c",
+      "senseId": "kaikki:1d750e12c9fc2fbdeb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-7c79af1a",
+      "senseId": "kaikki:2a98472339e17fa844"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-6853d98d",
+      "senseId": "kaikki:a8ab7caa7390fda0ad"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01",
+      "entryId": "ve-48663635",
+      "senseId": "kaikki:d322441addfe079110"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02",
+      "entryId": "ve-7c707952",
+      "senseId": "kaikki:6ffcd1853ae7f0571a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02",
+      "entryId": "ve-c978f6b6",
+      "senseId": "kaikki:ad81863862b4ee99a1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02",
+      "entryId": "ve-7c70f00c",
+      "senseId": "kaikki:3b56a7dc8b947947df"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02",
+      "entryId": "ve-7c7170db",
+      "senseId": "kaikki:b022c1ec41c97cfbdb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02",
+      "entryId": "ve-ab531de",
+      "senseId": "kaikki:da175f4a60c915d765"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02",
+      "entryId": "ve-7c6f3ce7",
+      "senseId": "kaikki:641f6a7b007de97695"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02",
+      "entryId": "ve-d2f26922",
+      "senseId": "kaikki:295e278167a22a0f68"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02",
+      "entryId": "ve-b877070",
+      "senseId": "kaikki:e13cb246daa64bc7a3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02",
+      "entryId": "ve-7c79751e",
+      "senseId": "kaikki:5c61d385bfc2e420a8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02",
+      "entryId": "ve-7cae72ff",
+      "senseId": "kaikki:e5a4c9d8fd2e981a46"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02",
+      "entryId": "ve-7fea6b7c",
+      "senseId": "kaikki:43db9a91e05d0a136d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02",
+      "entryId": "ve-b04c1408",
+      "senseId": "kaikki:ea9a87787771b16dbc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02",
+      "entryId": "ve-670c55cb",
+      "senseId": "kaikki:12cec18881f28e083f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02",
+      "entryId": "ve-7c778ef7",
+      "senseId": "kaikki:c3ba676e74e6207b3d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-3c5587d0",
+      "senseId": "kaikki:f85909447457e37aa4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-128449e4",
+      "senseId": "kaikki:6f63181860bf5ddf5a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-142fc86e",
+      "senseId": "kaikki:d5f85034c8f5fd3a8c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-b8747f4",
+      "senseId": "kaikki:9d019d4c98e048fd49"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-8cd57a58",
+      "senseId": "kaikki:7b42ad89bfcc5fca92"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-7c70685f",
+      "senseId": "kaikki:c3d6d86da650c9946c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-a8ee86e",
+      "senseId": "kaikki:b18fd2a132047a5646"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-ac4652ca",
+      "senseId": "kaikki:598c09479aaeaa92c9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-11fa499d",
+      "senseId": "kaikki:3a86b92a9a84501856"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-4a196e01",
+      "senseId": "kaikki:b253af3cdde635a3cd"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-a9d0e8e",
+      "senseId": "kaikki:a64fae135a56c60f8c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-2fa3fa10",
+      "senseId": "kaikki:35e6f095c1ff3aa432"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-a46986a4",
+      "senseId": "kaikki:2b2ed8e268e99f4303"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-2ca0a038",
+      "senseId": "kaikki:c44b913506e141def7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-2ac65289",
+      "senseId": "kaikki:bf86772938dfdb6224"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-a4fad6f5",
+      "senseId": "kaikki:7feb707da17d3a10ef"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-c6bbdb6e",
+      "senseId": "kaikki:5723a47221a028a1fe"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-6b9a6e3e",
+      "senseId": "kaikki:6d2446501b78b49a20"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-96273176",
+      "senseId": "kaikki:8da213e2998dc92c1a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-ba00f02",
+      "senseId": "kaikki:c0162c617f185f0965"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-7f8c3354",
+      "senseId": "kaikki:ad63a72571b2be6f4b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-c0abedc5",
+      "senseId": "kaikki:cdf49306e473a2b83e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-03",
+      "entryId": "ve-76239589",
+      "senseId": "kaikki:4b3056ecfff5096b07"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-bc902f83",
+      "senseId": "kaikki:5d6a741fc24f5994cb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-a8df29e",
+      "senseId": "kaikki:0fec65b720ca4238ae"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-c36f9c7d",
+      "senseId": "kaikki:640435e922a747cae1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-5c1731ab",
+      "senseId": "kaikki:148ccad0e9208dd86f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-5c6bd876",
+      "senseId": "kaikki:26b155afe7ff70d1a5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-a8f1872",
+      "senseId": "kaikki:ea8f77d0a8d0be6ada"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-78651562",
+      "senseId": "kaikki:cdfbe9d0332a411f71"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-7c6b2d33",
+      "senseId": "kaikki:696a9bc1bca30623c8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-9ffe12ad",
+      "senseId": "kaikki:60608d4335c5dcfdb6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-91f2164",
+      "senseId": "kaikki:5b7d9cfdf9669a8d04"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-50b9cdc9",
+      "senseId": "kaikki:19292600d830210189"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-525689ef",
+      "senseId": "kaikki:56cbce33319b53c7df"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-b8753ed",
+      "senseId": "kaikki:1cddd5e1f833907d7f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-aea2a599",
+      "senseId": "kaikki:442c4a40e2bdbb51d6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-c37429d1",
+      "senseId": "kaikki:b588c9776b16237c58"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-57692bdb",
+      "senseId": "kaikki:a0a51b788acc6f49a5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-398ad72b",
+      "senseId": "kaikki:a112890fe9b4bf8171"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-5fd66b31",
+      "senseId": "kaikki:c066a3fe7fbcf3a197"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-c79d5dc0",
+      "senseId": "kaikki:61beba0567aea2b6a6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-f2e3621a",
+      "senseId": "kaikki:72f28365623b382584"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "vocab:sample",
+      "senseId": "general"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-3b6b76a3",
+      "senseId": "kaikki:cf0a4c34674bfb3abe"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-3fe512e3",
+      "senseId": "kaikki:1e005fc6de3d5ec5b4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-db6889f",
+      "senseId": "kaikki:542a13218c153cb6ed"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-01",
+      "entryId": "ve-e9d017cf",
+      "senseId": "kaikki:65343b667458f5afbc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-02",
+      "entryId": "ve-6c7a320",
+      "senseId": "kaikki:6dc8186034f0687467"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-02",
+      "entryId": "ve-38a970a3",
+      "senseId": "kaikki:e4cedf27212f2299cc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-02",
+      "entryId": "ve-993cbfff",
+      "senseId": "kaikki:86b21f6055784775b0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-02",
+      "entryId": "ve-a36c237",
+      "senseId": "kaikki:e9f772057a61d24dfd"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-02",
+      "entryId": "ve-3900a96e",
+      "senseId": "kaikki:888be2b3961aca00f2"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-02",
+      "entryId": "ve-d6fe3be",
+      "senseId": "kaikki:656ba6768e0e98421b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-02",
+      "entryId": "ve-54abfb49",
+      "senseId": "kaikki:a2bdaf93e605b86320"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-02",
+      "entryId": "ve-578f589a",
+      "senseId": "kaikki:1c56aee9182c0abcc1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-02",
+      "entryId": "ve-df01a2f0",
+      "senseId": "kaikki:6128937d78353db0ce"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-02",
+      "entryId": "ve-61bf92f8",
+      "senseId": "kaikki:7a16a30b9233fde9b0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-02",
+      "entryId": "ve-64a23c58",
+      "senseId": "kaikki:01f2a9814ebf4893f9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-02",
+      "entryId": "ve-818301bb",
+      "senseId": "kaikki:fe1376a98d37980c82"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-02",
+      "entryId": "ve-bad8e98",
+      "senseId": "kaikki:6aca30dd55f678e189"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-04-group-02",
+      "entryId": "ve-fb848a96",
+      "senseId": "kaikki:6ee1bd395dabd6a90f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-01",
+      "entryId": "ve-1a47d31d",
+      "senseId": "kaikki:9d78f6be8eca072ddc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-01",
+      "entryId": "ve-ffa2288b",
+      "senseId": "kaikki:224d74285605217c06"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-01",
+      "entryId": "ve-d158e35d",
+      "senseId": "kaikki:0baae47beaf29fea76"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-01",
+      "entryId": "ve-b28e4f38",
+      "senseId": "kaikki:489cc663d85891d42d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-01",
+      "entryId": "ve-f0bde3cf",
+      "senseId": "kaikki:c133fd3ff26450f85a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-01",
+      "entryId": "ve-585fce26",
+      "senseId": "kaikki:b12be1128cba218ca4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-01",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:80c1ad587c0afbe12b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-01",
+      "entryId": "ve-29f3af53",
+      "senseId": "kaikki:a2280393dded93e065"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-01",
+      "entryId": "ve-6b92b4ae",
+      "senseId": "kaikki:03ad442474cce36a35"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-01",
+      "entryId": "ve-7f75c6d7",
+      "senseId": "kaikki:57882fb9120b95d59f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-01",
+      "entryId": "ve-b877faf",
+      "senseId": "kaikki:494ab1d41978c94611"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-02",
+      "entryId": "ve-5ba349fc",
+      "senseId": "kaikki:cfd0c424e80b6a6e20"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-02",
+      "entryId": "ve-606d4835",
+      "senseId": "kaikki:d021d5d7616febd20c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-02",
+      "entryId": "ve-e8f0903e",
+      "senseId": "kaikki:fb889f2da33f69cd88"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-02",
+      "entryId": "ve-5785deca",
+      "senseId": "kaikki:6d9c3d41b79adbe054"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-02",
+      "entryId": "ve-ab25735e",
+      "senseId": "kaikki:d1aff7a8ed9288a944"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-02",
+      "entryId": "ve-6363193a",
+      "senseId": "kaikki:8d196a9f9ff793f6af"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-02",
+      "entryId": "ve-7ebf5808",
+      "senseId": "kaikki:cf767662c848c1d98b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-02",
+      "entryId": "ve-fe420eed",
+      "senseId": "kaikki:7f9c873c144ecafc3d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-03",
+      "entryId": "ve-dab738f3",
+      "senseId": "kaikki:aec13cf61c89486dd9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-03",
+      "entryId": "ve-dd8bd8fa",
+      "senseId": "kaikki:6e6956fe6d2d9015d5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-03",
+      "entryId": "ve-4d1c62cd",
+      "senseId": "kaikki:62cf84470b32f5cc02"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-03",
+      "entryId": "ve-7c6e34c3",
+      "senseId": "kaikki:c696c554f076d8ddc3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-03",
+      "entryId": "ve-80a2e19e",
+      "senseId": "kaikki:8cfa81afc7bc2b8f50"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-04",
+      "entryId": "ve-178e96bb",
+      "senseId": "kaikki:84674d81056d98799b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-04",
+      "entryId": "ve-a6968d30",
+      "senseId": "kaikki:ecd7038310428a9faa"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-04",
+      "entryId": "ve-4348b570",
+      "senseId": "kaikki:6d03112bc12a615c09"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-04",
+      "entryId": "ve-5769b7bf",
+      "senseId": "kaikki:a10a1f35fb34361532"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-04",
+      "entryId": "ve-a468609",
+      "senseId": "kaikki:b02901009594386337"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-04",
+      "entryId": "ve-9b2722d0",
+      "senseId": "kaikki:25821adea9f7982b85"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-04",
+      "entryId": "ve-5794becf",
+      "senseId": "kaikki:6e3671cc6c48af9990"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-04",
+      "entryId": "ve-3c5237cc",
+      "senseId": "kaikki:15b292ab659cdfa906"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-04",
+      "entryId": "ve-b6c8386",
+      "senseId": "kaikki:6a3dc3b8393ffd90c5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-04",
+      "entryId": "ve-f72d6ea",
+      "senseId": "kaikki:ceddfd78d103539b6d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-04",
+      "entryId": "ve-8b512211",
+      "senseId": "kaikki:ba5cdeb7a3cd645c9d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-04",
+      "entryId": "ve-aecc907",
+      "senseId": "kaikki:a647384d29c09d8513"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-04",
+      "entryId": "vocab:variable",
+      "senseId": "general"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-7c703bad",
+      "senseId": "kaikki:d31f33c6c0e6931122"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-5c3addb7",
+      "senseId": "kaikki:27535b3bd6ab3d28c8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-9d1e70ae",
+      "senseId": "kaikki:4df4fc07d248f1d52c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-9d7c551d",
+      "senseId": "kaikki:4379ff8797bc02a512"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-43160580",
+      "senseId": "kaikki:196315db9ac38e7f36"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-98f5f5c0",
+      "senseId": "kaikki:73d50a575116823da6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-9d364e67",
+      "senseId": "kaikki:ab3733b87d97e79b43"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-7c6b87d0",
+      "senseId": "kaikki:fb4dd2e4207e2387b7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-37aed687",
+      "senseId": "kaikki:5c398815880c391bc1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-9bbfba2",
+      "senseId": "kaikki:b55c293c08fd78c8c8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-ad312d4",
+      "senseId": "kaikki:7c004fc335babdb942"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-8ced54de",
+      "senseId": "kaikki:f3fea1253b8017f9ce"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-5b873f4b",
+      "senseId": "kaikki:c3f7da5af7a2160276"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-b9a11c4",
+      "senseId": "kaikki:b7369e6296ed552a07"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-7c78b7e5",
+      "senseId": "kaikki:edd8a68b694b7631da"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-7feaec3c",
+      "senseId": "kaikki:354f0d4654fc703dc7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-7f9e0cfd",
+      "senseId": "kaikki:e13c4e7da04bb80698"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-f7a65b43",
+      "senseId": "kaikki:732d4c4a44dea62253"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-2797c2c3",
+      "senseId": "kaikki:848d71343a06e34115"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-7c76f1c4",
+      "senseId": "kaikki:0ff54b832bed68e04c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-05",
+      "entryId": "ve-b667523",
+      "senseId": "kaikki:84e1dbb9a363903979"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-a79261f",
+      "senseId": "kaikki:25280adc6ebfe98495"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-a7a9e04",
+      "senseId": "kaikki:619e3d2484a82f1c23"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-6fdbbf9a",
+      "senseId": "kaikki:be0fe58451be6b6487"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-f48f729",
+      "senseId": "kaikki:ce74aa1f9fd366b698"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-84911701",
+      "senseId": "kaikki:45f3fbe554501f4c18"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-f0705be2",
+      "senseId": "kaikki:caffc3adc9050a1013"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-55840e4d",
+      "senseId": "kaikki:53f66a5748516e64f4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-2e537fef",
+      "senseId": "kaikki:06deb9929801431385"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-9fdec693",
+      "senseId": "kaikki:3baf2386ee55c70beb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-7c75f952",
+      "senseId": "kaikki:8ed7b10a7f4b9c6ef0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-7e95123f",
+      "senseId": "kaikki:f076fbb476192916a1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-7e95157b",
+      "senseId": "kaikki:7db231fca0dc078227"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-1b2633f7",
+      "senseId": "kaikki:371dd8b4c3e73c1e8b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-7c798e1a",
+      "senseId": "kaikki:d5be3b4b1c54a85a23"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-e4875197",
+      "senseId": "kaikki:66ad70df348f9eceb7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-1837d7ea",
+      "senseId": "kaikki:f56ab81c31b8328243"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-806c14a0",
+      "senseId": "kaikki:a5a5d2c5ba7b76dc62"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-7c73af33",
+      "senseId": "kaikki:1006870928cdacfc07"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-06",
+      "entryId": "ve-985eefee",
+      "senseId": "kaikki:2069835336ac09b573"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-07",
+      "entryId": "ve-7c70e47e",
+      "senseId": "kaikki:95a910f8941d67d1a9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-07",
+      "entryId": "ve-75c85004",
+      "senseId": "kaikki:16cf0fd862c7b5623f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-07",
+      "entryId": "ve-6dbce197",
+      "senseId": "kaikki:5507b6ae3cae5de7aa"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-07",
+      "entryId": "ve-a7918201",
+      "senseId": "kaikki:be829359843300b9af"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-07",
+      "entryId": "ve-7c6eb2cc",
+      "senseId": "kaikki:ed02fbcd371523945f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-07",
+      "entryId": "ve-a22f18fc",
+      "senseId": "kaikki:2886b905ddb2eaa8b4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-07",
+      "entryId": "ve-8cf6293f",
+      "senseId": "kaikki:d26c191653c1106433"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-07",
+      "entryId": "ve-f27747b4",
+      "senseId": "kaikki:82c08a0fec50ffb242"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-07",
+      "entryId": "ve-b352cbf",
+      "senseId": "kaikki:711d4f894009f3bfec"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-07",
+      "entryId": "ve-da83c29",
+      "senseId": "kaikki:f9ea5666460eae8516"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-08",
+      "entryId": "ve-b9dd0652",
+      "senseId": "kaikki:e640ccd617cc6e1891"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-08",
+      "entryId": "ve-431d4b3f",
+      "senseId": "kaikki:3e8e11668b54773c11"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-08",
+      "entryId": "ve-1199cfed",
+      "senseId": "kaikki:45f53df28bd49d358f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-08",
+      "entryId": "ve-a468890",
+      "senseId": "kaikki:e5516ddf19e6a0ac66"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-08",
+      "entryId": "ve-56148bf8",
+      "senseId": "kaikki:194531b37d7433d24a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-08",
+      "entryId": "ve-26e15d76",
+      "senseId": "kaikki:843ba371c142b65b3d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-08",
+      "entryId": "vocab:research",
+      "senseId": "kaikki:25e953e1febcae6a37"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-08",
+      "entryId": "ve-bab782d",
+      "senseId": "kaikki:dd74ac1a7dd5ac9ca7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-05-group-08",
+      "entryId": "ve-e9f5f5b1",
+      "senseId": "kaikki:51c065a523c1dd002a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-c043f535",
+      "senseId": "kaikki:c23a8ef17bda202bc9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-b873244",
+      "senseId": "kaikki:b34b7b0bd2ef488b8d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-4ecf758e",
+      "senseId": "kaikki:54fc9747869c84a58c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-59527e88",
+      "senseId": "kaikki:37fde89a0e6d38e61c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-a8c4da6",
+      "senseId": "kaikki:0db3154ae66dd9b7f7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-99c078f6",
+      "senseId": "kaikki:d2438ef854c8a998da"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-7c6b6fa4",
+      "senseId": "kaikki:34d46a35ad565fefac"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-808740be",
+      "senseId": "kaikki:f77b7646dbcbe47372"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-525b0888",
+      "senseId": "kaikki:51bbde39590d72611e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-162f3625",
+      "senseId": "kaikki:f8a5632a2e8e8127db"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-5fb7042b",
+      "senseId": "kaikki:10e90dabf68ecaee39"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-7c6f4cd1",
+      "senseId": "kaikki:8364a1a15372cb05ec"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-bf6f7655",
+      "senseId": "kaikki:43e4d0b28f6efcc5bd"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-ca34285b",
+      "senseId": "kaikki:08aa1b6422cf5c9758"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-b9a54c1",
+      "senseId": "kaikki:fb5385bbfb44622599"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-80b1cc53",
+      "senseId": "kaikki:2d8aa4e9d3cd1a7ee4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-8dd02e7e",
+      "senseId": "kaikki:f886f9abdb3f5ec68a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01",
+      "entryId": "ve-e720f202",
+      "senseId": "kaikki:b66201c2f99090fbfc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "vocab:adapt",
+      "senseId": "general"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "ve-4dbc7158",
+      "senseId": "kaikki:708f8a9efd65e6a6cf"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "ve-f0174b67",
+      "senseId": "kaikki:b941d2ba9fc90b3041"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "ve-303661e2",
+      "senseId": "kaikki:43c40864edba8b73ff"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "ve-faf65896",
+      "senseId": "kaikki:5d0b1e77d49534aacb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "ve-8d7deee9",
+      "senseId": "kaikki:bf76da0fcf27dc1d3f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "ve-58b46453",
+      "senseId": "kaikki:da74e086cf3ca9b299"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "ve-d86ab76c",
+      "senseId": "kaikki:0749eeb2c7cb377336"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "ve-bfc209e3",
+      "senseId": "kaikki:dc8f73e6d969f8bfff"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "ve-b341991",
+      "senseId": "kaikki:cbcdbcf173d271fd2e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "ve-6fd0a584",
+      "senseId": "kaikki:7b347ba9ecffbce0e1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "ve-baf2585",
+      "senseId": "kaikki:c2cc073a3044fba74a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "ve-d6005cd8",
+      "senseId": "kaikki:7822061e2c248d3949"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "ve-18bb7349",
+      "senseId": "kaikki:f20cc5b6c828c5e717"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-02",
+      "entryId": "ve-e339554",
+      "senseId": "kaikki:f08927c119adc38f41"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-01",
+      "entryId": "ve-a20fbea",
+      "senseId": "kaikki:cfa1a8365edb9539ef"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-01",
+      "entryId": "ve-5952a6e4",
+      "senseId": "kaikki:42c592d767a9ffbbe8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-01",
+      "entryId": "ve-5c729376",
+      "senseId": "kaikki:91e63eb37752fc6d80"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-01",
+      "entryId": "ve-7c8c2099",
+      "senseId": "kaikki:1b293d241b2b4edee5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-01",
+      "entryId": "ve-52d3c59c",
+      "senseId": "kaikki:978742edfeff5ead6d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-01",
+      "entryId": "ve-71b999cd",
+      "senseId": "kaikki:82b402fcab6cead9e1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-01",
+      "entryId": "ve-6112bc92",
+      "senseId": "kaikki:5a25452064bc444987"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-01",
+      "entryId": "ve-f53c0c7f",
+      "senseId": "kaikki:b2b257809fe90bf2a0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-01",
+      "entryId": "ve-f34242f",
+      "senseId": "kaikki:14bde3ac3a1700eba2"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-01",
+      "entryId": "ve-a539848",
+      "senseId": "kaikki:d5ab6f0e76f5e3d890"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-01",
+      "entryId": "ve-7c799d80",
+      "senseId": "kaikki:97ba2ba25a59382afb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-01",
+      "entryId": "ve-bee233",
+      "senseId": "kaikki:eb81e18e8d211d5dcb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-02",
+      "entryId": "ve-2ab786cf",
+      "senseId": "kaikki:4e72a22da92d70f6a2"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-02",
+      "entryId": "ve-7c6f25d0",
+      "senseId": "kaikki:d82fb03de4407c849c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-02",
+      "entryId": "ve-151239c1",
+      "senseId": "kaikki:4a80ee6888eba29122"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-02",
+      "entryId": "ve-7f9e0971",
+      "senseId": "kaikki:a68340cc5048a3df28"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-02",
+      "entryId": "ve-6853e311",
+      "senseId": "kaikki:5a9c446945e327d4b8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-08-group-01",
+      "entryId": "ve-dd349dc5",
+      "senseId": "kaikki:2dc1db1641c1ca2dfc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-08-group-01",
+      "entryId": "ve-6422f6c6",
+      "senseId": "kaikki:2e674cdd8654c6c454"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-08-group-01",
+      "entryId": "ve-6dfb27ce",
+      "senseId": "kaikki:76a6c6f8270291467e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-08-group-01",
+      "entryId": "ve-6d07e8a4",
+      "senseId": "kaikki:f471bdfd1084cbfbda"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-08-group-01",
+      "entryId": "ve-b67fb7dd",
+      "senseId": "kaikki:f62a15fc3adec175ee"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-08-group-01",
+      "entryId": "ve-36be61b2",
+      "senseId": "kaikki:9321e10e58479ee1a4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-08-group-01",
+      "entryId": "ve-c8187812",
+      "senseId": "kaikki:d1b4aa78649bddaeb1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-08-group-01",
+      "entryId": "ve-15de519b",
+      "senseId": "kaikki:8713ad31c6dd9998d1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-08-group-01",
+      "entryId": "ve-7f8c33d2",
+      "senseId": "kaikki:d435f7c21eab67d82b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-08-group-01",
+      "entryId": "ve-805c10a3",
+      "senseId": "kaikki:792720624f6f1ae97c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-08-group-01",
+      "entryId": "ve-ae9ea8c",
+      "senseId": "kaikki:998987ed6a76cb77ca"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-08-group-01",
+      "entryId": "ve-b551f42",
+      "senseId": "kaikki:8aeb5d24a5e144b899"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-01",
+      "entryId": "ve-a283ecf",
+      "senseId": "kaikki:18019d3a1bd4223d7a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-01",
+      "entryId": "ve-5c09011c",
+      "senseId": "kaikki:5c7d89dfcc7792d59e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-01",
+      "entryId": "ve-3110ebd6",
+      "senseId": "kaikki:592691911e71e866dd"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-01",
+      "entryId": "ve-8631fdb7",
+      "senseId": "kaikki:16c564924fbe3ebf80"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-01",
+      "entryId": "ve-9cd49fe",
+      "senseId": "kaikki:829c5390081d12c479"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-01",
+      "entryId": "ve-a32aac0",
+      "senseId": "kaikki:ab1054db7d1663af6a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-01",
+      "entryId": "ve-2ebe6308",
+      "senseId": "kaikki:ec41b5d9813d9e897b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-01",
+      "entryId": "ve-50ead56",
+      "senseId": "kaikki:368f5818684c5fe569"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-01",
+      "entryId": "ve-a68111d",
+      "senseId": "kaikki:8ded267072c85182f1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-01",
+      "entryId": "ve-5c33a4e2",
+      "senseId": "kaikki:cb878f798a92c74d74"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-01",
+      "entryId": "ve-963b50d2",
+      "senseId": "kaikki:28811f2ff91b9bbf04"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-01",
+      "entryId": "ve-d633809b",
+      "senseId": "kaikki:157054842fe30f7039"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-01",
+      "entryId": "ve-6e0ef3b6",
+      "senseId": "kaikki:a26b0447534e16df21"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-02",
+      "entryId": "ve-dda9659b",
+      "senseId": "kaikki:cc2605eaa9b3c1c49f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-02",
+      "entryId": "ve-65d20028",
+      "senseId": "kaikki:d953dfe0286405ad4e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-02",
+      "entryId": "ve-ce506085",
+      "senseId": "kaikki:e027b2a790f3f2367f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-02",
+      "entryId": "ve-7c74a80e",
+      "senseId": "kaikki:c74f5f6a8689ba6976"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-02",
+      "entryId": "ve-db911a45",
+      "senseId": "kaikki:4c20769d527279e02d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-02",
+      "entryId": "ve-fa07cb32",
+      "senseId": "kaikki:0d81aadba7493ce359"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-02",
+      "entryId": "ve-bb67bbaa",
+      "senseId": "kaikki:f528516e69c6d75cca"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-02",
+      "entryId": "ve-80b5418d",
+      "senseId": "kaikki:f3e393611373e47d96"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-02",
+      "entryId": "ve-7c73c955",
+      "senseId": "kaikki:18fe5dc825b59f0f99"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-02",
+      "entryId": "ve-fe4b2a44",
+      "senseId": "kaikki:48e92028f6b65aba30"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-02",
+      "entryId": "ve-38abbc9a",
+      "senseId": "kaikki:3e47da2efec28982e4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-02",
+      "entryId": "ve-7621a81e",
+      "senseId": "kaikki:27eb74a355993ea439"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-02",
+      "entryId": "ve-a675d9ed",
+      "senseId": "kaikki:a7b44f02a1defcdab6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-1b57063d",
+      "senseId": "kaikki:4350864c0985237ef0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-7c703488",
+      "senseId": "kaikki:a811bfa83f65b9aa65"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-a8db12b",
+      "senseId": "kaikki:0abe75db70b03d51db"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-7d2de70",
+      "senseId": "kaikki:2b9a1d67b9f957984c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-7c6afedb",
+      "senseId": "kaikki:ae0c1d2a006d697a0f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-933f20a7",
+      "senseId": "kaikki:061a17f0e21e9f54c1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-b874f32",
+      "senseId": "kaikki:6a385a1be5d196f28b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-5fad3d14",
+      "senseId": "kaikki:106bf4658ffb688731"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-7c74da27",
+      "senseId": "kaikki:b4b9b79a47a225d563"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-57692bdb",
+      "senseId": "kaikki:a0a51b788acc6f49a5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-da828506",
+      "senseId": "kaikki:8f7dd0d9430faa5ecb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-7c757d80",
+      "senseId": "kaikki:1b660786ad633ae8a4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-7c790af0",
+      "senseId": "kaikki:36c3a19f496310a674"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-b8790f4",
+      "senseId": "kaikki:4eca4082ad6d3ad994"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-bacf5d2",
+      "senseId": "kaikki:13207c3c40d39602cc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-7356e836",
+      "senseId": "kaikki:3112707c1a1d2d0e93"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-03",
+      "entryId": "ve-67069062",
+      "senseId": "kaikki:5720e626b8cc99f081"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-01",
+      "entryId": "ve-9d085010",
+      "senseId": "kaikki:6b2002ac730819381a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-01",
+      "entryId": "ve-d2d8fc00",
+      "senseId": "kaikki:bed2c51f9155df95a7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-01",
+      "entryId": "ve-b8743f7",
+      "senseId": "kaikki:de1857b9f9f04a516b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-01",
+      "entryId": "ve-b9a2911",
+      "senseId": "kaikki:ca34c4a893df214a5b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-01",
+      "entryId": "ve-b97fed1",
+      "senseId": "kaikki:f13995717780a052f5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-01",
+      "entryId": "ve-7c799f08",
+      "senseId": "kaikki:abebf6015afc336751"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-01",
+      "entryId": "ve-add45b9",
+      "senseId": "kaikki:e14d77675b20dc2ca9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-01",
+      "entryId": "ve-b876066",
+      "senseId": "kaikki:d1018bf311611097c3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-02",
+      "entryId": "ve-7c703c50",
+      "senseId": "kaikki:337d9b7b9517ac73ca"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-02",
+      "entryId": "ve-f553d73b",
+      "senseId": "kaikki:d95c3abf9db3a2bcbb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-02",
+      "entryId": "ve-5e81e3cf",
+      "senseId": "kaikki:8ab8ab3b8faac71910"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-02",
+      "entryId": "ve-7c75d2f1",
+      "senseId": "kaikki:542f5c49ec6a3444bc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-02",
+      "entryId": "ve-3bd95a7f",
+      "senseId": "kaikki:9a891dc423ee996576"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-02",
+      "entryId": "ve-9626370c",
+      "senseId": "kaikki:23ad2673190ff81fb7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-02",
+      "entryId": "ve-908c371",
+      "senseId": "kaikki:4563dbc41244bd73f7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-03",
+      "entryId": "ve-5ba3f8cd",
+      "senseId": "kaikki:c6c7584b69669c93bb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-03",
+      "entryId": "ve-e96d31c7",
+      "senseId": "kaikki:4e76515a0b54ebb19f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-03",
+      "entryId": "ve-a68eca41",
+      "senseId": "kaikki:9334b38e346b6127a5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-03",
+      "entryId": "ve-43760a52",
+      "senseId": "kaikki:25acbfd85f86395cf4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-03",
+      "entryId": "ve-5f58d647",
+      "senseId": "kaikki:4fd035ba9109dd34cc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-03",
+      "entryId": "ve-7c7228df",
+      "senseId": "kaikki:257266c6c62f331691"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-03",
+      "entryId": "ve-7c6f1ce8",
+      "senseId": "kaikki:f1db34b514970cca0e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-03",
+      "entryId": "ve-7c6f9821",
+      "senseId": "kaikki:5c41d9cf8c02278a00"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-03",
+      "entryId": "ve-44dec091",
+      "senseId": "kaikki:45617a6b2fe3d12ba6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-10-group-03",
+      "entryId": "ve-baf3751",
+      "senseId": "kaikki:b8662188f38bec3adf"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-01",
+      "entryId": "ve-42d230f8",
+      "senseId": "kaikki:610fc85acda4a01844"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-01",
+      "entryId": "ve-b8720fd",
+      "senseId": "kaikki:8c7500108d5ad68be9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-01",
+      "entryId": "ve-48a642de",
+      "senseId": "kaikki:dd3df61883486d7f69"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-01",
+      "entryId": "ve-7a61e805",
+      "senseId": "kaikki:8ba9c57b68576b559b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-01",
+      "entryId": "ve-7c6ecbd4",
+      "senseId": "kaikki:3fa221dff8d8283c60"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-01",
+      "entryId": "ve-30c8652",
+      "senseId": "kaikki:3d74c22fb77213c08b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-01",
+      "entryId": "ve-b2e20044",
+      "senseId": "kaikki:cd2ee0e1617fdaece8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-01",
+      "entryId": "ve-6ae8b570",
+      "senseId": "kaikki:c0dc7ca69ddcbf092f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-02",
+      "entryId": "ve-a7df1a3",
+      "senseId": "kaikki:cf66646e1ced8f9d60"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-02",
+      "entryId": "ve-b2f9e8b",
+      "senseId": "kaikki:c014d68e5128271e82"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-02",
+      "entryId": "ve-81984b86",
+      "senseId": "kaikki:b5f00bcd0ac0b07027"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-02",
+      "entryId": "ve-ab8f02a2",
+      "senseId": "kaikki:72504bca91483f7d40"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-02",
+      "entryId": "ve-b9fef64",
+      "senseId": "kaikki:f9fe90736b7f9caf8e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-02",
+      "entryId": "ve-b8761fe",
+      "senseId": "kaikki:f7fe8d13102501a28a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-02",
+      "entryId": "ve-7c76e871",
+      "senseId": "kaikki:79497fd32212e320f3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-02",
+      "entryId": "ve-b66c342",
+      "senseId": "kaikki:632cf4c7970a0e9e84"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-02",
+      "entryId": "ve-7c76fc51",
+      "senseId": "kaikki:6b0af6bcdb152e9089"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-01",
+      "entryId": "ve-7c703ff3",
+      "senseId": "kaikki:656aa17ccfd4f34b5f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-01",
+      "entryId": "ve-c79a1577",
+      "senseId": "kaikki:f394426118a5282ad3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-01",
+      "entryId": "ve-ec41c28b",
+      "senseId": "kaikki:748e8b111f74dc0ab1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-01",
+      "entryId": "ve-7c6afcf9",
+      "senseId": "kaikki:e0a579c98593587e99"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-01",
+      "entryId": "ve-855b790d",
+      "senseId": "kaikki:2f5a406a9f37801c29"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-01",
+      "entryId": "ve-bd03ddd6",
+      "senseId": "kaikki:36c3bedb006e28de13"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-01",
+      "entryId": "ve-b100fd5",
+      "senseId": "kaikki:7a70bb121ed0c832e1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-01",
+      "entryId": "ve-1977ba64",
+      "senseId": "kaikki:1f483ff9c0e6fb42f3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-01",
+      "entryId": "ve-81812012",
+      "senseId": "kaikki:7856a25d1e29f8315c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-01",
+      "entryId": "ve-ba21728",
+      "senseId": "kaikki:ad59aec40c0550e8d6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02",
+      "entryId": "ve-7c703421",
+      "senseId": "kaikki:18dff40eb62e51cbe3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02",
+      "entryId": "ve-6a4b09bb",
+      "senseId": "kaikki:7c88fa07c9c05d3272"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02",
+      "entryId": "ve-7c70f00b",
+      "senseId": "kaikki:b50ffd2559aa96a43c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02",
+      "entryId": "ve-a468604",
+      "senseId": "kaikki:efb73f39277cc7e58d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02",
+      "entryId": "ve-7c71a098",
+      "senseId": "kaikki:3e569220e65246a88e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02",
+      "entryId": "ve-b66f7ea",
+      "senseId": "kaikki:a3af808053bfa4ed2c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02",
+      "entryId": "ve-857820c7",
+      "senseId": "kaikki:b9a0d7d51293e5a3e7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-03",
+      "entryId": "ve-5a2bbfb9",
+      "senseId": "kaikki:0f284bc6bcf60a344e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-03",
+      "entryId": "ve-c8495cb1",
+      "senseId": "kaikki:4463c7b62cbe4265c1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-03",
+      "entryId": "ve-7c70d94d",
+      "senseId": "kaikki:88ac3fe9f841685bff"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-03",
+      "entryId": "ve-b873d3a",
+      "senseId": "kaikki:1ada8d52849383051b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-03",
+      "entryId": "ve-a97cd90",
+      "senseId": "kaikki:3257848483c2f80650"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-03",
+      "entryId": "ve-b8769e3",
+      "senseId": "kaikki:214ad97da4babebb66"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-03",
+      "entryId": "ve-7c6f1b28",
+      "senseId": "kaikki:3d72e157bda25a53a0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-03",
+      "entryId": "ve-b875b6a",
+      "senseId": "kaikki:63c8930298224a4b5f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-03",
+      "entryId": "ve-689bf720",
+      "senseId": "kaikki:fc3c788ecd859a0493"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-03",
+      "entryId": "ve-970ae368",
+      "senseId": "kaikki:337dadc220210e3feb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-03",
+      "entryId": "ve-ba24129",
+      "senseId": "kaikki:a5ad0357038626a84d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-03",
+      "entryId": "ve-7ae77d4d",
+      "senseId": "kaikki:f0092344b4f005727e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-03",
+      "entryId": "ve-7c7936d9",
+      "senseId": "kaikki:450f228a6e0464f836"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-03",
+      "entryId": "ve-75228818",
+      "senseId": "kaikki:aa51c605b66ffc5a07"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-7c6dc75d",
+      "senseId": "kaikki:e1189a58e1b7de8b1f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-a88c5c2",
+      "senseId": "kaikki:db9ce6fb3076820d18"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-c6f5a366",
+      "senseId": "kaikki:ffa144d2383aa793bf"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-5b629190",
+      "senseId": "kaikki:f263b075679cc98850"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-e472fbd8",
+      "senseId": "kaikki:c2556797e15241e0b0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-5c6c1d58",
+      "senseId": "kaikki:6c34fcf3e884954b3d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-7c6ebf5d",
+      "senseId": "kaikki:721bed24645b01c795"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-68d62b0",
+      "senseId": "kaikki:badaf6bb88dbe04602"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-a570c86",
+      "senseId": "kaikki:72940fc19c689df68a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-54c6a235",
+      "senseId": "kaikki:a9eea423aa1993eba4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-2ce8d564",
+      "senseId": "kaikki:1f4fe1ec0772145c56"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-d5d705ea",
+      "senseId": "kaikki:d6a973aa8a82aa2533"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-57b2ede0",
+      "senseId": "kaikki:2cfd3581a917aba488"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-cfc2c670",
+      "senseId": "kaikki:c6f012495e4a0df90c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-01",
+      "entryId": "ve-6bb6d693",
+      "senseId": "kaikki:fff25b70c902658710"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-02",
+      "entryId": "ve-11cfa719",
+      "senseId": "kaikki:ee2e0099661ea1b139"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-02",
+      "entryId": "ve-dbabc0a7",
+      "senseId": "kaikki:bd7608748882ce9f8b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-02",
+      "entryId": "ve-ff662c95",
+      "senseId": "kaikki:a04eb3d09a385f00c5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-02",
+      "entryId": "ve-9dc4e6d",
+      "senseId": "kaikki:bb2d199280e9367afb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-02",
+      "entryId": "ve-2517ec02",
+      "senseId": "kaikki:1ab99d40f86250bd65"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-02",
+      "entryId": "ve-c96a11c7",
+      "senseId": "kaikki:c3ed4893d861b57bdb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-02",
+      "entryId": "ve-7c6fc8e7",
+      "senseId": "kaikki:639ee008c73a51f614"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-02",
+      "entryId": "ve-576066f5",
+      "senseId": "kaikki:396a23fecdf6d0bfde"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-02",
+      "entryId": "ve-7c75d993",
+      "senseId": "kaikki:f2cf14b9f938545e16"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-13-group-02",
+      "entryId": "ve-7c7350a7",
+      "senseId": "kaikki:b97411c6c4b05feeb1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-01",
+      "entryId": "ve-8bf24225",
+      "senseId": "kaikki:bcddaa97b391bb5f89"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-01",
+      "entryId": "ve-f3f0dc12",
+      "senseId": "kaikki:26ee6a7f1ecb39eece"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-01",
+      "entryId": "ve-3ba21348",
+      "senseId": "kaikki:be3d56fd2d2ca44840"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-4ddd939e",
+      "senseId": "kaikki:66fc26f749ad932f2c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-4ef4e2be",
+      "senseId": "kaikki:f8a586c555378a658b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-a88d503",
+      "senseId": "kaikki:bcf46b456061ea8922"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-9c843d5",
+      "senseId": "kaikki:bee3e149b342eb7634"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-9cac197",
+      "senseId": "kaikki:7be79abbe332c89945"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-e008bac",
+      "senseId": "kaikki:0988d6ba7394e76eda"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-7c6f2463",
+      "senseId": "kaikki:c20fe4a67a42bf0e42"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-3ac1d4c6",
+      "senseId": "kaikki:21c8346761145bad97"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-7c6f901c",
+      "senseId": "kaikki:c7fa8f2a19c214847f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-9757c7bf",
+      "senseId": "kaikki:88a05f2d1a587afad6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-7131340d",
+      "senseId": "kaikki:cdd67f62ae775cc9bb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-ba20f62",
+      "senseId": "kaikki:7fc71d1922d8b3c073"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-7f8a4a0e",
+      "senseId": "kaikki:8e07d692fe7bbe0376"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-7595b5ee",
+      "senseId": "kaikki:855c7cb66a04d6fae6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-14-group-02",
+      "entryId": "ve-75d2e1df",
+      "senseId": "kaikki:25c0cb996087853a3d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-5a61ce31",
+      "senseId": "kaikki:8549b41328e1b567cb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-dfccef65",
+      "senseId": "kaikki:f286bb7cdda98e04bc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-b8582f42",
+      "senseId": "kaikki:184e8f140f2cfc8337"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-7c6e4269",
+      "senseId": "kaikki:030d980f69389bccc4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-23157110",
+      "senseId": "kaikki:df7189f5e06cb54d69"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-e4c421c0",
+      "senseId": "kaikki:1a45e28c03c1a6c26a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-c535d9b1",
+      "senseId": "kaikki:8a53add90094ec620b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-315554f",
+      "senseId": "kaikki:0697185f0e20cf94bf"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-7152b0f9",
+      "senseId": "kaikki:573c603124d7d6e594"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-bd155763",
+      "senseId": "kaikki:5b8d3c86fb3f552e57"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-6b92384e",
+      "senseId": "kaikki:ed8fbe5a9766cb7ce2"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-7e9dbdc4",
+      "senseId": "kaikki:dc304b95f0f91a1e66"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-95087598",
+      "senseId": "kaikki:2897cfe927373cd0a0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-2f21829",
+      "senseId": "kaikki:882e479ac963d5d2b5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-740a7458",
+      "senseId": "kaikki:d81485c046beaad1cd"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-4d95f0b2",
+      "senseId": "kaikki:d56903bae0650a7d4b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-b8733a9",
+      "senseId": "kaikki:b62316575c9e2b7770"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-a22692ae",
+      "senseId": "kaikki:03c98d9b5c9745b068"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-46165898",
+      "senseId": "kaikki:63fdefa0dd47827dee"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-b347f892",
+      "senseId": "kaikki:df7f32eecac7fe454d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-8d35d515",
+      "senseId": "kaikki:1096fdad44d2d7cf85"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-aedcd7f1",
+      "senseId": "kaikki:afe24256c0b6b8b2af"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-30afcc8b",
+      "senseId": "kaikki:d1d18b107ba76509fd"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-6c00b80f",
+      "senseId": "kaikki:e525ac81ab78fb21d8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-e904ded8",
+      "senseId": "kaikki:14d14da0ea3d01f782"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-ecd3145e",
+      "senseId": "kaikki:8f87ec7289cb9f99f4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-7e9d62e3",
+      "senseId": "kaikki:0aa7864fd02a5152de"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-c019b465",
+      "senseId": "kaikki:1336d11f9151560d13"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-980220ae",
+      "senseId": "kaikki:a8bc9d3874c0ff8ace"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-ba07d08",
+      "senseId": "kaikki:7b654a06528f6ab2b6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-7c76f0cd",
+      "senseId": "kaikki:c8b8fa66867c34cc84"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-02",
+      "entryId": "ve-7591e7ab",
+      "senseId": "kaikki:66308af4cba4ccf17c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-4d95d73d",
+      "senseId": "kaikki:596213c7c86e8dd95b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-5c7067b4",
+      "senseId": "kaikki:608674b31dd0799812"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-4193b1a7",
+      "senseId": "kaikki:9b8e2184423ab55c8c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-6fe49d90",
+      "senseId": "kaikki:1accee2cdaef55588f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-beb9d57c",
+      "senseId": "kaikki:80b432cb7de6c5b452"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-523c679e",
+      "senseId": "kaikki:a0380dbcf881c102a9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-531cd014",
+      "senseId": "kaikki:064c42a9ddccd9c27f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-fa05ec41",
+      "senseId": "kaikki:61de24ee2d57b45021"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-569a7d54",
+      "senseId": "kaikki:faa4816ba08b758e17"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-a591e5b",
+      "senseId": "kaikki:20f42cc5a2a32995f0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-90024caf",
+      "senseId": "kaikki:ca0cb48e2a6c50c7f5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-814a837d",
+      "senseId": "kaikki:e82e3d125166b28168"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-7c793910",
+      "senseId": "kaikki:b615d22a38072b2517"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-67d4610b",
+      "senseId": "kaikki:1c39aa772464352985"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-01",
+      "entryId": "ve-b8761e8",
+      "senseId": "kaikki:394521767dda857940"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-4de4168a",
+      "senseId": "kaikki:7914bf1a9ce3366f03"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-e0b6dccc",
+      "senseId": "kaikki:eb6c41e50e2e815a57"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-a4fc8e1c",
+      "senseId": "kaikki:458f03fdc0512d5db8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-8c165150",
+      "senseId": "kaikki:c27a99bec4bd6d2ace"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-4565e9be",
+      "senseId": "kaikki:25df8ded2e50c47f9b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-503ee00d",
+      "senseId": "kaikki:a6bb452b05f7027055"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-4651c7e3",
+      "senseId": "kaikki:73f0af76e0dac36415"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-2f30c65f",
+      "senseId": "kaikki:ca20bba4b4e8f803b1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-5fc4f278",
+      "senseId": "kaikki:562c94d29095808d5f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-5fae4445",
+      "senseId": "kaikki:a5a4aa56299717ba41"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-aa85a73",
+      "senseId": "kaikki:2669f30dc0e7050163"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-5fb700d6",
+      "senseId": "kaikki:fb69ee9e85bc25470d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-9ae5147f",
+      "senseId": "kaikki:9ebbd4267cd6af0bfc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-6b91edee",
+      "senseId": "kaikki:6a1b5eeccf9e7d2816"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "vocab:reliable",
+      "senseId": "general"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-ba22110",
+      "senseId": "kaikki:9ca5f91b89fb930362"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-e6b173f",
+      "senseId": "kaikki:4c1259c1594e6db4a6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-2896ee56",
+      "senseId": "kaikki:da0e76def383184700"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-77e72e06",
+      "senseId": "kaikki:f97bd0deb2e4bcafbb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-02",
+      "entryId": "ve-b0e6f567",
+      "senseId": "kaikki:e93f758b7f7caa5f79"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-efbfdf4a",
+      "senseId": "kaikki:8640acca307a6da883"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-5c458ea7",
+      "senseId": "kaikki:eadf278d9db0ad4e60"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-5c458f23",
+      "senseId": "kaikki:3e1857447c50981fee"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-a8ba196",
+      "senseId": "kaikki:23e42a34d104ce9747"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-c0f31531",
+      "senseId": "kaikki:4baa80287502fa5eb0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-9e09eda4",
+      "senseId": "kaikki:56717b08b6b55ee90c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-58bcbfa5",
+      "senseId": "kaikki:427fc3f6e010777156"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-131797e4",
+      "senseId": "kaikki:edac0ad3abea95e7ff"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-5fabc9a6",
+      "senseId": "kaikki:9f3725b1a04777ee8e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-6fdd9de1",
+      "senseId": "kaikki:2363416704e826bb28"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-2e100631",
+      "senseId": "kaikki:aa56e8ce0ac50c711b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-7e96b96c",
+      "senseId": "kaikki:79aeef10e68be6905f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-bad8ba6",
+      "senseId": "kaikki:92624f296e5fcb164c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-145a4a53",
+      "senseId": "kaikki:17e0dacd542f2ceb4a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-a169bc44",
+      "senseId": "kaikki:e14efc3f511cf7830c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-16-group-03",
+      "entryId": "ve-71b570d9",
+      "senseId": "kaikki:ba43714cccea5bf9ff"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-01",
+      "entryId": "ve-ef1f92b",
+      "senseId": "kaikki:607e4b6fa3b2ef9bf5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-01",
+      "entryId": "ve-8cf01c74",
+      "senseId": "kaikki:55e31d3b5216fc506e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-4e538a61",
+      "senseId": "kaikki:622d5062d3feeb0fed"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-b656616",
+      "senseId": "kaikki:ccd60cce6629293e11"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-a7e0cdb",
+      "senseId": "kaikki:31ac9e1c8b07974b1b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-7c70d85a",
+      "senseId": "kaikki:4d23605b63971a1da2"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-dd7fdcc4",
+      "senseId": "kaikki:322642921e9670825d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-dd7feb63",
+      "senseId": "kaikki:42fd755c7604348138"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-a279a1b8",
+      "senseId": "kaikki:2f97b854096db2249b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-a126c360",
+      "senseId": "kaikki:f4ac4c35f64fead6b2"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-9d1833d8",
+      "senseId": "kaikki:2569ed0a5563b9e6cf"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-1cf81435",
+      "senseId": "kaikki:0be4d285eeca900f56"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-e2a03d25",
+      "senseId": "kaikki:d0858eefda2a3771a2"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-26e19db8",
+      "senseId": "kaikki:2f4b862f2b0e2fcdaa"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-8eeaf1de",
+      "senseId": "kaikki:6b9314e5d056a8b754"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-2732ad31",
+      "senseId": "kaikki:0106abdbaed6ed1539"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-71b9a75e",
+      "senseId": "kaikki:6409eacdf1cf491780"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-6ae79cd9",
+      "senseId": "kaikki:6aa654e3295d705900"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-6fdeff9c",
+      "senseId": "kaikki:39cf48e77ee6e134a5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-506e69fa",
+      "senseId": "kaikki:d94253ef7476fb1e75"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-98f6abe8",
+      "senseId": "kaikki:53539a1a8fc6ecf0e9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-514bb074",
+      "senseId": "kaikki:989acf0050eba13b1d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-514be348",
+      "senseId": "kaikki:2f8e149771e667ee3c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-7f9a4981",
+      "senseId": "kaikki:0a8ecdc8827c9af397"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-7f9a6ad9",
+      "senseId": "kaikki:b4b1eab803157efe5d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-7fa21420",
+      "senseId": "kaikki:9608b7866ad8a51a14"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-65f8156d",
+      "senseId": "kaikki:d30c2a0f2a70f2f70e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-7c734fb2",
+      "senseId": "kaikki:c0e782990b0c330d1b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-17-group-02",
+      "entryId": "ve-add65a2",
+      "senseId": "kaikki:2619aa9a94c9c8a737"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-42d87eae",
+      "senseId": "kaikki:8079b907da15a96be5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-a5ce58a0",
+      "senseId": "kaikki:0961a0960be8cca45f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-26bfd7a",
+      "senseId": "kaikki:a756bf49654b4d1475"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-57b1a410",
+      "senseId": "kaikki:242b993e142a44758f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-b9e28170",
+      "senseId": "kaikki:e1850731dcd1a5aeef"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-a6597c62",
+      "senseId": "kaikki:41bf3f67ae574b2034"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-a83d54af",
+      "senseId": "kaikki:b99003c1500f6f6b7c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-7162142b",
+      "senseId": "kaikki:5f81c9c6984411dd9b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-6ae578c4",
+      "senseId": "kaikki:a34c72fb7c3643ff63"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-b254785",
+      "senseId": "kaikki:1674b04fd54a2afd2a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-b9e9e71",
+      "senseId": "kaikki:93f6ffe3532e7d04a4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-8193f65a",
+      "senseId": "kaikki:8ca05776c655136fee"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-7c7935c1",
+      "senseId": "kaikki:448e8c5bc98646b1a9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-f6c5890c",
+      "senseId": "kaikki:469685e7e34f1f9653"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-ba0a6b8",
+      "senseId": "kaikki:b88e287ffab9bd71d4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-01",
+      "entryId": "ve-67d436f4",
+      "senseId": "kaikki:5161c4064cc2227a10"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-a7a8ea2",
+      "senseId": "kaikki:5fef1b30828ab4c292"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-a869154",
+      "senseId": "kaikki:b8d6a65553834fd3a3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-efb0f06",
+      "senseId": "kaikki:f46b9f4a266aeef3d6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-9ddc92fc",
+      "senseId": "kaikki:d190437eef9c7ab6db"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-5045ca6d",
+      "senseId": "kaikki:c8895fe8829cd74a25"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-50b671f1",
+      "senseId": "kaikki:f32c37a978661cc924"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-37f93308",
+      "senseId": "kaikki:a967808ca14e3b7a25"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-6ae8a48b",
+      "senseId": "kaikki:4ab9ef77b207ab8a56"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-dcf450f6",
+      "senseId": "kaikki:39c349f50b9f211fc0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-7cc8a515",
+      "senseId": "kaikki:ba04935480ee5569af"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-1393838b",
+      "senseId": "kaikki:bd5b147755ad573ec9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-ba83665",
+      "senseId": "kaikki:a34a49e02f9f885e26"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-7f9de002",
+      "senseId": "kaikki:827c51211e9d25b50e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-ae8c4353",
+      "senseId": "kaikki:1d7e5d1774395b4c4b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-6d0e98a1",
+      "senseId": "kaikki:879415fa932ee12edd"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-6854143b",
+      "senseId": "kaikki:29bd91f09154e48480"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-37449b42",
+      "senseId": "kaikki:fcf1def301ab98f1a8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-e93bb172",
+      "senseId": "kaikki:ec3544d5c0f4f9e630"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-48a35cb1",
+      "senseId": "kaikki:ad37ff1df3a9a05f79"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-02",
+      "entryId": "ve-3a56cae9",
+      "senseId": "kaikki:b7125203a8e3299432"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-dd3496e0",
+      "senseId": "kaikki:7f4816e618e49f0dd5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-9374e625",
+      "senseId": "kaikki:0d1d9803821d14ecda"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-50d2949b",
+      "senseId": "kaikki:7f770e5300ac9ce430"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-7c6e2eb5",
+      "senseId": "kaikki:0a35aee8d5ecec1d6a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-a468742",
+      "senseId": "kaikki:575fd0d27f4188b44a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-7c715c88",
+      "senseId": "kaikki:7e82cce35051caef65"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-5fc4ca0b",
+      "senseId": "kaikki:c6bb3a8ade95de3939"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-f0e365cb",
+      "senseId": "kaikki:540e06a42efd98930e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-ac17bd1",
+      "senseId": "kaikki:00481ab78055cad9c6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-649dd84f",
+      "senseId": "kaikki:e9b24fb828230833cd"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-ad2464d",
+      "senseId": "kaikki:f682b333d5e5fcbffe"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-6b9a6dfe",
+      "senseId": "kaikki:3092cf3348a350b49c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-2ad2b54e",
+      "senseId": "kaikki:114abbeeb24f48db6e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-7e9d6410",
+      "senseId": "kaikki:0be37326a8b91f5fef"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-d52b6e28",
+      "senseId": "kaikki:1bd4f11129111980ac"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-f79aaede",
+      "senseId": "kaikki:2fa5eadcb42c15ab57"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-67dc534d",
+      "senseId": "kaikki:474d8124333f548b7a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
+      "entryId": "ve-7c73c9f1",
+      "senseId": "kaikki:2044dbcc2fadee862b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-5a61feaa",
+      "senseId": "kaikki:c73e2e2c64bdf93fb0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-75e8bfdb",
+      "senseId": "kaikki:0f4b4ce9503cb2cbad"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-dd89e034",
+      "senseId": "kaikki:64e80582d440c40d59"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-42d0bc8d",
+      "senseId": "kaikki:875933fe8cfba5a3c6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-3d341044",
+      "senseId": "kaikki:9ec2f83efe13597da3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-a4b5460",
+      "senseId": "kaikki:3649a130f066b32248"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-29a40ba4",
+      "senseId": "kaikki:41eb4187fb870a917e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-7123b831",
+      "senseId": "kaikki:50a2f48e93f21c5488"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-b2d9847",
+      "senseId": "kaikki:fb9aa4fc6bfb5b39e2"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-7e96878f",
+      "senseId": "kaikki:da577e4435b64e9fa5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-51a36ec4",
+      "senseId": "kaikki:164c638bac844fb44e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-7c792ae6",
+      "senseId": "kaikki:4211d4f156f9b9d319"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-14523331",
+      "senseId": "kaikki:807290671177fcace7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-ad48e04f",
+      "senseId": "kaikki:52ee7bada0fc1040b4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-7f9e0967",
+      "senseId": "kaikki:a3d85900e9072e997e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-79b4817a",
+      "senseId": "kaikki:0b43ec068b0e44dd98"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-356c3387",
+      "senseId": "kaikki:7f25f2dbbd48d69873"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-04",
+      "entryId": "ve-e3ee7b6b",
+      "senseId": "kaikki:644aab68b121c00022"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-01",
+      "entryId": "ve-a5aad004",
+      "senseId": "kaikki:f871336049ebfeb7ed"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-01",
+      "entryId": "ve-acfacdda",
+      "senseId": "kaikki:e42bcfd9db63afe431"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-01",
+      "entryId": "ve-c3fba10e",
+      "senseId": "kaikki:9ced896e3e5963d1dd"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-01",
+      "entryId": "ve-4a5d62e2",
+      "senseId": "kaikki:02661ba927ba315a96"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-01",
+      "entryId": "ve-5fae4e3f",
+      "senseId": "kaikki:10d859f0fa06fdc81b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-01",
+      "entryId": "ve-e4e11947",
+      "senseId": "kaikki:d57b8e1d9902f5163f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-01",
+      "entryId": "ve-679f96d2",
+      "senseId": "kaikki:a994b710c0f975a87c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-01",
+      "entryId": "ve-a66dec1",
+      "senseId": "kaikki:6e785c4eb63d018e65"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-01",
+      "entryId": "ve-65b86b4f",
+      "senseId": "kaikki:bc18aca1da94a2fcb1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-01",
+      "entryId": "ve-68279781",
+      "senseId": "kaikki:0919678d0da873f61c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-01",
+      "entryId": "ve-6534527f",
+      "senseId": "kaikki:38cecf5ab3b9d1c61b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-02",
+      "entryId": "ve-a9fdad78",
+      "senseId": "kaikki:de95d98fe5887bf172"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-02",
+      "entryId": "ve-dde464a0",
+      "senseId": "kaikki:48d53da1fdc5dd542a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-02",
+      "entryId": "ve-9c8023d5",
+      "senseId": "kaikki:3fe9419bb69622fc1b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-02",
+      "entryId": "ve-7c6b558a",
+      "senseId": "kaikki:baa76ddaa66b5a3320"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-02",
+      "entryId": "ve-7c715fd5",
+      "senseId": "kaikki:5af064f001c6607f43"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-02",
+      "entryId": "ve-6214993",
+      "senseId": "kaikki:ab96c0d50141a24ebd"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-02",
+      "entryId": "ve-3f733e76",
+      "senseId": "kaikki:c1416ccbb240f97b61"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-02",
+      "entryId": "ve-a6728f0",
+      "senseId": "kaikki:2def46183c8855fe9f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-02",
+      "entryId": "ve-b27f3786",
+      "senseId": "kaikki:133725812814ffeea9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-02",
+      "entryId": "ve-bad1508",
+      "senseId": "kaikki:8b66f4e97304ca5043"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-02",
+      "entryId": "ve-7c799f70",
+      "senseId": "kaikki:36f13c180e70327c7f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-02",
+      "entryId": "ve-857fdf98",
+      "senseId": "kaikki:204243d6246d0e49c9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-19-group-02",
+      "entryId": "ve-75003e77",
+      "senseId": "kaikki:948453fbbbb33937b3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-01",
+      "entryId": "ve-32704414",
+      "senseId": "kaikki:d0e64bc488654d670b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-01",
+      "entryId": "ve-4f6c4c47",
+      "senseId": "kaikki:67747aacc2e96f675b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-01",
+      "entryId": "ve-1945f457",
+      "senseId": "kaikki:10077eb7fbf4cbfd61"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-01",
+      "entryId": "ve-a8f1717",
+      "senseId": "kaikki:cda9973a942a1cd991"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-01",
+      "entryId": "ve-7c6aeae5",
+      "senseId": "kaikki:092581a3a911131ee9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-01",
+      "entryId": "ve-46562c38",
+      "senseId": "kaikki:6ffbb63b502a697c55"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-01",
+      "entryId": "ve-b87527f",
+      "senseId": "kaikki:5b2324a6fba9227fa7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-01",
+      "entryId": "ve-aa59aa1",
+      "senseId": "kaikki:8d00e8fee0485496b4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-01",
+      "entryId": "ve-b9fef94",
+      "senseId": "kaikki:b37b434d4e0e0cdb69"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-01",
+      "entryId": "ve-802023bd",
+      "senseId": "kaikki:d196c3725b6f1970f3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
+      "entryId": "ve-b874776",
+      "senseId": "kaikki:7638ce4343157064c4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
+      "entryId": "ve-a891018",
+      "senseId": "kaikki:8e838c893c77de8998"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
+      "entryId": "ve-dda93361",
+      "senseId": "kaikki:8c0e081fa5e9ad665c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
+      "entryId": "ve-dd8bc805",
+      "senseId": "kaikki:9e37046611dc484911"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
+      "entryId": "ve-a4686f2",
+      "senseId": "kaikki:54796c73810b99d413"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
+      "entryId": "ve-b10642c",
+      "senseId": "kaikki:73771d9e86000c590b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
+      "entryId": "ve-7c6fcb8d",
+      "senseId": "kaikki:cef6ea6db2289798a3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
+      "entryId": "ve-ec26038d",
+      "senseId": "kaikki:c6dd372d2691c0d832"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
+      "entryId": "ve-71c075cd",
+      "senseId": "kaikki:cac2c8b00a71e31a75"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
+      "entryId": "ve-7c78fa3b",
+      "senseId": "kaikki:c29b5a82b4da8e1037"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
+      "entryId": "ve-810f43b3",
+      "senseId": "kaikki:b75a59d44de1a90386"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
+      "entryId": "ve-bac7841",
+      "senseId": "kaikki:0b25a4db5c6452fb79"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
+      "entryId": "ve-b9ffef0",
+      "senseId": "kaikki:4a3533c14781047d98"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
+      "entryId": "ve-3a17f13a",
+      "senseId": "kaikki:82910386ea215f5e9b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-dd8265ec",
+      "senseId": "kaikki:72fb661037370ef2e7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-8f0723df",
+      "senseId": "kaikki:a83709c847ae33a5c4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-dd88b1cf",
+      "senseId": "kaikki:e42d8eaaf4498ba5b4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-2ed43a47",
+      "senseId": "kaikki:044d19f688e293ffe5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-9e0c11cb",
+      "senseId": "kaikki:dfa85b7a3ff0403516"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-9e37321",
+      "senseId": "kaikki:e283d98bd13630cf32"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-5fad7815",
+      "senseId": "kaikki:ea48d5da105600e822"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-ab744c6",
+      "senseId": "kaikki:04d185b5a12c0e0aae"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-6dbb1c9c",
+      "senseId": "kaikki:0e53bc13120dae7c01"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-574c5604",
+      "senseId": "kaikki:6ee48ad40b8637ca8f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-51311aad",
+      "senseId": "kaikki:cddd37f68bbbf4b9a5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-a7d93d47",
+      "senseId": "kaikki:97f87307c7d21e616c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-270b2c52",
+      "senseId": "kaikki:70490c8794fc41cffb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-f7aaf6f1",
+      "senseId": "kaikki:6fe68765717e270632"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-ae9ef7d",
+      "senseId": "kaikki:b9fad2d6e70277055b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-03",
+      "entryId": "ve-aefa962",
+      "senseId": "kaikki:f17c99f54e99b8979a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-04",
+      "entryId": "ve-5ba38703",
+      "senseId": "kaikki:db95615f4bf17c7118"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-04",
+      "entryId": "ve-7c70dbfc",
+      "senseId": "kaikki:b4053165257d3c6a4c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-04",
+      "entryId": "ve-be20517e",
+      "senseId": "kaikki:0921d544076ff87279"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-04",
+      "entryId": "ve-9e3c19b",
+      "senseId": "kaikki:33a2a238aafc0b44a3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-04",
+      "entryId": "ve-ad0a3fd",
+      "senseId": "kaikki:da53d67ebd2b75efcf"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-04",
+      "entryId": "ve-64e53c48",
+      "senseId": "kaikki:e1bbd4d108c6104a76"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-04",
+      "entryId": "ve-6fddd451",
+      "senseId": "kaikki:e067ea9a6b2ca476ee"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-04",
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:f95bb821d396bdb939"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-04",
+      "entryId": "ve-7ea20def",
+      "senseId": "kaikki:325b550fa575f0bc03"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-04",
+      "entryId": "ve-7c799dbf",
+      "senseId": "kaikki:6719d9e24112eb6f76"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-04",
+      "entryId": "ve-7fa3e46a",
+      "senseId": "kaikki:4711a3ee6b7dbb0f47"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-05",
+      "entryId": "ve-4e53a3dd",
+      "senseId": "kaikki:5792d69a5eba8e2df0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-05",
+      "entryId": "ve-80709471",
+      "senseId": "kaikki:fced4a42d3326f5e41"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-05",
+      "entryId": "ve-a4698a4",
+      "senseId": "kaikki:e1a8fc915e8deb8969"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-05",
+      "entryId": "ve-5fc4c7f6",
+      "senseId": "kaikki:dcfdde8151cd91daec"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-05",
+      "entryId": "ve-8cf8b5b4",
+      "senseId": "kaikki:c14823e575dd250a55"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-05",
+      "entryId": "ve-2e208aac",
+      "senseId": "kaikki:a59d74099883f39e2d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-05",
+      "entryId": "ve-7e981ac3",
+      "senseId": "kaikki:37920e24b83877208e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-05",
+      "entryId": "ve-6e652a4a",
+      "senseId": "kaikki:f203f1e887c0d97418"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-05",
+      "entryId": "ve-7c79759d",
+      "senseId": "kaikki:24ec428e6ba1041199"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-05",
+      "entryId": "ve-7c5e3976",
+      "senseId": "kaikki:993a8d43bf1193055b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-05",
+      "entryId": "ve-6ba700a5",
+      "senseId": "kaikki:1e3e450ba209273d2f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-05",
+      "entryId": "ve-6687fec3",
+      "senseId": "kaikki:3c7b6e6b2c6c88fdd3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-05",
+      "entryId": "ve-75cf02d2",
+      "senseId": "kaikki:abee5727ff215dc264"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-05",
+      "entryId": "ve-8b1617ad",
+      "senseId": "kaikki:1d04e2495904363778"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-7c706c2d",
+      "senseId": "kaikki:04da37896ccfa38103"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-9dd39f6",
+      "senseId": "kaikki:b68347786f3b54e478"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-f29ddf9e",
+      "senseId": "kaikki:51cd5499683ecb3574"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-50cb34b4",
+      "senseId": "kaikki:58388b6c88e90d4030"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-a368171",
+      "senseId": "kaikki:c41309f6d2fc97112d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-579badf3",
+      "senseId": "kaikki:f07892acbac8617bb7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-6dbb1c11",
+      "senseId": "kaikki:0d74fb808bfd95f269"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-a52d841",
+      "senseId": "kaikki:7ea01a845b8c64b771"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-5741a39e",
+      "senseId": "kaikki:bbecadaaa37db541e9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-7c6fc08c",
+      "senseId": "kaikki:04b3c5e411f1b1ec63"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-7c728766",
+      "senseId": "kaikki:86a15a9b5c00cfc46a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-a64b3e59",
+      "senseId": "kaikki:423f86c799e1610513"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-1ec8a77b",
+      "senseId": "kaikki:55a63d4a3a619338ab"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-7a63cb44",
+      "senseId": "kaikki:124a69aa37551313b5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-baf5e68",
+      "senseId": "kaikki:7560b1d3057ee8f613"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-73bd4fca",
+      "senseId": "kaikki:a3f6df951563880721"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-6853d931",
+      "senseId": "kaikki:3ea832360f5f7a6b52"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-761799ec",
+      "senseId": "kaikki:079c626990c1923117"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-01",
+      "entryId": "ve-b56a8ee",
+      "senseId": "kaikki:769874c05945eda2b8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-4ef198ec",
+      "senseId": "kaikki:67e2e60a3b7945df4c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-a24d54e",
+      "senseId": "kaikki:df5b84f9417136adeb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-a283e1c",
+      "senseId": "kaikki:1522103ef2e07d81a5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-a8b658e",
+      "senseId": "kaikki:936daac495369b99e4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-535af099",
+      "senseId": "kaikki:ce6620ab93e6efb046"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-a7929ae9",
+      "senseId": "kaikki:c7dc62118e4d23bf39"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-7c715e61",
+      "senseId": "kaikki:1f79bfef9acb46bef7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-c79fb936",
+      "senseId": "kaikki:8a50bde97986ddc34a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-7c74dc40",
+      "senseId": "kaikki:35da606fac67ad3cd9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-58a12504",
+      "senseId": "kaikki:3abf7a6a6dbe22297b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-ac399af",
+      "senseId": "kaikki:d6bd44dc3aa1ecdd99"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-7c75d84d",
+      "senseId": "kaikki:2709d95cb4acf15495"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-a126b5fe",
+      "senseId": "kaikki:63713e79a8ffa427e6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-b25311a",
+      "senseId": "kaikki:948b0461d97c2508f8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-ba84c0b",
+      "senseId": "kaikki:f53682a4b30df00c2c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-baea1a4",
+      "senseId": "kaikki:3ff028e7cc9751e465"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-b87633b",
+      "senseId": "kaikki:2a540f2aec7d82bd53"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-b521585",
+      "senseId": "kaikki:3325469f1e72e7e1c2"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-7c76fba8",
+      "senseId": "kaikki:0f8d5cfce26d208886"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-39736a8b",
+      "senseId": "kaikki:4dfbbd66d81e5ad0bf"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-761b3c51",
+      "senseId": "kaikki:1fec849c06f2d52822"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-02",
+      "entryId": "ve-7c7aad84",
+      "senseId": "kaikki:891e5afb55c06dc0c2"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-5a3c38da",
+      "senseId": "kaikki:ad7b0c9de51b41fca4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-5ba3871d",
+      "senseId": "kaikki:e0d44bedee55584b9b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-7907ea6c",
+      "senseId": "kaikki:b254a2e4f9af62ab4b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-6b821e89",
+      "senseId": "kaikki:89bdeb20b392c0ce86"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-a3098b1",
+      "senseId": "kaikki:0bdf4098ac232d0318"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-59aca228",
+      "senseId": "kaikki:3b087568bc0d23e7c3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-a32c7c7",
+      "senseId": "kaikki:9dc25a40817abc0cb3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-f0cb0b02",
+      "senseId": "kaikki:ea94145f25d4da995a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-7c719fde",
+      "senseId": "kaikki:a2bce8660cb5f51a95"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-4751c4b7",
+      "senseId": "kaikki:d13b29f2662452e9f3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-5fb4469b",
+      "senseId": "kaikki:f8feb09013eb41108c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-1f176dd5",
+      "senseId": "kaikki:db8e1729c721629d2a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-557f5ffd",
+      "senseId": "kaikki:aef3811ef00ff21719"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-576c0b0c",
+      "senseId": "kaikki:731dddef4d923f0102"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-267fbacb",
+      "senseId": "kaikki:310ffffe7f78c47943"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-71bc1ce8",
+      "senseId": "kaikki:d0dd6086aa0b331589"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-7c73c04f",
+      "senseId": "kaikki:6c6bcbab7df72a2763"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-1c1589da",
+      "senseId": "kaikki:7baf1d2f37b26db790"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-220b8e4c",
+      "senseId": "kaikki:3300680974bfbba4d3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-b64167d",
+      "senseId": "kaikki:886ddebe3bc4bc7fb3"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-03",
+      "entryId": "ve-b692da2",
+      "senseId": "kaikki:60919b9b1546b85da9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-a8daf23",
+      "senseId": "kaikki:48680fac6ec9238dad"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-3fe09cee",
+      "senseId": "kaikki:061db2cd1a2b2c7987"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-7c70f124",
+      "senseId": "kaikki:ae82ccb1086b5ec57a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-7c6b06b8",
+      "senseId": "kaikki:da841fc2293cee375b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-7c6b1021",
+      "senseId": "kaikki:fe27340c1c52ac2c56"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-7c6b5797",
+      "senseId": "kaikki:4021d78fd475932fdf"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-7c715de5",
+      "senseId": "kaikki:9ad984df9ec31c4b3b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-a2e4bacc",
+      "senseId": "kaikki:db4dd6c03d3003f884"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-5531ea3a",
+      "senseId": "kaikki:dd5ae136156eb9f3ba"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-53833b81",
+      "senseId": "kaikki:e9a823a8a1b70f3507"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-e2eb1b2f",
+      "senseId": "kaikki:6cf20a7851364fb3ac"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-4d36d35a",
+      "senseId": "kaikki:290383b43b38bb28b6"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-fd9fa505",
+      "senseId": "kaikki:97dc51a32f0fe70a55"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-7ea530f4",
+      "senseId": "kaikki:0f4fac490cb55f2685"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-534b4d01",
+      "senseId": "kaikki:5c70bce85da3b4c176"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-7e96b95c",
+      "senseId": "kaikki:34869e7382d87ea2ba"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-f00a6a54",
+      "senseId": "kaikki:cd552fd36d57d6c13b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-8157eb01",
+      "senseId": "kaikki:e3c8888c229832cf64"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-af25e5b",
+      "senseId": "kaikki:ccba14047fca2e6b27"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-04",
+      "entryId": "ve-bdadf1a",
+      "senseId": "kaikki:2f63b0a5b4dad645b0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-295eead2",
+      "senseId": "kaikki:1f17fa18c77d880951"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-a8db07c",
+      "senseId": "kaikki:9b5cd44e4fbb239522"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-2e0ec6e6",
+      "senseId": "kaikki:71a547a77dd89db792"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-e454bf76",
+      "senseId": "kaikki:21d4ea606efb93f23a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-b873978",
+      "senseId": "kaikki:97c13c8866ba2a1d77"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-b700fd41",
+      "senseId": "kaikki:0bcdb111103a8b9c82"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-77499ba7",
+      "senseId": "kaikki:f33e66525f20212afc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-7c745d6e",
+      "senseId": "kaikki:f220fb60f91e4c17a9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-a1b13f51",
+      "senseId": "kaikki:0c3ef8ea3e2092e848"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-ee8392a6",
+      "senseId": "kaikki:9e8eb8912affdf2792"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-4ac54fa9",
+      "senseId": "kaikki:38f2b8cbf5de999a78"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-71687b8b",
+      "senseId": "kaikki:954fc7507d79d57b3d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-5299d7b8",
+      "senseId": "kaikki:a54e7f3451d57d685e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-b6aa576d",
+      "senseId": "kaikki:2a0552f4dc1ab0413f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-e03b7449",
+      "senseId": "kaikki:4fef77e541829d0e24"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-05",
+      "entryId": "ve-7c7d5cb7",
+      "senseId": "kaikki:d38a8687f3ba6a63cc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-2e3d2c4e",
+      "senseId": "kaikki:23236ce7566e52521c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-72c9017d",
+      "senseId": "kaikki:f79642941c38b04d13"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-e2583201",
+      "senseId": "kaikki:1227d5b3a4071270b8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-3e0e3772",
+      "senseId": "kaikki:1ecd51e20df289d258"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-eaf01295",
+      "senseId": "kaikki:e4180dd59fce1afafa"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-38187022",
+      "senseId": "kaikki:32a34c2523b57137c2"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-54a37dea",
+      "senseId": "kaikki:df060df47d820a9a6d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-a695b85",
+      "senseId": "kaikki:141aa8dd2bbf61c699"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-6d8b657d",
+      "senseId": "kaikki:60768dd0738f31f13d"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-ac11bb0",
+      "senseId": "kaikki:cfcc9e7f5b847b5011"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-b25c1f9",
+      "senseId": "kaikki:d227af7b71eb1973b2"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-a7177007",
+      "senseId": "kaikki:d42edfd52a31bd2442"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-f112e30d",
+      "senseId": "kaikki:a715b11c8f25472f9f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-7ec3d7e8",
+      "senseId": "kaikki:39bdba2f770e00d6a4"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-38ed3b44",
+      "senseId": "kaikki:20e3e21a1706435c5f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-bad4da6",
+      "senseId": "kaikki:243e3257600e669ea2"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-81eaf8a7",
+      "senseId": "kaikki:643adedad44b3b39e7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-06",
+      "entryId": "ve-6a7520de",
+      "senseId": "kaikki:3c1755ebf449306af5"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-07",
+      "entryId": "ve-a284f8c",
+      "senseId": "kaikki:78385a6611c8c10e4f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-07",
+      "entryId": "ve-a8ee9d6",
+      "senseId": "kaikki:503b06b0f0706b0b7f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-07",
+      "entryId": "ve-330463a4",
+      "senseId": "kaikki:cbae720e9972c31c41"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-07",
+      "entryId": "ve-5e91263f",
+      "senseId": "kaikki:c42346a156ddee5605"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-07",
+      "entryId": "ve-46d2e3e6",
+      "senseId": "kaikki:f5940b03f47dab0d8a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-07",
+      "entryId": "ve-3fba266e",
+      "senseId": "kaikki:5504b4bc1cb670e6c9"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-07",
+      "entryId": "ve-b877b6e",
+      "senseId": "kaikki:950f1e08dc591bb3d8"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-07",
+      "entryId": "ve-78307c72",
+      "senseId": "kaikki:3ca786962dc8abd09f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-a4542c71",
+      "senseId": "kaikki:2bdda49536af0b4823"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-eca05533",
+      "senseId": "kaikki:07800727243d61c4ef"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-9cbe66d",
+      "senseId": "kaikki:d2c1de4e2f4e4a040a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-b8722e8",
+      "senseId": "kaikki:fd652e82427ee5cce0"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-455d9a68",
+      "senseId": "kaikki:1453a94dcc99ccc24f"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-7c6b8661",
+      "senseId": "kaikki:3f95250fc2dfb83a31"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-b6dc9d04",
+      "senseId": "kaikki:c31919b3a791c072cb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-7c6e6676",
+      "senseId": "kaikki:956756c2ff4bea4061"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-53ba4b1f",
+      "senseId": "kaikki:412422f9f4b103ca7b"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-106239b6",
+      "senseId": "kaikki:2bb05f17d5ea0c2533"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-5fb412dc",
+      "senseId": "kaikki:a1a471191f4cb0a827"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-7fa6571c",
+      "senseId": "kaikki:80fb00f294af0e9571"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-975dd48b",
+      "senseId": "kaikki:c2164dca3fdd1d71a1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-fce95836",
+      "senseId": "kaikki:f40ab2c5f4964c464a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-a744af67",
+      "senseId": "kaikki:cb6e8d1ee9fb9ab427"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-7fa86b6a",
+      "senseId": "kaikki:e621eb5f5361c80880"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-d5fac456",
+      "senseId": "kaikki:bbd5cb16ce7d03f6ee"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-f986a94f",
+      "senseId": "kaikki:f348606e9bcd089bcb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-21-group-08",
+      "entryId": "ve-b643868",
+      "senseId": "kaikki:cff168957d9c767aee"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-c13167e9",
+      "senseId": "kaikki:8fe5133bd4e6206d87"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-7c6adcb9",
+      "senseId": "kaikki:1237b67fc1d45c6197"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-b872393",
+      "senseId": "kaikki:3cfbf72897956b5bff"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-50cb71f6",
+      "senseId": "kaikki:1f979fb9e632d058c1"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-5c47a7d4",
+      "senseId": "kaikki:83caa6c7ee4d6be650"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-5f2327f7",
+      "senseId": "kaikki:bdb522f28615ddedf7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-538239be",
+      "senseId": "kaikki:2c115d6fed8654bf5a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-56b1df59",
+      "senseId": "kaikki:7f38550e5036e6437c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-a627d82",
+      "senseId": "kaikki:d52be78ebdb651ba12"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-133d6335",
+      "senseId": "kaikki:f969e812d218123e15"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-abcf2f9",
+      "senseId": "kaikki:cf0924831213c3860c"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-eed137ac",
+      "senseId": "kaikki:eb0794487a00347a63"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-741b86f2",
+      "senseId": "kaikki:3fdf1b14a920178724"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-97762b7f",
+      "senseId": "kaikki:b2d8faded93163ce56"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-7e9f3b2e",
+      "senseId": "kaikki:19aad19bed79c5c73e"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-22-group-01",
+      "entryId": "ve-5cfaa8fc",
+      "senseId": "kaikki:ad585fbdd46d154504"
+    }
+  ]
+}
