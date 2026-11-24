@@ -22,7 +22,7 @@ export function VocabularySenseContent({ sense, entryId, term, learningExample, 
       </p>
       {example ? <>
         {readingNote || fallbackReadingNote ? <p className="vocabulary-example-label">Reading note</p> : !content.example ? <p className="vocabulary-example-label">Learning example</p> : null}
-        <blockquote><VocabularyExampleText text={example} term={readingNote || fallbackReadingNote ? undefined : term} form={form} /></blockquote>
+        <blockquote><VocabularyExampleText text={example} term={readingNote || fallbackReadingNote ? undefined : term} form={form} pos={sense.pos} /></blockquote>
       </> : showMissingExample ? <p className="vocabulary-muted">A learning example has not been added for this meaning yet.</p> : null}
       {showLearningNotes && sense.collocations?.length ? <div className="vocabulary-detail">
         <h4>{meaningGroup ? 'Examples of grouped uses' : usageReference ? 'Related phrases' : readingNote ? 'Reading cues' : 'Collocations'}</h4><p>{sense.collocations.join(' · ')}</p>

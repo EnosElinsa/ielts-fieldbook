@@ -1,5 +1,5 @@
 import { vocabularyTeaching, vocabularyTeachingRevision, type VocabularyContentScope } from './runtimeData';
-import { catalogVocabularyEntry, catalogVocabularySenses, hasVocabularySenseEdits, restoreVocabularyPublicImport, reviewedEntry, VOCABULARY_CONTENT_VERSION } from './content';
+import { catalogVocabularyEntry, catalogVocabularySenses, hasVocabularyLearningEdits, hasVocabularySenseEdits, restoreVocabularyPublicImport, reviewedEntry, VOCABULARY_CONTENT_VERSION } from './content';
 import { applyVocabularyContentVariant, hasVocabularyReadinessDefault, markVocabularyContentScope, supplementVocabularySense, vocabularyReadinessBaselines } from './readiness';
 import { vocabularyCurriculum, vocabularyCurriculumBaselines, type VocabularyCurriculum } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
@@ -52,7 +52,7 @@ export function resolveVocabularyLearningContext(entry: VocabularyEntry, request
   const existing = selectedBinding && entry.senses.find(item => item.id === selectedBinding.sense.id);
   const publicSenses = catalogVocabularySenses(entry.id);
   const catalogSense = selectedBinding && publicSenses.find(item => item.id === selectedBinding.sense.id);
-  const userOverride = existing && hasVocabularySenseEdits(existing, [selectedBinding?.originalSense, catalogSense, selectedBinding?.sense, ...vocabularyReadinessBaselines(entry.id,existing.id)]);
+  const userOverride = existing && hasVocabularyLearningEdits(entry.id, existing, [selectedBinding?.originalSense, catalogSense, selectedBinding?.sense, ...vocabularyReadinessBaselines(entry.id,existing.id)]);
   const explicitSaved = request.senseId && !request.bookId ? entry.senses.find(item=>item.id===request.senseId) : undefined;
   const selectedSense = (userOverride ? existing : selectedBinding?.sense) || (request.senseId ? explicitSaved || fallback.senses.find(item => item.id === request.senseId) || explicitSupplement?.sense : fallback.senses[0]);
   // Group teaching retains its context; a common default can receive a later same-sense review.
@@ -66,13 +66,13 @@ export function resolveVocabularyLearningContext(entry: VocabularyEntry, request
   const choices=publicChoices?.map(candidate=>{
     const existing=entry.senses.find(item=>item.id===candidate.id);
     const baselines=[...publicSenses.filter(item=>item.id===candidate.id),...vocabularyCurriculumBaselines(entry.id,candidate.id),...vocabularyReadinessBaselines(entry.id,candidate.id),candidate];
-    return existing && hasVocabularySenseEdits(existing,baselines)?existing:candidate;
+    return existing && hasVocabularyLearningEdits(entry.id, existing, baselines) ? existing : candidate;
   });
   const learnerPrimary=entry.senses[0];
   const publicEntry=catalogVocabularyEntry(entry.id);
   const publicBaseline=publicEntry || publicSenses.length ? reviewedEntry(publicEntry || {...entry,senses:publicSenses}) : undefined;
   const primaryBaselines=learnerPrimary ? [...(publicBaseline?.senses.filter(item=>item.id===learnerPrimary.id)||[]),...publicSenses.filter(item=>item.id===learnerPrimary.id),...vocabularyReadinessBaselines(entry.id,learnerPrimary.id),...vocabularyCurriculumBaselines(entry.id,learnerPrimary.id)] : [];
-  const learnerEdited=learnerPrimary && (publicSenses.length && !primaryBaselines.length || hasVocabularySenseEdits(learnerPrimary,primaryBaselines));
+  const learnerEdited=learnerPrimary && (publicSenses.length && !primaryBaselines.length || hasVocabularyLearningEdits(entry.id, learnerPrimary, primaryBaselines));
   const curricular=request.senseId?(request.bookId && request.unitId?choices?.find(item=>item.id===request.senseId):undefined):!userOverride && !learnerEdited?choices?.[0]:undefined;
   if(curricular) sense=structuredClone(curricular);
   if(!request.senseId && learnerEdited) sense=structuredClone(learnerPrimary);

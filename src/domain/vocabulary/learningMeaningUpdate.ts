@@ -1,4 +1,4 @@
-import { catalogVocabularyEntry, catalogVocabularySenses, hasVocabularySenseEdits, restoreVocabularyPublicImport } from './content';
+import { catalogVocabularyEntry, catalogVocabularySenses, hasVocabularyLearningEdits, restoreVocabularyPublicImport } from './content';
 import { vocabularyCurriculum, vocabularyCurriculumBaselines } from './curriculum';
 import { resolveVocabularyLearningContext } from './context';
 import { buildLearningBatch } from './learningBatch';
@@ -18,7 +18,7 @@ export function currentGroupLearningRef(state: Partial<VocabularyStore>, scope: 
   if (syllabus?.curriculum.senses.some(sense => sense.id === ref.senseId)) return ref;
   const correction = syllabus?.rows.find(row => row.originalSense?.id === ref.senseId && row.sense.id !== ref.senseId);
   if (!correction?.originalSense) return ref;
-  if (old && hasVocabularySenseEdits(old, [
+  if (old && hasVocabularyLearningEdits(entry.id, old, [
     correction.originalSense,
     ...catalogVocabularySenses(entry.id).filter(sense => sense.id === old.id),
     ...vocabularyReadinessBaselines(entry.id, old.id),

@@ -1,0 +1,222 @@
+{
+  "removeCorrections": [],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-a32a657",
+      "senseId": "kaikki:0580228dfb0dce4fe8",
+      "definition": "A standard British and Australian spelling of organization.",
+      "pos": "noun",
+      "example": "The organisation provides training for volunteers.",
+      "collocations": [
+        "a charitable organisation",
+        "an international organisation",
+        "join an organisation"
+      ],
+      "usage": "This example uses the institution meaning. The spelling reference also covers other meanings of organization.",
+      "distinctions": [
+        "Organisation is not a spelling error; organization is also standard, including in Oxford spelling conventions."
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=organisation&oldid=93711915",
+      "learningPriority": "general",
+      "register": "countable, uncountable",
+      "distinctionTask": {
+        "prompt": "The spelling organisation in a British report is _____.",
+        "options": [
+          "a standard spelling variant",
+          "necessarily a spelling error"
+        ],
+        "answer": "a standard spelling variant",
+        "explanation": "Organisation is standard in British English, alongside organization in Oxford spelling."
+      },
+      "originalSense": {
+        "id": "kaikki:0580228dfb0dce4fe8",
+        "definition": "Non-Oxford British English and Australian standard spelling of organization.",
+        "example": "[…] a number of commentators have noted how, during meetings and in committees, for example, organisation members often experience an attack of the sillies by playing the fool and horsing around.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "countable, uncountable",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/organisation#English",
+        "license": "CC-BY-SA-4.0"
+      },
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": []
+    }
+  ],
+  "removeTopics": [
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-afd7cf6",
+      "senseId": "kaikki:54a8aba53a6350a4ae"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-6853d98f",
+      "senseId": "kaikki:399f3918bc9d6437ca"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-a8ef1e2",
+      "senseId": "kaikki:f5ffe60832e04dc339"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-21dfc0d0",
+      "senseId": "kaikki:d45d9a44d9772d4dfc"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-f591835b",
+      "senseId": "kaikki:8eae80be88c9775123"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-8cebd2ea",
+      "senseId": "kaikki:df77278e1568ca1c69"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-4ec374a1",
+      "senseId": "kaikki:6e9724b169a9a6b0aa"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-bbdff50b",
+      "senseId": "kaikki:f3810d607a4e204099"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-42bebd47",
+      "senseId": "kaikki:3c8529f04db114d941"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-157cdcac",
+      "senseId": "kaikki:776c5f8699fb2ba87a"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-3cd002f2",
+      "senseId": "kaikki:152a4511b4c57bb791"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-a66f5cd",
+      "senseId": "kaikki:bd777ae9f97583f9fb"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-979e54d",
+      "senseId": "kaikki:ccf20f0994a4686044"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-62f40eb6",
+      "senseId": "kaikki:b43628a8ef7dee5cf7"
+    },
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-59509741",
+      "senseId": "kaikki:b38512c28843818c78"
+    }
+  ],
+  "restoreTopicRows": [
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01",
+      "entryId": "ve-d50a2d5c",
+      "term": "association",
+      "sense": {
+        "id": "kaikki:d34d44acf226b70b07",
+        "definition": "A group of persons associated for a common purpose; an organization; society.",
+        "example": "The association represents local government employees.",
+        "pos": "noun",
+        "collocations": [
+          "professional association",
+          "trade association"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/association#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      },
+      "originalSense": {
+        "id": "kaikki:fb0963ff627f0c5ec8",
+        "definition": "The act of associating.",
+        "example": "And it is a characteristic of man that he alone has any sense of good and evil, of just and unjust, and the like, and the association of living beings who have this sense makes a family and a state.",
+        "pos": "noun",
+        "synonyms": [
+          "connection",
+          "ass'n"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "uncountable",
+        "wordFamily": [
+          "AADAOPA",
+          "alumni association",
+          "amateur press association",
+          "anociassociation",
+          "antiassociation",
+          "articles of association",
+          "association copy",
+          "association fallacy",
+          "association football",
+          "associationism",
+          "associationist",
+          "association link",
+          "association list",
+          "association of ideas",
+          "association time",
+          "autoassociation",
+          "bar association",
+          "bioassociation",
+          "bisociation",
+          "CHARGE association",
+          "coassociation",
+          "damn by association",
+          "disassociation",
+          "employers' association",
+          "file association",
+          "free association",
+          "free clothes association",
+          "freedom of association",
+          "guarantee association",
+          "guilt by association"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/association#English",
+        "license": "CC-BY-SA-4.0"
+      },
+      "reason": "Curricular recommendation for Nations and government: replace the selected meaning (The act of associating.) with the topic-relevant noun meaning. Dictionary alternatives were compared; this is not verification of the original source meaning."
+    }
+  ]
+}

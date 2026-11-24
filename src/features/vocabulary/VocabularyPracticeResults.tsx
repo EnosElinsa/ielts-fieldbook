@@ -199,12 +199,12 @@ export function VocabularyPracticeResults({ controller, results }: {
                   </Link>
                   {(wordCounts.get(row.entryId) || 0) > 1 ? <small className="practice-result-meaning">Meaning {meaningNumbers.get(row.cardId)} of {wordCounts.get(row.entryId)}</small> : null}
                   <small>{changed && <strong>Meaning in this session · </strong>}{partOfSpeech && <><span className="practice-definition-pos">{partOfSpeech}</span>{' '}</>}{savedDefinition}</small>
-                  {savedExample && <small className="practice-result-context"><VocabularyExampleText text={savedExample} term={savedReadingNote ? undefined : row.term} form={savedForm} /></small>}
+                  {savedExample && <small className="practice-result-context"><VocabularyExampleText text={savedExample} term={savedReadingNote ? undefined : row.term} form={savedForm} pos={partOfSpeech} /></small>}
                   <VocabularyWordbookSources sources={frozen?.sources || current.raw.sources} context={current.context} onNavigate={() => rememberPosition(row.cardId)} />
                   {changed && current.resolved && <details className="practice-current-reference">
                     <summary>Current {current.context.bookId ? 'wordbook meaning' : 'meaning'}</summary>
                     <p>{learningPos && <><span className="practice-definition-pos">{learningPos}</span>{' '}</>}{learning.definition}</p>
-                    {learning.example && <p><VocabularyExampleText text={learning.example} term={isVocabularyReadingNote(row.entryId, current.resolved) ? undefined : current.raw.term} form={reviewedExampleForm(row.entryId, current.raw.term, current.resolved)} /></p>}
+                    {learning.example && <p><VocabularyExampleText text={learning.example} term={isVocabularyReadingNote(row.entryId, current.resolved) ? undefined : current.raw.term} form={reviewedExampleForm(row.entryId, current.raw.term, current.resolved)} pos={learningPos} /></p>}
                     {current.resolved.id !== row.senseId && <Link to={entryUrl(row.entryId,{...current.context,senseId:current.resolved.id,exactMeaning:'true'},resultReturnTo)} onClick={() => rememberPosition(row.cardId)}>View current meaning</Link>}
                   </details>}
                   {current.raw ? <Pronunciation compact entry={audioEntry} sense={audioEntry.senses.find(sense=>sense.id===row.senseId) || null} options={{pronunciation:frozen?.pronunciation ?? 'legacy'}} accent={frozenAudio ? results.preferences.accent : controller.preferences.accent}/> : null}

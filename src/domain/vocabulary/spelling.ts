@@ -86,3 +86,15 @@ export function matchesDictationSpelling(expected: unknown, response: unknown) {
 export function isRegionalSpellingDifference(expected: unknown, response: unknown) {
   return normalized(expected) !== normalized(response) && matchesDictationSpelling(expected, response);
 }
+
+// Surface only reviewed headword variants. Accepted dictation variants can be
+// more permissive than an annotation beside an individual dictionary sense.
+const spellingNotes: Record<string, string> = {
+  organisation: 'Also spelled organization in US English and Oxford spelling.',
+  organization: 'Also spelled organisation in British and Australian English.',
+};
+
+export function regionalSpellingNote(term: string): string | undefined {
+  const key = normalized(term);
+  return Object.hasOwn(spellingNotes, key) ? spellingNotes[key] : undefined;
+}

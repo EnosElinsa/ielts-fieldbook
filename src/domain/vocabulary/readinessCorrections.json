@@ -262173,7 +262173,7 @@
   {
     "entryId": "ve-a32a657",
     "senseId": "kaikki:0580228dfb0dce4fe8",
-    "definition": "A standard British and Australian spelling of organization.",
+    "definition": "A group of people working together for a particular purpose.",
     "pos": "noun",
     "example": "The organisation provides training for volunteers.",
     "collocations": [
@@ -262181,13 +262181,13 @@
       "an international organisation",
       "join an organisation"
     ],
-    "usage": "This example uses the institution meaning. The spelling reference also covers other meanings of organization.",
+    "usage": "Use a countable noun for a group, as in “a charitable organisation”.",
     "distinctions": [
       "Organisation is not a spelling error; organization is also standard, including in Oxford spelling conventions."
     ],
     "referenceUrl": "https://en.wiktionary.org/w/index.php?title=organisation&oldid=93711915",
     "learningPriority": "general",
-    "register": "countable, uncountable",
+    "register": "countable",
     "distinctionTask": {
       "prompt": "The spelling organisation in a British report is _____.",
       "options": [
@@ -262215,7 +262215,41 @@
     },
     "synonyms": [],
     "antonyms": [],
-    "wordFamily": []
+    "wordFamily": [],
+    "previousSenses": [
+      {
+        "id": "kaikki:0580228dfb0dce4fe8",
+        "definition": "A standard British and Australian spelling of organization.",
+        "example": "The organisation provides training for volunteers.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [
+          "a charitable organisation",
+          "an international organisation",
+          "join an organisation"
+        ],
+        "usage": "This example uses the institution meaning. The spelling reference also covers other meanings of organization.",
+        "register": "countable, uncountable",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/organisation#English",
+        "license": "CC-BY-SA-4.0",
+        "distinctions": [
+          "Organisation is not a spelling error; organization is also standard, including in Oxford spelling conventions."
+        ],
+        "distinctionTask": {
+          "prompt": "The spelling organisation in a British report is _____.",
+          "options": [
+            "a standard spelling variant",
+            "necessarily a spelling error"
+          ],
+          "answer": "a standard spelling variant",
+          "explanation": "Organisation is standard in British English, alongside organization in Oxford spelling."
+        }
+      }
+    ]
   },
   {
     "entryId": "ve-a3f30d7d",

@@ -2,9 +2,11 @@ import { afterEach, beforeEach, expect, test } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { VOCABULARY_CATALOG } from '../../src/domain/vocabulary/catalog';
 import { resolveVocabularyLearningContext } from '../../src/domain/vocabulary/context';
-import { getVocabularyReviewQueue } from '../../src/domain/vocabulary';
+import { getVocabularyReviewQueue, normalizeVocabularyCollections } from '../../src/domain/vocabulary';
 import { currentGroupLearningRef } from '../../src/domain/vocabulary/learningMeaningUpdate';
 import { vocabularyCurriculum } from '../../src/domain/vocabulary/curriculum';
+import { reviewedEntry } from '../../src/domain/vocabulary/content';
+import corrections from '../../src/domain/vocabulary/readinessCorrections.json';
 import type { VocabularyEntry } from '../../src/domain/vocabulary/types';
 
 const initial = structuredClone(VOCABULARY_CATALOG);
@@ -14,6 +16,45 @@ beforeEach(() => Object.assign(VOCABULARY_CATALOG, structuredClone(released)));
 afterEach(() => Object.assign(VOCABULARY_CATALOG, structuredClone(initial)));
 
 const travel = { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-14-group-01' };
+const government = { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-15-group-01' };
+
+test.each([
+  ['organisation', 'A group of people working together for a particular purpose.', 'The organisation provides advice to local councils.'],
+  ['association', 'A group of people organised for a shared purpose.', 'The association represents local government employees.'],
+  ['union', 'A group of countries, states, or organisations joined for a shared purpose.', 'The two countries formed a union to coordinate trade policy.'],
+  ['community', 'A group sharing common characteristics, such as the same language, law, religion, or tradition.', 'The local community shares a strong tradition of music and dance.'],
+  ['throne', 'The position of a king or queen.', 'The prince succeeded to the throne after his father died.'],
+])('government group teaches the contextual %s meaning from saved snapshots', (term, definition, example) => {
+  const original = legacyEntry(term, 'guixue', government);
+  const saved = normalizeVocabularyCollections({ vocabulary: [reviewedEntry(original)] }).vocabulary[0];
+  if (term === 'organisation') {
+    const legacy = corrections.find(row => row.entryId === original.id)?.previousSenses?.[0];
+    expect(legacy?.definition).toBe('A standard British and Australian spelling of organization.');
+    saved.senses[0] = legacy!;
+  }
+  const current = resolveVocabularyLearningContext(saved, government).sense!;
+  expect(current).toMatchObject({ definition, example });
+  const oldRef = { entryId: original.id, senseId: original.senses[0].id };
+  expect(currentGroupLearningRef({ vocabulary: [saved] }, government, oldRef).senseId).toBe(current.id);
+  expect(resolveVocabularyLearningContext(saved, { ...government, senseId: current.id }).sense).toMatchObject({ definition, example });
+  const card = getVocabularyReviewQueue({ vocabulary: [saved] }, { ...government, senseId: current.id, dueOnly: false, mode: 'dictation' })[0];
+  expect(card.entry.senses.find(sense => sense.id === card.senseId)).toMatchObject({ definition, example });
+});
+
+test('ordinary organisation lookup gives the institution meaning', () => {
+  const original = legacyEntry('organisation', 'guixue', government);
+  expect(resolveVocabularyLearningContext(original).sense?.definition).toBe('A group of people working together for a particular purpose.');
+});
+
+test('a personal edit to a saved public default stays visible in its group', () => {
+  const original = legacyEntry('organisation', 'guixue', government);
+  const saved = normalizeVocabularyCollections({ vocabulary: [reviewedEntry(original)] }).vocabulary[0];
+  saved.senses[0].example = 'Our organisation holds a meeting every Monday.';
+  const before = structuredClone(saved);
+  expect(resolveVocabularyLearningContext(saved, government).sense?.example).toBe(saved.senses[0].example);
+  expect(resolveVocabularyLearningContext(saved, { ...government, senseId: saved.senses[0].id }).sense?.example).toBe(saved.senses[0].example);
+  expect(saved).toEqual(before);
+});
 
 test('express teaches the transport adjective in the travel group and retains the everyday verb outside it', () => {
   const entry = released.entries.find((row: VocabularyEntry) => row.term === 'express') as VocabularyEntry;
