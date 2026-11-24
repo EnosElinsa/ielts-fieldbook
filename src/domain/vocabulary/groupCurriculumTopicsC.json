@@ -59,7 +59,7 @@
     "term": "association",
     "sense": {
       "id": "kaikki:d34d44acf226b70b07",
-      "definition": "A group of persons associated for a common purpose; an organization; society.",
+      "definition": "A group of people organised for a shared purpose.",
       "example": "The association represents local government employees.",
       "pos": "noun",
       "collocations": [
@@ -126,7 +126,28 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/association#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Curricular recommendation for Nations and government: replace the selected meaning (The act of associating.) with the topic-relevant noun meaning. Dictionary alternatives were compared; this is not verification of the original source meaning."
+    "reason": "Curricular recommendation for Nations and government: replace the selected meaning (The act of associating.) with the topic-relevant noun meaning. Dictionary alternatives were compared; this is not verification of the original source meaning.",
+    "previousSenses": [
+      {
+        "id": "kaikki:d34d44acf226b70b07",
+        "definition": "A group of persons associated for a common purpose; an organization; society.",
+        "example": "The association represents local government employees.",
+        "pos": "noun",
+        "collocations": [
+          "professional association",
+          "trade association"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "license": "CC-BY-SA-4.0",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/association#English",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -36672,5 +36693,998 @@
       }
     ],
     "reason": "Modern group teaching with a meaning-matched example, useful combinations, and an authored contextual contrast. Editorial syllabus recommendation; the source book’s intended meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-afd7cf6",
+    "term": "union",
+    "sense": {
+      "id": "kaikki:54a8aba53a6350a4ae",
+      "definition": "A group of countries, states, or organisations joined for a shared purpose.",
+      "example": "The two countries formed a union to coordinate trade policy.",
+      "pos": "noun",
+      "collocations": [
+        "political union",
+        "customs union"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/union#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:f7c92d2b14be1359d7",
+      "definition": "The act of uniting or joining two or more things into one.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "junction",
+        "coalition",
+        "combination"
+      ],
+      "antonyms": [
+        "nonunion",
+        "disunion"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "antiunion",
+        "anti-union",
+        "art union",
+        "Auto Union",
+        "axiom of union",
+        "banjo union",
+        "Barabkunda Union",
+        "civil union",
+        "Clam Union",
+        "company union",
+        "counion",
+        "credit union",
+        "customs union",
+        "de facto union",
+        "discriminated union",
+        "disjoint union",
+        "disjoint union topology",
+        "enterprise union",
+        "European Union",
+        "French Union",
+        "fruit of the union",
+        "Great Union Day",
+        "hypostatic union",
+        "interunion",
+        "intraunion",
+        "Kalmar Union",
+        "labor union",
+        "labour union",
+        "Mount Union",
+        "multiunion"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/union#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-6853d98f",
+    "term": "throne",
+    "sense": {
+      "id": "kaikki:399f3918bc9d6437ca",
+      "definition": "The position of a king or queen.",
+      "example": "The prince succeeded to the throne after his father died.",
+      "pos": "noun",
+      "collocations": [
+        "heir to the throne",
+        "succeed to the throne"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/throne#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:d4490ef35e2135a52b",
+      "definition": "An impressive seat used by a monarch, often on a raised dais in a throne room and reserved for formal occasions.",
+      "example": "He approached the throne reverently.",
+      "pos": "noun",
+      "synonyms": [
+        "chair of state"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "chicken on a throne",
+        "chicken throne",
+        "dethrone",
+        "disthrone",
+        "enthrone",
+        "inthrone",
+        "inthronize",
+        "porcelain throne",
+        "power behind the throne",
+        "rethrone",
+        "speech from the throne",
+        "thronal",
+        "thronedom",
+        "throneless",
+        "thronelet",
+        "thronelike",
+        "throne name",
+        "Throne of Wisdom",
+        "throne room",
+        "throneroom",
+        "throneship",
+        "Thronesiverse",
+        "throne sniffer",
+        "throne speech",
+        "Thronesverse",
+        "Throneverse",
+        "throne village",
+        "throneward",
+        "thronewards",
+        "throneworld"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/throne#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-a8ef1e2",
+    "term": "crown",
+    "sense": {
+      "id": "kaikki:f5ffe60832e04dc339",
+      "definition": "The state or government in a country ruled by a monarch.",
+      "example": "The land belongs to the Crown.",
+      "pos": "noun",
+      "collocations": [
+        "property of the Crown",
+        "the Crown"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/crown#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:8b6507be7f431294b5",
+      "definition": "A royal, imperial or princely headdress; a diadem.",
+      "example": "Before so many of Europe's crowns came tumbling off the heads of their royal owners, Continental Europe could show a rich variety in the matter of royal trains.",
+      "pos": "noun",
+      "synonyms": [
+        "coronet",
+        "diadem"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "12-crown-4",
+        "15-crown-5",
+        "18-crown-6",
+        "Advent crown",
+        "antique crown",
+        "astral crown",
+        "becrown",
+        "blockade crown",
+        "blossomcrown",
+        "Blue Crown",
+        "bridal crown",
+        "celestial crown",
+        "civic crown",
+        "copple-crown",
+        "Coxs Crown",
+        "crownable",
+        "crown achievement",
+        "crown agent",
+        "crown and anchor",
+        "crown antler",
+        "crown bar",
+        "crown cactus",
+        "crown cap",
+        "crown clade",
+        "crown colony",
+        "crown cork",
+        "crown corporation",
+        "Crown Court",
+        "crown daisy",
+        "crown dependency"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/crown#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-21dfc0d0",
+    "term": "parliament",
+    "sense": {
+      "id": "kaikki:d45d9a44d9772d4dfc",
+      "definition": "The body that debates and makes laws in many countries.",
+      "example": "Parliament voted on the new education bill.",
+      "pos": "noun",
+      "collocations": [
+        "member of parliament",
+        "dissolve parliament"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/parliament#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:8f156eba461cd64b38",
+      "definition": "A formal council summoned (especially by a monarch) to discuss important issues.",
+      "example": "By the 13th Century, a parliament was when kings met up with English barons to raise cash for fighting wars - mostly against Scotland.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "historical",
+      "register": "countable, historical, uncountable",
+      "wordFamily": [
+        "act of parliament",
+        "antiparliament",
+        "antiparliamentary",
+        "anti-parliamentary",
+        "contempt of Parliament",
+        "European Parliament",
+        "extraparliamentary",
+        "extra-parliamentary",
+        "House of Parliament",
+        "hung parliament",
+        "interparliament",
+        "interparliamentary",
+        "inter-parliamentary",
+        "majority parliament",
+        "member of parliament",
+        "Member of Parliament",
+        "minority parliament",
+        "parliamental",
+        "parliamentarian",
+        "Parliamentarian",
+        "parliamentarism",
+        "parliamentary",
+        "parliamentary agent",
+        "Parliament Hill",
+        "Parliament House",
+        "parliamentlike",
+        "parliament-like",
+        "parliament of the streets",
+        "parly",
+        "Parly"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/parliament#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-f591835b",
+    "term": "bureaucracy",
+    "sense": {
+      "id": "kaikki:8eae80be88c9775123",
+      "definition": "A system of administration with officials working under a hierarchy and following established procedures.",
+      "example": "The new agency inherited a large bureaucracy.",
+      "pos": "noun",
+      "collocations": [
+        "government bureaucracy",
+        "administrative bureaucracy"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/bureaucracy#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:d59a43333bdfceada3",
+      "definition": "Government by bureaus or their administrators or officers.",
+      "example": "However, when Britain left the European Union, ferries started to ply a direct sea link from Ireland, to save hauliers from custom's bureaucracy of driving via Britain.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "antibureaucracy",
+        "bureaucrap",
+        "bureaucrat",
+        "bureaucratese",
+        "bureaucratic",
+        "bureaucratically",
+        "bureaucratize",
+        "bureaucrazy",
+        "bureaupathology",
+        "Eurocracy",
+        "technobureaucracy"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/bureaucracy#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-8cebd2ea",
+    "term": "headquarters",
+    "sense": {
+      "id": "kaikki:df77278e1568ca1c69",
+      "definition": "The main office or centre from which an organisation is run.",
+      "example": "The election commission moved its headquarters to the capital.",
+      "pos": "noun",
+      "collocations": [
+        "national headquarters",
+        "party headquarters"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/headquarters#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:855918519b9ff8e2c0",
+      "definition": "The military installation from which troops are commanded and orders are issued; the military unit consisting of a commander and his support staff.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "HQ",
+        "h.q.",
+        "head office"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "general headquarters",
+        "subheadquarters"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/headquarters#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-4ec374a1",
+    "term": "department",
+    "sense": {
+      "id": "kaikki:6e9724b169a9a6b0aa",
+      "definition": "A division of an organisation or government responsible for a particular area of work.",
+      "example": "The health department issued new rules for hospitals.",
+      "pos": "noun",
+      "collocations": [
+        "government department",
+        "health department"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/department#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:cb2533db7cef43c752",
+      "definition": "A part, portion, or subdivision.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "cabinet department",
+        "casualty department",
+        "departmental",
+        "departmentally",
+        "departmentation",
+        "departmentize",
+        "Department of Redundancy Department",
+        "department store",
+        "departmentwide",
+        "emergency department",
+        "fire department",
+        "interdepartmental",
+        "multidepartment",
+        "police department",
+        "state department",
+        "subdepartment",
+        "superdepartment",
+        "treasury department",
+        "trouser department"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/department#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-bbdff50b",
+    "term": "administration",
+    "sense": {
+      "id": "kaikki:f3810d607a4e204099",
+      "definition": "The executive part of a government or the people responsible for carrying out its policies.",
+      "example": "The new administration proposed changes to immigration policy.",
+      "pos": "noun",
+      "collocations": [
+        "the incoming administration",
+        "the previous administration"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/administration#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:7c31d5b12ddb14d7e1",
+      "definition": "The act of administering; government of public affairs; the service rendered, or duties assumed, in conducting affairs; the conducting of any office or employment; direction.",
+      "example": "[…] the fact that the propertied classes are no longer the best educated, and the fact that the large number of people who owe their position solely to their general education do not possess that experience of the working of the economic system which the administration of property gives are important to understanding the role of the intellectual.",
+      "pos": "noun",
+      "synonyms": [
+        "administration",
+        "direction",
+        "governance",
+        "management",
+        "supervision"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "usually",
+      "register": "uncountable, usually",
+      "wordFamily": [
+        "administrational",
+        "administrationese",
+        "administration of the fulness of times",
+        "administrationspeak",
+        "antiadministration",
+        "business administration",
+        "coadministration",
+        "letter of administration",
+        "maladministration",
+        "male-administration",
+        "misadministration",
+        "mono-administration",
+        "multi-administration",
+        "National Aeronautics and Space Administration",
+        "National Oceanic and Atmospheric Administration",
+        "nonadministration",
+        "overadministration",
+        "postadministration",
+        "preadministration",
+        "proadministration",
+        "public administration",
+        "readministration",
+        "route of administration",
+        "self-administration",
+        "subadministration"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/administration#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-42bebd47",
+    "term": "meltdown",
+    "sense": {
+      "id": "kaikki:3c8529f04db114d941",
+      "definition": "A crisis in which a system breaks down or goes out of control.",
+      "example": "The stock market crash led to a financial meltdown.",
+      "pos": "noun",
+      "collocations": [
+        "financial meltdown",
+        "economic meltdown"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/meltdown#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:2a8358da034e177a19",
+      "definition": "An act or process of melting.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "melt-up"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "gypsy meltdown",
+        "market meltdown",
+        "melty",
+        "mutational meltdown",
+        "nuclear meltdown",
+        "techno-meltdown"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/meltdown#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-157cdcac",
+    "term": "democracy",
+    "sense": {
+      "id": "kaikki:776c5f8699fb2ba87a",
+      "definition": "A system of government in which power belongs to the people, often exercised through elected representatives.",
+      "example": "Independent courts can help protect a democracy.",
+      "pos": "noun",
+      "collocations": [
+        "representative democracy",
+        "a functioning democracy"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/democracy#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:776c5f8699fb2ba87a",
+      "definition": "Rule by the people, especially as a form of government, such as",
+      "example": "And the essential value and power of Democracy consists in this,—that it combines, as far as possible, power and organization ; THE SPIRIT, MANHOOD, is at one with THE BODY, ORGANIZATION. [....] Democracy is Government by the People.",
+      "pos": "noun",
+      "synonyms": [
+        "democratism"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "algorithmocracy",
+        "antidemocracy",
+        "aristodemocracy",
+        "arsenal of democracy",
+        "authoritarian democracy",
+        "Christian democracy",
+        "counterdemocracy",
+        "crony democracy",
+        "cyberdemocracy",
+        "democracide",
+        "democracy sausage",
+        "democratatorship",
+        "democratize",
+        "democrazy",
+        "demokkkracy",
+        "demonocracy",
+        "dictatorship of democracy",
+        "direct democracy",
+        "dollar democracy",
+        "dotmocracy",
+        "dumbocracy",
+        "ecodemocracy",
+        "e-democracy",
+        "fax democracy",
+        "grassroots democracy",
+        "indirect democracy",
+        "Islamocracy",
+        "liberal democracy",
+        "limited democracy",
+        "liquid democracy"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/democracy#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-3cd002f2",
+    "term": "hierarchy",
+    "sense": {
+      "id": "kaikki:152a4511b4c57bb791",
+      "definition": "A body of officials organised in ranks, with higher ranks having greater authority.",
+      "example": "The military hierarchy met to review the new command structure.",
+      "pos": "noun",
+      "collocations": [
+        "military hierarchy",
+        "the top of the hierarchy"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/hierarchy#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:152a4511b4c57bb791",
+      "definition": "A body of authoritative officials organized in nested ranks.",
+      "example": "Gay men and bisexuals were blamed for the [AIDS] epidemic for much the same reason that the church hierarchy in the Middle Ages accused Jewish people of creating bubonic plague by \"poisoning the wells.\"",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "antihierarchy",
+        "arithmetical hierarchy",
+        "arithmetic hierarchy",
+        "Chomsky hierarchy",
+        "command hierarchy",
+        "hierarchial",
+        "hierarchism",
+        "hierarchist",
+        "hierarchy of effects",
+        "Kleene hierarchy",
+        "Kleene-Mostowski hierarchy",
+        "Lévy hierarchy",
+        "phonological hierarchy",
+        "polyhierarchy",
+        "subhierarchy",
+        "superhierarchy",
+        "time hierarchy theorem"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/hierarchy#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-a66f5cd",
+    "term": "mayor",
+    "sense": {
+      "id": "kaikki:bd777ae9f97583f9fb",
+      "definition": "The head of the local government of a city or town.",
+      "example": "The mayor announced a plan to improve public transport.",
+      "pos": "noun",
+      "collocations": [
+        "elect a mayor",
+        "the mayor of a city"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mayor#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:bd777ae9f97583f9fb",
+      "definition": "The chief executive of the municipal government of a city, borough, etc., formerly (historical) usually appointed as a caretaker by European royal courts but now usually appointed or elected locally.",
+      "example": "The office of mayor has been the tomb of many political ambitions.",
+      "pos": "noun",
+      "synonyms": [
+        "mayoress",
+        "burgomaster",
+        "boroughmaster",
+        "boroughreeve",
+        "portreeve",
+        "provost",
+        "Lord Provost",
+        "praetor"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "lady mayor",
+        "lord mayor",
+        "mayoral",
+        "mayoralty",
+        "mayor-choosing",
+        "mayor-corn",
+        "mayor-council",
+        "mayordom",
+        "mayoress",
+        "mayorhood",
+        "mayorial",
+        "mayorless",
+        "mayorlet",
+        "mayorlike",
+        "mayorly",
+        "mayor-making",
+        "mayor's banquet",
+        "mayor's court",
+        "mayor's feast",
+        "mayorsfeud",
+        "mayorship",
+        "mayor's peer",
+        "mayor-town",
+        "mayory",
+        "supermayor",
+        "weak mayor"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mayor#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-979e54d",
+    "term": "municipal",
+    "sense": {
+      "id": "kaikki:ccf20f0994a4686044",
+      "definition": "Relating to the local government of a town or city.",
+      "example": "The municipal council approved a new library.",
+      "pos": "adj",
+      "collocations": [
+        "municipal council",
+        "municipal elections"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/municipal#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:ccf20f0994a4686044",
+      "definition": "Of or pertaining to a municipality (a city or a corporation having the right of administering local government).",
+      "example": "More than 100 provincial and municipal firefighters were brought in, with helicopters and aircraft used to drop water and fire retardant, while bulldozers were digging firebreaks.",
+      "pos": "adj",
+      "synonyms": [
+        "civic"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "not-comparable",
+      "register": "not-comparable",
+      "wordFamily": [
+        "antimunicipal",
+        "bimunicipal",
+        "intermunicipal",
+        "intramunicipal",
+        "monomunicipal",
+        "municipal borough",
+        "municipal corporation",
+        "municipal engineering",
+        "municipal flag",
+        "municipal incorporation",
+        "municipalise",
+        "municipalism",
+        "municipality",
+        "municipalization",
+        "municipalize",
+        "municipally",
+        "municipal president",
+        "municipal seat",
+        "nonmunicipal",
+        "premunicipal",
+        "quasimunicipal",
+        "submunicipal"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/municipal#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-62f40eb6",
+    "term": "nation",
+    "sense": {
+      "id": "kaikki:b43628a8ef7dee5cf7",
+      "definition": "A large community of people with a shared identity, often based on a common history, culture or language.",
+      "example": "The Kurds are often described as a nation without a state.",
+      "pos": "noun",
+      "collocations": [
+        "a nation without a state",
+        "national identity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/nation#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:b43628a8ef7dee5cf7",
+      "definition": "A historically constituted, stable community of people, formed based on a common language, territory, economic life, ethnicity and/or psychological make-up manifested in a common culture.",
+      "example": "The Roma are a nation without a country.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "collective",
+      "register": "collective",
+      "wordFamily": [
+        "aspirant nation",
+        "bedroom nation",
+        "bug nation",
+        "captive nation",
+        "cybernation",
+        "Delaware Nation",
+        "domestic dependent nation",
+        "egonation",
+        "father of the nation",
+        "First Nation",
+        "First Nations",
+        "Ford Nation",
+        "Holy Roman Empire of the German Nation",
+        "home nation",
+        "independent mini-nation",
+        "indispensable nation",
+        "internation",
+        "macronation",
+        "micronation",
+        "mini-nation",
+        "model nation",
+        "most favored nation",
+        "most favoured nation",
+        "mother of the nation",
+        "multination",
+        "Munsee-Delaware Nation",
+        "nanonation",
+        "natiolect",
+        "national",
+        "nation-builder"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/nation#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-15-group-01",
+    "entryId": "ve-59509741",
+    "term": "behalf",
+    "sense": {
+      "id": "kaikki:b38512c28843818c78",
+      "definition": "In “on behalf of”, acting as a representative of someone or in their interests.",
+      "example": "She signed the agreement on behalf of the council.",
+      "pos": "noun",
+      "collocations": [
+        "on behalf of the council",
+        "speak on behalf of someone"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/behalf#English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:b38512c28843818c78",
+      "definition": "The interest, benefit, or wellbeing of someone or something.",
+      "example": "She appeared on behalf of the U.N. Secretary General at a conference held in behalf of the world's children.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "behalfism",
+        "on behalf of",
+        "in behalf of"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/behalf#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Editorial syllabus recommendation for Nations and government with a contextual definition and a modern usage example."
   }
 ]

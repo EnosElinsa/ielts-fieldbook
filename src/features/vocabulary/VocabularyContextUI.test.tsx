@@ -515,7 +515,7 @@ test('an explicitly selected river meaning displays its diagram and learning not
 test('pea details show the food meaning with the same illustration as its learning card', () => {
   const pea = release.entries.find((entry: any) => entry.term === 'pea');
   mount(`/vocabulary/entry/${pea.id}?bookId=${book}&unitId=ielts-vocabulary-chapter-12-group-02`);
-  expect(screen.getByText('Add the peas to the soup near the end of cooking.')).toBeInTheDocument();
+  expect(screen.getByText((_, node) => node?.matches('blockquote') === true && node.textContent === 'Add the peas to the soup near the end of cooking.')).toBeInTheDocument();
   expect(screen.getByRole('img', { name: 'pea: Green peas in an open pod' })).toBeInTheDocument();
   expect(screen.getByText('Meaning source')).toBeInTheDocument();
   expect(screen.queryByText('Theme learning meaning')).not.toBeInTheDocument();

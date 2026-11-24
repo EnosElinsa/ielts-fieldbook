@@ -45,6 +45,7 @@ import { getVocabularyNextPractice } from '../../domain/vocabulary/nextPractice'
 import { VocabularyNextPractice } from './VocabularyNextPractice';
 import { vocabularyLearningTimeline } from "../../domain/vocabulary/timeline";
 import { vocabularyPartOfSpeech, vocabularySensePresentation } from "../../domain/vocabulary/dictionaryPresentation";
+import { regionalSpellingNote } from '../../domain/vocabulary/spelling';
 import { isVocabularyMeaningGroup, isVocabularyPracticeReference, isVocabularySpellingReference, isVocabularyUsageReference, vocabularyReadinessBaselines } from '../../domain/vocabulary/readiness';
 import { VocabularySenseContent } from "./VocabularySenseContent";
 import { VocabularySourceLinks } from './VocabularySourceLinks';
@@ -205,6 +206,7 @@ export function VocabularyEntryPage() {
   const origin = location.pathname + location.search;
   const entry = resolved?.entry;
   const primary = resolved?.sense;
+  const spellingNote = entry && regionalSpellingNote(entry.term);
   const dictionaryPreview = Boolean(primary && !baseResolved?.sense);
   const nextPractice = useMemo(() => entry && primary && status === 'ready'
     ? getVocabularyNextPractice(state,entry,{...context,senseId:primary.id}) : undefined,
@@ -622,6 +624,7 @@ export function VocabularyEntryPage() {
               {primary ? (
                 <>
                   {renderSense(primary, true)}
+                  {spellingNote && <p className="vocabulary-muted">{spellingNote}</p>}
                   {alternateGroupMeaning ? (
                     <Link className="btn line vocabulary-group-meaning-link" to={`${location.pathname}?${groupMeaningParams}`}>
                       View wordbook meaning <ArrowRight size={14} aria-hidden="true" />

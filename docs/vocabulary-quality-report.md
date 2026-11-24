@@ -2,7 +2,7 @@
 
 Generated with `npm run vocabulary:quality` from checked-in public data and the actual learning-context and exercise resolvers. No account data or external services are read.
 
-Source snapshot: `8cafaef5c421430db534722f85655f0eecbc49af5905e7c7adace4e554d0b599`.
+Source snapshot: `c32cb6e1a2dd584b19ab3e740c6db704a0d4e0bab4f28b6f4e99421d9a813b68`.
 
 ## Coverage
 
@@ -14,16 +14,16 @@ Source snapshot: `8cafaef5c421430db534722f85655f0eecbc49af5905e7c7adace4e554d0b5
 | Existing editorial reviews | 9551 |
 | Dictionary senses still pending | 42601 |
 | Words with a resolved learning meaning | 7021 |
-| Distinct learning-content variants | 9117 |
+| Distinct learning-content variants | 9132 |
 | Default/group learning contexts, including multiple-meaning lessons | 16296 |
-| Learning variants with a displayed example or reading note | 9117 |
-| Learning variants with collocations or reading cues | 3607 |
-| Learning variants with distinction notes | 1585 |
-| Learning variants supporting sentence gaps | 7779 |
+| Learning variants with a displayed example or reading note | 9132 |
+| Learning variants with collocations or reading cues | 3622 |
+| Learning variants with distinction notes | 1584 |
+| Learning variants supporting sentence gaps | 7794 |
 | Learning variants supporting distinction questions | 340 |
 | Learning variants with content-review signals | 0 |
-| Learning variants without content-review signals | 9117 |
-| Learning variants with enrichment opportunities | 8739 |
+| Learning variants without content-review signals | 9132 |
+| Learning variants with enrichment opportunities | 8754 |
 | Exact-content decisions retaining valid examples | 285 |
 | Source groups sharing a normalised definition and POS within one word | 12 |
 
@@ -43,10 +43,10 @@ Learning variants preserve exact content and provenance. A word can have a defau
 | archaic-example | content-review | 0 | 0 | 1341 |
 | example-fragment-signal | content-review | 0 | 283 | 3636 |
 | missing-collocations | enrichment | 5466 | 5466 | 43065 |
-| missing-distinctions | enrichment | 7496 | 7496 | 43239 |
+| missing-distinctions | enrichment | 7512 | 7512 | 43239 |
 | duplicate-gloss | content-review | 0 | 0 | 24 |
 | no-cloze-task | enrichment | 1281 | 1281 | Not scanned |
-| no-distinction-task | enrichment | 8720 | 8720 | Not scanned |
+| no-distinction-task | enrichment | 8735 | 8735 | Not scanned |
 
 These signals are candidates for review, not proven linguistic defects. A phrase can be a valid example; an old quotation can be appropriate reading material; two glosses can belong to distinct source identities. Typed reading notes and reference records do not require sentence gaps. Exercise availability is scanned for learning variants only, not every reference meaning. The availability of a question is not proof of its semantic quality. No missing-diagram signal is generated.
 

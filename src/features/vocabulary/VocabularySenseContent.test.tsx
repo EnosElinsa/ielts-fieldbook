@@ -19,6 +19,13 @@ test.each([
   expect([...container.querySelectorAll('mark')].map(node => node.textContent)).toEqual(expected);
 });
 
+test('highlights a whole regular noun plural without highlighting a longer word', () => {
+  const text = 'The crowns were on display. The uncrowned prince chose a crown.';
+  const { container } = render(<p><VocabularyExampleText text={text} term="crown" pos="noun" /></p>);
+  expect(container.textContent).toBe(text);
+  expect([...container.querySelectorAll('mark')].map(node => node.textContent)).toEqual(['crowns', 'crown']);
+});
+
 test('an exact-bound historical reading explanation is labelled and does not turn a learner’s replacement sentence into a reading note', () => {
   const row = corrections.find(row => row.entryId === 've-649a8d90' && row.senseId === 'kaikki:a0e69a49931b08846d')!;
   const sense = supplementVocabularySense(row.entryId, row.originalSense as VocabularySense, [], () => false);

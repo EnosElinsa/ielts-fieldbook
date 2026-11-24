@@ -20,6 +20,7 @@ import { VocabularyMeaningNotes } from './VocabularyMeaningNotes';
 import { hasVocabularyReadinessNotes, isVocabularyReadingNote } from '../../domain/vocabulary/readiness';
 import conciseLearningExamples from '../../domain/vocabulary/conciseLearningExamples.json';
 import { VocabularyExampleText } from './VocabularyExampleText';
+import { regionalSpellingNote } from '../../domain/vocabulary/spelling';
 import { getVocabularyMastery } from '../../domain/vocabulary/mastery';
 import { getLearnedVocabularyIds, vocabularyGroupProgress } from '../../domain/vocabulary/progress';
 import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
@@ -211,7 +212,7 @@ export function VocabularyGroupLearnPage() {
   const previewingMeanings = Boolean(meaningUpdate && keepTaskMeanings !== meaningUpdateKey);
   const displayCards = useMemo(() => {
     if (previewingMeanings) return meaningUpdate!.batch.selection.cards;
-    if (meaningUpdate || !boundPlan || (planRow?.target.type === 'vocabulary' && planRow.target.selectedMeanings?.length)) return currentBatch?.selection.cards;
+    if (meaningUpdate || !boundPlan || (planRow?.target.type === 'vocabulary' && planRow.target.selectedMeanings?.length)) return currentBatch?.selection.cards || boundPlan?.target.cards;
     return boundPlan.target.cards.map(ref => currentGroupLearningRef(state, {bookId, unitId}, ref));
   }, [previewingMeanings, meaningUpdate, boundPlan, currentBatch, planRow, state, bookId, unitId]);
   const showingUpdatedReference = !meaningUpdate && Boolean(boundPlan?.target.cards.some((ref, index) => displayCards?.[index]?.senseId !== undefined && displayCards[index].senseId !== ref.senseId));
@@ -305,6 +306,7 @@ export function VocabularyGroupLearnPage() {
   const visualPresentation = activeResolved ? getVocabularyVisualPresentation(activeResolved) : 'none';
   const hasVisual = visualPresentation === 'inline';
   const presentation = selectedSense ? vocabularySensePresentation(selectedSense) : undefined;
+  const spellingNote = word && regionalSpellingNote(word.entry.term);
   const readingNote = Boolean(word && selectedSense && isVocabularyReadingNote(word.entry.id, selectedSense));
   const conciseExample = word && selectedSense && !readingNote ? conciseLearningExamples.find(row =>
     row.entryId === word.entry.id && row.term === word.entry.term && row.senseId === selectedSense.id &&
@@ -319,7 +321,7 @@ export function VocabularyGroupLearnPage() {
   const reliableCollocations = reviewedNotes || activeResolved?.contentReviewed || selectedSense?.source === 'Personal note' || Boolean(state.vocabulary.some(entry=>entry.id===word?.entry.id) && publicSense && selectedSense && hasVocabularySenseEdits(selectedSense,[publicSense]));
   const meaningSource = selectedSense?.source === 'Personal note'
     ? 'Your personal notes.'
-    : activeResolved?.curriculumCurrent
+    : groupTeachingNotes
       ? activeResolved.curriculum?.basis === 'theme'
         ? `Recommended for the ${activeResolved.curriculum.title.split(' · ')[0]} topic.`
         : activeResolved.curriculum?.basis === 'source'
@@ -372,15 +374,16 @@ export function VocabularyGroupLearnPage() {
           {word.resolved.curriculum && word.resolved.curriculum.senses.length>1 ? <section className="vocabulary-learning-meaning-picker" aria-label="Meanings to learn"><p>{boundPlan?'This task uses the selected meaning. Other meanings keep their own review progress.':'Choose the meaning to study. Each meaning keeps its own review progress.'}</p><div className="vocabulary-learning-meanings">{word.resolved.curriculum.senses.map((sense,i)=><button className="btn line" key={sense.id} aria-pressed={selectedSense?.id===sense.id} disabled={Boolean(params.get('planId'))} onClick={()=>{const next=new URLSearchParams(params);next.set('sense',sense.id);if(currentBatch)next.set('batchCards',JSON.stringify(currentBatch.selection.cards.map(ref=>ref.entryId===word.entry.id?{...ref,senseId:sense.id}:ref)));setParams(next,{replace:true, state: location.state});}}><span className="vocabulary-learning-meaning-label">Meaning {i+1} · {sense.pos}{selectedSense?.id===sense.id?<Check size={14} aria-label="Selected"/>:null}</span>{meaningVisible?<span className="vocabulary-learning-meaning-preview">{vocabularySensePresentation(sense).definition}</span>:null}</button>)}</div></section> : null}
           {!meaningVisible ? <div className="vocabulary-learning-reveal"><p>Recall the meaning and think of a sentence before checking.</p><button className="btn primary" aria-controls="learning-meaning" onClick={() => { setRevealedKey(learningCardKey); requestAnimationFrame(() => document.getElementById('learning-meaning')?.focus({ preventScroll:true })); }}>Reveal meaning<ArrowRight size={15}/></button></div> : null}
           {meaningVisible ? <div id="learning-meaning" tabIndex={-1} className={`vocabulary-learning-content${hasVisual ? ' has-visual' : ''}`}><div className="vocabulary-learning-copy"><div className="vocabulary-learning-primary"><div className="vocabulary-learning-definition"><small>{selectedSense?.pos || 'Meaning'}</small>{presentation?.definition ? <p>{presentation.definition}</p> : <StateMessage kind="error" message="This selected meaning could not be loaded. Retry to restore this batch." onRetry={retry} retryLabel="Retry meaning" />}</div>
+          {spellingNote && <small className="vocabulary-muted">{spellingNote}</small>}
 
           {presentation?.example ? <>
             <div className="vocabulary-learning-example">
               <h4>{readingNote ? 'Reading note' : conciseExample ? 'Learning example' : 'Example'}</h4>
-              <p><VocabularyExampleText text={conciseExample?.example || presentation.example} term={readingNote ? undefined : word.entry.term} form={conciseExample ? undefined : exampleForm} /></p>
+              <p><VocabularyExampleText text={conciseExample?.example || presentation.example} term={readingNote ? undefined : word.entry.term} form={conciseExample ? undefined : exampleForm} pos={selectedSense?.pos} /></p>
             </div>
             {conciseExample && <details className="vocabulary-learning-provenance vocabulary-learning-source-example" key={selectedSense?.id}>
               <summary>Dictionary example</summary>
-              <p><VocabularyExampleText text={presentation.example} term={word.entry.term} form={exampleForm} /></p>
+              <p><VocabularyExampleText text={presentation.example} term={word.entry.term} form={exampleForm} pos={selectedSense?.pos} /></p>
             </details>}
           </> : null}
           {hasVisual && activeResolved ? <VocabularyLearningVisual resolved={activeResolved} /> : null}

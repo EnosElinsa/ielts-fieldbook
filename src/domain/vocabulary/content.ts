@@ -118,8 +118,8 @@ reviewed['solely'] = {definition:'Only and not for anything else.',example:'The 
 reviewed['tremendous'] = {definition:'Very great in amount or degree.',example:'The project required tremendous effort.',answers:['enormous'],explanation:'In this context, enormous expresses the meaning of tremendous.'};
 reviewed['unbiased'] = {definition:'Not favouring any particular side.',example:'The panel must provide an unbiased assessment.',answers:['impartial'],explanation:'In this context, impartial expresses the meaning of unbiased.'};
 export function escapePattern(text: string) { return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
-export function vocabularyWordPattern(word: string, alternative?: string): RegExp {
- const forms = alternative ? [word, alternative].sort((a, b) => b.length - a.length) : [word];
+export function vocabularyWordPattern(word: string, ...alternatives: (string | undefined)[]): RegExp {
+ const forms = [word, ...alternatives.filter((form): form is string => Boolean(form))].sort((a, b) => b.length - a.length);
  return new RegExp(`(?<![\\p{L}\\p{N}_])(?:${forms.map(escapePattern).join('|')})(?![\\p{L}\\p{N}_])`, 'giu');
 }
 export function concealWord(text: string, answer: string) { return text.replace(vocabularyWordPattern(answer), '_____'); }
@@ -154,6 +154,14 @@ export function hasVocabularySenseEdits(sense: VocabularySense, baselines: (Voca
   editableSenseFields.every(field => sense[field] === undefined ||
    Object.hasOwn(item,field) && comparableSenseValue(item[field]) === comparableSenseValue(sense[field]))
  ));
+}
+
+/** A saved public default can include earlier editorial additions to the source sense. */
+export function hasVocabularyLearningEdits(entryId: string, sense: VocabularySense, baselines: (VocabularySense | undefined | null)[]): boolean {
+ if (!hasVocabularySenseEdits(sense, baselines)) return false;
+ if (sense.source === 'Personal note') return true;
+ const defaults = baselines.filter((item): item is VocabularySense => Boolean(item)).map(item => supplementVocabularySense(entryId, item, [item], () => false, {kind:'default'}));
+ return hasVocabularySenseEdits(sense, defaults);
 }
 
 /** Older public imports/enrolments materialised absent fields as empty values. Restore
