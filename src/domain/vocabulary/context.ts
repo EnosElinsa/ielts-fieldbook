@@ -88,10 +88,14 @@ export function resolveVocabularyLearningContext(entry: VocabularyEntry, request
   });
   const learnerEdited = learnerPrimary && (primaryBaselines.length ? hasVocabularyLearningEdits(entry.id, learnerPrimary, primaryBaselines) : (publicSenses.length > 0 && !publicDictionaryPrimary));
   const curricular=request.senseId?(request.bookId && request.unitId?choices?.find(item=>item.id===request.senseId):undefined):!userOverride && !learnerEdited?choices?.[0]:undefined;
+  const retiredCurricular=!curricular && !sense && request.senseId && request.bookId && request.unitId
+    ? plan?.rows.flatMap(row=>[...(row.previousSenses || []).slice().reverse(),row.originalSense]).find((candidate): candidate is VocabularySense => Boolean(candidate && candidate.id === request.senseId))
+    : undefined;
   if(curricular) sense=structuredClone(curricular);
+  else if(retiredCurricular) sense=structuredClone(retiredCurricular);
   if(!request.senseId && learnerEdited) sense=structuredClone(learnerPrimary);
   // Curriculum/bindings may replace the earlier fallback. Repair only this final public selection.
-  const selectedPublic=curricular?publicChoices?.find(item=>item.id===sense?.id):route.kind==='dictionary-source'?sense:selectedBinding?.sense || explicitSupplement?.sense || sense;
+  const selectedPublic=curricular?publicChoices?.find(item=>item.id===sense?.id):retiredCurricular?undefined:route.kind==='dictionary-source'?sense:selectedBinding?.sense || explicitSupplement?.sense || sense;
   const uneditedDefaultFallback = route.kind === 'dictionary-source' && !request.bookId && binding && !membershipBinding
     && sense && sense.id === binding.sense.id && sense.id === (publicEntry?.senses[0]?.id || publicSenses[0]?.id)
     && !hasVocabularyContentVariant(entry.id, selectedPublic || sense, route)

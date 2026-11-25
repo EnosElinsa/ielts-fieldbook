@@ -1377,3 +1377,58 @@ test("steward with collected verb sense still edits the Transport and travel nou
   );
   expect(mocks.fb.openModal).toHaveBeenCalledWith("vocabulary");
 });
+
+test("historical practice results for range keep the tested PR #42 noun meaning and disclose the updated Actions verb meaning", async () => {
+  const raw = structuredClone(release.entries.find((entry: any) => entry.term === "range"));
+  const oldSense = {
+    id: "kaikki:f95bb821d396bdb939",
+    pos: "noun",
+    definition: "Selection, array.",
+    example: "The training covered a wide range of practical skills.",
+    source: "English Wiktionary via Kaikki.org",
+    sourceUrl: "https://en.wiktionary.org/wiki/range#English",
+    license: "CC-BY-SA-4.0",
+  };
+  const savedEntry = addVocabularyItem(mocks.fb.state, {
+    ...raw,
+    senses: [oldSense, ...raw.senses.filter((s: any) => s.id !== oldSense.id)],
+    sources: [{ type: "wordbook", id: "ielts-vocabulary:ielts-vocabulary-chapter-20-group-04:" + raw.id, bookId: "ielts-vocabulary", unitId: "ielts-vocabulary-chapter-20-group-04" }],
+  }).item!;
+  const record = {
+    id: "range-history-session",
+    mode: "dictation",
+    status: "submitted",
+    startedAt: "2026-11-24T10:00:00Z",
+    submittedAt: "2026-11-24T10:02:00Z",
+    filter: { bookId: "ielts-vocabulary", unitId: "ielts-vocabulary-chapter-20-group-04" },
+    selection: { kind: "unit", bookId: "ielts-vocabulary", unitId: "ielts-vocabulary-chapter-20-group-04" },
+    preferences: { accent: "uk" },
+    summary: { total: 1, correct: 1, incorrect: 0, pending: 0, unanswered: 0 },
+    cardSnapshots: [{ id: "card-range", entry: { ...savedEntry, senses: [oldSense] }, senseId: oldSense.id }],
+    results: [{
+      cardId: "card-range",
+      entryId: raw.id,
+      senseId: oldSense.id,
+      term: "range",
+      response: "range",
+      expectedAnswer: "range",
+      result: "success",
+      definition: oldSense.definition,
+      example: oldSense.example,
+      context: { bookId: "ielts-vocabulary", unitId: "ielts-vocabulary-chapter-20-group-04" },
+    }],
+  };
+  showResults(record);
+  expect(screen.getByText("Selection, array.")).toBeVisible();
+  await userEvent.setup().click(screen.getByText("Current wordbook meaning"));
+  expect(screen.getByText("To vary or extend within specified limits.")).toBeVisible();
+  const currentLink = new URL(screen.getByRole("link", { name: "View current meaning" }).getAttribute("href")!, "https://test.test");
+  expect(currentLink.searchParams.get("senseId")).toBe("kaikki:3b067d9485d2a34516");
+});
+
+test("occur in Conflict and competition Group 3 highlights occurred in Word details", async () => {
+  const occur = structuredClone(release.entries.find((entry: any) => entry.term === "occur"));
+  mount(`/vocabulary/entry/${occur.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-18-group-03`);
+  const mark = await screen.findByText("occurred", { selector: "mark.vocabulary-example-target" });
+  expect(mark).toBeVisible();
+});

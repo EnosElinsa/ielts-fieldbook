@@ -277,3 +277,77 @@ test('account settings, speaking, and stories keep single current nav state, con
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth), route).toBe(true);
   }
 });
+
+test('follow-up group meanings stay aligned across Card, List, Details, task preview, occurred highlight and retained resources', async ({ page }) => {
+  test.setTimeout(120_000);
+  // Verify the previously published production manifest remains directly loadable.
+  const retained = await page.request.get('/vocabulary-resources/manifest.1d6deca143999e5d.json');
+  expect(retained.status()).toBe(200);
+
+  // Desktop: verify Social roles Group 1 ("miss") across Card, List and Word details.
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-19-group-01/learn?word=ve-7c6f9881');
+  await expect(page.getByRole('heading', { level: 2, name: 'miss', exact: true })).toBeVisible({ timeout: 30000 });
+  await expect(page.getByText('To feel sad because someone or something you care about is absent.')).toBeVisible();
+  await expect(page.locator('mark.vocabulary-example-target', { hasText: /^miss$/ })).toBeVisible();
+
+  await page.getByRole('button', { name: 'List', exact: true }).click();
+  const listItem = page.locator('.vocabulary-learning-list li').filter({ hasText: 'miss' });
+  await expect(listItem.getByText('To feel sad because someone or something you care about is absent.')).toBeVisible();
+  await listItem.getByRole('button', { name: /Open card/ }).click();
+  await page.getByRole('link', { name: /Word details/ }).click();
+  await expect(page.getByRole('heading', { level: 1, name: 'miss' })).toBeVisible({ timeout: 30000 });
+  await expect(page.getByText('To feel sad because someone or something you care about is absent.')).toBeVisible();
+  await expect(page.locator('blockquote').filter({ hasText: 'Many students miss their families' }).locator('mark.vocabulary-example-target', { hasText: /^miss$/ })).toBeVisible();
+
+  // Desktop: verify Conflict and competition Group 3 ("occur") highlights "occurred".
+  await page.goto('/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-18-group-03/learn?word=ve-ad2464d');
+  await expect(page.getByRole('heading', { level: 2, name: 'occur', exact: true })).toBeVisible({ timeout: 30000 });
+  await expect(page.locator('mark.vocabulary-example-target', { hasText: /^occurred$/ })).toBeVisible();
+
+  // Existing unfinished task with PR #42's noun "range" previews the verb update and can still use original meanings.
+  const rangePlan = {
+    id: 'range-meaning-upgrade',
+    title: 'Actions and behaviour - Group 4',
+    skill: 'vocabulary',
+    kind: 'vocabulary',
+    dateKey: '2026-11-17',
+    status: 'pending',
+    origin: 'automatic',
+    estimatedMinutes: 5,
+    target: {
+      type: 'vocabulary',
+      mode: 'learning-batch',
+      bookId: 'ielts-vocabulary',
+      unitId: 'ielts-vocabulary-chapter-20-group-04',
+      batchIndex: 0,
+      batchSize: 10,
+      assessmentMode: 'definition',
+      cards: [{ entryId: 've-b9a5e1a', senseId: 'kaikki:f95bb821d396bdb939' }],
+    },
+  };
+  await page.route('**/rpc/load_planning_workspace', route => route.fulfill({
+    json: {
+      profile: { settings: { dailyMinutes: 30, activeSkill: 'vocabulary' }, active_plan_id: rangePlan.id },
+      plans: [{ id: rangePlan.id, payload: rangePlan }],
+      planStamp: '0'.repeat(32),
+      evidence: {},
+    },
+    headers: { 'access-control-allow-origin': '*' },
+  }));
+  await page.goto(`/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-20-group-04/learn?planId=${rangePlan.id}&word=ve-b9a5e1a`);
+  const rangeCard = page.getByRole('article', { name: 'Current learning word' });
+  await expect(rangeCard.getByRole('heading', { level: 2, name: 'range', exact: true })).toBeVisible({ timeout: 30000 });
+  await expect(page.getByText(/Previewing current group meanings/)).toBeVisible();
+  await expect(rangeCard.getByText('To vary or extend within specified limits.')).toBeVisible();
+  await page.getByRole('button', { name: 'Use original task meanings' }).click();
+  await expect(page.getByText('Using the original task meanings.')).toBeVisible();
+  await expect(rangeCard.getByText('Selection, array.')).toBeVisible();
+
+  // Mobile 390px: verify updated group card and Word details render without horizontal overflow.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-20-group-04/learn?word=ve-b9a5e1a');
+  await expect(page.getByRole('heading', { level: 2, name: 'range', exact: true })).toBeVisible({ timeout: 30000 });
+  await expect(page.getByText('To vary or extend within specified limits.')).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+});
