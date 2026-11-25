@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
@@ -108,4 +108,16 @@ test('a replacement chart starts fresh and ignores events from the old image', (
   expect(screen.getByText('Loading chart…')).toBeInTheDocument();
   fireEvent.load(next);
   expect(screen.queryByText('Loading chart…')).not.toBeInTheDocument();
+});
+
+test('chart preview timeout transitions to error and cache-busts on retry', () => {
+  vi.useFakeTimers();
+  fieldbook.current.state.questions[0].image = 'question-assets/slow.png';
+  render(<MemoryRouter><WritingBankPage /></MemoryRouter>);
+  expect(screen.getByText('Loading chart…')).toBeInTheDocument();
+  act(() => { vi.advanceTimersByTime(15_000); });
+  expect(screen.getByText('Chart preview unavailable')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Retry chart: Cities chart' }));
+  expect(screen.getByAltText('Cities chart')).toHaveAttribute('src', '/question-assets/slow.png?retry=1');
+  vi.useRealTimers();
 });

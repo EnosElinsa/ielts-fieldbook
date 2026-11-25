@@ -141,7 +141,8 @@ test('a forecast review waits for its time and a manual overdue move needs confi
   await expect(pending.getByText(/Suggested date/)).toBeVisible();
   await pending.getByRole('button',{name:'Preview move'}).click();
   const dialog = page.getByRole('dialog',{name:'Review task changes'});
-  await expect(dialog.getByText('2026-11-16 → 2026-11-17')).toBeVisible();
+  await expect(dialog.getByText('Mon 16 Nov → Tue 17 Nov · 5 min')).toBeVisible();
+  await expect(dialog.getByText('Moved to fit the study budget.')).toBeVisible();
   const saved = page.waitForRequest(request=>request.url().endsWith('/rpc/commit_workspace_changes')
     && JSON.stringify(request.postDataJSON()?.batch?.lists?.plans?.upserts||[]).includes(overdue.id));
   await dialog.getByRole('button',{name:'Save task changes'}).click();
@@ -253,4 +254,26 @@ test.describe('English date controls under a Chinese browser locale', () => {
     await calendar.getByRole('button', { name: 'Clear date' }).click();
     await expect(date).toHaveValue('');
   });
+});
+
+test('account settings, speaking, and stories keep single current nav state, contrast, and zero mobile overflow', async ({ page }) => {
+  for (const theme of ['light', 'dark']) {
+    await page.addInitScript(t => localStorage.setItem('fieldbook-theme-v1', t), theme);
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/settings/account');
+    await expect(page.getByRole('heading', { level: 2, name: 'Appearance and account' })).toBeVisible();
+    await expect(page.locator('[aria-busy="true"]')).toHaveCount(0, { timeout: 30000 });
+    const rail = page.locator('.rail');
+    await expect(rail.getByRole('link', { name: 'Account' })).toHaveAttribute('aria-current', 'page');
+    await expect(rail.getByRole('link', { name: 'Settings' })).not.toHaveAttribute('aria-current', 'page');
+    const a11y = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+    expect(a11y.violations.filter(v => v.impact === 'serious' || v.impact === 'critical')).toEqual([]);
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const route of ['/settings/account', '/speak', '/stories']) {
+    await page.goto(route);
+    await expect(page.locator('.view.active').first()).toBeVisible();
+    await expect(page.locator('[aria-busy="true"]')).toHaveCount(0, { timeout: 30000 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth), route).toBe(true);
+  }
 });

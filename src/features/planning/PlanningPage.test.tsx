@@ -314,8 +314,8 @@ test('automatic replan preview distinguishes selected tasks from related schedul
  const dialog=screen.getByRole('dialog',{name:'Review task changes'});
  expect(within(dialog).getAllByText('Selected task')).toHaveLength(1);
  expect(within(dialog).getAllByText('Related schedule change').length).toBeGreaterThan(0);
- expect(dialog).toHaveTextContent('30 → 24 min');
- expect(dialog).toHaveTextContent('Added to schedule');
+  expect(dialog).toHaveTextContent('30 → 24 min');
+  expect(dialog).toHaveTextContent('Scheduled using the current study budget and progress.');
 });
 
 test('history keeps skipped identities and restores only through an explicit dated action',async()=>{
@@ -387,4 +387,89 @@ test('system-handled history excludes archived tasks and still offers an explici
   await userEvent.click(screen.getByRole('option',{name:'Archived'}));
   expect(screen.getByRole('heading',{name:'Archived decision'})).toBeInTheDocument();
   expect(screen.queryByRole('heading',{name:'Current decision'})).not.toBeInTheDocument();
+});
+
+test('resuming a held task over budget offers Keep extra minutes override and retries with allowOverBudget', async () => {
+  mocks.state.plans = [{
+    ...mocks.state.plans[0],
+    id: 'held-task',
+    title: 'Held chart',
+    onHold: true,
+    estimatedMinutes: 45,
+  }];
+  mocks.change
+    .mockImplementationOnce(async (_id, _action, opts) => {
+      opts?.onError?.('Resuming this task exceeds the daily budget by 15 minutes.');
+      return false;
+    })
+    .mockResolvedValueOnce(true);
+
+  const user = userEvent.setup();
+  mount();
+  await user.click(screen.getByRole('button', { name: /Waiting · 1/ }));
+  await user.click(screen.getByRole('button', { name: 'Task actions: Held chart' }));
+  await user.click(await screen.findByRole('menuitem', { name: 'Return to schedule' }));
+
+  const keepButton = await screen.findByRole('button', { name: 'Keep extra 15 minutes' });
+  await user.click(keepButton);
+  expect(mocks.change).toHaveBeenNthCalledWith(2, 'held-task', { type: 'resume', allowOverBudget: true }, { onError: expect.any(Function) });
+});
+
+test('TaskEditor preserves vocabulary due-review and learning-batch modes when opened on an existing vocabulary task', async () => {
+  const today = dateKey(new Date());
+  mocks.state.plans = [
+    {
+      id: 'vocab-due',
+      dateKey: today,
+      status: 'pending',
+      skill: 'vocabulary',
+      kind: 'vocabulary',
+      title: 'Vocabulary · Review due words',
+      estimatedMinutes: 5,
+      target: { type: 'vocabulary', mode: 'due-review', assessmentMode: 'dictation', binding: 'dynamic', cards: [] },
+    },
+    {
+      id: 'vocab-batch',
+      dateKey: today,
+      status: 'pending',
+      skill: 'vocabulary',
+      kind: 'vocabulary',
+      title: 'Vocabulary · Learn batch',
+      estimatedMinutes: 10,
+      target: { type: 'vocabulary', mode: 'learning-batch', assessmentMode: 'definition', batchSize: 10 },
+    },
+  ];
+
+  const user = userEvent.setup();
+  mount();
+  await user.click(screen.getByRole('button', { name: 'Task actions: Vocabulary · Review due words' }));
+  await user.click(await screen.findByRole('menuitem', { name: 'Replace task' }));
+  const dialog1 = screen.getByRole('dialog', { name: 'Replace task' });
+  expect(within(dialog1).getByRole('combobox', { name: 'Practice type' })).toHaveTextContent('Recall due words');
+  await user.click(within(dialog1).getByRole('button', { name: 'Cancel' }));
+
+  await user.click(screen.getByRole('button', { name: 'Task actions: Vocabulary - Learn up to 10 words' }));
+  await user.click(await screen.findByRole('menuitem', { name: 'Replace task' }));
+  const dialog2 = screen.getByRole('dialog', { name: 'Replace task' });
+  expect(within(dialog2).getByRole('combobox', { name: 'Practice type' })).toHaveTextContent('Learn and assess a batch');
+});
+
+test('bulkWaiting post-save shows an expanded ScheduleChanges summary with dates, duration, and reason', async () => {
+  mocks.state.plans = [
+    { id: 'old-pending', dateKey: '2020-01-01', status: 'pending', skill: 'writing', kind: '1', title: 'Old pending', estimatedMinutes: 20 },
+  ];
+  const user = userEvent.setup();
+  mount();
+  await user.click(screen.getByRole('button', { name: /Waiting · 1/ }));
+  await user.click(screen.getByRole('button', { name: 'Select this page' }));
+  await user.click(screen.getByRole('button', { name: 'Preview skip' }));
+  await user.click(screen.getByRole('button', { name: 'Save task changes' }));
+
+  const savedRegion = await screen.findByRole('region', { name: 'Saved task changes' });
+  const details = savedRegion.querySelector('details');
+  expect(details).toHaveAttribute('open');
+  expect(savedRegion).toHaveTextContent('See schedule changes');
+  expect(savedRegion).toHaveTextContent('Old pending');
+  expect(savedRegion).toHaveTextContent('Skipped');
+  expect(savedRegion).toHaveTextContent('20 min');
 });

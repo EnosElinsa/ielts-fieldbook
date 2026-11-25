@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { AccountPage } from './AccountPage';
 
-const { state, resend, updateUser, rpc } = vi.hoisted(() => ({
+const { state, resend, updateUser, rpc, signOut } = vi.hoisted(() => ({
   state: {
     user: {
       id: 'user-1',
@@ -26,6 +26,11 @@ const { state, resend, updateUser, rpc } = vi.hoisted(() => ({
   resend: vi.fn(),
   updateUser: vi.fn(),
   rpc: vi.fn(),
+  signOut: vi.fn(),
+}));
+
+vi.mock('../../auth/AuthGate', () => ({
+  signOut,
 }));
 
 vi.mock('../../auth/useAuthUser', () => ({
@@ -42,6 +47,7 @@ afterEach(() => {
   resend.mockReset();
   updateUser.mockReset();
   rpc.mockReset();
+  signOut.mockReset();
   state.user.email_confirmed_at = '2026-09-25T12:05:00';
 });
 
@@ -110,5 +116,19 @@ describe('AccountPage identity', () => {
       { email: 'next@example.com' },
       { emailRedirectTo: window.location.origin },
     );
+  });
+
+  test('renders sign-out errors only inside the leave panel and uses non-control metric labels', async () => {
+    signOut.mockRejectedValueOnce(new Error('Network down'));
+    const { container } = renderPage();
+    expect(container.querySelectorAll('.metrics label')).toHaveLength(0);
+    expect(container.querySelectorAll('.metrics .metric-label').length).toBeGreaterThanOrEqual(3);
+    await userEvent.click(screen.getByRole('button', { name: 'Sign out' }));
+    const leavePanel = container.querySelector('.account-leave') as HTMLElement;
+    const dangerPanel = container.querySelector('.account-danger') as HTMLElement;
+    const alert = await screen.findByRole('alert');
+    expect(leavePanel).toContainElement(alert);
+    expect(alert).toHaveTextContent('Could not sign out. Try again.');
+    expect(dangerPanel.querySelector('[role="alert"]')).toBeNull();
   });
 });

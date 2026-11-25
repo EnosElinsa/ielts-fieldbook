@@ -2105,3 +2105,166 @@ test.each([false,true])('starting a fourteen-minute passage binds all thirteen q
   expect(fieldbook.state.plans.find(plan=>plan.id==='manatees').target.questionIds).toEqual(expected);
   expect(new URL(currentPath,'https://fieldbook.local').searchParams.get('questions')).toBe(JSON.stringify(expected));
 });
+
+test('persistNow rolls back optimistic receptive completion on failure and retries once on planning conflict', async () => {
+  const startedAt = '2026-10-12T10:00:00Z';
+  const completedAt = '2026-10-12T10:15:00Z';
+  const plan = {
+    id: 'read-1',
+    kind: 'reading-practice',
+    skill: 'reading',
+    origin: 'manual',
+    dateKey: '2026-10-12',
+    estimatedMinutes: 20,
+    status: 'in_progress',
+    startedAt,
+    target: { type: 'section', skill: 'reading', sectionId: 'sec-1', mode: 'practice', questionIds: ['q1'] },
+  };
+  const attempt = {
+    id: 'att-1',
+    planId: 'read-1',
+    skill: 'reading',
+    mode: 'practice',
+    status: 'completed',
+    sectionIds: ['sec-1'],
+    startedAt,
+    completedAt,
+    updatedAt: completedAt,
+    responses: { q1: 'yes' },
+    results: { q1: true },
+    questionSnapshot: [{ id: 'q1' }],
+  };
+  mocks.statuses = { plans: 'ready', profile: 'ready', examAttempts: 'ready' };
+  mocks.initial.plans = [structuredClone(plan)];
+  mocks.initial.activePlanId = 'read-1';
+  await mount('/reading');
+
+  mocks.saveState.mockImplementationOnce(async (_next, onError) => { onError?.('Network failure'); return false; });
+  const draft1 = structuredClone(fieldbook.stateRef.current);
+  draft1.examAttempts = [structuredClone(attempt)];
+  await act(async () => { expect(await fieldbook.persistNow(draft1, { collections: ['examAttempts', 'plans'] })).toBe(false); });
+  expect(fieldbook.state.plans[0].status).toBe('in_progress');
+  expect(fieldbook.state.activePlanId).toBe('read-1');
+
+  mocks.planningRead.mockResolvedValueOnce({ settings: fieldbook.state.settings, activePlanId: 'read-1', plans: [structuredClone(plan)] });
+  mocks.saveState
+    .mockImplementationOnce(async (_next, onError) => { onError?.('Your plan changed on another device.'); return false; })
+    .mockResolvedValueOnce(true);
+  const draft2 = structuredClone(fieldbook.stateRef.current);
+  draft2.examAttempts = [structuredClone(attempt)];
+  await act(async () => { expect(await fieldbook.persistNow(draft2, { collections: ['examAttempts', 'plans'] })).toBe(true); });
+  expect(mocks.planningRead).toHaveBeenCalledTimes(1);
+  expect(fieldbook.state.plans[0]).toMatchObject({ status: 'completed', linkedSessionId: 'att-1' });
+  expect(fieldbook.state.activePlanId).toBeNull();
+});
+
+test('persistVocabularySession refreshes conflict and completes open bound task on latest schedule', async () => {
+  const refs = [{ entryId: 'word', senseId: 'sense' }];
+  mocks.initial.plans = [{
+    id: 'vocab-plan',
+    kind: 'vocabulary',
+    status: 'in_progress',
+    startedAt: '2026-10-20T01:00:00Z',
+    target: { type: 'vocabulary', mode: 'due-review', assessmentMode: 'dictation', cards: refs },
+  }];
+  mocks.initial.activePlanId = 'vocab-plan';
+  mocks.statuses = { plans: 'ready', profile: 'ready' };
+  await mount('/vocabulary/review');
+  const draft = structuredClone(fieldbook.stateRef.current);
+  draft.vocabularySessions.push({
+    id: 'vocab-sess',
+    planId: 'vocab-plan',
+    status: 'submitted',
+    mode: 'dictation',
+    startedAt: '2026-10-20T01:01:00Z',
+    submittedAt: '2026-10-20T01:10:00Z',
+    results: [{ ...refs[0], response: 'correct', result: 'success' }],
+  });
+  mocks.saveState.mockClear();
+  mocks.saveState
+    .mockImplementationOnce(async (_next, onError) => { onError?.('Your plan changed on another device.'); return false; })
+    .mockResolvedValueOnce(true);
+  mocks.planningRead.mockResolvedValueOnce({
+    settings: fieldbook.state.settings,
+    activePlanId: 'vocab-plan',
+    plans: [structuredClone(draft.plans[0]), { id: 'unrelated-plan', kind: 'writing', status: 'pending', dateKey: '2026-10-25' }],
+  });
+  const onResult = vi.fn();
+  await act(async () => { expect(await fieldbook.persistVocabularySession(draft, 'vocab-sess', { onResult })).toBe(true); });
+  expect(mocks.planningRead).toHaveBeenCalledTimes(1);
+  expect(mocks.saveState).toHaveBeenCalledTimes(2);
+  expect(fieldbook.state.plans.find(row => row.id === 'vocab-plan')).toMatchObject({ status: 'completed', linkedSessionId: 'vocab-sess' });
+  expect(fieldbook.state.activePlanId).toBeNull();
+});
+
+test('saveAttempt freezes submittedAt on retry, completes bound error-review, and retries on planning conflict', async () => {
+  const errId = 'err-bound';
+  const startedAt = '2026-10-20T09:00:00Z';
+  mocks.initial.errors = [{ id: errId, date: '2026-10-19', code: 'TA', text: 'State trend', next: 'Fix', sourceSessionId: 's0', reviewCount: 0, lastReviewedAt: null, nextReviewAt: '2026-10-19', resolved: false }];
+  mocks.initial.plans = [{
+    id: 'err-rev-plan',
+    kind: 'review',
+    skill: 'writing',
+    origin: 'manual',
+    status: 'in_progress',
+    startedAt,
+    dateKey: '2026-10-20',
+    target: { type: 'error-review', errorIds: [errId] },
+  }];
+  mocks.initial.activePlanId = 'err-rev-plan';
+  mocks.statuses = { plans: 'ready', profile: 'ready', drafts: 'ready', sessions: 'ready', errors: 'ready' };
+  await mount('/write');
+  await act(async () => {
+    fieldbook.setPendingAttempt({
+      id: 'attempt-frozen',
+      question: mocks.initial.questions[0],
+      essay: 'Completed writing essay',
+      skill: 'writing',
+      practiceMode: 'full',
+      reviewErrorId: errId,
+    });
+  });
+
+  mocks.saveState.mockClear();
+  mocks.saveState
+    .mockImplementationOnce(async (_next, onError) => { onError?.('Your plan changed on another device.'); return false; })
+    .mockResolvedValueOnce(true);
+  mocks.planningRead.mockResolvedValueOnce({
+    settings: fieldbook.state.settings,
+    activePlanId: 'err-rev-plan',
+    plans: structuredClone(mocks.initial.plans),
+  });
+
+  await act(async () => {
+    await fieldbook.saveAttempt(false, { focus: '', next: '', errors: '' });
+  });
+  expect(mocks.planningRead).toHaveBeenCalledTimes(1);
+  expect(mocks.saveState).toHaveBeenCalledTimes(2);
+  const firstSessionDate = mocks.saveState.mock.calls[0][0].sessions[0].date;
+  const secondSessionDate = mocks.saveState.mock.calls[1][0].sessions[0].date;
+  expect(secondSessionDate).toBe(firstSessionDate);
+  expect(fieldbook.state.plans[0].status).toBe('completed');
+  expect(fieldbook.state.activePlanId).toBeNull();
+});
+
+test('/speak hydrates selectedTopic and deskPart from an in-progress active speaking plan', async () => {
+  mocks.initial.speakingTopics = [
+    { id: 'sp-first', part: 2, title: 'First topic', cueCard: 'First' },
+    { id: 'sp-target', part: 1, title: 'Planned Part 1 topic', questions: ['Where do you work?'] },
+  ];
+  mocks.initial.plans = [{
+    id: 'speak-plan',
+    kind: 'speaking-p1',
+    skill: 'speaking',
+    origin: 'manual',
+    status: 'in_progress',
+    startedAt: '2026-10-20T10:00:00Z',
+    dateKey: '2026-10-20',
+    questionId: 'sp-target',
+    target: { type: 'question', skill: 'speaking', questionId: 'sp-target', part: '1', mode: 'full' },
+  }];
+  mocks.initial.activePlanId = 'speak-plan';
+  await mount('/speak');
+  expect(fieldbook.selectedTopic?.id).toBe('sp-target');
+  expect(fieldbook.deskPart).toBe('1');
+});

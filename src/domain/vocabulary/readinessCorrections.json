@@ -971,8 +971,9 @@
   {
     "entryId": "ve-a34f2f1",
     "senseId": "kaikki:0907930157f6d781fa",
-    "definition": "A physical conflict in which people or animals try to hurt one another.",
-    "example": "The argument ended in a fight outside the station.",
+    "definition": "To take part in a physical struggle or battle against an opponent.",
+    "pos": "verb",
+    "example": "Soldiers fought the invading army for three days.",
     "originalSense": {
       "id": "kaikki:0907930157f6d781fa",
       "definition": "Senses relating to physical conflict:",
@@ -984,7 +985,25 @@
       "usage": "",
       "register": "transitive",
       "wordFamily": []
-    }
+    },
+    "previousSenses": [
+      {
+        "id": "kaikki:0907930157f6d781fa",
+        "definition": "A physical conflict in which people or animals try to hurt one another.",
+        "example": "The argument ended in a fight outside the station.",
+        "pos": "verb",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/fight#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ]
   },
   {
     "entryId": "ve-b9fef09",

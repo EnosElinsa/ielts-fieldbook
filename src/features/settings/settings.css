@@ -196,3 +196,12 @@
 }
 
 .settings-field-help, .settings-input-help, .settings-save-help, .settings-help > p { font-size: 13px; }
+
+/* 320px: seven weekday tiles and the three-part template rows must fit without sideways page scroll. */
+.settings-weekdays, .settings-weekday { min-width: 0; }
+@media (max-width: 380px) {
+  .settings-weekdays { gap: 3px; }
+  .settings-weekday > span { gap: 4px; height: 56px; font-size: 11px; }
+  .settings-template-row { grid-template-columns: 36px minmax(0, 1fr); gap: 8px 9px; }
+  .settings-template-row > :nth-child(n+3) { grid-column: 1 / -1; }
+}

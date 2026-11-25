@@ -435,4 +435,14 @@ Write only the overview next time.
       expect(screen.getByRole('link', { name: 'Open feedback' })).toBeTruthy();
     });
   }, 30000);
+
+  it('marks only Account as the current page when visiting /settings/account', async () => {
+    renderAt('/settings/account');
+    await screen.findByRole('heading', { level: 2, name: 'Appearance and account' });
+    const rail = document.querySelector('.rail') as HTMLElement;
+    const settingsLink = within(rail).getByRole('link', { name: 'Settings' });
+    const accountLink = within(rail).getByRole('link', { name: 'Account' });
+    expect(accountLink.getAttribute('aria-current')).toBe('page');
+    expect(settingsLink.getAttribute('aria-current')).toBeNull();
+  });
 });

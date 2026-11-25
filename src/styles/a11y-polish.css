@@ -1,0 +1,33 @@
+/* Keyboard focus, touch targets and notices that apply across the workspace. Loaded last so these win ties. */
+
+/* Radix menus and the command palette move focus with data-highlighted instead of :focus. */
+.dropdown-item[data-highlighted]:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+.command-input input:focus-visible { outline-offset: 6px; border-radius: 4px; }
+
+/* One failure notice for every surface: page, dialog and the global save banner. */
+.save-failure {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  margin: 16px 0; padding: 12px 16px; border: 1px solid color-mix(in srgb, var(--red) 40%, var(--rule));
+  border-radius: 8px; background: var(--soft-red); color: var(--ink); font-size: 13px; line-height: 1.65;
+}
+.save-failure > span { flex: 1 1 240px; min-width: 0; overflow-wrap: anywhere; }
+.save-failure .btn { flex: 0 0 auto; min-height: 44px; }
+
+/* Notice with a dismiss control; the live region inside stays mounted so changes are announced. */
+.toast { display: flex; align-items: flex-start; gap: 8px; }
+.toast-text { min-width: 0; line-height: 1.5; overflow-wrap: anywhere; }
+.toast-dismiss { flex: none; display: grid; place-items: center; width: 28px; height: 28px; margin: -4px -6px -4px 0; padding: 0; border: 0; border-radius: 6px; background: transparent; color: inherit; opacity: .85; }
+.toast-dismiss:hover { background: color-mix(in srgb, currentColor 16%, transparent); opacity: 1; }
+.toast-dismiss:focus-visible { outline: 2px solid currentColor; outline-offset: 1px; }
+
+/* 44px minimum targets for touch (WCAG 2.5.8 is 24px; the workspace targets the comfortable size). */
+@media (max-width: 740px), (pointer: coarse) {
+  .btn, .btn:visited { min-height: 44px; }
+  .icon-button, .icon-btn, .account-menu-trigger, .study-task-tools .icon-button { min-width: 44px; min-height: 44px; }
+  .auth-footer button { min-width: 44px; min-height: 44px; padding: 8px 12px; }
+  .import-score { min-width: 44px; min-height: 44px; }
+  .toast-dismiss { width: 44px; height: 44px; margin-block: -12px; }
+}
+
+/* Scrollable table wrappers are keyboard-reachable regions, so their focus must be visible. */
+.edit-table-wrap:focus-visible, .progress-score-table:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }

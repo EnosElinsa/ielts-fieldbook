@@ -273,3 +273,15 @@ test('Save draft toasts only after the account write succeeds', async () => {
   await userEvent.click(screen.getByRole('button', { name: 'Save draft' }));
   expect(toast).toHaveBeenCalledWith('Draft saved.');
 });
+
+test('Task 1 checklist stays reachable inside the answer pane for mobile answer mode', () => {
+  saveState.type = '1';
+  saveState.mode = 'full';
+  const { container } = render(<WritingDeskPage />);
+  const answerPane = container.querySelector('#writing-answer');
+  expect(answerPane).not.toBeNull();
+  for (const label of ['Series', 'Units', 'Time', 'Overview']) {
+    const checkbox = screen.getByLabelText(label);
+    expect(answerPane).toContainElement(checkbox);
+  }
+});

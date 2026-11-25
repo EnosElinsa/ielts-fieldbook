@@ -193,8 +193,8 @@
   z-index: 1;
 }
 .vocabulary-row-select.check-chip:has(input:checked)::after {
-  background: var(--blue);
-  border-color: var(--blue);
+  background: var(--blue-fill);
+  border-color: var(--blue-fill);
 }
 @media (hover: hover) {
   .vocabulary-row-select.check-chip:not(:has(input:checked, input:disabled)):hover::after {
@@ -345,7 +345,7 @@
   font-size: 14px;
   line-height: 1.7;
 }
-.vocabulary-detail h4 {
+.vocabulary-detail :is(h3,h4) {
   font-size: 12px;
   color: var(--muted);
   margin: 18px 0 5px;
@@ -468,7 +468,7 @@
   overflow-wrap: anywhere;
 }
 .vocabulary-success {
-  color: #26704c;
+  color: var(--success);
   font-size: 13px;
 }
 .vocabulary-error {
@@ -766,3 +766,7 @@
 .vocabulary-view h2.vocabulary-section-title { font: 600 18px/1.4 Manrope,Arial,sans-serif; }
 .vocabulary-view .vocabulary-book h2 { font-size: 18px; }
 .vocabulary-view .vocabulary-entryway h2, .vocabulary-view .vocabulary-recovery h2, .vocabulary-view .vocabulary-sense-head h2, .vocabulary-learning-progress > :is(h2,h3) { font-size: 18px; }
+
+@media (max-width: 480px) {
+  .vocabulary-progress-table > div { grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); gap: 6px; font-size: 12px; overflow-wrap: anywhere; }
+}

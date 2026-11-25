@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { speakingCoverage } from '../../domain';
+import { speakingPrompts } from '../../domain/speaking';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { useSpeakingSample, SpeakingSampleStatus } from './useSpeakingSample';
 import { coverageClass, coverageLabel } from '../../lib/format';
@@ -107,7 +108,11 @@ export function SpeakingTopicPage() {
   }
 
   const statusValue = speakingCoverage(fb.state, topic.id);
-  const draft = fb.speakingDraft(topic.id);
+  const part2Prompt = Number(topic.part) === 2 ? speakingPrompts(topic, '2')[0] : null;
+  const notePromptKey = part2Prompt?.promptKey;
+  const draft = fb.speakingDraft(topic.id, notePromptKey);
+  const saveStatus = fb.draftSaveStatus?.(topic.id, notePromptKey) || 'saved';
+  const notesStatusLabel = saveStatus === 'failed' || saveStatus === 'error' ? 'Notes could not be saved.' : saveStatus === 'unsaved' ? 'Notes have unsaved changes.' : saveStatus === 'pending' ? 'Waiting to save notes...' : saveStatus === 'saving' ? 'Saving notes...' : saveStatus === 'saved' ? 'Notes saved.' : 'Autosave enabled.';
   const stories = (fb.state.stories || []).filter((story) => (story.topicIds || []).includes(topic.id));
 
   return (
@@ -145,7 +150,7 @@ export function SpeakingTopicPage() {
               </div>
               {topic.part3 && topic.part3.length ? (
                 <>
-                  <h4 className="mt-16">Part 3</h4>
+                  <h3 className="mt-16">Part 3</h3>
                   <ol className="prompt-body">
                     {topic.part3.map((item) => (
                       <li key={item}>{item}</li>
@@ -243,13 +248,26 @@ export function SpeakingTopicPage() {
           <h3 className="topic-notes-title">Notes</h3>
           <textarea
             className="notes-area"
+            aria-label="Topic notes"
             placeholder="Notes for this question"
             value={draft.notes}
             onChange={(e) => {
-              fb.setSpeakingDraft(topic.id, { notes: e.target.value });
+              fb.setSpeakingDraft(topic.id, { ...(part2Prompt || {}), notes: e.target.value });
               fb.scheduleDraftPersist();
             }}
           />
+          <p className="file-hint" role="status">
+            {notesStatusLabel}{' '}
+            {(saveStatus === 'failed' || saveStatus === 'error') ? (
+              <button
+                className="btn text"
+                type="button"
+                onClick={() => void (fb.flushDraftPersist?.() ?? fb.persistNow(undefined, { collections: ['drafts'] }))}
+              >
+                Retry save
+              </button>
+            ) : null}
+          </p>
           <div className="topic-actions">
             {Number(topic.part) === 1 ? (
               <button className="btn primary" type="button" onClick={() => fb.startSpeakingPractice(topic.id, '1')}>

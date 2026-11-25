@@ -4,6 +4,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { ReviewPage } from './ReviewPage';
+import { completeReview } from '../../domain';
 
 const { mockFieldbook } = vi.hoisted(() => ({ mockFieldbook: { current: null as any } }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mockFieldbook.current }));
@@ -24,6 +25,7 @@ beforeEach(() => {
     },
     openFeedbackImport: vi.fn(), startTargetedPractice: vi.fn(), downloadFile: vi.fn(),
     buildAssessmentRequest: vi.fn(() => 'Assessment request'), toast: vi.fn(),
+    setState: vi.fn((next: any) => { mockFieldbook.current.state = next; }),
   };
 });
 
@@ -122,12 +124,12 @@ test('reviewing and resolving mistakes save only errors, preserving unrelated dr
   await user.click(screen.getByRole('button', { name: 'More actions for CC-ORG' }));
   await user.click(await screen.findByRole('menuitem', { name: 'Review once' }));
   await waitFor(() => expect(fb.persistNow).toHaveBeenCalledTimes(1));
-  expect(fb.persistNow).toHaveBeenLastCalledWith(expect.any(Object), { collections: ['errors'] });
+  expect(fb.persistNow).toHaveBeenLastCalledWith(expect.any(Object), { collections: ['errors'], onError: expect.any(Function) });
   expect(fb.toast).not.toHaveBeenCalledWith('Review saved.');
   await user.click(screen.getByRole('button', { name: 'More actions for CC-ORG' }));
   await user.click(await screen.findByRole('menuitem', { name: 'Mark corrected myself' }));
   await waitFor(() => expect(fb.persistNow).toHaveBeenCalledTimes(2));
-  expect(fb.persistNow).toHaveBeenLastCalledWith(expect.any(Object), { collections: ['errors'] });
+  expect(fb.persistNow).toHaveBeenLastCalledWith(expect.any(Object), { collections: ['errors'], onError: expect.any(Function) });
 });
 
 test('a search with no matches can clear filters without pretending the account is empty', async () => {
@@ -158,9 +160,9 @@ test('attempts and feedback use newest dates first regardless of database row or
     { id: 'new', sessionId: 'deleted', skill: 'writing', task: 'Task 2', date: '2026-10-05T12:00:00Z', overall: '7' },
   );
   const view = mount();
-  expect([...view.container.querySelectorAll('.review-attempts h4')].map(node => node.textContent)).toEqual(['Cities essay', 'Education essay']);
+  expect([...view.container.querySelectorAll('.review-attempts h3')].map(node => node.textContent)).toEqual(['Cities essay', 'Education essay']);
   expect(screen.getByRole('heading', { name: 'Feedback without a saved attempt' })).toBeInTheDocument();
-  expect([...view.container.querySelectorAll('.review-unlinked h4')].map(node => node.textContent)).toEqual(['Task 2', 'Task 1']);
+  expect([...view.container.querySelectorAll('.review-unlinked h3')].map(node => node.textContent)).toEqual(['Task 2', 'Task 1']);
   expect(within(view.container.querySelector('.review-unlinked')!).getByRole('link', { name: /^Band 7\.0/ })).toHaveAttribute('href', '/review/new');
 });
 
@@ -169,4 +171,89 @@ test('pasted search text ignores surrounding whitespace', async () => {
   await userEvent.setup().type(screen.getByRole('textbox', { name: 'Search attempts' }), '  Cities  ');
   expect(screen.getByText('Cities essay')).toBeInTheDocument();
   expect(screen.queryByText('Education essay')).not.toBeInTheDocument();
+});
+
+test('markReviewDone alerts on unreviewed mistakes and completes bound error-review once satisfied', async () => {
+  const fb = mockFieldbook.current;
+  fb.stateRef = { current: fb.state };
+  fb.completeReview = completeReview;
+  fb.refreshPlanningState = vi.fn();
+  fb.setState = vi.fn((next: any) => { fb.state = next; });
+  fb.state.plans = [{
+    id: 'rev-plan',
+    kind: 'review',
+    skill: 'writing',
+    status: 'in_progress',
+    startedAt: '2026-10-10T10:00:00Z',
+    target: { type: 'error-review', errorIds: ['e1'] },
+  }];
+  fb.state.activePlanId = 'rev-plan';
+  fb.persistNow = vi.fn(async (draft: any) => { fb.stateRef.current = draft; fb.state = draft; return true; });
+
+  const user = userEvent.setup();
+  mount();
+  await user.click(screen.getByRole('button', { name: 'Mark review done' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Review or mark corrected 1 targeted mistake');
+  expect(fb.persistNow).not.toHaveBeenCalled();
+
+  fb.state.errors[0].resolved = true;
+  await user.click(screen.getByRole('button', { name: 'Mark review done' }));
+  await waitFor(() => expect(fb.persistNow).toHaveBeenCalledTimes(1));
+  expect(fb.persistNow).toHaveBeenCalledWith(
+    expect.objectContaining({ activePlanId: null }),
+    { collections: ['errors', 'plans', 'profile'], onError: expect.any(Function) },
+  );
+  expect(fb.toast).toHaveBeenCalledWith('Review done.');
+});
+
+test('toggleResolved rolls back error and plan completion on failure and retries once on planning conflict', async () => {
+  const fb = mockFieldbook.current;
+  fb.stateRef = { current: fb.state };
+  fb.resolveError = (draft: any, id: string, resolved: boolean) => {
+    const item = draft.errors.find((row: any) => row.id === id);
+    if (item) item.resolved = resolved;
+  };
+  fb.completeReview = completeReview;
+  fb.refreshPlanningState = vi.fn().mockResolvedValue(undefined);
+  fb.setState = vi.fn((next: any) => { fb.state = next; });
+  fb.state.plans = [{
+    id: 'rev-plan',
+    kind: 'review',
+    skill: 'writing',
+    status: 'in_progress',
+    startedAt: '2026-10-10T10:00:00Z',
+    target: { type: 'error-review', errorIds: ['e1'] },
+  }];
+  fb.state.activePlanId = 'rev-plan';
+  fb.persistNow = vi.fn()
+    .mockImplementationOnce(async (draft: any, options: any) => {
+      fb.stateRef.current = draft; fb.state = draft;
+      options?.onError?.('Network offline.');
+      return false;
+    })
+    .mockImplementationOnce(async (draft: any, options: any) => {
+      fb.stateRef.current = draft; fb.state = draft;
+      options?.onError?.('Schedule changed on another device.');
+      return false;
+    })
+    .mockImplementationOnce(async (draft: any) => {
+      fb.stateRef.current = draft; fb.state = draft;
+      return true;
+    });
+
+  const user = userEvent.setup();
+  mount();
+  await user.click(screen.getByRole('button', { name: 'More actions for CC-ORG' }));
+  await user.click(await screen.findByRole('menuitem', { name: 'Mark corrected myself' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Network offline.');
+  expect(fb.stateRef.current.errors[0].resolved).toBeFalsy();
+  expect(fb.stateRef.current.plans[0].status).toBe('in_progress');
+  expect(fb.stateRef.current.activePlanId).toBe('rev-plan');
+
+  await user.click(screen.getByRole('button', { name: 'More actions for CC-ORG' }));
+  await user.click(await screen.findByRole('menuitem', { name: 'Mark corrected myself' }));
+  await waitFor(() => expect(fb.refreshPlanningState).toHaveBeenCalledTimes(1));
+  expect(fb.persistNow).toHaveBeenCalledTimes(3);
+  expect(fb.stateRef.current.plans[0].status).toBe('completed');
+  expect(fb.toast).toHaveBeenCalledWith('Review task complete.');
 });

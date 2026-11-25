@@ -1,4 +1,5 @@
 import { vocabularyTeaching, vocabularyTeachingRevision, type ReadinessSupplement as Supplement, type ReadinessDefault as Default, type VocabularyLearningPriority, type VocabularyContentScope, vocabularyEditableSenseFields } from './runtimeData';
+import { vocabularyCurriculumBaselines } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
 
 export const VOCABULARY_READINESS_VERSION = 'core-2026-10-21.11-defaults';
@@ -80,6 +81,10 @@ export function applyVocabularyContentVariant(entryId:string,publicSense:Vocabul
  const result={...learnerSense,...publicSense};
  for(const field of vocabularyEditableSenseFields) delete (result as unknown as Record<string,unknown>)[field];
  return markVocabularyContentScope({...result,...row.contentVariant.afterContent,editorial:row.exampleCredit || editorial},scope);
+}
+export function hasVocabularyContentVariant(entryId:string,sense:VocabularySense,scope:VocabularyContentScope):boolean {
+ ensureReadiness();
+ return Boolean(matchingVariant(entryId,sense,scope));
 }
 
 const learningPriorities = new Set<VocabularyLearningPriority>(['general', 'specialist', 'historical', 'proper-name']);
@@ -232,17 +237,17 @@ export function applyVocabularyReadiness(entry:VocabularyEntry, originals:Vocabu
  const learnerPrimary=senses[0];
  if (candidate) {
   const primaryBaselines=learnerPrimary ? originals.filter(s=>s.id===learnerPrimary.id) : [];
-  if (learnerPrimary) primaryBaselines.push(...vocabularyReadinessBaselines(entry.id,learnerPrimary.id));
+  if (learnerPrimary) primaryBaselines.push(...vocabularyReadinessBaselines(entry.id,learnerPrimary.id),...vocabularyCurriculumBaselines(entry.id,learnerPrimary.id));
   if (candidate.sense.id===learnerPrimary?.id) primaryBaselines.push(candidate.sense,...(candidate.originalSense ? [candidate.originalSense]:[]));
   const completeBaselines=[...primaryBaselines,...primaryBaselines.map(s=>supplementVocabularySense(entry.id,s,[s],()=>false,defaultScope))];
   if (learnerPrimary && edited(learnerPrimary,completeBaselines)) return {...entry,meaning:learnerPrimary.definition || entry.meaning,example:learnerPrimary.example || entry.example};
   const existing=senses.find(sense=>sense.id===candidate.sense.id);
-  const baseline=[candidate.originalSense,candidate.sense,...originals.filter(s=>s.id===candidate.sense.id),...vocabularyReadinessBaselines(entry.id,candidate.sense.id)].filter((s):s is VocabularySense=>Boolean(s));
+  const baseline=[candidate.originalSense,candidate.sense,...originals.filter(s=>s.id===candidate.sense.id),...vocabularyReadinessBaselines(entry.id,candidate.sense.id),...vocabularyCurriculumBaselines(entry.id,candidate.sense.id)].filter((s):s is VocabularySense=>Boolean(s));
   const selected=existing && edited(existing,baseline) ? existing : candidate.sense;
   senses=[selected,...senses.filter(sense=>sense.id!==selected.id)];
  }
  senses=senses.map(sense=>{
-  const known=[...originals.filter(s=>s.id===sense.id),...(candidate?.sense.id===sense.id ? [candidate.sense] : []),...vocabularyReadinessBaselines(entry.id,sense.id)];
+  const known=[...originals.filter(s=>s.id===sense.id),...(candidate?.sense.id===sense.id ? [candidate.sense] : []),...vocabularyReadinessBaselines(entry.id,sense.id),...vocabularyCurriculumBaselines(entry.id,sense.id)];
   const publicSense=candidate?.sense.id===sense.id?candidate.sense:known.find(item=>!edited(sense,[item])) || sense;
   return supplementVocabularySense(entry.id,sense,known,edited,defaultScope,publicSense);
  });

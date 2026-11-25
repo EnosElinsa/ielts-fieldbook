@@ -64,7 +64,7 @@ import { collectVocabularyChoice } from '../domain/vocabulary/collection';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
 import { ensurePlans, ensureUnifiedPlans, ensureUnifiedPlansAsync, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan, applyBacklogPreview, compareStudyPlans, describeScheduleChanges, upcomingReviewTime } from '../lib/planTemplates';
-import { bindSpeakingPlan } from '../domain/plans';
+import { bindSpeakingPlan, completePlan, errorReviewSatisfied } from '../domain/plans';
 import { speakingPrompts, speakingResponseDraft, updateSpeakingResponse } from '../domain/speaking';
 import { useConfirmationDialog } from '../components/useConfirmationDialog';
 import { loadExamCatalog, loadExamSections } from '../storage/examCatalog';
@@ -83,10 +83,10 @@ import { safeVocabularyReturn, rememberVocabularyPosition } from '../features/vo
 import { studySourceUrl } from '../lib/studyNavigation';
 import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
 import { previewLearningPlanMeaningUpdate } from '../domain/vocabulary/learningMeaningUpdate';
-import { completeReceptivePlanIfMatched, receptivePlanPath, isListeningCheckPlan } from '../lib/receptivePlans';
+import { captureReceptiveCompletion, completeReceptivePlanIfMatched, receptivePlanPath, isListeningCheckPlan } from '../lib/receptivePlans';
 import { bindStudyPlanTargets } from '../lib/planTargets';
 import { normalizeVocabularyIdentities } from '../domain/vocabulary/identities';
-import { sessionSkill } from '../lib/format';
+import { safeImage, sessionSkill } from '../lib/format';
 import { attemptSections } from '../domain/desk';
 import { accountId } from '../storage/remote';
 import { captureDraftRecovery, differentDrafts, discardDraftRecovery, readDraftRecovery, writeDraftRecovery, writeDraftRecoveryEntry, type DraftRecoveryVersions } from '../storage/recovery';
@@ -187,6 +187,7 @@ function useFieldbookValue() {
   const acceptedPlanningRows = useRef(new Map());
   const planningStateRevision = useRef(0);
   const completingAttempt = useRef(false);
+  const attemptSubmittedAt = useRef<{ id: string; at: string } | null>(null);
   const saveGeneration = useRef(0);
   const lastSaved = useRef(null);
   const alive = useRef(true);
@@ -375,16 +376,70 @@ function useFieldbookValue() {
     return operation;
   }
 
+  const refreshPlanningState=useCallback(()=>{
+    const owner=accountId(),epoch=loadEpoch.current;
+    pendingAutomaticSave.current=null;
+    const operation=saveQueue.current.catch(()=>{}).then(async()=>{
+      if(!alive.current||owner!==accountId()||epoch!==loadEpoch.current)throw new Error('Account load superseded');
+      const latest=await readPlanningState();
+      if(!alive.current||owner!==accountId()||epoch!==loadEpoch.current)throw new Error('Account load superseded');
+      planningStateRevision.current+=1;acceptedPlanningRows.current.clear();
+      committedStudySettings.current=committedStudySettings.current.filter(row=>row.owner!==owner);
+      committedPlanChanges.current=committedPlanChanges.current.filter(row=>row.owner!==owner);
+      committedVocabularyPreferences.current=committedVocabularyPreferences.current.filter(row=>row.owner!==owner);
+      const next={...stateRef.current,...latest};stateRef.current=next;setState(next);
+      acknowledgeSaved(next,['profile','plans']);
+      return latest;
+    });
+    saveQueue.current=operation.then(()=>true,()=>false);return operation;
+  },[]);
+
   const persistNow = useCallback(
     (draft?: any, options?: { collections?: string[]; onError?: (message: string) => void }) => {
       const next = draft || stateRef.current;
       next.schemaVersion = STATE_VERSION;
+      const guard = captureReceptiveCompletion(next);
       completeReceptivePlanIfMatched(next, lastSaved.current);
+      const completedIds = guard.completedIds(next);
       stateRef.current = next;
       setState({ ...next });
-      return queueSave(next, false, false, options);
+      if (!completedIds.length) return queueSave(next, false, false, options);
+      // A completed task is only real once its save finishes. A failure returns
+      // the task to its saved state; a schedule conflict is refreshed and retried.
+      const owner = accountId(), epoch = loadEpoch.current;
+      const external = options?.onError;
+      let feedback = '';
+      const withProfile = (snapshot: any, source: typeof guard) => options?.collections && source.activePlanChanged(snapshot) && !options.collections.includes('profile')
+        ? [...options.collections, 'profile'] : options?.collections;
+      const attempt = (snapshot: any, source: typeof guard) => queueSave(snapshot, false, false, { ...options, collections: withProfile(snapshot, source), onError: message => { feedback = message; } });
+      const fail = (ids: string[], source: typeof guard) => {
+        if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
+        const restored = source.rollback(stateRef.current, ids);
+        stateRef.current = restored; setState(restored);
+        saveFeedback(external ? { onError: external } : undefined)(feedback || 'Could not save to your account. Try again.');
+        if (!external) setSaveFailed(true);
+        setSaveStatus('failed');
+        return false;
+      };
+      return attempt(next, guard).then(async saved => {
+        if (saved) return true;
+        if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
+        if (!/changed on another device|baseline conflict|refresh.*preview/i.test(feedback)) return fail(completedIds, guard);
+        try {
+          await refreshPlanningState();
+          if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
+          const retry = structuredClone(stateRef.current);
+          const retryGuard = captureReceptiveCompletion(retry);
+          completeReceptivePlanIfMatched(retry, lastSaved.current);
+          const retryIds = retryGuard.completedIds(retry);
+          stateRef.current = retry; setState({ ...retry });
+          feedback = '';
+          if (await attempt(retry, retryGuard)) return true;
+          return fail(retryIds, retryGuard);
+        } catch { return fail(completedIds, guard); }
+      });
     },
-    [toast],
+    [toast, refreshPlanningState],
   );
 
   const mergeAccountData = useCallback((data, before) => {
@@ -560,24 +615,6 @@ function useFieldbookValue() {
     return row;
   }, []);
 
-  const refreshPlanningState=useCallback(()=>{
-    const owner=accountId(),epoch=loadEpoch.current;
-    pendingAutomaticSave.current=null;
-    const operation=saveQueue.current.catch(()=>{}).then(async()=>{
-      if(!alive.current||owner!==accountId()||epoch!==loadEpoch.current)throw new Error('Account load superseded');
-      const latest=await readPlanningState();
-      if(!alive.current||owner!==accountId()||epoch!==loadEpoch.current)throw new Error('Account load superseded');
-      planningStateRevision.current+=1;acceptedPlanningRows.current.clear();
-      committedStudySettings.current=committedStudySettings.current.filter(row=>row.owner!==owner);
-      committedPlanChanges.current=committedPlanChanges.current.filter(row=>row.owner!==owner);
-      committedVocabularyPreferences.current=committedVocabularyPreferences.current.filter(row=>row.owner!==owner);
-      const next={...stateRef.current,...latest};stateRef.current=next;setState(next);
-      acknowledgeSaved(next,['profile','plans']);
-      return latest;
-    });
-    saveQueue.current=operation.then(()=>true,()=>false);return operation;
-  },[]);
-
   const ensureQuestionBank = useCallback((skill, force = false) => {
     if (!force && bankReads.current.has(skill)) return bankReads.current.get(skill);
     const owner = accountId();
@@ -608,10 +645,10 @@ function useFieldbookValue() {
     bankReads.current.set(skill, request); return request;
   }, []);
 
-  const ensureSpeakingSample = useCallback(async topicId => {
+  const ensureSpeakingSample = useCallback(async (topicId, options?: { force?: boolean }) => {
     const owner = accountId();
     const epoch = loadEpoch.current;
-    const sample = await readSpeakingSample(topicId);
+    const sample = await readSpeakingSample(topicId, options);
     if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
     if (sample) {
       const next = {...stateRef.current, speakingTopics:stateRef.current.speakingTopics.map(topic => String(topic.id) === String(topicId) ? {...topic,...sample,id:topic.id} : topic)};
@@ -983,6 +1020,14 @@ function useFieldbookValue() {
               if(['already-completed','changed','requirements-unmet'].includes(latestOutcome.taskStatus)){
                 options?.onResult?.(latestOutcome);setSaveFailed(false);setSaveStatus('saved');return true;
               }
+              // Another part of the schedule changed. This task is still open, so finish it on the latest schedule.
+              if(latestOutcome.taskStatus==='completed'){
+                planFeedback='';
+                try { completed=await mutatePlans(draft=>completeVocabularyPlan(draft,session),{onError:message=>{planFeedback=message;}}); } catch { /* Fall through to the explicit retry state. */ }
+                if(!alive.current || accountId()!==owner || epoch!==loadEpoch.current)return false;
+                const settled=stateRef.current.plans.find(row=>row.id===session.planId);
+                if(!completed&&settled?.status==='completed'&&settled.linkedSessionId===session.id)completed=true;
+              }
             }catch{/* Keep the same session for an explicit retry when refresh is unavailable. */}
           }
         if(!completed){
@@ -1205,11 +1250,14 @@ function useFieldbookValue() {
     state.questions[0] ||
     FALLBACK_QUESTIONS[0];
 
+  const plannedSpeaking = accountRoute.startsWith('/speak') && activePlan?.status === 'in_progress' && planMatchesSkill(activePlan, 'speaking')
+    ? activePlan : null;
+  const speakingTopicId = plannedSpeaking?.target?.questionId || plannedSpeaking?.questionId || selectedTopicId;
   const selectedTopic =
-    (selectedTopicId && state.speakingTopics.find((t) => String(t.id) === String(selectedTopicId))) ||
+    (speakingTopicId && state.speakingTopics.find((t) => String(t.id) === String(speakingTopicId))) ||
     state.speakingTopics[0] ||
     null;
-  const deskPart = deskPartOverride || String(selectedTopic?.part || '2');
+  const deskPart = plannedSpeaking?.target?.part || deskPartOverride || String(selectedTopic?.part || '2');
 
   const currentDeskMode = useCallback(() => {
     if (standaloneWriting) return 'full';
@@ -1832,7 +1880,7 @@ function useFieldbookValue() {
     } else if(skill==='reading'||skill==='listening'){
       const path=receptivePlanPath({...plan,target},skill);const params=new URLSearchParams({planId});if(target.questionIds)params.set('questions',JSON.stringify(target.questionIds));openExamTask(`${path}${path.includes('?')?'&':'?'}${params}`);
     } else if(plan.kind==='review')navigate('/review');
-    else if(skill==='speaking') {startSpeakingPractice(plan.questionId,target.part,plan.storyId); const nextPrompt = target.prompts?.find(prompt => !(plan.completedPromptKeys || []).includes(prompt.promptKey)) || target.prompts?.[0]; setQuestionIndex(Math.max(0, target.prompts?.indexOf(nextPrompt) || 0)); setSpeakingDraft(plan.questionId,{...nextPrompt,practiceMode:target.mode,targetErrorIds:plan.targetErrorIds||[]});}
+    else if(skill==='speaking') {startSpeakingPractice(plan.questionId,target.part,plan.storyId); const nextPrompt = target.prompts?.find(prompt => !(plan.completedPromptKeys || []).includes(prompt.promptKey)) || target.prompts?.[0]; setQuestionIndex(Math.max(0, target.prompts?.indexOf(nextPrompt) || 0)); if (setSpeakingDraft(plan.questionId,{...nextPrompt,practiceMode:target.mode,targetErrorIds:plan.targetErrorIds||[]})) scheduleDraftPersist();}
     else {
       const existing = normalizeDraft(stateRef.current.drafts[plan.questionId]);
       if (setWritingDraft(plan.questionId, existing.text, { practiceMode: target.mode, targetErrorIds: plan.targetErrorIds || [] })) {
@@ -1859,6 +1907,10 @@ function useFieldbookValue() {
       const speaking = pendingAttempt.skill === 'speaking';
       const completionDrafts = structuredClone(draft.drafts);
       const question = pendingAttempt.question;
+      // A retry after a lost response must send the identical payload, so the
+      // same batch is replayed instead of being treated as new work.
+      if (attemptSubmittedAt.current?.id !== pendingAttempt.id) attemptSubmittedAt.current = { id: pendingAttempt.id, at: new Date().toISOString() };
+      const submittedAt = attemptSubmittedAt.current.at;
       const attempt = createAttempt(
         draft,
         {
@@ -1879,7 +1931,7 @@ function useFieldbookValue() {
           practiceMode: pendingAttempt.practiceMode || currentDeskMode(),
           targetErrorIds: pendingAttempt.targetErrorIds || [],
         },
-        { id: () => pendingAttempt.id, now: () => new Date().toISOString() },
+        { id: () => pendingAttempt.id, now: () => submittedAt },
       );
       saveFields.errors
         .split(/[;；]/)
@@ -1902,23 +1954,49 @@ function useFieldbookValue() {
         });
       const matchedPlan = pendingAttempt.planId ? completePlanIfMatched(draft, pendingAttempt.planId, attempt) : null;
       if (!speaking && pendingAttempt.reviewErrorId) reviewError(draft, pendingAttempt.reviewErrorId);
+      // Reviewing the exact mistakes a bound task targets finishes that task, even from a rewrite.
+      const finishReviewTasks = (target) => (target.plans || []).filter(plan => plan.kind === 'review' && plan.status === 'in_progress' && plan.target?.type === 'error-review' && errorReviewSatisfied(target, plan))
+        .forEach(plan => completePlan(target, plan.id, { planId: plan.id, completedAt: submittedAt }));
+      if (!speaking) finishReviewTasks(draft);
       if (speaking) {
         if (pendingAttempt.promptKey) draft.drafts[question.id] = updateSpeakingResponse(draft.drafts[question.id], { ...pendingAttempt, transcript: '', notes: '', parentSessionId: null });
         else draft.drafts[question.id] = normalizeDraft({ ...normalizeDraft(draft.drafts[question.id]), transcript: '', notes: '', parentSessionId: null });
       }
       else {
-        const current = normalizeDraft(draft.drafts[selectedQuestion.id]);
-        draft.drafts[selectedQuestion.id] = { ...current, text: '', parentSessionId: null,
+        const current = normalizeDraft(draft.drafts[question.id]);
+        draft.drafts[question.id] = { ...current, text: '', parentSessionId: null,
           sections: pendingAttempt.keepPracticeNotes ? current.sections : undefined };
       }
       let committed = draft;
       let liveBaseline = completionDrafts;
       let firstCommit = true;
+      let conflictRetried = false;
+      const saveCollections = ['drafts', 'sessions', 'errors', 'plans', 'profile', 'vocabularyStates', 'vocabularyEvidence', 'vocabularyActivities'];
       while (true) {
-        const saved = await queueSave(committed, !firstCommit, true, { ...options, submittedDraftId: question.id, collections: ['drafts', 'sessions', 'errors', 'plans', 'profile', 'vocabularyStates', 'vocabularyEvidence', 'vocabularyActivities'] });
+        let attemptFeedback = '';
+        const saved = await queueSave(committed, !firstCommit, true, { ...options, submittedDraftId: question.id, collections: saveCollections, onError: message => { attemptFeedback = message; } });
         firstCommit = false;
         if (!alive.current || accountId() !== completionOwner || loadEpoch.current !== completionEpoch) { completingAttempt.current = false; return false; }
-        if (!saved) { completingAttempt.current = false; return false; }
+        if (!saved) {
+          // The schedule changed elsewhere. Re-read it, re-apply this submission's task completion and retry once.
+          if (!conflictRetried && /changed on another device|baseline conflict|refresh.*preview/i.test(attemptFeedback)) {
+            conflictRetried = true;
+            try {
+              await refreshPlanningState();
+              if (!alive.current || accountId() !== completionOwner || loadEpoch.current !== completionEpoch) { completingAttempt.current = false; return false; }
+              const latest = stateRef.current;
+              const rebuilt = { ...committed, plans: structuredClone(latest.plans), activePlanId: latest.activePlanId, settings: structuredClone(latest.settings) };
+              if (pendingAttempt.planId) completePlanIfMatched(rebuilt, pendingAttempt.planId, attempt);
+              if (!speaking) finishReviewTasks(rebuilt);
+              committed = rebuilt;
+              continue;
+            } catch { /* Report the original failure below. */ }
+          }
+          completingAttempt.current = false;
+          if (options?.onError) options.onError(attemptFeedback || 'Could not save to your account. Try again.');
+          else { setSaveFailureMessage(attemptFeedback || 'Could not save to your account. Try again.'); setSaveFailed(true); }
+          return false;
+        }
         const liveDrafts = structuredClone(stateRef.current.drafts);
         const mergedDrafts = structuredClone(committed.drafts);
         // Rebase only edits made during this RPC. Unchanged response fields retain
@@ -1950,6 +2028,7 @@ function useFieldbookValue() {
       stateRef.current = committed;
       setState(committed);
       if (speaking && pendingAttempt.audioId) void deletePendingAudio(completionOwner, question.id, pendingAttempt.part, pendingAttempt.promptKey);
+      attemptSubmittedAt.current = null;
       setPendingAttempt(null);
       closeModal();
       if (exportForReview) {
@@ -1961,15 +2040,16 @@ function useFieldbookValue() {
           );
         } else {
           downloadFile(
-            `ielts-assessment-request-${selectedQuestion.id}-${dateKey(new Date())}.md`,
-            buildAssessmentRequest(attempt, selectedQuestion),
+            `ielts-assessment-request-${question.id}-${dateKey(new Date())}.md`,
+            buildAssessmentRequest(attempt, question),
             'text/markdown',
           );
-          if (selectedQuestion.image) {
+          const imageUrl = question.image ? safeImage(question.image) : '';
+          if (imageUrl) {
             setTimeout(() => {
               const anchor = document.createElement('a');
-              anchor.href = selectedQuestion.image;
-              anchor.download = selectedQuestion.image.split('/').pop() || 'question-image';
+              anchor.href = imageUrl;
+              anchor.download = imageUrl.split('/').pop() || 'question-image';
               anchor.click();
             }, 120);
           }
@@ -2265,7 +2345,7 @@ function useFieldbookValue() {
       removeStory,
       completeStoriesPlan,
       completeVocabularyPlan,
-      completeReview: (draft,details) => completeReview(draft,{...details,planId:details?.planId||draft.activePlanId}),
+      completeReview: (draft, details) => completeReview(draft, details),
       reviewError,
       resolveError,
       importAssessmentText,

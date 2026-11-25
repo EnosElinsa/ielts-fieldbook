@@ -176,3 +176,27 @@ test('a blocked Practice navigation retains trigger focus while waiting for a de
     await waitFor(() => expect(trigger).toHaveFocus());
   } finally { document.removeEventListener('fieldbook:before-navigate', block); }
 });
+
+test('CommandSearch collapses aria-expanded on zero matches and indexes Stories, Account, and formatted question names', async () => {
+  const originalQuestions = fb.state.questions;
+  fb.state.questions = [{ id: 'q-chart', name: '折线图 Transport' }] as any;
+  try {
+    const user = userEvent.setup();
+    render(<MemoryRouter><CommandSearch open onClose={() => {}} /></MemoryRouter>);
+    const input = screen.getByRole('combobox', { name: 'Search Fieldbook' });
+    await user.type(input, 'Stories');
+    expect(screen.getByRole('option', { name: /Stories Page/ })).toBeInTheDocument();
+    await user.clear(input);
+    await user.type(input, 'Account');
+    expect(screen.getByRole('option', { name: /Account Page/ })).toBeInTheDocument();
+    await user.clear(input);
+    await user.type(input, 'Line graph');
+    expect(screen.getByRole('option', { name: /Line graph Transport/ })).toBeInTheDocument();
+    await user.clear(input);
+    await user.type(input, 'zzzznothing');
+    expect(input).toHaveAttribute('aria-expanded', 'false');
+    expect(input).not.toHaveAttribute('aria-activedescendant');
+  } finally {
+    fb.state.questions = originalQuestions;
+  }
+});

@@ -17754,8 +17754,8 @@
     "term": "grey",
     "sense": {
       "id": "kaikki:291e34887617987a8f",
-      "definition": "A neutral colour between black and white.",
-      "example": "The jacket is a pale shade of grey.",
+      "definition": "Of a neutral colour between black and white.",
+      "example": "She chose a pale grey jacket for the interview.",
       "pos": "adj",
       "synonyms": [],
       "antonyms": [],
@@ -17824,7 +17824,34 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/grey#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Retains the same meaning; replaces an incomplete, misleading, archaic, or unsuitable teaching example with a full English sentence and topic collocations. Editorial teaching choice for Fashion and trends; original-source sense remains unconfirmed."
+    "reason": "Retains the same meaning; replaces an incomplete, misleading, archaic, or unsuitable teaching example with a full English sentence and topic collocations. Editorial teaching choice for Fashion and trends; original-source sense remains unconfirmed.",
+    "previousSenses": [
+      {
+        "id": "kaikki:291e34887617987a8f",
+        "definition": "A neutral colour between black and white.",
+        "example": "The jacket is a pale shade of grey.",
+        "pos": "adj",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [
+          "pale grey",
+          "dark grey"
+        ],
+        "usage": "",
+        "register": "",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/grey#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        },
+        "distinctions": []
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",

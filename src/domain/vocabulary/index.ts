@@ -134,7 +134,7 @@ export function updateVocabularyItem(state: VocabularyStore, entryId: string, in
   if (input.senses) input.senses.forEach((raw, index) => {
     const sense = item.senses.find(s => s.id === raw.id) || item.senses[index];
     if (!sense) return;
-    Object.assign(sense, { definition: english(raw.definition), example: english(raw.example), pos: english(raw.pos) || 'expression', collocations: raw.collocations===undefined?undefined:englishList(raw.collocations), usage: raw.usage===undefined?undefined:english(raw.usage), synonyms: raw.synonyms===undefined?undefined:englishList(raw.synonyms), antonyms: raw.antonyms===undefined?undefined:englishList(raw.antonyms), distinctions: raw.distinctions===undefined?undefined:englishList(raw.distinctions) });
+    Object.assign(sense, { definition: english(raw.definition), example: english(raw.example), pos: english(raw.pos) || 'expression', collocations: raw.collocations===undefined?undefined:englishList(raw.collocations), usage: raw.usage===undefined?undefined:english(raw.usage), synonyms: raw.synonyms===undefined?undefined:englishList(raw.synonyms), antonyms: raw.antonyms===undefined?undefined:englishList(raw.antonyms), distinctions: raw.distinctions===undefined?undefined:englishList(raw.distinctions), ...(raw.source === undefined ? {} : { source: english(raw.source) }) });
   });
   item.meaning = item.senses[0]?.definition || ''; item.example = item.senses[0]?.example || '';
   item.enrichmentPending = item.senses.every(s => !s.definition);

@@ -10,7 +10,7 @@ export function useSpeakingSample(topicId?: string) {
     if (!topicId || !fb.ensureSpeakingSample) return;
     let alive = true;
     setStatus('loading');
-    fb.ensureSpeakingSample(topicId).then(() => { if (alive) setStatus(''); }, () => { if (alive) setStatus('error'); });
+    fb.ensureSpeakingSample(topicId, { force: revision > 0 }).then(() => { if (alive) setStatus(''); }, () => { if (alive) setStatus('error'); });
     return () => { alive = false; };
   }, [topicId, fb.ensureSpeakingSample, revision]);
   return {status, retry: () => setRevision(value => value + 1)};

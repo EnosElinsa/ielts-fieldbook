@@ -66,6 +66,30 @@ test('learning priority is delivered in scoped teaching while the preceding comp
   for (const url of [...Object.values(previous.entryResources), ...Object.values(previous.entryTeachingResources), ...previous.units.flatMap((unit: any) => [unit.resource, unit.teachingResource]).filter(Boolean)] as string[]) expect(release.resources.has(url), url).toBe(true);
 });
 
+test('the fight and grey audit fixes serve the corrected packs and retain the previous immutable packs', () => {
+  const fightId = 've-a34f2f1', greyId = 've-7c6ebecc';
+  const oldFight = { definition: 'A physical conflict in which people or animals try to hurt one another.', example: 'The argument ended in a fight outside the station.' };
+  const oldGrey = { definition: 'A neutral colour between black and white.', example: 'The jacket is a pale shade of grey.' };
+  const newFight = { definition: 'To take part in a physical struggle or battle against an opponent.', example: 'Soldiers fought the invading army for three days.' };
+  const newGrey = { definition: 'Of a neutral colour between black and white.', example: 'She chose a pale grey jacket for the interview.' };
+  const fightRow = (manifest: typeof release.manifest) => JSON.parse(release.resources.get(manifest.entryTeachingResources[manifest.entryShards[fightId]])!).teaching.readiness.corrections.find((row: any) => row.entryId === fightId);
+  const unit = release.manifest.units.find(row => row.id === 'ielts-vocabulary-chapter-11-group-02')!;
+  const greyRow = (url: string) => JSON.parse(release.resources.get(url)!).teaching.curriculum.topics.find((row: any) => row.entryId === greyId);
+  expect(fightRow(release.manifest)).toMatchObject({ ...newFight, pos: 'verb' });
+  expect(greyRow(unit.teachingResource!).sense).toMatchObject(newGrey);
+  const currentFightPackUrl = release.manifest.entryTeachingResources[release.manifest.entryShards[fightId]];
+  // Previous packs keep pre-fix content without newFight/newGrey (current packs also hold previousSenses for learner history upgrades).
+  // Compare bytes: decoding the whole retained corpus into strings exhausts the heap.
+  const packs = (prefix: string, excludeUrl: string, ...needles: string[]) => [...release.resources.byteEntries()]
+    .filter(([url, bytes]) => url.startsWith(prefix) && url !== excludeUrl && needles.every(needle => bytes.includes(needle)));
+  const previousFight = packs('/vocabulary-resources/teaching/entries/', currentFightPackUrl, JSON.stringify(oldFight.example), JSON.stringify(oldFight.definition));
+  expect(previousFight.length).toBeGreaterThan(0);
+  expect(previousFight.every(([, bytes]) => !bytes.includes(JSON.stringify(newFight.definition)))).toBe(true);
+  const previousGrey = packs('/vocabulary-resources/teaching/groups/', unit.teachingResource!, JSON.stringify(oldGrey.example), JSON.stringify(oldGrey.definition));
+  expect(previousGrey.length).toBeGreaterThan(0);
+  expect(previousGrey.every(([, bytes]) => !bytes.includes(JSON.stringify(newGrey.definition)))).toBe(true);
+});
+
 test('the light right left table batch retains the entire preceding teaching release', () => {
   const previous = JSON.parse(release.resources.get('/vocabulary-resources/manifest.ceba35ae9f9890bc.json')!);
   const light = (manifest: typeof release.manifest) => JSON.parse(release.resources.get(manifest.entryTeachingResources[manifest.entryShards['ve-a5291fb']])!).teaching;

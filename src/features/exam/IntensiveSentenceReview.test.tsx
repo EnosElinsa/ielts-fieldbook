@@ -153,3 +153,12 @@ test('a correct sentence can be reviewed on demand without opting into future re
   await user.click(screen.getByRole('button', { name: 'Save review and finish' }));
   expect(onSave).toHaveBeenCalledWith(expect.objectContaining({ selfRating: 5, reviewEnabled: false }));
 });
+
+test('review player wires onRetrySource through to retry audio links', async () => {
+  const onRetryAudio = vi.fn();
+  open({ onRetryAudio });
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Start listening review' }));
+  expect(mocks.props.onRetrySource).toBe(onRetryAudio);
+  mocks.props.onRetrySource();
+  expect(onRetryAudio).toHaveBeenCalledOnce();
+});

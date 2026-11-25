@@ -41,7 +41,7 @@ export function safeModuleUrl(value: unknown, module: WorkspaceModule): value is
     if (module === 'writing') return /^\/(?:write(?:\/questions)?|review(?:\/[^/]+)?)$/.test(path);
     if (module === 'speaking') return /^\/(?:speak(?:\/questions|\/topics\/[^/]+)?|stories|review(?:\/[^/]+)?)$/.test(path);
     if (module === 'vocabulary') return /^\/vocabulary(?:\/(?:words|wordbooks(?:\/[^/]+(?:\/groups\/[^/]+\/(?:words|learn))?)?|history(?:\/[^/]+)?|entry\/[^/]+|review|study))?$/.test(path);
-    return new RegExp(`^/${module}(?:/[^/]+|/review/[^/]+|/mock/[^/]+${module === 'listening' ? '|/intensive/[^/]+' : ''})?$`).test(path);
+    return new RegExp(`^/${module}(?:/[^/]+|/review/[^/]+|/mock/[^/]+|/source/[^/]+${module === 'listening' ? '|/intensive/[^/]+' : ''})?$`).test(path);
   } catch { return false; }
 }
 

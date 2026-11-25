@@ -27,6 +27,7 @@ export function AccountPage() {
   const [emailError, setEmailError] = useState('');
   const [deleteEmail, setDeleteEmail] = useState('');
   const [deleteError, setDeleteError] = useState('');
+  const [signOutError, setSignOutError] = useState('');
   const [busy, setBusy] = useState<'name' | 'password' | 'out' | 'resend' | 'email' | 'delete' | null>(null);
   const confirmed = Boolean(user?.email_confirmed_at);
   const deleteReady = emailsMatch(deleteEmail, user?.email);
@@ -142,7 +143,8 @@ export function AccountPage() {
 
   async function leave() {
     setBusy('out');
-    try { await signOut(); navigate('/'); } catch { setDeleteError('Could not sign out. Try again.'); setBusy(null); }
+    setSignOutError('');
+    try { await signOut(); navigate('/'); } catch { setSignOutError('Could not sign out. Try again.'); setBusy(null); }
   }
 
   return (
@@ -154,7 +156,7 @@ export function AccountPage() {
 
       <div className="metrics">
         <div className="metric">
-          <label>Email</label>
+          <span className="metric-label">Email</span>
           <strong>{user?.email || '—'}</strong>
           <span className={confirmed ? 'account-email-status is-confirmed' : 'account-email-status is-pending'}>
             <span>{confirmed ? 'Confirmed' : 'Not confirmed'}</span>
@@ -173,14 +175,14 @@ export function AccountPage() {
               )
             ) : null}
           </span>
-          {resendError ? <p className="auth-error">{resendError}</p> : null}
+          {resendError ? <p className="auth-error" role="alert">{resendError}</p> : null}
         </div>
         <div className="metric">
-          <label>Joined</label>
+          <span className="metric-label">Joined</span>
           <strong>{formatAccountDate(user?.created_at)}</strong>
         </div>
         <div className="metric">
-          <label>Last sign-in</label>
+          <span className="metric-label">Last sign-in</span>
           <strong>{formatAccountDate(user?.last_sign_in_at)}</strong>
         </div>
       </div>
@@ -193,8 +195,8 @@ export function AccountPage() {
             <label htmlFor="account-name">Display name</label>
             <input id="account-name" value={name} maxLength={40} onChange={(event) => setName(event.target.value)} />
           </div>
-          {nameError ? <p className="auth-error">{nameError}</p> : null}
-          {nameNote ? <p className="auth-notice">{nameNote}</p> : null}
+          {nameError ? <p className="auth-error" role="alert">{nameError}</p> : null}
+          {nameNote ? <p className="auth-notice" role="status">{nameNote}</p> : null}
           <div className="modal-foot">
             <button className="btn primary" type="submit" disabled={busy === 'name'}>
               Save name
@@ -227,8 +229,8 @@ export function AccountPage() {
               onChange={(event) => setConfirm(event.target.value)}
             />
           </div>
-          {passwordError ? <p className="auth-error">{passwordError}</p> : null}
-          {passwordNote ? <p className="auth-notice">{passwordNote}</p> : null}
+          {passwordError ? <p className="auth-error" role="alert">{passwordError}</p> : null}
+          {passwordNote ? <p className="auth-notice" role="status">{passwordNote}</p> : null}
           <div className="modal-foot">
             <button className="btn primary" type="submit" disabled={busy === 'password'}>
               Update password
@@ -244,8 +246,8 @@ export function AccountPage() {
           <label htmlFor="account-email">New email</label>
           <input id="account-email" type="email" value={nextEmail} onChange={(event) => setNextEmail(event.target.value)} />
         </div>
-        {emailError ? <p className="auth-error">{emailError}</p> : null}
-        {pendingVisible ? <p className="auth-notice">Confirmation sent. {pendingEmail}</p> : null}
+        {emailError ? <p className="auth-error" role="alert">{emailError}</p> : null}
+        {pendingVisible ? <p className="auth-notice" role="status">Confirmation sent. {pendingEmail}</p> : null}
         <div className="modal-foot">
           <button className="btn primary" type="submit" disabled={busy === 'email'}>
             Save email
@@ -265,8 +267,8 @@ export function AccountPage() {
             onChange={(event) => setDeleteEmail(event.target.value)}
           />
         </div>
-        {deleteEmail.trim() && !deleteReady ? <p className="auth-error">Type the email shown above.</p> : null}
-        {deleteError ? <p className="auth-error">{deleteError}</p> : null}
+        {deleteEmail.trim() && !deleteReady ? <p className="auth-error" role="alert">Type the email shown above.</p> : null}
+        {deleteError ? <p className="auth-error" role="alert">{deleteError}</p> : null}
         <div className="modal-foot">
           <button className="btn warn" type="button" onClick={() => void removeAccount()} disabled={!deleteReady || busy === 'delete'}>
             Delete account
@@ -278,6 +280,7 @@ export function AccountPage() {
         <div>
           <h3>Sign out</h3>
           <p className="account-note">Your saved study data will remain in your account.</p>
+          {signOutError ? <p className="auth-error" role="alert">{signOutError}</p> : null}
         </div>
         <button className="btn warn" type="button" onClick={() => void leave()} disabled={busy === 'out'}>
           Sign out

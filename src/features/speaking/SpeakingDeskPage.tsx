@@ -295,12 +295,19 @@ export function SpeakingDeskPage() {
     if (recording || uploading) return;
     const text = String(transcript || '').trim();
     if (!text) { fb.toast('Nothing written yet.'); return; }
+    if (audioBlob && !transcriptOnly && !audioBlob.size) {
+      clearRecording();
+      setMicError('No audio was recorded. Check your microphone and try again.');
+      return;
+    }
+    if (transcriptOnly) setAudioSaved(false);
     liveSave({ transcript, notes });
     const attemptId = crypto.randomUUID();
     const generation = microphoneGeneration.current;
     const stillCurrent = () => owner === accountId() && generation === microphoneGeneration.current && scopeRef.current === scope;
     let audioId = null;
     if (audioBlob && !transcriptOnly) {
+      setAudioSaved(false);
       setUploading(true);
       setUploadError(false);
       try {
@@ -398,7 +405,7 @@ export function SpeakingDeskPage() {
       <div className="desk-grid">
         <div className={`prompt${mobileTab === 'prompt' ? ' mobile-active' : ''}`} id="speaking-prompt">
           <span className="pill blue">Part {part}</span>
-          <h3>{topic.title}</h3>
+          <h2>{topic.title}</h2>
           <div className="prompt-body">
             {part === '1' || part === '3' ? (
               (questions.length ? questions : part === '3' ? ['Take the long turn a step further.'] : [topic.title]).map(
@@ -447,7 +454,7 @@ export function SpeakingDeskPage() {
           {!hideAids && stories.length ? (
             <div className="question-history history-flush">
               <div className="history-head">
-                <h4>Stories</h4>
+                <h3>Stories</h3>
               </div>
               {stories.map((story) => (
                 <div className="linked-story" key={story.id}>
@@ -459,7 +466,7 @@ export function SpeakingDeskPage() {
           ) : null}
           <div className="question-history">
             <div className="history-head">
-              <h4>Earlier attempts</h4>
+              <h3>Earlier attempts</h3>
               <span>{attempts.length === 1 ? '1 attempt' : `${attempts.length} attempts`}</span>
             </div>
             <div className="history-list">
@@ -528,7 +535,7 @@ export function SpeakingDeskPage() {
           {part === '2' && !hideAids ? (
             <details className="editor-block preparation-notes" open={notesOpen} onToggle={event => setNotesOpen(event.currentTarget.open)}>
               <summary className="editor-head">
-                <h3>One-minute notes</h3>
+                <h2>One-minute notes</h2>
                 <span className={`timer${noteRunning ? ' is-live' : ''}`}>{formatClock(noteSeconds)}</span>
               </summary>
               <div className="editor-bar">
@@ -583,7 +590,7 @@ export function SpeakingDeskPage() {
             </details>
           ) : null}
           <div className="editor-head">
-            <h3>What you said</h3>
+            <h2>What you said</h2>
             <span className={`timer${speakRunning ? ' is-live' : ''}`}>{formatClock(speakSeconds)}</span>
           </div>
           <div className="editor-bar">
@@ -642,36 +649,52 @@ export function SpeakingDeskPage() {
                       if (generation !== microphoneGeneration.current || captureOwner !== accountId() || scopeRef.current !== scope) { stream.getTracks().forEach(track => track.stop()); return; }
                       const recorder = new MediaRecorder(stream);
                       requestedRecorder = recorder;
-                      recorder.start();
-                      // Replace recoverable audio only once a new recording has started.
-                      if (audioBlob) void deletePendingAudio(captureOwner, topic.id, part, promptKey);
-                      resetRecording();
-                      streamRef.current = stream;
-                      chunksRef.current = [];
-                      activeCapture.current = { owner: captureOwner, topicId: topic.id, part, promptKey };
-                      const recordingGeneration = microphoneGeneration.current;
-                      const chunks = chunksRef.current;
-                      mediaRecorderRef.current = recorder;
+                      const chunks = [];
+                      let recordingGeneration = microphoneGeneration.current;
                       recorder.ondataavailable = (event) => {
                         if (event.data && event.data.size) chunks.push(event.data);
                       };
-                      recorder.onstop = () => {
-                        const blob = new Blob(chunks, { type: recorder.mimeType || 'audio/webm' });
-                        void writePendingAudio(captureOwner, topic.id, part, blob, promptKey);
+                      recorder.onerror = () => {
                         stream.getTracks().forEach(track => track.stop());
                         if (captureOwner !== accountId() || scopeRef.current !== scope || recordingGeneration !== microphoneGeneration.current) return;
+                        streamRef.current = null;
+                        mediaRecorderRef.current = null;
+                        setRecording(false);
+                        setSpeakRunning(false);
+                        setMicError('Recording failed. Try recording again, or type the transcript.');
+                      };
+                      recorder.onstop = () => {
+                        const blob = new Blob(chunks, { type: recorder.mimeType || 'audio/webm' });
+                        stream.getTracks().forEach(track => track.stop());
+                        if (captureOwner !== accountId() || scopeRef.current !== scope || recordingGeneration !== microphoneGeneration.current) return;
+                        if (!blob.size) {
+                          streamRef.current = null;
+                          mediaRecorderRef.current = null;
+                          setRecording(false);
+                          setSpeakRunning(false);
+                          setMicError('No audio was recorded. Check your microphone and try again.');
+                          return;
+                        }
+                        void writePendingAudio(captureOwner, topic.id, part, blob, promptKey);
                         setAudioBlob(blob);
                         setAudioUrl((prev) => {
                           if (prev) URL.revokeObjectURL(prev);
                           return URL.createObjectURL(blob);
                         });
-                        if (streamRef.current) {
-                          streamRef.current = null;
-                        }
+                        streamRef.current = null;
                         setRecording(false);
                         setSpeakRunning(false);
                         setPhase('playback');
                       };
+                      recorder.start();
+                      // Replace recoverable audio only once a new recording has started.
+                      if (audioBlob) void deletePendingAudio(captureOwner, topic.id, part, promptKey);
+                      resetRecording();
+                      streamRef.current = stream;
+                      chunksRef.current = chunks;
+                      activeCapture.current = { owner: captureOwner, topicId: topic.id, part, promptKey };
+                      recordingGeneration = microphoneGeneration.current;
+                      mediaRecorderRef.current = recorder;
                       setRecording(true);
                       setPhase('record');
                       setNotesOpen(false);

@@ -15,6 +15,10 @@ import { navigateTabs } from '../../lib/tabNavigation';
 import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 
 const FRAGMENT_MODES = new Set(['overview', 'outline', 'compare', 'body']);
+const retrySrc = (src: string, retry: number) => {
+  if (!retry || !src || /^(?:data|blob):/i.test(src)) return src;
+  return `${src}${src.includes('?') ? '&' : '?'}retry=${retry}`;
+};
 const DRAFT_STATUS_LABELS = {
   unsaved: 'Draft has unsaved changes',
   pending: 'Waiting to save draft...',
@@ -254,46 +258,15 @@ export function WritingDeskPage() {
       <div className={`desk-stack${widerPrompt ? ' writing-prompt-wide' : ''}`}>
         <div className={`prompt${mobileTab === 'prompt' ? ' mobile-active' : ''}`} id="writing-prompt">
           <span className="pill blue">{typeName(selected)}</span>
-          <h3>{displayName(selected.name)}</h3>
+          <h2>{displayName(selected.name)}</h2>
           <WritingTaskPrompt prompt={selected.prompt} image={image} />
           {!fragment && <div className="prompt-tip">{tips[mode] || tips.full}</div>}
           {correction ? (
             <div className="prompt-tip correction-note">Use this correction at least once: {correction.detail}</div>
           ) : null}
-          {showChecklist ? (
-            <div className="desk-check">
-              {selected.type === '1' ? (
-                <>
-                  {['series', 'units', 'time', 'overview'].map((key) => (
-                    <label className="check-field" key={key}>
-                      <input
-                        type="checkbox"
-                        checked={Boolean(checks[key])}
-                        onChange={(e) => setChecks((c) => ({ ...c, [key]: e.target.checked }))}
-                      />
-                      {key === 'series' ? 'Series' : key === 'units' ? 'Units' : key === 'time' ? 'Time' : 'Overview'}
-                    </label>
-                  ))}
-                </>
-              ) : (
-                <>
-                  {['prompt', 'position', 'body'].map((key) => (
-                    <label className="check-field" key={key}>
-                      <input
-                        type="checkbox"
-                        checked={Boolean(checks[key])}
-                        onChange={(e) => setChecks((c) => ({ ...c, [key]: e.target.checked }))}
-                      />
-                      {key === 'prompt' ? 'Question' : key === 'position' ? 'Position' : 'Two paragraphs'}
-                    </label>
-                  ))}
-                </>
-              )}
-            </div>
-          ) : null}
           <div className="question-history">
             <div className="history-head">
-              <h4>Earlier attempts</h4>
+              <h3>Earlier attempts</h3>
               <span>{attempts.length === 1 ? '1 attempt' : `${attempts.length} attempts`}</span>
             </div>
             <div className="history-list">
@@ -347,7 +320,7 @@ export function WritingDeskPage() {
         </div>
         <div className={`editor${running ? ' is-writing' : ''}${mobileTab === 'answer' ? ' mobile-active' : ''}`} id="writing-answer">
           <div className="editor-head">
-            <h3>{editorTitle}</h3>
+            <h2>{editorTitle}</h2>
             <span className={`timer${running ? ' is-live' : ''}`}>{formatClock(timerSeconds)}</span>
           </div>
           <div className="editor-bar">
@@ -420,6 +393,37 @@ export function WritingDeskPage() {
               />
             </div>
           ) : null}
+          {showChecklist ? (
+            <div className="desk-check">
+              {selected.type === '1' ? (
+                <>
+                  {['series', 'units', 'time', 'overview'].map((key) => (
+                    <label className="check-field" key={key}>
+                      <input
+                        type="checkbox"
+                        checked={Boolean(checks[key])}
+                        onChange={(e) => setChecks((c) => ({ ...c, [key]: e.target.checked }))}
+                      />
+                      {key === 'series' ? 'Series' : key === 'units' ? 'Units' : key === 'time' ? 'Time' : 'Overview'}
+                    </label>
+                  ))}
+                </>
+              ) : (
+                <>
+                  {['prompt', 'position', 'body'].map((key) => (
+                    <label className="check-field" key={key}>
+                      <input
+                        type="checkbox"
+                        checked={Boolean(checks[key])}
+                        onChange={(e) => setChecks((c) => ({ ...c, [key]: e.target.checked }))}
+                      />
+                      {key === 'prompt' ? 'Question' : key === 'position' ? 'Position' : 'Two paragraphs'}
+                    </label>
+                  ))}
+                </>
+              )}
+            </div>
+          ) : null}
           <div className="editor-foot">
             <p>{fragment
               ? words > limit ? `Remove ${plural(words - limit, 'word')} to meet the limit.` : 'Focused feedback on this exercise'
@@ -460,10 +464,16 @@ function WritingTaskChart({ image }) {
   const [failed, setFailed] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [retry, setRetry] = useState(0);
+  const src = retrySrc(image, retry);
+  useEffect(() => {
+    if (failed || loaded) return undefined;
+    const timer = window.setTimeout(() => setFailed(true), 15_000);
+    return () => window.clearTimeout(timer);
+  }, [failed, loaded, src]);
   return <figure className="prompt-figure" aria-busy={!failed && !loaded}>
     {failed ? <div className="task-chart-error" role="status"><p>The task chart could not load.</p><button type="button" className="btn line" onClick={() => { setFailed(false); setLoaded(false); setRetry(value => value + 1); }}><RotateCcw size={15}/>Retry chart</button></div> : <Dialog.Root>
-      <Dialog.Trigger asChild><button type="button" className={`figure-zoom${loaded ? '' : ' is-loading'}`} disabled={!loaded} aria-label="Zoom task chart"><img key={retry} src={image} alt="Task chart" onLoad={() => setLoaded(true)} onError={() => setFailed(true)} />{loaded ? <span><ZoomIn size={16} /> Zoom</span> : <span className="task-chart-loading"><InlineLoadingState message="Loading chart…" /></span>}</button></Dialog.Trigger>
-      <Dialog.Portal><Dialog.Overlay className="chart-dialog-overlay" /><Dialog.Content className="chart-dialog-content"><div className="chart-dialog-head"><Dialog.Title>Task chart</Dialog.Title><Dialog.Close asChild><button className="btn line icon-btn" aria-label="Close task chart"><X size={20} /></button></Dialog.Close></div><Dialog.Description className="sr-only">Full-size chart for the current writing prompt.</Dialog.Description><div className="chart-dialog-image"><img src={image} alt="Task chart enlarged" onError={() => setFailed(true)} /></div></Dialog.Content></Dialog.Portal>
+      <Dialog.Trigger asChild><button type="button" className={`figure-zoom${loaded ? '' : ' is-loading'}`} disabled={!loaded} aria-label="Zoom task chart"><img key={src} src={src} alt="Task chart" onLoad={() => setLoaded(true)} onError={() => setFailed(true)} />{loaded ? <span><ZoomIn size={16} /> Zoom</span> : <span className="task-chart-loading"><InlineLoadingState message="Loading chart…" /></span>}</button></Dialog.Trigger>
+      <Dialog.Portal><Dialog.Overlay className="chart-dialog-overlay" /><Dialog.Content className="chart-dialog-content"><div className="chart-dialog-head"><Dialog.Title>Task chart</Dialog.Title><Dialog.Close asChild><button className="btn line icon-btn" aria-label="Close task chart"><X size={20} /></button></Dialog.Close></div><Dialog.Description className="sr-only">Full-size chart for the current writing prompt.</Dialog.Description><div className="chart-dialog-image"><img src={src} alt="Task chart enlarged" onError={() => setFailed(true)} /></div></Dialog.Content></Dialog.Portal>
     </Dialog.Root>}
   </figure>;
 }

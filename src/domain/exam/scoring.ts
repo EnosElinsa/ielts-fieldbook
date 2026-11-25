@@ -5,6 +5,19 @@ export function normalizeAnswer(value: unknown): string {
     .replace(/^[\s"'.,!?;:()[\]{}]+|[\s"'.,!?;:()[\]{}]+$/g, '').replace(/\s+/g, ' ').trim();
 }
 
+/** "ONE WORD AND/OR A NUMBER" style limits do not count numeric tokens as words. */
+export function permitsAnswerNumber(question: Pick<ExamQuestion, 'instructions'>): boolean {
+  return /\b(?:AND\s*\/\s*OR|AND|OR)\s+A\s+NUMBER\b/i.test(question.instructions || '');
+}
+
+/** True when a free-text answer uses more words than the question allows. */
+export function exceedsWordLimit(question: Pick<ExamQuestion, 'instructions' | 'maxWords'>, value: unknown): boolean {
+  if (!question.maxWords || typeof value !== 'string') return false;
+  const permitsNumber = permitsAnswerNumber(question);
+  const words = value.trim().split(/\s+/).filter(token => token && (!permitsNumber || !/\d/.test(token)));
+  return words.length > question.maxWords;
+}
+
 export function gradeQuestion(question: ExamQuestion, response: string | string[] | undefined): boolean {
   if (question.type === 'multiple') {
     const choices = (value: string | string[] | undefined) => [...new Set((Array.isArray(value) ? value : value ? [value] : []).map(normalizeAnswer).filter(Boolean))].sort();
@@ -14,9 +27,7 @@ export function gradeQuestion(question: ExamQuestion, response: string | string[
   }
   if (Array.isArray(response) && response.length !== 1) return false;
   const actual = normalizeAnswer(Array.isArray(response) ? response[0] : response);
-  const permitsNumber = /\b(?:AND\s*\/\s*OR|AND|OR)\s+A\s+NUMBER\b/i.test(question.instructions || '');
-  const wordCount = actual.split(/\s+/).filter(token => !permitsNumber || !/\d/.test(token)).length;
-  if (!actual || (question.maxWords !== undefined && wordCount > question.maxWords)) return false;
+  if (!actual || exceedsWordLimit(question, actual)) return false;
   const answers = [...(Array.isArray(question.answer) ? question.answer : [question.answer]), ...(question.alternatives || [])];
   return answers.some(answer => normalizeAnswer(answer) === actual);
 }

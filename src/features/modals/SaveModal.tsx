@@ -1,13 +1,13 @@
 // @ts-nocheck
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
-import * as Dialog from '@radix-ui/react-dialog';
 import { ModalFrame } from '../../components/ModalFrame';
 import { SaveFailure } from '../../components/SaveFailure';
 
 export function SaveModal() {
   const fb = useFieldbook();
   const open = fb.modal === 'save';
+  const id = useId();
   const [focus, setFocus] = useState('');
   const [next, setNext] = useState('');
   const [errors, setErrors] = useState('');
@@ -22,63 +22,38 @@ export function SaveModal() {
   };
   const speaking = fb.pendingAttempt?.skill === 'speaking';
   const focused = ['overview', 'outline', 'compare', 'body'].includes(fb.pendingAttempt?.practiceMode);
+  const description = focused ? 'Save your exercise, or export it for feedback and import the marked file when it is ready.' : speaking
+    ? 'Save your transcript, or export it for feedback. The export does not include your recording. Import the marked file when it is ready.'
+    : 'Save your response, or export it for feedback and import the marked file when it is ready.';
 
   return (
-    <ModalFrame open={open} title="Save practice" busy={saving} onClose={() => fb.closeModal()}>
-      <div className="modal">
-        <h3 aria-hidden="true">Save practice</h3>
-        <Dialog.Description>
-          {focused ? 'Save your exercise, or export it for feedback and import the marked file when it is ready.' : speaking
-            ? 'Save your transcript, or export it for feedback. The export does not include your recording. Import the marked file when it is ready.'
-            : 'Save your response, or export it for feedback and import the marked file when it is ready.'}
-        </Dialog.Description>
-        <fieldset className="form" disabled={saving}>
-          <div className="field full">
-            <label>Practice focus</label>
-            <input
-              value={focus}
-              onChange={(e) => setFocus(e.target.value)}
-              placeholder="For example: overview, comparisons, paragraph order"
-            />
-          </div>
-          <div className="field full">
-            <label>Next step</label>
-            <input
-              value={next}
-              onChange={(e) => setNext(e.target.value)}
-              placeholder="For example: check the figures before writing"
-            />
-          </div>
-          <div className="field full">
-            <label>Mistake tags (separate with semicolons)</label>
-            <input
-              value={errors}
-              onChange={(e) => setErrors(e.target.value)}
-              placeholder="For example: TA-DATA wrong figure; GRA-PREP preposition"
-            />
-          </div>
-        </fieldset>
-        <SaveFailure failed={Boolean(error)} role="alert" message={error} />
-        <div className="modal-foot">
-          <button
-            className="btn line"
-            type="button"
-            disabled={saving}
-            onClick={() => {
-              fb.setPendingAttempt(null);
-              fb.closeModal();
-            }}
-          >
-            Cancel
-          </button>
-          <button className="btn line" disabled={saving} type="button" onClick={() => void save(false)}>
-            Save only
-          </button>
-          <button className="btn primary" disabled={saving} type="button" onClick={() => void save(true)}>
-            {saving ? 'Saving…' : 'Save and export'}
-          </button>
+    <ModalFrame
+      open={open}
+      title="Save practice"
+      description={description}
+      busy={saving}
+      onClose={() => fb.closeModal()}
+      footer={<>
+        <button className="btn line" type="button" disabled={saving} onClick={() => { fb.setPendingAttempt(null); fb.closeModal(); }}>Cancel</button>
+        <button className="btn line" disabled={saving} type="button" onClick={() => void save(false)}>Save only</button>
+        <button className="btn primary" disabled={saving} type="button" onClick={() => void save(true)}>{saving ? 'Saving…' : 'Save and export'}</button>
+      </>}
+    >
+      <fieldset className="form save-modal-form" disabled={saving}>
+        <div className="field full">
+          <label htmlFor={`${id}-focus`}>Practice focus</label>
+          <input id={`${id}-focus`} value={focus} onChange={(e) => setFocus(e.target.value)} placeholder="For example: overview, comparisons, paragraph order" />
         </div>
-      </div>
+        <div className="field full">
+          <label htmlFor={`${id}-next`}>Next step</label>
+          <input id={`${id}-next`} value={next} onChange={(e) => setNext(e.target.value)} placeholder="For example: check the figures before writing" />
+        </div>
+        <div className="field full">
+          <label htmlFor={`${id}-errors`}>Mistake tags (separate with semicolons)</label>
+          <input id={`${id}-errors`} value={errors} onChange={(e) => setErrors(e.target.value)} placeholder="For example: TA-DATA wrong figure; GRA-PREP preposition" />
+        </div>
+      </fieldset>
+      <SaveFailure failed={Boolean(error)} role="alert" message={error} />
     </ModalFrame>
   );
 }

@@ -37,7 +37,7 @@ export function StoryModal() {
       setTime(editing.time || '');
       setEvent(editing.event || '');
       setFeeling(editing.feeling || '');
-      setTags((editing.tags || []).join('；'));
+      setTags((editing.tags || []).join('; '));
       setTopicIds(editing.topicIds || []);
     } else {
       setTitle('');
@@ -79,10 +79,27 @@ export function StoryModal() {
   };
 
   return (
-    <ModalFrame open={open} title={editing ? 'Edit this story' : 'Write a story'} busy={saving} onClose={() => fb.closeModal()}>
-      <div className="modal story-modal">
-        <h3 aria-hidden="true">{editing ? 'Edit this story' : 'Write a story'}</h3>
-        <p>Who, where, when, and what happened.</p>
+    <ModalFrame
+      open={open}
+      title={editing ? 'Edit this story' : 'Write a story'}
+      description="Who, where, when, and what happened."
+      busy={saving}
+      onClose={() => fb.closeModal()}
+      footer={<>
+        <button className="btn line" type="button" disabled={saving} onClick={() => fb.closeModal()}>
+          Cancel
+        </button>
+        <button
+          className="btn primary"
+          type="button"
+          disabled={saving}
+          onClick={() => void save()}
+        >
+          {saving ? 'Saving…' : 'Save'}
+        </button>
+      </>}
+    >
+      <div className="story-modal-body">
         <fieldset className="form" disabled={saving}>
           <div className="field full">
             <label htmlFor="storyTitle">Title</label>
@@ -129,8 +146,8 @@ export function StoryModal() {
             <input id="storyTags" value={tags} onChange={(e) => setTags(e.target.value)} placeholder="school; travel; friends" />
           </div>
           <div className="field full">
-            <label>Which Part 2 topics</label>
-            <div className="story-topics">
+            <span id="story-topics-label" className="field-label">Which Part 2 topics</span>
+            <div className="story-topics" role="group" aria-labelledby="story-topics-label">
               {part2.length ? (
                 part2.map((topic) => (
                   <label key={topic.id}>
@@ -156,19 +173,6 @@ export function StoryModal() {
           </div>
         </fieldset>
         <SaveFailure failed={Boolean(error)} role="alert" message={error} />
-        <div className="modal-foot">
-          <button className="btn line" type="button" disabled={saving} onClick={() => fb.closeModal()}>
-            Cancel
-          </button>
-          <button
-            className="btn primary"
-            type="button"
-            disabled={saving}
-            onClick={() => void save()}
-          >
-            {saving ? 'Saving…' : 'Save'}
-          </button>
-        </div>
       </div>
     </ModalFrame>
   );

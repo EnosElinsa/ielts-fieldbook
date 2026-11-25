@@ -111,7 +111,7 @@
 :is(.workspace-page-error,.workspace-error-screen,.workspace-dialog-error) [role=alert][tabindex="-1"]:focus{outline:none}
 
 /* Supporting copy remains readable at desktop and mobile sizes. */
-.kicker, .mark-sub, .rail-foot > span, .field label, .dropdown-label, .auth-card label { font-size: 12px; line-height: 1.5; }
+.kicker, .mark-sub, .rail-foot > span, .field :is(label, .field-label), .dropdown-label, .auth-card label { font-size: 12px; line-height: 1.5; }
 .page-tools p, .file-hint, .auth-hint, .modal > p, .async-state-detail, .study-selection-hint { font-size: 13px; line-height: 1.65; }
 .progress-section .section-head h2, .progress-score-section .section-head h2 { font: 600 17px Manrope,Arial,sans-serif; margin: 0; }
 @media (max-width: 740px) { .progress-section .section-head h2, .progress-score-section .section-head h2 { font-size: 16px; } }

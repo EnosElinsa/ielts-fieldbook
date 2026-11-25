@@ -44,6 +44,16 @@ export function AuthGate({ children }: { children: ReactNode }) {
   const [legalView, setLegalView] = useState<string | null>(null);
   const [sessionOwner, setSessionOwner] = useState<string | null>(null);
   const { theme, setTheme } = useTheme();
+  const [systemDark, setSystemDark] = useState(() => Boolean(window.matchMedia?.('(prefers-color-scheme: dark)').matches));
+  useEffect(() => {
+    const media = window.matchMedia?.('(prefers-color-scheme: dark)');
+    if (!media) return undefined;
+    const sync = () => setSystemDark(media.matches);
+    sync();
+    media.addEventListener?.('change', sync);
+    return () => media.removeEventListener?.('change', sync);
+  }, []);
+  const darkTheme = theme === 'dark' || (theme === 'system' && systemDark);
 
   useEffect(() => {
     if (!supabaseConfigured()) return undefined;
@@ -239,7 +249,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
           <button className="btn text" type="button" onClick={() => setShowPassword((current) => !current)}>
             {showPassword ? 'Hide password' : 'Show password'}
           </button>
-          {error ? <p className="auth-error">{error}</p> : null}
+          {error ? <p className="auth-error" role="alert">{error}</p> : null}
           <button className="btn primary" type="submit" disabled={busy}>
             {busy ? 'Saving…' : 'Save password'}
           </button>
@@ -274,10 +284,10 @@ export function AuthGate({ children }: { children: ReactNode }) {
               </>
             )}
           </ol>
-          {error ? <p className="auth-error">{error}</p> : null}
+          {error ? <p className="auth-error" role="alert">{error}</p> : null}
           {confirming ? (
             sent ? (
-              <p>Confirmation email sent.</p>
+              <p role="status">Confirmation email sent.</p>
             ) : (
               <button className="btn line" type="button" onClick={() => void resend()} disabled={busy}>
                 {busy ? 'Sending…' : 'Resend confirmation'}
@@ -359,7 +369,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
           {mode === 'signup' ? 'I already have an account' : mode === 'reset' ? 'Back to sign in' : 'Create an account'}
         </button>
       </form>
-      <footer className="auth-footer"><button type="button" onClick={() => setLegalView('privacy')}>Privacy & terms</button><button type="button" onClick={() => setLegalView('feedback')}>Feedback</button><button type="button" aria-label={theme === 'dark' ? 'Use light theme' : 'Use dark theme'} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>{theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}</button></footer>
+      <footer className="auth-footer"><button type="button" onClick={() => setLegalView('privacy')}>Privacy & terms</button><button type="button" onClick={() => setLegalView('feedback')}>Feedback</button><button type="button" aria-label={darkTheme ? 'Use light theme' : 'Use dark theme'} onClick={() => setTheme(darkTheme ? 'light' : 'dark')}>{darkTheme ? <Sun size={16} /> : <Moon size={16} />}</button></footer>
       {legalView ? <Suspense fallback={null}><LegalModal view={legalView} onClose={() => setLegalView(null)} /></Suspense> : null}
     </main>
   );

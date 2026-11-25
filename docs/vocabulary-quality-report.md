@@ -2,7 +2,7 @@
 
 Generated with `npm run vocabulary:quality` from checked-in public data and the actual learning-context and exercise resolvers. No account data or external services are read.
 
-Source snapshot: `6d2ff518888360c8f4803e221cfec58376922121016a0321bc3ffe8d1e69998b`.
+Source snapshot: `53fa219c07ce6b8f2321c07f00392b0e423af611346dded10e496addc494d19f`.
 
 ## Coverage
 
@@ -19,7 +19,7 @@ Source snapshot: `6d2ff518888360c8f4803e221cfec58376922121016a0321bc3ffe8d1e6999
 | Learning variants with a displayed example or reading note | 10064 |
 | Learning variants with collocations or reading cues | 3698 |
 | Learning variants with distinction notes | 1655 |
-| Learning variants supporting sentence gaps | 8667 |
+| Learning variants supporting sentence gaps | 8666 |
 | Learning variants supporting distinction questions | 360 |
 | Learning variants with content-review signals | 0 |
 | Learning variants without content-review signals | 10064 |
@@ -45,7 +45,7 @@ Learning variants preserve exact content and provenance. A word can have a defau
 | missing-collocations | enrichment | 6322 | 6322 | 43065 |
 | missing-distinctions | enrichment | 8373 | 8373 | 43239 |
 | duplicate-gloss | content-review | 0 | 0 | 24 |
-| no-cloze-task | enrichment | 1340 | 1340 | Not scanned |
+| no-cloze-task | enrichment | 1341 | 1341 | Not scanned |
 | no-distinction-task | enrichment | 9647 | 9647 | Not scanned |
 
 These signals are candidates for review, not proven linguistic defects. A phrase can be a valid example; an old quotation can be appropriate reading material; two glosses can belong to distinct source identities. Typed reading notes and reference records do not require sentence gaps. Exercise availability is scanned for learning variants only, not every reference meaning. The availability of a question is not proof of its semantic quality. No missing-diagram signal is generated.

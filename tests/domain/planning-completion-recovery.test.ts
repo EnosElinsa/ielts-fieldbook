@@ -141,3 +141,41 @@ test('recovery never advances a saved mock stage or mutates shared evidence', ()
   expect(state.plans.find(plan => plan.id === 'yesterday')).toMatchObject({ status: 'in_progress', stage: 'p2' });
   expect(state.sessions).toEqual(before);
 });
+
+test.each([false, true])('reconciles bound error-review tasks strictly once every target error is reviewed or resolved (cold summary: %s)', summary => {
+  const state = emptyState() as any;
+  Object.assign(state.settings, { dailyMinutes: 60, days: [1, 2, 3, 4, 5, 6, 7], skills: ['writing'], planning: { vocabularyMode: 'fixed', vocabularyMinutes: 0 } });
+  const reviewStartedAt = '2026-11-16T09:00:00.000Z';
+  const resolvedAt = '2026-11-16T09:30:00.000Z';
+  state.plans = [{
+    id: 'err-rev',
+    kind: 'review',
+    skill: 'writing',
+    origin: 'automatic',
+    status: 'in_progress',
+    startedAt: reviewStartedAt,
+    dateKey: '2026-11-16',
+    estimatedMinutes: 20,
+    target: { type: 'error-review', errorIds: ['e1', 'e2'] },
+  }];
+  state.activePlanId = 'err-rev';
+  state.errors = [
+    { id: 'e1', code: 'TA', text: 'First', resolved: false, lastReviewedAt: resolvedAt },
+    { id: 'e2', code: 'CC', text: 'Second', resolved: false, lastReviewedAt: '2026-11-15T09:00:00.000Z' },
+  ];
+  const unready = structuredClone(state);
+  if (summary) projectEvidence(unready);
+  ensureUnifiedPlans(unready, undefined, today);
+  expect(unready.plans.find((plan: any) => plan.id === 'err-rev').status).toBe('in_progress');
+  expect(unready.activePlanId).toBe('err-rev');
+
+  state.errors[1].resolved = true;
+  if (summary) projectEvidence(state);
+  ensureUnifiedPlans(state, undefined, today);
+  expect(state.plans.find((plan: any) => plan.id === 'err-rev')).toMatchObject({
+    status: 'completed',
+    dateKey: '2026-11-16',
+    completedAt: resolvedAt,
+  });
+  expect(state.activePlanId).toBeNull();
+});

@@ -53,3 +53,13 @@ test('a schedule with no days cannot be submitted and current-plan acceptance ig
   await user.click(screen.getByRole('button', { name: 'Use current plan' }));
   expect(mock.save).toHaveBeenCalledWith({ studySetupCompletedAt: expect.any(String) });
 });
+
+test('needsStudySetup stays false when remote planningEvidence exists or skills are explicitly empty', () => {
+  const withEvidence: Record<string, any> = emptyState();
+  withEvidence.planningEvidence = [{ id: 'sessions', rows: [{ id: 's1' }] }];
+  expect(needsStudySetup(withEvidence)).toBe(false);
+
+  const vocabOnly: { settings: Record<string, any> } & ReturnType<typeof emptyState> = emptyState();
+  vocabOnly.settings.skills = [];
+  expect(needsStudySetup(vocabOnly)).toBe(false);
+});

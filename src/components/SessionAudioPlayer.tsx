@@ -31,10 +31,22 @@ export function RecordingPlayer({ src, label = 'Recording', onPlaybackChange }: 
     setStatus('loading');
     const fail = () => { if (active) setStatus('error'); };
     let player: WaveSurfer | undefined;
+    const colors = () => {
+      const style = getComputedStyle(document.documentElement);
+      return {
+        waveColor: style.getPropertyValue('--muted').trim() || '#626974',
+        progressColor: style.getPropertyValue('--blue').trim() || '#3268da',
+        cursorColor: style.getPropertyValue('--ink').trim() || '#252830',
+      };
+    };
+    const themeObserver = typeof MutationObserver !== 'undefined'
+      ? new MutationObserver(() => player?.setOptions(colors()))
+      : null;
     try {
       // WaveSurfer decodes the real source and shares the mounted native player.
       // Its constructor loads this URL; an additional load would supersede it.
-      player = WaveSurfer.create({ container: container.current, media: media.current, url: new URL(src, window.location.href).href, height: 76, waveColor: '#b6c2d0', progressColor: '#2563eb', cursorColor: '#17212f', barWidth: 2, barGap: 2, barRadius: 1, dragToSeek: true, normalize: true });
+      player = WaveSurfer.create({ container: container.current, media: media.current, url: new URL(src, window.location.href).href, height: 76, ...colors(), barWidth: 2, barGap: 2, barRadius: 1, dragToSeek: true, normalize: true });
+      themeObserver?.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
       wave.current = player;
       player.on('ready', (seconds) => { if (active) { setDuration(seconds); setStatus('ready'); } });
       player.on('timeupdate', (seconds) => { if (active) setPosition(seconds); });
@@ -43,7 +55,7 @@ export function RecordingPlayer({ src, label = 'Recording', onPlaybackChange }: 
       player.on('finish', () => { if (active) { setPlaying(false); callback.current?.(false); } });
       player.on('error', fail);
     } catch { fail(); }
-    return () => { active = false; wave.current = null; player?.destroy(); };
+    return () => { active = false; themeObserver?.disconnect(); wave.current = null; player?.destroy(); };
   }, [src, retry]);
   useEffect(() => { setPlaying(false); setDuration(0); setPosition(0); setSpeed(1); }, [src]);
 

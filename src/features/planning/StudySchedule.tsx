@@ -35,7 +35,8 @@ export function useStudySchedule() {
     (fb.state.intensiveSessions||[]).map(row=>[row.id,row.completedAt,row.nextReviewAt,row.dictationResult,row.reviewEnabled]),
     (fb.state.assessments||[]).map(row=>[row.id,row.date]),
     (fb.state.errors||[]).map(row=>[row.id,row.resolved,row.nextReviewAt]),
-    (fb.state.plans||[]).filter(row=>row.origin==='manual'||['completed','skipped'].includes(row.status)).map(row=>[row.id,row.status,row.dateKey,row.manuallyEditedAt]),
+    // Edited, held and archived automatic tasks change what the planner may rebuild, so they are tracked too.
+    (fb.state.plans||[]).filter(row=>row.origin==='manual'||row.manuallyEditedAt||row.onHold||row.archivedAt||['completed','skipped'].includes(row.status)).map(row=>[row.id,row.status,row.dateKey,row.manuallyEditedAt,row.estimatedMinutes,Boolean(row.onHold),Boolean(row.archivedAt)]),
   ]);
   const refresh=useCallback((reconcile=false)=>{
     if(inFlight.current){if(reconcile)rerun.current=true;return inFlight.current;}

@@ -48,6 +48,7 @@ import '../../styles/vocabulary-collection-list.css';
 import { isRegionalSpellingDifference } from '../../domain/vocabulary/spelling';
 import { formatCount, plural } from '../../lib/format';
 import { getVocabularyMastery } from '../../domain/vocabulary/mastery';
+import { vocabularyPartOfSpeech } from '../../domain/vocabulary/dictionaryPresentation';
 import { groupPath, practiceUrl, rememberVocabularyPosition, useVocabularyPosition } from './vocabularyNavigation';
 
 const STATUS = [
@@ -633,7 +634,7 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
                     <span className="vocabulary-word-pending">Pending definition</span>
                     <span id={`vocabulary-definition-help-${entry.id}`}>Use Edit to add a meaning before practice.</span>
                   </> : <>
-                    {sense?.pos ? <small>{sense.pos}</small> : null}
+                    {vocabularyPartOfSpeech(sense?.pos) ? <small>{vocabularyPartOfSpeech(sense?.pos)}</small> : null}
                     {sense.definition}
                   </>}
                 </p>

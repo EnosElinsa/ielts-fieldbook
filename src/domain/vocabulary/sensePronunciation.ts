@@ -1,6 +1,7 @@
 import registry from './sensePronunciations.json';
 import type { VocabularyEntry, VocabularySense } from './types';
 import type { VocabularyAccent, VocabularyRecording } from './media';
+import { comparablePartOfSpeech, publishedCurriculumSenseIds } from './publishedSenseIdentity';
 
 /** IDs refer to retained, immutable registry rows. Null freezes a missing match. */
 export type FrozenVocabularyPronunciation = { version: 1; bindingId: string | null } | 'legacy';
@@ -10,8 +11,12 @@ const bindings = new Map(registry.bindings.map(row => [row.id, row]));
 const groups = new Map((registry.groups as Group[]).map(row => [row.id, row]));
 const recordings = new Map((registry.recordings as (VocabularyRecording & { id: string })[]).map(row => [row.id, row]));
 const protectedTerms = new Set(registry.protectedTerms);
-const matches = (binding: Binding, entry: VocabularyEntry, sense?: VocabularySense) => Boolean(sense && sense.source !== 'Personal note' &&
+const exactMatch = (binding: Binding, entry: VocabularyEntry, sense?: VocabularySense) => Boolean(sense && sense.source !== 'Personal note' &&
   binding.entryId === entry.id && binding.term === entry.term && binding.senseId === sense.id && binding.definition === sense.definition && binding.pos === sense.pos);
+/** An unmodified published curriculum meaning keeps the reading of the dictionary meaning it teaches, even when reworded. */
+const curriculumMatch = (binding: Binding, entry: VocabularyEntry, sense?: VocabularySense) => Boolean(sense && sense.source !== 'Personal note' &&
+  binding.entryId === entry.id && binding.term === entry.term && comparablePartOfSpeech(binding.pos) === comparablePartOfSpeech(sense.pos) && publishedCurriculumSenseIds(entry.id, sense).includes(binding.senseId));
+const matches = (binding: Binding, entry: VocabularyEntry, sense?: VocabularySense) => exactMatch(binding, entry, sense) || curriculumMatch(binding, entry, sense);
 
 export function isFrozenVocabularyPronunciation(value: unknown, entry: VocabularyEntry, sense?: VocabularySense): value is FrozenVocabularyPronunciation {
   if (value === 'legacy') return true;
@@ -32,7 +37,7 @@ export function getVocabularyPronunciation(entry: VocabularyEntry, sense?: Vocab
   if (frozen !== undefined && !isFrozenVocabularyPronunciation(frozen, entry, sense)) return { required: true, invalid: true, recordings: [] };
   const binding = frozen !== undefined
     ? frozen.bindingId === null ? undefined : bindings.get(frozen.bindingId)
-    : registry.bindings.find(row => matches(row, entry, sense));
+    : registry.bindings.find(row => exactMatch(row, entry, sense)) || registry.bindings.find(row => curriculumMatch(row, entry, sense));
   const group = binding ? groups.get(binding.groupId) : undefined;
   return { required: required || frozen !== undefined, ...(binding && group ? { binding, group } : {}),
     recordings: group ? Object.values(group.recordings).flatMap(id => { const audio = id ? recordings.get(id) : undefined; return audio ? [audio] : []; }) : [] };

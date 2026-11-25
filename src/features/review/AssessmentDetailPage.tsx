@@ -85,7 +85,7 @@ export function AssessmentDetailPage() {
               ) : null}
             </div>
             <section className="assessment-section">
-              <h4>Assessment criteria</h4>
+              <h3>Assessment criteria</h3>
               <div className="criteria-grid">
                 {(assessment.criteria || []).map((criterion, index) => {
                   const unscored =
@@ -102,7 +102,7 @@ export function AssessmentDetailPage() {
               </div>
             </section>
             <section className="assessment-section">
-              <h4>Main problems</h4>
+              <h3>Main problems</h3>
               <div>
                 {assessment.priorities ? (
                   <p>
@@ -114,10 +114,10 @@ export function AssessmentDetailPage() {
               </div>
             </section>
             <section className="assessment-section">
-              <h4>Edits</h4>
+              <h3>Edits</h3>
               <div>
                 {assessment.editRows && assessment.editRows.length ? (
-                  <div className="edit-table-wrap">
+                  <div className="edit-table-wrap" tabIndex={0} role="region" aria-label="Line-by-line edits">
                     <table className="edit-table">
                       <thead>
                         <tr>
@@ -167,7 +167,7 @@ export function AssessmentDetailPage() {
               </div>
             </section>
             <section className="assessment-section">
-              <h4>Assessor's example</h4>
+              <h3>Assessor's example</h3>
               <div>
                 {assessment.rewrittenResponse ? (
                   <>
@@ -193,7 +193,7 @@ export function AssessmentDetailPage() {
               </div>
             </section>
             <section className="assessment-section">
-              <h4>Vocabulary to keep</h4>
+              <h3>Vocabulary to keep</h3>
               <div>
                 {assessment.vocabularySuggestionsList && assessment.vocabularySuggestionsList.length ? (
                   <div className="vocabulary-tags">
@@ -231,7 +231,7 @@ export function AssessmentDetailPage() {
               </div>
             </section>
             <section className="assessment-section">
-              <h4>Next practice</h4>
+              <h3>Next practice</h3>
               <div>
                 {assessment.nextExercise ? (
                   <p>
@@ -243,11 +243,11 @@ export function AssessmentDetailPage() {
               </div>
               {session ? <button type="button" className="btn primary" onClick={() => void fb.startTargetedPractice(session)}>Start targeted practice <ArrowRight size={16} /></button> : null}
             </section>
-            {session && latestRewrite ? <section className="assessment-section"><h4>Your progress on this task</h4><div className="rewrite-comparison"><div><h5>Original attempt</h5><small>{formatDate(session.date, true)} · {session.words} words</small><pre>{session.essay}</pre></div><div><h5>Your latest {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</h5><small>{formatDate(latestRewrite.date, true)} · {latestRewrite.words} words</small><pre>{latestRewrite.essay}</pre>{latestRewrite.assessmentId ? <Link className="btn line" to={`/review/${latestRewrite.assessmentId}`}>View new feedback <ArrowRight size={15} /></Link> : <div className="history-actions"><button className="btn line" onClick={() => void exportAttemptRequest(fb, latestRewrite)}><Download size={16} />Request feedback for {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</button><button className="btn line" onClick={() => fb.openFeedbackImport()}>Import feedback</button></div>}</div></div></section> : null}
+            {session && latestRewrite ? <section className="assessment-section"><h3>Your progress on this task</h3><div className="rewrite-comparison"><div><h4>Original attempt</h4><small>{formatDate(session.date, true)} · {session.words} words</small><pre>{session.essay}</pre></div><div><h4>Your latest {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</h4><small>{formatDate(latestRewrite.date, true)} · {latestRewrite.words} words</small><pre>{latestRewrite.essay}</pre>{latestRewrite.assessmentId ? <Link className="btn line" to={`/review/${latestRewrite.assessmentId}`}>View new feedback <ArrowRight size={15} /></Link> : <div className="history-actions"><button className="btn line" onClick={() => void exportAttemptRequest(fb, latestRewrite)}><Download size={16} />Request feedback for {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</button><button className="btn line" onClick={() => fb.openFeedbackImport()}>Import feedback</button></div>}</div></div></section> : null}
           </article>
           <aside className="assessment-aside">
             <section>
-              <h4>Your script</h4>
+              <h3>Your script</h3>
               {session && sessionSkill(session) === 'speaking' && session.audioId ? (
                 <SessionAudioPlayer audioId={session.audioId} label="Playback" />
               ) : null}

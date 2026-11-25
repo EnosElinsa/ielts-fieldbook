@@ -8,6 +8,18 @@ import type { VocabularyPracticeController } from "./useVocabularyPracticeContro
 import { VocabularySourceLinks } from './VocabularySourceLinks';
 import { getVocabularyPronunciation } from '../../domain/vocabulary/sensePronunciation';
 
+const sameText = (left: string, right: string) => {
+  const normal = (value: string) => value.normalize('NFKC').replace(/\s+/g, ' ').trim().replace(/[.!?]+$/, '').toLocaleLowerCase();
+  return normal(left) === normal(right);
+};
+/** The frozen task explanation and the sense's Distinction explanation are often the same sentence; show it once. */
+function distinctionExplanation(card: ReviewCard, mode: string) {
+  if (mode !== 'distinction') return '';
+  const explanation = senseFor(card)?.distinctionTask?.explanation;
+  if (!explanation) return '';
+  return card.task?.explanation && sameText(card.task.explanation, explanation) ? '' : explanation;
+}
+
 export function VocabularyPracticeSession({ controller, session }: {
   controller: VocabularyPracticeController;
   session: VocabularyPracticeSession;
@@ -66,9 +78,8 @@ export function VocabularyPracticeSession({ controller, session }: {
         {session.mode !== "production" ? (
           <strong>{evaluation.expectedAnswer}</strong>
         ) : null}
-        {session.mode === "distinction" &&
-        senseFor(card)?.distinctionTask?.explanation ? (
-          <p>{senseFor(card)?.distinctionTask?.explanation}</p>
+        {distinctionExplanation(card, session.mode) ? (
+          <p>{distinctionExplanation(card, session.mode)}</p>
         ) : null}
         <VocabularySourceLinks sources={card.sources} senseId={card.senseId} filter={session.filter} />
       </div>
@@ -232,7 +243,7 @@ export function VocabularyPracticeSession({ controller, session }: {
         {audioStatus}
       </div>
       {audioNeedsChoice ? <div className="vocabulary-audio-recovery practice-audio-choices" role="group" aria-label="Pronunciation recovery">
-        {matchingRecordings.map(recording=><button key={recording.url} className="btn line" type="button" disabled={locked || audioBusy} onClick={()=>void playCard(currentIndex,{accent:recording.accent as 'uk' | 'us'})}>Play matching {recording.accent.toUpperCase()} recording</button>)}
+        {matchingRecordings.map(recording=><button key={recording.url} className="btn line" type="button" disabled={locked || audioBusy} onClick={()=>void playCard(currentIndex,{accent:recording.accent as 'uk' | 'us',recording})}>Play matching {recording.accent.toUpperCase()} recording</button>)}
         <button className="btn line" type="button" disabled={locked || audioBusy} onClick={()=>void playCard(currentIndex,{deviceOnly:true})}>Use {preferences.accent.toUpperCase()} device voice (reading unverified)</button>
       </div> : null}
       <nav className="practice-number-nav" aria-label="Session words">

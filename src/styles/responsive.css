@@ -4,7 +4,7 @@
 @media(max-width:740px){.lexicon-list{grid-template-columns:1fr}}
 @media(max-width:1050px){.metrics{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:740px){.metrics{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:740px){.skill-switch{margin:0 0 10px}.sample-answers{padding:10px 12px}.speak-q,.sample-qa,.cue-card,.linked-story{overflow-wrap:anywhere}.story-topics{max-height:min(140px,30vh)}.q-card.speak{min-height:0}.speak-board h3{margin-top:12px}}
+@media(max-width:740px){.skill-switch{margin:0 0 10px}.sample-answers{padding:10px 12px}.speak-q,.sample-qa,.cue-card,.linked-story{overflow-wrap:anywhere}.story-topics{max-height:min(140px,30vh)}.q-card.speak{min-height:0}.speak-board :is(h2,h3){margin-top:12px}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }

@@ -1,9 +1,27 @@
 import type { VocabularySense } from "./types";
 
+/** Learner-facing English word-class labels for every abbreviation found in the dictionary and curriculum data. */
+const partOfSpeechLabels: Record<string, string> = {
+  adj: 'adjective', adv: 'adverb', name: 'proper name', prep: 'preposition', conj: 'conjunction',
+  prep_phrase: 'prepositional phrase', det: 'determiner', num: 'numeral', pron: 'pronoun', intj: 'interjection',
+  n: 'noun', v: 'verb', phrase: 'phrase', symbol: 'symbol', particle: 'particle', contraction: 'contraction',
+};
+
+/**
+ * The one formatter for a sense's word class. Abbreviated, hyphenated or underscored source values
+ * and their spelt-out forms ("adj" and "adjective") produce the same lower-case label; unknown
+ * classes are shown tidied rather than hidden, and placeholders such as "word" give an empty string.
+ */
 export function vocabularyPartOfSpeech(pos?: string): string {
-  const value = pos?.trim().toLowerCase() || '';
-  return ({ adj: 'adjective', adv: 'adverb', name: 'proper name', prep: 'preposition', conj: 'conjunction' } as Record<string, string>)[value]
-    || (['word', 'other', 'unknown'].includes(value) ? '' : value);
+  const value = pos?.trim().toLowerCase().replace(/[\s-]+/g, '_') || '';
+  return partOfSpeechLabels[value]
+    || (['word', 'other', 'unknown'].includes(value) ? '' : value.replace(/_/g, ' '));
+}
+
+/** Sentence-case word class for headings, pills and filters (for example "Prepositional phrase"). */
+export function vocabularyPartOfSpeechLabel(pos?: string, fallback = ''): string {
+  const label = vocabularyPartOfSpeech(pos) || fallback;
+  return label.replace(/^./, char => char.toUpperCase());
 }
 
 /** Display-only cleanup: source material and learner notes are never rewritten. */

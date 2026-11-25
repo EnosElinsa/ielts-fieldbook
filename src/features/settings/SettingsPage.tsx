@@ -19,6 +19,7 @@ import './settings.css';
 import { PlanningSettings, VocabularySourceSettings } from './PlanningSettings';
 import { SettingsSection } from './SettingsSection';
 import { studyBudget } from '../../lib/planTemplates';
+import { ScheduleChangeList } from '../planning/ScheduleChanges';
 import { studyPlanTitle } from '../../lib/planTargets';
 import { emptyState } from '../../domain/state';
 
@@ -58,6 +59,7 @@ export function SettingsPage() {
   const restoringHistory = useRef(false);
   const [error, setError] = useState('');
   const [note, setNote] = useState('');
+  const [savedChanges, setSavedChanges] = useState<ReturnType<typeof settingsPlanPreview>['changes']>([]);
   const changes = settingsChanges(draft, baseline.current.draft);
   const dirty = Object.keys(changes).length > 0 || appearance !== baseline.current.appearance;
   const showSettingsActions = category !== 'workspace' || dirty || saving || Boolean(error);
@@ -65,7 +67,7 @@ export function SettingsPage() {
   const [previewChanges,setPreviewChanges]=useState(changes);
   useEffect(()=>{const timer=setTimeout(()=>setPreviewChanges(JSON.parse(changesKey)),180);return()=>clearTimeout(timer);},[changesKey]);
   const preview = useMemo(()=>settingsPlanPreview(fb.state.settings, baseline.current.owner===owner?previewChanges:{}, fb.state.plans || [], undefined, fb.state),[fb.state,previewChanges,owner]);
-  const update = (patch: Partial<SettingsDraft>) => { setDraft(current => ({ ...current, ...patch })); setNote(''); setError(''); };
+  const update = (patch: Partial<SettingsDraft>) => { setDraft(current => ({ ...current, ...patch })); setNote(''); setError(''); setSavedChanges([]); };
   const vocabulary = (patch: Partial<VocabularyPreferences>) => update({ vocabulary: { ...draft.vocabulary, ...patch } });
 
   useLayoutEffect(() => {
@@ -145,6 +147,7 @@ export function SettingsPage() {
       if (appearance !== baseline.current.appearance) setTheme(appearance);
       baseline.current = { draft, appearance, owner: saveOwner };
       setNote(freshPreview.rebuild ? `Settings saved. Plan refreshed; ${freshPreview.preservedLearning.length} saved learning task${freshPreview.preservedLearning.length===1?'':'s'} kept.` : 'Settings saved.');
+      setSavedChanges(freshPreview.changes);
     } catch { if (saveOwner === accountId()) setError('Settings could not be saved. Your changes are still here. Try again.'); }
     finally { savingRef.current = false; setSaving(false); }
   }
@@ -163,7 +166,6 @@ export function SettingsPage() {
   const choices = (values: number[], suffix = '') => values.map(value => ({ value, label: `${value}${suffix}` }));
   const weeklyMinutes = [1,2,3,4,5,6,7].filter(day=>draft.days.includes(day)).reduce((sum,day)=>sum+(draft.planning.week[day]?.minutes??draft.dailyMinutes),0);
   const weekDuration = `${Math.floor(weeklyMinutes / 60) ? `${Math.floor(weeklyMinutes / 60)}h ` : ''}${weeklyMinutes % 60 ? `${weeklyMinutes % 60}m` : ''}`.trim() || '0m';
-  const affectedDates = [...new Set(preview.affected.map(plan => plan.dateKey))];
   const settingsActions = showSettingsActions && <footer className="settings-actions"><div className="settings-save-status">{error?<p role="alert">{error}</p>:note?<p role="status"><Check size={16}/>{note}</p>:<p>{dirty?'Unsaved changes':'All changes saved'}</p>}</div><div className="settings-save-buttons"><button className="btn line" type="button" disabled={saving} onClick={()=>void resetDefaults()}>Reset defaults</button><button className="btn line" type="button" disabled={saving || !dirty} onClick={discard}><RotateCcw size={15}/>Discard changes</button><button className="btn primary" type="button" disabled={saving || !dirty} onClick={() => void save()}><Save size={16} />{saving ? 'Saving...' : error ? 'Retry save' : 'Save settings'}</button></div>{['target','schedule','overdue','vocabulary'].includes(category||'')&&<p className="settings-save-help">Saved to your account. Planning changes update upcoming automatic tasks; started and fixed tasks keep their requirements.</p>}{error&&<button className="btn line" type="button" disabled={saving} onClick={()=>void refreshConflict()}>Refresh saved settings and retain my edits</button>}</footer>;
   return <section className="view active settings-page">
     <div className="settings-category-picker"><SelectField aria-label="Settings category" value={category} onChange={event => navigate(`/settings/${event.target.value}${location.search}`, {state:location.state})}>{categories.map(([id,label]) => <option key={id} value={id}>{label}</option>)}</SelectField></div>
@@ -191,7 +193,16 @@ export function SettingsPage() {
           </SettingsSection><PlanningSettings draft={draft} update={update}/>
         </div>}
         {category === 'schedule' && <><SettingsSection title="Practice modules" description="Choose the skills in your plan. Leave all four unchecked to study vocabulary only."><div className="form">
-          <div className="field full"><span>Selected skills</span><div className="settings-skills">{skillNames.map(skill => <label className="check-chip" key={skill}><input type="checkbox" checked={draft.skills.includes(skill)} onChange={event => update({ skills: ['writing', 'speaking', 'reading', 'listening'].filter(value => value === skill ? event.target.checked : draft.skills.includes(value)) })} />{capital(skill)}</label>)}</div></div>
+          <div className="field full"><span>Selected skills</span><div className="settings-skills">{skillNames.map(skill => <label className="check-chip" key={skill}><input type="checkbox" checked={draft.skills.includes(skill)} onChange={event => {
+            const nextSkills = ['writing', 'speaking', 'reading', 'listening'].filter(value => value === skill ? event.target.checked : draft.skills.includes(value));
+            if (!nextSkills.length && draft.skills.length) {
+              update({ skills: nextSkills, planning: { ...draft.planning, vocabularyMode: 'ratio', vocabularyPercent: 100 } });
+            } else if (nextSkills.length && !draft.skills.length && draft.planning.vocabularyMode === 'ratio' && draft.planning.vocabularyPercent === 100) {
+              update({ skills: nextSkills, planning: { ...draft.planning, vocabularyPercent: 20 } });
+            } else {
+              update({ skills: nextSkills });
+            }
+          }} />{capital(skill)}</label>)}</div></div>
           <label className="field">Writing focus<SelectField aria-label="Writing focus" value={draft.focus} onChange={event => update({ focus: event.target.value })}><option value="balanced">Task 1 and Task 2</option><option value="task1">Task 1 only</option><option value="task2">Task 2 only</option></SelectField></label>
           <label className="field">Speaking focus<SelectField aria-label="Speaking focus" value={draft.speakingFocus} onChange={event => update({ speakingFocus: event.target.value })}><option value="balanced">All parts</option><option value="part1">Part 1 only</option><option value="part2">Part 2 only</option></SelectField></label>
         </div></SettingsSection><PlanningSettings draft={draft} update={update} section="weights"/></>}
@@ -226,7 +237,8 @@ export function SettingsPage() {
           <SettingsSection title="Backup" description="Export your study data or restore a backup file."><div className="btn-row"><button className="btn line" type="button" onClick={() => requestSettingsBackup('export')}><Download size={16} />Export backup</button><button className="btn line" type="button" onClick={() => requestSettingsBackup('import')}><Upload size={16} />Import backup</button></div></SettingsSection>
         </>}
       </fieldset>
-      {preview.rebuild && <section className="settings-plan-preview" aria-label="Affected study tasks"><details><summary><RotateCcw size={16}/><span>{preview.affected.length} existing task{preview.affected.length === 1 ? '' : 's'} will change</span></summary>{affectedDates.map(date=><div className="settings-preview-day" key={date}><time>{new Date(`${date}T00:00:00`).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})}</time><ul>{preview.affected.filter(plan=>plan.dateKey===date).map(plan=><li key={plan.id}>{studyPlanTitle(plan)}</li>)}</ul></div>)}</details><div className="settings-preview-overview"><strong>{preview.scheduled.length} scheduled tasks in the next seven days</strong><div className="settings-preview-modules">{Object.entries(preview.totals).filter(([,minutes])=>minutes>0).map(([skill,minutes])=><span key={skill}>{capital(skill)} <b>{minutes} min</b></span>)}</div></div>{preview.preservedLearning.length>0&&<details className="settings-preserved-learning"><summary>{preview.preservedLearning.length} saved learning task{preview.preservedLearning.length===1?'':'s'} will keep their words</summary><p className="settings-input-help">New limits apply to newly created tasks. These saved selections stay the same.</p><ul>{preview.preservedLearning.map(plan=><li key={plan.id}>{studyPlanTitle(plan)} · {new Date(`${plan.dateKey}T00:00:00`).toLocaleDateString('en-GB',{day:'numeric',month:'short'})}</li>)}</ul></details>}<details><summary>Preview your new week</summary>{preview.days.map(day=>{const tasks=preview.scheduled.filter(plan=>plan.dateKey===day);const used=tasks.reduce((sum,plan)=>sum+Number(plan.estimatedMinutes||0),0);const budget=studyBudget({...fb.state.settings,...draft},day).daily;return <div className="settings-preview-day" key={day}><time>{new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})}<small>{used} / {budget} min</small></time><ul>{tasks.length?tasks.map(plan=><li key={plan.id}>{studyPlanTitle(plan)} · {plan.estimatedMinutes} min{plan.origin==='manual'?' · Kept':''}</li>):<li>{budget?'No tasks scheduled':'Rest day'}</li>}</ul></div>;})}</details><p className="settings-field-help">Started, completed, manually arranged tasks and saved word selections keep their content. Other unfinished tasks may move within your budget.</p></section>}
+      {preview.rebuild && <section className="settings-plan-preview" aria-label="Affected study tasks"><details><summary><RotateCcw size={16}/><span>{preview.affected.length} existing task{preview.affected.length === 1 ? '' : 's'} will change</span></summary><ScheduleChangeList changes={preview.changes}/></details><div className="settings-preview-overview"><strong>{preview.scheduled.length} scheduled tasks in the next seven days</strong><div className="settings-preview-modules">{Object.entries(preview.totals).filter(([,minutes])=>minutes>0).map(([skill,minutes])=><span key={skill}>{capital(skill)} <b>{minutes} min</b></span>)}</div></div>{preview.preservedLearning.length>0&&<details className="settings-preserved-learning"><summary>{preview.preservedLearning.length} saved learning task{preview.preservedLearning.length===1?'':'s'} will keep their words</summary><p className="settings-input-help">New limits apply to newly created tasks. These saved selections stay the same.</p><ul>{preview.preservedLearning.map(plan=><li key={plan.id}>{studyPlanTitle(plan)} · {new Date(`${plan.dateKey}T00:00:00`).toLocaleDateString('en-GB',{day:'numeric',month:'short'})}</li>)}</ul></details>}<details><summary>Preview your new week</summary>{preview.days.map(day=>{const tasks=preview.scheduled.filter(plan=>plan.dateKey===day);const used=tasks.reduce((sum,plan)=>sum+Number(plan.estimatedMinutes||0),0);const budget=studyBudget({...fb.state.settings,...draft},day).daily;return <div className="settings-preview-day" key={day}><time>{new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})}<small>{used} / {budget} min</small></time><ul>{tasks.length?tasks.map(plan=><li key={plan.id}>{studyPlanTitle(plan)} · {plan.estimatedMinutes} min{plan.origin==='manual'?' · Kept':''}</li>):<li>{budget?'No tasks scheduled':'Rest day'}</li>}</ul></div>;})}</details><p className="settings-field-help">Started, completed, manually arranged tasks and saved word selections keep their content. Other unfinished tasks may move within your budget.</p></section>}
+      {category !== 'workspace' && savedChanges.length > 0 && <section className="settings-saved-changes" aria-label="Saved schedule changes"><p role="status">Saved. These existing tasks changed.</p><ScheduleChangeList changes={savedChanges}/></section>}
       {category !== 'workspace' && settingsActions}
     </div>
     {dialog}

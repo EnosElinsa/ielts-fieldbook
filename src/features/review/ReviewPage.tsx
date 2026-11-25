@@ -5,7 +5,9 @@ import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Copy, Download, FileInput, ArrowRight, RotateCcw, MoreHorizontal, FileText, Check } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
+import { accountId } from '../../storage/remote';
 import { isBandScore } from '../../domain';
+import { completePlan, errorReviewSatisfied, pendingErrorReviewIds } from '../../domain/plans';
 import { attemptLabel, displayName, formatDate, plural, sessionSkill } from '../../lib/format';
 import { Empty, FilterMenu } from '../../components/ui';
 import { exportAttemptRequest } from './assessmentRequest';
@@ -29,6 +31,7 @@ export function ReviewPage() {
   const [filter, setFilter] = useWorkspacePageState(`review:${reviewSkill}:filter`, 'all', value => ['all', 'pending', 'assessed', 'rewrite'].includes(value));
   const [search, setSearch] = useWorkspacePageState(`review:${reviewSkill}:search`, '');
   const [openingId, setOpeningId] = useState(null);
+  const [reviewNotice, setReviewNotice] = useState('');
   if (reviewSkill === 'reading' || reviewSkill === 'listening') return <Navigate to={`/${reviewSkill}/review`} replace />;
   const speaking = reviewSkill === 'speaking';
   const query = search.trim().toLowerCase();
@@ -72,14 +75,56 @@ export function ReviewPage() {
     fb.openModal('history');
   };
 
+  /** Complete every bound mistake task whose exact mistakes are now reviewed or fixed. */
+  const finishReviewTasks = (draft) => {
+    const finished = (draft.plans || []).filter((plan) => plan.kind === 'review' && plan.status === 'in_progress' && plan.target?.type === 'error-review' && errorReviewSatisfied(draft, plan));
+    finished.forEach((plan) => completePlan(draft, plan.id, { planId: plan.id }));
+    return finished.map((plan) => plan.id);
+  };
+  const CONFLICT = /changed on another device|baseline conflict|refresh.*preview/i;
+  /**
+   * Apply a review change, save it, and undo exactly what was applied if the save fails.
+   * A schedule conflict is refreshed and applied once more to the latest schedule.
+   */
+  const commitReview = async (mutate) => {
+    const owner = accountId();
+    setReviewNotice('');
+    for (let round = 0; round < 2; round += 1) {
+      const prior = fb.stateRef.current;
+      const draft = structuredClone(prior);
+      const outcome = mutate(draft);
+      if (!outcome) return null;
+      let feedback = '';
+      const saved = await fb.persistNow(draft, { collections: outcome.completed.length ? ['errors', 'plans', 'profile'] : outcome.collections, onError: (message) => { feedback = message; } });
+      if (accountId() !== owner) return false;
+      if (saved) return outcome;
+      const live = fb.stateRef.current;
+      const restored = {
+        ...live,
+        errors: (live.errors || []).map((row) => outcome.errorIds.includes(row.id) ? (prior.errors || []).find((item) => item.id === row.id) || row : row),
+        plans: (live.plans || []).map((row) => outcome.completed.includes(row.id) ? (prior.plans || []).find((item) => item.id === row.id) || row : row),
+        activePlanId: outcome.completed.length && live.activePlanId === null ? prior.activePlanId : live.activePlanId,
+      };
+      fb.stateRef.current = restored; fb.setState(restored);
+      if (round === 0 && CONFLICT.test(feedback)) {
+        try { await fb.refreshPlanningState(); if (accountId() !== owner) return false; continue; } catch { /* Report the original failure. */ }
+      }
+      setReviewNotice(`${feedback || 'Could not save this review.'} Your task is still open; try again.`);
+      return false;
+    }
+    return false;
+  };
+
   const reviewOnce = async (error) => {
-    const draft = structuredClone(fb.stateRef.current);
-    const item = draft.errors.find((e) => e.id === error.id);
-    if (!item) return;
-    const session = item.sourceSessionId && draft.sessions.find((entry) => entry.id === item.sourceSessionId);
-    fb.reviewError(draft, item.id);
-    const saved = await fb.persistNow(draft, { collections: ['errors'] });
+    const saved = await commitReview((draft) => {
+      const item = draft.errors.find((e) => e.id === error.id);
+      if (!item) return null;
+      fb.reviewError(draft, item.id);
+      return { errorIds: [item.id], collections: ['errors'], completed: finishReviewTasks(draft) };
+    });
     if (!saved) return;
+    if (saved.completed.length) fb.toast('Review task complete.');
+    const session = error.sourceSessionId && fb.stateRef.current.sessions.find((entry) => entry.id === error.sourceSessionId);
     if (!session) {
       fb.toast('No matching attempt. The review was still saved.');
       return;
@@ -89,16 +134,34 @@ export function ReviewPage() {
     fb.toast('Review saved.');
   };
 
-  const toggleResolved = (error) => {
-    const draft = structuredClone(fb.stateRef.current);
-    fb.resolveError(draft, error.id, !error.resolved);
-    fb.persistNow(draft, { collections: ['errors'] });
+  const toggleResolved = async (error) => {
+    const saved = await commitReview((draft) => {
+      fb.resolveError(draft, error.id, !error.resolved);
+      return { errorIds: [error.id], collections: ['errors'], completed: finishReviewTasks(draft) };
+    });
+    if (saved && saved.completed.length) fb.toast('Review task complete.');
+  };
+
+  const markReviewDone = async () => {
+    let missing = '';
+    const saved = await commitReview((draft) => {
+      const completed = fb.completeReview(draft);
+      if (!completed) {
+        const open = (draft.plans || []).find((plan) => plan.kind === 'review' && plan.status === 'in_progress' && plan.target?.type === 'error-review');
+        const waiting = open ? pendingErrorReviewIds(draft, open).length : 0;
+        missing = open ? `Review or mark corrected ${plural(waiting || open.target.errorIds.length, 'targeted mistake')} before finishing this task.` : 'There is no review task in progress.';
+        return null;
+      }
+      return { errorIds: [], collections: ['plans', 'profile'], completed: [completed.id] };
+    });
+    if (saved) fb.toast('Review done.');
+    else if (missing) setReviewNotice(missing);
   };
 
   const feedbackRow = (key, assessment, title, meta, pill, actions) => (
     <li className="review-row" key={key}>
       <div className="review-row-main">
-        <div className="review-row-title"><h4>{title}</h4>{pill}</div>
+        <div className="review-row-title"><h3>{title}</h3>{pill}</div>
         <small>{meta}</small>
       </div>
       {assessment ? <Link className="review-band" to={`/review/${assessment.id}`} aria-label={`${bandLabel(assessment)}: open the score report for ${title}`}>{bandLabel(assessment)}</Link> : <span className="review-awaiting">Awaiting feedback</span>}
@@ -110,7 +173,7 @@ export function ReviewPage() {
     <section className="view active review-page">
       <div className="page-tools"><p>{plural(allSessions.length, 'attempt')} · {awaiting} awaiting feedback</p><button type="button" className="btn primary" onClick={() => fb.openFeedbackImport()}><FileInput size={16} /> Import feedback</button></div>
       <div className="toolbar"><input className="search" aria-label="Search attempts" placeholder="Search your attempts" value={search} onChange={(event) => setSearch(event.target.value)} /><FilterMenu label="Attempt status" value={filter} onChange={setFilter} options={[{ value: 'all', label: 'All attempts' }, { value: 'pending', label: 'Awaiting feedback' }, { value: 'assessed', label: 'With feedback' }, { value: 'rewrite', label: 'Rewrites & retakes' }]} /></div>
-      <h3 className="block-title">Attempts</h3>
+      <h2 className="block-title">Attempts</h2>
       {sessions.length ? (
         <ul className="review-list review-attempts">
           {sessions.map((session) => {
@@ -142,7 +205,7 @@ export function ReviewPage() {
         />
       )}
       {others.length ? <>
-        <h3 className="block-title review-unlinked-title">{others.some(({ session }) => session) ? 'Other feedback' : 'Feedback without a saved attempt'}</h3>
+        <h2 className="block-title review-unlinked-title">{others.some(({ session }) => session) ? 'Other feedback' : 'Feedback without a saved attempt'}</h2>
         <ul className="review-list review-unlinked">
           {others.map(({ assessment, session }) => feedbackRow(
             assessment.id,
@@ -156,20 +219,18 @@ export function ReviewPage() {
       </> : null}
       <div className="section-head">
         <div>
-          <h3>Mistakes</h3>
+          <h2>Mistakes</h2>
           <p>Corrections from your feedback. Practise each one until it sticks.</p>
         </div>
         <button
           type="button"
           className="btn text"
-          onClick={async () => {
-            const draft = structuredClone(fb.stateRef.current);
-            if (fb.completeReview(draft) && await fb.persistNow(draft, { collections: ['plans', 'profile'] })) fb.toast('Review done.');
-          }}
+          onClick={() => void markReviewDone()}
         >
           Mark review done
         </button>
       </div>
+      {reviewNotice ? <p className="save-failure" role="alert">{reviewNotice}</p> : null}
       {errors.length ? (
         <ul className="review-list review-mistakes">
           {errors

@@ -1,0 +1,105 @@
+{
+  "removeCorrections": [],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-a34f2f1",
+      "senseId": "kaikki:0907930157f6d781fa",
+      "definition": "A physical conflict in which people or animals try to hurt one another.",
+      "example": "The argument ended in a fight outside the station.",
+      "originalSense": {
+        "id": "kaikki:0907930157f6d781fa",
+        "definition": "Senses relating to physical conflict:",
+        "example": "My grandfather fought the Nazis in World War II.",
+        "pos": "verb",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": []
+      }
+    }
+  ],
+  "removeTopics": [],
+  "restoreTopicRows": [
+    {
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-11-group-02",
+      "entryId": "ve-7c6ebecc",
+      "term": "grey",
+      "sense": {
+        "id": "kaikki:291e34887617987a8f",
+        "definition": "A neutral colour between black and white.",
+        "example": "The jacket is a pale shade of grey.",
+        "pos": "adj",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [
+          "pale grey",
+          "dark grey"
+        ],
+        "usage": "",
+        "register": "",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/grey#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        },
+        "distinctions": []
+      },
+      "originalSense": {
+        "id": "kaikki:291e34887617987a8f",
+        "definition": "Commonwealth standard spelling of gray.",
+        "example": "These grey and dun colors may be also produced by mixing whites and blacks.",
+        "pos": "adj",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "all cats are grey at night",
+          "all cats are grey by night",
+          "all cats are grey in the dark",
+          "ash-grey",
+          "ash grey",
+          "battleship grey",
+          "battleship-grey",
+          "blue-grey",
+          "brain grey",
+          "cadet grey",
+          "cool grey",
+          "dove grey",
+          "eastern grey kangaroo",
+          "flathead grey mullet",
+          "French grey",
+          "get grey hair from",
+          "give grey hair to",
+          "give someone grey hair",
+          "great grey owl",
+          "great grey shrike",
+          "green-grey",
+          "grey alder",
+          "grey alien",
+          "grey amber",
+          "grey ammonia",
+          "grey area",
+          "grey baby syndrome",
+          "greyback",
+          "grey-backed fiscal",
+          "greybeard"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/grey#English",
+        "license": "CC-BY-SA-4.0"
+      },
+      "reason": "Retains the same meaning; replaces an incomplete, misleading, archaic, or unsuitable teaching example with a full English sentence and topic collocations. Editorial teaching choice for Fashion and trends; original-source sense remains unconfirmed."
+    }
+  ]
+}

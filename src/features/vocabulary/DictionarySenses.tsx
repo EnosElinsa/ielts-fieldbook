@@ -16,9 +16,11 @@ import { VocabularyDiagramDisclosure } from './VocabularyDiagramDisclosure';
 import { practiceUrl } from "./vocabularyNavigation";
 import { loadTermDictionary, resetDictionaryCache } from './dictionary';
 export { resetDictionaryCache } from './dictionary';
-const key = (sense: VocabularySense) =>
-  `${normalizeAnswer(sense.pos)}:${normalizeAnswer(sense.definition)}`;
+// Compare word classes by their learner-facing label so "adj" and "adjective" are one class: a curated
+// adjective meaning must hide the identical dictionary meaning instead of repeating it.
 const partOfSpeech = (sense: VocabularySense) => vocabularyPartOfSpeech(sense.pos) || 'other';
+const key = (sense: VocabularySense) =>
+  `${normalizeAnswer(partOfSpeech(sense))}:${normalizeAnswer(sense.definition)}`;
 const label = (value: string) => value.replace(/^./, char => char.toUpperCase());
 export function DictionarySenses({
   entry,
@@ -242,7 +244,7 @@ export function DictionarySenses({
       ) : null}
       {groups.map((pos) => (
         <section className="vocabulary-dictionary-pos" key={pos}>
-          <h3>{label(pos)}</h3>
+          <h2>{label(pos)}</h2>
           {visible
             .filter(
               (sense) => partOfSpeech(sense) === pos,
@@ -254,7 +256,7 @@ export function DictionarySenses({
               return (
               <section className="vocabulary-sense" key={sense.id}>
                 <div className="vocabulary-sense-head">
-                  <h4>Meaning {meaningNumbers.get(sense.id)}</h4>
+                  <h3>Meaning {meaningNumbers.get(sense.id)}</h3>
                   {priorityLabel ? <span className="pill">{priorityLabel}</span> : null}
                   {isVocabularyMeaningGroup(entry.id, sense) ? <span className="pill">Meaning group</span> : isVocabularyUsageReference(entry.id, sense) ? <span className="pill">Usage reference</span> : isVocabularySpellingReference(entry.id, sense) ? <span className="pill">Spelling reference</span> : <button
                     type="button"
@@ -266,7 +268,7 @@ export function DictionarySenses({
                     {saving === sense.id ? "Saving…" : "Practise this sense"}
                   </button>}
                 </div>
-                <VocabularySenseContent entryId={entry.id} term={entry.term} sense={sense} showLearningNotes />
+                <VocabularySenseContent entryId={entry.id} term={entry.term} sense={sense} showLearningNotes headingLevel={4} />
                 {diagram ? <VocabularyDiagramDisclosure diagram={diagram} number={meaningNumbers.get(sense.id)} /> : null}
               </section>
             );})}

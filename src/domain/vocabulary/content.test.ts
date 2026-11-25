@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import fs from 'node:fs';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
-import { concealWord, learningTask, reviewedEntry } from './content';
+import { concealWord, concealWordInflections, learningTask, reviewedEntry, vocabularyInflectedPattern } from './content';
 import { createVocabularySession, evaluateVocabularySessionAnswer, buildVocabularySessionCommit } from './session';
 import { readVocabularyDraft, writeVocabularyDraft } from '../../storage/vocabularyDrafts';
 import { getVocabularyReviewQueue } from './index';
@@ -146,3 +146,39 @@ test('full corpus task integrity and per-book coverage audit',()=>{
  }
  expect(catalog.entries).toHaveLength(7021);expect(dictionarySenses).toBeGreaterThan(51000);expect(byBook).toHaveLength(6);
 }, 20000);
+
+describe('definition and example concealment of regular inflections', () => {
+ test.each([
+  ['manufacture', 'The firm will manufacture and manufactures goods; it manufactured and is manufacturing more.', 4],
+  ['carry', 'She carries it, carried it and is carrying it.', 3],
+  ['stop', 'He stopped, stops and keeps stopping.', 3],
+  ['hero', 'The hero and many heroes.', 2],
+  ['potato', 'One potato, two potatoes.', 2],
+  ['make', 'She makes tea and is making more.', 2],
+  ['tie', 'They tied it, tie it, and keep tying it.', 3],
+  ['panic', 'She panicked, panics and is panicking.', 3],
+  ['bus', 'Two buses and some busses.', 2],
+  ['quiz', 'Several quizzes and one quiz.', 2],
+  ['refer', 'He refers, referred and is referring to it.', 3],
+ ])('conceals every regular form of %s', (term, text, count) => {
+  const concealed = concealWordInflections(text, term);
+  expect(concealed.match(/_____/g)).toHaveLength(count);
+  expect(concealed.toLowerCase()).not.toContain(term.slice(0, term.length - 1));
+ });
+ test('regular verb inflections are concealed without touching longer or unrelated words', () => {
+  expect(concealWordInflections('She carries and carried it, carrying on.', 'carry')).toBe('She _____ and _____ it, _____ on.');
+  expect(concealWordInflections('They stopped; stopping and stops.', 'stop')).toBe('They _____; _____ and _____.');
+  expect(concealWordInflections('He used it; using and uses it.', 'use')).toBe('He _____ it; _____ and _____ it.');
+  expect(concealWordInflections('The hero saved two heroes.', 'hero')).toBe('The _____ saved two _____.');
+  expect(concealWordInflections('A bat fought a battle; batted batsmen batter.', 'bat')).toBe('A _____ fought a battle; _____ batsmen batter.');
+  expect(concealWordInflections('Plan a planet; plans and planning.', 'plan')).toBe('_____ a planet; _____ and _____.');
+ });
+ test('a headword is matched literally, never as a pattern, and keeps Unicode word boundaries', () => {
+  expect(concealWordInflections('Use (a|b) now. Use ab.', '(a|b)')).toBe('Use _____ now. Use ab.');
+  expect(concealWordInflections('Cost: a.b and axb.', 'a.b')).toBe('Cost: _____ and axb.');
+  expect(concealWordInflections('Café, cafés and cafeteria', 'café')).toBe('_____, cafés and cafeteria');
+  expect(concealWordInflections('naïve naïves', 'naïve')).toBe('_____ naïves');
+  expect(concealWordInflections('Takes part and took part; take parts.', 'take part')).toBe('_____ and took part; _____.');
+  expect(() => vocabularyInflectedPattern('[unclosed', 'verb')).not.toThrow();
+ });
+});

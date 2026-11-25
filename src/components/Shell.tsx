@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { PageLoadingState, PanelLoadingState, StateMessage } from './AsyncState';
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
-import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { studyStreak } from '../domain';
 import { useFieldbook } from '../context/FieldbookContext';
 import { displayName } from '../lib/format';
@@ -18,7 +18,7 @@ import { navigateWithPracticeGuard } from '../lib/practiceNavigation';
 import { moduleFor, studyLinkActive, workspaceModules } from './workspaceNavigation';
 import { useWorkspaceModuleMemory } from './useWorkspaceModuleMemory';
 import { accountId } from '../storage/remote';
-import { AccountDataBoundary } from './AccountDataBoundary';
+import { AccountDataBoundary, ModalDataBoundary } from './AccountDataBoundary';
 import { vocabularyTeachingScope } from './vocabularyTeachingScope';
 import { PageErrorBoundary } from './PageErrorBoundary';
 import { PageTransition } from './PageTransition';
@@ -152,6 +152,9 @@ export function Shell() {
   const module = moduleFor(location.pathname, location.search, fb.activeSkill);
   const { selectModule: resumeModule, scrollRestoration } = useWorkspaceModuleMemory({ owner: accountId(), ready: fb.booted, activeSkill: fb.activeSkill, setSkill: fb.setSkill });
   const speaking = module === 'speaking';
+  // Account lives under /settings, but it is its own destination: only one rail item may be current.
+  const accountRoute = /^\/(?:settings\/)?account(?:\/|$)/.test(location.pathname);
+  const isCurrent = (id: string) => module === id && !(id === 'settings' && accountRoute);
   const secondaryLinks = studyLinks[module] || [];
   const vocabularyOwnHeading = location.pathname.startsWith('/vocabulary');
   const ownHeading = /^\/(today)?$/.test(location.pathname) || location.pathname === '/planning' || EXAM_PATH.test(location.pathname) || location.pathname.startsWith('/speak/topics/');
@@ -262,9 +265,9 @@ export function Shell() {
               const children = studyLinks[link.id] || [];
               return <div className="nav-group" key={link.to}>
                 <RailHint label={link.label} enabled={collapsed}><Link
-                  to={link.to} aria-current={module === link.id ? 'page' : undefined} aria-label={link.label} data-practice-navigation
+                  to={link.to} aria-current={isCurrent(link.id) ? 'page' : undefined} aria-label={link.label} data-practice-navigation
                   onClick={(event) => { if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); resumeModule(link.id); }}
-                  className={module === link.id ? 'active' : undefined}
+                  className={isCurrent(link.id) ? 'active' : undefined}
                 ><span className="nav-icon" aria-hidden="true">{icon}</span><span className="nav-label">{link.label}</span></Link></RailHint>
                 {module === link.id && children.length ? <nav className="nav-children" aria-label={`${link.label} study`}>
                   {children.map((child) => <RailHint key={child.to} label={child.label} enabled={collapsed}><Link to={child.to} aria-label={child.label} aria-current={studyLinkActive(child.to, location.pathname, location.search, module) ? 'page' : undefined} className={studyLinkActive(child.to, location.pathname, location.search, module) ? 'active' : undefined}>
@@ -275,12 +278,12 @@ export function Shell() {
             })}
           </nav>
           <nav className="nav nav-account" aria-label="Account navigation">
-            <RailHint label="Account" enabled={collapsed}><NavLink to="/settings/account" aria-label="Account" className={({ isActive }) => (isActive ? 'active' : undefined)}>
+            <RailHint label="Account" enabled={collapsed}><Link to="/settings/account" aria-label="Account" aria-current={accountRoute ? 'page' : undefined} className={accountRoute ? 'active' : undefined}>
               <span className="nav-icon">
                 <AccountMark user={accountUser} size="nav" />
               </span>
               <span className="nav-label">Account</span>
-            </NavLink></RailHint>
+            </Link></RailHint>
           </nav>
           <RailHint label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} enabled={collapsed}><button
             type="button"
@@ -307,7 +310,7 @@ export function Shell() {
             <div className="actions">
               <IconButton label="Search workspace" onClick={() => setSearchOpen(true)}><Search size={18} /></IconButton>
               <AccountMenu user={accountUser} onImportBackup={() => backupInput.current?.click()} onExportBackup={exportBackup} onLegal={setLegalView} />
-              {!['vocabulary', 'account', 'settings', 'planning', 'reading', 'listening'].includes(module) ? <button className="btn line import-score" type="button" onClick={() => fb.openFeedbackImport()}>
+              {!['vocabulary', 'account', 'settings', 'planning', 'reading', 'listening'].includes(module) ? <button className="btn line import-score" type="button" aria-label="Import score" title="Import score" onClick={() => fb.openFeedbackImport()}>
                 <Upload size={16} />Import score
               </button> : null}
               <input
@@ -323,7 +326,7 @@ export function Shell() {
               />
             </div>
           </header>
-          <SaveFailure failed={fb.saveFailed && !location.pathname.startsWith('/settings')} message={fb.saveFailureMessage || undefined} saving={fb.saveStatus === 'saving'} onRetry={() => void fb.persistNow()} />
+          <SaveFailure failed={fb.saveFailed} message={fb.saveFailureMessage || undefined} saving={fb.saveStatus === 'saving'} onRetry={() => void fb.persistNow()} />
           {fb.loadError && fb.booted ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
           {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
           {fb.loadError && !fb.booted ? <StateMessage kind="error" title="Your workspace could not load" message={<>Check your connection, then retry. Work you already saved is safe.{fb.loadError !== WORKSPACE_LOAD_ERROR ? <small className="async-state-detail">{fb.loadError}</small> : null}</>} onRetry={fb.retryLoad} retryLabel="Retry" /> : null}
@@ -345,27 +348,27 @@ export function Shell() {
           </div>}
           <div className="mobile-more-links" role="group" aria-label="Workspace">
             {workspaceModules.filter(link => ['progress', 'settings'].includes(link.id)).map(link => (
-              <button type="button" key={link.id} className={module === link.id ? 'active' : undefined} aria-current={module === link.id ? 'page' : undefined} onClick={() => { setMoreOpen(false); resumeModule(link.id); }}><link.Icon size={20} aria-hidden="true" />{link.label}</button>
+              <button type="button" key={link.id} className={isCurrent(link.id) ? 'active' : undefined} aria-current={isCurrent(link.id) ? 'page' : undefined} onClick={() => { setMoreOpen(false); resumeModule(link.id); }}><link.Icon size={20} aria-hidden="true" />{link.label}</button>
             ))}
-            <button type="button" onClick={() => goFromMore('/settings/account')}><UserRound size={20} aria-hidden="true" />Account</button>
+            <button type="button" className={accountRoute ? 'active' : undefined} aria-current={accountRoute ? 'page' : undefined} onClick={() => goFromMore('/settings/account')}><UserRound size={20} aria-hidden="true" />Account</button>
           </div>
         </div>
       </ModalFrame>
       {searchOpen && <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
       <PageErrorBoundary resetKey={`${accountId()}:${fb.modal}:${legalView}`} onDismiss={() => { fb.closeModal(); setLegalView(null); }}>
       <Suspense fallback={<ModalFrame open={Boolean(fb.modal || legalView)} onClose={() => { fb.closeModal(); setLegalView(null); }} title="Opening dialog"><PanelLoadingState variant="form" message="Loading dialog…" /></ModalFrame>}>
-        {fb.modal === 'assessment' && <AccountDataBoundary modules={['productive']}><AssessmentImportModal /></AccountDataBoundary>}
+        {fb.modal === 'assessment' && <ModalDataBoundary modules={['productive']} title="Import feedback" onClose={() => fb.closeModal()}><AssessmentImportModal /></ModalDataBoundary>}
         {legalView && <LegalModal view={legalView} onClose={() => setLegalView(null)} />}
         {fb.modal === 'settings' && <SettingsModal />}
         {fb.modal === 'save' && <SaveModal />}
-        {fb.modal === 'history' && <AccountDataBoundary modules={['productive']}><HistoryModal /></AccountDataBoundary>}
-        {fb.modal === 'vocabulary' && <AccountDataBoundary modules={['vocabulary']}><VocabularyModal /></AccountDataBoundary>}
-        {fb.modal === 'vocabularyImport' && <AccountDataBoundary modules={['vocabulary']}><VocabularyImportModal /></AccountDataBoundary>}
-        {fb.modal === 'story' && <AccountDataBoundary modules={['productive']} banks={['speaking']}><StoryModal /></AccountDataBoundary>}
+        {fb.modal === 'history' && <ModalDataBoundary modules={['productive']} title="Attempt" onClose={() => fb.closeModal()}><HistoryModal /></ModalDataBoundary>}
+        {fb.modal === 'vocabulary' && <ModalDataBoundary modules={['vocabulary']} title="Vocabulary" onClose={() => fb.closeModal()}><VocabularyModal /></ModalDataBoundary>}
+        {fb.modal === 'vocabularyImport' && <ModalDataBoundary modules={['vocabulary']} title="Import vocabulary" onClose={() => fb.closeModal()}><VocabularyImportModal /></ModalDataBoundary>}
+        {fb.modal === 'story' && <ModalDataBoundary modules={['productive']} banks={['speaking']} title="Write a story" onClose={() => fb.closeModal()}><StoryModal /></ModalDataBoundary>}
         {fb.modal === 'backup' && <BackupModal />}
       </Suspense>
       </PageErrorBoundary>
-      <Toast message={fb.toastMessage} visible={fb.toastVisible} />
+      <Toast message={fb.toastMessage} visible={fb.toastVisible} revision={fb.toastRevision} />
     </>
   );
 }

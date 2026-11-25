@@ -10,7 +10,7 @@ import type { ExamCatalog } from '../../domain/exam/types';
 const mocks = vi.hoisted(() => ({ fb: null as any, recovery: new Map<string, any>() }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mocks.fb }));
 vi.mock('../../storage/remote', () => ({ accountId: () => 'diagnosis-owner' }));
-vi.mock('../../storage/examCatalog', () => ({ loadExamSections: async () => catalog, resolveExamAsset: async () => '/audio.mp3' }));
+vi.mock('../../storage/examCatalog', async importOriginal => ({ ...await importOriginal<typeof import('../../storage/examCatalog')>(), loadExamSections: async () => catalog, resolveExamAsset: async () => '/audio.mp3' }));
 vi.mock('../../storage/examRecovery', () => ({
   readExamRecovery: (owner: string, key: string) => mocks.recovery.get(`${owner}:${key}`),
   readExamRecoveries: () => [],

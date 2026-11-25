@@ -4,6 +4,7 @@ import { vocabularySensePresentation } from './dictionaryPresentation';
 import imageManifest from './illustrations.json';
 import senseDiagrams from './senseDiagrams.json';
 import { hostedPronunciations } from './hostedPronunciations';
+import { comparablePartOfSpeech, publishedCurriculumSenseIds } from './publishedSenseIdentity';
 export type VocabularyAccent = 'uk' | 'us';
 export type MediaCredit = { sourceUrl: string; author: string; license: string; licenseUrl: string; changes: string };
 export type VocabularyRecording = MediaCredit & { url: string; aliases?: string[]; title: string; accent: VocabularyAccent | 'other' | 'unknown'; status: 'verified' | 'unknown' | 'rejected' | 'missing'; availability: 'http-audio' | 'metadata-only' | 'network-unverified' | 'failed'; reason: string; wordformConfirmed?: boolean };
@@ -69,7 +70,13 @@ export type VocabularySenseDiagram = typeof senseDiagrams[number];
 export function getVocabularySenseDiagram(resolved: Pick<ResolvedVocabularyLearningContext, 'entry' | 'sense'>): VocabularySenseDiagram | undefined {
   const sense = resolved.sense;
   if (!sense || sense.source === 'Personal note') return;
-  return senseDiagrams.find(row => row.entryId === resolved.entry.id && row.term === resolved.entry.term && row.senseId === sense.id && row.definition === sense.definition && row.pos === sense.pos);
+  const exact = senseDiagrams.find(row => row.entryId === resolved.entry.id && row.term === resolved.entry.term && row.senseId === sense.id && row.definition === sense.definition && row.pos === sense.pos);
+  if (exact) return exact;
+  // A reworded but unmodified published meaning still teaches the diagrammed dictionary meaning.
+  const candidates = senseDiagrams.filter(row => row.entryId === resolved.entry.id && row.term === resolved.entry.term && comparablePartOfSpeech(row.pos) === comparablePartOfSpeech(sense.pos));
+  if (!candidates.length) return;
+  const identities = publishedCurriculumSenseIds(resolved.entry.id, sense);
+  return identities.length ? candidates.find(row => identities.includes(row.senseId)) : undefined;
 }
 export type VocabularyVisualConcept = 'pea' | 'carrot' | 'apple' | 'banana' | 'grape' | 'lemon' | 'orange' | 'vegetable' | 'fruit' | 'paste'
  | 'wheat' | 'grain' | 'rice' | 'corn' | 'flour' | 'bread' | 'tomato' | 'potato' | 'onion' | 'garlic' | 'mushroom' | 'egg' | 'cheese' | 'nut'

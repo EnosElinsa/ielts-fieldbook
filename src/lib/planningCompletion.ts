@@ -1,4 +1,4 @@
-import { completePlanIfMatched, completeVocabularyPlan, planMatchesAttempt } from '../domain/plans';
+import { completePlan, completePlanIfMatched, completeVocabularyPlan, errorReviewSatisfied, planMatchesAttempt } from '../domain/plans';
 import { dateKey } from '../domain/utils';
 import { completeReceptivePlanIfMatched } from './receptivePlans';
 
@@ -22,6 +22,11 @@ export function recoverCompletedPlans(state: Record<string, any>) {
     if (plan.status !== 'in_progress' || !plan.target || !plan.startedAt) continue;
     const owned: any = { ...state, plans: [plan], examAttempts: exams.get(plan.id) || [], intensiveSessions: intensive.get(plan.id) || [] };
     completeReceptivePlanIfMatched(owned, undefined, true);
+    // A mistake review is bound to its exact mistakes and the time it began.
+    if (plan.kind === 'review' && plan.target.type === 'error-review' && errorReviewSatisfied(state, plan)) {
+      const reviewed = plan.target.errorIds.map((id: string) => Date.parse((state.errors || []).find((error: Record<string, any>) => error.id === id)?.lastReviewedAt || '')).filter(Number.isFinite);
+      completePlan(owned, plan.id, { completedAt: new Date(reviewed.length ? Math.max(...reviewed) : Date.parse(plan.startedAt)).toISOString() });
+    }
     // Mock stages change their next target. Do not replay a prior stage into another one.
     if (!String(plan.kind || '').endsWith('-mock')) {
       const rows = [...(sessions.get(plan.id) || [])]

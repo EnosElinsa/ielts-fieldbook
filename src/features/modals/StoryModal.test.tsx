@@ -47,3 +47,17 @@ test('pending story save prevents dismissal and duplicate submission; a changed 
   expect(mock.fb.closeModal).not.toHaveBeenCalled();
   expect(mock.fb.toast).not.toHaveBeenCalled();
 });
+
+test('formats tags with ASCII semicolons and exposes accessible dialog structure', () => {
+  mock.fb.editingStoryId = 's1';
+  mock.fb.state = {
+    stories: [{ id: 's1', title: 'Library', tags: ['a', 'b'], topicIds: [] }],
+    speakingTopics: [{ id: 't1', part: 2, title: 'A place' }],
+  };
+  mock.fb.stateRef.current = mock.fb.state;
+  render(<StoryModal />);
+  expect(screen.getByRole('dialog')).toHaveAccessibleDescription('Who, where, when, and what happened.');
+  expect(screen.getByLabelText('Tags')).toHaveValue('a; b');
+  const group = screen.getByRole('group', { name: 'Which Part 2 topics' });
+  expect(group).toContainElement(screen.getByRole('checkbox', { name: 'A place' }));
+});
