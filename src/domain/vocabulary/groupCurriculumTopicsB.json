@@ -39746,10 +39746,10 @@
     "entryId": "ve-44dec091",
     "term": "miniature",
     "sense": {
-      "id": "kaikki:45617a6b2fe3d12ba6",
-      "definition": "A small model or copy of something larger.",
-      "example": "The display includes a miniature of the old windmill.",
-      "pos": "noun",
+      "id": "kaikki:552839c4f245b2be71",
+      "definition": "Very small; made on a much smaller scale than normal.",
+      "example": "The workshop built a miniature model of the steam engine.",
+      "pos": "adj",
       "synonyms": [],
       "antonyms": [],
       "collocations": [],
@@ -39809,7 +39809,41 @@
         "attribution": "Fieldbook editorial contributors"
       }
     },
-    "reason": "The objects group supports the tangible small model sense. The earlier example uses the expression in miniature."
+    "reason": "In source membership order, miniature sits inside an all-adjective cluster (inferior, counterfeit, fake, miniature, fragile, durable, available), and both reference transcripts lead with the adjective gloss (\"微型的；很小的\") and adjective example (\"a miniature portrait\").",
+    "previousSenses": [
+      {
+        "id": "kaikki:45617a6b2fe3d12ba6",
+        "definition": "A small model or copy of something larger.",
+        "example": "The display includes a miniature of the old windmill.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "eye miniature",
+          "in miniature",
+          "mini-",
+          "mini",
+          "miniaturism",
+          "miniaturist",
+          "miniaturization",
+          "miniaturisation",
+          "miniaturize",
+          "miniaturise"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/miniature#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",

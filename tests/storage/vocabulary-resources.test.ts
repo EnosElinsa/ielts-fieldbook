@@ -13,6 +13,23 @@ const resourceBuildTimeout = 120_000;
 // verify content and historical bytes; the bundle budget is checked separately.
 beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, resourceBuildTimeout);
 
+test('the review-pass group context audit retains the preceding PR #44 production manifest and all its resources', () => {
+  const url = '/vocabulary-resources/manifest.3ce90c4c5b58aa11.json';
+  const bytes = release.resources.getBytes(url);
+  expect(bytes).toBeDefined();
+  expect(createHash('sha256').update(bytes!).digest('hex').slice(0, 16)).toBe('3ce90c4c5b58aa11');
+  const previous = JSON.parse(bytes!.toString('utf8'));
+  for (const resource of [
+    previous.termIndexUrl,
+    ...Object.values(previous.entryResources),
+    ...Object.values(previous.entryTeachingResources),
+    ...previous.units.flatMap((unit: any) => [unit.resource, unit.teachingResource]).filter(Boolean),
+  ] as string[]) {
+    expect(release.resources.has(resource), resource).toBe(true);
+  }
+  expect(release.manifestUrl).not.toBe(url);
+});
+
 test('the follow-up group context audit retains the preceding PR #43 production manifest and all its resources', () => {
   const url = '/vocabulary-resources/manifest.1d6deca143999e5d.json';
   const bytes = release.resources.getBytes(url);

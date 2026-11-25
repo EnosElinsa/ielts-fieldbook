@@ -43089,7 +43089,7 @@
     "term": "respire",
     "sense": {
       "id": "kaikki:45c9e8682870efbdfc",
-      "definition": "To carry out respiration, using oxygen to release energy from sugars and producing carbon dioxide.",
+      "definition": "To take in oxygen to release energy from sugars and produce carbon dioxide.",
       "example": "Plant roots respire in the dark, releasing energy from sugars.",
       "pos": "verb",
       "synonyms": [
@@ -43159,7 +43159,43 @@
         "attribution": "Fieldbook editorial contributors"
       }
     },
-    "reason": "Select the dictionary sense that fits the Plant research chapter and use a matching example."
+    "reason": "Keeps the plant-respiration sense (kaikki:45c9e8682870efbdfc) while removing the \"respiration\" morphological giveaway from the definition.",
+    "previousSenses": [
+      {
+        "id": "kaikki:45c9e8682870efbdfc",
+        "definition": "To carry out respiration, using oxygen to release energy from sugars and producing carbon dioxide.",
+        "example": "Plant roots respire in the dark, releasing energy from sugars.",
+        "pos": "verb",
+        "synonyms": [
+          "breathe"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "intransitive",
+        "wordFamily": [
+          "nonrespiring",
+          "photorespire",
+          "respirable",
+          "respiratory",
+          "respiring",
+          "respiro-",
+          "respirocyte",
+          "respirometer",
+          "respirometry",
+          "unrespired"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/respire#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -45810,26 +45846,19 @@
     "entryId": "ve-7c70f12d",
     "term": "curl",
     "sense": {
-      "id": "kaikki:52fcff2fda3f9392ee",
-      "definition": "To bend into a curved or rounded shape.",
-      "example": "A hedgehog can curl into a ball when threatened.",
-      "pos": "verb",
+      "id": "kaikki:dc005d8fefec9f2d78",
+      "definition": "A curving lock or ringlet of hair or fur.",
+      "example": "The breed is known for the soft curl of its winter coat.",
+      "pos": "noun",
       "synonyms": [
-        "coil",
-        "roll up",
-        "billow"
+        "ringlet"
       ],
       "antonyms": [
-        "straighten",
-        "uncoil",
-        "unroll",
-        "straighten",
-        "uncoil",
-        "unroll"
+        "extension"
       ],
       "collocations": [],
       "usage": "",
-      "register": "intransitive",
+      "register": "",
       "wordFamily": [
         "barbell curl",
         "becurl",
@@ -45923,7 +45952,72 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/curl#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Select the dictionary sense that fits the Animal protection chapter and use a matching example."
+    "reason": "In source membership order, curl closes the animal coat/hair noun cluster (plume, feather, fur, bristle, curl), and both reference transcripts lead with the noun gloss (\"卷曲；螺旋状物\" / \"鬈发\") and noun example (\"his hair lost its curl\") rather than the verb.",
+    "previousSenses": [
+      {
+        "id": "kaikki:52fcff2fda3f9392ee",
+        "definition": "To bend into a curved or rounded shape.",
+        "example": "A hedgehog can curl into a ball when threatened.",
+        "pos": "verb",
+        "synonyms": [
+          "coil",
+          "roll up",
+          "billow"
+        ],
+        "antonyms": [
+          "straighten",
+          "uncoil",
+          "unroll",
+          "straighten",
+          "uncoil",
+          "unroll"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "intransitive",
+        "wordFamily": [
+          "barbell curl",
+          "becurl",
+          "bicep curl",
+          "biceps curl",
+          "bluecurls",
+          "blue curls",
+          "cable curl",
+          "cheat curl",
+          "cheese curl",
+          "concentration curl",
+          "curl bar",
+          "curl grub",
+          "curlicue",
+          "curliness",
+          "curlless",
+          "curlpaper",
+          "curl-paper",
+          "curls for the girls",
+          "curl snake",
+          "curlsome",
+          "curl-up",
+          "curly",
+          "dumbbell curl",
+          "executive curl",
+          "hammer curl",
+          "high-cable curl",
+          "Jerry curl",
+          "jerry curl",
+          "Jheri curl",
+          "kiss-curl"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/curl#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -59179,18 +59273,17 @@
     "entryId": "ve-7e95157b",
     "term": "revise",
     "sense": {
-      "id": "kaikki:7db231fca0dc078227",
-      "definition": "To study something again in preparation for an exam. Common in British English.",
-      "example": "She plans to revise for her chemistry exam this weekend.",
+      "id": "kaikki:6403081f8791569c23",
+      "definition": "To review, alter and amend something, especially written work.",
+      "example": "The student plans to revise the essay draft before submitting it.",
       "pos": "verb",
       "synonyms": [
-        "review",
-        "review"
+        "overhaul"
       ],
       "antonyms": [],
       "collocations": [],
-      "usage": "Australia, New-Zealand, UK",
-      "register": "Australia, New-Zealand, UK",
+      "usage": "",
+      "register": "",
       "wordFamily": [
         "misrevise",
         "rerevise",
@@ -59240,7 +59333,43 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/revise#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "The British study sense fits the semester, quiz and test vocabulary."
+    "reason": "Both reference transcripts exclusively gloss revise as \"v. 修订；修改\" (\"The writer was revising what he had written\") in a separate cluster (revise, inspect, consult) after preview/review; restoring the amend-written-work sense removes duplication with review.",
+    "previousSenses": [
+      {
+        "id": "kaikki:7db231fca0dc078227",
+        "definition": "To study something again in preparation for an exam. Common in British English.",
+        "example": "She plans to revise for her chemistry exam this weekend.",
+        "pos": "verb",
+        "synonyms": [
+          "review",
+          "review"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "Australia, New-Zealand, UK",
+        "register": "Australia, New-Zealand, UK",
+        "wordFamily": [
+          "misrevise",
+          "rerevise",
+          "revised",
+          "revisee",
+          "revisor",
+          "nonrevised",
+          "revise one's priors",
+          "revisingly",
+          "unrevised"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/revise#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",

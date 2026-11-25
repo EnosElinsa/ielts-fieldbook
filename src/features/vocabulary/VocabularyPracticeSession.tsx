@@ -7,6 +7,10 @@ import { conceal, modeLabel, resultName, senseFor } from "./practicePresentation
 import type { VocabularyPracticeController } from "./useVocabularyPracticeController";
 import { VocabularySourceLinks } from './VocabularySourceLinks';
 import { getVocabularyPronunciation } from '../../domain/vocabulary/sensePronunciation';
+import { dictionaryDisplayText, vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
+import { reviewedExampleForm } from '../../domain/vocabulary/content';
+import { isVocabularyReadingNote } from '../../domain/vocabulary/readiness';
+import { VocabularyExampleText } from './VocabularyExampleText';
 
 const sameText = (left: string, right: string) => {
   const normal = (value: string) => value.normalize('NFKC').replace(/\s+/g, ' ').trim().replace(/[.!?]+$/, '').toLocaleLowerCase();
@@ -26,7 +30,11 @@ export function VocabularyPracticeSession({ controller, session }: {
 }) {
   const { preferences, mode, cards, saving, audioStatus, audioBusy, audioNeedsChoice, looping, answered, flagged, count, locked, currentIndex, pageStart, visibleCards, playCard, updateAnswer, finalizeAnswer, focusCard, advance, toggleFlag, reportProduction, submit, registerAnswerField, pauseSession, replayCard, toggleCurrentAudio, toggleAudioLoop, handleWorkbenchKeyDown } = controller;
   const audioCard = cards[currentIndex];
-  const matchingRecordings = audioCard ? getVocabularyPronunciation(audioCard.entry,senseFor(audioCard),audioCard.pronunciation ?? 'legacy').recordings : [];
+  const audioSense = audioCard ? senseFor(audioCard) : undefined;
+  const audioPresentation = audioSense ? vocabularySensePresentation(audioSense) : undefined;
+  const audioReadingNote = Boolean(audioCard && audioSense && isVocabularyReadingNote(audioCard.entryId, audioSense));
+  const audioExampleForm = audioCard && audioSense ? reviewedExampleForm(audioCard.entryId, audioCard.entry.term, audioSense) : undefined;
+  const matchingRecordings = audioCard ? getVocabularyPronunciation(audioCard.entry,audioSense,audioCard.pronunciation ?? 'legacy').recordings : [];
   function prompt(card: ReviewCard, compact = false) {
     const sense = senseFor(card);
     const currentMode = session?.mode || mode;
@@ -296,13 +304,20 @@ export function VocabularyPracticeSession({ controller, session }: {
           >
             <Volume2 size={34} />
           </IconButton>
-          <h3>{cards[currentIndex]?.entry.term}</h3>
+          <h3>{audioCard?.entry.term}</h3>
           <p>
-            {senseFor(cards[currentIndex])?.definition ||
-              cards[currentIndex]?.entry.meaning}
+            {audioPresentation?.definition ||
+              dictionaryDisplayText(audioCard?.entry.meaning)}
           </p>
           <p className="practice-audio-example">
-            {senseFor(cards[currentIndex])?.example}
+            {audioPresentation?.example ? (
+              <VocabularyExampleText
+                text={audioPresentation.example}
+                term={audioReadingNote ? undefined : audioCard?.entry.term}
+                form={audioExampleForm}
+                pos={audioSense?.pos}
+              />
+            ) : null}
           </p>
           <span className="practice-listened-state">
             {session.answers[cards[currentIndex].id]?.response ? (

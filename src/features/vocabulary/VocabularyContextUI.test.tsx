@@ -1432,3 +1432,51 @@ test("occur in Conflict and competition Group 3 highlights occurred in Word deta
   const mark = await screen.findByText("occurred", { selector: "mark.vocabulary-example-target" });
   expect(mark).toBeVisible();
 });
+
+test("historical practice results for revise keep the tested PR #42 exam sense and disclose the restored amend-writing sense", async () => {
+  const raw = structuredClone(release.entries.find((entry: any) => entry.term === "revise"));
+  const oldSense = {
+    id: "kaikki:7db231fca0dc078227",
+    pos: "verb",
+    definition: "To study something again in preparation for an exam. Common in British English.",
+    example: "She plans to revise for her chemistry exam this weekend.",
+    source: "English Wiktionary via Kaikki.org",
+    sourceUrl: "https://en.wiktionary.org/wiki/revise#English",
+    license: "CC-BY-SA-4.0",
+  };
+  const savedEntry = addVocabularyItem(mocks.fb.state, {
+    ...raw,
+    senses: [oldSense, ...raw.senses.filter((s: any) => s.id !== oldSense.id)],
+    sources: [{ type: "wordbook", id: "ielts-vocabulary:ielts-vocabulary-chapter-05-group-06:" + raw.id, bookId: "ielts-vocabulary", unitId: "ielts-vocabulary-chapter-05-group-06" }],
+  }).item!;
+  const record = {
+    id: "revise-history-session",
+    mode: "dictation",
+    status: "submitted",
+    startedAt: "2026-11-24T11:00:00Z",
+    submittedAt: "2026-11-24T11:02:00Z",
+    filter: { bookId: "ielts-vocabulary", unitId: "ielts-vocabulary-chapter-05-group-06" },
+    selection: { kind: "unit", bookId: "ielts-vocabulary", unitId: "ielts-vocabulary-chapter-05-group-06" },
+    preferences: { accent: "uk" },
+    summary: { total: 1, correct: 1, incorrect: 0, pending: 0, unanswered: 0 },
+    cardSnapshots: [{ id: "card-revise", entry: { ...savedEntry, senses: [oldSense] }, senseId: oldSense.id }],
+    results: [{
+      cardId: "card-revise",
+      entryId: raw.id,
+      senseId: oldSense.id,
+      term: "revise",
+      response: "revise",
+      expectedAnswer: "revise",
+      result: "success",
+      definition: oldSense.definition,
+      example: oldSense.example,
+      context: { bookId: "ielts-vocabulary", unitId: "ielts-vocabulary-chapter-05-group-06" },
+    }],
+  };
+  showResults(record);
+  expect(screen.getByText("To study something again in preparation for an exam. Common in British English.")).toBeVisible();
+  await userEvent.setup().click(screen.getByText("Current wordbook meaning"));
+  expect(screen.getByText("To review, alter and amend something, especially written work.")).toBeVisible();
+  const currentLink = new URL(screen.getByRole("link", { name: "View current meaning" }).getAttribute("href")!, "https://test.test");
+  expect(currentLink.searchParams.get("senseId")).toBe("kaikki:6403081f8791569c23");
+});

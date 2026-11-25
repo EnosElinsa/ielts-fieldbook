@@ -7,6 +7,7 @@ import { buildLearningBatch } from '../../src/domain/vocabulary/learningBatch';
 import { currentGroupLearningRef, previewLearningPlanMeaningUpdate, updateLearningPlanMeanings } from '../../src/domain/vocabulary/learningMeaningUpdate';
 import revisions from '../../src/domain/vocabulary/resourceDictionaryRevisions.json';
 import baseline from '../../src/domain/vocabulary/resourceWordbookContextFollowupBaseline.json';
+import reviewBaseline from '../../src/domain/vocabulary/resourceWordbookContextReviewBaseline.json';
 import type { VocabularyEntry } from '../../src/domain/vocabulary/types';
 
 const initial = structuredClone(VOCABULARY_CATALOG);
@@ -16,13 +17,20 @@ const entry = (term: string): VocabularyEntry => structuredClone(released.entrie
 beforeEach(() => Object.assign(VOCABULARY_CATALOG, structuredClone(released)));
 afterEach(() => Object.assign(VOCABULARY_CATALOG, structuredClone(initial)));
 
-test('follow-up context revision is registered first with exact rollback coverage', () => {
-  expect(revisions[0]).toBe('resourceWordbookContextFollowupBaseline');
+test('follow-up and review context revisions are registered in order with exact rollback coverage', () => {
+  expect(revisions[0]).toBe('resourceWordbookContextReviewBaseline');
+  expect(revisions).toContain('resourceWordbookContextFollowupBaseline');
+  expect(revisions.indexOf('resourceWordbookContextReviewBaseline')).toBeLessThan(revisions.indexOf('resourceWordbookContextFollowupBaseline'));
+  expect(revisions.indexOf('resourceWordbookContextFollowupBaseline')).toBeLessThan(revisions.indexOf('resourceAuditFixesBaseline'));
   expect(new Set(revisions).size).toBe(revisions.length);
   expect(baseline.removeCorrections).toEqual([]);
   expect(baseline.restoreCorrections).toEqual([]);
   expect(baseline.removeTopics).toHaveLength(6);
   expect(baseline.restoreTopicRows).toHaveLength(12);
+  expect(reviewBaseline.removeCorrections).toEqual([]);
+  expect(reviewBaseline.restoreCorrections).toEqual([]);
+  expect(reviewBaseline.removeTopics).toEqual([]);
+  expect(reviewBaseline.restoreTopicRows).toHaveLength(8);
 });
 
 test.each([
@@ -196,4 +204,73 @@ test('retired previousSenses fallback preserves personal edits, group isolation 
   // Unknown sense IDs never match retired previousSenses.
   const unknown = resolveVocabularyLearningContext(raw, { ...ch20, senseId: 'kaikki:nonexistent-sense' });
   expect(unknown.sense).toBeUndefined();
+});
+
+test.each([
+  ['curl', 'ielts-vocabulary-chapter-03-group-01', 'kaikki:dc005d8fefec9f2d78', 'noun', ['kaikki:52fcff2fda3f9392ee']],
+  ['revise', 'ielts-vocabulary-chapter-05-group-06', 'kaikki:6403081f8791569c23', 'verb', ['kaikki:7db231fca0dc078227']],
+  ['miniature', 'ielts-vocabulary-chapter-10-group-03', 'kaikki:552839c4f245b2be71', 'adj', ['kaikki:d7ff4d251725eb19fb', 'kaikki:45617a6b2fe3d12ba6']],
+  ['foul', 'ielts-vocabulary-chapter-18-group-03', 'kaikki:3ec567250f7e679336', 'adj', ['kaikki:69a6c7de8ea5677cad', 'kaikki:0a35aee8d5ecec1d6a']],
+  ['reel', 'ielts-vocabulary-chapter-20-group-02', 'kaikki:7643448034a5bba273', 'verb', ['kaikki:36f383f07ca3b00af7', 'kaikki:c29b5a82b4da8e1037']],
+] as const)('review-pass correction %s binds the source-confirmed sense and upgrades retired PR #42 tasks', (term, unitId, newSenseId, pos, retiredSenseIds) => {
+  const raw = entry(term);
+  const scope = { bookId: 'ielts-vocabulary', unitId };
+  const live = resolveVocabularyLearningContext(raw, scope);
+  const explicit = resolveVocabularyLearningContext(raw, { ...scope, senseId: newSenseId });
+
+  expect(live.curriculumCurrent).toBe(true);
+  expect(live.contentReviewed).toBe(true);
+  expect(live.sense).toMatchObject({ id: newSenseId, pos });
+  expect(explicit.sense).toEqual(live.sense);
+  expect(concealWordInflections(live.sense!.definition, term)).toBe(live.sense!.definition);
+  expect([...live.sense!.example.matchAll(vocabularyInflectedPattern(term, live.sense!.pos))].length).toBeGreaterThan(0);
+  expect(learningTask(live.entry, live.sense!, 'cloze')).toBeDefined();
+
+  for (const oldSenseId of retiredSenseIds) {
+    expect(currentGroupLearningRef({ vocabulary: [raw] }, scope, { entryId: raw.id, senseId: oldSenseId }).senseId).toBe(newSenseId);
+    const retired = resolveVocabularyLearningContext(raw, { ...scope, senseId: oldSenseId });
+    expect(retired.sense?.id).toBe(oldSenseId);
+    expect(retired.curriculumCurrent).toBe(false);
+    const originalBatch = buildLearningBatch({ vocabulary: [] }, scope.bookId, scope.unitId, 0, 10, 'definition', [{ entryId: raw.id, senseId: oldSenseId }]);
+    expect(originalBatch.cards).toHaveLength(1);
+    expect(originalBatch.cards[0].senseId).toBe(oldSenseId);
+  }
+
+  // Personal edits stay protected.
+  const edited = structuredClone(raw);
+  edited.senses[0].definition = `Personal ${term} definition.`;
+  edited.senses[0].example = `Personal ${term} example.`;
+  const resolvedEdited = resolveVocabularyLearningContext(edited, scope);
+  expect(resolvedEdited.sense?.definition).toBe(`Personal ${term} definition.`);
+  expect(resolvedEdited.sense?.example).toBe(`Personal ${term} example.`);
+});
+
+test('reel keeps distinct meanings across School education (film spool noun) and Actions (dizzy verb)', () => {
+  const reel = entry('reel');
+  const spool = resolveVocabularyLearningContext(reel, { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-05-group-03' });
+  const dizzy = resolveVocabularyLearningContext(reel, { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-20-group-02' });
+  expect(spool.sense).toMatchObject({ id: 'editorial:curriculum:school-education:ve-7c78fa3b:noun', pos: 'noun' });
+  expect(dizzy.sense).toMatchObject({ id: 'kaikki:7643448034a5bba273', pos: 'verb' });
+});
+
+test.each([
+  ['respire', 'ielts-vocabulary-chapter-02-group-01', 'kaikki:45c9e8682870efbdfc', /respir/i],
+  ['access', 'ielts-vocabulary-chapter-17-group-02', 'kaikki:622d5062d3feeb0fed', /access/i],
+  ['X-ray', 'ielts-vocabulary-chapter-21-group-04', 'kaikki:2f63b0a5b4dad645b0', /x-?rays?/i],
+] as const)('review-pass refined definition for %s removes answer giveaways while upgrading saved PR #42 copies', (term, unitId, senseId, giveaway) => {
+  const raw = entry(term);
+  const scope = { bookId: 'ielts-vocabulary', unitId };
+  const live = resolveVocabularyLearningContext(raw, scope);
+  expect(live.sense?.id).toBe(senseId);
+  expect(live.sense?.definition).toMatch(/^[A-Z].*\.$/);
+  expect(live.sense?.definition).not.toMatch(giveaway);
+  expect(learningTask(live.entry, live.sense!, 'cloze')).toBeDefined();
+
+  // An unmodified PR #42 saved snapshot upgrades cleanly to the refined definition.
+  const pr42Row = reviewBaseline.restoreTopicRows.find(row => row.term === term && row.unitId === unitId)!;
+  const withPr42Saved = structuredClone(raw);
+  withPr42Saved.senses = [structuredClone(pr42Row.sense), ...withPr42Saved.senses.filter(s => s.id !== senseId)];
+  const upgraded = resolveVocabularyLearningContext(withPr42Saved, scope);
+  expect(upgraded.sense?.definition).toBe(live.sense?.definition);
+  expect(upgraded.curriculumCurrent).toBe(true);
 });
