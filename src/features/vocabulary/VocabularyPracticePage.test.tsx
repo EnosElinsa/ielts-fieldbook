@@ -394,6 +394,16 @@ test('audio-loop failure retains the missing-reading explanation and never recor
   await waitFor(async()=>expect((await latestDraft())?.answers).toEqual({}));
   expect(fb.current.state.vocabularyActivities).toEqual([]);
 });
+test('audio practice highlights inflected target word forms such as occurred',async()=>{
+  const raw=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8')).entries.find((e:any)=>e.term==='occur');
+  const sense={...raw.senses[0],definition:'To happen or take place.',example:'The dispute occurred just before the final round.'};
+  fb.current.state.vocabulary=[{...raw,senses:[sense]}];
+  fb.current.state.settings.vocabulary={autoPlay:false,accent:'uk'};
+  mount(`?entryId=${raw.id}&senseId=${sense.id}&dueOnly=false&mode=audio`);
+  fireEvent.click(await readyStart());
+  const mark=await screen.findByText('occurred',{selector:'mark.vocabulary-example-target'});
+  expect(mark).toBeVisible();
+});
 test('the home due-review link launches only saved meanings with an actual due schedule and freezes that restriction',async()=>{
   const state=fb.current.state;
   state.vocabularyStates=[{id:'scheduled',entryId:'entry-0',senseId:'sense-0',cards:{definition:{due:'2020-01-01'}},wrong:{active:false,modes:{}},dimensions:{}}];

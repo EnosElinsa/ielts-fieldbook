@@ -280,9 +280,11 @@ test('account settings, speaking, and stories keep single current nav state, con
 
 test('follow-up group meanings stay aligned across Card, List, Details, task preview, occurred highlight and retained resources', async ({ page }) => {
   test.setTimeout(120_000);
-  // Verify the previously published production manifest remains directly loadable.
-  const retained = await page.request.get('/vocabulary-resources/manifest.1d6deca143999e5d.json');
-  expect(retained.status()).toBe(200);
+  // Verify previously published production manifests remain directly loadable.
+  for (const url of ['/vocabulary-resources/manifest.3ce90c4c5b58aa11.json', '/vocabulary-resources/manifest.1d6deca143999e5d.json']) {
+    const retained = await page.request.get(url);
+    expect(retained.status(), url).toBe(200);
+  }
 
   // Desktop: verify Social roles Group 1 ("miss") across Card, List and Word details.
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -300,10 +302,23 @@ test('follow-up group meanings stay aligned across Card, List, Details, task pre
   await expect(page.getByText('To feel sad because someone or something you care about is absent.')).toBeVisible();
   await expect(page.locator('blockquote').filter({ hasText: 'Many students miss their families' }).locator('mark.vocabulary-example-target', { hasText: /^miss$/ })).toBeVisible();
 
-  // Desktop: verify Conflict and competition Group 3 ("occur") highlights "occurred".
+  // Desktop: verify School education Group 6 ("revise") across Card, List and Word details.
+  await page.goto('/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-05-group-06/learn?word=ve-7e95157b');
+  await expect(page.getByRole('heading', { level: 2, name: 'revise', exact: true })).toBeVisible({ timeout: 30000 });
+  await expect(page.getByText('To review, alter and amend something, especially written work.')).toBeVisible();
+  await expect(page.locator('mark.vocabulary-example-target', { hasText: /^revise$/ })).toBeVisible();
+  await page.getByRole('button', { name: 'List', exact: true }).click();
+  await expect(page.locator('.vocabulary-learning-list li').filter({ hasText: 'revise' }).getByText('To review, alter and amend something, especially written work.')).toBeVisible();
+
+  // Desktop: verify Conflict and competition Group 3 ("occur") highlights "occurred" on Card and in Audio practice mode.
   await page.goto('/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-18-group-03/learn?word=ve-ad2464d');
   await expect(page.getByRole('heading', { level: 2, name: 'occur', exact: true })).toBeVisible({ timeout: 30000 });
   await expect(page.locator('mark.vocabulary-example-target', { hasText: /^occurred$/ })).toBeVisible();
+  await page.goto('/vocabulary/review?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-18-group-03&entryId=ve-ad2464d&senseId=kaikki%3Af682b333d5e5fcbffe&dueOnly=false&mode=audio');
+  await expect(page.getByRole('button', { name: 'Start session' })).toBeEnabled({ timeout: 30000 });
+  await page.getByRole('button', { name: 'Start session' }).click();
+  await expect(page.getByRole('heading', { level: 3, name: 'occur', exact: true })).toBeVisible({ timeout: 15000 });
+  await expect(page.locator('.practice-audio-example mark.vocabulary-example-target', { hasText: /^occurred$/ })).toBeVisible({ timeout: 15000 });
 
   // Existing unfinished task with PR #42's noun "range" previews the verb update and can still use original meanings.
   const rangePlan = {
@@ -346,8 +361,8 @@ test('follow-up group meanings stay aligned across Card, List, Details, task pre
 
   // Mobile 390px: verify updated group card and Word details render without horizontal overflow.
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-20-group-04/learn?word=ve-b9a5e1a');
-  await expect(page.getByRole('heading', { level: 2, name: 'range', exact: true })).toBeVisible({ timeout: 30000 });
-  await expect(page.getByText('To vary or extend within specified limits.')).toBeVisible();
+  await page.goto('/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-18-group-03/learn?word=ve-7c6e2eb5');
+  await expect(page.getByRole('heading', { level: 2, name: 'foul', exact: true })).toBeVisible({ timeout: 30000 });
+  await expect(page.getByText('Wicked, detestable or extremely unpleasant.')).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
 });

@@ -24,13 +24,16 @@ function publishedRows(entryId: string): PublishedRow[] {
   return rowsByEntry.get(entryId) || [];
 }
 
+const isDictionarySenseId = (id: string) => /^(?:kaikki|wiktionary):/.test(id);
+
 /**
  * Dictionary sense IDs that an unmodified published curriculum meaning stands for.
  * The curriculum can reword a meaning, or give it an editorial ID, without changing which
  * dictionary meaning it teaches. Any learner edit to the ID, definition, part of speech
  * or source (and every personal note) returns no identity, so edited content never inherits
- * pronunciation or diagram evidence. The original dictionary ID counts only when it has
- * the same part of speech as the published meaning.
+ * pronunciation or diagram evidence. A distinct dictionary sense replacement (`kaikki:` /
+ * `wiktionary:`) never aliases its replaced originalSense ID; only an editorial ID with
+ * the same part of speech retains the original dictionary reading identity.
  */
 export function publishedCurriculumSenseIds(entryId: string, sense: VocabularySense | undefined): string[] {
   if (!sense || sense.source === 'Personal note') return [];
@@ -40,7 +43,7 @@ export function publishedCurriculumSenseIds(entryId: string, sense: VocabularySe
     if (published.id !== sense.id || published.definition !== sense.definition || published.pos !== sense.pos || published.source !== sense.source) continue;
     ids.add(published.id);
     const original = row.originalSense;
-    if (original && comparablePartOfSpeech(original.pos) === comparablePartOfSpeech(sense.pos)) ids.add(original.id);
+    if (original && !isDictionarySenseId(published.id) && comparablePartOfSpeech(original.pos) === comparablePartOfSpeech(sense.pos)) ids.add(original.id);
   }
   return [...ids];
 }
