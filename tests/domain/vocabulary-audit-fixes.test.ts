@@ -91,7 +91,8 @@ test('previous fight and grey content is retained as previousSenses and in the r
   expect(grey.previousSenses).toHaveLength(1);
   expect(grey.previousSenses![0]).toEqual({ ...grey.sense, ...oldGrey });
 
-  expect(revisions[0]).toBe('resourceAuditFixesBaseline');
+  expect(revisions).toContain('resourceAuditFixesBaseline');
+  expect(revisions.indexOf('resourceAuditFixesBaseline')).toBeLessThan(revisions.indexOf('resourceWordbookContextBaseline'));
   expect(new Set(revisions).size).toBe(revisions.length);
   expect(baseline.removeCorrections).toEqual([]);
   expect(baseline.removeTopics).toEqual([]);

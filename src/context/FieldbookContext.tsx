@@ -1791,7 +1791,8 @@ function useFieldbookValue() {
           if (!batch.cards.length) throw new Error('The selected word batch is unavailable. Replace the task or retry.');
           const refs = batch.cards.map(({entryId,senseId})=>({entryId,senseId}));
           if (target.cards?.length && JSON.stringify(target.cards) !== JSON.stringify(refs)) throw new Error('This word batch has changed. Replace the task or retry.');
-          target = { ...target, ...batch.selection, type: 'vocabulary', mode: 'learning-batch', assessmentMode: batch.mode, cards: refs };
+          const { bookId, unitId, batchIndex, batchSize } = batch.selection;
+          target = { ...target, bookId, unitId, batchIndex, batchSize, type: 'vocabulary', mode: 'learning-batch', assessmentMode: batch.mode, cards: refs };
         }
       } else {
         if (target.binding === 'dynamic' || !target.binding && !target.cards?.length) {

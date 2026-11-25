@@ -34133,7 +34133,7 @@
     "term": "comedy",
     "sense": {
       "id": "kaikki:5c7d89dfcc7792d59e",
-      "definition": "a dramatic work that is light and humorous or satirical in tone",
+      "definition": "A dramatic work that is light and humorous or satirical in tone.",
       "example": "The theatre is staging a comedy about two families who book the same holiday cottage.",
       "pos": "noun",
       "synonyms": [],
@@ -34212,7 +34212,52 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/comedy#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Select the dictionary sense that fits the Entertainment and sport chapter and use a matching example."
+    "reason": "Retains the verified sense and example; normalises sentence capitalisation and terminal punctuation in the raw Wiktionary definition.",
+    "previousSenses": [
+      {
+        "id": "kaikki:5c7d89dfcc7792d59e",
+        "definition": "a dramatic work that is light and humorous or satirical in tone",
+        "example": "The theatre is staging a comedy about two families who book the same holiday cottage.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [
+          "drama",
+          "tragedy"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "countable",
+        "wordFamily": [
+          "anticomedy",
+          "comedian",
+          "comedic",
+          "comedically",
+          "comedy breasts",
+          "comedy drama",
+          "dark comedy",
+          "docucomedy",
+          "dramedy",
+          "high comedy",
+          "metacomedy",
+          "musical comedy",
+          "noncomedy",
+          "romedy",
+          "sentimental comedy",
+          "telecomedy",
+          "warmedy",
+          "zomedy"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/comedy#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -37937,18 +37982,21 @@
     "entryId": "ve-b97fed1",
     "term": "reuse",
     "sense": {
-      "id": "kaikki:f13995717780a052f5",
-      "definition": "The practice of using an item or material again.",
-      "example": "The reuse of glass jars reduced the amount of packaging the shop needed to buy.",
-      "pos": "noun",
+      "id": "kaikki:20d5af2dece71139b2",
+      "definition": "To use an item or material again instead of throwing it away.",
+      "example": "Shoppers can reuse glass jars to store dry ingredients at home.",
+      "pos": "verb",
       "synonyms": [],
       "antonyms": [],
       "collocations": [],
       "usage": "",
-      "register": "countable, uncountable",
+      "register": "",
       "wordFamily": [
         "adaptive reuse",
-        "composite reuse principle"
+        "composite reuse principle",
+        "reusability",
+        "reusable",
+        "reuser"
       ],
       "source": "English Wiktionary via Kaikki.org",
       "attribution": "English Wiktionary contributors",
@@ -37984,7 +38032,33 @@
         "attribution": "Fieldbook editorial contributors"
       }
     },
-    "reason": "The group pairs the term with recycling and household objects, supporting direct reuse without requiring restoration."
+    "reason": "Immediately following verb recycle in Objects and materials Group 1, both reference wordbook transcripts teach reuse exclusively as a verb (\"v. 再次使用\").",
+    "previousSenses": [
+      {
+        "id": "kaikki:f13995717780a052f5",
+        "definition": "The practice of using an item or material again.",
+        "example": "The reuse of glass jars reduced the amount of packaging the shop needed to buy.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "countable, uncountable",
+        "wordFamily": [
+          "adaptive reuse",
+          "composite reuse principle"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/reuse#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",

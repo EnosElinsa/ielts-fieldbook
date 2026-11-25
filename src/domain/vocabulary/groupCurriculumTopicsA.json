@@ -39348,12 +39348,16 @@
     "entryId": "ve-5eea93ee",
     "term": "parallel",
     "sense": {
-      "id": "kaikki:def6070d850ac9dfe0",
-      "definition": "An imaginary line joining places at the same latitude.",
-      "example": "The forty-ninth parallel forms part of the border between Canada and the United States.",
-      "pos": "noun",
+      "id": "kaikki:b27ac56b1deff44909",
+      "definition": "Equally distant from one another at every point and never meeting.",
+      "example": "Two parallel mountain ridges run along the edge of the valley.",
+      "pos": "adj",
       "synonyms": [],
-      "antonyms": [],
+      "antonyms": [
+        "antiparallel",
+        "perpendicular",
+        "skew"
+      ],
       "collocations": [],
       "usage": "",
       "register": "",
@@ -39450,7 +39454,61 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/parallel#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "The equator, latitude and hemisphere group supports the geographic noun rather than the general adjective."
+    "reason": "In source membership order, parallel sits directly among terrain-shape adjectives (vertical, steep, parallel, narrow) rather than with latitude terms, and the source wordbook does not gloss parallel as a line of latitude.",
+    "previousSenses": [
+      {
+        "id": "kaikki:def6070d850ac9dfe0",
+        "definition": "An imaginary line joining places at the same latitude.",
+        "example": "The forty-ninth parallel forms part of the border between Canada and the United States.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "autoparallel",
+          "biparallel",
+          "embarrassingly parallel",
+          "frontoparallel",
+          "hyperparallel",
+          "massively parallel",
+          "multiparallel",
+          "nonparallel",
+          "parallelable",
+          "parallel axis theorem",
+          "parallel bars",
+          "parallel citation",
+          "parallel compression",
+          "parallel cousin",
+          "parallel dead space",
+          "parallel fifths",
+          "parallel giant slalom",
+          "parallel gill trama",
+          "parallel immersion",
+          "parallel import",
+          "parallelisation",
+          "parallelise",
+          "parallelistic",
+          "parallelity",
+          "parallelization",
+          "parallelize",
+          "parallel key",
+          "parallelless",
+          "parallel market",
+          "parallel motion"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/parallel#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -45529,22 +45587,31 @@
     "entryId": "ve-a8ef1e8",
     "term": "crowd",
     "sense": {
-      "id": "kaikki:de689af86961843679",
-      "definition": "To gather close together in large numbers.",
-      "example": "The chicks crowd together under the heat lamp.",
-      "pos": "verb",
+      "id": "kaikki:dc11e44719f91c606a",
+      "definition": "A large group of people gathered closely together.",
+      "example": "A crowd of visitors gathered outside the penguin enclosure at feeding time.",
+      "pos": "noun",
       "synonyms": [
+        "assemblage",
+        "congregation",
+        "crowd",
+        "flock",
+        "huddle",
+        "legion",
+        "press",
+        "slew",
+        "audience",
+        "group",
+        "multitude",
+        "public",
         "swarm",
         "throng",
-        "crowd in",
-        "crush",
-        "pile",
         "horde"
       ],
       "antonyms": [],
       "collocations": [],
       "usage": "",
-      "register": "intransitive",
+      "register": "",
       "wordFamily": [
         "crowder",
         "crowdingly",
@@ -45554,7 +45621,28 @@
         "crowd up",
         "outcrowd",
         "overcrowd",
-        "undercrowd"
+        "undercrowd",
+        "alone in a crowd",
+        "anticrowd",
+        "beat the crowd",
+        "capacity crowd",
+        "crowd art",
+        "crowd catch",
+        "crowd control",
+        "crowd disease",
+        "crowdest",
+        "crowdfactoring",
+        "crowdfund",
+        "crowdfunding",
+        "crowd-kill",
+        "crowdlending",
+        "crowdless",
+        "crowdlike",
+        "crowd manipulation",
+        "crowd pleaser",
+        "crowd-pleaser",
+        "crowdpleaser",
+        "crowd-pleasing"
       ],
       "source": "English Wiktionary via Kaikki.org",
       "attribution": "English Wiktionary contributors",
@@ -45594,7 +45682,47 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/crowd#English",
       "license": "CC-BY-SA-4.0"
     },
-    "reason": "Select the dictionary sense that fits the Animal protection chapter and use a matching example."
+    "reason": "In source membership order, crowd closes the collective-noun cluster (flock, herd, swarm, throng, crowd) alongside sibling noun throng, and both reference transcripts teach crowd exclusively as a noun.",
+    "previousSenses": [
+      {
+        "id": "kaikki:de689af86961843679",
+        "definition": "To gather close together in large numbers.",
+        "example": "The chicks crowd together under the heat lamp.",
+        "pos": "verb",
+        "synonyms": [
+          "swarm",
+          "throng",
+          "crowd in",
+          "crush",
+          "pile",
+          "horde"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "intransitive",
+        "wordFamily": [
+          "crowder",
+          "crowdingly",
+          "crowd in on",
+          "crowd out",
+          "crowd together",
+          "crowd up",
+          "outcrowd",
+          "overcrowd",
+          "undercrowd"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/crowd#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      }
+    ]
   },
   {
     "bookId": "ielts-vocabulary",
@@ -65034,5 +65162,240 @@
       "license": "CC-BY-SA-4.0"
     },
     "reason": "The current meaning fits the group. Use a shorter or more directly relevant sentence demonstrating the same sense."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-06-group-01",
+    "entryId": "ve-4de44d8a",
+    "term": "absorb",
+    "sense": {
+      "id": "kaikki:45fda064410978bf70",
+      "definition": "To take in and understand information, ideas or knowledge.",
+      "example": "New engineers need time to absorb the technical specifications before testing the system.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "absorb information",
+        "absorb the details"
+      ],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/absorb#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This sense is mental assimilation of information; Plant research teaches physical uptake of liquid or nutrients separately."
+      ],
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:9cfebb50e0e983dc6b",
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/absorb#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      },
+      "definition": "To include so that it no longer has separate existence; to overwhelm; to cause to disappear as if by swallowing up; to incorporate; to assimilate; to take in and use up.",
+      "example": "The larger organization absorbed the smaller one.",
+      "pos": "verb",
+      "collocations": [
+        "absorb an organization",
+        "absorb into a larger whole"
+      ],
+      "usage": "",
+      "synonyms": [
+        "incorporate",
+        "assimilate"
+      ],
+      "antonyms": [],
+      "distinctions": [
+        "This sense removes separate existence by incorporation; liquid uptake and paying costs are separate."
+      ],
+      "wordFamily": [],
+      "register": "transitive"
+    },
+    "reason": "In Technology and invention Group 1, absorb appears in the study/research cluster (specialise, absorb, concentrate, focus) and the source wordbook explicitly teaches mental comprehension rather than corporate takeover."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-06-group-02",
+    "entryId": "ve-74c11571",
+    "term": "stumble",
+    "sense": {
+      "id": "kaikki:1e02b352b6ab3fb77b",
+      "definition": "To make a mistake or run into difficulty while doing something.",
+      "example": "Even experienced engineers can stumble when testing unfamiliar software.",
+      "pos": "verb",
+      "synonyms": [
+        "blunder",
+        "err"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "stumble across",
+        "stumble against",
+        "stumblebum",
+        "stumble-drunk",
+        "stumble into",
+        "stumble on",
+        "stumble onto",
+        "stumbler",
+        "stumblesome",
+        "stumble upon",
+        "stumbly"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/stumble#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:4251ec62d146deab6c",
+      "definition": "A fall, trip or substantial misstep.",
+      "example": "I went to his aid. As he said, a board in the floor was loose. His stepping on it unawares had caused his stumble.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/stumble#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Both reference wordbook transcripts confirm stumble is taught as a verb (not the previous noun default) leading with \"犯错误\" immediately after error, mistake, flaw, wrong and fault; this group-aligned verb sense matches that cluster and removes the archaic three-sentence quote."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-07-group-02",
+    "entryId": "ve-9cdf911e",
+    "term": "celebrity",
+    "sense": {
+      "id": "kaikki:8b15829ceb1db3bc86",
+      "definition": "Fame, renown; the state of being famous or talked-about.",
+      "example": "The explorer gained lasting celebrity after returning from the voyage.",
+      "pos": "noun",
+      "synonyms": [
+        "big name",
+        "distinction",
+        "fame",
+        "eminence",
+        "renown"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "anticelebrity",
+        "blogebrity",
+        "celeb",
+        "celebreality",
+        "celebretard",
+        "celebricide",
+        "celebrification",
+        "celebriphilia",
+        "celebritihood",
+        "celebritiness",
+        "celebritize",
+        "celebritydom",
+        "celebrityhood",
+        "celebrityness",
+        "celebrity obsession disorder",
+        "celebrityship",
+        "celebrityville",
+        "celebrity worship syndrome",
+        "celebutante",
+        "celebutard",
+        "celesbian",
+        "celetoid",
+        "cybercelebrity",
+        "delebrity",
+        "demicelebrity",
+        "e-celebrity",
+        "incelebrity",
+        "megacelebrity",
+        "microcelebrity",
+        "micro-celebrity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/celebrity#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:8b15829ceb1db3bc86",
+      "definition": "Fame, renown; the state of being famous or talked-about.",
+      "example": "Many of those that envy celebrities aspire to celebrity themselves.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "anticelebrity",
+        "blogebrity",
+        "celeb",
+        "celebreality",
+        "celebretard",
+        "celebricide",
+        "celebrification",
+        "celebriphilia",
+        "celebritihood",
+        "celebritiness",
+        "celebritize",
+        "celebritydom",
+        "celebrityhood",
+        "celebrityness",
+        "celebrity obsession disorder",
+        "celebrityship",
+        "celebrityville",
+        "celebrity worship syndrome",
+        "celebutante",
+        "celebutard",
+        "celesbian",
+        "celetoid",
+        "cybercelebrity",
+        "delebrity",
+        "demicelebrity",
+        "e-celebrity",
+        "incelebrity",
+        "megacelebrity",
+        "microcelebrity",
+        "micro-celebrity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/celebrity#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "The source wordbook sentence confirms the uncountable fame/renown sense next to status. Replacing the original Wiktionary example removes dual-sense confusion (\"celebrities\" vs \"celebrity\") and fixes a cloze answer giveaway."
   }
 ]
