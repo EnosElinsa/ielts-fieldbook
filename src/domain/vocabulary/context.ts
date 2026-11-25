@@ -1,6 +1,6 @@
 import { vocabularyTeaching, vocabularyTeachingRevision, type VocabularyContentScope } from './runtimeData';
 import { catalogVocabularyEntry, catalogVocabularySenses, hasVocabularyLearningEdits, hasVocabularySenseEdits, restoreVocabularyPublicImport, reviewedEntry, VOCABULARY_CONTENT_VERSION } from './content';
-import { applyVocabularyContentVariant, hasVocabularyReadinessDefault, markVocabularyContentScope, supplementVocabularySense, vocabularyReadinessBaselines } from './readiness';
+import { applyVocabularyContentVariant, hasVocabularyContentVariant, hasVocabularyReadinessDefault, markVocabularyContentScope, supplementVocabularySense, vocabularyReadinessBaselines } from './readiness';
 import { vocabularyCurriculum, vocabularyCurriculumBaselines, type VocabularyCurriculum } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
 import { normalizeVocabularyScope } from './identities';
@@ -41,48 +41,75 @@ export function resolveVocabularyLearningContext(entry: VocabularyEntry, request
   entry = restoreVocabularyPublicImport(entry);
   request = normalizeVocabularyScope(request);
   ensureContexts();
-  const route:VocabularyContentScope=request.bookId && request.unitId?{kind:'group',bookId:request.bookId,unitId:request.unitId}:request.senseId?{kind:'dictionary-source'}:{kind:'default'};
   const membershipKey = key({ ...request, entryId: entry.id });
   const membershipBinding = bindings.get(membershipKey);
   const binding = membershipBinding || (!hasVocabularyReadinessDefault(entry.id) ? supplements.defaults.find(item => item.entryId === entry.id) : undefined) as unknown as Binding | undefined;
   const fallback = reviewedEntry(entry);
-  const selectedBinding = binding && (!request.senseId || Boolean(membershipBinding) && request.senseId === binding.sense.id) ? binding : undefined;
-  // An explicit dictionary sense may not be in the learner's small catalog snapshot yet.
-  const explicitSupplement = request.senseId ? [...supplements.bindings, ...supplements.defaults].find(item => item.entryId === entry.id && item.sense.id === request.senseId) : undefined;
-  const existing = selectedBinding && entry.senses.find(item => item.id === selectedBinding.sense.id);
   const publicSenses = catalogVocabularySenses(entry.id);
+  const route: VocabularyContentScope = request.bookId && request.unitId
+    ? { kind: 'group', bookId: request.bookId, unitId: request.unitId }
+    : request.senseId
+      ? { kind: 'dictionary-source' }
+      : { kind: 'default' };
+  const selectedBinding = binding && (!request.senseId || Boolean(membershipBinding) && request.senseId === binding.sense.id) ? binding : undefined;
+  // A requested group may consult only its own binding and common defaults, never another book's binding.
+  const supplementPool = request.bookId && request.unitId
+    ? [...(membershipBinding ? [membershipBinding] : []), ...supplements.defaults]
+    : [...supplements.defaults, ...supplements.bindings];
+  const explicitSupplement = request.senseId ? supplementPool.find(item => item.entryId === entry.id && item.sense.id === request.senseId) : undefined;
+  const existing = selectedBinding && entry.senses.find(item => item.id === selectedBinding.sense.id);
   const catalogSense = selectedBinding && publicSenses.find(item => item.id === selectedBinding.sense.id);
-  const userOverride = existing && hasVocabularyLearningEdits(entry.id, existing, [selectedBinding?.originalSense, catalogSense, selectedBinding?.sense, ...vocabularyReadinessBaselines(entry.id,existing.id)]);
-  const explicitSaved = request.senseId && !request.bookId ? entry.senses.find(item=>item.id===request.senseId) : undefined;
+  const userOverride = existing && hasVocabularyLearningEdits(entry.id, existing, [selectedBinding?.originalSense, catalogSense, selectedBinding?.sense, ...vocabularyReadinessBaselines(entry.id, existing.id), ...vocabularyCurriculumBaselines(entry.id, existing.id)]);
+  const explicitSaved = request.senseId && !request.bookId ? entry.senses.find(item => item.id === request.senseId) : undefined;
   const selectedSense = (userOverride ? existing : selectedBinding?.sense) || (request.senseId ? explicitSaved || fallback.senses.find(item => item.id === request.senseId) || explicitSupplement?.sense : fallback.senses[0]);
   // Group teaching retains its context; a common default can receive a later same-sense review.
   const contextSource = selectedBinding || explicitSupplement;
   const scopedContext = Boolean(request.bookId && request.unitId && contextSource && 'bookId' in contextSource
     && contextSource.bookId === request.bookId && contextSource.unitId === request.unitId);
   const contextBaselines = contextSource ? [contextSource.sense, contextSource.originalSense].filter((s): s is VocabularySense => Boolean(s)) : [];
+  const learnerPrimary=entry.senses[0];
+  const publicEntry=catalogVocabularyEntry(entry.id);
+  const publicBaseline=publicEntry || publicSenses.length ? reviewedEntry(publicEntry || {...entry,senses:publicSenses}) : undefined;
+  const primaryBaselines=learnerPrimary ? [...(publicBaseline?.senses.filter(item=>item.id===learnerPrimary.id)||[]),...publicSenses.filter(item=>item.id===learnerPrimary.id),...vocabularyReadinessBaselines(entry.id,learnerPrimary.id),...vocabularyCurriculumBaselines(entry.id,learnerPrimary.id)] : [];
+  // An unmodified dictionary meaning saved from a lookup must not masquerade as a personal edit over group teaching.
+  const publicDictionaryPrimary = Boolean(learnerPrimary && !primaryBaselines.length && learnerPrimary.source && learnerPrimary.source !== 'Personal note'
+    && /^(?:kaikki:|wiktionary:)/.test(learnerPrimary.id)
+    && (learnerPrimary.sourceUrl?.includes('wiktionary.org/') || learnerPrimary.source.includes('Wiktionary') || learnerPrimary.source.includes('Fieldbook')));
   let sense = selectedSense ? structuredClone(scopedContext ? selectedSense : supplementVocabularySense(entry.id,selectedSense,[...publicSenses.filter(s=>s.id===selectedSense.id),...contextBaselines],hasVocabularySenseEdits,route)) : undefined;
-  const plan=vocabularyCurriculum(entry,request,sense || fallback.senses[0]);
+  const curriculumFallback = request.bookId && request.unitId && !request.senseId && publicDictionaryPrimary && !selectedBinding && publicBaseline?.senses[0]
+    ? publicBaseline.senses[0]
+    : sense || fallback.senses[0];
+  const plan=vocabularyCurriculum(entry,request,curriculumFallback);
   const publicChoices=plan?.curriculum.senses.map(candidate=>applyVocabularyContentVariant(entry.id,candidate,candidate,[candidate,...vocabularyCurriculumBaselines(entry.id,candidate.id)],()=>false,route));
   const choices=publicChoices?.map(candidate=>{
     const existing=entry.senses.find(item=>item.id===candidate.id);
     const baselines=[...publicSenses.filter(item=>item.id===candidate.id),...vocabularyCurriculumBaselines(entry.id,candidate.id),...vocabularyReadinessBaselines(entry.id,candidate.id),candidate];
     return existing && hasVocabularyLearningEdits(entry.id, existing, baselines) ? existing : candidate;
   });
-  const learnerPrimary=entry.senses[0];
-  const publicEntry=catalogVocabularyEntry(entry.id);
-  const publicBaseline=publicEntry || publicSenses.length ? reviewedEntry(publicEntry || {...entry,senses:publicSenses}) : undefined;
-  const primaryBaselines=learnerPrimary ? [...(publicBaseline?.senses.filter(item=>item.id===learnerPrimary.id)||[]),...publicSenses.filter(item=>item.id===learnerPrimary.id),...vocabularyReadinessBaselines(entry.id,learnerPrimary.id),...vocabularyCurriculumBaselines(entry.id,learnerPrimary.id)] : [];
-  const learnerEdited=learnerPrimary && (publicSenses.length && !primaryBaselines.length || hasVocabularyLearningEdits(entry.id, learnerPrimary, primaryBaselines));
+  const learnerEdited = learnerPrimary && (primaryBaselines.length ? hasVocabularyLearningEdits(entry.id, learnerPrimary, primaryBaselines) : (publicSenses.length > 0 && !publicDictionaryPrimary));
   const curricular=request.senseId?(request.bookId && request.unitId?choices?.find(item=>item.id===request.senseId):undefined):!userOverride && !learnerEdited?choices?.[0]:undefined;
   if(curricular) sense=structuredClone(curricular);
   if(!request.senseId && learnerEdited) sense=structuredClone(learnerPrimary);
   // Curriculum/bindings may replace the earlier fallback. Repair only this final public selection.
   const selectedPublic=curricular?publicChoices?.find(item=>item.id===sense?.id):route.kind==='dictionary-source'?sense:selectedBinding?.sense || explicitSupplement?.sense || sense;
+  const uneditedDefaultFallback = route.kind === 'dictionary-source' && !request.bookId && binding && !membershipBinding
+    && sense && sense.id === binding.sense.id && sense.id === (publicEntry?.senses[0]?.id || publicSenses[0]?.id)
+    && !hasVocabularyContentVariant(entry.id, selectedPublic || sense, route)
+    && !hasVocabularyLearningEdits(entry.id, sense, [...publicSenses.filter(item => item.id === sense!.id), ...vocabularyReadinessBaselines(entry.id, sense!.id)]);
+  if (uneditedDefaultFallback) {
+    sense = structuredClone(binding!.sense);
+  }
+  const contentScope: VocabularyContentScope =
+    route.kind === 'dictionary-source' && sense && sense.id === (publicEntry?.senses[0]?.id || publicSenses[0]?.id)
+    && !hasVocabularyContentVariant(entry.id, selectedPublic || sense, route)
+    && hasVocabularyContentVariant(entry.id, uneditedDefaultFallback ? sense : (selectedPublic || sense), { kind: 'default' })
+      ? { kind: 'default' }
+      : route;
   if(sense && selectedPublic?.id===sense.id) {
     const known=[...publicSenses.filter(item=>item.id===sense!.id),...contextBaselines,...vocabularyCurriculumBaselines(entry.id,sense.id),...vocabularyReadinessBaselines(entry.id,sense.id)];
-    sense=applyVocabularyContentVariant(entry.id,selectedPublic,sense,known,hasVocabularySenseEdits,route);
+    sense=applyVocabularyContentVariant(entry.id,uneditedDefaultFallback?sense:selectedPublic,sense,known,hasVocabularySenseEdits,contentScope);
   }
-  if(sense) markVocabularyContentScope(sense,route);
+  if(sense) markVocabularyContentScope(sense,contentScope);
   const selectedCurriculumRow=plan?.rows.find(row=>row.sense.id===sense?.id);
   const curriculumEdited=Boolean(selectedCurriculumRow && sense && hasVocabularySenseEdits(sense,[selectedCurriculumRow.sense,...(publicChoices?.filter(item=>item.id===sense!.id)||[])]));
   const sourceConfirmed=Boolean(selectedCurriculumRow?.sectionId && selectedCurriculumRow.sentenceIds?.length && !curriculumEdited && !learnerEdited);

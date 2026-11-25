@@ -21,6 +21,8 @@ import { playbackMessage } from "./Pronunciation";
 import { useVocabularyReturn, vocabularyForwardState } from './VocabularyRouteLink';
 import { practiceKeyboard } from "./practiceKeyboard";
 import { presentVocabularySession } from '../../domain/vocabulary/sessionPresentation';
+import { historicalCatalogRequests } from '../../domain/vocabulary/sessionHydration';
+import type { VocabularyRecording } from '../../domain/vocabulary/media';
 import { MODES, senseFor } from "./practicePresentation";
 import { loadReleasedVocabularyTeaching } from '../../storage/vocabularyCatalog';
 import { type PracticeNavigationRequest } from '../../lib/practiceNavigation';
@@ -458,10 +460,12 @@ export function useVocabularyPracticeController() {
     const record = ((fb.state.vocabularySessions || []) as SessionLog[]).find(record => record.id === id);
     if (record) {
       setResults(presentVocabularySession(record)); setCards([]); setError('');
-      const sourceBook = record.selection && 'bookId' in record.selection ? record.selection.bookId : record.filter?.bookId;
-      if (sourceBook && sourceBook !== 'all') {
-        const unit = record.selection && 'unitId' in record.selection ? record.selection.unitId : record.filter?.unitId;
-        void fb.loadVocabularyCatalog?.(sourceBook, { ...(unit && unit !== 'all' ? { unitId: unit } : {}), entryIds: record.entryIds }).catch(() => { /* historical view remains available from frozen rows */ });
+      // A refreshed or deep-linked result has none of the session's words loaded.
+      // Read every tested entry from its own frozen book/group so the exact tested
+      // sense, part of speech, definition and example can be rendered.
+      for (const request of historicalCatalogRequests(record)) {
+        const { bookId: requestBook, ...options } = request;
+        void new Promise(resolve => resolve(fb.loadVocabularyCatalog?.(requestBook, options))).catch(() => { /* historical view remains available from frozen rows */ });
       }
     }
     else if (fb.booted) {
@@ -472,6 +476,26 @@ export function useVocabularyPracticeController() {
       return ()=>{active=false;};
     }
   }, [historySessionId, params.get('sessionId'), fb.state.vocabularySessions, fb.booted,fb.ensureVocabularySession]);
+
+  const resultsPlanId = results?.planId;
+  const resultsPlanKnown = Boolean(resultsPlanId && (fb.state.plans as { id: string }[] | undefined)?.some(plan => plan.id === resultsPlanId));
+  const resultsPlanKey = JSON.stringify([accountId(), resultsPlanId || '']);
+  const [resultsPlanRead, setResultsPlanRead] = useState<{ key: string; status: 'ready' | 'error' }>();
+  const [resultsPlanRetry, setResultsPlanRetry] = useState(0);
+  // Completed or old tasks are paged out of the account load. Read the linked row
+  // before the saved result reports what happened to its task.
+  useEffect(() => {
+    if (!resultsPlanId || resultsPlanKnown || submissionOutcome?.planId === resultsPlanId) return;
+    let active = true;
+    const requestOwner = accountId();
+    new Promise(resolve => resolve(fb.ensurePlanningRows?.([resultsPlanId])))
+      .then(() => { if (active && requestOwner === accountId()) setResultsPlanRead({ key: resultsPlanKey, status: 'ready' }); })
+      .catch(() => { if (active && requestOwner === accountId()) setResultsPlanRead({ key: resultsPlanKey, status: 'error' }); });
+    return () => { active = false; };
+  }, [resultsPlanId, resultsPlanKnown, resultsPlanKey, resultsPlanRetry, submissionOutcome?.planId, fb.ensurePlanningRows]);
+  const resultsPlanStatus: 'ready' | 'loading' | 'error' = !resultsPlanId || resultsPlanKnown || submissionOutcome?.planId === resultsPlanId ? 'ready'
+    : resultsPlanRead?.key !== resultsPlanKey ? 'loading' : resultsPlanRead.status;
+  const retryResultsPlan = () => { setResultsPlanRead(undefined); setResultsPlanRetry(value => value + 1); };
 
   const resultReturnParams = new URLSearchParams(params);
   resultReturnParams.delete('sessionId');
@@ -498,7 +522,7 @@ export function useVocabularyPracticeController() {
 
   async function playCard(
     index: number,
-    options: { automatic?: boolean; example?: boolean; accent?: 'uk' | 'us'; deviceOnly?: boolean } = {},
+    options: { automatic?: boolean; example?: boolean; accent?: 'uk' | 'us'; deviceOnly?: boolean; recording?: VocabularyRecording } = {},
   ) {
     const card = cardsRef.current[index];
     if (!card || !owned()) return false;
@@ -518,6 +542,7 @@ export function useVocabularyPracticeController() {
       sense: senseFor(card),
       pronunciation: card.pronunciation ?? 'legacy',
       deviceOnly: options.deviceOnly,
+      ...(options.recording ? { recording: options.recording } : {}),
       rate: p.speechRate,
       volume: p.volume,
       repeatCount: p.repeatCount,
@@ -1159,7 +1184,7 @@ export function useVocabularyPracticeController() {
     focusCard, advance, toggleFlag, reportProduction, submit, savePreferences, exit,
     resetResults, discardResume, showRecentSession, retryCatalog,
     registerAnswerField, pauseSession, replayCard, toggleCurrentAudio, toggleAudioLoop,
-    handleWorkbenchKeyDown, retryMistakes,
+    handleWorkbenchKeyDown, retryMistakes, resultsPlanStatus, retryResultsPlan,
     submissionPending: Boolean(pendingCommit.current),
   };
 }

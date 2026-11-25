@@ -202,14 +202,14 @@ export async function ensureQuestionBank(skill: 'writing' | 'speaking', options:
   return questionBankRows(skill, data);
 }
 
-export async function ensureSpeakingSample(topicId: string) {
+export async function ensureSpeakingSample(topicId: string, options: { force?: boolean } = {}) {
   const generation = accountGeneration();
   const id = accountId();
   const sample = await cachedRead(readCacheKey(id, String(STATE_VERSION), 'speaking_samples', [generation, topicId]), async () => {
-    const { data, error } = await getSupabase().from('speaking_samples').select('id, payload').eq('id', topicId).maybeSingle();
+    const { data, error } = await requestTimeout(getSupabase().from('speaking_samples').select('id, payload').eq('id', topicId).maybeSingle(), 15_000);
     if (error) throw error;
     return data ? { ...data.payload, id: String(data.id) } : null;
-  }, { staleWhileRevalidate: false });
+  }, { staleWhileRevalidate: false, force: options.force });
   assertAccount(generation, id);
   return sample;
 }

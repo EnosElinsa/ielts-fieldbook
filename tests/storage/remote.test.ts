@@ -52,7 +52,11 @@ vi.mock('../../src/lib/supabase', () => ({
           eq: (key, value) => { rows = rows.filter(row => (key.startsWith('payload->>') ? row.payload?.[key.slice(10)] : row[key]) === value); return query; },
           in: (key, values) => { rows = rows.filter(row => values.includes(key.startsWith('payload->>') ? row.payload?.[key.slice(10)] : row[key])); return query; },
           order: () => { rows = rows.slice().sort((left, right) => String(left.id).localeCompare(String(right.id))); return query; },
-          maybeSingle: async () => ({ data: structuredClone(table === 'profiles' ? mocks.profile : rows[0] || null), error: null }),
+          maybeSingle: async () => {
+            mocks.reads.push(table);
+            if (mocks.readPromises[table]) await mocks.readPromises[table];
+            return { data: structuredClone(table === 'profiles' ? mocks.profile : rows[0] || null), error: null };
+          },
         };
         return query;
       },
@@ -927,4 +931,23 @@ test('edits made while the session RPC is pending remain available for a later s
   expect(await saving).toBe(true);
   expect(await saveState(state)).toBe(true);
   expect(mocks.upserts.find(call => call.table === 'vocabulary').rows[0].payload.term).toBe('later edit');
+});
+
+test('ensureSpeakingSample times out hung reads at 15s and honors force: true on retry', async () => {
+  vi.useFakeTimers();
+  mocks.rows.speaking_samples = [{ id: 't1', payload: { sampleAnswer: 'Cached sample' } }];
+  mocks.readPromises.speaking_samples = new Promise(() => {});
+  const { ensureSpeakingSample, hydrateState } = await import('../../src/storage/remote');
+  await hydrateState({ modules: [] });
+
+  const timedOut = ensureSpeakingSample('t1').catch(error => error);
+  await vi.advanceTimersByTimeAsync(15_000);
+  const error = await timedOut;
+  expect(error).toBeInstanceOf(Error);
+  expect(error.message).toMatch(/too long|timeout/i);
+
+  delete mocks.readPromises.speaking_samples;
+  const fresh = await ensureSpeakingSample('t1', { force: true });
+  expect(fresh).toEqual({ id: 't1', sampleAnswer: 'Cached sample' });
+  expect(mocks.reads.filter(table => table === 'speaking_samples')).toHaveLength(2);
 });

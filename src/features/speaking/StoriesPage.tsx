@@ -78,7 +78,7 @@ export function StoriesPage() {
                 <div className="story-card-head">
                   <div>
                     <span className="pill blue">Fits {plural((story.topicIds || []).length, 'topic')}</span>
-                    <h4 className="story-term">{story.title || 'Untitled story'}</h4>
+                    <h2 className="story-term">{story.title || 'Untitled story'}</h2>
                     <p className="story-meaning">{storySummary(story) || 'No notes yet'}</p>
                   </div>
                 </div>

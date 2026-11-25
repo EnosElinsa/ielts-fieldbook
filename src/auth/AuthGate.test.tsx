@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { AuthGate } from './AuthGate';
+import { ThemeProvider } from '../context/ThemeContext';
 
 const { signUp, signInWithPassword, getSession, resend, resetPasswordForEmail, onAuthStateChange } = vi.hoisted(() => {
   type AuthListener = (event: string, session: unknown) => void;
@@ -176,4 +177,39 @@ test('a returned saved-session error offers the same connection retry', async ()
   await renderGate();
   expect(screen.getByText(connectionError)).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Retry connection' })).toBeEnabled();
+});
+
+test('system theme follows OS dark preference, switches to light mode, and exposes live auth roles', async () => {
+  vi.stubGlobal('matchMedia', vi.fn(() => ({
+    matches: true,
+    media: '(prefers-color-scheme: dark)',
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+  })));
+  localStorage.clear();
+  signInWithPassword.mockResolvedValueOnce({ data: { session: null }, error: { message: 'Invalid login credentials' } } as never);
+  signUp.mockResolvedValueOnce({ data: { session: null }, error: null } as never);
+  try {
+    render(<ThemeProvider><AuthGate><p>Notebook</p></AuthGate></ThemeProvider>);
+    const toggle = await screen.findByRole('button', { name: 'Use light theme' });
+    expect(document.documentElement.dataset.theme).toBe('dark');
+    await userEvent.setup().click(toggle);
+    expect(document.documentElement.dataset.theme).toBe('light');
+
+    await userEvent.type(screen.getByLabelText('Email'), 'user@example.com');
+    await userEvent.type(screen.getByLabelText('Password'), 'wrongpw');
+    await userEvent.click(screen.getByRole('button', { name: /^Sign in$/ }));
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Create an account' }));
+    await userEvent.type(screen.getByLabelText('Password'), 'secret1');
+    await userEvent.click(screen.getByRole('button', { name: 'Create account' }));
+    resend.mockResolvedValueOnce({ error: null });
+    await userEvent.click(await screen.findByRole('button', { name: 'Resend confirmation' }));
+    expect(await screen.findByRole('status')).toHaveTextContent('Confirmation email sent.');
+  } finally {
+    vi.unstubAllGlobals();
+    localStorage.clear();
+    delete document.documentElement.dataset.theme;
+  }
 });

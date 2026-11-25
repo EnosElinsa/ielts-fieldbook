@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { useFieldbook } from '../context/FieldbookContext';
-import { PageLoadingState, StateMessage, type LoadingVariant } from './AsyncState';
+import { PageLoadingState, PanelLoadingState, StateMessage, type LoadingVariant } from './AsyncState';
+import { ModalFrame } from './ModalFrame';
 import type { AccountModule } from '../storage/accountModules';
 import { accountId } from '../storage/remote';
 
@@ -34,13 +35,35 @@ export function useAccountRequirements({ modules = [], banks = [], vocabularyEnt
 }
 
 const GENERIC_LOAD_ERROR = 'Could not load study data.';
+const GUIDANCE = 'Check your connection, then retry. Work you already saved is safe.';
+
+function useLoadFailure(banks: Requirements['banks'], error: string) {
+  const fb = useFieldbook();
+  return error || (banks || []).map(bank => fb.bankErrors?.[bank]).find(Boolean) || '';
+}
 
 export function AccountDataBoundary({ children, modules, banks, vocabularyEntryIds, variant = 'cards', area = 'study data', title }: Requirements & { children: ReactNode; variant?: LoadingVariant; area?: string; title?: string }) {
   const { ready, error, retry } = useAccountRequirements({modules,banks,vocabularyEntryIds});
-  const fb = useFieldbook();
-  const refreshError = error || (banks || []).map(bank => fb.bankErrors?.[bank]).find(Boolean);
+  const refreshError = useLoadFailure(banks, error);
   const detail = refreshError && refreshError !== GENERIC_LOAD_ERROR ? refreshError : '';
-  if (!ready && refreshError) return <StateMessage kind="error" title={`Your ${area} could not load`} message={<>Check your connection, then retry. Work you already saved is safe.{detail ? <small className="async-state-detail">{detail}</small> : null}</>} onRetry={retry} retryLabel="Retry" />;
+  if (!ready && refreshError) return <StateMessage kind="error" title={`Your ${area} could not load`} message={<>{GUIDANCE}{detail ? <small className="async-state-detail">{detail}</small> : null}</>} onRetry={retry} retryLabel="Retry" />;
   if (!ready) return <PageLoadingState title={title} message={`Loading your ${area}…`} variant={variant} onRetry={retry} retryLabel="Retry" />;
-  return <>{refreshError && <p role="alert">{refreshError} <button className="btn text" onClick={retry}>Retry</button></p>}{children}</>;
+  return <>{refreshError && <p className="async-refresh-error"><StateMessage inline kind="error" title={`Some ${area} could not refresh. `} message={detail ? `${detail} ` : 'Showing what is already saved. '} onRetry={retry} retryLabel="Retry" /></p>}{children}</>;
+}
+
+/**
+ * Dialogs that need account data sit inside this wrapper, not the other way round. The dialog frame
+ * is present while data loads or fails, so the page behind it is never left under a blank overlay
+ * that cannot be closed. The wrapped dialog renders its own frame once the data is ready.
+ */
+export function ModalDataBoundary({ children, modules, banks, vocabularyEntryIds, title, area = 'study data', onClose }: Requirements & { children: ReactNode; title: string; area?: string; onClose: () => void }) {
+  const { ready, error, retry } = useAccountRequirements({ modules, banks, vocabularyEntryIds });
+  const failure = useLoadFailure(banks, error);
+  if (ready) return <>{children}</>;
+  const detail = failure && failure !== GENERIC_LOAD_ERROR ? failure : '';
+  return <ModalFrame open onClose={onClose} title={title}>
+    {failure
+      ? <StateMessage kind="error" title={`Your ${area} could not load`} message={<>{GUIDANCE}{detail ? <small className="async-state-detail">{detail}</small> : null}</>} onRetry={retry} retryLabel="Retry" />
+      : <PanelLoadingState variant="form" message={`Loading your ${area}…`} onRetry={retry} retryLabel="Retry" />}
+  </ModalFrame>;
 }

@@ -948,3 +948,26 @@ test('planned learning ignores URL card substitutions and keeps the account batc
   expect(url.searchParams.get('planId')).toBe('account-learning');
   expect(JSON.parse(url.searchParams.get('batchCards')!)).toEqual(batch.selection.cards);
 });
+
+test('batch meaning update shows old-to-new preview with reason and post-save date/duration summary', async () => {
+  const { entry, url } = legacyEscalatorPlan();
+  mocks.fb.state.plans[0].dateKey = '2026-11-25';
+  mocks.fb.state.plans[0].estimatedMinutes = 15;
+  vi.spyOn(vocabularySessionDrafts, 'list').mockResolvedValue([]);
+  mocks.fb.mutatePlans = vi.fn(async (mutate: any) => {
+    const next = structuredClone(mocks.fb.state);
+    await mutate(next);
+    mocks.fb.state = next; mocks.fb.stateRef.current = next;
+    return true;
+  });
+  mount(url);
+  const previewRegion = await screen.findByRole('complementary', { name: 'Batch meaning update' });
+  expect(previewRegion).toHaveTextContent(/Previewing current group meanings for this 10-word task/);
+  expect(previewRegion).toHaveTextContent(/15 min/);
+  expect(previewRegion).toHaveTextContent(`${entry.senses[0].definition} → `);
+  await userEvent.click(within(previewRegion).getByRole('button', { name: 'Update batch meanings' }));
+  const savedBanner = await screen.findByRole('status', { name: 'Updated batch meanings' });
+  expect(savedBanner).toHaveTextContent(/Updated \d+ word meaning/);
+  expect(savedBanner).toHaveTextContent(/15 min/);
+  expect(savedBanner).toHaveTextContent('A moving staircase that carries people between levels.');
+});

@@ -539,6 +539,8 @@ function refreshEvidenceTargets(state, keys, skills, now, previous, approvedId?)
       const base=`${plan.id}-practice`;let id=base,index=2;while(state.plans.some(row=>row.id===id))id=`${base}-${index++}`;
       clearPlanBinding(practice);
       Object.assign(practice,skillTask(state,practice.skill,remaining,Math.floor((practice.rotationIndex||0)/skills.length)),{id});
+      // The approved replacement keeps the displaced practice time; regeneration must not drop it.
+      if (crossSkill) practice.manuallyEditedAt = now.toISOString();
       state.plans.push(practice);
     }
   }
@@ -797,7 +799,7 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
         allocateStudyBlocks(skills,budget,available,sequence,state.settings.focus).forEach(({skill,minutes},index)=>{
           add(key,skillTask(state,skill,minutes,sequence+index),`study-${key}-slot-${index+1}`,index+vocabularyOrder,sequence+index);
         });
-      } else if(!state.plans.some(plan=>plan.dateKey===key&&plan.status!=='skipped'&&!isVocabularyPlan(plan))) {
+      } else if(!state.plans.some(plan=>plan.dateKey===key&&plan.status!=='skipped'&&!plan.onHold&&!plan.archivedAt&&!isVocabularyPlan(plan))) {
         const weighted=daySkills.flatMap(skill=>Array(Math.max(1,budget.planning.weights[skill])).fill(skill));
         const task=skillTask(state,weighted[sequence%weighted.length],available,Math.floor(sequence/skills.length));
         if(task.skill!=='reading'||available>=2)add(key,task,`study-${key}-skill`,vocabularyOrder,sequence);
@@ -818,29 +820,70 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
 function backlogSnapshot(state,now) {
   return JSON.stringify([dateKey(now),state.plans,state.activePlanId,planningSettingsKey(state.settings)]);
 }
+const BUDGET_SHORTAGE=/exceeds the daily budget by (\d+) minutes/i;
+const dayMinutes=(plans,key,excluded)=>plans.filter(row=>!excluded.has(row.id)&&row.dateKey===key&&row.status!=='skipped'&&!row.onHold&&!row.archivedAt).reduce((n,row)=>n+Number(row.estimatedMinutes||0),0);
+/**
+ * A task the user places on a day takes priority over untouched automatic practice there.
+ * Manual, edited, started, held, completed and frozen tasks are never displaced.
+ */
+function reclaimAutomaticSlots(draft,key,incoming,excluded,reasons,title,allowOverBudget) {
+  const need=dayMinutes(draft.plans,key,excluded)+incoming-studyBudget(draft.settings,key).daily;
+  if(need<=0)return;
+  const slots=draft.plans.filter(plan=>plan.dateKey===key&&!excluded.has(plan.id)&&plan.origin==='automatic'&&plan.status==='pending'&&!startedPlan(plan)&&!protectedSchedulePlan(plan)&&!isVocabularyPlan(plan)).sort((a,b)=>compareStudyPlans(b,a));
+  const reclaimable=slots.reduce((n,plan)=>n+Number(plan.estimatedMinutes||0),0);
+  // Without consent to run over budget, displace nothing unless the move will actually fit.
+  if(reclaimable<need&&!allowOverBudget)return;
+  let remaining=need;
+  for(const slot of slots) {
+    if(remaining<=0)break;
+    draft.plans.splice(draft.plans.indexOf(slot),1);
+    remaining-=Number(slot.estimatedMinutes||0);
+    reasons.set(slot.id,`Removed to make room for ${title}.`);
+  }
+}
+
+const BACKLOG_REASONS={reschedule:'Moved by you.',hold:'Held by you. It stays out of automatic planning until you return it.',skip:'Skipped by you. You can restore it from History.',archive:'Archived by you.',unarchive:'Unarchived by you.'};
 export function previewBacklogChange(state,action,now=new Date()) {
   if(!['replan','skip','hold','resume','reschedule','archive','unarchive'].includes(action.type))throw new Error('Choose a supported task action.');
   const draft=structuredClone(state),today=dateKey(now),ids=new Set(action.ids||[]);
   const history=['archive','unarchive'].includes(action.type);
   const selected=draft.plans.filter(plan=>ids.has(plan.id)&&(history?['completed','skipped'].includes(plan.status):['pending','in_progress'].includes(plan.status)&&(action.includeStarted||!startedPlan(plan))));
   if(!selected.length)throw new Error('Select at least one eligible waiting task.');
-  if(action.type==='replan')ensureUnifiedPlans(draft,undefined,now,new Set(selected.map(plan=>plan.id)));
-  else for(const plan of selected){
-    try {mutateStudyPlan(draft,plan.id,action.type==='reschedule'?{type:'reschedule',dateKey:action.dateKey}:{type:action.type},now);if(action.type==='skip')plan.skipReason='bulk-skip';}
-    catch(cause){if(action.type!=='reschedule')throw cause;plan.waitingReason=cause.message;}
-  }
   const selectedIds=new Set(selected.map(plan=>plan.id));
-  return {snapshot:backlogSnapshot(state,now),createdAt:now.toISOString(),action,plans:draft.plans,activePlanId:draft.activePlanId,changes:describeScheduleChanges(state.plans,draft.plans,selectedIds,today)};
+  const reasons=new Map<string,string>(),overBudget=new Map<string,number>(),placed=new Set<string>();
+  if(action.type==='replan')ensureUnifiedPlans(draft,undefined,now,selectedIds);
+  else for(const plan of selected){
+    const placing=action.type==='reschedule'?action.dateKey:action.type==='resume'&&plan.dateKey>=today?plan.dateKey:null;
+    if(placing&&/^\d{4}-\d{2}-\d{2}$/.test(placing)&&(action.type==='reschedule'||plan.onHold))reclaimAutomaticSlots(draft,placing,Number(plan.estimatedMinutes||0),new Set([plan.id]),reasons,studyPlanTitle(plan),action.allowOverBudget);
+    const live=draft.plans.find(row=>row.id===plan.id)||plan;
+    try {
+      mutateStudyPlan(draft,plan.id,action.type==='reschedule'?{type:'reschedule',dateKey:action.dateKey,allowOverBudget:action.allowOverBudget}:{type:action.type,allowOverBudget:action.allowOverBudget},now);
+      if(action.type==='skip')live.skipReason='bulk-skip';
+      if(placing)placed.add(placing);
+      if(action.type==='resume')reasons.set(plan.id,live.dateKey>=today?'Returned to your schedule.':'Returned to Waiting.');
+      else if(BACKLOG_REASONS[action.type])reasons.set(plan.id,BACKLOG_REASONS[action.type]);
+    }
+    catch(cause){
+      const message=cause instanceof Error?cause.message:'This change is unavailable.';
+      const shortage=BUDGET_SHORTAGE.exec(message);
+      if(!['reschedule','resume'].includes(action.type)||action.type==='resume'&&!shortage)throw cause;
+      live.waitingReason=message;
+      if(shortage){const key=action.type==='reschedule'?action.dateKey:live.dateKey;overBudget.set(key,Math.max(overBudget.get(key)||0,Number(shortage[1])));}
+    }
+  }
+  // Keep offering the consent control after it is ticked, with the extra time that will be kept.
+  if(action.allowOverBudget)for(const key of placed){const over=dayMinutes(draft.plans,key,new Set())-studyBudget(draft.settings,key).daily;if(over>0)overBudget.set(key,Math.max(overBudget.get(key)||0,over));}
+  return {snapshot:backlogSnapshot(state,now),createdAt:now.toISOString(),action,plans:draft.plans,activePlanId:draft.activePlanId,changes:describeScheduleChanges(state.plans,draft.plans,selectedIds,today,reasons),overBudget:[...overBudget].map(([dateKey,minutes])=>({dateKey,minutes}))};
 }
 
-export function describeScheduleChanges(beforePlans, afterPlans, selectedIds=new Set(), today=dateKey(new Date())) {
+export function describeScheduleChanges(beforePlans, afterPlans, selectedIds=new Set(), today=dateKey(new Date()), reasons=new Map<string,string>()) {
   const beforeById=new Map(beforePlans.map(plan=>[plan.id,plan])),afterById=new Map(afterPlans.map(plan=>[plan.id,plan]));
   // Selection controls the requested action. Preview scope includes every
   // resulting schedule edit, including regenerated automatic slots.
   const changedIds=[...new Set([...selectedIds,...beforeById.keys(),...afterById.keys()])].filter(id=>selectedIds.has(id)||JSON.stringify(beforeById.get(id))!==JSON.stringify(afterById.get(id)));
   return changedIds.map(id=>{
     const before=beforeById.get(id),after=afterById.get(id),plan=after||before;
-    return {id,title:studyPlanTitle(plan),previousTitle:before?studyPlanTitle(before):undefined,selected:selectedIds.has(id),changeType:!before?'added':!after?'removed':JSON.stringify(before)===JSON.stringify(after)?'unchanged':'updated',from:before?.dateKey||'',to:after?.dateKey||'',fromMinutes:before?.estimatedMinutes||0,toMinutes:after?.estimatedMinutes||0,status:plan.status,previousStatus:before?.status,onHold:plan.onHold,archived:Boolean(plan.archivedAt),reason:plan.waitingReason,requirementsChanged:Boolean(before&&after&&JSON.stringify([before.target,before.completion])!==JSON.stringify([after.target,after.completion])),waiting:Boolean(after&&after.dateKey<today&&!['skipped','completed'].includes(after.status)),skipReason:after?.skipReason};
+    return {id,title:studyPlanTitle(plan),previousTitle:before?studyPlanTitle(before):undefined,selected:selectedIds.has(id),changeType:!before?'added':!after?'removed':JSON.stringify(before)===JSON.stringify(after)?'unchanged':'updated',from:before?.dateKey||'',to:after?.dateKey||'',fromMinutes:before?.estimatedMinutes||0,toMinutes:after?.estimatedMinutes||0,status:plan.status,previousStatus:before?.status,onHold:plan.onHold,archived:Boolean(plan.archivedAt),reason:plan.waitingReason||reasons.get(id),requirementsChanged:Boolean(before&&after&&JSON.stringify([before.target,before.completion])!==JSON.stringify([after.target,after.completion])),waiting:Boolean(after&&after.dateKey<today&&!['skipped','completed'].includes(after.status)),skipReason:after?.skipReason};
   });
 }
 
@@ -853,7 +896,10 @@ export function previewScheduleReview(state, now=new Date()) {
   draft.plans=structuredClone(state.plans);
   refreshEvidenceTargets(draft,keys,skills,now,previous,id);
   draft.plans.sort(compareStudyPlans);
-  const changes=describeScheduleChanges(state.plans,draft.plans,new Set([id]),keys[0]);
+  const reasons=new Map<string,string>([[id,'Replaced by a due review so your mistakes are fixed first.']]);
+  const known=new Set(state.plans.map(plan=>plan.id));
+  for(const plan of draft.plans)if(!known.has(plan.id))reasons.set(plan.id,'The remaining time stays as practice.');
+  const changes=describeScheduleChanges(state.plans,draft.plans,new Set([id]),keys[0],reasons);
   return {snapshot:backlogSnapshot(state,now),action:{type:'review',id},plans:draft.plans,activePlanId:state.activePlanId,changes};
 }
 export function applyBacklogPreview(state,preview,now=new Date()) {
@@ -909,7 +955,9 @@ export function manualStudyTask(state, action) {
   if(minutes<option.minimum)throw new Error(`This practice needs at least ${option.minimum} minutes.`);
   if(skill==='vocabulary') {
     if(practice==='due-review') {
-      const mode=action.assessmentMode || state.settings.vocabulary?.mode || 'definition';
+      const configuredMode=state.settings.vocabulary?.mode;
+      // Audio and production are not graded recall modes; fall back to a graded one instead of failing.
+      const mode=action.assessmentMode || (isAssessedReviewMode(configuredMode)?configuredMode:'definition');
       if(!isAssessedReviewMode(mode))throw new Error('Choose an assessed recall mode.');
       if(action.reviewType||action.binding){
         if(!['due','wrong','custom'].includes(action.reviewType))throw new Error('Choose a review type.');

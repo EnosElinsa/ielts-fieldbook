@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { afterEach, expect, test } from 'vitest';
 import { emptyState } from '../domain';
-import { completePlanIfMatched, completeVocabularyPlan, startPlan } from '../domain/plans';
+import { completePlanIfMatched, completeReview, completeVocabularyPlan, startPlan } from '../domain/plans';
 import { applyBacklogPreview, ensureUnifiedPlans, nextUnifiedPlan, previewScheduleReview, studyBudget, mutateStudyPlan } from './planTemplates';
 import { addVocabularyItem, recordVocabularyReview } from '../domain/vocabulary';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
@@ -290,4 +290,44 @@ test('manual mock replacement requires its entire duration in the daily budget',
   expect(()=>mutateStudyPlan(state,plan.id,{type:'replace',skill:'writing',kind:'writing-mock'})).toThrow(/budget/i);
   state.settings.dailyMinutes=60;mutateStudyPlan(state,plan.id,{type:'replace',skill:'writing',kind:'writing-mock'});
   expect(plan).toMatchObject({kind:'writing-mock',estimatedMinutes:60,origin:'automatic',deskMode:'timed'});expect(plan.manuallyEditedAt).toBeTruthy();
+});
+
+test('vocab-only schedule (skills: []) honors vocabularyPercent 100 for full day and respects explicit lower caps', () => {
+  const state = setup();
+  enroll(state);
+  state.settings.skills = [];
+  state.settings.dailyMinutes = 30;
+  state.settings.vocabulary.learningBatchSize = 15;
+  state.settings.planning.newWordsPerDay = 30;
+  state.settings.planning.vocabularyMode = 'ratio';
+  state.settings.planning.vocabularyPercent = 20;
+  expect(studyBudget(state.settings, '2026-10-13').vocabulary).toBe(6);
+
+  state.settings.planning.vocabularyPercent = 100;
+  const budget = studyBudget(state.settings, '2026-10-13');
+  expect(budget.vocabulary).toBe(30);
+  ensureUnifiedPlans(state, undefined, now);
+  const firstDayVocab = state.plans.filter(plan => plan.dateKey === '2026-10-13' && plan.skill === 'vocabulary');
+  expect(firstDayVocab.reduce((sum, plan) => sum + plan.estimatedMinutes, 0)).toBe(30);
+});
+
+test('completeReview requires an exact matching planId when details.planId is supplied', () => {
+  const state = setup();
+  const plan = {
+    id: 'review-1',
+    kind: 'review',
+    skill: 'writing',
+    status: 'in_progress',
+    startedAt: now.toISOString(),
+    target: { type: 'error-review', errorIds: ['e1'] },
+  };
+  state.plans = [plan];
+  state.activePlanId = 'review-1';
+  state.errors = [{ id: 'e1', code: 'TA', text: 'Clarify trend', resolved: true, lastReviewedAt: now.toISOString() }];
+  expect(completeReview(state, { planId: 'other-review' })).toBeNull();
+  expect(state.plans[0].status).toBe('in_progress');
+  expect(state.activePlanId).toBe('review-1');
+
+  expect(completeReview(state, { planId: 'review-1' })?.status).toBe('completed');
+  expect(state.activePlanId).toBeNull();
 });

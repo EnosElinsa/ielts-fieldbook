@@ -33,7 +33,7 @@ export function sourceType(section, instructions) {
   const type=String(section.type);
   if(type==='2')return 'multiple';
   if(/flow.?chart/i.test(instructions))return 'flow';
-  if(/label the (?:map|plan)/i.test(instructions))return 'map';
+  if(/label the (?:map|plan|diagram)/i.test(instructions))return 'map';
   if(/summary/i.test(instructions))return 'summary';
   if(type==='1')return 'single';
   if(['7','10','15','16','17'].includes(type))return 'gap';

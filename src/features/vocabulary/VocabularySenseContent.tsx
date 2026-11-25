@@ -5,7 +5,8 @@ import { VocabularyMeaningNotes } from './VocabularyMeaningNotes';
 import { reviewedExampleForm } from '../../domain/vocabulary/content';
 import { VocabularyExampleText } from './VocabularyExampleText';
 
-export function VocabularySenseContent({ sense, entryId, term, learningExample, showMissingExample = false, showLearningNotes = false }: { sense: VocabularySense; entryId?: string; term?: string; learningExample?: { example: string; sense: VocabularySense }; showMissingExample?: boolean; showLearningNotes?: boolean }) {
+export function VocabularySenseContent({ sense, entryId, term, learningExample, showMissingExample = false, showLearningNotes = false, headingLevel = 3 }: { sense: VocabularySense; entryId?: string; term?: string; learningExample?: { example: string; sense: VocabularySense }; showMissingExample?: boolean; showLearningNotes?: boolean; headingLevel?: 3 | 4 }) {
+  const Heading = headingLevel === 4 ? 'h4' : 'h3';
   const content = vocabularySensePresentation(sense);
   const meaningGroup = Boolean(entryId && isVocabularyMeaningGroup(entryId, sense));
   const usageReference = Boolean(entryId && isVocabularyUsageReference(entryId, sense));
@@ -25,9 +26,9 @@ export function VocabularySenseContent({ sense, entryId, term, learningExample, 
         <blockquote><VocabularyExampleText text={example} term={readingNote || fallbackReadingNote ? undefined : term} form={form} pos={sense.pos} /></blockquote>
       </> : showMissingExample ? <p className="vocabulary-muted">A learning example has not been added for this meaning yet.</p> : null}
       {showLearningNotes && sense.collocations?.length ? <div className="vocabulary-detail">
-        <h4>{meaningGroup ? 'Examples of grouped uses' : usageReference ? 'Related phrases' : readingNote ? 'Reading cues' : 'Collocations'}</h4><p>{sense.collocations.join(' · ')}</p>
+        <Heading>{meaningGroup ? 'Examples of grouped uses' : usageReference ? 'Related phrases' : readingNote ? 'Reading cues' : 'Collocations'}</Heading><p>{sense.collocations.join(' · ')}</p>
       </div> : null}
-      <VocabularyMeaningNotes entryId={entryId} sense={sense} example={example} showDistinctions={showLearningNotes} />
+      <VocabularyMeaningNotes entryId={entryId} sense={sense} example={example} showDistinctions={showLearningNotes} headingLevel={headingLevel} />
     </>
   );
 }

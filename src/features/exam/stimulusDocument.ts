@@ -10,6 +10,18 @@ export function stimulusDocument(html: string): Document {
     const walker = parsed.createTreeWalker(parsed.body, NodeFilter.SHOW_TEXT);
     while (walker.nextNode()) walker.currentNode.textContent = walker.currentNode.textContent!.replace('Onexample', 'One example');
   }
+  // Source markup sometimes leaks as `^^^^^_<strong>term</strong>_^^^^^` and a
+  // Roman numeral I is mistyped as a lowercase L ("A-l"). Only text is changed,
+  // so the element tree and every block ID stay exactly as saved.
+  if (/\^+_|_\^+|\bA-l\b/.test(parsed.body.textContent || '')) {
+    const walker = parsed.createTreeWalker(parsed.body, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      const text = node.textContent || '';
+      const repaired = text.replace(/^\s*\^+_/, '').replace(/_\^+\s*$/, '').replace(/\bA-l\b/g, 'A-I');
+      if (repaired !== text) node.textContent = repaired;
+    }
+  }
   for (const table of parsed.querySelectorAll('table')) {
     if (!table.textContent?.includes('The Junction') || !table.textContent.includes('Paloma')) continue;
     for (const paragraph of table.querySelectorAll('p')) {

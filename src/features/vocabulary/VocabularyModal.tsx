@@ -11,6 +11,12 @@ import {
 import "../../styles/vocabulary.css";
 import { VocabularyCollectionDialog } from './VocabularyCollectionDialog';
 
+/** The meaning the learner chose to edit is the one displayed, which is not always senses[0]. */
+function editedSenseOf(editing, seed) {
+  const displayed = editing && seed?.id === editing.id ? seed.editSense : undefined;
+  return displayed?.id ? displayed : editing?.senses?.[0];
+}
+
 export function VocabularyModal() {
   const fb = useFieldbook();
   const open = fb.modal === "vocabulary";
@@ -36,7 +42,7 @@ export function VocabularyModal() {
   useEffect(() => {
     if (!open) return;
     const item = editing || fb.vocabularySeed || {};
-    const sense = item.senses?.[0] || {};
+    const sense = (editing ? editedSenseOf(editing, fb.vocabularySeed) : item.senses?.[0]) || {};
     setForm({
       term: item.term || "",
       category: item.category || "word",
@@ -59,7 +65,7 @@ export function VocabularyModal() {
     });
     setError("");
     setSaving(false);
-  }, [open, fb.editingVocabularyId]);
+  }, [open, fb.editingVocabularyId, fb.vocabularySeed]);
   const change = (key, value) =>
     setForm((current) => ({ ...current, [key]: value }));
   const split = (value) =>
@@ -78,28 +84,52 @@ export function VocabularyModal() {
     setError("");
     const draft = structuredClone(fb.stateRef.current);
     const original = editing || fb.vocabularySeed || {};
-    const firstSense = original.senses?.[0] || {};
+    const target = editing ? editedSenseOf(editing, fb.vocabularySeed) : undefined;
+    const storedTarget = target ? (original.senses || []).find((sense) => sense.id === target.id) : undefined;
+    // A displayed meaning absent from the saved entry is added under its own id.
+    const addDisplayed = Boolean(target && !storedTarget);
+    const editsFirst = !target || (original.senses || [])[0]?.id === target.id;
+    const firstSense = (editing ? storedTarget || target : original.senses?.[0]) || {};
     const sourceSkill = form.skill || original.skill;
+    const normalizedCollocations = split(form.collocations);
+    const normalizedSynonyms = split(form.synonyms);
+    const normalizedAntonyms = split(form.antonyms);
+    const normalizedUsage = form.usage.trim();
+    const contentChanged = Boolean(
+      editing && (
+        form.meaning.trim() !== (firstSense.definition || '').trim() ||
+        form.example.trim() !== (firstSense.example || '').trim() ||
+        form.pos !== (firstSense.pos || '') ||
+        (normalizedCollocations.length > 0 || firstSense.collocations !== undefined) && JSON.stringify(normalizedCollocations) !== JSON.stringify(firstSense.collocations || []) ||
+        (normalizedUsage.length > 0 || firstSense.usage !== undefined) && normalizedUsage !== (Array.isArray(firstSense.usage) ? firstSense.usage.join('; ') : firstSense.usage || '').trim() ||
+        (normalizedSynonyms.length > 0 || firstSense.synonyms !== undefined) && JSON.stringify(normalizedSynonyms) !== JSON.stringify((firstSense.synonyms || []).map(v => typeof v === 'string' ? v : v.term)) ||
+        (normalizedAntonyms.length > 0 || firstSense.antonyms !== undefined) && JSON.stringify(normalizedAntonyms) !== JSON.stringify((firstSense.antonyms || []).map(v => typeof v === 'string' ? v : v.term))
+      )
+    );
+    const editedSense = {
+      ...firstSense,
+      definition: form.meaning.trim(),
+      example: form.example.trim(),
+      pos: form.pos,
+      ...(firstSense.collocations !== undefined || normalizedCollocations.length ? { collocations: normalizedCollocations } : {}),
+      ...(firstSense.usage !== undefined || normalizedUsage ? { usage: normalizedUsage } : {}),
+      ...(firstSense.synonyms !== undefined || normalizedSynonyms.length ? { synonyms: normalizedSynonyms } : {}),
+      ...(firstSense.antonyms !== undefined || normalizedAntonyms.length ? { antonyms: normalizedAntonyms } : {}),
+      ...(contentChanged ? { source: 'Personal note' } : {}),
+    };
     const input = {
       ...original,
       term: form.term.trim(),
       category: form.category,
-      meaning: form.meaning.trim(),
-      example: form.example.trim(),
+      // Top-level meaning/example mirror senses[0]; never send them for another meaning.
+      meaning: editsFirst ? form.meaning.trim() : undefined,
+      example: editsFirst ? form.example.trim() : undefined,
       tags: split(form.tags),
-      senses: [
-        {
-          ...firstSense,
-          definition: form.meaning.trim(),
-          example: form.example.trim(),
-          pos: form.pos,
-          collocations: split(form.collocations),
-          usage: form.usage.trim(),
-          synonyms: split(form.synonyms),
-          antonyms: split(form.antonyms),
-        },
-        ...(original.senses || []).slice(1),
-      ],
+      senses: addDisplayed
+        ? undefined
+        : editsFirst
+          ? [editedSense, ...(original.senses || []).slice(1)]
+          : [editedSense],
       sources: original.sources?.length
         ? original.sources
         : [
@@ -111,9 +141,17 @@ export function VocabularyModal() {
             },
           ],
     };
-    const result = fb.editingVocabularyId
+    let result = fb.editingVocabularyId
       ? updateVocabularyItem(draft, fb.editingVocabularyId, input)
       : addVocabularyItem(draft, input);
+    if (result && !result.invalid && addDisplayed) {
+      result = addVocabularyItem(draft, {
+        term: form.term.trim(),
+        category: form.category,
+        senses: [editedSense],
+        sources: original.sources,
+      });
+    }
     if (!result || result.invalid) {
       setError(
         result?.reason ||

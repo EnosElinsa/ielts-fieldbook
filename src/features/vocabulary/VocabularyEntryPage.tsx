@@ -418,16 +418,16 @@ export function VocabularyEntryPage() {
         {personalNotes &&
         sense.collocations?.length ? (
           <div className="vocabulary-detail">
-            <h4>{personalNotes ? "Your collocation notes" : "Collocations"}</h4>
+            <h3>{personalNotes ? "Your collocation notes" : "Collocations"}</h3>
             <p>{sense.collocations.join(" · ")}</p>
           </div>
         ) : null}
         {((main && resolved?.contentReviewed) || personalNotes) &&
         content.register ? (
           <div className="vocabulary-detail">
-            <h4>
+            <h3>
               {personalNotes ? "Your register note" : "Reviewed register"}
-            </h4>
+            </h3>
             <p>{content.register}</p>
           </div>
         ) : null}
@@ -448,7 +448,7 @@ export function VocabularyEntryPage() {
             ].map(([title, values]) =>
               Array.isArray(values) && values.length ? (
                 <div className="vocabulary-detail" key={String(title)}>
-                  <h4>{String(title)}</h4>
+                  <h3>{String(title)}</h3>
                   <p>{values.join(" · ")}</p>
                 </div>
               ) : null,
@@ -529,7 +529,7 @@ export function VocabularyEntryPage() {
                     className="btn line"
                     onClick={() => {
                       fb.setEditingVocabularyId(entry.id as never);
-                      fb.setVocabularySeed(raw as never);
+                      fb.setVocabularySeed({ ...raw, editSense: primary } as never);
                       fb.openModal("vocabulary");
                     }}
                   >
@@ -636,7 +636,7 @@ export function VocabularyEntryPage() {
                       <summary>Meaning source</summary>
                       <p>{personalMeaning ? 'Your saved meaning and notes.' : resolved?.curriculumCurrent ? resolved.curriculum?.explanation : resolved?.reviewed ? 'Selected from the listening passage. The example is written for practice.' : 'A dictionary meaning of this word.'}</p>
                       {personalMeaning && groupMeaning?.id === primary.id && !resolved?.curriculumCurrent ? <div className="vocabulary-group-comparison">
-                        <h4>Group meaning</h4>
+                        <h3>Group meaning</h3>
                         <VocabularySenseContent entryId={entry?.id} term={entry?.term} sense={groupMeaning} />
                       </div> : null}
                     </details>
@@ -684,7 +684,7 @@ export function VocabularyEntryPage() {
           >
             <h2>Learning progress</h2>
             <div className="vocabulary-progress-overview">
-            {nextPractice && primary ? <VocabularyNextPractice recommendation={nextPractice}
+            {nextPractice && primary ? <VocabularyNextPractice headingLevel={3} recommendation={nextPractice}
               to={mode=>practiceUrl(entry.id,primary.id,context,origin,mode)}
               onPractice={dictionaryPreview ? mode=>void practiseDictionaryMeaning(mode) : undefined}
               busy={saving || savingPractice} /> : null}
@@ -692,9 +692,9 @@ export function VocabularyEntryPage() {
               const mastery = getVocabularyMastery(state, entry.id, sense.id);
               return (
                 <section className="vocabulary-mastery-sense" key={sense.id}>
-                  <h4>
+                  <h3>
                       Progress for this meaning
-                  </h4>
+                  </h3>
                   <dl className="vocabulary-mastery-status">
                     <div>
                       <dt>Familiarity</dt>

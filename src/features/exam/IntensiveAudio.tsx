@@ -16,6 +16,8 @@ type Props = {
   scope?: string;
   onAvailabilityChange?: (available: boolean) => void;
   onPlaybackInvalidated?: () => void;
+  /** Ask the owner of `src` for a fresh signed URL after a load or play failure. */
+  onRetrySource?: () => void;
   onReplay: () => void;
   onSentenceEnd: () => void;
   onSpeedChange: (speed: number) => void;
@@ -45,6 +47,7 @@ export const IntensiveAudio = forwardRef<IntensiveAudioHandle, Props>(function I
   const [duration, setDuration] = useState(0);
   const [position, setPosition] = useState(0);
   const [retry, setRetry] = useState(0);
+  const autoRefresh = useRef(true);
   const hasBounds = props.start !== undefined && props.end !== undefined && props.start >= 0 && props.end > props.start && props.end <= duration + 0.1;
   const allowed = status === 'ready' && (props.full || hasBounds);
   const invalidate = useCallback(() => {
@@ -58,7 +61,12 @@ export const IntensiveAudio = forwardRef<IntensiveAudioHandle, Props>(function I
     let active = true;
     setStatus('loading'); setPlaying(false); setDuration(0); setPosition(0);
     playingRef.current = false; expectedPauses.current=0; expectedLoopFinish.current=false; invalidate();
-    const fail = () => { if (active) { invalidate(); setStatus('error'); setPlaying(false); playingRef.current = false; } };
+    const fail = () => {
+      if (!active) return;
+      invalidate(); setStatus('error'); setPlaying(false); playingRef.current = false;
+      // An expired signed link is the usual cause: fetch a fresh one once before asking the learner.
+      if (autoRefresh.current) { autoRefresh.current = false; current.current.onRetrySource?.(); }
+    };
     let player: WaveSurfer | undefined;
     const colors = () => { const style = getComputedStyle(document.documentElement); return { waveColor: style.getPropertyValue('--muted').trim() || '#707681', progressColor: style.getPropertyValue('--blue').trim() || '#3268da', cursorColor: style.getPropertyValue('--blue').trim() || '#3268da' }; };
     const themeObserver = new MutationObserver(() => player?.setOptions(colors()));
@@ -66,7 +74,7 @@ export const IntensiveAudio = forwardRef<IntensiveAudioHandle, Props>(function I
       player = WaveSurfer.create({ container: container.current, height: 86, ...colors(), barWidth: 2, barGap: 2, barRadius: 2, dragToSeek: false, normalize: true, interact: false });
       themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
       wave.current = player;
-      player.on('ready', (seconds) => { if (active) { setDuration(seconds); setStatus('ready'); player?.setPlaybackRate(current.current.speed, true); } });
+      player.on('ready', (seconds) => { if (active) { autoRefresh.current = true; setDuration(seconds); setStatus('ready'); player?.setPlaybackRate(current.current.speed, true); } });
       player.on('play', () => { if (active) { playingRef.current = true; setPlaying(true); } });
       player.on('pause', () => { if (active) { if(expectedPauses.current>0){expectedPauses.current-=1;return;} invalidate(); playingRef.current = false; setPlaying(false); } });
       player.on('seeking', seconds => {
@@ -114,10 +122,11 @@ export const IntensiveAudio = forwardRef<IntensiveAudioHandle, Props>(function I
     wave.current.setTime(start);
     props.onReplay();
     const player=wave.current;
-    void player.play().catch(() => { if(wave.current===player&&playGeneration.current===generation){invalidate();setStatus('error');setPlaying(false);playingRef.current=false;} });
+    void player.play().catch(() => { if(wave.current===player&&playGeneration.current===generation){invalidate();setStatus('error');setPlaying(false);playingRef.current=false;if(autoRefresh.current){autoRefresh.current=false;current.current.onRetrySource?.();}} });
     return true;
   }, [allowed, hasBounds, props.start, props.end, props.src, props.scope, props.full, props.onReplay, stop, invalidate]);
   const replayRef=useRef(replay);replayRef.current=replay;
+  const retrySource = useCallback(() => { autoRefresh.current = false; setRetry(value => value + 1); current.current.onRetrySource?.(); }, []);
   useImperativeHandle(ref,()=>({replay,stop}),[replay,stop]);
 
   const toggle = useCallback(() => {
@@ -143,8 +152,8 @@ export const IntensiveAudio = forwardRef<IntensiveAudioHandle, Props>(function I
 
   return <div className="audio-player intensive-player">
     <div ref={container} className="waveform" aria-label="Listening waveform" />
-    {status === 'loading' ? <InlineLoadingState message="Loading audio…" onRetry={() => setRetry(value => value + 1)} retryLabel="Retry audio" /> : null}
-    {status === 'error' ? <StateMessage kind="error" message="Audio could not load. Check the connection and retry." onRetry={() => setRetry(value => value + 1)} retryLabel="Retry audio" /> : null}
+    {status === 'loading' ? <InlineLoadingState message="Loading audio…" onRetry={retrySource} retryLabel="Retry audio" /> : null}
+    {status === 'error' ? <StateMessage kind="error" message="Audio could not load. Check the connection and retry." onRetry={retrySource} retryLabel="Retry audio" /> : null}
     {status === 'ready' && !props.full && !hasBounds ? <p role="status">Sentence timing is unavailable or outside the audio. Set valid A/B points below, or use full-track listening.</p> : null}
     <div className="intensive-audio-controls">
       <div className="intensive-transport" role="group" aria-label="Sentence playback">

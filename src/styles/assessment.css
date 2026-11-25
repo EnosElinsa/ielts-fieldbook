@@ -1,4 +1,4 @@
-.criteria-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0}.criteria-card{border:1px solid var(--rule);background:#fffefa;padding:11px}.criteria-card strong{display:block;font:600 12px 'Source Serif 4',serif}.criteria-card span{display:block;font:11px 'DM Mono',monospace;color:var(--muted);margin-top:3px}.assessment-section{border-top:1px solid var(--rule);padding-top:13px;margin-top:16px}.assessment-section h4{font:600 17px 'Source Serif 4',serif;margin:0 0 8px}.assessment-section p,.assessment-section li{font-size:13px;line-height:1.65;color:#59666c}.assessment-section ul{padding-left:18px;margin:0}.assessment-section pre{white-space:pre-wrap;font:11px/1.7 Manrope,Arial,sans-serif;color:#59666c;background:#fffefa;border:1px solid var(--rule);padding:12px;margin:0}.raw-details{margin-top:16px;border-top:1px solid var(--rule);padding-top:10px}.raw-details summary{font-size:12px;color:var(--muted);cursor:pointer}.raw-details pre{max-height:220px;overflow:auto;white-space:pre-wrap;font:12px/1.6 Manrope,Arial,sans-serif;color:var(--muted);margin-top:10px}
+.criteria-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0}.criteria-card{border:1px solid var(--rule);background:#fffefa;padding:11px}.criteria-card strong{display:block;font:600 12px 'Source Serif 4',serif}.criteria-card span{display:block;font:11px 'DM Mono',monospace;color:var(--muted);margin-top:3px}.assessment-section{border-top:1px solid var(--rule);padding-top:13px;margin-top:16px}.assessment-section :is(h3,h4){font:600 17px 'Source Serif 4',serif;margin:0 0 8px}.assessment-section p,.assessment-section li{font-size:13px;line-height:1.65;color:#59666c}.assessment-section ul{padding-left:18px;margin:0}.assessment-section pre{white-space:pre-wrap;font:11px/1.7 Manrope,Arial,sans-serif;color:#59666c;background:#fffefa;border:1px solid var(--rule);padding:12px;margin:0}.raw-details{margin-top:16px;border-top:1px solid var(--rule);padding-top:10px}.raw-details summary{font-size:12px;color:var(--muted);cursor:pointer}.raw-details pre{max-height:220px;overflow:auto;white-space:pre-wrap;font:12px/1.6 Manrope,Arial,sans-serif;color:var(--muted);margin-top:10px}
 .assessment-page{max-width:1120px}
 .assessment-page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin:2px 0 19px}
 .assessment-page-head h2{font:600 31px/1.1 'Source Serif 4',serif;letter-spacing:-.04em;margin:0}
@@ -8,7 +8,7 @@
 .assessment-main>.assessment-summary{font-size:15px;line-height:1.75;color:#4f5f66}
 .assessment-main>.assessment-summary p{margin:0}
 .assessment-aside{position:static}
-.assessment-aside h4{font:600 17px 'Source Serif 4',serif;margin:0 0 9px}
+.assessment-aside :is(h3,h4){font:600 17px 'Source Serif 4',serif;margin:0 0 9px}
 .assessment-aside .history-copy{margin:0;max-height:none;overflow:visible}
 .edit-table .edit-tag{white-space:nowrap}
 .assessment-page .criteria-grid{margin:14px 0 0}

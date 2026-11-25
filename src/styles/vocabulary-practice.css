@@ -411,7 +411,8 @@
 .practice-row-main > textarea:focus,
 .practice-focus > input:focus,
 .practice-focus > textarea:focus {
-  outline: 0;
+  outline: 2px solid var(--blue);
+  outline-offset: 1px;
   border-color: var(--blue);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--blue) 10%, transparent);
 }

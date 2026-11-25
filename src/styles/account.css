@@ -28,7 +28,6 @@
 .account-resend:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 @media(max-width:740px){.account-resend{min-height:44px}}
 .account-resend:disabled{cursor:wait;opacity:.6}
-.save-failure{margin:-8px 0 22px;padding:10px 12px;border-left:3px solid var(--red);background:var(--soft-red);color:var(--red);font-size:13px}
 .account-danger{border-left:3px solid var(--red);background:#fffefa}
 .account-danger h3{color:var(--red)}
 .account .field input,
@@ -52,4 +51,3 @@
 .account .field input:-webkit-autofill:hover,
 .account .field input:-webkit-autofill:focus{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 1000px var(--sheet) inset;transition:background-color 9999s ease-out}
 .account-danger{background:var(--sheet)}
-.save-failure{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.save-failure .btn{min-height:44px;flex-shrink:0}

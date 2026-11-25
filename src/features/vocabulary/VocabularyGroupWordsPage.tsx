@@ -15,6 +15,7 @@ import { getVocabularyMastery } from "../../domain/vocabulary/mastery";
 import type { VocabularyStore } from "../../domain/vocabulary/types";
 import { normalizeVocabularyPreferences } from "../../domain/vocabulary/preferences";
 import { VocabularyNavigation } from "./VocabularyPages";
+import { vocabularyPartOfSpeech } from "../../domain/vocabulary/dictionaryPresentation";
 import { Pronunciation, pronunciationIpa } from "./Pronunciation";
 
 const masteryLabel = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
@@ -182,7 +183,7 @@ export function VocabularyGroupWordsPage() {
                   </div>
                   <div role="cell" className="vocabulary-group-word-meaning">
                     <p>
-                      {sense?.pos ? <small>{sense.pos}</small> : null}
+                      {vocabularyPartOfSpeech(sense?.pos) ? <small>{vocabularyPartOfSpeech(sense?.pos)}</small> : null}
                       {sense?.definition || "Definition not available yet"}
                     </p>
                   </div>

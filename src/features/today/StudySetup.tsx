@@ -1,14 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Clock3, Save } from 'lucide-react';
 import { DEFAULT_SETTINGS, dateKey } from '../../domain';
+import { planningEvidenceView } from '../../domain/planningEvidence';
 import { DateField } from '../../components/ui';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { accountId } from '../../storage/remote';
 import { settingsChanges, settingsDraft } from '../settings/settingsDraft';
 
-export function needsStudySetup(state: any): boolean {
+export function needsStudySetup(source: any): boolean {
+  // Lazy-loaded history can arrive as read-only summaries; they still prove the account is in use.
+  const state = planningEvidenceView(source);
   const settings = state.settings || {};
-  if (settings.studySetupCompletedAt || settings.targetBand || settings.examDate || settings.skills?.length) return false;
+  // An explicit skill choice, including none (vocabulary only), is a configured plan.
+  if (settings.studySetupCompletedAt || settings.targetBand || settings.examDate || Array.isArray(settings.skills)) return false;
   if (settings.dailyMinutes !== DEFAULT_SETTINGS.dailyMinutes || JSON.stringify(settings.days) !== JSON.stringify(DEFAULT_SETTINGS.days) || settings.skillMix !== DEFAULT_SETTINGS.skillMix) return false;
   if (['sessions', 'assessments', 'examAttempts', 'intensiveSessions', 'vocabularyReviews', 'vocabularyEvidence', 'vocabularyActivities', 'wordbookEnrollments', 'vocabularySessions', 'stories'].some(key => state[key]?.length)) return false;
   if (state.plans?.some((plan: any) => ['in_progress', 'completed'].includes(plan.status))) return false;

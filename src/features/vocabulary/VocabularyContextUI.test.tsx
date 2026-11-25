@@ -1347,3 +1347,33 @@ test("one linked dictation event appears once with both dimensions and truthful 
   ).toBeInTheDocument();
   expect(screen.getByText(/Learning history \(1\)/)).toBeInTheDocument();
 });
+
+test("steward with collected verb sense still edits the Transport and travel noun sense", async () => {
+  const steward = structuredClone(release.entries.find((entry: any) => entry.term === "steward"));
+  const verbSense = {
+    id: "kaikki:c20fd686aa0d8300ef",
+    pos: "verb",
+    definition: "To act as the steward or caretaker of (something).",
+    example: "Volunteers stewarded the reserve.",
+    source: "English Wiktionary via Kaikki.org",
+    sourceUrl: "https://en.wiktionary.org/wiki/steward#English",
+    license: "CC-BY-SA-4.0",
+  };
+  steward.senses = [verbSense, ...steward.senses];
+  steward.sources = [{ type: "personal", id: `dictionary:${verbSense.id}`, senseId: verbSense.id }];
+  mocks.fb.state.vocabulary = [steward];
+  mocks.fb.setEditingVocabularyId = vi.fn();
+  mocks.fb.setVocabularySeed = vi.fn();
+  mount(`/vocabulary/entry/${steward.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-14-group-01`);
+  const meaningSection = (await screen.findByRole("heading", { name: "Meaning" })).closest("section")!;
+  expect(meaningSection).not.toHaveTextContent("To act as the steward or caretaker");
+  await userEvent.setup().click(screen.getByRole("button", { name: "Edit" }));
+  expect(mocks.fb.setEditingVocabularyId).toHaveBeenCalledWith(steward.id);
+  expect(mocks.fb.setVocabularySeed).toHaveBeenCalledWith(
+    expect.objectContaining({
+      id: steward.id,
+      editSense: expect.objectContaining({ pos: "noun" }),
+    }),
+  );
+  expect(mocks.fb.openModal).toHaveBeenCalledWith("vocabulary");
+});

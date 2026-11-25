@@ -106,7 +106,7 @@ export function WritingBankPage() {
                   <span className="date">{formatLabel(question.format)}</span>
                   <button type="button" className="btn text icon-btn" aria-label={`${favorites.has(`writing:${question.id}`) ? 'Remove' : 'Add'} favourite: ${displayName(question.name)}`} title="Favourite question" aria-pressed={favorites.has(`writing:${question.id}`)} onClick={() => fb.toggleFavorite(question.id, 'writing')}><Star size={17} fill={favorites.has(`writing:${question.id}`) ? 'currentColor' : 'none'} /></button>
                 </div>
-                <h4>{displayName(question.name)}</h4>
+                <h2>{displayName(question.name)}</h2>
                 {image ? <WritingChartPreview key={image} src={image} alt={`${displayName(question.name)} chart`} /> : null}
                 <p>{prompt}</p>
                 <div className="q-bottom">

@@ -73,7 +73,9 @@ export function VocabularyPracticeResults({ controller, results }: {
     const valid = Boolean(raw && bookId && unitId && (VOCABULARY_CATALOG.memberships.some(member => member.entryId === row.entryId && member.bookId === bookId && member.unitId === unitId) || raw.sources.some(source => source.bookId === bookId && source.unitId === unitId)));
     const context = valid ? {bookId,unitId} : {};
     const exact = resolveVocabularyLearningContext(raw, {...context, senseId:row.senseId}).sense;
-    const saved = snapshot?.entry.senses.find(sense=>sense.id===row.senseId);
+    // Without a frozen card, only a sense that still carries the tested definition can
+    // supply part of speech; an edited wordbook sense must not relabel old results.
+    const saved = snapshot?.entry.senses.find(sense=>sense.id===row.senseId) || raw.senses?.find(sense=>sense.id===row.senseId && dictionaryDisplayText(sense.definition)===dictionaryDisplayText(row.definition));
     const resolved = valid ? resolveVocabularyLearningContext(raw,context).sense : exact;
     return {raw,resolved,saved,context,detail:entryUrl(row.entryId,{...context,senseId:row.senseId,exactMeaning:'true'},resultReturnTo)};
   };
@@ -96,9 +98,11 @@ export function VocabularyPracticeResults({ controller, results }: {
     learning.entryId === row.entryId && learning.senseId === row.senseId && learning.wrong?.modes?.[recoveryMode]?.active,
   )).map(row => `${row.entryId}:${row.senseId}`)).size;
   const taskOutcome=controller.submissionOutcome||vocabularyTaskSubmissionOutcome(controller.state,results);
+  const planStatus=controller.resultsPlanStatus||'ready';
+  const taskMessage=planStatus==='loading'?'Checking the linked task…':planStatus==='error'?'The linked task could not be loaded, so its status is unknown. Your learning was saved.':taskOutcome.message;
   return (
     <section className="practice-results">
-      <aside className="practice-task-outcome" role="status"><strong>{results.sourceSnapshot?.origin==='manual'?'User-arranged review':results.planId?'Planned review':'Self-directed review'}</strong><p>{taskOutcome.message}</p>{results.planId&&<Link className="btn line" to={`/planning?view=task#task-${encodeURIComponent(results.planId)}`}>View task requirements<ArrowRight size={15} aria-hidden="true"/></Link>}</aside>
+      <aside className="practice-task-outcome" role="status" aria-busy={planStatus==='loading'}><strong>{results.sourceSnapshot?.origin==='manual'?'User-arranged review':results.planId?'Planned review':'Self-directed review'}</strong><p>{taskMessage}</p>{planStatus==='error'&&<button className="btn line" type="button" onClick={controller.retryResultsPlan}><RotateCcw size={15} aria-hidden="true"/>Retry loading task</button>}{results.planId&&<Link className="btn line" to={`/planning?view=task#task-${encodeURIComponent(results.planId)}`}>View task requirements<ArrowRight size={15} aria-hidden="true"/></Link>}</aside>
       <div className="practice-result-title">
         <div>
           <span>

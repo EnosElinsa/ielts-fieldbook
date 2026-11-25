@@ -3,9 +3,9 @@
 export const PLANNING_FIELDS = {
   sessions: ['skill','type','part','practiceMode','date','assessmentId','questionId','question_id','targetErrorIds','planId','promptKey'],
   assessments: ['sessionId','skill','date','criteria','overall','practiceMode','questionId','part','task','nextExercise','inventedPronunciation'],
-  errors: ['code','text','resolved','nextReviewAt','sourceSessionId','sourceAssessmentId'],
+  errors: ['code','text','resolved','nextReviewAt','sourceSessionId','sourceAssessmentId','lastReviewedAt','reviewCount'],
   stories: ['topicIds'],
-  examAttempts: ['skill','status','sectionIds','results','responses','errorReasons','evidence','completedAt','mode','sourceId','planId','retryOfAttemptId','updatedAt','startedAt','remainingSeconds','durationSeconds'],
+  examAttempts: ['skill','status','sectionIds','results','responses','errorReasons','evidence','completedAt','mode','sourceId','planId','retryOfAttemptId','updatedAt','startedAt','elapsedSeconds','timeLimitSeconds'],
   intensiveSessions: ['nextReviewAt','sectionId','sentenceId','stage','completedAt','dictationResult','reviewEnabled','planId','listeningReviews'],
   vocabularySessions: ['planId','mode','status','startedAt','submittedAt','selection','results'],
 } as const;

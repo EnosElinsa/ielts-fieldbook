@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Eye, Upload } from "lucide-react";
 import { useFieldbook } from "../../context/FieldbookContext";
-import * as Dialog from "@radix-ui/react-dialog";
 import { ModalFrame } from "../../components/ModalFrame";
 import {
   mergeVocabularyImport,
@@ -150,13 +149,36 @@ export function VocabularyImportModal() {
     <ModalFrame
       open={open}
       title="Import vocabulary"
+      description="Choose a CSV file or paste its contents, then preview before importing."
+      busy={saving}
       onClose={() => {
         if (!saving) fb.closeModal();
       }}
+      footer={<>
+        <button
+          className="btn line"
+          type="button"
+          disabled={saving}
+          onClick={() => fb.closeModal()}
+        >
+          Cancel
+        </button>
+        <button
+          className="btn primary"
+          type="button"
+          disabled={!preview || saving}
+          onClick={commit}
+        >
+          <Upload size={16} />
+          {saving
+            ? "Saving import..."
+            : error && pending.current
+              ? "Retry import"
+              : "Import vocabulary"}
+        </button>
+      </>}
     >
-      <div className="modal vocabulary-modal">
-        <h3 aria-hidden="true">Import vocabulary</h3>
-        <Dialog.Description>Choose a CSV file or paste its contents, then preview before importing.</Dialog.Description>
+      <div className="vocabulary-import-body">
         <div className="vocabulary-import-file">
           <label htmlFor="vocabulary-import-file" className="vocabulary-import-label">CSV vocabulary file</label>
           <input
@@ -233,29 +255,6 @@ export function VocabularyImportModal() {
             {error}
           </p>
         ) : null}
-        <div className="modal-foot">
-          <button
-            className="btn line"
-            type="button"
-            disabled={saving}
-            onClick={() => fb.closeModal()}
-          >
-            Cancel
-          </button>
-          <button
-            className="btn primary"
-            type="button"
-            disabled={!preview || saving}
-            onClick={commit}
-          >
-            <Upload size={16} />
-            {saving
-              ? "Saving import..."
-              : error && pending.current
-                ? "Retry import"
-                : "Import vocabulary"}
-          </button>
-        </div>
       </div>
     </ModalFrame>
   );

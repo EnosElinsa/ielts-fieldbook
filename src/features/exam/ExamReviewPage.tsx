@@ -2,7 +2,7 @@ import { ExamBackLink, ExamStudyLink } from './ExamNavigation';
 import { withExamReturn } from '../../lib/examNavigation';
 import { questionEndNumber, questionLabel, questionNumberLabel, questionSlotCount } from '../../domain/exam/questionSlots';
 import { SelectField } from '../../components/SelectField';
-import { PageLoadingState, StateMessage } from '../../components/AsyncState';
+import { InlineLoadingState, PageLoadingState, StateMessage } from '../../components/AsyncState';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Link, useNavigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { RotateCcw, Bookmark, Check, Headphones, Save, LocateFixed } from 'lucide-react';
@@ -49,6 +49,7 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
   const identity = `${owner}:${attemptId}`;
   const currentIdentity = useRef(identity); currentIdentity.current = identity;
   const mounted = useRef(true);
+  const pendingSave = useRef<{ snapshot: string; at: string } | null>(null);
   const generation = useRef(0);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; generation.current += 1; }; }, []);
   const location = useLocation();
@@ -130,21 +131,33 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
     setSaving(true); setSaveError('');
     const draft = structuredClone(fb.stateRef.current);
     const row = draft.examAttempts.find((current: ExamAttempt) => current.id === attempt.id);
+    // Retrying the same edits must replay the same commit, not look like new work.
+    if (pendingSave.current?.snapshot !== snapshot) pendingSave.current = { snapshot, at: new Date().toISOString() };
     if (row) {
-      row.updatedAt = new Date().toISOString();
+      row.updatedAt = pendingSave.current.at;
       const plan = ((draft.plans || []) as import('../../domain/plans').StudyPlan[]).find(item => item.id === params.get('planId') && item.status === 'in_progress' && item.target?.type === 'exam-review' && item.target.attemptId === row.id && item.target.skill === skill);
       if (plan) row.planId = plan.id;
       Object.entries(annotations).forEach(([id, annotation]) => { row.evidence[id] = annotation.evidence; row.keywords[id] = annotation.keywords; row.errorReasons[id] = annotation.reason; });
     }
     let saved = false;
     let feedback = '';
+    const beforeAttempt = structuredClone(((fb.stateRef.current.examAttempts || []) as ExamAttempt[]).find(current => current.id === attempt.id));
     try { saved = await fb.persistNow(draft, { collections: ['examAttempts', 'plans'], onError: (message: string) => { feedback = message; } }); } catch { saved = false; }
+    if (!saved && beforeAttempt && accountId() === owner) {
+      // Unsaved notes stay in the editor for retry; they must not look saved in the loaded attempt.
+      const live = fb.stateRef.current;
+      const restored = { ...live, examAttempts: ((live.examAttempts || []) as ExamAttempt[]).map(current => current.id === beforeAttempt.id ? beforeAttempt : current) };
+      fb.stateRef.current = restored; fb.setState(restored);
+    }
     if (!mounted.current || accountId() !== owner || currentIdentity.current !== identity || generation.current !== requestGeneration) return;
     setSaving(false);
     if (!saved) setSaveError(`${feedback || 'Could not save review notes.'} Your edits remain here; retry saving.`);
-    else { if (JSON.stringify(readExamRecovery(owner, recoveryKey)) === snapshot) clearExamRecovery(owner, recoveryKey); setAnnotations({}); setSavedThisVisit(true); }
+    else { pendingSave.current = null; if (JSON.stringify(readExamRecovery(owner, recoveryKey)) === snapshot) clearExamRecovery(owner, recoveryKey); setAnnotations({}); setSavedThisVisit(true); }
   };
-  const retry = () => navigate(withExamReturn(`/${skill}/${attempt.sectionIds[0]}?retry=${encodeURIComponent(attempt.id)}`, params.get('returnTo')));
+  const catalogStatus = attempt.questionSnapshot ? { loading, error, onRetry: reload } : undefined;
+  // Start in the first part that actually has mistakes, not always Part 1.
+  const retryStart = attempt.sectionIds.find(id => wrong.some(question => question.sectionId === id)) || attempt.sectionIds[0];
+  const retry = () => navigate(withExamReturn(`/${skill}/${retryStart}?retry=${encodeURIComponent(attempt.id)}`, params.get('returnTo')));
   return <section className="view active exam-review">
 <div className="exam-review-head">
 <div className="exam-back-links">
@@ -176,11 +189,12 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
 <button aria-pressed={filter === 'all' || !partWrong.length} className={filter === 'all' || !partWrong.length ? 'active' : ''} onClick={() => setFilter('all')}>{hasPooled ? 'All answer groups' : 'All answers'} ({partRows.length})</button>
 </div>
 </div>
+{catalogStatus?.error ? <StateMessage kind="error" className="exam-review-source-status" message={`Source images and passage evidence could not load. ${catalogStatus.error}`} onRetry={catalogStatus.onRetry} retryLabel="Retry loading source" /> : catalogStatus?.loading ? <p className="exam-review-source-status"><InlineLoadingState message="Loading source images and evidence…" onRetry={catalogStatus.onRetry} retryLabel="Retry loading source" /></p> : null}
 <div className={'exam-review-workspace' + (skill === 'reading' ? ' has-source' : references.length ? ' has-reference' : '')}>
     {skill === 'reading' && <aside className="exam-review-source" aria-label="Passage workspace">
       <details open={sourceOpen} onToggle={event => setSourceOpen(event.currentTarget.open)}><summary>Passage &amp; evidence</summary>
       {sourceQuestion ? <QuestionEvidence key={sourceQuestion.id} question={sourceQuestion} response={attempt.responses[sourceQuestion.id] || ''} passages={catalog.passages} section={catalog.sections.find(row => row.id === sourceQuestion.sectionId)} loading={loading} error={error} onRetry={reload} besideAnswers focusEvidence={Boolean(evidenceId)} onClose={() => { setSourceDismissed(true); setEvidenceId(''); evidenceTrigger.current?.focus(); }} /> : <p>Select “Locate evidence” on an answer to read its passage.</p>}
-      {references.length > 0 && <details className="exam-review-question-context"><summary>Question context</summary>{references.map(question => <div key={question.id}><ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} /><ReferenceChoices question={question} /></div>)}</details>}
+      {references.length > 0 && <details className="exam-review-question-context"><summary>Question context</summary>{references.map(question => <div key={question.id}><ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} status={catalogStatus} /><ReferenceChoices question={question} /></div>)}</details>}
       </details>
     </aside>}
     {skill !== 'reading' && references.length > 0 && <aside className="exam-review-reference" aria-label="Question reference">
@@ -189,7 +203,7 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
 <h3>Questions in context</h3>
 </header>{references.map(question => <details key={question.id} open>
 <summary>{question.groupId ? 'Question group' : questionLabel(question)} · {QUESTION_TYPE_NAMES[question.type]}</summary>
-<ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} />
+<ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} status={catalogStatus} />
 <ReferenceChoices question={question} />
 </details>)}</aside>}
     <div className="exam-review-list">{visibleRows.map(question => { const prompt = readingQuestionPrompt(question, questionRows, catalog.passages.filter(p => p.sectionId === question.sectionId).flatMap(p => p.paragraphs)); const review = questionReviewContent(question); const response = attempt.responses[question.id] || ''; const correct = attempt.results?.[question.id] ?? gradeQuestion(question, response); const annotation = notes(question.id); const sentenceId = skill === 'listening' ? evidenceSentenceId(question, catalog.sections.find(section => section.id === question.sectionId)) : undefined; return <article id={`exam-review-${question.id}`} tabIndex={-1} className={`exam-review-card ${correct ? 'is-correct' : 'is-wrong'}`} key={question.id}>
@@ -199,7 +213,7 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
 <strong>{correct ? 'Correct' : 'Review this answer'}{question.points && question.points > 1 ? ` · ${attempt.earnedPoints?.[question.id] || 0}/${question.points} points` : ''}</strong>
 </header>
 <h3>{prompt.slice(questionNumberPrefixLength(prompt, question.number, questionEndNumber(question))).replace(/in the text above/i, "in the question reference")}</h3>
-<ExamImage asset={catalog.assets.find(asset => asset.id === question.assetId && asset.kind === 'image')} label={`${questionLabel(question)} diagram`} />
+<ExamImage asset={catalog.assets.find(asset => asset.id === question.assetId && asset.kind === 'image')} label={`${questionLabel(question)} diagram`} status={catalogStatus} expected={Boolean(question.assetId)} />
 <dl>
 <div>
 <dt>Your response</dt>

@@ -5,7 +5,7 @@ import { ModalFrame } from '../../components/ModalFrame';
 import { DateField, FilterMenu } from '../../components/ui';
 import { SelectField } from '../../components/SelectField';
 import { useFieldbook } from '../../context/FieldbookContext';
-import { manualStudyTask, studyBudget, validatePlanDuration } from '../../lib/planTemplates';
+import { manualStudyTask, planSkill, studyBudget, validatePlanDuration } from '../../lib/planTemplates';
 import { TASK_PRACTICES } from '../../lib/planningTaskOptions';
 import { loadExamCatalog, loadExamSections } from '../../storage/examCatalog';
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
@@ -20,8 +20,12 @@ const confirmLabels={add:'Add task',duplicate:'Add copy',reschedule:'Move task',
 
 export function TaskEditor({mode,plan,dateKey,onClose}) {
   const fb=useFieldbook();const owner=accountId();
-  const [skill,setSkill]=useState(plan?.skill||'writing');
-  const [practice,setPractice]=useState(mode==='replace'?'recommended':plan?.kind?.endsWith('-mock')?plan.kind:'recommended');
+  const [skill,setSkill]=useState(plan?planSkill(plan):'writing');
+  const [practice,setPractice]=useState(()=>{
+    // Vocabulary has no "recommended" practice; keep the task's own kind.
+    if((plan?planSkill(plan):'writing')==='vocabulary')return plan?.target?.mode==='due-review'||plan?.target?.mode==='learning-batch'?plan.target.mode:'learning-batch';
+    return mode==='replace'?'recommended':plan?.kind?.endsWith('-mock')?plan.kind:'recommended';
+  });
   const [minutes,setMinutes]=useState(plan?.estimatedMinutes||Math.min(30,studyBudget(fb.state.settings,dateKey).daily)||30);
   const [date,setDate]=useState(mode==='restore'?todayKey(new Date()):dateKey||plan?.dateKey);
   const [material,setMaterial]=useState('');const [sentence,setSentence]=useState('');const [batch,setBatch]=useState(1);const [search,setSearch]=useState('');

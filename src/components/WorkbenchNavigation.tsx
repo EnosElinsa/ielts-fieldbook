@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { BookOpen, Check, ChevronDown, House, Library, LogOut, Monitor, Moon, MoreHorizontal, PencilLine, Search, Settings2, Sun, Upload, Download, ShieldCheck, MessageSquare, ChartNoAxesCombined, Mic2, NotebookTabs, Headphones } from 'lucide-react';
+import { BookOpen, Check, ChevronDown, House, Library, LogOut, Monitor, Moon, MoreHorizontal, PencilLine, Search, Settings2, Sun, Upload, Download, ShieldCheck, MessageSquare, ChartNoAxesCombined, Mic2, NotebookTabs, Headphones, UserRound } from 'lucide-react';
 import { ModalFrame } from './ModalFrame';
 import { useTheme } from '../context/ThemeContext';
 import { useFieldbook } from '../context/FieldbookContext';
@@ -12,6 +12,16 @@ import { navigateWithPracticeGuard } from '../lib/practiceNavigation';
 import { moduleFor, workspaceModules } from './workspaceNavigation';
 import { useAccountRequirements } from './AccountDataBoundary';
 import { InlineLoadingState } from './AsyncState';
+import { displayName, formatDate } from '../lib/format';
+
+/** Exam attempts are stored by paper id; search shows the paper, mode, score and date instead. */
+export function examAttemptTitle(row: { skill?: string; sourceId?: string; mode?: string; score?: number; total?: number; completedAt?: string; updatedAt?: string }) {
+  const paper = /^cambridge:(\d+):(\d+)$/.exec(String(row.sourceId || ''));
+  const name = paper ? `Cambridge IELTS ${paper[1]} · Test ${paper[2]}` : `${row.skill === 'listening' ? 'Listening' : 'Reading'} paper`;
+  const when = row.completedAt || row.updatedAt;
+  const score = typeof row.score === 'number' && row.total ? ` · ${row.score}/${row.total}` : '';
+  return `${name} ${row.mode === 'mock' ? 'mock test' : 'practice'}${score}${when ? ` · ${formatDate(when)}` : ''}`;
+}
 
 export function AccountMenu({ user, onImportBackup, onExportBackup, onLegal }: { user: unknown; onImportBackup: () => void; onExportBackup: () => void; onLegal: (view: string) => void }) {
   const fb = useFieldbook();
@@ -54,21 +64,23 @@ export function CommandSearch({ open, onClose }: { open: boolean; onClose: () =>
       ['Listening review', '/listening/review', Headphones],
       ['Reading review', '/reading/review', BookOpen], ['Writing questions', '/write/questions', Library],
       ['Speaking questions', '/speak/questions', Library], ['Writing review', '/review?skill=writing', BookOpen], ['Speaking review', '/review?skill=speaking', BookOpen],
+      ['Stories', '/stories', NotebookTabs], ['Vocabulary words', '/vocabulary/words', Library], ['Vocabulary wordbooks', '/vocabulary/wordbooks', Library],
+      ['Vocabulary history', '/vocabulary/history', BookOpen], ['Vocabulary review', '/vocabulary/review', BookOpen], ['Account', '/settings/account', UserRound],
     ].map(([title, path, Icon]) => ({ id: path, path, title, kind: 'Page', Icon, run: () => { const module = moduleFor(path.split('?')[0], path.includes('?') ? path.slice(path.indexOf('?')) : '', fb.activeSkill); if (['writing', 'speaking', 'reading', 'listening'].includes(module)) fb.setSkill(module, path); else navigate(path); } }));
     const search = query.trim().toLowerCase();
     if (!search) return navigation;
-    const questions = fb.state.questions.map((q) => ({ id: `w:${q.id}`, path: '/write', title: q.name, kind: 'Writing question', Icon: PencilLine, run: () => { fb.setSkill('writing', '/write'); fb.chooseQuestion(q.id); } }));
+    const questions = fb.state.questions.map((q) => ({ id: `w:${q.id}`, path: '/write', title: displayName(q.name), kind: 'Writing question', Icon: PencilLine, run: () => { fb.setSkill('writing', '/write'); fb.chooseQuestion(q.id); } }));
     const topics = fb.state.speakingTopics.map((q) => ({ id: `s:${q.id}`, path: `/speak/topics/${q.id}`, title: q.title, kind: 'Speaking topic', Icon: Library, run: () => { fb.setSelectedTopicId(q.id); fb.setSkill('speaking', `/speak/topics/${q.id}`); } }));
-    const attempts = fb.state.sessions.map((s) => ({ id: `a:${s.id}`, path: '', title: s.name, kind: 'Your attempt', Icon: BookOpen, run: () => { fb.setViewedSession(s); fb.openModal('history'); } }));
+    const attempts = fb.state.sessions.map((s) => ({ id: `a:${s.id}`, path: '', title: displayName(s.name), kind: 'Your attempt', Icon: BookOpen, run: () => { fb.setViewedSession(s); fb.openModal('history'); } }));
     const vocabularyEntries = fb.state.vocabulary.filter(p => !p.tags?.includes('archived')).map((p) => ({ id: `v:${p.id}`, path: `/vocabulary/entry/${p.id}`, title: p.term, kind: 'Vocabulary entry', Icon: BookOpen, run: () => navigate(`/vocabulary/entry/${p.id}`) }));
-    const examAttempts = (fb.state.examAttempts || []).filter(row => row.status === 'completed').map(row => ({ id: `exam:${row.id}`, path: `/${row.skill}/review/${encodeURIComponent(row.id)}`, title: row.sourceId, kind: `${row.skill === 'reading' ? 'Reading' : 'Listening'} attempt`, Icon: row.skill === 'reading' ? BookOpen : Headphones, run: () => fb.setSkill(row.skill, `/${row.skill}/review/${encodeURIComponent(row.id)}`) }));
+    const examAttempts = (fb.state.examAttempts || []).filter(row => row.status === 'completed').map(row => ({ id: `exam:${row.id}`, path: `/${row.skill}/review/${encodeURIComponent(row.id)}`, title: examAttemptTitle(row), kind: `${row.skill === 'reading' ? 'Reading' : 'Listening'} attempt`, Icon: row.skill === 'reading' ? BookOpen : Headphones, run: () => fb.setSkill(row.skill, `/${row.skill}/review/${encodeURIComponent(row.id)}`) }));
     return [...navigation, ...questions, ...topics, ...attempts, ...examAttempts, ...vocabularyEntries].filter((item) => `${item.title} ${item.kind}`.toLowerCase().includes(search)).slice(0, 12);
   }, [query, fb.state, navigate]);
   const activeIndex = Math.min(selected, Math.max(0, items.length - 1));
   useEffect(() => { document.getElementById(`command-${activeIndex}`)?.scrollIntoView?.({ block: 'nearest' }); }, [activeIndex, query, items.length]);
   const choose = (item) => { onClose(); if (item.path) navigateWithPracticeGuard(item.path, item.run); else item.run(); };
   return <ModalFrame open={open} onClose={onClose} title="Search Fieldbook"><div className="modal command-modal">
-    <div className="command-input"><Search size={20} /><input autoFocus role="combobox" aria-autocomplete="list" aria-expanded="true" aria-label="Search Fieldbook" placeholder="Search your workspace" value={query} onChange={(e) => { setQuery(e.target.value); setSelected(0); }} aria-controls="command-results" aria-activedescendant={items[activeIndex] ? `command-${activeIndex}` : undefined} onKeyDown={(e) => {
+    <div className="command-input"><Search size={20} /><input autoFocus role="combobox" aria-autocomplete="list" aria-expanded={items.length > 0} aria-label="Search Fieldbook" placeholder="Search your workspace" value={query} onChange={(e) => { setQuery(e.target.value); setSelected(0); }} aria-controls="command-results" aria-activedescendant={items[activeIndex] ? `command-${activeIndex}` : undefined} onKeyDown={(e) => {
       if (e.defaultPrevented || e.nativeEvent.isComposing || e.nativeEvent.keyCode === 229) return;
       if (e.key === 'ArrowDown') { e.preventDefault(); setSelected(Math.max(0, Math.min(activeIndex + 1, items.length - 1))); }
       if (e.key === 'ArrowUp') { e.preventDefault(); setSelected(Math.max(activeIndex - 1, 0)); }

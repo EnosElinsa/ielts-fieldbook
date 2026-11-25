@@ -95,6 +95,36 @@ export function completeReceptivePlanIfMatched(state: CompletionState, previous?
   return completed;
 }
 
+const COMPLETION_FIELDS = ['status', 'completedAt', 'linkedSessionId', 'sectionId', 'sentenceId'] as const;
+/**
+ * Completing a task is applied to memory before its save finishes. Capture the
+ * unfinished tasks first, so a failed save can return exactly those tasks to
+ * their saved state without discarding unrelated concurrent changes.
+ */
+export function captureReceptiveCompletion(state: CompletionState) {
+  const before = new Map<string, Record<string, any>>(state.plans.filter(plan => plan.status === 'in_progress')
+    .map(plan => [plan.id, Object.fromEntries(COMPLETION_FIELDS.map(field => [field, plan[field]]))]));
+  const activePlanId = state.activePlanId;
+  return {
+    completedIds(next: CompletionState): string[] {
+      return next.plans.filter(plan => before.has(plan.id) && plan.status !== before.get(plan.id)!.status).map(plan => plan.id);
+    },
+    activePlanChanged(next: CompletionState) { return next.activePlanId !== activePlanId; },
+    /** Restore only tasks whose completion this attempt applied. */
+    rollback(target: CompletionState, ids: string[]) {
+      const completed = new Set(ids);
+      const plans = target.plans.map(plan => {
+        const prior = before.get(plan.id);
+        if (!prior || !completed.has(plan.id) || plan.status !== 'completed') return plan;
+        const restored = { ...plan };
+        for (const field of COMPLETION_FIELDS) { if (prior[field] === undefined) delete restored[field]; else restored[field] = prior[field]; }
+        return restored;
+      });
+      return { ...target, plans, activePlanId: ids.length && target.activePlanId === null ? activePlanId : target.activePlanId };
+    },
+  };
+}
+
 function completeBoundReceptivePlan(state: CompletionState, plan: Record<string, any>, previous?: CompletionState | null, recoverSaved = false) {
   if (plan.status !== 'in_progress') return null;
   if (!plan || !plan.startedAt || !/^(reading|listening)-/.test(plan.kind)) return null;

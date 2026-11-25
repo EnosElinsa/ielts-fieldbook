@@ -171,7 +171,8 @@ test('a source phrase list is accessible under All meanings as a usage reference
   const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.lead}`, 'utf8'));
   vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? index : dictionary })));
   render(<MemoryRouter><DictionarySenses entry={entry} excludeSenses={[]} /></MemoryRouter>);
-  await screen.findByText('She leads a team of six researchers.');
+  // The inflected headword "leads" is now highlighted, so the sentence spans a <mark>.
+  await screen.findByText((_, node) => node?.tagName === 'BLOCKQUOTE' && node.textContent === 'She leads a team of six researchers.');
   fireEvent.click(screen.getByText(/Other dictionary meanings/));
   expect(screen.queryByText('Source usage note: lead occurs in several phrasal verbs.')).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: /^All meanings/ }));
@@ -613,4 +614,23 @@ test("a save completed after changing term does not navigate away from the new d
   await waitFor(() =>
     expect(screen.getByText("/vocabulary/entry/original")).toBeInTheDocument(),
   );
+});
+
+test('an abbreviated dictionary word class does not repeat a curated meaning that is already shown', async () => {
+  // Regression: the "audio" adjective was listed twice because "adj" and "adjective" were compared as different classes.
+  const { entry } = fixture();
+  const shown = { ...sourceSense, id: 'curated:audio:adjective', pos: 'adjective', definition: 'Focused on audible sound, as opposed to sight.' };
+  const duplicate = { ...sourceSense, id: 'kaikki:audio-adj', pos: 'adj', definition: 'Focused on audible sound, as opposed to sight.' };
+  const noun = { ...sourceSense, id: 'kaikki:audio-noun', pos: 'noun', definition: 'Sound, or a sound signal.' };
+  const phrase = { ...sourceSense, id: 'kaikki:phrase', pos: 'prep_phrase', definition: 'In the direction of something.' };
+  vi.stubGlobal('fetch', dictionaryFetch([duplicate, noun, phrase]));
+  render(<MemoryRouter><DictionarySenses entry={entry} excludeSenses={[shown]} /></MemoryRouter>);
+  await screen.findByText(noun.definition);
+  fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  expect(screen.getByText('Other dictionary meanings (2)')).toBeInTheDocument();
+  expect(screen.queryByText(duplicate.definition)).not.toBeInTheDocument();
+  expect(screen.queryByRole('heading', { name: 'Adjective' })).not.toBeInTheDocument();
+  // Word classes are labelled in learner-facing English, never as raw source codes.
+  expect(screen.getByRole('heading', { name: 'Prepositional phrase' })).toBeInTheDocument();
+  expect(screen.queryByText('prep_phrase')).not.toBeInTheDocument();
 });

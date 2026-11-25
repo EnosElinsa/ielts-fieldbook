@@ -262,7 +262,8 @@ export function SourceAnnotations({ sourceId, skill, mock = false, disabled = fa
       for (let parent = node?.parentElement; parent && parent !== container.current; parent = parent.parentElement) {
         if (parent instanceof HTMLDetailsElement) parent.open = true;
       }
-      node?.scrollIntoView?.({ block: 'center', behavior: 'smooth' }); node?.focus({ preventScroll: true });
+      const reducedMotion = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+      node?.scrollIntoView?.({ block: 'center', behavior: reducedMotion ? 'auto' : 'smooth' }); node?.focus({ preventScroll: true });
     });
   };
   const contextValue = useMemo(() => ({ rows, selectBlock, open, register }), [JSON.stringify(rows), selectBlock, register, disabled, saving, blocks, scope, allowedBlockKey]);

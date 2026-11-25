@@ -123,9 +123,9 @@ function ScheduleDay({current,forceOpen,heading,summary,className,children}){
 }
 
 function PlanTask({plan,expanded=false,todayFocus=false,now=new Date()}){
-  const fb=useFieldbook();const [dialog,setDialog]=useState(null);const [saving,setSaving]=useState(false);const [error,setError]=useState('');
+  const fb=useFieldbook();const [dialog,setDialog]=useState(null);const [saving,setSaving]=useState(false);const [error,setError]=useState('');const [resumeExtra,setResumeExtra]=useState(0);
   const completed=plan.status==='completed';
-  async function change(action){setSaving(true);setError('');let feedback='';try{if(await fb.changePlan(plan.id,action,{onError:message=>{feedback=message;}}))setDialog(null);else setError(feedback||'Your task could not be saved. Retry the change.');}catch(cause){setError(cause instanceof Error?cause.message:'Your task could not be saved.');}finally{setSaving(false);}}
+  async function change(action){setSaving(true);setError('');setResumeExtra(0);let feedback='';try{if(await fb.changePlan(plan.id,action,{onError:message=>{feedback=message;}}))setDialog(null);else{const message=feedback||'Your task could not be saved. Retry the change.';const over=/exceeds the daily budget by (\d+) minutes/i.exec(message);if(over&&action.type==='resume')setResumeExtra(Number(over[1]));setError(message);}}catch(cause){const message=cause instanceof Error?cause.message:'Your task could not be saved.';const over=/exceeds the daily budget by (\d+) minutes/i.exec(message);if(over&&action.type==='resume')setResumeExtra(Number(over[1]));setError(message);}finally{setSaving(false);}}
   const skill=planSkill(plan);const material=studyTargetSummary(plan);
   const completionDescription=receptivePlanCompletionDescription(plan);
   const status=plan.onHold&&plan.status!=='completed'?'On hold':({pending:'Not started',in_progress:'In progress',completed:'Completed',skipped:'Skipped'})[plan.status] || plan.status;
@@ -162,7 +162,7 @@ function PlanTask({plan,expanded=false,todayFocus=false,now=new Date()}){
             ['duplicate','Duplicate task',Copy,false],
           ].map(([mode,label,Icon,disabled])=><DropdownMenu.Item key={mode} className="dropdown-item" disabled={disabled} onSelect={()=>{setError('');setDialog(mode);}}><Icon size={16}/>{label}</DropdownMenu.Item>)}
           <DropdownMenu.Separator className="dropdown-separator"/>
-          <DropdownMenu.Item className="dropdown-item" disabled={completed} onSelect={()=>void change({type:plan.onHold?'resume':'hold'})}>{plan.onHold?'Return to waiting':'Hold task'}</DropdownMenu.Item>
+          <DropdownMenu.Item className="dropdown-item" disabled={completed} onSelect={()=>void change({type:plan.onHold?'resume':'hold'})}>{plan.onHold?(plan.dateKey>=dateKey(new Date())?'Return to schedule':'Return to waiting'):'Hold task'}</DropdownMenu.Item>
           <DropdownMenu.Item className="dropdown-item" disabled={completed||plan.onHold} onSelect={()=>void change({type:'reorder',direction:'up'})}><ArrowUp size={16}/>Move task up</DropdownMenu.Item>
           <DropdownMenu.Item className="dropdown-item" disabled={completed||plan.onHold} onSelect={()=>void change({type:'reorder',direction:'down'})}><ArrowDown size={16}/>Move task down</DropdownMenu.Item>
           <DropdownMenu.Separator className="dropdown-separator"/>
@@ -170,7 +170,7 @@ function PlanTask({plan,expanded=false,todayFocus=false,now=new Date()}){
         </DropdownMenu.Content></DropdownMenu.Portal>
       </DropdownMenu.Root>
     </>}</div>
-    {error&&!dialog&&<p className="study-alert" role="alert">{error}</p>}
+    {error&&!dialog&&<div className="study-alert" role="alert"><p>{error}</p>{resumeExtra>0&&<button type="button" className="btn line" disabled={saving} onClick={()=>void change({type:'resume',allowOverBudget:true})}>Keep extra {resumeExtra} minutes</button>}</div>}
     {dialog&&<TaskEditor key={`${accountId()}:${plan.id}:${dialog}`} mode={dialog} plan={plan} dateKey={plan.dateKey} onClose={()=>setDialog(null)}/>}
 
   </article>;

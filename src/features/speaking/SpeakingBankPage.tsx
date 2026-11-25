@@ -118,9 +118,9 @@ export function SpeakingBankPage() {
         {groups.length ? (
           groups.map((group) => (
             <div className="speak-board" key={group.part}>
-              <h3>
+              <h2>
                 {group.title}
-              </h3>
+              </h2>
               <div className={`questions${view === 'list' ? ' questions-list' : ''}`}>
                 {group.items.length ? (
                   group.items.map((topic) => {
@@ -134,7 +134,7 @@ export function SpeakingBankPage() {
                           <span className={`pill ${coverageClass(statusValue)}`}>{coverageLabel(statusValue)}</span>
                           <button type="button" className="btn text icon-btn" aria-label={`${favorites.has(`speaking:${topic.id}`) ? 'Remove' : 'Add'} favourite: ${topic.title}`} title="Favourite topic" aria-pressed={favorites.has(`speaking:${topic.id}`)} onClick={() => fb.toggleFavorite(topic.id, 'speaking')}><Star size={17} fill={favorites.has(`speaking:${topic.id}`) ? 'currentColor' : 'none'} /></button>
                         </div>
-                        <h4>{topic.title}</h4>
+                        <h3>{topic.title}</h3>
                         <p>{topicPreview(topic)}</p>
                         {topic.incomplete ? <p className="file-hint">Some questions for this topic are still missing.</p> : null}
                         <div className="q-bottom">

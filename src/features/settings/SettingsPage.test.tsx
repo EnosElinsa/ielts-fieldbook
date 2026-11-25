@@ -364,3 +364,39 @@ test('practice origin survives settings category changes and a direct refresh',a
   fireEvent.click(screen.getByRole('link',{name:'Back to vocabulary review'}));
   expect(screen.getByText('Practice setup')).toBeInTheDocument();
 });
+
+test('post-save settings summary lists exact moved task date, duration, and reason', async () => {
+  setup();
+  const user = userEvent.setup();
+  fireEvent.change(screen.getByRole('spinbutton', { name: 'Minutes a day' }), { target: { value: '45' } });
+  const preview = await screen.findByRole('region', { name: 'Affected study tasks' });
+  expect(preview).toHaveTextContent('2 existing tasks will change');
+  await user.click(screen.getByRole('button', { name: 'Save settings' }));
+  const savedSection = await screen.findByRole('region', { name: 'Saved schedule changes' });
+  expect(savedSection).toHaveTextContent('Saved. These existing tasks changed.');
+  expect(savedSection).toHaveTextContent('Automatic task');
+  expect(savedSection).toHaveTextContent('Past task');
+  expect(savedSection).toHaveTextContent(/min/);
+});
+
+test('unchecking all skills raises vocabulary allocation to 100% and re-enabling a skill restores 20%', async () => {
+  setup('schedule');
+  const user = userEvent.setup();
+  for (const label of ['Writing', 'Speaking', 'Reading', 'Listening']) {
+    await user.click(screen.getByRole('checkbox', { name: label }));
+  }
+  await user.click(screen.getByRole('button', { name: 'Save settings' }));
+  expect(context.current.saveStudySettings).toHaveBeenLastCalledWith(expect.objectContaining({
+    skills: [],
+    skillMix: 'mixed',
+    planning: expect.objectContaining({ vocabularyMode: 'ratio', vocabularyPercent: 100 }),
+  }));
+
+  await user.click(screen.getByRole('checkbox', { name: 'Reading' }));
+  await user.click(screen.getByRole('button', { name: 'Save settings' }));
+  expect(context.current.saveStudySettings).toHaveBeenLastCalledWith(expect.objectContaining({
+    skills: ['reading'],
+    skillMix: 'reading',
+    planning: expect.objectContaining({ vocabularyPercent: 20 }),
+  }));
+});

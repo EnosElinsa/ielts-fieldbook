@@ -1,5 +1,5 @@
 import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
-import { planningSettingsKey, selectedStudySkills, ensureUnifiedPlans, calendarDays } from '../../lib/planTemplates';
+import { planningSettingsKey, selectedStudySkills, ensureUnifiedPlans, calendarDays, describeScheduleChanges } from '../../lib/planTemplates';
 import { normalizePlanning } from '../../domain/planningPreferences';
 import { emptyState } from '../../domain/state';
 import { dateKey } from '../../domain/utils';
@@ -31,10 +31,11 @@ export function settingsChanges(draft: SettingsDraft, baseline: SettingsDraft): 
   return changes;
 }
 
-export function settingsPlanPreview(settings: Record<string, any>, changes: Record<string, any>, plans: any[], today = dateKey(new Date()), state?: any) {
+export function settingsPlanPreview(settings: Record<string, any>, changes: Record<string, any>, plans: any[], today?: string, state?: any) {
   const next = { ...settings, ...changes, vocabulary: { ...settings.vocabulary, ...changes.vocabulary } };
   const rebuild = planningSettingsKey(next) !== planningSettingsKey(settings);
-  const now=new Date(`${today}T12:00:00`);
+  // Without an explicit date use the real clock, so the preview matches what saving will generate.
+  const now=today?new Date(`${today}T12:00:00`):new Date();
   // The planner needs the complete previous schedule for rotation, reservations and carryover.
   // Only plans and activePlanId are mutated by generation. Learning data is a
   // read-only input; avoid copying every frozen answer/media snapshot here.
@@ -43,8 +44,12 @@ export function settingsPlanPreview(settings: Record<string, any>, changes: Reco
   const nextPlans=new Map(draft.plans.map((plan: any)=>[plan.id,plan]));
   const affected=rebuild?plans.filter(plan=>!sameSetting(plan,nextPlans.get(plan.id))):[];
   const days=calendarDays(now);
+  // Each existing task that changes states where it goes, how long it is and why.
+  const affectedIds=new Set<string>(affected.map((plan:any)=>plan.id));
+  const reasons=new Map<string,string>(affected.map((plan:any)=>[plan.id,nextPlans.has(plan.id)?'Rebuilt for your new settings.':'Removed because your new settings no longer schedule it.']));
+  const scheduleChanges=rebuild?describeScheduleChanges(plans,draft.plans,affectedIds,dateKey(now),reasons).filter((change:any)=>affectedIds.has(change.id)):[];
   const scheduled=generated.filter(plan=>plan.status!=='skipped'&&!plan.onHold&&!plan.archivedAt);
   const preservedLearning=scheduled.filter(plan=>['pending','in_progress'].includes(plan.status)&&plan.target?.type==='vocabulary'&&plan.target.mode==='learning-batch'&&(plan.target.cards?.length||plan.target.entryIds?.length)&&sameSetting(plan,plans.find(previous=>previous.id===plan.id)));
   const totals=Object.fromEntries(['writing','speaking','reading','listening','vocabulary'].map(skill=>[skill,scheduled.filter(plan=>plan.skill===skill).reduce((sum,plan)=>sum+Number(plan.estimatedMinutes||0),0)]));
-  return {rebuild,affected,generated,scheduled,preservedLearning,days,totals};
+  return {rebuild,affected,changes:scheduleChanges,generated,scheduled,preservedLearning,days,totals};
 }

@@ -30,7 +30,7 @@ function FullLocation() { const location = useLocation(); return <output aria-la
 async function openSessionActions(user = userEvent.setup()) { await user.click(screen.getByRole('button', { name: 'More session actions' })); return screen.findByRole('menu'); }
 async function sessionAction(name: string, user = userEvent.setup()) { await openSessionActions(user); await user.click(await screen.findByRole('menuitem', { name })); }
 function practice(path = '/reading/section') { return render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/reading" element={<ExamBankPage skill="reading" />} /><Route path="/reading/:sectionId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/mock/:paperId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/review/:attemptId" element={<ExamReviewPage skill="reading" />} /></Routes><Location /></MemoryRouter>); }
-beforeEach(() => { clearReadCache(); mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); sessionStorage.clear(); const state = { examAttempts: [], intensiveSessions: [], settings: { favoriteExamSectionIds: [] } }; mocks.fb = { state, stateRef: { current: state }, ensureAccountModule: vi.fn().mockResolvedValue(undefined), persistNow: vi.fn(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; }), toast: vi.fn() }; });
+beforeEach(() => { clearReadCache(); mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); sessionStorage.clear(); const state = { examAttempts: [], intensiveSessions: [], settings: { favoriteExamSectionIds: [] } }; mocks.fb = { state, stateRef: { current: state }, setState: vi.fn((next: any) => { mocks.fb.state = next; }), ensureAccountModule: vi.fn().mockResolvedValue(undefined), persistNow: vi.fn(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; }), toast: vi.fn() }; });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.useRealTimers(); });
 
 function plannedListening(path: string) {
@@ -334,6 +334,27 @@ test('map answers can open the source beside the current answer and return witho
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   await waitFor(() => expect(screen.getByRole('button', { name: 'View map for question 2' })).toHaveFocus());
   expect(answer).toHaveTextContent('B');
+});
+
+test('matching questions with a diagram show it beside the answers and step through the picture questions', async () => {
+  mocks.catalog.assets = [{ id: 'map', paperId: 'paper', kind: 'image', storagePath: 'map.png', sourceUrl: 'https://example.org/map', provenance }];
+  mocks.catalog.questions = [1, 2].map(number => ({ ...catalog.questions[0], id: `q${number}`, number, type: 'matching', maxWords: undefined, groupId: 'diagram', prompt: `Part ${number}`, options: ['A', 'B'], answer: 'B', instructions: 'Label the diagram below.', stimulusHtml: '<p>\u00a0\u00a0</p><p>Water Heater</p><p><img src="exam-asset:map" alt="Water heater"></p>' }));
+  practice();
+  await screen.findByRole('combobox', { name: 'Answer 1' });
+  expect(screen.getByRole('img', { name: 'Water heater' })).toBeVisible();
+  expect(document.querySelector('.exam-group-instructions img')).toBeNull();
+  const user = userEvent.setup();
+  await user.click(screen.getByRole('button', { name: 'View diagram for question 1' }));
+  const dialog = screen.getByRole('dialog', { name: 'Diagram reference' });
+  expect(within(dialog).getByRole('img', { name: 'Water heater' })).toBeVisible();
+  expect(within(dialog).getByText('1 of 2')).toBeInTheDocument();
+  expect(within(dialog).getByRole('button', { name: 'Previous question' })).toBeDisabled();
+  await user.click(within(dialog).getByRole('button', { name: 'Next question' }));
+  expect(within(dialog).getByText('2 of 2')).toBeInTheDocument();
+  expect(within(dialog).getByText('Part 2')).toBeInTheDocument();
+  expect(within(dialog).getByRole('button', { name: 'Next question' })).toBeDisabled();
+  await user.keyboard('{Escape}');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'View diagram for question 2' })).toHaveFocus());
 });
 
 test('resuming a saved map exercise restores the verified diagram without changing its saved answers', async () => {
@@ -793,11 +814,11 @@ test('a listening mock shows its time limit and parts before start', async () =>
 });
 test('wrong-only retry starts with blank answers and evidence and grades only the retry questions', async () => { mocks.fb.state.examAttempts = [{ id: 'previous', skill: 'reading', sourceId: 'section', sectionIds: ['section'], mode: 'practice', status: 'completed', responses: { q1: '1990', q2: 'TRUE' }, results: { q1: true, q2: false }, evidence: { q2: 'Old proof' }, keywords: {}, errorReasons: {}, score: 1, total: 2, startedAt: '2026-01-01', updatedAt: '2026-01-01', elapsedSeconds: 0, hintsEnabled: true }]; practice('/reading/section?retry=previous'); await screen.findByRole('radio', { name: 'FALSE' }); expect(screen.queryByRole('textbox', { name: 'Answer 1' })).not.toBeInTheDocument(); await userEvent.setup().click(screen.getByRole('button', { name: 'Evidence & paraphrase for question 2' })); expect(screen.getByRole('textbox', { name: 'Evidence for question 2' })).toHaveValue(''); await userEvent.setup().click(screen.getByRole('radio', { name: 'FALSE' })); await userEvent.setup().click(screen.getByRole('button', { name: 'Submit answers' })); expect(await screen.findByRole('alert')).toHaveTextContent('Add fresh passage evidence for question 2'); expect(screen.getByLabelText('URL')).toHaveTextContent('/reading/section'); expect(screen.getByRole('radio', { name: 'FALSE' })).toBeChecked(); await userEvent.setup().type(screen.getByRole('textbox', { name: 'Evidence for question 2' }), 'The garden opened in 1990.'); await userEvent.setup().click(screen.getByRole('button', { name: 'Submit answers' })); expect(await screen.findByLabelText('Attempt score')).toHaveTextContent('1 / 1'); });
 test('review preserves the submitted question snapshot when the live source changes', async () => { mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'reading', sourceId: 'section', sectionIds: ['section'], mode: 'practice', status: 'completed', responses: { q1: '1990' }, results: { q1: true }, questionSnapshot: [catalog.questions[0]], evidence: {}, keywords: {}, errorReasons: {}, score: 1, total: 1, startedAt: '2026-01-01', updatedAt: '2026-01-01', elapsedSeconds: 0, hintsEnabled: true }]; mocks.catalog.questions[0].answer = '2000'; practice('/reading/review/saved'); expect(await screen.findByRole('heading', { name: 'The garden opened in _____.' })).toBeInTheDocument(); expect(screen.queryByText('2000')).not.toBeInTheDocument(); expect(screen.getAllByText('1990')).toHaveLength(2); });
-test('source stimulus keeps tables and numbered gaps while stripping active HTML', () => { const { container } = render(<ExamStimulus html={'<table><tr><td colspan="2" onclick="alert(1)">Opened #####-1-#####<br>Source note</td></tr></table><script>steal()</script><iframe src="https://example.org"></iframe><p><a href="javascript:alert(1)">Safe text</a></p>'} />); expect(screen.getByRole('cell')).toHaveTextContent('Opened 〔1〕'); expect(screen.getByRole('cell')).toHaveAttribute('colspan', '2'); expect(container.querySelector('script,iframe,a,[onclick]')).toBeNull(); expect(screen.getByText('Safe text')).toBeInTheDocument(); expect(container.querySelector('br')).not.toBeNull(); });
+test('source stimulus keeps tables and numbered gaps while stripping active HTML', () => { const { container } = render(<ExamStimulus html={'<table><tr><td colspan="2" onclick="alert(1)">Opened #####-1-#####<br>Source note</td></tr></table><script>steal()</script><iframe src="https://example.org"></iframe><p><a href="javascript:alert(1)">Safe text</a></p>'} />); expect(screen.getByRole('cell')).toHaveTextContent('Opened [1]'); expect(screen.getByRole('cell')).toHaveAttribute('colspan', '2'); expect(container.querySelector('script,iframe,a,[onclick]')).toBeNull(); expect(screen.getByText('Safe text')).toBeInTheDocument(); expect(container.querySelector('br')).not.toBeNull(); });
 test('integrated source gaps render controlled answers in the original table', () => {
   render(<ExamStimulus html={'<table><tr><td>Opened #####-1-#####</td><td>Unknown #####-99-#####</td></tr></table>'} renderGap={number => number === 1 ? <input aria-label="Answer 1" defaultValue="1990" /> : null} />);
   expect(within(screen.getAllByRole('cell')[0]).getByRole('textbox', { name: 'Answer 1' })).toHaveValue('1990');
-  expect(screen.getAllByRole('cell')[1]).toHaveTextContent('〔99〕');
+  expect(screen.getAllByRole('cell')[1]).toHaveTextContent('[99]');
 });
 test('imported numbered blanks stay in the source while shared instructions and scaffold prompts are not repeated', async () => {
   const instructions = 'Complete the notes below. Write ONE WORD ONLY for each answer.';
@@ -1459,4 +1480,28 @@ test('backgrounding pauses an active passage, preserves answers, and waits for R
   expect(screen.getByRole('timer').textContent).not.toBe(before);
   visibility.mockRestore();
   vi.useRealTimers();
+});
+
+test('review note retry freezes updatedAt across retries and restores prior attempt row on failure', async () => {
+  savedReview();
+  mocks.fb.state.examAttempts[0].updatedAt = '2026-10-01T10:20:00Z';
+  mocks.fb.persistNow
+    .mockImplementationOnce(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return false; })
+    .mockImplementationOnce(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; });
+  practice('/reading/review/saved');
+  const user = userEvent.setup();
+  await user.type(await screen.findByRole('textbox', { name: 'Evidence for question 2' }), 'Paragraph A proof');
+  await user.click(screen.getByRole('button', { name: 'Save review notes' }));
+  await screen.findByRole('alert');
+  expect(mocks.fb.setState).toHaveBeenCalledWith(expect.objectContaining({
+    examAttempts: [expect.objectContaining({ updatedAt: '2026-10-01T10:20:00Z', evidence: {} })],
+  }));
+  expect(mocks.fb.stateRef.current.examAttempts[0].evidence).toEqual({});
+
+  await user.click(screen.getByRole('button', { name: 'Save review notes' }));
+  await waitFor(() => expect(mocks.fb.persistNow).toHaveBeenCalledTimes(2));
+  const firstUpdatedAt = mocks.fb.persistNow.mock.calls[0][0].examAttempts[0].updatedAt;
+  const secondUpdatedAt = mocks.fb.persistNow.mock.calls[1][0].examAttempts[0].updatedAt;
+  expect(secondUpdatedAt).toBe(firstUpdatedAt);
+  expect(mocks.fb.stateRef.current.examAttempts[0].evidence.q2).toBe('Paragraph A proof');
 });

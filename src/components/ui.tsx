@@ -33,13 +33,7 @@ export function Empty({
   );
 }
 
-export function Toast({ message, visible }: { message: string; visible: boolean }) {
-  return (
-    <div id="toast" className={`toast${visible ? ' show' : ''}`} role="status" aria-live="polite">
-      {message}
-    </div>
-  );
-}
+export { Toast } from './Toast';
 
 export const NavIcons = {
   today: <House size={18} />,

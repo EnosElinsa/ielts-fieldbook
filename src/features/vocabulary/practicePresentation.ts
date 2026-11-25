@@ -1,4 +1,4 @@
-import { concealWord } from '../../domain/vocabulary/content';
+import { concealWordInflections } from '../../domain/vocabulary/content';
 import type { ReviewCard } from "../../domain/vocabulary";
 export { VOCABULARY_PRACTICE_MODES as MODES } from '../../domain/vocabulary/preferences';
 import { VOCABULARY_PRACTICE_MODES as MODES } from '../../domain/vocabulary/preferences';
@@ -7,7 +7,7 @@ export const titleCase = (value: string) =>
 export const modeLabel = (mode: string) =>
   MODES.find((item) => item.value === mode)?.label || titleCase(mode);
 export function conceal(text: string, term: string) {
-  return concealWord(text, term);
+  return concealWordInflections(text, term);
 }
 export function senseFor(card: ReviewCard) {
   return (

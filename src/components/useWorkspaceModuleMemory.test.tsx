@@ -333,3 +333,8 @@ test.each([true, false])('a restored hash target expands its chapter without ove
     expect(window.scrollTo).toHaveBeenCalledWith(0, 250);
   } finally { Element.prototype.scrollIntoView = original; }
 });
+
+test('source detail routes remain valid module URLs for listening and reading', () => {
+  expect(safeModuleUrl('/listening/source/s1', 'listening')).toBe(true);
+  expect(safeModuleUrl('/reading/source/p1', 'reading')).toBe(true);
+});

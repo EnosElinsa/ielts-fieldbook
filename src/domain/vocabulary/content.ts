@@ -5,6 +5,7 @@ import type { VocabularyEntry, VocabularySense } from './types';
 import { applyVocabularyContentVariant, applyVocabularyReadiness, exactVocabularyContent, hasVocabularyReadinessContext, isVocabularyReadingNote, isVocabularyPracticeReference, supplementVocabularySense, vocabularyReadinessBaselines, VOCABULARY_READINESS_VERSION } from './readiness';
 import { vocabularySensePresentation } from './dictionaryPresentation';
 import sentenceGapForms from './sentenceGapForms.json';
+import { regularWordForms } from './wordForms';
 export const VOCABULARY_CONTENT_VERSION = `reviewed-2026-10-18.2/${VOCABULARY_READINESS_VERSION}`;
 const learningSenses = vocabularyTeaching.learning;
 const taskSenseBindings = vocabularyTeaching.tasks;
@@ -122,7 +123,12 @@ export function vocabularyWordPattern(word: string, ...alternatives: (string | u
  const forms = [word, ...alternatives.filter((form): form is string => Boolean(form))].sort((a, b) => b.length - a.length);
  return new RegExp(`(?<![\\p{L}\\p{N}_])(?:${forms.map(escapePattern).join('|')})(?![\\p{L}\\p{N}_])`, 'giu');
 }
+/** Whole-word pattern for a headword, its regular inflections (for the given class, or any when omitted) and explicit extra forms. */
+export function vocabularyInflectedPattern(word: string, pos?: string, ...alternatives: (string | undefined)[]): RegExp {
+ return vocabularyWordPattern(word, ...regularWordForms(word, pos), ...alternatives);
+}
 export function concealWord(text: string, answer: string) { return text.replace(vocabularyWordPattern(answer), '_____'); }
+export function concealWordInflections(text: string, answer: string) { return text.replace(vocabularyInflectedPattern(answer), '_____'); }
 
 /** A reviewed inflected form belongs to its original word, meaning and sentence. */
 export function reviewedExampleForm(entryId: string, term: string, sense: VocabularySense): string | undefined {

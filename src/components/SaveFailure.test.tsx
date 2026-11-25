@@ -8,9 +8,9 @@ afterEach(cleanup);
 
 test('the failed save line stays only while the flag is set', () => {
   const { rerender } = render(<SaveFailure failed />);
-  expect(screen.getByRole('status')).toHaveTextContent('Could not save to your account. Try again.');
+  expect(screen.getByRole('alert')).toHaveTextContent('Could not save to your account. Try again.');
   rerender(<SaveFailure failed={false} />);
-  expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 });
 
 test('offers a real retry and prevents duplicate retries while saving', async () => {

@@ -252,17 +252,37 @@ export function completeVocabularyPlan(state, session, now = undefined) {
   return completePlan(state, plan.id, { linkedSessionId: session.id, completedAt: session.submittedAt || now });
 }
 
+/** Mistakes this task targets that still need a review after it began, or a fix. */
+export function pendingErrorReviewIds(state, plan): string[] {
+  const target = plan?.target;
+  if (!target || target.type !== 'error-review' || !Array.isArray(target.errorIds)) return [];
+  const started = Date.parse(plan.startedAt || '');
+  const restored = Date.parse(plan.restoredAt || '');
+  const since = Number.isFinite(started) ? Math.max(started, Number.isFinite(restored) ? restored : 0) : NaN;
+  return target.errorIds.filter(id => {
+    const error = (state.errors || []).find(row => row.id === id);
+    return !(error && (error.resolved || Date.parse(error.lastReviewedAt) >= since));
+  });
+}
+
+/** Every mistake this task targets was reviewed after the task began, or fixed. */
+export function errorReviewSatisfied(state, plan) {
+  return Array.isArray(plan?.target?.errorIds) && plan.target.errorIds.length > 0 && plan.target.type === 'error-review' && !pendingErrorReviewIds(state, plan).length;
+}
+
 export function completeReview(state, details) {
-  const plan = (state.plans || []).find(item => item.id === state.activePlanId && item.kind === 'review');
-  if (!plan) return null;
-  if (plan.target) {
-    if (plan.status !== 'in_progress' || plan.target.type !== 'error-review' || details?.planId !== plan.id) return null;
-    if (!plan.target.errorIds.length || !plan.target.errorIds.every(id => {
-      const error = (state.errors || []).find(row => row.id === id);
-      return error && (error.resolved || Date.parse(error.lastReviewedAt) >= Date.parse(plan.startedAt));
-    })) return null;
+  const plans = state.plans || [];
+  const ready = item => !item.target || (item.status === 'in_progress' && item.target.type === 'error-review' && errorReviewSatisfied(state, item));
+  // An explicit review task is judged on its own mistakes; it never completes some other task by accident.
+  if (details?.planId) {
+    const requested = plans.find(item => item.id === details.planId && item.kind === 'review');
+    return requested && ready(requested) ? completePlan(state, requested.id, details) : null;
   }
-  return completePlan(state, plan.id, details);
+  // Starting a rewrite clears the active task; a bound task still completes once its mistakes are done.
+  const active = plans.find(item => item.id === state.activePlanId && item.kind === 'review');
+  if (active) return ready(active) ? completePlan(state, active.id, details) : null;
+  const bound = plans.find(item => item.kind === 'review' && item.status === 'in_progress' && item.target?.type === 'error-review' && errorReviewSatisfied(state, item));
+  return bound ? completePlan(state, bound.id, details) : null;
 }
 
 export function reviewError(state, errorId, reviewedAt) {

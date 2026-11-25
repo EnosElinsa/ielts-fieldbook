@@ -207,3 +207,18 @@ test('frozen reservations compare resolved learning batches when archived words 
  try {ensureUnifiedPlans(s,undefined,now);const batches=s.plans.filter(row=>row.target?.mode==='learning-batch');expect(batches.length).toBeGreaterThan(0);expect(batches.flatMap(row=>row.target.entryIds)).toEqual(entries.slice(5).filter(entry=>entry.id!==entries[10].id).map(entry=>entry.id));expect(batches.every(row=>row.target.selectionPolicy==='exact')).toBe(true);}
  finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);for(const member of members)VOCABULARY_CATALOG.memberships.splice(VOCABULARY_CATALOG.memberships.indexOf(member),1);}
 });
+
+test('placing a waiting task onto a full automatic day reclaims an automatic slot without over-budget warning', () => {
+  const s = setup();
+  s.settings.skills = ['writing'];
+  s.settings.planning.vocabularyMinutes = 0;
+  s.plans = [
+    task('waiting-task', 20, { dateKey: '2026-10-12', origin: 'manual', status: 'pending', target: { type: 'question', skill: 'writing', questionId: 'w-manual', mode: 'overview' } }),
+    task('auto-wednesday', 30, { dateKey: '2026-10-21', origin: 'automatic', status: 'pending', target: { type: 'question', skill: 'writing', questionId: 'w-auto', mode: 'overview' } }),
+  ];
+  const preview = previewBacklogChange(s, { type: 'reschedule', ids: ['waiting-task'], dateKey: '2026-10-21', allowOverBudget: false }, now);
+  expect(preview.overBudget).toEqual([]);
+  const wednesday = preview.plans.filter(row => row.dateKey === '2026-10-21' && row.status !== 'skipped' && !row.onHold);
+  expect(wednesday.some(row => row.id === 'waiting-task')).toBe(true);
+  expect(wednesday.reduce((sum, row) => sum + Number(row.estimatedMinutes || 0), 0)).toBeLessThanOrEqual(30);
+});

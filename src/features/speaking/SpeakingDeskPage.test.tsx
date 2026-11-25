@@ -397,3 +397,28 @@ test('a durable pending recording restores and survives cancelled completion unt
   expect(deletePendingAudio).toHaveBeenCalledWith('account-1', 'speaking-1', '1', expect.any(String));
   expect(screen.queryByText('Decoded recording player')).not.toBeInTheDocument();
 });
+
+test('recorder errors and empty recordings stop tracks cleanly and report an alert without saving empty audio', async () => {
+  const stopTracks = vi.fn();
+  let latestRecorder: any;
+  vi.stubGlobal('navigator', { mediaDevices: { getUserMedia: vi.fn().mockResolvedValue({ getTracks: () => [{ stop: stopTracks }] }) } });
+  vi.stubGlobal('MediaRecorder', class {
+    state = 'inactive'; mimeType = 'audio/webm'; ondataavailable: any; onstop: any; onerror: any;
+    constructor() { latestRecorder = this; }
+    start() { this.state = 'recording'; }
+    stop() { this.state = 'inactive'; this.onstop?.(); }
+  });
+  render(<SpeakingDeskPage />);
+  await userEvent.click(screen.getByRole('button', { name: 'Record' }));
+  act(() => { latestRecorder.onerror?.(); });
+  expect(await screen.findByRole('alert')).toHaveTextContent('Recording failed. Try recording again');
+  expect(stopTracks).toHaveBeenCalled();
+
+  stopTracks.mockClear();
+  await userEvent.click(screen.getByRole('button', { name: 'Record' }));
+  await userEvent.click(screen.getByRole('button', { name: 'Stop' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('No audio was recorded');
+  expect(stopTracks).toHaveBeenCalled();
+  expect(writePendingAudio).not.toHaveBeenCalled();
+  expect(screen.queryByText('Decoded recording player')).not.toBeInTheDocument();
+});
