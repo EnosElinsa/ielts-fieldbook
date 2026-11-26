@@ -270,7 +270,6 @@ test('account settings, speaking, and stories keep single current nav state, con
     const rail = page.locator('.rail');
     await expect(rail.getByRole('link', { name: 'Account' })).toHaveAttribute('aria-current', 'page');
     await expect(rail.getByRole('link', { name: 'Settings' })).not.toHaveAttribute('aria-current', 'page');
-    await expect(page.getByRole('form', { name: 'Delete account' })).toBeVisible();
     const a11y = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
     expect(a11y.violations.filter(v => v.impact === 'serious' || v.impact === 'critical')).toEqual([]);
   }
@@ -317,6 +316,8 @@ test('mobile planning preserves accessible day headings, account inputs honor ho
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/settings/account');
   await expect(page.getByRole('heading', { level: 2, name: 'Appearance and account' })).toBeVisible();
+  // Kept on this non-axe /settings/account pass: Playwright Firefox 159 crashes when getByRole('form') and axe-core both run on the same document.
+  await expect(page.getByRole('form', { name: 'Delete account' })).toBeVisible();
   const nameInput = page.getByLabel('Display name');
   const restBorder = await nameInput.evaluate(el => getComputedStyle(el).borderTopColor);
   await nameInput.hover();
