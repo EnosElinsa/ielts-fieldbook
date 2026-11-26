@@ -9,17 +9,18 @@ import { PanelLoadingState } from '../../components/AsyncState';
 
 const statusNames = { pending: 'Not started', in_progress: 'In progress', completed: 'Completed', skipped: 'Skipped' };
 const PAGE_SIZE = 20;
-export function ProgressPlansPanel({ skill, since, revision }: { skill: StudySkill; since: number; revision?: string }) {
+export function ProgressPlansPanel({ skill, since, revision, headingLevel = 2 }: { skill: StudySkill; since: number; revision?: string; headingLevel?: 2 | 3 }) {
   const from = since ? dateKey(new Date(since)) : '', to = dateKey(new Date());
-  return <PlanStatusFilter key={`${accountId()}:${accountGeneration()}:${skill}`} skill={skill} from={from} to={to} revision={revision} />;
+  return <PlanStatusFilter key={`${accountId()}:${accountGeneration()}:${skill}`} skill={skill} from={from} to={to} revision={revision} headingLevel={headingLevel} />;
 }
 
 type PlanScope = { skill: StudySkill; from: string; to: string; revision?: string };
 
-function PlanStatusFilter({ skill, from, to, revision }: PlanScope) {
+function PlanStatusFilter({ skill, from, to, revision, headingLevel = 2 }: PlanScope & { headingLevel?: 2 | 3 }) {
   const [status, setStatus] = useState<StudyPlan['status'] | 'all'>('all');
+  const Heading = headingLevel === 3 ? 'h3' : 'h2';
   return <section className="progress-section" aria-labelledby="progress-plans-heading">
-    <div className="section-head"><h2 id="progress-plans-heading">Study plans</h2><FilterMenu label="Plan status" value={status} onChange={value => setStatus(value as typeof status)} options={[{ value: 'all', label: 'Any status' }, ...Object.entries(statusNames).map(([value, label]) => ({ value, label }))]} /></div>
+    <div className="section-head"><Heading id="progress-plans-heading">Study plans</Heading><FilterMenu label="Plan status" value={status} onChange={value => setStatus(value as typeof status)} options={[{ value: 'all', label: 'Any status' }, ...Object.entries(statusNames).map(([value, label]) => ({ value, label }))]} /></div>
     <PlanResults key={`${from}:${to}:${status}`} skill={skill} from={from} to={to} status={status} revision={revision} />
   </section>;
 }

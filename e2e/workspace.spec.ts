@@ -187,6 +187,10 @@ test('search respects IME confirmation and real Enter still navigates', async ({
   await expect(search).toBeVisible();
   await search.dispatchEvent('keydown', { key: 'Enter', code: 'Enter', keyCode: 229 });
   await expect(search).toBeVisible();
+  await search.dispatchEvent('keydown', { key: 'Escape', code: 'Escape', isComposing: true });
+  await expect(search).toBeVisible();
+  await search.dispatchEvent('keydown', { key: 'Escape', code: 'Escape', keyCode: 229 });
+  await expect(search).toBeVisible();
   await search.press('Enter');
   await expect(page).toHaveURL(/\/write\/questions/);
 });
@@ -257,6 +261,8 @@ test.describe('English date controls under a Chinese browser locale', () => {
 });
 
 test('account settings, speaking, and stories keep single current nav state, contrast, and zero mobile overflow', async ({ page }) => {
+  test.setTimeout(90_000);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   for (const theme of ['light', 'dark']) {
     await page.addInitScript(t => localStorage.setItem('fieldbook-theme-v1', t), theme);
     await page.setViewportSize({ width: 1440, height: 900 });
@@ -276,6 +282,55 @@ test('account settings, speaking, and stories keep single current nav state, con
     await expect(page.locator('[aria-busy="true"]')).toHaveCount(0, { timeout: 30000 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth), route).toBe(true);
   }
+});
+
+test('mobile planning preserves accessible day headings, account inputs honor hover borders, mobile search avoids zoom, and reduced motion stops spatial transitions', async ({ page }) => {
+  const futurePlan = {
+    id: 'future-mobile-heading', title: 'Tomorrow writing essay', skill: 'writing', kind: '2',
+    dateKey: '2026-11-18', status: 'in_progress', origin: 'manual', estimatedMinutes: 40,
+  };
+  await page.route('**/rpc/load_planning_workspace', route => route.fulfill({
+    json: {
+      profile: { settings: { dailyMinutes: 45, skills: ['writing'], planning: { newWordsPerDay: 0 } }, active_plan_id: null },
+      plans: [{ id: futurePlan.id, payload: futurePlan }], planStamp: '0'.repeat(32), evidence: {},
+    },
+    headers: { 'access-control-allow-origin': '*' },
+  }));
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/planning');
+  const futureDay = page.locator('details.study-day-foldable[open]').first();
+  await expect(futureDay).toBeVisible();
+  expect(await futureDay.locator('summary h1, summary h2, summary h3, summary h4').count()).toBe(0);
+  const dayHeading = futureDay.locator('.study-day-header > h3');
+  await expect(dayHeading).toHaveCount(1);
+  expect(await dayHeading.evaluate(el => getComputedStyle(el).display)).not.toBe('none');
+  const mobileA11y = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+  expect(mobileA11y.violations.filter(v => v.impact === 'serious' || v.impact === 'critical')).toEqual([]);
+
+  await page.getByRole('button', { name: /Search/ }).first().click();
+  const searchInput = page.getByRole('combobox', { name: 'Search Fieldbook' });
+  await expect(searchInput).toBeVisible();
+  expect(await searchInput.evaluate(el => parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThanOrEqual(16);
+  await page.keyboard.press('Escape');
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/settings/account');
+  await expect(page.getByRole('heading', { level: 2, name: 'Appearance and account' })).toBeVisible();
+  // Kept on this non-axe /settings/account pass: Playwright Firefox 159 crashes when getByRole('form') and axe-core both run on the same document.
+  await expect(page.getByRole('form', { name: 'Delete account' })).toBeVisible();
+  const nameInput = page.getByLabel('Display name');
+  const restBorder = await nameInput.evaluate(el => getComputedStyle(el).borderTopColor);
+  await nameInput.hover();
+  const hoverBorder = await nameInput.evaluate(el => getComputedStyle(el).borderTopColor);
+  expect(hoverBorder).not.toBe(restBorder);
+
+  const reducedDurations = await page.evaluate(() => ['.shell', '.toast', '.rail-foot'].map(selector => {
+    const el = document.querySelector(selector);
+    return el ? getComputedStyle(el).transitionDuration : null;
+  }));
+  expect(reducedDurations).toEqual(['0s', '0s', '0s']);
 });
 
 test('follow-up group meanings stay aligned across Card, List, Details, task preview, occurred highlight and retained resources', async ({ page }) => {
@@ -365,4 +420,25 @@ test('follow-up group meanings stay aligned across Card, List, Details, task pre
   await expect(page.getByRole('heading', { level: 2, name: 'foul', exact: true })).toBeVisible({ timeout: 30000 });
   await expect(page.getByText('Wicked, detestable or extremely unpleasant.')).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+});
+
+test('jumping to a far word in a 50-row production session keeps document height stable and scrolls the focused row into view', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/vocabulary/study?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-01-group-01&mode=production');
+  const start = page.getByRole('button', { name: /Start/ });
+  await expect(start).toBeEnabled({ timeout: 30000 });
+  await start.click();
+  await expect(page.locator('.practice-answer-row')).toHaveCount(50, { timeout: 15000 });
+  const initialHeight = await page.evaluate(() => document.documentElement.scrollHeight);
+  await page.getByRole('button', { name: /^Word 48\b/ }).click();
+  const target = page.getByRole('textbox', { name: 'Answer 48' });
+  await expect(target).toBeFocused();
+  const after = await page.evaluate(() => {
+    const row = document.querySelectorAll('.practice-answer-row')[47];
+    const rect = row?.getBoundingClientRect();
+    return { scrollHeight: document.documentElement.scrollHeight, top: rect?.top ?? -1, bottom: rect?.bottom ?? -1, innerHeight: window.innerHeight };
+  });
+  expect(after.scrollHeight).toBe(initialHeight);
+  expect(after.top).toBeGreaterThanOrEqual(0);
+  expect(after.bottom).toBeLessThanOrEqual(after.innerHeight);
 });

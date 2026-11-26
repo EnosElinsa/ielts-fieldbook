@@ -129,6 +129,7 @@ function useFieldbookValue() {
   const [state, setState] = useState(() => loadState());
   const [toastMessage, setToastMessage] = useState('');
   const [toastVisible, setToastVisible] = useState(false);
+  const [toastRevision, setToastRevision] = useState(0);
   const toastTimer = useRef<number | null>(null);
   const draftTimer = useRef<number | null>(null);
   const [modal, setModal] = useState<ModalName>(null);
@@ -143,9 +144,9 @@ function useFieldbookValue() {
   const [vocabularyDueOnly, setVocabularyDueOnly] = useState(false);
   const [vocabularyDueAtVisit, setVocabularyDueAtVisit] = useState(0);
   const [revealedVocabulary, setRevealedVocabulary] = useState<Record<string, boolean>>({});
-  const [pendingAttempt, setPendingAttempt] = useState(null);
-  const [pendingBackup, setPendingBackup] = useState(null);
-  const [viewedSession, setViewedSession] = useState(null);
+  const [pendingAttempt, setPendingAttempt] = useState<any>(null);
+  const [pendingBackup, setPendingBackup] = useState<any>(null);
+  const [viewedSession, setViewedSession] = useState<any>(null);
   const [editingVocabularyId, setEditingVocabularyId] = useState(null);
   const [vocabularySeed, setVocabularySeed] = useState<(Partial<VocabularyEntry> & { skill?: VocabularySkill; sourceId?: string; sourceType?: VocabularySource['type']; context?: string; sessionId?: string; source?: string }) | null>(null);
   const [editingStoryId, setEditingStoryId] = useState(null);
@@ -198,6 +199,7 @@ function useFieldbookValue() {
   const toast = useCallback((message: string) => {
     setToastMessage(message);
     setToastVisible(true);
+    setToastRevision((value) => value + 1);
     if (toastTimer.current) window.clearTimeout(toastTimer.current);
     toastTimer.current = window.setTimeout(() => setToastVisible(false), 2600);
   }, []);
@@ -2241,6 +2243,7 @@ function useFieldbookValue() {
       toast,
       toastMessage,
       toastVisible,
+      toastRevision,
       persist,
       persistNow,
       commitExamSectionExpansion,
@@ -2431,6 +2434,7 @@ function useFieldbookValue() {
       toast,
       toastMessage,
       toastVisible,
+      toastRevision,
       viewedSession,
     ],
   );

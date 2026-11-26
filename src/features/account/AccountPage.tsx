@@ -6,8 +6,9 @@ import { authError } from '../../auth/errors';
 import { useAuthUser } from '../../auth/useAuthUser';
 import { displayNameOf } from '../../lib/identity';
 import { formatAccountDate } from '../../lib/format';
+import { requestTimeout } from '../../lib/requestTimeout';
 import { getSupabase } from '../../lib/supabase';
-import { clearPendingAudioAccount } from '../../storage/pendingAudio';
+import { clearAccountLocalState } from '../../storage/accountCleanup';
 import { AccountMark } from './AccountMark';
 
 export function AccountPage() {
@@ -16,6 +17,7 @@ export function AccountPage() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [nameNote, setNameNote] = useState('');
   const [passwordNote, setPasswordNote] = useState('');
   const [nameError, setNameError] = useState('');
@@ -29,6 +31,7 @@ export function AccountPage() {
   const [deleteError, setDeleteError] = useState('');
   const [signOutError, setSignOutError] = useState('');
   const [busy, setBusy] = useState<'name' | 'password' | 'out' | 'resend' | 'email' | 'delete' | null>(null);
+  const actionBusy = Boolean(busy);
   const confirmed = Boolean(user?.email_confirmed_at);
   const deleteReady = emailsMatch(deleteEmail, user?.email);
   const pendingVisible = Boolean(pendingEmail) && !emailsMatch(user?.email, pendingEmail);
@@ -41,6 +44,7 @@ export function AccountPage() {
 
   async function saveName(event: FormEvent) {
     event.preventDefault();
+    if (busy) return;
     const next = name.trim();
     if (!next) {
       setNameError('Enter a name.');
@@ -49,17 +53,23 @@ export function AccountPage() {
     setBusy('name');
     setNameError('');
     setNameNote('');
-    const { error } = await getSupabase().auth.updateUser({ data: { display_name: next } });
-    setBusy(null);
-    if (error) {
-      setNameError(error.message);
-      return;
+    try {
+      const { error } = await requestTimeout(getSupabase().auth.updateUser({ data: { display_name: next } }), 15_000);
+      if (error) {
+        setNameError(error.message);
+        return;
+      }
+      setNameNote('Name saved.');
+    } catch (cause) {
+      setNameError(cause instanceof Error && cause.message ? authError(cause.message, 'signin') : 'Could not save your name. Try again.');
+    } finally {
+      setBusy(null);
     }
-    setNameNote('Name saved.');
   }
 
   async function savePassword(event: FormEvent) {
     event.preventDefault();
+    if (busy) return;
     if (password.length < 6) {
       setPasswordError('Use at least 6 characters.');
       return;
@@ -71,37 +81,52 @@ export function AccountPage() {
     setBusy('password');
     setPasswordError('');
     setPasswordNote('');
-    const { error } = await getSupabase().auth.updateUser({ password });
-    setBusy(null);
-    if (error) {
-      setPasswordError(error.message);
-      return;
+    try {
+      const { error } = await requestTimeout(getSupabase().auth.updateUser({ password }), 15_000);
+      if (error) {
+        setPasswordError(error.message);
+        return;
+      }
+      setPassword('');
+      setConfirm('');
+      setPasswordNote('Password updated.');
+    } catch (cause) {
+      setPasswordError(cause instanceof Error && cause.message ? authError(cause.message, 'reset') : 'Could not update your password. Try again.');
+    } finally {
+      setBusy(null);
     }
-    setPassword('');
-    setConfirm('');
-    setPasswordNote('Password updated.');
   }
 
   async function resendConfirmation() {
+    if (busy) return;
     const address = user?.email?.trim();
     if (!address || confirmed) return;
     setBusy('resend');
     setResendError('');
-    const { error } = await getSupabase().auth.resend({
-      type: 'signup',
-      email: address,
-      options: { emailRedirectTo: window.location.origin },
-    });
-    setBusy(null);
-    if (error) {
-      setResendError(authError(error.message, 'signup'));
-      return;
+    try {
+      const { error } = await requestTimeout(
+        getSupabase().auth.resend({
+          type: 'signup',
+          email: address,
+          options: { emailRedirectTo: window.location.origin },
+        }),
+        15_000,
+      );
+      if (error) {
+        setResendError(authError(error.message, 'signup'));
+        return;
+      }
+      setSent(true);
+    } catch (cause) {
+      setResendError(authError(cause instanceof Error ? cause.message : '', 'signup'));
+    } finally {
+      setBusy(null);
     }
-    setSent(true);
   }
 
   async function saveEmail(event: FormEvent) {
     event.preventDefault();
+    if (busy) return;
     const next = nextEmail.trim();
     if (!next) {
       setEmailError('Enter an email.');
@@ -114,44 +139,65 @@ export function AccountPage() {
     }
     setBusy('email');
     setEmailError('');
-    const { error } = await getSupabase().auth.updateUser(
-      { email: next },
-      { emailRedirectTo: window.location.origin },
-    );
-    setBusy(null);
-    if (error) {
-      setEmailError(authError(error.message, 'signup'));
-      return;
+    try {
+      const { error } = await requestTimeout(
+        getSupabase().auth.updateUser(
+          { email: next },
+          { emailRedirectTo: window.location.origin },
+        ),
+        15_000,
+      );
+      if (error) {
+        setEmailError(authError(error.message, 'signup'));
+        return;
+      }
+      setPendingEmail(next);
+    } catch (cause) {
+      setEmailError(authError(cause instanceof Error ? cause.message : '', 'signup'));
+    } finally {
+      setBusy(null);
     }
-    setPendingEmail(next);
   }
 
-  async function removeAccount() {
-    if (!deleteReady) return;
+  async function removeAccount(event: FormEvent) {
+    event.preventDefault();
+    if (!deleteReady || busy) return;
     setBusy('delete');
     setDeleteError('');
-    const { error } = await getSupabase().rpc('delete_own_account');
-    if (error) {
-      setBusy(null);
+    try {
+      const { error } = await requestTimeout(Promise.resolve(getSupabase().rpc('delete_own_account')), 15_000);
+      if (error) {
+        setDeleteError('Could not delete this account. Try again.');
+        return;
+      }
+      const owner = user?.id || null;
+      try {
+        await signOut(owner);
+      } catch {
+        // The account is already deleted remotely; clear local Supabase session and device artifacts so AuthGate returns to sign-in.
+        await requestTimeout(Promise.resolve(getSupabase().auth.signOut({ scope: 'local' })), 5_000).catch(() => {});
+        await clearAccountLocalState(owner);
+      }
+      navigate('/');
+    } catch {
       setDeleteError('Could not delete this account. Try again.');
-      return;
+    } finally {
+      setBusy(null);
     }
-    await clearPendingAudioAccount(user?.id || null);
-    await signOut();
-    navigate('/');
   }
 
   async function leave() {
+    if (busy) return;
     setBusy('out');
     setSignOutError('');
-    try { await signOut(); navigate('/'); } catch { setSignOutError('Could not sign out. Try again.'); setBusy(null); }
+    try { await signOut(user?.id || null); navigate('/'); } catch { setSignOutError('Could not sign out. Try again.'); } finally { setBusy(null); }
   }
 
   return (
     <div className="account">
       <div className="account-id">
         <AccountMark user={user} />
-        <h2>{displayNameOf(user)}</h2>
+        <h4>{displayNameOf(user)}</h4>
       </div>
 
       <div className="metrics">
@@ -168,9 +214,9 @@ export function AccountPage() {
                   className="account-resend"
                   type="button"
                   onClick={() => void resendConfirmation()}
-                  disabled={busy === 'resend'}
+                  disabled={actionBusy}
                 >
-                  Resend
+                  {busy === 'resend' ? 'Sending…' : 'Resend'}
                 </button>
               )
             ) : null}
@@ -188,104 +234,152 @@ export function AccountPage() {
       </div>
 
       <div className="split">
-        <form className="panel" onSubmit={saveName}>
-          <h3>Name</h3>
+        <form className="panel" aria-labelledby="account-name-heading" aria-busy={busy === 'name' || undefined} onSubmit={saveName}>
+          <h4 id="account-name-heading">Name</h4>
           <p className="account-note">Your display name does not change your sign-in email.</p>
           <div className="field">
             <label htmlFor="account-name">Display name</label>
-            <input id="account-name" value={name} maxLength={40} onChange={(event) => setName(event.target.value)} />
+            <input
+              id="account-name"
+              autoComplete="name"
+              value={name}
+              maxLength={40}
+              aria-invalid={Boolean(nameError) || undefined}
+              aria-describedby={nameError ? 'account-name-error' : undefined}
+              onChange={(event) => {
+                setName(event.target.value);
+                if (nameError) setNameError('');
+              }}
+            />
           </div>
-          {nameError ? <p className="auth-error" role="alert">{nameError}</p> : null}
+          {nameError ? <p id="account-name-error" className="auth-error" role="alert">{nameError}</p> : null}
           {nameNote ? <p className="auth-notice" role="status">{nameNote}</p> : null}
           <div className="modal-foot">
-            <button className="btn primary" type="submit" disabled={busy === 'name'}>
-              Save name
+            <button className="btn primary" type="submit" disabled={actionBusy}>
+              {busy === 'name' ? 'Saving…' : 'Save name'}
             </button>
           </div>
         </form>
 
-        <form className="panel" onSubmit={savePassword}>
-          <h3>Password</h3>
+        <form className="panel" aria-labelledby="account-password-heading" aria-busy={busy === 'password' || undefined} onSubmit={savePassword}>
+          <h4 id="account-password-heading">Password</h4>
           <p className="account-note">You stay signed in on this browser.</p>
           <div className="field">
             <label htmlFor="account-password">New password</label>
             <input
               id="account-password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               autoComplete="new-password"
               minLength={6}
               value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              aria-invalid={Boolean(passwordError) || undefined}
+              aria-describedby={passwordError ? 'account-password-error' : undefined}
+              onChange={(event) => {
+                setPassword(event.target.value);
+                if (passwordError) setPasswordError('');
+              }}
             />
           </div>
           <div className="field">
             <label htmlFor="account-confirm">Confirm password</label>
             <input
               id="account-confirm"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               autoComplete="new-password"
               minLength={6}
               value={confirm}
-              onChange={(event) => setConfirm(event.target.value)}
+              aria-invalid={Boolean(passwordError) || undefined}
+              aria-describedby={passwordError ? 'account-password-error' : undefined}
+              onChange={(event) => {
+                setConfirm(event.target.value);
+                if (passwordError) setPasswordError('');
+              }}
             />
           </div>
-          {passwordError ? <p className="auth-error" role="alert">{passwordError}</p> : null}
+          <button className="btn text account-password-toggle" type="button" aria-pressed={showPassword} onClick={() => setShowPassword(current => !current)}>
+            {showPassword ? 'Hide password' : 'Show password'}
+          </button>
+          {passwordError ? <p id="account-password-error" className="auth-error" role="alert">{passwordError}</p> : null}
           {passwordNote ? <p className="auth-notice" role="status">{passwordNote}</p> : null}
           <div className="modal-foot">
-            <button className="btn primary" type="submit" disabled={busy === 'password'}>
-              Update password
+            <button className="btn primary" type="submit" disabled={actionBusy}>
+              {busy === 'password' ? 'Updating…' : 'Update password'}
             </button>
           </div>
         </form>
       </div>
 
-      <form className="panel" onSubmit={saveEmail}>
-        <h3>Email address</h3>
+      <form className="panel" aria-labelledby="account-email-heading" aria-busy={busy === 'email' || undefined} onSubmit={saveEmail}>
+        <h4 id="account-email-heading">Email address</h4>
         <p className="account-note">Continue using your current email until you confirm the new address.</p>
         <div className="field">
           <label htmlFor="account-email">New email</label>
-          <input id="account-email" type="email" value={nextEmail} onChange={(event) => setNextEmail(event.target.value)} />
+          <input
+            id="account-email"
+            type="email"
+            autoComplete="email"
+            autoCapitalize="none"
+            spellCheck={false}
+            value={nextEmail}
+            aria-invalid={Boolean(emailError) || undefined}
+            aria-describedby={emailError ? 'account-email-error' : undefined}
+            onChange={(event) => {
+              setNextEmail(event.target.value);
+              if (emailError) setEmailError('');
+            }}
+          />
         </div>
-        {emailError ? <p className="auth-error" role="alert">{emailError}</p> : null}
+        {emailError ? <p id="account-email-error" className="auth-error" role="alert">{emailError}</p> : null}
         {pendingVisible ? <p className="auth-notice" role="status">Confirmation sent. {pendingEmail}</p> : null}
         <div className="modal-foot">
-          <button className="btn primary" type="submit" disabled={busy === 'email'}>
-            Save email
+          <button className="btn primary" type="submit" disabled={actionBusy}>
+            {busy === 'email' ? 'Saving…' : 'Save email'}
           </button>
         </div>
       </form>
 
-      <div className="panel account-danger">
-        <h3>Delete account</h3>
+      <form className="panel account-danger" aria-labelledby="account-delete-heading" aria-busy={busy === 'delete' || undefined} onSubmit={removeAccount}>
+        <h4 id="account-delete-heading">Delete account</h4>
         <p className="account-note">Permanently delete your account and all saved study data. You can register again with this email.</p>
         <div className="field">
           <label htmlFor="account-delete-email">Type your email</label>
           <input
             id="account-delete-email"
             type="email"
+            autoComplete="email"
+            autoCapitalize="none"
+            spellCheck={false}
+            aria-invalid={Boolean(deleteError) || undefined}
+            aria-describedby={[
+              deleteEmail.trim() && !deleteReady ? 'account-delete-hint' : '',
+              deleteError ? 'account-delete-error' : '',
+            ].filter(Boolean).join(' ') || undefined}
             value={deleteEmail}
-            onChange={(event) => setDeleteEmail(event.target.value)}
+            onChange={(event) => {
+              setDeleteEmail(event.target.value);
+              if (deleteError) setDeleteError('');
+            }}
           />
         </div>
-        {deleteEmail.trim() && !deleteReady ? <p className="auth-error" role="alert">Type the email shown above.</p> : null}
-        {deleteError ? <p className="auth-error" role="alert">{deleteError}</p> : null}
+        {deleteEmail.trim() && !deleteReady ? <p id="account-delete-hint" className="account-delete-hint">Type the email shown above.</p> : null}
+        {deleteError ? <p id="account-delete-error" className="auth-error" role="alert">{deleteError}</p> : null}
         <div className="modal-foot">
-          <button className="btn warn" type="button" onClick={() => void removeAccount()} disabled={!deleteReady || busy === 'delete'}>
-            Delete account
+          <button className="btn warn" type="submit" disabled={!deleteReady || actionBusy}>
+            {busy === 'delete' ? 'Deleting…' : 'Delete account'}
           </button>
         </div>
-      </div>
+      </form>
 
-      <div className="panel account-leave">
+      <section className="panel account-leave" aria-busy={busy === 'out' || undefined}>
         <div>
-          <h3>Sign out</h3>
+          <h4>Sign out</h4>
           <p className="account-note">Your saved study data will remain in your account.</p>
           {signOutError ? <p className="auth-error" role="alert">{signOutError}</p> : null}
         </div>
-        <button className="btn warn" type="button" onClick={() => void leave()} disabled={busy === 'out'}>
-          Sign out
+        <button className="btn warn" type="button" onClick={() => void leave()} disabled={actionBusy}>
+          {busy === 'out' ? 'Signing out…' : 'Sign out'}
         </button>
-      </div>
+      </section>
     </div>
   );
 }

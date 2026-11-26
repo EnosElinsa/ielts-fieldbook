@@ -84,7 +84,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .async-state *,
-  .workspace-skeleton * { animation-duration: 0.001ms !important; }
+  .workspace-skeleton * { animation: none !important; }
 }
 
 .exam-workspace .exam-source-panel { min-height: min(650px, calc(100dvh - 120px)); max-height: calc(100dvh - 120px); }

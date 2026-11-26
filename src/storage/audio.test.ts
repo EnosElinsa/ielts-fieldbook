@@ -1,8 +1,9 @@
-import { expect, test, vi } from 'vitest';
+import { afterEach, expect, test, vi } from 'vitest';
 import { beginAccountLoad, resetAccountIdentity, setAccountIdentity } from './accountIdentity';
 import { putAudio } from './audio';
 const mocks = vi.hoisted(() => ({ session: null as Promise<any> | null, upload: vi.fn().mockResolvedValue({ error: null }) }));
 vi.mock('../lib/supabase', () => ({ supabaseConfigured: () => true, getSupabase: () => ({ auth: { getSession: () => mocks.session }, storage: { from: () => ({ upload: mocks.upload }) } }) }));
+afterEach(() => { vi.useRealTimers(); mocks.upload.mockReset().mockResolvedValue({ error: null }); resetAccountIdentity(); });
 test('raw audio cannot upload under a new owner after delayed auth lookup', async () => {
   resetAccountIdentity(); setAccountIdentity('owner-a'); beginAccountLoad();
   let release!: (result: any) => void; mocks.session = new Promise(resolve => { release = resolve; });
@@ -11,5 +12,14 @@ test('raw audio cannot upload under a new owner after delayed auth lookup', asyn
   release({ data: { session: { user: { id: 'owner-b' } } } });
   await expect(upload).rejects.toThrow('Account changed');
   expect(mocks.upload).not.toHaveBeenCalled();
-  resetAccountIdentity();
+});
+test('stalled audio upload rejects after the timeout instead of locking recording controls', async () => {
+  vi.useFakeTimers();
+  setAccountIdentity('owner-a'); beginAccountLoad();
+  mocks.session = Promise.resolve({ data: { session: { user: { id: 'owner-a' } } } });
+  mocks.upload.mockImplementationOnce(() => new Promise(() => {}));
+  const upload = putAudio('audio', new Blob(['private recording']), 'owner-a');
+  const assertion = expect(upload).rejects.toThrow(/took too long/i);
+  await vi.advanceTimersByTimeAsync(30_000);
+  await assertion;
 });

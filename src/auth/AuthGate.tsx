@@ -1,4 +1,4 @@
-import { FormEvent, lazy, Suspense, useEffect, useState, type ReactNode } from 'react';
+import { FormEvent, lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
 import { InlineLoadingState } from '../components/AsyncState';
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import { requestTimeout } from '../lib/requestTimeout';
@@ -43,6 +43,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
   const [sessionCheckFailed, setSessionCheckFailed] = useState(false);
   const [legalView, setLegalView] = useState<string | null>(null);
   const [sessionOwner, setSessionOwner] = useState<string | null>(null);
+  const previousOwnerRef = useRef<string | null>(null);
   const { theme, setTheme } = useTheme();
   const [systemDark, setSystemDark] = useState(() => Boolean(window.matchMedia?.('(prefers-color-scheme: dark)').matches));
   useEffect(() => {
@@ -67,24 +68,37 @@ export function AuthGate({ children }: { children: ReactNode }) {
     }
     const supabase = getSupabase();
     let cancelled = false;
+    let authStateChanged = false;
     void (async () => {
       try {
         const { data, error: sessionError } = await requestTimeout(supabase.auth.getSession());
-        if (cancelled) return;
+        if (cancelled || authStateChanged) return;
         if (sessionError) throw sessionError;
         setSessionCheckFailed(false);
-        setSessionOwner(data.session?.user.id || null);
+        const owner = data.session?.user.id || null;
+        previousOwnerRef.current = owner;
+        setSessionOwner(owner);
         setSessionState(data.session ? 'in' : 'out');
       } catch (cause) {
-        if (cancelled) return;
+        if (cancelled || authStateChanged) return;
         setError(authError(errorMessage(cause), 'signin'));
         setSessionCheckFailed(true);
         setSessionState('out');
       }
     })();
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      authStateChanged = true;
       if (event === 'PASSWORD_RECOVERY') setRecovery(true);
-      setSessionOwner(session?.user.id || null);
+      const nextOwner = session?.user.id || null;
+      const previousOwner = previousOwnerRef.current;
+      previousOwnerRef.current = nextOwner;
+      if (previousOwner && previousOwner !== nextOwner) {
+        const stillInactive = () => !cancelled && previousOwnerRef.current !== previousOwner;
+        void import('../storage/accountCleanup')
+          .then(({ clearAccountTabState }) => clearAccountTabState(previousOwner, stillInactive))
+          .catch(() => {});
+      }
+      setSessionOwner(nextOwner);
       setSessionState(session ? 'in' : 'out');
     });
     return () => {
@@ -109,9 +123,12 @@ export function AuthGate({ children }: { children: ReactNode }) {
       const supabase = getSupabase();
       const address = email.trim();
       if (mode === 'reset') {
-        const { error: resetError } = await supabase.auth.resetPasswordForEmail(address, {
-          redirectTo: window.location.origin,
-        });
+        const { error: resetError } = await requestTimeout(
+          supabase.auth.resetPasswordForEmail(address, {
+            redirectTo: window.location.origin,
+          }),
+          15_000,
+        );
         if (resetError) {
           setError(authError(resetError.message, mode));
           return;
@@ -122,12 +139,15 @@ export function AuthGate({ children }: { children: ReactNode }) {
       }
       const result =
         mode === 'signup'
-          ? await supabase.auth.signUp({
-              email: address,
-              password,
-              options: { emailRedirectTo: window.location.origin },
-            })
-          : await supabase.auth.signInWithPassword({ email: address, password });
+          ? await requestTimeout(
+              supabase.auth.signUp({
+                email: address,
+                password,
+                options: { emailRedirectTo: window.location.origin },
+              }),
+              15_000,
+            )
+          : await requestTimeout(supabase.auth.signInWithPassword({ email: address, password }), 15_000);
       if (result.error) {
         setError(authError(result.error.message, mode));
         return;
@@ -148,11 +168,14 @@ export function AuthGate({ children }: { children: ReactNode }) {
     setBusy(true);
     setError('');
     try {
-      const { error: resendError } = await getSupabase().auth.resend({
-        type: 'signup',
-        email: email.trim(),
-        options: { emailRedirectTo: window.location.origin },
-      });
+      const { error: resendError } = await requestTimeout(
+        getSupabase().auth.resend({
+          type: 'signup',
+          email: email.trim(),
+          options: { emailRedirectTo: window.location.origin },
+        }),
+        15_000,
+      );
       if (resendError) {
         setError(authError(resendError.message, 'signup'));
         return;
@@ -208,7 +231,10 @@ export function AuthGate({ children }: { children: ReactNode }) {
             setBusy(true);
             setError('');
             try {
-              const { error: updateError } = await getSupabase().auth.updateUser({ password: nextPassword });
+              const { error: updateError } = await requestTimeout(
+                getSupabase().auth.updateUser({ password: nextPassword }),
+                15_000,
+              );
               if (updateError) {
                 setError(authError(updateError.message, 'reset'));
                 return;
@@ -246,7 +272,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
             required
             onChange={(event) => setConfirmPassword(event.target.value)}
           />
-          <button className="btn text" type="button" onClick={() => setShowPassword((current) => !current)}>
+          <button className="btn text" type="button" aria-pressed={showPassword} onClick={() => setShowPassword((current) => !current)}>
             {showPassword ? 'Hide password' : 'Show password'}
           </button>
           {error ? <p className="auth-error" role="alert">{error}</p> : null}
@@ -321,7 +347,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
         {mode === 'signup' ? <p>You will need to confirm your email before signing in.</p> : null}
         {mode === 'reset' ? <p>Enter your account email to request a password reset link.</p> : null}
         <label htmlFor="auth-email">Email</label>
-        <input id="auth-email" type="email" autoComplete="email" value={email} required onChange={(event) => setEmail(event.target.value)} />
+        <input id="auth-email" type="email" autoComplete="email" autoCapitalize="none" spellCheck={false} value={email} required onChange={(event) => setEmail(event.target.value)} />
         {mode === 'reset' ? null : (
           <>
             <label htmlFor="auth-password">Password</label>
@@ -329,15 +355,16 @@ export function AuthGate({ children }: { children: ReactNode }) {
               id="auth-password"
               type={showPassword ? 'text' : 'password'}
               autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
+              aria-describedby={mode === 'signup' ? 'auth-password-hint' : undefined}
               minLength={6}
               value={password}
               required
               onChange={(event) => setPassword(event.target.value)}
             />
-            <button className="btn text" type="button" onClick={() => setShowPassword((current) => !current)}>
+            <button className="btn text" type="button" aria-pressed={showPassword} onClick={() => setShowPassword((current) => !current)}>
               {showPassword ? 'Hide password' : 'Show password'}
             </button>
-            {mode === 'signup' ? <p className="auth-hint">At least 6 characters. You can change it later from Account.</p> : null}
+            {mode === 'signup' ? <p id="auth-password-hint" className="auth-hint">At least 6 characters. You can change it later from Account.</p> : null}
           </>
         )}
         {error ? <p className="auth-error" role="alert">{error}</p> : null}
@@ -375,17 +402,13 @@ export function AuthGate({ children }: { children: ReactNode }) {
   );
 }
 
-export async function signOut() {
+export async function signOut(ownerFallback?: string | null) {
   if (!supabaseConfigured()) return;
-  const [{ accountId, resetAccountStore }, { discardDraftRecovery }, { clearVocabularyDraft }, { clearAccountExamRecovery }, { clearPendingAudioAccount }] = await Promise.all([
-    import('../storage/remote'), import('../storage/recovery'), import('../storage/vocabularyDrafts'), import('../storage/examRecovery'), import('../storage/pendingAudio'),
+  const [{ accountId }, { clearAccountLocalState }] = await Promise.all([
+    import('../storage/remote'), import('../storage/accountCleanup'),
   ]);
-  const owner=accountId();
-  const { error } = await getSupabase().auth.signOut();
+  const owner = accountId() || ownerFallback || null;
+  const { error } = await requestTimeout(getSupabase().auth.signOut(), 15_000);
   if (error) throw error;
-  discardDraftRecovery(owner);
-  clearVocabularyDraft(owner);
-  clearAccountExamRecovery(owner);
-  await clearPendingAudioAccount(owner);
-  resetAccountStore();
+  await clearAccountLocalState(owner);
 }

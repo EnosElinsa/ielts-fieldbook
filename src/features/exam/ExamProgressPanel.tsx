@@ -9,8 +9,8 @@ import type { ExamAttempt, ExamSkill, IntensiveSession, QuestionType } from '../
 import { QUESTION_TYPE_NAMES, useExamCatalog } from './useExamCatalog';
 import { Empty } from '../../components/ui';
 import { InlineLoadingState, StateMessage } from '../../components/AsyncState';
-import { formatDateKey } from '../../lib/format';
 import { activityBuckets, activityInRange } from '../progress/practiceActivity';
+import { ProgressPlansPanel } from '../progress/ProgressPlansPanel';
 
 const percent = (earned: number, total: number) => total > 0 ? `${Math.round(earned / total * 100)}%` : '—';
 /** Attempt time in whole minutes; a timed attempt never reads as 0 min. */
@@ -41,8 +41,6 @@ export function ExamProgressPanel({ skill, since = 0 }: { skill: ExamSkill; sinc
   const typeRows = Object.entries(stats.byType).sort((left, right) => left[1].correct / left[1].total - right[1].correct / right[1].total);
   const activity = activityBuckets(completed.map(attempt => attempt.completedAt || attempt.startedAt), since, now);
   const weeks = activity.buckets.map(bucket => ({ ...bucket, stats: examStats(completed.filter(attempt => activityInRange(attempt.completedAt || attempt.startedAt, bucket.start, new Date(bucket.end)))) }));
-  const statusNames: Record<string, string> = { pending: 'Not started', in_progress: 'In progress', completed: 'Completed', skipped: 'Skipped' };
-  const plans = ((fb.state.plans || []) as { id: string; kind: string; dateKey: string; title: string; status: string }[]).filter(plan => String(plan.kind).startsWith(`${skill}-`) && activityInRange(plan.dateKey, since, now));
   return <div className="exam-progress-panel">
     <div className="section-head"><div><h2>{skill === 'reading' ? 'Reading' : 'Listening'} accuracy</h2><p>Accuracy, study time and results by question type.</p></div><div className="page-tools exam-progress-filters"><div className="exam-progress-filter"><label htmlFor="exam-progress-mode">View</label><SelectField id="exam-progress-mode" value={mode} onChange={event => setMode(event.target.value as typeof mode)}><option value="practice">Practice only</option><option value="mock">Mocks only</option><option value="all">All attempts</option></SelectField></div><div className="exam-progress-filter"><label htmlFor="exam-progress-support">Answer support</label><SelectField id="exam-progress-support" value={support} onChange={event => setSupport(event.target.value as typeof support)}><option value="unassisted">Unassisted</option><option value="supported">Answers checked</option><option value="all">Any support</option></SelectField></div></div></div>
     <div className="progress-metrics">{[
@@ -51,7 +49,7 @@ export function ExamProgressPanel({ skill, since = 0 }: { skill: ExamSkill; sinc
       { label: 'Practice minutes', value: minutes, icon: Clock3 },
       { label: 'Retries', value: completed.filter(attempt => attempt.retryOfAttemptId).length, icon: RotateCcw },
     ].map(({ label, value, icon: Icon }) => <div className="progress-metric" key={label}><Icon size={18} /><strong>{value}</strong><span>{label}</span></div>)}</div>
-    <section className="progress-score-section"><h3>Accuracy by question type</h3>{typeRows.length ? <div className="progress-score-table" tabIndex={0} role="region" aria-label="Accuracy by question type"><table><thead><tr><th>Question type</th><th>Marks</th><th>Accuracy</th></tr></thead><tbody>{typeRows.map(([type, row]) => <tr key={type}><td>{QUESTION_TYPE_NAMES[type as QuestionType] || type}</td><td>{row.correct} / {row.total}</td><td>{percent(row.correct, row.total)}</td></tr>)}</tbody></table></div> : <Empty message="Complete a part to see which question types need work." />}
+    <section className="progress-score-section"><h3>Accuracy by question type</h3>{typeRows.length ? <div className="progress-score-table" tabIndex={0} role="region" aria-label="Accuracy by question type"><table><caption className="sr-only">Accuracy by question type</caption><thead><tr><th scope="col">Question type</th><th scope="col">Marks</th><th scope="col">Accuracy</th></tr></thead><tbody>{typeRows.map(([type, row]) => <tr key={type}><td>{QUESTION_TYPE_NAMES[type as QuestionType] || type}</td><td>{row.correct} / {row.total}</td><td>{percent(row.correct, row.total)}</td></tr>)}</tbody></table></div> : <Empty message="Complete a part to see which question types need work." />}
       <p className="rule-note">Pooled multiple-choice questions contribute their individual marks. Supported practice and mocks are recorded separately below.</p>
     </section>
     <div className="evidence-grid exam-progress-evidence"><section className="progress-section"><h3>{activity.period} accuracy</h3><div className="week-bars">{weeks.map(week => <div className="week-bar" key={week.start}><span>{week.label}</span><div className="track"><div className="fill" style={{ width: `${week.stats.accuracy * 100}%` }} /></div><strong>{week.stats.total ? `${week.stats.correct}/${week.stats.total}` : '—'}</strong></div>)}</div><p className="rule-note">Marks earned / available in the selected range.</p></section>
@@ -68,7 +66,7 @@ export function ExamProgressPanel({ skill, since = 0 }: { skill: ExamSkill; sinc
         </div>}
       </section>
     </div>
-    <section className="progress-section"><h3>Attempt history</h3>{completed.length ? <div className="progress-score-table" tabIndex={0} role="region" aria-label="Attempt history"><table><thead><tr><th>Date</th><th>Practice</th><th>Marks</th><th>Time</th><th>Review</th></tr></thead><tbody>{completed.slice().reverse().map(attempt => <tr key={attempt.id}><td>{date(attempt.completedAt || attempt.startedAt)}</td><td>{attempt.mode === 'mock' ? 'Full mock' : attempt.retryOfAttemptId ? 'Retry' : skill === 'reading' ? 'Passage practice' : 'Part practice'}{attempt.answerRevealed ? ' · supported' : ''}</td><td>{typeof attempt.score === 'number' && typeof attempt.total === 'number' && attempt.total > 0 ? String(attempt.score) + ' / ' + attempt.total : '—'}</td><td>{studyMinutes(attempt.elapsedSeconds)}</td><td><Link to={`/${skill}/review/${attempt.id}`}>Review attempt</Link></td></tr>)}</tbody></table></div> : <Empty message="No completed attempts in this range." />}</section>
+    <section className="progress-section"><h3>Attempt history</h3>{completed.length ? <div className="progress-score-table" tabIndex={0} role="region" aria-label="Attempt history"><table><caption className="sr-only">Attempt history</caption><thead><tr><th scope="col">Date</th><th scope="col">Practice</th><th scope="col">Marks</th><th scope="col">Time</th><th scope="col">Review</th></tr></thead><tbody>{completed.slice().reverse().map(attempt => <tr key={attempt.id}><td id={`attempt-date-${attempt.id}`}>{date(attempt.completedAt || attempt.startedAt)}</td><td>{attempt.mode === 'mock' ? 'Full mock' : attempt.retryOfAttemptId ? 'Retry' : skill === 'reading' ? 'Passage practice' : 'Part practice'}{attempt.answerRevealed ? ' · supported' : ''}</td><td>{typeof attempt.score === 'number' && typeof attempt.total === 'number' && attempt.total > 0 ? String(attempt.score) + ' / ' + attempt.total : '—'}</td><td>{studyMinutes(attempt.elapsedSeconds)}</td><td><Link to={`/${skill}/review/${attempt.id}`} aria-describedby={`attempt-date-${attempt.id}`}>Review attempt</Link></td></tr>)}</tbody></table></div> : <Empty message="No completed attempts in this range." />}</section>
     {skill === 'listening' && <section className="progress-section">
       <div className="section-head"><h3>Intensive listening</h3></div>
       <div className="band-list">
@@ -90,6 +88,6 @@ export function ExamProgressPanel({ skill, since = 0 }: { skill: ExamSkill; sinc
         </> : <p className="empty">No sentence reviews are due right now.</p>}
       </div>
     </section>}
-    <section className="progress-section"><h3>Study plans</h3>{plans.length ? <div className="plan-list">{plans.slice().sort((left, right) => String(right.dateKey).localeCompare(String(left.dateKey))).map(plan => <div className="work-row" key={plan.id}><div className="work-name">{plan.title}<small>{formatDateKey(plan.dateKey)}</small></div><span className={`pill ${plan.status === 'completed' ? 'green' : ''}`}>{statusNames[plan.status] || plan.status}</span></div>)}</div> : <Empty message="No plans in this range." />}</section>
+    <ProgressPlansPanel skill={skill} since={since} revision={fb.saveStatus} headingLevel={3} />
   </div>;
 }

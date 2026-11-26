@@ -92,7 +92,7 @@ export function Toast({ message, visible, revision, duration = TOAST_VISIBLE_MS 
       onMouseLeave={() => { hovering.current = false; release(); }}
       onFocus={() => { focusing.current = true; hold(); }}
       onBlur={leaveFocus}
-      onKeyDown={(event) => { if (event.key === 'Escape' && openRef.current) dismiss(); }}
+      onKeyDown={(event) => { if (event.key === 'Escape' && !event.nativeEvent.isComposing && event.nativeEvent.keyCode !== 229 && openRef.current) dismiss(); }}
     >
       <div className="toast-text" role="status" aria-live="polite" aria-atomic="true"><span key={epoch}>{text}</span></div>
       {open ? <button type="button" className="toast-dismiss" aria-label="Dismiss notification" onClick={dismiss}><X size={14} aria-hidden="true" /></button> : null}

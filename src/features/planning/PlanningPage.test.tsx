@@ -473,3 +473,18 @@ test('bulkWaiting post-save shows an expanded ScheduleChanges summary with dates
   expect(savedRegion).toHaveTextContent('Skipped');
   expect(savedRegion).toHaveTextContent('20 min');
 });
+
+test('foldable schedule days render no heading inside summary and avoid duplicate day h3 elements', () => {
+  const tomorrow = new Date(Date.now() + 86_400_000).toISOString().slice(0, 10);
+  mocks.state.plans = [
+    { id: 'future-plan', dateKey: tomorrow, status: 'pending', skill: 'writing', kind: '2', title: 'Tomorrow essay', estimatedMinutes: 40 },
+  ];
+  const { container } = mount();
+  const summaries = container.querySelectorAll('details.study-day > summary');
+  expect(summaries.length).toBeGreaterThan(0);
+  summaries.forEach(summary => {
+    expect(summary.querySelector('h1, h2, h3, h4, h5, h6')).toBeNull();
+  });
+  const futureDay = container.querySelector('details.study-day')!;
+  expect(futureDay.querySelectorAll('h3')).toHaveLength(1);
+});

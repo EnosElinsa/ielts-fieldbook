@@ -59,7 +59,7 @@ export function AnnotatedText({ blockId, text, version, hiddenPrefixLength = 0, 
   });
   return <span data-source-block={blockId} data-source-version={version} data-evidence-block={evidenceRanges.length ? true : undefined} tabIndex={context ? 0 : evidenceRanges.length ? -1 : undefined}
     title={context ? 'Annotate this text' : undefined}
-    onKeyDown={event => { if (event.target === event.currentTarget && ['Enter', ' '].includes(event.key)) { event.preventDefault(); context?.selectBlock(blockId, text, version); } }}>
+    onKeyDown={event => { if (!event.nativeEvent.isComposing && event.nativeEvent.keyCode !== 229 && event.target === event.currentTarget && ['Enter', ' '].includes(event.key)) { event.preventDefault(); context?.selectBlock(blockId, text, version); } }}>
     {segments.map(segment => {
       // Keep the complete source in the DOM and registry so saved ranges retain their offsets.
       const from = Math.max(hiddenPrefixLength, trimWhitespace ? text.length - text.trimStart().length : 0);
@@ -71,7 +71,7 @@ export function AnnotatedText({ blockId, text, version, hiddenPrefixLength = 0, 
       const Tag = segment.color ? 'mark' : 'span';
       const content = visible && (segment.annotationIds.length ? <Tag key={segment.start} className={`source-annotation-anchor ${segment.color ? `source-highlight source-highlight-${segment.color}` : 'source-note-anchor'}`} title="Annotation options" tabIndex={0} role="button"
       onClick={event => { if (!window.getSelection()?.isCollapsed) return; context?.open(segment.primaryAnnotationId!, event.currentTarget, false, segment.annotationIds); }}
-      onKeyDown={event => { if (['Enter', ' '].includes(event.key)) { event.preventDefault(); event.stopPropagation(); context?.open(segment.primaryAnnotationId!, event.currentTarget, true, segment.annotationIds); } }}>{highlighted}</Tag> : highlighted);
+      onKeyDown={event => { if (!event.nativeEvent.isComposing && event.nativeEvent.keyCode !== 229 && ['Enter', ' '].includes(event.key)) { event.preventDefault(); event.stopPropagation(); context?.open(segment.primaryAnnotationId!, event.currentTarget, true, segment.annotationIds); } }}>{highlighted}</Tag> : highlighted);
       return hiddenLength || visibleEnd < segment.text.length ? <span key={segment.start}>{hiddenLength > 0 && <span hidden aria-hidden="true">{segment.text.slice(0, hiddenLength)}</span>}{content}{visibleEnd < segment.text.length && <span hidden aria-hidden="true">{segment.text.slice(visibleEnd)}</span>}</span> : content;
     })}
   </span>;
@@ -132,7 +132,7 @@ export function SourceAnnotations({ sourceId, skill, mock = false, disabled = fa
       if (event.target instanceof Element && !event.target.closest('.source-selection-tools,.source-annotation-anchor,[role="dialog"],[role="listbox"],[data-radix-popper-content-wrapper]')) setSelection(null);
     };
     const escape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && !event.defaultPrevented && !noteOpen && !document.querySelector('[role="listbox"]')) { setSelection(null); window.getSelection()?.removeAllRanges(); selectionTrigger.current?.focus({ preventScroll: true }); }
+      if (event.key === 'Escape' && !event.defaultPrevented && !event.isComposing && event.keyCode !== 229 && !noteOpen && !document.querySelector('[role="listbox"]')) { setSelection(null); window.getSelection()?.removeAllRanges(); selectionTrigger.current?.focus({ preventScroll: true }); }
     };
     const scroll = (event: Event) => {
       if (noteOpen || event.target instanceof Element && event.target.closest('.source-selection-tools,[role="dialog"],[role="listbox"],[data-radix-popper-content-wrapper]')) return;

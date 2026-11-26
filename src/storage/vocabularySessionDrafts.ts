@@ -53,6 +53,21 @@ export function createVocabularyDraftStore(factory?:IDBFactory,name='fieldbook-v
         tx.oncomplete=()=>resolve();tx.onabort=tx.onerror=()=>reject(failure||tx.error||new Error('Could not remove this local session.'));
       });
     },
+    async clearAccount(owner:string|null):Promise<boolean>{
+      if(!owner?.trim()||owner.length>500)return false;
+      const provider=factory||globalThis.indexedDB;
+      if(!provider)return false;
+      let db:IDBDatabase;
+      try{db=await database();}catch{return false;}
+      return new Promise(resolve=>{
+        try{
+          const tx=db.transaction('drafts','readwrite'),drafts=tx.objectStore('drafts'),request=drafts.index('owner').openKeyCursor(owner);
+          request.onsuccess=()=>{const cursor=request.result;if(!cursor)return;drafts.delete(cursor.primaryKey);cursor.continue();};
+          tx.oncomplete=()=>resolve(true);
+          tx.onabort=tx.onerror=()=>resolve(false);
+        }catch{resolve(false);}
+      });
+    },
     async migrate(owner:string):Promise<void>{
       const legacy=readVocabularyDraft(owner);if(!legacy)return;
       const current=(await store.list(owner)).find(row=>row.session.id===legacy.id);

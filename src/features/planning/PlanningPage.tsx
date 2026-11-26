@@ -59,7 +59,7 @@ function PlanningCalendar(){
   const proposal=useMemo(()=>tab==='schedule'?previewScheduleReview(fb.state,now):null,[fb.state,tab,schedule.saving,anchor,today,schedule.clock]);
   const needsWordbook=!(fb.state.wordbookEnrollments||[]).length&&!fb.state.plans.some(plan=>plan.target?.mode==='learning-batch'&&!plan.onHold&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status));
   return <section className="view active study-planning"><header className="study-page-head"><h2>Planning</h2></header>
-    {schedule.error&&<div className="study-alert" role="alert"><span>{schedule.error}</span><button className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}
+    {schedule.error&&<div className="study-alert" role="alert"><span>{schedule.error}</span><button type="button" className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}
     {targetError&&<div className="study-alert" role="alert"><p>{targetError}</p><button type="button" className="btn line" onClick={()=>setTargetRetry(value=>value+1)}>Retry task</button></div>}
     <div className="study-view-bar"><nav className="study-tabs" aria-label="Planning views">{[['schedule','Schedule'],['waiting',`Waiting · ${overdue.length}`],['history','History']].map(([value,label])=><button type="button" className="btn line" aria-pressed={tab===value} key={value} onClick={()=>selectTab(value)}>{label}</button>)}</nav>{schedule.saving&&<div className="study-sync-status"><InlineLoadingState message="Updating schedule…" /></div>}</div>
     {tab==='task'&&<section className="study-linked-task" aria-label="Linked task"><header><h3>Linked task</h3><p>Requirements and current status for this task.</p></header>{linkedTask?<PlanTask key={linkedTask.id} plan={linkedTask} expanded now={now}/>:!targetId?<p>No task selected. Open Schedule or History to find a task.</p>:!targetError?<p role="status">Loading linked task…</p>:null}</section>}
@@ -88,12 +88,15 @@ function PlanningCalendar(){
       const newWords=tasks.filter(plan=>plan.status!=='skipped'&&plan.target?.mode==='learning-batch').reduce((sum,plan)=>sum+(plan.target.cards?.length||plan.target.entryIds?.length||plan.quantity||plan.target.batchSize||0),0);
       const completed=tasks.filter(plan=>plan.status==='completed').reduce((sum,plan)=>sum+Number(plan.estimatedMinutes||0),0);
       const goal=dayBudget.planning.newWordsPerDay;
-      const heading=<h3>{day===today?'Today':new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{weekday:'long'})}<span>{new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{day:'numeric',month:'short'})}</span></h3>;
+      const dayTitle=day===today?'Today':new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{weekday:'long'});
+      const dayDate=new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+      const heading=<h3>{dayTitle}<span>{dayDate}</span></h3>;
+      const toggleHeading=<span className="study-day-toggle-title">{dayTitle}<span>{dayDate}</span></span>;
       const addTask=<button type="button" className="btn line study-add-task" disabled={schedule.saving} onClick={()=>setEditor({mode:'add',dateKey:day})}><Plus size={15}/><span className="study-add-label">Add task</span></button>;
       if(!tasks.length&&!(schedule.saving&&budget&&day>=today&&day<=horizon))return <section className={`study-day is-empty${budget?'':' is-rest'}${day===today?' is-today':''}`} key={day}>
         <header className="study-day-header">{heading}<p className="study-day-empty">{!budget?'Rest day':day>horizon?'Outside the current planning window':`No tasks yet · ${budget} min available${goal>0?` · ${goal} new words goal`:''}`}</p>{addTask}</header>
       </section>;
-      return <ScheduleDay className={`study-day${day===today?' is-today':''}`} key={day} current={day===today} forceOpen={tasks.some(plan=>plan.id===targetId||plan.status==='in_progress')} heading={heading} summary={`${tasks.length} ${tasks.length===1?'task':'tasks'} · ${used} min`}>
+      return <ScheduleDay className={`study-day${day===today?' is-today':''}`} key={day} current={day===today} forceOpen={tasks.some(plan=>plan.id===targetId||plan.status==='in_progress')} heading={toggleHeading} summary={`${tasks.length} ${tasks.length===1?'task':'tasks'} · ${used} min`}>
         <div className="study-day-content"><header className="study-day-header">
           {heading}
           <div className="study-day-summary" role="group" aria-label="Daily plan summary"><dl className="study-day-stats">
@@ -139,7 +142,7 @@ function PlanTask({plan,expanded=false,todayFocus=false,now=new Date()}){
   return <article id={`task-${plan.id}`} tabIndex={-1} className={`study-task study-plan-task ${plan.status}`}>
     <div className="study-plan-task-body">
       <h4>{studyPlanTitle(plan)}</h4>
-      <p className="study-task-meta"><span className={`study-skill study-skill-${skill}`}>{skill}</span><span><Clock3 size={14}/>{planMinutesLabel(plan)}</span><span className="study-task-status">{completed&&<Check size={14}/>}{status}</span>{todayFocus&&<strong className="study-task-focus">Today's focus</strong>}{plan.dateKey<dateKey(new Date())&&<span>Due {formatDateKey(plan.dateKey)}</span>}{plan.originalDateKey&&plan.originalDateKey!==plan.dateKey&&<span>Moved from {formatDateKey(plan.originalDateKey)}</span>}{plan.origin==='manual'&&<span>Added by you</span>}</p>
+      <p className="study-task-meta"><span className={`study-skill study-skill-${skill}`}>{skill}</span><span><Clock3 size={14}/>{planMinutesLabel(plan)}</span><span className="study-task-status">{completed&&<Check size={14}/>}{status}</span>{todayFocus&&<strong className="study-task-focus">Today's focus</strong>}{plan.dateKey<dateKey(now)&&<span>Due {formatDateKey(plan.dateKey)}</span>}{plan.originalDateKey&&plan.originalDateKey!==plan.dateKey&&<span>Moved from {formatDateKey(plan.originalDateKey)}</span>}{plan.origin==='manual'&&<span>Added by you</span>}</p>
       <LearningTaskDetails plan={plan} batchSize={fb.state.settings.vocabulary?.learningBatchSize||10}/>
       {expanded&&<LinkedTaskRequirements plan={plan}/>}
 
@@ -162,7 +165,7 @@ function PlanTask({plan,expanded=false,todayFocus=false,now=new Date()}){
             ['duplicate','Duplicate task',Copy,false],
           ].map(([mode,label,Icon,disabled])=><DropdownMenu.Item key={mode} className="dropdown-item" disabled={disabled} onSelect={()=>{setError('');setDialog(mode);}}><Icon size={16}/>{label}</DropdownMenu.Item>)}
           <DropdownMenu.Separator className="dropdown-separator"/>
-          <DropdownMenu.Item className="dropdown-item" disabled={completed} onSelect={()=>void change({type:plan.onHold?'resume':'hold'})}>{plan.onHold?(plan.dateKey>=dateKey(new Date())?'Return to schedule':'Return to waiting'):'Hold task'}</DropdownMenu.Item>
+          <DropdownMenu.Item className="dropdown-item" disabled={completed} onSelect={()=>void change({type:plan.onHold?'resume':'hold'})}>{plan.onHold?(plan.dateKey>=dateKey(now)?'Return to schedule':'Return to waiting'):'Hold task'}</DropdownMenu.Item>
           <DropdownMenu.Item className="dropdown-item" disabled={completed||plan.onHold} onSelect={()=>void change({type:'reorder',direction:'up'})}><ArrowUp size={16}/>Move task up</DropdownMenu.Item>
           <DropdownMenu.Item className="dropdown-item" disabled={completed||plan.onHold} onSelect={()=>void change({type:'reorder',direction:'down'})}><ArrowDown size={16}/>Move task down</DropdownMenu.Item>
           <DropdownMenu.Separator className="dropdown-separator"/>

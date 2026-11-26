@@ -1,11 +1,11 @@
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { AuthGate } from './AuthGate';
 import { ThemeProvider } from '../context/ThemeContext';
 
-const { signUp, signInWithPassword, getSession, resend, resetPasswordForEmail, onAuthStateChange } = vi.hoisted(() => {
+const { signUp, signInWithPassword, getSession, resend, resetPasswordForEmail, onAuthStateChange, remoteOwner, resetAccountStore } = vi.hoisted(() => {
   type AuthListener = (event: string, session: unknown) => void;
   return {
     signUp: vi.fn(),
@@ -17,8 +17,15 @@ const { signUp, signInWithPassword, getSession, resend, resetPasswordForEmail, o
       void callback;
       return { data: { subscription: { unsubscribe: () => undefined } } };
     }),
+    remoteOwner: { current: null as string | null },
+    resetAccountStore: vi.fn(),
   };
 });
+
+vi.mock('../storage/remote', () => ({
+  accountId: () => remoteOwner.current,
+  resetAccountStore,
+}));
 
 vi.mock('../lib/supabase', () => ({
   supabaseConfigured: () => true,
@@ -45,6 +52,8 @@ afterEach(() => {
   resend.mockReset();
   resetPasswordForEmail.mockReset();
   onAuthStateChange.mockClear();
+  remoteOwner.current = null;
+  resetAccountStore.mockReset();
   window.location.hash = '';
 });
 
@@ -212,4 +221,83 @@ test('system theme follows OS dark preference, switches to light mode, and expos
     localStorage.clear();
     delete document.documentElement.dataset.theme;
   }
+});
+
+test('a stalled sign-in request times out and releases the busy button', async () => {
+  vi.useFakeTimers();
+  signInWithPassword.mockImplementationOnce(() => new Promise(() => {}));
+  render(<AuthGate><p>Notebook</p></AuthGate>);
+  await act(async () => { await Promise.resolve(); });
+  fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'learner@example.test' } });
+  fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'secret1' } });
+  fireEvent.click(screen.getByRole('button', { name: /^Sign in$/ }));
+  expect(screen.getByRole('button', { name: 'Please wait…' })).toBeDisabled();
+  await act(async () => { vi.advanceTimersByTime(15_000); });
+  expect(screen.getByRole('alert')).toHaveTextContent(/took too long/i);
+  expect(screen.getByRole('button', { name: /^Sign in$/ })).toBeEnabled();
+});
+
+test('password toggle exposes aria-pressed and signup links the password requirement hint', async () => {
+  await renderGate();
+  const toggle = screen.getByRole('button', { name: 'Show password' });
+  expect(toggle).toHaveAttribute('aria-pressed', 'false');
+  await userEvent.click(toggle);
+  expect(screen.getByRole('button', { name: 'Hide password' })).toHaveAttribute('aria-pressed', 'true');
+  await userEvent.click(screen.getByRole('button', { name: 'Create an account' }));
+  expect(screen.getByLabelText('Password')).toHaveAccessibleDescription(/At least 6 characters/);
+});
+
+test('cross-tab SIGNED_OUT clears previous owner tab session storage and resets matching account store while preserving other accounts', async () => {
+  sessionStorage.clear();
+  remoteOwner.current = 'account-a';
+  sessionStorage.setItem('fieldbook:module-memory:v1:"account-a"', '{"version":1}');
+  sessionStorage.setItem('fieldbook:module-memory:v1:"account-b"', '{"version":1}');
+  getSession.mockResolvedValueOnce({ data: { session: { user: { id: 'account-a' } } }, error: null } as never);
+  render(<AuthGate><p>Notebook</p></AuthGate>);
+  expect(await screen.findByText('Notebook')).toBeInTheDocument();
+  const listener = onAuthStateChange.mock.calls[0][0];
+  await act(async () => {
+    listener('SIGNED_OUT', null);
+  });
+  expect(await screen.findByRole('heading', { name: 'Sign in' })).toBeInTheDocument();
+  await waitFor(() => expect(resetAccountStore).toHaveBeenCalledOnce());
+  expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-a"')).toBeNull();
+  expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-b"')).not.toBeNull();
+  sessionStorage.clear();
+});
+
+test('cross-tab cleanup does not wipe tab storage or store if the same account signs back in before async cleanup runs', async () => {
+  sessionStorage.clear();
+  remoteOwner.current = 'account-a';
+  sessionStorage.setItem('fieldbook:module-memory:v1:"account-a"', '{"version":1}');
+  getSession.mockResolvedValueOnce({ data: { session: { user: { id: 'account-a' } } }, error: null } as never);
+  render(<AuthGate><p>Notebook</p></AuthGate>);
+  expect(await screen.findByText('Notebook')).toBeInTheDocument();
+  const listener = onAuthStateChange.mock.calls[0][0];
+  await act(async () => {
+    listener('SIGNED_OUT', null);
+    listener('SIGNED_IN', { user: { id: 'account-a' } });
+    await new Promise(resolve => setTimeout(resolve, 20));
+  });
+  expect(screen.getByText('Notebook')).toBeInTheDocument();
+  expect(resetAccountStore).not.toHaveBeenCalled();
+  expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-a"')).toBe('{"version":1}');
+  sessionStorage.clear();
+});
+
+test('a slow initial getSession resolution or failure cannot overwrite a newer onAuthStateChange sign-in', async () => {
+  let resolveSession!: (value: { data: { session: null }; error: null }) => void;
+  getSession.mockImplementationOnce(() => new Promise(resolve => { resolveSession = resolve; }));
+  render(<AuthGate><p>Notebook</p></AuthGate>);
+  const listener = onAuthStateChange.mock.calls[0][0];
+  await act(async () => {
+    listener('SIGNED_IN', { user: { id: 'account-a' } });
+  });
+  expect(await screen.findByText('Notebook')).toBeInTheDocument();
+  await act(async () => {
+    resolveSession({ data: { session: null }, error: null });
+    await Promise.resolve();
+  });
+  expect(screen.getByText('Notebook')).toBeInTheDocument();
+  expect(screen.queryByRole('heading', { name: 'Sign in' })).not.toBeInTheDocument();
 });

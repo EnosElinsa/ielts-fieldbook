@@ -10,7 +10,7 @@ import { useAuthUser } from '../auth/useAuthUser';
 import { AccountMark } from '../features/account/AccountMark';
 import { SaveFailure } from './SaveFailure';
 import { ArrowRight, Search, PanelLeftClose, PanelLeftOpen, Upload, UserRound } from 'lucide-react';
-import { IconButton } from './IconButton';
+import { IconButton, TooltipProvider } from './IconButton';
 import { AccountMenu, CommandSearch, MobileNavigation } from './WorkbenchNavigation';
 import { ModalFrame } from './ModalFrame';
 import * as Tooltip from '@radix-ui/react-tooltip';
@@ -188,14 +188,16 @@ export function Shell() {
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || event.isComposing || event.keyCode === 229 || event.altKey || event.shiftKey) return;
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        if (document.querySelector('[role="dialog"][aria-busy="true"]')) return;
         event.preventDefault();
         setSearchOpen((current) => !current);
       }
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [fb]);
+  }, []);
 
   const selectModule = (path: string) => {
     if (path === '/write') fb.setSkill('writing', path);
@@ -250,8 +252,9 @@ export function Shell() {
   return (
     <>
       <SkipToContent targetRef={mainContent} />
+      <TooltipProvider delayDuration={350}>
       <div className={`${collapsed ? 'shell is-collapsed' : 'shell'}${speaking ? ' skill-speaking' : ''}`}>
-        <Tooltip.Provider delayDuration={350}><aside className="rail">
+        <aside className="rail">
           <div className="mark">
             <div className="mark-box" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32" /></div>
             <div className="mark-copy">
@@ -301,7 +304,7 @@ export function Shell() {
             <span>Streak</span>
             {streak === null ? <Link to="/progress" className="rail-activity-link">View activity<ArrowRight size={14} aria-hidden="true"/></Link> : <strong>{streak} {streak === 1 ? 'day' : 'days'}</strong>}
           </div>
-        </aside></Tooltip.Provider>
+        </aside>
         <main className="main" id="workspace-content" ref={mainContent} tabIndex={-1}>
           <header className={`top${ownHeading || vocabularyOwnHeading ? ' top-compact' : ''}`}>
             {!vocabularyOwnHeading && <div className="page-title">
@@ -327,8 +330,8 @@ export function Shell() {
             </div>
           </header>
           <SaveFailure failed={fb.saveFailed} message={fb.saveFailureMessage || undefined} saving={fb.saveStatus === 'saving'} onRetry={() => void fb.persistNow()} />
-          {fb.loadError && fb.booted ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
-          {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
+          {fb.loadError && fb.booted ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button type="button" className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
+          {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button type="button" className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button type="button" className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
           {fb.loadError && !fb.booted ? <StateMessage kind="error" title="Your workspace could not load" message={<>Check your connection, then retry. Work you already saved is safe.{fb.loadError !== WORKSPACE_LOAD_ERROR ? <small className="async-state-detail">{fb.loadError}</small> : null}</>} onRetry={fb.retryLoad} retryLabel="Retry" /> : null}
           {!fb.booted && !fb.loadError ? <PageLoadingState title={ownHeading ? title : undefined} message="Loading your workspace…" variant={loadingLayout(location.pathname)} onRetry={fb.retryLoad} /> : null}
           <PageTransition transitionKey={transitionKey} focusKey={location.pathname} skipHeadingFocus={Boolean(location.hash)} scrollRestoration={scrollRestoration} key={module === 'settings' ? 'settings' : location.pathname}>
@@ -369,6 +372,7 @@ export function Shell() {
       </Suspense>
       </PageErrorBoundary>
       <Toast message={fb.toastMessage} visible={fb.toastVisible} revision={fb.toastRevision} />
+      </TooltipProvider>
     </>
   );
 }

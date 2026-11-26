@@ -68,7 +68,7 @@ export function WritingDeskPage() {
 
   useEffect(() => {
     if (!focused) return;
-    const exit = (event) => { if (event.key === 'Escape' && !document.querySelector('[role="dialog"]')) setFocused(false); };
+    const exit = (event) => { if (event.key === 'Escape' && !event.isComposing && event.keyCode !== 229 && !document.querySelector('[role="dialog"]')) setFocused(false); };
     window.addEventListener('keydown', exit);
     return () => window.removeEventListener('keydown', exit);
   }, [focused]);
@@ -149,7 +149,7 @@ export function WritingDeskPage() {
     persistDraft(value.essay, value.sections);
   };
   const keyboardHistory = (event) => {
-    if (!(event.ctrlKey || event.metaKey) || event.altKey) return;
+    if (event.defaultPrevented || event.nativeEvent?.isComposing || event.nativeEvent?.keyCode === 229 || !(event.ctrlKey || event.metaKey) || event.altKey) return;
     if (event.key.toLowerCase() === 'z') {
       event.preventDefault();
       restore(event.shiftKey ? 'redo' : 'undo');

@@ -44,6 +44,7 @@ class VocabularyLearningSync {
   private status: LearningSaveSnapshot['status'];
   private timer?: ReturnType<typeof setTimeout>;
   private inFlight = false;
+  private discarded = false;
   private savedOnDevice = true;
   private listeners = new Set<(snapshot: LearningSaveSnapshot) => void>();
   constructor(private key: string, private options: Options) {
@@ -53,20 +54,31 @@ class VocabularyLearningSync {
   }
   snapshot = (): LearningSaveSnapshot => ({ status: this.status, pending: this.draft ? learningOnly(this.draft) : undefined, savedOnDevice:this.savedOnDevice });
   subscribe = (listener: (snapshot: LearningSaveSnapshot) => void) => {
+    if (this.discarded) { listener(this.snapshot()); return () => {}; }
     this.listeners.add(listener); listener(this.snapshot());
     return () => {
       this.listeners.delete(listener);
+      if (this.discarded) return;
       if (!this.listeners.size) { this.flush(); this.releaseIfUnused(); }
     };
   };
-  private emit() { this.listeners.forEach(listener => listener(this.snapshot())); }
+  private emit() { if (!this.discarded) this.listeners.forEach(listener => listener(this.snapshot())); }
   private isOwner() { return this.options.owner === this.options.currentOwner(); }
   private clearTimer() { if (this.timer !== undefined) clearTimeout(this.timer); this.timer = undefined; }
+  discard() {
+    this.discarded = true;
+    this.clearTimer();
+    this.draft = undefined;
+    this.acknowledged = undefined;
+    this.status = 'idle';
+    this.listeners.clear();
+    if (queues.get(this.key) === this) queues.delete(this.key);
+  }
   private releaseIfUnused() {
     if (!this.listeners.size && !this.inFlight && queues.get(this.key) === this) queues.delete(this.key);
   }
   update = (learning: VocabularyLearning, delay = 800) => {
-    if (!this.isOwner()) return;
+    if (this.discarded || !this.isOwner()) return;
     const previous = this.draft || this.acknowledged;
     if (previous && previous.currentEntryId === learning.currentEntryId && previous.viewedEntryIds.length === learning.viewedEntryIds.length && previous.viewedEntryIds.every(id=>learning.viewedEntryIds.includes(id))) return;
     const sequence = lastSequence = Math.max(lastSequence + 1, Date.now() * 1000);
@@ -77,7 +89,7 @@ class VocabularyLearningSync {
   };
   flush = () => {
     this.clearTimer();
-    if (!this.draft || this.inFlight || !this.isOwner()) return;
+    if (this.discarded || !this.draft || this.inFlight || !this.isOwner()) return;
     const submitted = this.draft;
     this.inFlight = true; this.status = 'saving'; this.emit();
     void this.send(submitted);
@@ -86,6 +98,7 @@ class VocabularyLearningSync {
     let saved = false;
     try { saved = await this.options.save(learningOnly(submitted)); } catch { /* Leave the draft available for retry. */ }
     this.inFlight = false;
+    if (this.discarded) return;
     if (!this.isOwner()) { this.status = 'failed'; this.releaseIfUnused(); return; }
     if (this.draft?.revision !== submitted.revision) {
       // New navigation supersedes both success and failure of an older request.
@@ -113,4 +126,25 @@ export function acquireVocabularyLearningSync(options: Options) {
   let queue = queues.get(key);
   if (!queue) { queue = new VocabularyLearningSync(key, options); queues.set(key, queue); }
   return queue;
+}
+
+export function discardAccountVocabularyLearningQueues(owner: string | null) {
+  if (!owner) return;
+  const prefix = `fieldbook:vocabulary-learning-pending:${owner}:`;
+  for (const [key, queue] of [...queues.entries()]) {
+    if (key.startsWith(prefix)) queue.discard();
+  }
+}
+
+export function clearAccountVocabularyLearning(owner: string | null) {
+  if (!owner) return;
+  const prefix = `fieldbook:vocabulary-learning-pending:${owner}:`;
+  discardAccountVocabularyLearningQueues(owner);
+  for (const storage of [() => localStorage, () => sessionStorage]) {
+    try {
+      const store = storage();
+      const keys = Array.from({ length: store.length }, (_, index) => store.key(index));
+      keys.filter((key): key is string => Boolean(key && key.startsWith(prefix))).forEach(key => store.removeItem(key));
+    } catch { /* Browser storage cleanup is best effort. */ }
+  }
 }

@@ -1,13 +1,15 @@
-.account{display:grid;gap:14px}
+.account{display:grid;gap:18px}
 .account .metrics{grid-template-columns:1.4fr .8fr .8fr}
 .account .metric strong{font-size:18px;overflow-wrap:anywhere}
 .account .panel{display:grid;gap:0;align-content:start}
+.account .panel h3,.account .panel h4{margin:0 0 8px;font:600 16px/1.4 Manrope,Arial,sans-serif;color:var(--ink)}
 .account-note{font-size:13px;color:var(--muted);line-height:1.55;margin:0 0 14px}
 .account .field{margin-bottom:11px}
-.account .field input{width:100%;border:1px solid var(--rule);background:#fffefa;border-radius:5px;padding:9px 10px;font-size:13px}
+.account .account-password-toggle{justify-self:start;padding-inline:0;margin-bottom:4px}
+.account-delete-hint{margin:2px 0 8px;font-size:13px;line-height:1.5;color:var(--muted)}
 .account .modal-foot{margin-top:4px;justify-content:flex-start}
 .account .account-leave{display:flex;justify-content:space-between;align-items:center;gap:16px}
-.account-leave h3{margin-bottom:6px}
+.account-leave h3,.account-leave h4{margin-bottom:6px}
 .account-leave .account-note{margin:0}
 .account-leave .btn{width:auto}
 @media(max-width:900px){
@@ -17,22 +19,28 @@
   .account .account-leave{display:grid}
 }
 .account-id{display:flex;align-items:center;gap:12px}
-.account-id h2{margin:0;font:600 28px/1.1 'Source Serif 4',serif;color:var(--ink)}
-.avatar{width:44px;height:44px;border-radius:50%;background:var(--red);color:var(--sheet);display:grid;place-items:center;font:600 16px 'Source Serif 4',serif;flex:none}
+.account-id h2,.account-id h4{margin:0;font:650 22px/1.2 Manrope,Arial,sans-serif;color:var(--ink)}
+.avatar{width:44px;height:44px;border-radius:50%;background:var(--red);color:var(--sheet);display:grid;place-items:center;font:600 16px Manrope,Arial,sans-serif;flex:none}
 .avatar-nav{width:16px;height:16px;font-size:8px;line-height:1}
-.account-email-status{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;margin-top:6px;font:11px/1.4 'DM Mono',monospace;letter-spacing:.04em}
-.account-email-status.is-confirmed{color:#2f5646}
+.account-email-status{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;margin-top:6px;font:500 12px/1.4 Manrope,Arial,sans-serif}
+.account-email-status.is-confirmed{color:var(--success)}
 .account-email-status.is-pending{color:var(--red)}
 .account-resend{padding:4px 6px;min-width:44px;min-height:32px;border:0;background:none;color:var(--red);font:inherit;letter-spacing:inherit;text-decoration:underline;cursor:pointer;border-radius:4px}
 .account-resend:hover{background:var(--soft-red)}
 .account-resend:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 @media(max-width:740px){.account-resend{min-height:44px}}
 .account-resend:disabled{cursor:wait;opacity:.6}
-.account-danger{border-left:3px solid var(--red);background:#fffefa}
-.account-danger h3{color:var(--red)}
+.account-danger{border:1px solid color-mix(in srgb,var(--red) 40%,var(--rule));background:var(--soft-red)}
+.account .account-danger h3,.account .account-danger h4{color:var(--red)}
+/* Flatten nested cards when Account is embedded inside a Settings group card. */
+.settings-group .account .panel:not(.account-danger){border:0;border-top:1px solid var(--rule);border-radius:0;padding:18px 0 0;background:transparent}
+.settings-group .account .split{gap:24px}
+.settings-group .account .split>.panel{border-top:0;padding-top:4px}
+@media(max-width:900px){.settings-group .account .split>.panel+.panel{border-top:1px solid var(--rule);padding-top:18px}}
+.settings-group .account .account-danger{border:1px solid color-mix(in srgb,var(--red) 40%,var(--rule));border-radius:8px;padding:18px 20px;background:var(--soft-red)}
 .account .field input,
 .account .field select,
-.account .field textarea{width:100%;min-height:40px;border:1px solid var(--rule);border-radius:6px;background:var(--sheet);color:var(--ink);font:inherit;padding:9px 10px;caret-color:var(--blue);box-shadow:none}
+.account .field textarea{width:100%;min-height:44px;border:1px solid var(--input-border,var(--rule));border-radius:6px;background:var(--sheet);color:var(--ink);font:inherit;padding:11px 12px;caret-color:var(--blue);box-shadow:none}
 .account .field input::placeholder,
 .account .field textarea::placeholder{color:var(--muted);opacity:1}
 .account .field input:hover,
@@ -50,4 +58,3 @@
 .account .field input:-webkit-autofill,
 .account .field input:-webkit-autofill:hover,
 .account .field input:-webkit-autofill:focus{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 1000px var(--sheet) inset;transition:background-color 9999s ease-out}
-.account-danger{background:var(--sheet)}
