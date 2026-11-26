@@ -1,8 +1,14 @@
-import { expect, test } from 'vitest';
+import { beforeAll, expect, test, vi } from 'vitest';
 import { buildVocabularyResources, vocabularyResourcesPlugin } from '../../scripts/vocabularyResources';
 
+let currentOnly: ReturnType<typeof buildVocabularyResources>;
+
+beforeAll(() => {
+  currentOnly = buildVocabularyResources(process.cwd(), { includeHistory: false });
+}, 30_000);
+
 test('current-only vocabulary resource build emits the full current manifest and teaching packs without historical archives', () => {
-  const current = buildVocabularyResources(process.cwd(), { includeHistory: false });
+  const current = currentOnly;
   expect(current.manifestUrl).toMatch(/^\/vocabulary-resources\/manifest\.[a-f0-9]{16}\.json$/);
   expect(current.teachingIndexUrl).toMatch(/^\/vocabulary-resources\/teaching-index\.[a-f0-9]{16}\.json$/);
   expect(current.resources.size).toBeLessThan(600);
@@ -17,12 +23,27 @@ test('current-only vocabulary resource build emits the full current manifest and
   ] as string[]) {
     expect(current.resources.has(url), url).toBe(true);
   }
-}, 30_000);
+});
 
-test('vocabularyResourcesPlugin serves current resources in dev mode with expected cache headers', () => {
-  const plugin = vocabularyResourcesPlugin(process.cwd());
+test('vocabularyResourcesPlugin serves current resources in dev mode and lazily loads historical archives once on miss', () => {
+  const historicUrl = '/vocabulary-resources/manifest.3ce90c4c5b58aa11.json';
+  const historicPayload = Buffer.from(JSON.stringify({ version: 1, books: [], units: [] }), 'utf8');
+  const buildSpy = vi.fn((_root: string, options?: { includeHistory?: boolean }) => {
+    if (!options?.includeHistory) return currentOnly;
+    const withHistory = {
+      ...currentOnly,
+      resources: {
+        ...currentOnly.resources,
+        getBytes: (url: string) => (url === historicUrl ? historicPayload : currentOnly.resources.getBytes(url)),
+      },
+    } as ReturnType<typeof buildVocabularyResources>;
+    return withHistory;
+  });
+  const plugin = vocabularyResourcesPlugin(process.cwd(), buildSpy);
   (plugin.configResolved as (config: { command: string }) => void)({ command: 'serve' });
   (plugin.buildStart as () => void)();
+  expect(buildSpy).toHaveBeenCalledTimes(1);
+  expect(buildSpy).toHaveBeenLastCalledWith(process.cwd(), { includeHistory: false });
   const virtualModule = (plugin.load as (id: string) => string)('\0virtual:vocabulary-manifest');
   const manifestMatch = /export default "([^"]+)"/.exec(virtualModule);
   expect(manifestMatch?.[1]).toMatch(/^\/vocabulary-resources\/manifest\.[a-f0-9]{16}\.json$/);
@@ -45,6 +66,7 @@ test('vocabularyResourcesPlugin serves current resources in dev mode with expect
   expect(headers['Cache-Control']).toBe('public, max-age=0, must-revalidate');
   expect(headers['Content-Type']).toBe('application/json; charset=utf-8');
   expect(JSON.parse(body!.toString('utf8')).version).toBe(1);
+  expect(buildSpy).toHaveBeenCalledTimes(1);
 
   let nonVocabNext = false;
   middleware!(
@@ -53,18 +75,21 @@ test('vocabularyResourcesPlugin serves current resources in dev mode with expect
     () => { nonVocabNext = true; },
   );
   expect(nonVocabNext).toBe(true);
+  expect(buildSpy).toHaveBeenCalledTimes(1);
 
   const historicHeaders: Record<string, string> = {};
   let historicBody: Buffer | undefined;
   let historicNext = false;
   middleware!(
-    { url: '/vocabulary-resources/manifest.3ce90c4c5b58aa11.json' },
+    { url: historicUrl },
     { setHeader(k, v) { historicHeaders[k] = v; }, end(b) { historicBody = b; } },
     () => { historicNext = true; },
   );
   expect(historicNext).toBe(false);
   expect(historicHeaders['Cache-Control']).toBe('public, max-age=31536000, immutable');
   expect(JSON.parse(historicBody!.toString('utf8')).version).toBe(1);
+  expect(buildSpy).toHaveBeenCalledTimes(2);
+  expect(buildSpy).toHaveBeenLastCalledWith(process.cwd(), { includeHistory: true });
 
   let missingNext = false;
   middleware!(
@@ -73,4 +98,5 @@ test('vocabularyResourcesPlugin serves current resources in dev mode with expect
     () => { missingNext = true; },
   );
   expect(missingNext).toBe(true);
-}, 120_000);
+  expect(buildSpy).toHaveBeenCalledTimes(2);
+}, 30_000);

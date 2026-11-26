@@ -552,13 +552,16 @@ function buildResourceCatalog(source: Catalog, teaching: VocabularyTeachingData,
   return { manifest, resources, manifestUrl, teachingIndex, teachingIndexUrl };
 }
 
-export function vocabularyResourcesPlugin(root: string): Plugin {
+export function vocabularyResourcesPlugin(
+  root: string,
+  buildResources: typeof buildVocabularyResources = buildVocabularyResources,
+): Plugin {
   let generated: ReturnType<typeof buildVocabularyResources> | undefined;
   let generatedIncludesHistory = false;
   let serveMode = false;
   const ensure = (includeHistory = !serveMode) => {
     if (!generated || (includeHistory && !generatedIncludesHistory)) {
-      generated = buildVocabularyResources(root, { includeHistory });
+      generated = buildResources(root, { includeHistory });
       generatedIncludesHistory = includeHistory;
     }
     return generated;
