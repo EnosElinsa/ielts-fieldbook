@@ -1,4 +1,4 @@
-import { FormEvent, lazy, Suspense, useEffect, useState, type ReactNode } from 'react';
+import { FormEvent, lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
 import { InlineLoadingState } from '../components/AsyncState';
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import { requestTimeout } from '../lib/requestTimeout';
@@ -43,6 +43,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
   const [sessionCheckFailed, setSessionCheckFailed] = useState(false);
   const [legalView, setLegalView] = useState<string | null>(null);
   const [sessionOwner, setSessionOwner] = useState<string | null>(null);
+  const previousOwnerRef = useRef<string | null>(null);
   const { theme, setTheme } = useTheme();
   const [systemDark, setSystemDark] = useState(() => Boolean(window.matchMedia?.('(prefers-color-scheme: dark)').matches));
   useEffect(() => {
@@ -73,7 +74,9 @@ export function AuthGate({ children }: { children: ReactNode }) {
         if (cancelled) return;
         if (sessionError) throw sessionError;
         setSessionCheckFailed(false);
-        setSessionOwner(data.session?.user.id || null);
+        const owner = data.session?.user.id || null;
+        previousOwnerRef.current = owner;
+        setSessionOwner(owner);
         setSessionState(data.session ? 'in' : 'out');
       } catch (cause) {
         if (cancelled) return;
@@ -84,7 +87,13 @@ export function AuthGate({ children }: { children: ReactNode }) {
     })();
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') setRecovery(true);
-      setSessionOwner(session?.user.id || null);
+      const nextOwner = session?.user.id || null;
+      const previousOwner = previousOwnerRef.current;
+      previousOwnerRef.current = nextOwner;
+      if (previousOwner && previousOwner !== nextOwner) {
+        void import('../storage/accountCleanup').then(({ clearAccountTabState }) => clearAccountTabState(previousOwner)).catch(() => {});
+      }
+      setSessionOwner(nextOwner);
       setSessionState(session ? 'in' : 'out');
     });
     return () => {
@@ -388,13 +397,13 @@ export function AuthGate({ children }: { children: ReactNode }) {
   );
 }
 
-export async function signOut() {
+export async function signOut(ownerFallback?: string | null) {
   if (!supabaseConfigured()) return;
   const [{ accountId }, { clearAccountLocalState }] = await Promise.all([
     import('../storage/remote'), import('../storage/accountCleanup'),
   ]);
-  const owner = accountId();
-  const { error } = await getSupabase().auth.signOut();
+  const owner = accountId() || ownerFallback || null;
+  const { error } = await requestTimeout(getSupabase().auth.signOut(), 15_000);
   if (error) throw error;
   await clearAccountLocalState(owner);
 }

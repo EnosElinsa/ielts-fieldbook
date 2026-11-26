@@ -33,7 +33,7 @@ export function examAttemptTitle(row: { skill?: string; sourceId?: string; mode?
   return `${name} ${row.mode === 'mock' ? 'mock test' : 'practice'}${score}${when ? ` · ${formatDate(when, false)}` : ''}`;
 }
 
-export function AccountMenu({ user, onImportBackup, onExportBackup, onLegal }: { user: { email?: string; user_metadata?: { display_name?: string } } | null; onImportBackup: () => void; onExportBackup: () => void; onLegal: (view: string) => void }) {
+export function AccountMenu({ user, onImportBackup, onExportBackup, onLegal }: { user: { id?: string; email?: string; user_metadata?: { display_name?: string } } | null; onImportBackup: () => void; onExportBackup: () => void; onLegal: (view: string) => void }) {
   const fb = useFieldbook();
   const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ export function AccountMenu({ user, onImportBackup, onExportBackup, onLegal }: {
         <DropdownMenu.Item className="dropdown-item" onSelect={() => onLegal('privacy')}><ShieldCheck size={16} />Privacy & terms</DropdownMenu.Item>
         <DropdownMenu.Item className="dropdown-item" onSelect={() => onLegal('feedback')}><MessageSquare size={16} />Send feedback</DropdownMenu.Item>
         <DropdownMenu.Separator className="dropdown-separator" />
-        <DropdownMenu.Item className="dropdown-item" onSelect={() => { void signOut().catch(() => fb.toast('Could not sign out. Try again.')); }}><LogOut size={16} />Sign out</DropdownMenu.Item>
+        <DropdownMenu.Item className="dropdown-item" onSelect={() => { void signOut(user?.id || null).catch(() => fb.toast('Could not sign out. Try again.')); }}><LogOut size={16} />Sign out</DropdownMenu.Item>
       </DropdownMenu.Content></DropdownMenu.Portal>
     </DropdownMenu.Root>
   );

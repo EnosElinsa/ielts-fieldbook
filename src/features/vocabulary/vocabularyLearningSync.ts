@@ -122,12 +122,18 @@ export function acquireVocabularyLearningSync(options: Options) {
   return queue;
 }
 
-export function clearAccountVocabularyLearning(owner: string | null) {
+export function discardAccountVocabularyLearningQueues(owner: string | null) {
   if (!owner) return;
   const prefix = `fieldbook:vocabulary-learning-pending:${owner}:`;
   for (const [key, queue] of [...queues.entries()]) {
     if (key.startsWith(prefix)) queue.discard();
   }
+}
+
+export function clearAccountVocabularyLearning(owner: string | null) {
+  if (!owner) return;
+  const prefix = `fieldbook:vocabulary-learning-pending:${owner}:`;
+  discardAccountVocabularyLearningQueues(owner);
   for (const storage of [() => localStorage, () => sessionStorage]) {
     try {
       const store = storage();

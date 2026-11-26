@@ -29,6 +29,21 @@ export function clearAccountSessionStorage(owner: string | null) {
   removePrefixed(() => localStorage, [`fieldbook:vocabulary-position:${owner}:`]);
 }
 
+/** Clear per-tab session keys, in-memory learning timers and stale store state on cross-tab sign-out or account switch without wiping durable recovery drafts. */
+export async function clearAccountTabState(owner: string | null) {
+  if (!owner) return;
+  clearAccountSessionStorage(owner);
+  const [
+    { accountId, resetAccountStore },
+    { discardAccountVocabularyLearningQueues },
+  ] = await Promise.all([
+    import('./remote'),
+    import('../features/vocabulary/vocabularyLearningSync'),
+  ]);
+  discardAccountVocabularyLearningQueues(owner);
+  if (accountId() === owner) resetAccountStore();
+}
+
 /** Clear all local drafts, cached audio, pending learning queues and session keys for an account. */
 export async function clearAccountLocalState(owner: string | null) {
   const [

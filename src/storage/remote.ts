@@ -128,7 +128,7 @@ export async function loadVocabularyCatalog(options: { bookId?: string; unitId?:
   async function page(table: string, filter?: (query) => unknown) {
     let query = supabase.from(table).select('id, payload').order('id', { ascending: true });
     if (filter) query = filter(query);
-    const { data, error } = await query.range(offset, offset + limit - 1);
+    const { data, error } = await requestTimeout(Promise.resolve(query.range(offset, offset + limit - 1)), 15_000);
     if (error) throw new Error(`Could not load vocabulary catalog (${table}): ${error.message || 'request failed'}`);
     return (data || []).map(row => normalizeVocabularyIdentities(Object.assign({}, row.payload, { id: String(row.id) })));
   }
@@ -141,7 +141,7 @@ export async function loadVocabularyCatalog(options: { bookId?: string; unitId?:
     const ids = [...new Set(options.entryIds.map(String))];
     const entries = (await Promise.all(Array.from({ length: Math.ceil(ids.length / 80) }, async (_, index) => {
       const chunk = ids.slice(index * 80, index * 80 + 80);
-      const { data, error } = await supabase.from('word_entries').select('id, payload').in('id', chunk).range(0, chunk.length - 1);
+      const { data, error } = await requestTimeout(Promise.resolve(supabase.from('word_entries').select('id, payload').in('id', chunk).range(0, chunk.length - 1)), 15_000);
       if (error) throw error;
       return (data || []).map(row => ({ ...row.payload, id: String(row.id) }));
     }))).flat();
@@ -161,7 +161,7 @@ export async function loadVocabularyCatalog(options: { bookId?: string; unitId?:
     // The membership page bounds the entry fetch; the whole public catalogue is never loaded.
     const entries = ids.length ? (await Promise.all(Array.from({length:Math.ceil(ids.length/80)},async(_,index)=>{
       const chunk=ids.slice(index*80,index*80+80);
-      const { data, error } = await supabase.from('word_entries').select('id, payload').in('id', chunk).order('id', { ascending: true }).range(0, chunk.length - 1);
+      const { data, error } = await requestTimeout(Promise.resolve(supabase.from('word_entries').select('id, payload').in('id', chunk).order('id', { ascending: true }).range(0, chunk.length - 1)), 15_000);
       if (error) throw new Error(`Could not load vocabulary catalog (word_entries): ${error.message || 'request failed'}`);
       return (data || []).map(row => Object.assign({}, row.payload, { id: String(row.id) }));
     }))).flat() : [];

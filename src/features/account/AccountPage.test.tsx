@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { AccountPage } from './AccountPage';
 
-const { state, resend, updateUser, rpc, signOut, clearLocal } = vi.hoisted(() => ({
+const { state, resend, updateUser, rpc, signOut, localSignOut, clearLocal } = vi.hoisted(() => ({
   state: {
     user: {
       id: 'user-1',
@@ -27,6 +27,7 @@ const { state, resend, updateUser, rpc, signOut, clearLocal } = vi.hoisted(() =>
   updateUser: vi.fn(),
   rpc: vi.fn(),
   signOut: vi.fn(),
+  localSignOut: vi.fn().mockResolvedValue({ error: null }),
   clearLocal: vi.fn().mockResolvedValue(undefined),
 }));
 
@@ -43,7 +44,7 @@ vi.mock('../../auth/useAuthUser', () => ({
 }));
 
 vi.mock('../../lib/supabase', () => ({
-  getSupabase: () => ({ auth: { resend, updateUser, signOut: vi.fn() }, rpc }),
+  getSupabase: () => ({ auth: { resend, updateUser, signOut: localSignOut }, rpc }),
   supabaseConfigured: () => true,
 }));
 
@@ -53,6 +54,7 @@ afterEach(() => {
   updateUser.mockReset();
   rpc.mockReset();
   signOut.mockReset();
+  localSignOut.mockReset().mockResolvedValue({ error: null });
   clearLocal.mockReset().mockResolvedValue(undefined);
   state.user.email_confirmed_at = '2026-09-25T12:05:00';
 });
@@ -166,14 +168,27 @@ describe('AccountPage identity', () => {
     expect(screen.getByRole('button', { name: 'Delete account' })).toBeEnabled();
   });
 
-  test('account deletion still clears local data when remote sign-out fails after server deletion', async () => {
+  test('account deletion still clears local Supabase session and local data when remote sign-out fails after server deletion', async () => {
     rpc.mockResolvedValueOnce({ error: null });
     signOut.mockRejectedValueOnce(new Error('Session already revoked'));
     renderPage();
     await userEvent.type(screen.getByLabelText('Type your email'), 'enoselinsa@gmail.com');
     await userEvent.click(screen.getByRole('button', { name: 'Delete account' }));
     expect(rpc).toHaveBeenCalledWith('delete_own_account');
+    expect(signOut).toHaveBeenCalledWith('user-1');
+    expect(localSignOut).toHaveBeenCalledWith({ scope: 'local' });
     expect(clearLocal).toHaveBeenCalledWith('user-1');
+  });
+
+  test('ignores concurrent account actions while another mutation is in flight', async () => {
+    let resolveName!: (value: { error: null }) => void;
+    updateUser.mockImplementationOnce(() => new Promise(resolve => { resolveName = resolve; }));
+    renderPage();
+    await userEvent.click(screen.getByRole('button', { name: 'Save name' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Sign out' }));
+    expect(signOut).not.toHaveBeenCalled();
+    resolveName({ error: null });
+    expect(await screen.findByText('Name saved.')).toBeInTheDocument();
   });
 
   test('exposes accessible form labels, level-4 headings, password visibility toggle and non-live delete hint', async () => {

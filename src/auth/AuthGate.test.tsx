@@ -1,11 +1,11 @@
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { AuthGate } from './AuthGate';
 import { ThemeProvider } from '../context/ThemeContext';
 
-const { signUp, signInWithPassword, getSession, resend, resetPasswordForEmail, onAuthStateChange } = vi.hoisted(() => {
+const { signUp, signInWithPassword, getSession, resend, resetPasswordForEmail, onAuthStateChange, remoteOwner, resetAccountStore } = vi.hoisted(() => {
   type AuthListener = (event: string, session: unknown) => void;
   return {
     signUp: vi.fn(),
@@ -17,8 +17,15 @@ const { signUp, signInWithPassword, getSession, resend, resetPasswordForEmail, o
       void callback;
       return { data: { subscription: { unsubscribe: () => undefined } } };
     }),
+    remoteOwner: { current: null as string | null },
+    resetAccountStore: vi.fn(),
   };
 });
+
+vi.mock('../storage/remote', () => ({
+  accountId: () => remoteOwner.current,
+  resetAccountStore,
+}));
 
 vi.mock('../lib/supabase', () => ({
   supabaseConfigured: () => true,
@@ -45,6 +52,8 @@ afterEach(() => {
   resend.mockReset();
   resetPasswordForEmail.mockReset();
   onAuthStateChange.mockClear();
+  remoteOwner.current = null;
+  resetAccountStore.mockReset();
   window.location.hash = '';
 });
 
@@ -236,4 +245,23 @@ test('password toggle exposes aria-pressed and signup links the password require
   expect(screen.getByRole('button', { name: 'Hide password' })).toHaveAttribute('aria-pressed', 'true');
   await userEvent.click(screen.getByRole('button', { name: 'Create an account' }));
   expect(screen.getByLabelText('Password')).toHaveAccessibleDescription(/At least 6 characters/);
+});
+
+test('cross-tab SIGNED_OUT clears previous owner tab session storage and resets matching account store while preserving other accounts', async () => {
+  sessionStorage.clear();
+  remoteOwner.current = 'account-a';
+  sessionStorage.setItem('fieldbook:module-memory:v1:"account-a"', '{"version":1}');
+  sessionStorage.setItem('fieldbook:module-memory:v1:"account-b"', '{"version":1}');
+  getSession.mockResolvedValueOnce({ data: { session: { user: { id: 'account-a' } } }, error: null } as never);
+  render(<AuthGate><p>Notebook</p></AuthGate>);
+  expect(await screen.findByText('Notebook')).toBeInTheDocument();
+  const listener = onAuthStateChange.mock.calls[0][0];
+  await act(async () => {
+    listener('SIGNED_OUT', null);
+  });
+  expect(await screen.findByRole('heading', { name: 'Sign in' })).toBeInTheDocument();
+  await waitFor(() => expect(resetAccountStore).toHaveBeenCalledOnce());
+  expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-a"')).toBeNull();
+  expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-b"')).not.toBeNull();
+  sessionStorage.clear();
 });

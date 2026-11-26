@@ -43,6 +43,7 @@ export function AccountPage() {
 
   async function saveName(event: FormEvent) {
     event.preventDefault();
+    if (busy) return;
     const next = name.trim();
     if (!next) {
       setNameError('Enter a name.');
@@ -67,6 +68,7 @@ export function AccountPage() {
 
   async function savePassword(event: FormEvent) {
     event.preventDefault();
+    if (busy) return;
     if (password.length < 6) {
       setPasswordError('Use at least 6 characters.');
       return;
@@ -95,6 +97,7 @@ export function AccountPage() {
   }
 
   async function resendConfirmation() {
+    if (busy) return;
     const address = user?.email?.trim();
     if (!address || confirmed) return;
     setBusy('resend');
@@ -122,6 +125,7 @@ export function AccountPage() {
 
   async function saveEmail(event: FormEvent) {
     event.preventDefault();
+    if (busy) return;
     const next = nextEmail.trim();
     if (!next) {
       setEmailError('Enter an email.');
@@ -155,7 +159,7 @@ export function AccountPage() {
   }
 
   async function removeAccount() {
-    if (!deleteReady) return;
+    if (!deleteReady || busy) return;
     setBusy('delete');
     setDeleteError('');
     try {
@@ -166,9 +170,10 @@ export function AccountPage() {
       }
       const owner = user?.id || null;
       try {
-        await signOut();
+        await signOut(owner);
       } catch {
-        // The account is already deleted remotely; still clear local device artifacts and reset state.
+        // The account is already deleted remotely; clear local Supabase session and device artifacts so AuthGate returns to sign-in.
+        await requestTimeout(Promise.resolve(getSupabase().auth.signOut({ scope: 'local' })), 5_000).catch(() => {});
         await clearAccountLocalState(owner);
       }
       navigate('/');
@@ -180,9 +185,10 @@ export function AccountPage() {
   }
 
   async function leave() {
+    if (busy) return;
     setBusy('out');
     setSignOutError('');
-    try { await signOut(); navigate('/'); } catch { setSignOutError('Could not sign out. Try again.'); setBusy(null); }
+    try { await signOut(user?.id || null); navigate('/'); } catch { setSignOutError('Could not sign out. Try again.'); setBusy(null); }
   }
 
   return (

@@ -1,5 +1,6 @@
-import { beforeEach, expect, test, vi } from 'vitest';
+import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { signOut } from './AuthGate';
+import { clearAccountTabState } from '../storage/accountCleanup';
 const m = vi.hoisted(() => ({ owner: 'account-a', authSignOut: vi.fn(), reset: vi.fn(), discard: vi.fn(), vocabulary: vi.fn(), exam: vi.fn(), audio: vi.fn().mockResolvedValue(true), sessionDrafts: vi.fn().mockResolvedValue(true) }));
 vi.mock('../lib/supabase', () => ({ supabaseConfigured: () => true, getSupabase: () => ({ auth: { signOut: m.authSignOut } }) }));
 vi.mock('../storage/remote', () => ({ accountId: () => m.owner, resetAccountStore: m.reset }));
@@ -9,6 +10,7 @@ vi.mock('../storage/examRecovery', () => ({ clearAccountExamRecovery: m.exam }))
 vi.mock('../storage/pendingAudio', () => ({ clearPendingAudioAccount: m.audio }));
 vi.mock('../storage/vocabularySessionDrafts', () => ({ vocabularySessionDrafts: { clearAccount: m.sessionDrafts } }));
 beforeEach(() => { vi.clearAllMocks(); localStorage.clear(); sessionStorage.clear(); m.owner = 'account-a'; m.authSignOut.mockResolvedValue({ error: null }); });
+afterEach(() => { vi.useRealTimers(); });
 test('sign out clears the captured owner’s recovery, session storage, vocabulary queues and pending recordings even if account state resets during auth', async () => {
   sessionStorage.setItem('fieldbook:module-memory:v1:"account-a"', '{"version":1}');
   sessionStorage.setItem('fieldbook:history-scroll:v1:"account-a"', '{"version":1}');
@@ -44,4 +46,39 @@ test('failed sign out preserves recoverable recordings, drafts and session state
   expect(m.sessionDrafts).not.toHaveBeenCalled();
   expect(m.reset).not.toHaveBeenCalled();
   expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-a"')).not.toBeNull();
+});
+test('stalled sign out times out and preserves local drafts and session state', async () => {
+  vi.useFakeTimers();
+  sessionStorage.setItem('fieldbook:module-memory:v1:"account-a"', '{"version":1}');
+  m.authSignOut.mockImplementationOnce(() => new Promise(() => {}));
+  const pending = signOut();
+  const assertion = expect(pending).rejects.toThrow(/took too long/i);
+  await vi.advanceTimersByTimeAsync(15_000);
+  await assertion;
+  expect(m.reset).not.toHaveBeenCalled();
+  expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-a"')).not.toBeNull();
+});
+test('sign out uses owner fallback when account store identity is not populated yet', async () => {
+  m.owner = '';
+  sessionStorage.setItem('fieldbook:module-memory:v1:"account-a"', '{"version":1}');
+  await signOut('account-a');
+  expect(m.discard).toHaveBeenCalledWith('account-a');
+  expect(m.sessionDrafts).toHaveBeenCalledWith('account-a');
+  expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-a"')).toBeNull();
+});
+test('clearAccountTabState clears per-tab session keys and resets only matching owner without wiping durable drafts', async () => {
+  sessionStorage.setItem('fieldbook:module-memory:v1:"account-a"', '{"version":1}');
+  localStorage.setItem('fieldbook:vocabulary-learning-pending:account-a:b1:u1', '{}');
+  await clearAccountTabState('account-a');
+  expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-a"')).toBeNull();
+  expect(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-a:b1:u1')).not.toBeNull();
+  expect(m.discard).not.toHaveBeenCalled();
+  expect(m.reset).toHaveBeenCalledOnce();
+
+  m.reset.mockClear();
+  m.owner = 'account-b';
+  sessionStorage.setItem('fieldbook:module-memory:v1:"account-a"', '{"version":1}');
+  await clearAccountTabState('account-a');
+  expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-a"')).toBeNull();
+  expect(m.reset).not.toHaveBeenCalled();
 });
