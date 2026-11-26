@@ -111,7 +111,7 @@ async function selectCatalog(table: string) {
   const supabase = getSupabase();
   const rows = [];
   for (let from = 0; ; from += PAGE) {
-    const { data, error } = await supabase.from(table).select('id, payload').range(from, from + PAGE - 1);
+    const { data, error } = await requestTimeout(Promise.resolve(supabase.from(table).select('id, payload').range(from, from + PAGE - 1)), 15_000);
     if (error) throw error;
     rows.push(...(data || []));
     if (!data || data.length < PAGE) break;
@@ -333,7 +333,7 @@ export async function ensureAccountModule(module: AccountModule) {
         for(let offset=0;;offset+=PAGE){
           // Progress needs the attempt's scope, not frozen cards or answers.
           // Reviews already loaded by vocabularyCore supply the answered IDs.
-          const {data,error}=await getSupabase().from('vocabulary_sessions').select('id,mode:payload->>mode,status:payload->>status,selection:payload->selection,filter:payload->filter').eq('payload->>status','submitted').order('id',{ascending:true}).range(offset,offset+PAGE-1);
+          const {data,error}=await requestTimeout(Promise.resolve(getSupabase().from('vocabulary_sessions').select('id,mode:payload->>mode,status:payload->>status,selection:payload->selection,filter:payload->filter').eq('payload->>status','submitted').order('id',{ascending:true}).range(offset,offset+PAGE-1)),15_000);
           assertAccount(generation,id);if(error)throw error;
           attempts.push(...normalizeVocabularyIdentities(data||[]));
           if((data||[]).length<PAGE)break;
@@ -344,7 +344,7 @@ export async function ensureAccountModule(module: AccountModule) {
         const failed=new Set((normalized.vocabularyStates||[]).flatMap(row=>Object.entries(row.wrong?.modes||{}).filter(([,value])=>value?.active&&value.lastFailureAt).map(([mode,value])=>JSON.stringify([row.entryId,row.senseId,mode,value.lastFailureAt]))));
         const ids=[...new Set((normalized.vocabularyEvidence||[]).filter(row=>row.sessionId&&failed.has(JSON.stringify([row.entryId,row.senseId,row.mode,row.occurredAt]))).map(row=>row.sessionId))];
         for(let offset=0;offset<ids.length;offset+=80){
-          const {data,error}=await getSupabase().from('vocabulary_sessions').select('id,payload').in('id',ids.slice(offset,offset+80)).range(0,79);
+          const {data,error}=await requestTimeout(Promise.resolve(getSupabase().from('vocabulary_sessions').select('id,payload').in('id',ids.slice(offset,offset+80)).range(0,79)),15_000);
           assertAccount(generation,id);if(error)throw error;
           const loaded=(data||[]).map(row=>({...row.payload,id:String(row.id)}));
           const combined=new Map((accountState.vocabularySessions||[]).map(row=>[row.id,row]));loaded.forEach(row=>combined.set(row.id,row));
@@ -412,7 +412,7 @@ export async function loadPlanningRows(ids:string[]) {
   if(!owner||!accountReady)throw new Error('Sign in to load these tasks.');
   const rows=[];
   for(let offset=0;offset<ids.length;offset+=80){
-    const {data,error}=await getSupabase().from('plans').select('id,payload').in('id',ids.slice(offset,offset+80)).range(0,79);
+    const {data,error}=await requestTimeout(Promise.resolve(getSupabase().from('plans').select('id,payload').in('id',ids.slice(offset,offset+80)).range(0,79)),15_000);
     assertAccount(generation,owner);if(error)throw error;rows.push(...(data||[]));
   }
   return {rows,plans:migrateState({...emptyState(),plans:rowsToList(rows)}).plans};
@@ -429,7 +429,7 @@ export async function loadVocabularyHistoryPage(options: { offset?: number; limi
   if (options.source === 'planned') query = query.not('payload->>planId', 'is', null);
   if (['automatic', 'manual'].includes(options.source)) query = query.eq('payload->sourceSnapshot->>origin', options.source);
   if (options.mode && options.mode !== 'all') query = query.eq('payload->>mode', options.mode);
-  const { data, count, error } = await query.order('payload->>submittedAt', { ascending: false }).order('id', { ascending: true }).range(offset, offset + limit - 1);
+  const { data, count, error } = await requestTimeout(Promise.resolve(query.order('payload->>submittedAt', { ascending: false }).order('id', { ascending: true }).range(offset, offset + limit - 1)), 15_000);
   assertAccount(generation, owner);
   if (error) throw error;
   return { rows: data || [], total: count || 0, offset, limit };
@@ -440,7 +440,7 @@ export async function loadVocabularySession(id: string) {
   if (!owner || !accountReady) throw new Error('Sign in to load this result.');
   const existing = accountState.vocabularySessions?.find(row => row.id === id);
   if (existing) return structuredClone(existing);
-  const { data, error } = await getSupabase().from('vocabulary_sessions').select('id,payload').eq('id', id).maybeSingle();
+  const { data, error } = await requestTimeout(Promise.resolve(getSupabase().from('vocabulary_sessions').select('id,payload').eq('id', id).maybeSingle()), 15_000);
   assertAccount(generation, owner);
   if (error) throw error;
   if (!data) return null;
@@ -625,7 +625,7 @@ export async function saveVocabularyImport(state, batchId: string, onError?: (me
     const lists = Object.fromEntries(VOCABULARY_IMPORT_LISTS.map(key => [key, diffList(previous.lists[key], next.lists[key]).upserts]));
     const { data: commitResult, error } = await accountRpc(supabase, 'commit_vocabulary_import', {
       batch: { id: batchId, lists, importBatch, updatedAt: new Date().toISOString() },
-    }, data.session);
+    }, data.session, true);
     if (error) throw error;
     if (accountId() !== expectedAccount || generation !== accountGeneration()) return false;
     // A replay acknowledges the earlier transaction, not edits added since it.
@@ -676,7 +676,7 @@ export async function saveVocabularySession(state, sessionId: string, onError?: 
     }
     const { data: commitResult, error } = await accountRpc(supabase, 'commit_vocabulary_session', {
       batch: { id: sessionId, session: completedSession, lists, updatedAt: new Date().toISOString() },
-    }, data.session);
+    }, data.session, true);
     if (error) throw error;
     if (accountId() !== expectedAccount || generation !== accountGeneration()) return false;
     if (commitResult?.id !== sessionId || typeof commitResult.alreadyCommitted !== 'boolean') throw new Error('Invalid vocabulary session acknowledgement');

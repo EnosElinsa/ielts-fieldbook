@@ -1,26 +1,47 @@
 import { beforeEach, expect, test, vi } from 'vitest';
 import { signOut } from './AuthGate';
-const m = vi.hoisted(() => ({ owner: 'account-a', authSignOut: vi.fn(), reset: vi.fn(), discard: vi.fn(), vocabulary: vi.fn(), exam: vi.fn(), audio: vi.fn().mockResolvedValue(true) }));
+const m = vi.hoisted(() => ({ owner: 'account-a', authSignOut: vi.fn(), reset: vi.fn(), discard: vi.fn(), vocabulary: vi.fn(), exam: vi.fn(), audio: vi.fn().mockResolvedValue(true), sessionDrafts: vi.fn().mockResolvedValue(true) }));
 vi.mock('../lib/supabase', () => ({ supabaseConfigured: () => true, getSupabase: () => ({ auth: { signOut: m.authSignOut } }) }));
 vi.mock('../storage/remote', () => ({ accountId: () => m.owner, resetAccountStore: m.reset }));
 vi.mock('../storage/recovery', () => ({ discardDraftRecovery: m.discard }));
 vi.mock('../storage/vocabularyDrafts', () => ({ clearVocabularyDraft: m.vocabulary }));
 vi.mock('../storage/examRecovery', () => ({ clearAccountExamRecovery: m.exam }));
 vi.mock('../storage/pendingAudio', () => ({ clearPendingAudioAccount: m.audio }));
-beforeEach(() => { vi.clearAllMocks(); m.owner = 'account-a'; m.authSignOut.mockResolvedValue({ error: null }); });
-test('sign out clears the captured owner’s recovery and pending recordings even if account state resets during auth', async () => {
+vi.mock('../storage/vocabularySessionDrafts', () => ({ vocabularySessionDrafts: { clearAccount: m.sessionDrafts } }));
+beforeEach(() => { vi.clearAllMocks(); localStorage.clear(); sessionStorage.clear(); m.owner = 'account-a'; m.authSignOut.mockResolvedValue({ error: null }); });
+test('sign out clears the captured owner’s recovery, session storage, vocabulary queues and pending recordings even if account state resets during auth', async () => {
+  sessionStorage.setItem('fieldbook:module-memory:v1:"account-a"', '{"version":1}');
+  sessionStorage.setItem('fieldbook:history-scroll:v1:"account-a"', '{"version":1}');
+  sessionStorage.setItem('fieldbook:page-state:v1:"account-a":desk', '{"version":1}');
+  sessionStorage.setItem('fieldbook:vocabulary-position:account-a:/vocabulary', '{"y":12}');
+  sessionStorage.setItem('fieldbook:session-position:account-a:s1:all', '{"y":24}');
+  localStorage.setItem('fieldbook:vocabulary-learning-pending:account-a:b1:u1', '{}');
+  sessionStorage.setItem('fieldbook:module-memory:v1:"account-b"', '{"version":1}');
+  localStorage.setItem('fieldbook:vocabulary-learning-pending:account-b:b1:u1', '{}');
   m.authSignOut.mockImplementation(async () => { m.owner = ''; return { error: null }; });
   await signOut();
   expect(m.discard).toHaveBeenCalledWith('account-a');
   expect(m.vocabulary).toHaveBeenCalledWith('account-a');
   expect(m.exam).toHaveBeenCalledWith('account-a');
   expect(m.audio).toHaveBeenCalledWith('account-a');
+  expect(m.sessionDrafts).toHaveBeenCalledWith('account-a');
   expect(m.reset).toHaveBeenCalledOnce();
+  expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-a"')).toBeNull();
+  expect(sessionStorage.getItem('fieldbook:history-scroll:v1:"account-a"')).toBeNull();
+  expect(sessionStorage.getItem('fieldbook:page-state:v1:"account-a":desk')).toBeNull();
+  expect(sessionStorage.getItem('fieldbook:vocabulary-position:account-a:/vocabulary')).toBeNull();
+  expect(sessionStorage.getItem('fieldbook:session-position:account-a:s1:all')).toBeNull();
+  expect(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-a:b1:u1')).toBeNull();
+  expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-b"')).not.toBeNull();
+  expect(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-b:b1:u1')).not.toBeNull();
 });
-test('failed sign out preserves recoverable recordings and drafts', async () => {
+test('failed sign out preserves recoverable recordings, drafts and session state', async () => {
+  sessionStorage.setItem('fieldbook:module-memory:v1:"account-a"', '{"version":1}');
   m.authSignOut.mockResolvedValue({ error: new Error('offline') });
   await expect(signOut()).rejects.toThrow('offline');
   expect(m.audio).not.toHaveBeenCalled();
   expect(m.exam).not.toHaveBeenCalled();
+  expect(m.sessionDrafts).not.toHaveBeenCalled();
   expect(m.reset).not.toHaveBeenCalled();
+  expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-a"')).not.toBeNull();
 });

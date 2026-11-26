@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { AccountPage } from './AccountPage';
 
-const { state, resend, updateUser, rpc, signOut } = vi.hoisted(() => ({
+const { state, resend, updateUser, rpc, signOut, clearLocal } = vi.hoisted(() => ({
   state: {
     user: {
       id: 'user-1',
@@ -27,10 +27,15 @@ const { state, resend, updateUser, rpc, signOut } = vi.hoisted(() => ({
   updateUser: vi.fn(),
   rpc: vi.fn(),
   signOut: vi.fn(),
+  clearLocal: vi.fn().mockResolvedValue(undefined),
 }));
 
 vi.mock('../../auth/AuthGate', () => ({
   signOut,
+}));
+
+vi.mock('../../storage/accountCleanup', () => ({
+  clearAccountLocalState: clearLocal,
 }));
 
 vi.mock('../../auth/useAuthUser', () => ({
@@ -48,6 +53,7 @@ afterEach(() => {
   updateUser.mockReset();
   rpc.mockReset();
   signOut.mockReset();
+  clearLocal.mockReset().mockResolvedValue(undefined);
   state.user.email_confirmed_at = '2026-09-25T12:05:00';
 });
 
@@ -130,5 +136,43 @@ describe('AccountPage identity', () => {
     expect(leavePanel).toContainElement(alert);
     expect(alert).toHaveTextContent('Could not sign out. Try again.');
     expect(dangerPanel.querySelector('[role="alert"]')).toBeNull();
+  });
+
+  test('thrown network errors release busy controls and report alerts across account actions', async () => {
+    state.user.email_confirmed_at = null;
+    updateUser.mockRejectedValue(new TypeError('Failed to fetch'));
+    resend.mockRejectedValue(new TypeError('Failed to fetch'));
+    rpc.mockRejectedValueOnce(new TypeError('Failed to fetch'));
+    renderPage();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Save name' }));
+    expect(screen.getByRole('button', { name: 'Save name' })).toBeEnabled();
+
+    await userEvent.type(screen.getByLabelText('New password'), 'secret1');
+    await userEvent.type(screen.getByLabelText('Confirm password'), 'secret1');
+    await userEvent.click(screen.getByRole('button', { name: 'Update password' }));
+    expect(screen.getByRole('button', { name: 'Update password' })).toBeEnabled();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Resend' }));
+    expect(screen.getByRole('button', { name: 'Resend' })).toBeEnabled();
+
+    await userEvent.type(screen.getByLabelText('New email'), 'other@example.com');
+    await userEvent.click(screen.getByRole('button', { name: 'Save email' }));
+    expect(screen.getByRole('button', { name: 'Save email' })).toBeEnabled();
+
+    await userEvent.type(screen.getByLabelText('Type your email'), 'enoselinsa@gmail.com');
+    await userEvent.click(screen.getByRole('button', { name: 'Delete account' }));
+    expect(await screen.findByText('Could not delete this account. Try again.')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Delete account' })).toBeEnabled();
+  });
+
+  test('account deletion still clears local data when remote sign-out fails after server deletion', async () => {
+    rpc.mockResolvedValueOnce({ error: null });
+    signOut.mockRejectedValueOnce(new Error('Session already revoked'));
+    renderPage();
+    await userEvent.type(screen.getByLabelText('Type your email'), 'enoselinsa@gmail.com');
+    await userEvent.click(screen.getByRole('button', { name: 'Delete account' }));
+    expect(rpc).toHaveBeenCalledWith('delete_own_account');
+    expect(clearLocal).toHaveBeenCalledWith('user-1');
   });
 });

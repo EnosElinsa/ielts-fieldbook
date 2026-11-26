@@ -139,7 +139,7 @@ function PlanTask({plan,expanded=false,todayFocus=false,now=new Date()}){
   return <article id={`task-${plan.id}`} tabIndex={-1} className={`study-task study-plan-task ${plan.status}`}>
     <div className="study-plan-task-body">
       <h4>{studyPlanTitle(plan)}</h4>
-      <p className="study-task-meta"><span className={`study-skill study-skill-${skill}`}>{skill}</span><span><Clock3 size={14}/>{planMinutesLabel(plan)}</span><span className="study-task-status">{completed&&<Check size={14}/>}{status}</span>{todayFocus&&<strong className="study-task-focus">Today's focus</strong>}{plan.dateKey<dateKey(new Date())&&<span>Due {formatDateKey(plan.dateKey)}</span>}{plan.originalDateKey&&plan.originalDateKey!==plan.dateKey&&<span>Moved from {formatDateKey(plan.originalDateKey)}</span>}{plan.origin==='manual'&&<span>Added by you</span>}</p>
+      <p className="study-task-meta"><span className={`study-skill study-skill-${skill}`}>{skill}</span><span><Clock3 size={14}/>{planMinutesLabel(plan)}</span><span className="study-task-status">{completed&&<Check size={14}/>}{status}</span>{todayFocus&&<strong className="study-task-focus">Today's focus</strong>}{plan.dateKey<dateKey(now)&&<span>Due {formatDateKey(plan.dateKey)}</span>}{plan.originalDateKey&&plan.originalDateKey!==plan.dateKey&&<span>Moved from {formatDateKey(plan.originalDateKey)}</span>}{plan.origin==='manual'&&<span>Added by you</span>}</p>
       <LearningTaskDetails plan={plan} batchSize={fb.state.settings.vocabulary?.learningBatchSize||10}/>
       {expanded&&<LinkedTaskRequirements plan={plan}/>}
 
@@ -162,7 +162,7 @@ function PlanTask({plan,expanded=false,todayFocus=false,now=new Date()}){
             ['duplicate','Duplicate task',Copy,false],
           ].map(([mode,label,Icon,disabled])=><DropdownMenu.Item key={mode} className="dropdown-item" disabled={disabled} onSelect={()=>{setError('');setDialog(mode);}}><Icon size={16}/>{label}</DropdownMenu.Item>)}
           <DropdownMenu.Separator className="dropdown-separator"/>
-          <DropdownMenu.Item className="dropdown-item" disabled={completed} onSelect={()=>void change({type:plan.onHold?'resume':'hold'})}>{plan.onHold?(plan.dateKey>=dateKey(new Date())?'Return to schedule':'Return to waiting'):'Hold task'}</DropdownMenu.Item>
+          <DropdownMenu.Item className="dropdown-item" disabled={completed} onSelect={()=>void change({type:plan.onHold?'resume':'hold'})}>{plan.onHold?(plan.dateKey>=dateKey(now)?'Return to schedule':'Return to waiting'):'Hold task'}</DropdownMenu.Item>
           <DropdownMenu.Item className="dropdown-item" disabled={completed||plan.onHold} onSelect={()=>void change({type:'reorder',direction:'up'})}><ArrowUp size={16}/>Move task up</DropdownMenu.Item>
           <DropdownMenu.Item className="dropdown-item" disabled={completed||plan.onHold} onSelect={()=>void change({type:'reorder',direction:'down'})}><ArrowDown size={16}/>Move task down</DropdownMenu.Item>
           <DropdownMenu.Separator className="dropdown-separator"/>

@@ -9,7 +9,7 @@ const resources = { requests: 0, transferredBytes: 0, longTaskMs: 0 };
 export function startPerformanceTelemetry() {
   if (typeof PerformanceObserver === 'undefined') return;
   for (const type of ['resource', 'longtask']) {
-    if (!PerformanceObserver.supportedEntryTypes.includes(type)) continue;
+    if (!PerformanceObserver.supportedEntryTypes?.includes(type)) continue;
     new PerformanceObserver(list => {
       for (const entry of list.getEntries()) {
         if (type === 'resource') {

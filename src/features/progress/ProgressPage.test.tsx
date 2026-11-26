@@ -173,3 +173,12 @@ test('a late previous-account response cannot replace the current account histor
   expect(screen.queryByText('Previous account history')).not.toBeInTheDocument();
   expect(screen.getByText('Current account history')).toBeInTheDocument();
 });
+
+test.each(['reading', 'listening'] as const)('direct %s progress loads historical study plans via read-only summary with level-3 heading', async category => {
+  mock.readPlans.mockResolvedValue({ plans: [{ id: `${category}-old`, title: `Historical ${category} plan`, dateKey: '2026-10-13', status: 'completed' }], total: 1, offset: 0, limit: 20 });
+  render(<MemoryRouter initialEntries={[`/progress?category=${category}&range=all`]}><ProgressPage /></MemoryRouter>);
+  expect(await screen.findByText(`Historical ${category} plan`)).toBeInTheDocument();
+  expect(mock.readPlans).toHaveBeenCalledWith(expect.objectContaining({ skill: category }));
+  expect(screen.getByRole('heading', { level: 3, name: 'Study plans' })).toBeInTheDocument();
+  expect(mock.state.plans).toEqual([]);
+});

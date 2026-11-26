@@ -213,3 +213,17 @@ test('system theme follows OS dark preference, switches to light mode, and expos
     delete document.documentElement.dataset.theme;
   }
 });
+
+test('a stalled sign-in request times out and releases the busy button', async () => {
+  vi.useFakeTimers();
+  signInWithPassword.mockImplementationOnce(() => new Promise(() => {}));
+  render(<AuthGate><p>Notebook</p></AuthGate>);
+  await act(async () => { await Promise.resolve(); });
+  fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'learner@example.test' } });
+  fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'secret1' } });
+  fireEvent.click(screen.getByRole('button', { name: /^Sign in$/ }));
+  expect(screen.getByRole('button', { name: 'Please wait…' })).toBeDisabled();
+  await act(async () => { vi.advanceTimersByTime(15_000); });
+  expect(screen.getByRole('alert')).toHaveTextContent(/took too long/i);
+  expect(screen.getByRole('button', { name: /^Sign in$/ })).toBeEnabled();
+});

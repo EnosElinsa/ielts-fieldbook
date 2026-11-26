@@ -32,3 +32,13 @@ test('a failed migration retains the legacy draft and rejects malformed session 
  await expect(createVocabularyDraftStore(blocked).migrate('alice')).rejects.toThrow();expect(readVocabularyDraft('alice')?.id).toBe(draft.id);
  await expect(createVocabularyDraftStore(new IDBFactory()).save('alice',{...draft,status:'submitted'})).rejects.toThrow(/Invalid/);
 });
+test('clearAccount deletes every local draft for one account while preserving other accounts',async()=>{
+ const store=createVocabularyDraftStore(new IDBFactory());
+ await store.save('alice',session());
+ await store.save('alice',session());
+ await store.save('bob',session());
+ expect(await store.clearAccount('alice')).toBe(true);
+ expect(await store.list('alice')).toEqual([]);
+ expect(await store.list('bob')).toHaveLength(1);
+ expect(await store.clearAccount(null)).toBe(false);
+});

@@ -109,9 +109,12 @@ export function AuthGate({ children }: { children: ReactNode }) {
       const supabase = getSupabase();
       const address = email.trim();
       if (mode === 'reset') {
-        const { error: resetError } = await supabase.auth.resetPasswordForEmail(address, {
-          redirectTo: window.location.origin,
-        });
+        const { error: resetError } = await requestTimeout(
+          supabase.auth.resetPasswordForEmail(address, {
+            redirectTo: window.location.origin,
+          }),
+          15_000,
+        );
         if (resetError) {
           setError(authError(resetError.message, mode));
           return;
@@ -122,12 +125,15 @@ export function AuthGate({ children }: { children: ReactNode }) {
       }
       const result =
         mode === 'signup'
-          ? await supabase.auth.signUp({
-              email: address,
-              password,
-              options: { emailRedirectTo: window.location.origin },
-            })
-          : await supabase.auth.signInWithPassword({ email: address, password });
+          ? await requestTimeout(
+              supabase.auth.signUp({
+                email: address,
+                password,
+                options: { emailRedirectTo: window.location.origin },
+              }),
+              15_000,
+            )
+          : await requestTimeout(supabase.auth.signInWithPassword({ email: address, password }), 15_000);
       if (result.error) {
         setError(authError(result.error.message, mode));
         return;
@@ -148,11 +154,14 @@ export function AuthGate({ children }: { children: ReactNode }) {
     setBusy(true);
     setError('');
     try {
-      const { error: resendError } = await getSupabase().auth.resend({
-        type: 'signup',
-        email: email.trim(),
-        options: { emailRedirectTo: window.location.origin },
-      });
+      const { error: resendError } = await requestTimeout(
+        getSupabase().auth.resend({
+          type: 'signup',
+          email: email.trim(),
+          options: { emailRedirectTo: window.location.origin },
+        }),
+        15_000,
+      );
       if (resendError) {
         setError(authError(resendError.message, 'signup'));
         return;
@@ -208,7 +217,10 @@ export function AuthGate({ children }: { children: ReactNode }) {
             setBusy(true);
             setError('');
             try {
-              const { error: updateError } = await getSupabase().auth.updateUser({ password: nextPassword });
+              const { error: updateError } = await requestTimeout(
+                getSupabase().auth.updateUser({ password: nextPassword }),
+                15_000,
+              );
               if (updateError) {
                 setError(authError(updateError.message, 'reset'));
                 return;
@@ -377,15 +389,11 @@ export function AuthGate({ children }: { children: ReactNode }) {
 
 export async function signOut() {
   if (!supabaseConfigured()) return;
-  const [{ accountId, resetAccountStore }, { discardDraftRecovery }, { clearVocabularyDraft }, { clearAccountExamRecovery }, { clearPendingAudioAccount }] = await Promise.all([
-    import('../storage/remote'), import('../storage/recovery'), import('../storage/vocabularyDrafts'), import('../storage/examRecovery'), import('../storage/pendingAudio'),
+  const [{ accountId }, { clearAccountLocalState }] = await Promise.all([
+    import('../storage/remote'), import('../storage/accountCleanup'),
   ]);
-  const owner=accountId();
+  const owner = accountId();
   const { error } = await getSupabase().auth.signOut();
   if (error) throw error;
-  discardDraftRecovery(owner);
-  clearVocabularyDraft(owner);
-  clearAccountExamRecovery(owner);
-  await clearPendingAudioAccount(owner);
-  resetAccountStore();
+  await clearAccountLocalState(owner);
 }

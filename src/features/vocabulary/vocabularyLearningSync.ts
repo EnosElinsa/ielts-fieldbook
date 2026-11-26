@@ -62,6 +62,13 @@ class VocabularyLearningSync {
   private emit() { this.listeners.forEach(listener => listener(this.snapshot())); }
   private isOwner() { return this.options.owner === this.options.currentOwner(); }
   private clearTimer() { if (this.timer !== undefined) clearTimeout(this.timer); this.timer = undefined; }
+  discard() {
+    this.clearTimer();
+    this.draft = undefined;
+    this.acknowledged = undefined;
+    this.status = 'idle';
+    if (queues.get(this.key) === this) queues.delete(this.key);
+  }
   private releaseIfUnused() {
     if (!this.listeners.size && !this.inFlight && queues.get(this.key) === this) queues.delete(this.key);
   }
@@ -113,4 +120,19 @@ export function acquireVocabularyLearningSync(options: Options) {
   let queue = queues.get(key);
   if (!queue) { queue = new VocabularyLearningSync(key, options); queues.set(key, queue); }
   return queue;
+}
+
+export function clearAccountVocabularyLearning(owner: string | null) {
+  if (!owner) return;
+  const prefix = `fieldbook:vocabulary-learning-pending:${owner}:`;
+  for (const [key, queue] of [...queues.entries()]) {
+    if (key.startsWith(prefix)) queue.discard();
+  }
+  for (const storage of [() => localStorage, () => sessionStorage]) {
+    try {
+      const store = storage();
+      const keys = Array.from({ length: store.length }, (_, index) => store.key(index));
+      keys.filter((key): key is string => Boolean(key && key.startsWith(prefix))).forEach(key => store.removeItem(key));
+    } catch { /* Browser storage cleanup is best effort. */ }
+  }
 }

@@ -76,7 +76,7 @@ function UnifiedToday() {
   const doneMinutes=done.reduce((total,plan)=>total+Number(plan.estimatedMinutes||0),0);
   const summarySkills=skills.filter(skill=>counted.some(plan=>planSkill(plan)===skill));
   return <section className="view active study-today">
-    <header className="study-page-head"><div><p className="kicker">{new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})}</p><h2>Today</h2></div><Link className="btn line" to="/planning"><CalendarDays size={16}/>Planning</Link></header>
+    <header className="study-page-head"><div><p className="kicker">{now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})}</p><h2>Today</h2></div><Link className="btn line" to="/planning"><CalendarDays size={16}/>Planning</Link></header>
     {setup && <StudySetup key={accountId()} />}
     {schedule.error && <div className="study-alert" role="alert"><span>{schedule.error}</span><button className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}
     <ScheduleChanges changes={schedule.changes} />

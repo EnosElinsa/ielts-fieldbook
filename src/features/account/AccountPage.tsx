@@ -6,8 +6,9 @@ import { authError } from '../../auth/errors';
 import { useAuthUser } from '../../auth/useAuthUser';
 import { displayNameOf } from '../../lib/identity';
 import { formatAccountDate } from '../../lib/format';
+import { requestTimeout } from '../../lib/requestTimeout';
 import { getSupabase } from '../../lib/supabase';
-import { clearPendingAudioAccount } from '../../storage/pendingAudio';
+import { clearAccountLocalState } from '../../storage/accountCleanup';
 import { AccountMark } from './AccountMark';
 
 export function AccountPage() {
@@ -49,13 +50,18 @@ export function AccountPage() {
     setBusy('name');
     setNameError('');
     setNameNote('');
-    const { error } = await getSupabase().auth.updateUser({ data: { display_name: next } });
-    setBusy(null);
-    if (error) {
-      setNameError(error.message);
-      return;
+    try {
+      const { error } = await requestTimeout(getSupabase().auth.updateUser({ data: { display_name: next } }), 15_000);
+      if (error) {
+        setNameError(error.message);
+        return;
+      }
+      setNameNote('Name saved.');
+    } catch (cause) {
+      setNameError(cause instanceof Error && cause.message ? authError(cause.message, 'signin') : 'Could not save your name. Try again.');
+    } finally {
+      setBusy(null);
     }
-    setNameNote('Name saved.');
   }
 
   async function savePassword(event: FormEvent) {
@@ -71,15 +77,20 @@ export function AccountPage() {
     setBusy('password');
     setPasswordError('');
     setPasswordNote('');
-    const { error } = await getSupabase().auth.updateUser({ password });
-    setBusy(null);
-    if (error) {
-      setPasswordError(error.message);
-      return;
+    try {
+      const { error } = await requestTimeout(getSupabase().auth.updateUser({ password }), 15_000);
+      if (error) {
+        setPasswordError(error.message);
+        return;
+      }
+      setPassword('');
+      setConfirm('');
+      setPasswordNote('Password updated.');
+    } catch (cause) {
+      setPasswordError(cause instanceof Error && cause.message ? authError(cause.message, 'reset') : 'Could not update your password. Try again.');
+    } finally {
+      setBusy(null);
     }
-    setPassword('');
-    setConfirm('');
-    setPasswordNote('Password updated.');
   }
 
   async function resendConfirmation() {
@@ -87,17 +98,25 @@ export function AccountPage() {
     if (!address || confirmed) return;
     setBusy('resend');
     setResendError('');
-    const { error } = await getSupabase().auth.resend({
-      type: 'signup',
-      email: address,
-      options: { emailRedirectTo: window.location.origin },
-    });
-    setBusy(null);
-    if (error) {
-      setResendError(authError(error.message, 'signup'));
-      return;
+    try {
+      const { error } = await requestTimeout(
+        getSupabase().auth.resend({
+          type: 'signup',
+          email: address,
+          options: { emailRedirectTo: window.location.origin },
+        }),
+        15_000,
+      );
+      if (error) {
+        setResendError(authError(error.message, 'signup'));
+        return;
+      }
+      setSent(true);
+    } catch (cause) {
+      setResendError(authError(cause instanceof Error ? cause.message : '', 'signup'));
+    } finally {
+      setBusy(null);
     }
-    setSent(true);
   }
 
   async function saveEmail(event: FormEvent) {
@@ -114,31 +133,49 @@ export function AccountPage() {
     }
     setBusy('email');
     setEmailError('');
-    const { error } = await getSupabase().auth.updateUser(
-      { email: next },
-      { emailRedirectTo: window.location.origin },
-    );
-    setBusy(null);
-    if (error) {
-      setEmailError(authError(error.message, 'signup'));
-      return;
+    try {
+      const { error } = await requestTimeout(
+        getSupabase().auth.updateUser(
+          { email: next },
+          { emailRedirectTo: window.location.origin },
+        ),
+        15_000,
+      );
+      if (error) {
+        setEmailError(authError(error.message, 'signup'));
+        return;
+      }
+      setPendingEmail(next);
+    } catch (cause) {
+      setEmailError(authError(cause instanceof Error ? cause.message : '', 'signup'));
+    } finally {
+      setBusy(null);
     }
-    setPendingEmail(next);
   }
 
   async function removeAccount() {
     if (!deleteReady) return;
     setBusy('delete');
     setDeleteError('');
-    const { error } = await getSupabase().rpc('delete_own_account');
-    if (error) {
-      setBusy(null);
+    try {
+      const { error } = await requestTimeout(Promise.resolve(getSupabase().rpc('delete_own_account')), 15_000);
+      if (error) {
+        setDeleteError('Could not delete this account. Try again.');
+        return;
+      }
+      const owner = user?.id || null;
+      try {
+        await signOut();
+      } catch {
+        // The account is already deleted remotely; still clear local device artifacts and reset state.
+        await clearAccountLocalState(owner);
+      }
+      navigate('/');
+    } catch {
       setDeleteError('Could not delete this account. Try again.');
-      return;
+    } finally {
+      setBusy(null);
     }
-    await clearPendingAudioAccount(user?.id || null);
-    await signOut();
-    navigate('/');
   }
 
   async function leave() {

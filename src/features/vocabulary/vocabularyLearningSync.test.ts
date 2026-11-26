@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
-import { acquireVocabularyLearningSync, vocabularyLearningPendingKey } from './vocabularyLearningSync';
+import { acquireVocabularyLearningSync, clearAccountVocabularyLearning, vocabularyLearningPendingKey } from './vocabularyLearningSync';
 
 const key = vocabularyLearningPendingKey('one', 'book', 'group');
 const learning = (id: string) => ({ viewedEntryIds: ['first'], currentEntryId: id, updatedAt: '2026-10-13T00:00:00Z' });
@@ -170,4 +170,21 @@ test('a successful memory-only save acknowledges newer progress and removes an o
   expect(sync.snapshot().pending).toBeUndefined();
   expect(localStorage.getItem(key)).toBeNull();
   release();vi.restoreAllMocks();
+});
+
+test('clearAccountVocabularyLearning cancels pending timers and clears only that account storage', async () => {
+  const otherKey = vocabularyLearningPendingKey('two', 'book', 'group');
+  const saveOne = vi.fn().mockResolvedValue(true);
+  const sync = acquireVocabularyLearningSync({ owner: 'one', bookId: 'book', unitId: 'group', currentOwner: () => 'one', save: saveOne });
+  const release = sync.subscribe(() => {});
+  sync.update(learning('second'));
+  sessionStorage.setItem(key, JSON.stringify(learning('second')));
+  localStorage.setItem(otherKey, JSON.stringify(learning('other')));
+  clearAccountVocabularyLearning('one');
+  await vi.advanceTimersByTimeAsync(1000);
+  expect(saveOne).not.toHaveBeenCalled();
+  expect(localStorage.getItem(key)).toBeNull();
+  expect(sessionStorage.getItem(key)).toBeNull();
+  expect(localStorage.getItem(otherKey)).not.toBeNull();
+  release();
 });
