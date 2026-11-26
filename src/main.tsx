@@ -4,10 +4,9 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthGate } from './auth/AuthGate';
 import { ThemeProvider, applyTheme, initialTheme } from './context/ThemeContext';
-import * as Tooltip from '@radix-ui/react-tooltip';
 import './styles/index.css';
 import { startPerformanceTelemetry } from './lib/performanceTelemetry';
-import { PageErrorBoundary } from './components/PageErrorBoundary';
+import { StandaloneErrorBoundary } from './components/StandaloneErrorBoundary';
 import { installPageLoadRecovery } from './lib/pageLoadRecovery';
 import { startDiagnostics } from './lib/diagnostics';
 
@@ -20,17 +19,15 @@ startDiagnostics();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-    <Tooltip.Provider delayDuration={350}>
     <BrowserRouter>
-      <PageErrorBoundary standalone>
+      <StandaloneErrorBoundary standalone>
       <AuthGate>
         <Suspense fallback={<main className="workspace-loading"><PageLoadingState variant="workbench" message="Opening your workspace…" /></main>}>
           <AppRoutes />
         </Suspense>
       </AuthGate>
-      </PageErrorBoundary>
+      </StandaloneErrorBoundary>
     </BrowserRouter>
-    </Tooltip.Provider>
     </ThemeProvider>
   </StrictMode>,
 );
