@@ -1,11 +1,3 @@
-import { resetAccountStore } from './remote';
-import { discardDraftRecovery } from './recovery';
-import { clearVocabularyDraft } from './vocabularyDrafts';
-import { clearAccountExamRecovery } from './examRecovery';
-import { clearPendingAudioAccount } from './pendingAudio';
-import { vocabularySessionDrafts } from './vocabularySessionDrafts';
-import { clearAccountVocabularyLearning } from '../features/vocabulary/vocabularyLearningSync';
-
 function removePrefixed(storage: () => Storage, prefixes: string[], exact: string[] = []) {
   try {
     const store = storage();
@@ -39,6 +31,23 @@ export function clearAccountSessionStorage(owner: string | null) {
 
 /** Clear all local drafts, cached audio, pending learning queues and session keys for an account. */
 export async function clearAccountLocalState(owner: string | null) {
+  const [
+    { resetAccountStore },
+    { discardDraftRecovery },
+    { clearVocabularyDraft },
+    { clearAccountExamRecovery },
+    { clearPendingAudioAccount },
+    { vocabularySessionDrafts },
+    { clearAccountVocabularyLearning },
+  ] = await Promise.all([
+    import('./remote'),
+    import('./recovery'),
+    import('./vocabularyDrafts'),
+    import('./examRecovery'),
+    import('./pendingAudio'),
+    import('./vocabularySessionDrafts'),
+    import('../features/vocabulary/vocabularyLearningSync'),
+  ]);
   discardDraftRecovery(owner);
   clearVocabularyDraft(owner);
   clearAccountExamRecovery(owner);
