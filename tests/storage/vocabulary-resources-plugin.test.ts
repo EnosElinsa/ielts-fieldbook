@@ -53,4 +53,24 @@ test('vocabularyResourcesPlugin serves current resources in dev mode with expect
     () => { nonVocabNext = true; },
   );
   expect(nonVocabNext).toBe(true);
-});
+
+  const historicHeaders: Record<string, string> = {};
+  let historicBody: Buffer | undefined;
+  let historicNext = false;
+  middleware!(
+    { url: '/vocabulary-resources/manifest.3ce90c4c5b58aa11.json' },
+    { setHeader(k, v) { historicHeaders[k] = v; }, end(b) { historicBody = b; } },
+    () => { historicNext = true; },
+  );
+  expect(historicNext).toBe(false);
+  expect(historicHeaders['Cache-Control']).toBe('public, max-age=31536000, immutable');
+  expect(JSON.parse(historicBody!.toString('utf8')).version).toBe(1);
+
+  let missingNext = false;
+  middleware!(
+    { url: '/vocabulary-resources/does-not-exist.json' },
+    { setHeader() {}, end() {} },
+    () => { missingNext = true; },
+  );
+  expect(missingNext).toBe(true);
+}, 60_000);
