@@ -5,7 +5,7 @@
 .account .panel h3,.account .panel h4{margin:0 0 8px;font:600 16px/1.4 Manrope,Arial,sans-serif;color:var(--ink)}
 .account-note{font-size:13px;color:var(--muted);line-height:1.55;margin:0 0 14px}
 .account .field{margin-bottom:11px}
-.account-password-toggle{justify-self:start;padding-inline:0;margin-bottom:4px}
+.account .account-password-toggle{justify-self:start;padding-inline:0;margin-bottom:4px}
 .account-delete-hint{margin:2px 0 8px;font-size:13px;line-height:1.5;color:var(--muted)}
 .account .modal-foot{margin-top:4px;justify-content:flex-start}
 .account .account-leave{display:flex;justify-content:space-between;align-items:center;gap:16px}
@@ -31,10 +31,12 @@
 @media(max-width:740px){.account-resend{min-height:44px}}
 .account-resend:disabled{cursor:wait;opacity:.6}
 .account-danger{border:1px solid color-mix(in srgb,var(--red) 40%,var(--rule));background:var(--soft-red)}
-.account-danger h3,.account-danger h4{color:var(--red)}
+.account .account-danger h3,.account .account-danger h4{color:var(--red)}
 /* Flatten nested cards when Account is embedded inside a Settings group card. */
 .settings-group .account .panel:not(.account-danger){border:0;border-top:1px solid var(--rule);border-radius:0;padding:18px 0 0;background:transparent}
 .settings-group .account .split{gap:24px}
+.settings-group .account .split>.panel{border-top:0;padding-top:4px}
+@media(max-width:900px){.settings-group .account .split>.panel+.panel{border-top:1px solid var(--rule);padding-top:18px}}
 .settings-group .account .account-danger{border:1px solid color-mix(in srgb,var(--red) 40%,var(--rule));border-radius:8px;padding:18px 20px;background:var(--soft-red)}
 .account .field input,
 .account .field select,
