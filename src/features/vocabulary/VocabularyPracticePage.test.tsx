@@ -1714,3 +1714,21 @@ test('planned review ignores legacy group-study query detection',async()=>{
   fireEvent.click(screen.getByRole('button',{name:'Start session'}));
   await waitFor(async()=>expect((await latestDraft())?.selection).toMatchObject({kind:'planned-review',planId:'review-route'}));
 });
+
+test('results preserve first-match and any-active mistake recovery counts when duplicate learning state rows exist',async()=>{
+  const entry=fb.current.state.vocabulary[0];
+  const sense=entry.senses[0];
+  const sessionId='dup-recovery-session';
+  fb.current.state.vocabularyStates=[
+    {entryId:entry.id,senseId:sense.id,cards:{},wrong:{active:true,modes:{dictation:{active:true}}}},
+    {entryId:entry.id,senseId:sense.id,cards:{},wrong:{active:false,modes:{dictation:{active:false}}}},
+  ];
+  fb.current.state.vocabularySessions=[{
+    id:sessionId,mode:'dictation',status:'submitted',startedAt:'2026-11-17T10:00:00Z',submittedAt:'2026-11-17T10:05:00Z',
+    filter:{dueOnly:false},preferences:{accent:'uk',speechRate:1,volume:1,repeatCount:1,repeatGapMs:400,autoPlay:false,audioExamples:false,audioGapMs:1000,autoAdvance:true,feedback:'end',layout:'list',order:'source',sessionSize:10,mode:'dictation'},
+    summary:{total:1,correct:1,incorrect:0,pending:0,unanswered:0,listened:0},
+    results:[{cardId:`${entry.id}:${sense.id}:dictation`,entryId:entry.id,senseId:sense.id,term:entry.term,definition:sense.definition,example:sense.example,response:entry.term,expectedAnswer:entry.term,result:'success'}],
+  }];
+  mount(`?sessionId=${sessionId}`);
+  expect(await screen.findByText(/1 word remains in mistake review\./)).toBeInTheDocument();
+});

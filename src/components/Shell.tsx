@@ -190,6 +190,7 @@ export function Shell() {
     const onKey = (event: KeyboardEvent) => {
       if (event.defaultPrevented || event.isComposing || event.keyCode === 229 || event.altKey || event.shiftKey) return;
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        if (document.querySelector('[role="dialog"][aria-busy="true"]')) return;
         event.preventDefault();
         setSearchOpen((current) => !current);
       }
@@ -338,7 +339,6 @@ export function Shell() {
           </PageTransition>
         </main>
       </div>
-      </TooltipProvider>
       <MobileNavigation onMore={() => setMoreOpen(true)} onSelectModule={resumeModule} />
       <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header={null}>
         <div className="more-modal">
@@ -372,6 +372,7 @@ export function Shell() {
       </Suspense>
       </PageErrorBoundary>
       <Toast message={fb.toastMessage} visible={fb.toastVisible} revision={fb.toastRevision} />
+      </TooltipProvider>
     </>
   );
 }

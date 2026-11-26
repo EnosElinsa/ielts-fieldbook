@@ -87,6 +87,22 @@ describe('Shell keyboard shortcuts', () => {
     fireEvent.keyDown(document, { key: 'k', metaKey: true });
     expect(screen.queryByRole('dialog', { name: 'Search Fieldbook' })).not.toBeInTheDocument();
   });
+
+  test('ignores Ctrl/Cmd+K while a busy dialog is open', () => {
+    renderShell();
+    const busyDialog = document.createElement('div');
+    busyDialog.setAttribute('role', 'dialog');
+    busyDialog.setAttribute('aria-busy', 'true');
+    document.body.appendChild(busyDialog);
+    try {
+      fireEvent.keyDown(document, { key: 'k', ctrlKey: true });
+      expect(screen.queryByRole('dialog', { name: 'Search Fieldbook' })).not.toBeInTheDocument();
+      fireEvent.keyDown(document, { key: 'k', metaKey: true });
+      expect(screen.queryByRole('dialog', { name: 'Search Fieldbook' })).not.toBeInTheDocument();
+    } finally {
+      busyDialog.remove();
+    }
+  });
 });
 
 describe('IconButton tooltip provider compatibility', () => {

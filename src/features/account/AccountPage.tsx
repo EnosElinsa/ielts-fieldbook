@@ -190,7 +190,7 @@ export function AccountPage() {
     if (busy) return;
     setBusy('out');
     setSignOutError('');
-    try { await signOut(user?.id || null); navigate('/'); } catch { setSignOutError('Could not sign out. Try again.'); setBusy(null); }
+    try { await signOut(user?.id || null); navigate('/'); } catch { setSignOutError('Could not sign out. Try again.'); } finally { setBusy(null); }
   }
 
   return (
@@ -239,9 +239,20 @@ export function AccountPage() {
           <p className="account-note">Your display name does not change your sign-in email.</p>
           <div className="field">
             <label htmlFor="account-name">Display name</label>
-            <input id="account-name" autoComplete="name" value={name} maxLength={40} onChange={(event) => setName(event.target.value)} />
+            <input
+              id="account-name"
+              autoComplete="name"
+              value={name}
+              maxLength={40}
+              aria-invalid={Boolean(nameError) || undefined}
+              aria-describedby={nameError ? 'account-name-error' : undefined}
+              onChange={(event) => {
+                setName(event.target.value);
+                if (nameError) setNameError('');
+              }}
+            />
           </div>
-          {nameError ? <p className="auth-error" role="alert">{nameError}</p> : null}
+          {nameError ? <p id="account-name-error" className="auth-error" role="alert">{nameError}</p> : null}
           {nameNote ? <p className="auth-notice" role="status">{nameNote}</p> : null}
           <div className="modal-foot">
             <button className="btn primary" type="submit" disabled={actionBusy}>
@@ -261,7 +272,12 @@ export function AccountPage() {
               autoComplete="new-password"
               minLength={6}
               value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              aria-invalid={Boolean(passwordError) || undefined}
+              aria-describedby={passwordError ? 'account-password-error' : undefined}
+              onChange={(event) => {
+                setPassword(event.target.value);
+                if (passwordError) setPasswordError('');
+              }}
             />
           </div>
           <div className="field">
@@ -272,13 +288,18 @@ export function AccountPage() {
               autoComplete="new-password"
               minLength={6}
               value={confirm}
-              onChange={(event) => setConfirm(event.target.value)}
+              aria-invalid={Boolean(passwordError) || undefined}
+              aria-describedby={passwordError ? 'account-password-error' : undefined}
+              onChange={(event) => {
+                setConfirm(event.target.value);
+                if (passwordError) setPasswordError('');
+              }}
             />
           </div>
           <button className="btn text account-password-toggle" type="button" aria-pressed={showPassword} onClick={() => setShowPassword(current => !current)}>
             {showPassword ? 'Hide password' : 'Show password'}
           </button>
-          {passwordError ? <p className="auth-error" role="alert">{passwordError}</p> : null}
+          {passwordError ? <p id="account-password-error" className="auth-error" role="alert">{passwordError}</p> : null}
           {passwordNote ? <p className="auth-notice" role="status">{passwordNote}</p> : null}
           <div className="modal-foot">
             <button className="btn primary" type="submit" disabled={actionBusy}>
@@ -293,9 +314,22 @@ export function AccountPage() {
         <p className="account-note">Continue using your current email until you confirm the new address.</p>
         <div className="field">
           <label htmlFor="account-email">New email</label>
-          <input id="account-email" type="email" autoComplete="email" autoCapitalize="none" spellCheck={false} value={nextEmail} onChange={(event) => setNextEmail(event.target.value)} />
+          <input
+            id="account-email"
+            type="email"
+            autoComplete="email"
+            autoCapitalize="none"
+            spellCheck={false}
+            value={nextEmail}
+            aria-invalid={Boolean(emailError) || undefined}
+            aria-describedby={emailError ? 'account-email-error' : undefined}
+            onChange={(event) => {
+              setNextEmail(event.target.value);
+              if (emailError) setEmailError('');
+            }}
+          />
         </div>
-        {emailError ? <p className="auth-error" role="alert">{emailError}</p> : null}
+        {emailError ? <p id="account-email-error" className="auth-error" role="alert">{emailError}</p> : null}
         {pendingVisible ? <p className="auth-notice" role="status">Confirmation sent. {pendingEmail}</p> : null}
         <div className="modal-foot">
           <button className="btn primary" type="submit" disabled={actionBusy}>
@@ -315,13 +349,20 @@ export function AccountPage() {
             autoComplete="email"
             autoCapitalize="none"
             spellCheck={false}
-            aria-describedby={deleteEmail.trim() && !deleteReady ? 'account-delete-hint' : undefined}
+            aria-invalid={Boolean(deleteError) || undefined}
+            aria-describedby={[
+              deleteEmail.trim() && !deleteReady ? 'account-delete-hint' : '',
+              deleteError ? 'account-delete-error' : '',
+            ].filter(Boolean).join(' ') || undefined}
             value={deleteEmail}
-            onChange={(event) => setDeleteEmail(event.target.value)}
+            onChange={(event) => {
+              setDeleteEmail(event.target.value);
+              if (deleteError) setDeleteError('');
+            }}
           />
         </div>
         {deleteEmail.trim() && !deleteReady ? <p id="account-delete-hint" className="account-delete-hint">Type the email shown above.</p> : null}
-        {deleteError ? <p className="auth-error" role="alert">{deleteError}</p> : null}
+        {deleteError ? <p id="account-delete-error" className="auth-error" role="alert">{deleteError}</p> : null}
         <div className="modal-foot">
           <button className="btn warn" type="submit" disabled={!deleteReady || actionBusy}>
             {busy === 'delete' ? 'Deleting…' : 'Delete account'}

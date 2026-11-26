@@ -26,6 +26,15 @@ import { reviewedExampleForm } from '../../domain/vocabulary/content';
 import { isVocabularyReadingNote } from '../../domain/vocabulary/readiness';
 import { VocabularyExampleText } from './VocabularyExampleText';
 
+function indexFirst<T>(items: readonly T[] | undefined, keyOf: (item: T) => string) {
+  const map = new Map<string, T>();
+  if (items) for (const item of items) {
+    const key = keyOf(item);
+    if (!map.has(key)) map.set(key, item);
+  }
+  return map;
+}
+
 export function VocabularyPracticeResults({ controller, results }: {
   controller: VocabularyPracticeController;
   results: VocabularySessionRecord;
@@ -66,22 +75,22 @@ export function VocabularyPracticeResults({ controller, results }: {
     try { sessionStorage.setItem(positionKey, JSON.stringify({ y: window.scrollY, x: table.current?.scrollLeft || 0, tableY: table.current?.scrollTop || 0, cardId })); } catch { /* Navigation works without storage. */ }
   };
   const snapshotByCardId = useMemo(
-    () => new Map((results.cardSnapshots || []).map(card => [card.id, card])),
+    () => indexFirst(results.cardSnapshots, card => card.id),
     [results.cardSnapshots],
   );
   const vocabById = useMemo(
-    () => new Map(((controller.state.vocabulary as VocabularyEntry[]) || []).map(entry => [entry.id, entry])),
+    () => indexFirst(controller.state.vocabulary as VocabularyEntry[] | undefined, entry => entry.id),
     [controller.state.vocabulary],
   );
   const catalogEntries = (VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]) || [];
   const catalogEntryById = useMemo(
-    () => new Map(catalogEntries.map(entry => [entry.id, entry])),
-    [catalogEntries, catalogEntries.length],
+    () => indexFirst(catalogEntries, entry => entry.id),
+    [catalogEntries, catalogEntries.length, controller.vocabularyCatalogRevision],
   );
   const catalogMemberships = VOCABULARY_CATALOG.memberships || [];
   const membershipKeys = useMemo(
     () => new Set(catalogMemberships.map(member => `${member.bookId}\0${member.unitId}\0${member.entryId}`)),
-    [catalogMemberships, catalogMemberships.length],
+    [catalogMemberships, catalogMemberships.length, controller.vocabularyCatalogRevision],
   );
   const currentRow = (row: VocabularySessionResult) => {
     const snapshot = snapshotByCardId.get(row.cardId);
@@ -101,9 +110,16 @@ export function VocabularyPracticeResults({ controller, results }: {
   const recoveryMode = results.mode === 'audio' ? undefined : results.mode;
   const learningStates = controller.state.vocabularyStates as VocabularyState[];
   const learningStateByKey = useMemo(
-    () => new Map((learningStates || []).map(item => [`${item.entryId}\0${item.senseId}`, item])),
+    () => indexFirst(learningStates, item => `${item.entryId}\0${item.senseId}`),
     [learningStates],
   );
+  const activeWrongKeys = useMemo(() => {
+    const keys = new Set<string>();
+    if (recoveryMode && learningStates) for (const item of learningStates) {
+      if (item.wrong?.modes?.[recoveryMode]?.active) keys.add(`${item.entryId}\0${item.senseId}`);
+    }
+    return keys;
+  }, [learningStates, recoveryMode]);
   const followUp=(()=>{
     for(const row of resultRows){
       if(row.result!=='failure')continue;
@@ -116,11 +132,9 @@ export function VocabularyPracticeResults({ controller, results }: {
         return {row,current,recommendation};
     }
   })();
-  const recoveringWords = new Set(results.results.filter(row => {
-    if (row.result !== 'success' || !recoveryMode) return false;
-    const learning = learningStateByKey.get(`${row.entryId}\0${row.senseId}`);
-    return Boolean(learning?.wrong?.modes?.[recoveryMode]?.active);
-  }).map(row => `${row.entryId}:${row.senseId}`)).size;
+  const recoveringWords = new Set(results.results.filter(row =>
+    row.result === 'success' && Boolean(recoveryMode) && activeWrongKeys.has(`${row.entryId}\0${row.senseId}`),
+  ).map(row => `${row.entryId}:${row.senseId}`)).size;
   const taskOutcome=controller.submissionOutcome||vocabularyTaskSubmissionOutcome(controller.state,results);
   const planStatus=controller.resultsPlanStatus||'ready';
   const taskMessage=planStatus==='loading'?'Checking the linked task…':planStatus==='error'?'The linked task could not be loaded, so its status is unknown. Your learning was saved.':taskOutcome.message;

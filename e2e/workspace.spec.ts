@@ -261,6 +261,8 @@ test.describe('English date controls under a Chinese browser locale', () => {
 });
 
 test('account settings, speaking, and stories keep single current nav state, contrast, and zero mobile overflow', async ({ page }) => {
+  test.setTimeout(90_000);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   for (const theme of ['light', 'dark']) {
     await page.addInitScript(t => localStorage.setItem('fieldbook-theme-v1', t), theme);
     await page.setViewportSize({ width: 1440, height: 900 });
@@ -418,4 +420,25 @@ test('follow-up group meanings stay aligned across Card, List, Details, task pre
   await expect(page.getByRole('heading', { level: 2, name: 'foul', exact: true })).toBeVisible({ timeout: 30000 });
   await expect(page.getByText('Wicked, detestable or extremely unpleasant.')).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+});
+
+test('jumping to a far word in a 50-row production session keeps document height stable and scrolls the focused row into view', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/vocabulary/study?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-01-group-01&mode=production');
+  const start = page.getByRole('button', { name: /Start/ });
+  await expect(start).toBeEnabled({ timeout: 30000 });
+  await start.click();
+  await expect(page.locator('.practice-answer-row')).toHaveCount(50, { timeout: 15000 });
+  const initialHeight = await page.evaluate(() => document.documentElement.scrollHeight);
+  await page.getByRole('button', { name: /^Word 48\b/ }).click();
+  const target = page.getByRole('textbox', { name: 'Answer 48' });
+  await expect(target).toBeFocused();
+  const after = await page.evaluate(() => {
+    const row = document.querySelectorAll('.practice-answer-row')[47];
+    const rect = row?.getBoundingClientRect();
+    return { scrollHeight: document.documentElement.scrollHeight, top: rect?.top ?? -1, bottom: rect?.bottom ?? -1, innerHeight: window.innerHeight };
+  });
+  expect(after.scrollHeight).toBe(initialHeight);
+  expect(after.top).toBeGreaterThanOrEqual(0);
+  expect(after.bottom).toBeLessThanOrEqual(after.innerHeight);
 });

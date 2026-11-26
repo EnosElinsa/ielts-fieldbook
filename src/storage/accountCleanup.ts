@@ -32,7 +32,6 @@ export function clearAccountSessionStorage(owner: string | null) {
 /** Clear per-tab session keys, in-memory learning timers and stale store state on cross-tab sign-out or account switch without wiping durable recovery drafts. */
 export async function clearAccountTabState(owner: string | null, shouldClear: () => boolean = () => true) {
   if (!owner || !shouldClear()) return;
-  clearAccountSessionStorage(owner);
   const [
     { accountId, resetAccountStore },
     { discardAccountVocabularyLearningQueues },
@@ -41,6 +40,7 @@ export async function clearAccountTabState(owner: string | null, shouldClear: ()
     import('../features/vocabulary/vocabularyLearningSync'),
   ]);
   if (!shouldClear()) return;
+  clearAccountSessionStorage(owner);
   discardAccountVocabularyLearningQueues(owner);
   if (accountId() === owner) resetAccountStore();
 }

@@ -1236,6 +1236,7 @@ export function useVocabularyPracticeController() {
     resetResults, discardResume, showRecentSession, retryCatalog,
     registerAnswerField, pauseSession, replayCard, toggleCurrentAudio, toggleAudioLoop,
     handleWorkbenchKeyDown, retryMistakes, resultsPlanStatus, retryResultsPlan,
+    vocabularyCatalogRevision: fb.vocabularyCatalogRevision,
     submissionPending: Boolean(pendingCommit.current),
   };
 }

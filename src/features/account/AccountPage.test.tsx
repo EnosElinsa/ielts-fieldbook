@@ -221,4 +221,28 @@ describe('AccountPage identity', () => {
     expect(deleteInput).toHaveAccessibleDescription('Type the email shown above.');
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
+
+  test('links validation errors via aria-invalid and aria-describedby and clears them on input', async () => {
+    renderPage();
+    const nameInput = screen.getByLabelText('Display name');
+    await userEvent.clear(nameInput);
+    await userEvent.click(screen.getByRole('button', { name: 'Save name' }));
+    expect(nameInput).toHaveAttribute('aria-invalid', 'true');
+    expect(nameInput).toHaveAccessibleDescription('Enter a name.');
+    await userEvent.type(nameInput, 'Alex');
+    expect(nameInput).not.toHaveAttribute('aria-invalid');
+    expect(screen.queryByText('Enter a name.')).not.toBeInTheDocument();
+
+    const passwordInput = screen.getByLabelText('New password');
+    const confirmInput = screen.getByLabelText('Confirm password');
+    await userEvent.type(passwordInput, 'secret1');
+    await userEvent.type(confirmInput, 'secret2');
+    await userEvent.click(screen.getByRole('button', { name: 'Update password' }));
+    expect(passwordInput).toHaveAttribute('aria-invalid', 'true');
+    expect(confirmInput).toHaveAttribute('aria-invalid', 'true');
+    expect(confirmInput).toHaveAccessibleDescription('The two passwords do not match.');
+    await userEvent.type(confirmInput, 'x');
+    expect(passwordInput).not.toHaveAttribute('aria-invalid');
+    expect(confirmInput).not.toHaveAttribute('aria-invalid');
+  });
 });

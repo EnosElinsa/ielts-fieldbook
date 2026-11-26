@@ -188,3 +188,26 @@ test('clearAccountVocabularyLearning cancels pending timers and clears only that
   expect(localStorage.getItem(otherKey)).not.toBeNull();
   release();
 });
+
+test('a discarded learning sync queue ignores late updates, unsubscribes, and settling in-flight saves', async () => {
+  let resolveSave!: (saved: boolean) => void;
+  const save = vi.fn(() => new Promise<boolean>(resolve => { resolveSave = resolve; }));
+  const listener = vi.fn();
+  const sync = acquireVocabularyLearningSync({ owner: 'one', bookId: 'book', unitId: 'group', currentOwner: () => 'one', save });
+  const release = sync.subscribe(listener);
+  sync.update(learning('first-edit'));
+  sync.flush();
+  expect(save).toHaveBeenCalledTimes(1);
+  listener.mockClear();
+
+  clearAccountVocabularyLearning('one');
+  sync.update(learning('late-after-discard'));
+  release();
+  resolveSave(true);
+  await vi.advanceTimersByTimeAsync(1000);
+
+  expect(save).toHaveBeenCalledTimes(1);
+  expect(listener).not.toHaveBeenCalled();
+  expect(localStorage.getItem(key)).toBeNull();
+  expect(sessionStorage.getItem(key)).toBeNull();
+});

@@ -68,10 +68,11 @@ export function AuthGate({ children }: { children: ReactNode }) {
     }
     const supabase = getSupabase();
     let cancelled = false;
+    let authStateChanged = false;
     void (async () => {
       try {
         const { data, error: sessionError } = await requestTimeout(supabase.auth.getSession());
-        if (cancelled) return;
+        if (cancelled || authStateChanged) return;
         if (sessionError) throw sessionError;
         setSessionCheckFailed(false);
         const owner = data.session?.user.id || null;
@@ -79,13 +80,14 @@ export function AuthGate({ children }: { children: ReactNode }) {
         setSessionOwner(owner);
         setSessionState(data.session ? 'in' : 'out');
       } catch (cause) {
-        if (cancelled) return;
+        if (cancelled || authStateChanged) return;
         setError(authError(errorMessage(cause), 'signin'));
         setSessionCheckFailed(true);
         setSessionState('out');
       }
     })();
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      authStateChanged = true;
       if (event === 'PASSWORD_RECOVERY') setRecovery(true);
       const nextOwner = session?.user.id || null;
       const previousOwner = previousOwnerRef.current;

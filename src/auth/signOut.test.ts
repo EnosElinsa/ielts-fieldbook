@@ -82,3 +82,14 @@ test('clearAccountTabState clears per-tab session keys and resets only matching 
   expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-a"')).toBeNull();
   expect(m.reset).not.toHaveBeenCalled();
 });
+test('clearAccountTabState does not half-wipe sessionStorage if shouldClear becomes false during async import resolution', async () => {
+  sessionStorage.setItem('fieldbook:module-memory:v1:"account-a"', '{"version":1}');
+  let checks = 0;
+  await clearAccountTabState('account-a', () => {
+    checks += 1;
+    return checks === 1;
+  });
+  expect(checks).toBe(2);
+  expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-a"')).toBe('{"version":1}');
+  expect(m.reset).not.toHaveBeenCalled();
+});

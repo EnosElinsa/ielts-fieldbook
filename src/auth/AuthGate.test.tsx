@@ -284,3 +284,20 @@ test('cross-tab cleanup does not wipe tab storage or store if the same account s
   expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-a"')).toBe('{"version":1}');
   sessionStorage.clear();
 });
+
+test('a slow initial getSession resolution or failure cannot overwrite a newer onAuthStateChange sign-in', async () => {
+  let resolveSession!: (value: { data: { session: null }; error: null }) => void;
+  getSession.mockImplementationOnce(() => new Promise(resolve => { resolveSession = resolve; }));
+  render(<AuthGate><p>Notebook</p></AuthGate>);
+  const listener = onAuthStateChange.mock.calls[0][0];
+  await act(async () => {
+    listener('SIGNED_IN', { user: { id: 'account-a' } });
+  });
+  expect(await screen.findByText('Notebook')).toBeInTheDocument();
+  await act(async () => {
+    resolveSession({ data: { session: null }, error: null });
+    await Promise.resolve();
+  });
+  expect(screen.getByText('Notebook')).toBeInTheDocument();
+  expect(screen.queryByRole('heading', { name: 'Sign in' })).not.toBeInTheDocument();
+});
