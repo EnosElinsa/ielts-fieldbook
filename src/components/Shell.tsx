@@ -10,7 +10,7 @@ import { useAuthUser } from '../auth/useAuthUser';
 import { AccountMark } from '../features/account/AccountMark';
 import { SaveFailure } from './SaveFailure';
 import { ArrowRight, Search, PanelLeftClose, PanelLeftOpen, Upload, UserRound } from 'lucide-react';
-import { IconButton } from './IconButton';
+import { IconButton, TooltipProvider } from './IconButton';
 import { AccountMenu, CommandSearch, MobileNavigation } from './WorkbenchNavigation';
 import { ModalFrame } from './ModalFrame';
 import * as Tooltip from '@radix-ui/react-tooltip';
@@ -188,6 +188,7 @@ export function Shell() {
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || event.isComposing || event.keyCode === 229 || event.altKey || event.shiftKey) return;
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
         setSearchOpen((current) => !current);
@@ -195,7 +196,7 @@ export function Shell() {
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [fb]);
+  }, []);
 
   const selectModule = (path: string) => {
     if (path === '/write') fb.setSkill('writing', path);
@@ -250,8 +251,9 @@ export function Shell() {
   return (
     <>
       <SkipToContent targetRef={mainContent} />
+      <TooltipProvider delayDuration={350}>
       <div className={`${collapsed ? 'shell is-collapsed' : 'shell'}${speaking ? ' skill-speaking' : ''}`}>
-        <Tooltip.Provider delayDuration={350}><aside className="rail">
+        <aside className="rail">
           <div className="mark">
             <div className="mark-box" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32" /></div>
             <div className="mark-copy">
@@ -301,7 +303,7 @@ export function Shell() {
             <span>Streak</span>
             {streak === null ? <Link to="/progress" className="rail-activity-link">View activity<ArrowRight size={14} aria-hidden="true"/></Link> : <strong>{streak} {streak === 1 ? 'day' : 'days'}</strong>}
           </div>
-        </aside></Tooltip.Provider>
+        </aside>
         <main className="main" id="workspace-content" ref={mainContent} tabIndex={-1}>
           <header className={`top${ownHeading || vocabularyOwnHeading ? ' top-compact' : ''}`}>
             {!vocabularyOwnHeading && <div className="page-title">
@@ -336,6 +338,7 @@ export function Shell() {
           </PageTransition>
         </main>
       </div>
+      </TooltipProvider>
       <MobileNavigation onMore={() => setMoreOpen(true)} onSelectModule={resumeModule} />
       <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header={null}>
         <div className="more-modal">

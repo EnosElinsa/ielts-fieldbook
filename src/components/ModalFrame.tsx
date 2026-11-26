@@ -13,7 +13,7 @@ export function ModalFrame({ open, onClose, children, title = 'Fieldbook', heade
     <Dialog.Root open={open} onOpenChange={(next) => { if (!next) dismiss(); }}>
       <Dialog.Portal>
         <Dialog.Overlay className="dialog-overlay" />
-        <Dialog.Content className={`dialog-content modal-workbench modal-workbench-${size} ${structured ? 'modal-workbench-structured' : 'modal-workbench-legacy'}`} {...(!description ? { 'aria-describedby': undefined } : {})} onEscapeKeyDown={(event) => { if (busy) event.preventDefault(); }} onInteractOutside={(event) => { if (busy) event.preventDefault(); }} aria-busy={busy}>
+        <Dialog.Content className={`dialog-content modal-workbench modal-workbench-${size} ${structured ? 'modal-workbench-structured' : 'modal-workbench-legacy'}`} {...(!description ? { 'aria-describedby': undefined } : {})} onEscapeKeyDown={(event) => { if (busy || event.isComposing || event.keyCode === 229) event.preventDefault(); }} onInteractOutside={(event) => { if (busy) event.preventDefault(); }} aria-busy={busy}>
           <div className="modal-workbench-shell">
             {structured ? <header className="modal-workbench-header"><div className="modal-workbench-header-copy">{header ? <div className="modal-workbench-eyebrow">{header}</div> : null}<Dialog.Title className="modal-workbench-title">{title}</Dialog.Title>{description ? <Dialog.Description className="modal-workbench-description">{description}</Dialog.Description> : null}</div></header> : <Dialog.Title className="sr-only">{title}</Dialog.Title>}
             <div className="modal-workbench-body">{children}</div>

@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
@@ -23,4 +23,13 @@ test('legacy children and accessible title remain supported', () => {
   render(<ModalFrame open onClose={() => {}} title="Legacy"><div className="modal"><h3>Existing heading</h3><button>Existing save</button></div></ModalFrame>);
   expect(screen.getByRole('dialog', { name: 'Legacy' })).toBeVisible();
   expect(screen.getByRole('button', { name: 'Existing save' })).toBeVisible();
+});
+test.each([{ isComposing: true }, { keyCode: 229 }])('does not dismiss on Escape during IME composition (%j)', (composition) => {
+  const close = vi.fn();
+  render(<ModalFrame open onClose={close} title="Compose"><input aria-label="Note" /></ModalFrame>);
+  const input = screen.getByLabelText('Note');
+  fireEvent.keyDown(input, { key: 'Escape', ...composition });
+  expect(close).not.toHaveBeenCalled();
+  fireEvent.keyDown(input, { key: 'Escape' });
+  expect(close).toHaveBeenCalledOnce();
 });
