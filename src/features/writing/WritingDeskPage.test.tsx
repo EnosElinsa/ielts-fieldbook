@@ -285,3 +285,15 @@ test('Task 1 checklist stays reachable inside the answer pane for mobile answer 
     expect(answerPane).toContainElement(checkbox);
   }
 });
+
+test('IME composition Escape does not exit writing focus mode', async () => {
+  const view = render(<WritingDeskPage />);
+  await userEvent.click(screen.getByRole('button', { name: 'Enter focus mode' }));
+  expect(view.container.querySelector('.focus-workspace')).toBeInTheDocument();
+  fireEvent.keyDown(window, { key: 'Escape', isComposing: true });
+  expect(view.container.querySelector('.focus-workspace')).toBeInTheDocument();
+  fireEvent.keyDown(window, { key: 'Escape', keyCode: 229 });
+  expect(view.container.querySelector('.focus-workspace')).toBeInTheDocument();
+  fireEvent.keyDown(window, { key: 'Escape' });
+  expect(view.container.querySelector('.focus-workspace')).not.toBeInTheDocument();
+});

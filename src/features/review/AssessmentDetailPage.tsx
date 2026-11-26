@@ -133,7 +133,7 @@ export function AssessmentDetailPage() {
                         {assessment.editRows.map((row, index) => (
                           <tr key={index}>
                             <td>{row.original}</td>
-                            <td>{row.revised}</td>
+                            <td id={`edit-revision-${index}`}>{row.revised}</td>
                             <td>{row.reason}</td>
                             <td>
                               <span className="pill red edit-tag">{row.tag}</span>
@@ -142,6 +142,7 @@ export function AssessmentDetailPage() {
                               <button
                                 className="btn line"
                                 type="button"
+                                aria-describedby={`edit-revision-${index}`}
                                 onClick={() =>
                                   quickVocabulary({
                                     category: 'phrase',
@@ -202,13 +203,14 @@ export function AssessmentDetailPage() {
                       <div className="vocabulary-suggestion" key={index}>
                         <div>
                           <span className="pill blue">{vocabularyLabels[item.category] || 'Phrase'}</span>
-                          <strong>{item.term}</strong>
+                          <strong id={`vocab-suggestion-${index}`}>{item.term}</strong>
                           <p>{item.meaning}</p>
                           {item.example ? <small>{item.example}</small> : null}
                         </div>
                         <button
                           className="btn line"
                           type="button"
+                          aria-describedby={`vocab-suggestion-${index}`}
                           onClick={() =>
                             quickVocabulary({
                               category: item.category,
@@ -244,7 +246,7 @@ export function AssessmentDetailPage() {
               </div>
               {session ? <button type="button" className="btn primary" onClick={() => void fb.startTargetedPractice(session)}>Start targeted practice <ArrowRight size={16} /></button> : null}
             </section>
-            {session && latestRewrite ? <section className="assessment-section"><h3>Your progress on this task</h3><div className="rewrite-comparison"><div><h4>Original attempt</h4><small>{formatDate(session.date, true)} · {session.words} words</small><pre>{session.essay}</pre></div><div><h4>Your latest {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</h4><small>{formatDate(latestRewrite.date, true)} · {latestRewrite.words} words</small><pre>{latestRewrite.essay}</pre>{latestRewrite.assessmentId ? <Link className="btn line" to={`/review/${latestRewrite.assessmentId}`}>View new feedback <ArrowRight size={15} /></Link> : <div className="history-actions"><button className="btn line" onClick={() => void exportAttemptRequest(fb, latestRewrite)}><Download size={16} />Request feedback for {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</button><button className="btn line" onClick={() => fb.openFeedbackImport()}>Import feedback</button></div>}</div></div></section> : null}
+            {session && latestRewrite ? <section className="assessment-section"><h3>Your progress on this task</h3><div className="rewrite-comparison"><div><h4>Original attempt</h4><small>{formatDate(session.date, true)} · {session.words} words</small><pre>{session.essay}</pre></div><div><h4>Your latest {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</h4><small>{formatDate(latestRewrite.date, true)} · {latestRewrite.words} words</small><pre>{latestRewrite.essay}</pre>{latestRewrite.assessmentId ? <Link className="btn line" to={`/review/${latestRewrite.assessmentId}`}>View new feedback <ArrowRight size={15} /></Link> : <div className="history-actions"><button type="button" className="btn line" onClick={() => void exportAttemptRequest(fb, latestRewrite)}><Download size={16} />Request feedback for {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</button><button type="button" className="btn line" onClick={() => fb.openFeedbackImport()}>Import feedback</button></div>}</div></div></section> : null}
           </article>
           <aside className="assessment-aside">
             <section>

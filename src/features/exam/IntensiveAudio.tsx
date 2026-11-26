@@ -137,7 +137,7 @@ export const IntensiveAudio = forwardRef<IntensiveAudioHandle, Props>(function I
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
-      if (event.defaultPrevented || document.querySelector('[role="dialog"]')) return;
+      if (event.defaultPrevented || event.isComposing || event.keyCode === 229 || document.querySelector('[role="dialog"]')) return;
       if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') { event.preventDefault(); replay(); return; }
       if (event.ctrlKey || event.metaKey || event.altKey) return;
       const target = event.target;

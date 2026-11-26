@@ -40,7 +40,7 @@
 .settings-group .account .account-danger{border:1px solid color-mix(in srgb,var(--red) 40%,var(--rule));border-radius:8px;padding:18px 20px;background:var(--soft-red)}
 .account .field input,
 .account .field select,
-.account .field textarea{width:100%;min-height:40px;border:1px solid var(--input-border,var(--rule));border-radius:6px;background:var(--sheet);color:var(--ink);font:inherit;padding:9px 10px;caret-color:var(--blue);box-shadow:none}
+.account .field textarea{width:100%;min-height:44px;border:1px solid var(--input-border,var(--rule));border-radius:6px;background:var(--sheet);color:var(--ink);font:inherit;padding:11px 12px;caret-color:var(--blue);box-shadow:none}
 .account .field input::placeholder,
 .account .field textarea::placeholder{color:var(--muted);opacity:1}
 .account .field input:hover,

@@ -278,6 +278,53 @@ test('account settings, speaking, and stories keep single current nav state, con
   }
 });
 
+test('mobile planning preserves accessible day headings, account inputs honor hover borders, mobile search avoids zoom, and reduced motion stops spatial transitions', async ({ page }) => {
+  const futurePlan = {
+    id: 'future-mobile-heading', title: 'Tomorrow writing essay', skill: 'writing', kind: '2',
+    dateKey: '2026-11-18', status: 'in_progress', origin: 'manual', estimatedMinutes: 40,
+  };
+  await page.route('**/rpc/load_planning_workspace', route => route.fulfill({
+    json: {
+      profile: { settings: { dailyMinutes: 45, skills: ['writing'], planning: { newWordsPerDay: 0 } }, active_plan_id: null },
+      plans: [{ id: futurePlan.id, payload: futurePlan }], planStamp: '0'.repeat(32), evidence: {},
+    },
+    headers: { 'access-control-allow-origin': '*' },
+  }));
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/planning');
+  const futureDay = page.locator('details.study-day-foldable[open]').first();
+  await expect(futureDay).toBeVisible();
+  expect(await futureDay.locator('summary h1, summary h2, summary h3, summary h4').count()).toBe(0);
+  const dayHeading = futureDay.locator('.study-day-header > h3');
+  await expect(dayHeading).toHaveCount(1);
+  expect(await dayHeading.evaluate(el => getComputedStyle(el).display)).not.toBe('none');
+  const mobileA11y = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+  expect(mobileA11y.violations.filter(v => v.impact === 'serious' || v.impact === 'critical')).toEqual([]);
+
+  await page.getByRole('button', { name: /Search/ }).first().click();
+  const searchInput = page.getByRole('combobox', { name: 'Search Fieldbook' });
+  await expect(searchInput).toBeVisible();
+  expect(await searchInput.evaluate(el => parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThanOrEqual(16);
+  await page.keyboard.press('Escape');
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/settings/account');
+  await expect(page.getByRole('heading', { level: 2, name: 'Appearance and account' })).toBeVisible();
+  const nameInput = page.getByLabel('Display name');
+  const restBorder = await nameInput.evaluate(el => getComputedStyle(el).borderTopColor);
+  await nameInput.hover();
+  const hoverBorder = await nameInput.evaluate(el => getComputedStyle(el).borderTopColor);
+  expect(hoverBorder).not.toBe(restBorder);
+
+  const reducedDurations = await page.evaluate(() => ['.shell', '.toast', '.rail-foot'].map(selector => {
+    const el = document.querySelector(selector);
+    return el ? getComputedStyle(el).transitionDuration : null;
+  }));
+  expect(reducedDurations).toEqual(['0s', '0s', '0s']);
+});
+
 test('follow-up group meanings stay aligned across Card, List, Details, task preview, occurred highlight and retained resources', async ({ page }) => {
   test.setTimeout(120_000);
   // Verify previously published production manifests remain directly loadable.

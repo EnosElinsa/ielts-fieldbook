@@ -46,3 +46,15 @@ test('Toast stays visible for >=5000ms, pauses on hover and focus, and dismisses
   await userEvent.setup().click(dismissBtn);
   expect(toastEl).not.toHaveClass('show');
 });
+
+test('Toast ignores IME composition Escape and still dismisses on real Escape', () => {
+  render(<Toast message="Saved." visible revision={1} />);
+  const toastEl = screen.getByRole('status').closest('#toast')!;
+  expect(toastEl).toHaveClass('show');
+  fireEvent.keyDown(toastEl, { key: 'Escape', isComposing: true });
+  expect(toastEl).toHaveClass('show');
+  fireEvent.keyDown(toastEl, { key: 'Escape', keyCode: 229 });
+  expect(toastEl).toHaveClass('show');
+  fireEvent.keyDown(toastEl, { key: 'Escape' });
+  expect(toastEl).not.toHaveClass('show');
+});

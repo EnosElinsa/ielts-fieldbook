@@ -2,7 +2,7 @@
 .vocabulary-collection-error { flex-basis: 100%; margin: 0; color: var(--red, var(--ink)); font-size: 13px; line-height: 1.6; }
 .vocabulary-collection-fields, .vocabulary-collection-matches { padding: 0; margin: 0; border: 0; min-width: 0; }
 .vocabulary-collection-fields > label, .vocabulary-collection-personal > label, .vocabulary-collection-advanced > label { display: grid; gap: 7px; font-size: 13px; font-weight: 600; }
-.vocabulary-collection input:not([type=radio]), .vocabulary-collection textarea, .vocabulary-collection select { width: 100%; min-width: 0; padding: 10px 12px; background: var(--sheet); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; font: inherit; font-weight: 400; }
+.vocabulary-collection input:where(:not([type=radio])), .vocabulary-collection textarea, .vocabulary-collection select { width: 100%; min-width: 0; padding: 10px 12px; background: var(--sheet); color: var(--ink); border: 1px solid var(--input-border, var(--rule)); border-radius: 6px; font: inherit; font-weight: 400; }
 .vocabulary-collection textarea { resize: vertical; min-height: 72px; }
 .vocabulary-collection-source { margin-block: 10px 16px; }
 .vocabulary-collection summary { cursor: pointer; min-height: 44px; padding-block: 12px; font-size: 13px; }

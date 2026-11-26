@@ -54,7 +54,7 @@
 .settings-draft-status::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
 .settings-fields .form { margin: 0; gap: 24px 20px; }
 .settings-fields .field { gap: 10px; font-size: 13px; }
-.settings-fields input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), .settings-fields select, .settings-fields .select-field, .settings-category-picker select { width: 100%; background: var(--sheet); color: var(--ink); border: 1px solid var(--input-border, var(--rule)); border-radius: 6px; padding: 11px 12px; min-height: 44px; }
+.settings-fields input:where(:not([type="checkbox"]):not([type="radio"]):not([type="range"])), .settings-fields select, .settings-fields .select-field, .settings-category-picker select { width: 100%; background: var(--sheet); color: var(--ink); border: 1px solid var(--input-border, var(--rule)); border-radius: 6px; padding: 11px 12px; min-height: 44px; }
 .settings-fields .date-field { width: 100%; }
 .settings-page :is(button, a, input, select, summary):focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 .settings-skills label, .settings-toggle { font-size: 13px; }

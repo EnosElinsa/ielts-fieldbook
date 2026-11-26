@@ -14,11 +14,11 @@
   ::-webkit-scrollbar-corner { background: transparent; }
 }
 
-/* Text inputs, selects and filters use >=3:1 boundary contrast (WCAG 1.4.11). */
-:is(.field input, .field select, .field textarea, input.search, .auth-card input, .select-field, .filter-trigger, .manuscript textarea, .section-field textarea, .feedback-paste):not([type=checkbox]):not([type=radio]):not([type=range]):not([type=hidden]) {
+/* Text inputs, selects and filters use >=3:1 boundary contrast (WCAG 1.4.11) without hijacking hover/invalid specificity. */
+:is(.field input, .field select, .field textarea, input.search, .auth-card input, .select-field, .filter-trigger, .manuscript textarea, .section-field textarea, .feedback-paste):where(:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=hidden])) {
   border-color: var(--input-border);
 }
-:is(.field input, .field select, .field textarea, input.search, .auth-card input, .select-field, .filter-trigger, .manuscript textarea, .section-field textarea, .feedback-paste):not([type=checkbox]):not([type=radio]):not([type=range]):not([type=hidden]):focus {
+:is(.field input, .field select, .field textarea, input.search, .auth-card input, .select-field, .filter-trigger, .manuscript textarea, .section-field textarea, .feedback-paste):where(:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=hidden])):focus {
   border-color: var(--blue);
 }
 

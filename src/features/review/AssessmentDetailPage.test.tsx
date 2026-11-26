@@ -35,3 +35,18 @@ test('an unknown score id explains the account boundary and links back to review
   expect(screen.getByRole('heading', { name: "This score report isn't in your account" })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Back to review' })).toHaveAttribute('href', '/review');
 });
+
+test('edit table exposes caption, column scopes, and row-associated Add and Save buttons', () => {
+  mock.fb.state.assessments[1] = {
+    ...mock.fb.state.assessments[1],
+    vocabularySuggestionsList: [{ category: 'phrase', term: 'urban density', meaning: 'concentration of housing' }],
+  } as any;
+  const view = show('/review/w');
+  const table = view.container.querySelector('.edit-table')!;
+  expect(table.querySelector('caption')).toHaveTextContent('Line-by-line edits');
+  const headers = Array.from(table.querySelectorAll('th'));
+  expect(headers).toHaveLength(5);
+  headers.forEach(th => expect(th).toHaveAttribute('scope', 'col'));
+  expect(screen.getByRole('button', { name: 'Add' })).toHaveAccessibleDescription('b');
+  expect(screen.getByRole('button', { name: 'Save' })).toHaveAccessibleDescription('urban density');
+});
