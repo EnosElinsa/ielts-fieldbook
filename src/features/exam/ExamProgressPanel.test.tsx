@@ -60,4 +60,11 @@ test('reading history labels passages and keeps unavailable grades distinct from
   expect(row.children[1]).toHaveTextContent('Passage practice');
   expect(row.children[2]).toHaveTextContent('—');
   expect(row.children[2]).not.toHaveTextContent('0 / 0');
+  const tables = document.querySelectorAll('.progress-score-table table');
+  expect(tables.length).toBeGreaterThan(0);
+  tables.forEach(table => {
+    expect(table.querySelector('caption')).toBeInTheDocument();
+    table.querySelectorAll('th').forEach(th => expect(th).toHaveAttribute('scope', 'col'));
+  });
+  expect(screen.getByRole('link', { name: 'Review attempt' })).toHaveAccessibleDescription(/13 Oct/);
 });

@@ -175,4 +175,25 @@ describe('AccountPage identity', () => {
     expect(rpc).toHaveBeenCalledWith('delete_own_account');
     expect(clearLocal).toHaveBeenCalledWith('user-1');
   });
+
+  test('exposes accessible form labels, level-4 headings, password visibility toggle and non-live delete hint', async () => {
+    const { container } = renderPage();
+    expect(container.querySelectorAll('h2, h3')).toHaveLength(0);
+    expect(screen.getByRole('heading', { level: 4, name: 'enoselinsa' })).toBeInTheDocument();
+    expect(screen.getByRole('form', { name: 'Name' })).toBeInTheDocument();
+    expect(screen.getByRole('form', { name: 'Password' })).toBeInTheDocument();
+    expect(screen.getByRole('form', { name: 'Email address' })).toBeInTheDocument();
+
+    const toggle = screen.getByRole('button', { name: 'Show password' });
+    expect(toggle).toHaveAttribute('aria-pressed', 'false');
+    expect(screen.getByLabelText('New password')).toHaveAttribute('type', 'password');
+    await userEvent.click(toggle);
+    expect(screen.getByRole('button', { name: 'Hide password' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByLabelText('New password')).toHaveAttribute('type', 'text');
+
+    const deleteInput = screen.getByLabelText('Type your email');
+    await userEvent.type(deleteInput, 'wrong@example.com');
+    expect(deleteInput).toHaveAccessibleDescription('Type the email shown above.');
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
 });

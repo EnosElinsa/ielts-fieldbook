@@ -17,6 +17,7 @@ export function AccountPage() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [nameNote, setNameNote] = useState('');
   const [passwordNote, setPasswordNote] = useState('');
   const [nameError, setNameError] = useState('');
@@ -188,7 +189,7 @@ export function AccountPage() {
     <div className="account">
       <div className="account-id">
         <AccountMark user={user} />
-        <h2>{displayNameOf(user)}</h2>
+        <h4>{displayNameOf(user)}</h4>
       </div>
 
       <div className="metrics">
@@ -225,12 +226,12 @@ export function AccountPage() {
       </div>
 
       <div className="split">
-        <form className="panel" onSubmit={saveName}>
-          <h3>Name</h3>
+        <form className="panel" aria-labelledby="account-name-heading" onSubmit={saveName}>
+          <h4 id="account-name-heading">Name</h4>
           <p className="account-note">Your display name does not change your sign-in email.</p>
           <div className="field">
             <label htmlFor="account-name">Display name</label>
-            <input id="account-name" value={name} maxLength={40} onChange={(event) => setName(event.target.value)} />
+            <input id="account-name" autoComplete="name" value={name} maxLength={40} onChange={(event) => setName(event.target.value)} />
           </div>
           {nameError ? <p className="auth-error" role="alert">{nameError}</p> : null}
           {nameNote ? <p className="auth-notice" role="status">{nameNote}</p> : null}
@@ -241,14 +242,14 @@ export function AccountPage() {
           </div>
         </form>
 
-        <form className="panel" onSubmit={savePassword}>
-          <h3>Password</h3>
+        <form className="panel" aria-labelledby="account-password-heading" onSubmit={savePassword}>
+          <h4 id="account-password-heading">Password</h4>
           <p className="account-note">You stay signed in on this browser.</p>
           <div className="field">
             <label htmlFor="account-password">New password</label>
             <input
               id="account-password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               autoComplete="new-password"
               minLength={6}
               value={password}
@@ -259,13 +260,16 @@ export function AccountPage() {
             <label htmlFor="account-confirm">Confirm password</label>
             <input
               id="account-confirm"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               autoComplete="new-password"
               minLength={6}
               value={confirm}
               onChange={(event) => setConfirm(event.target.value)}
             />
           </div>
+          <button className="btn text account-password-toggle" type="button" aria-pressed={showPassword} onClick={() => setShowPassword(current => !current)}>
+            {showPassword ? 'Hide password' : 'Show password'}
+          </button>
           {passwordError ? <p className="auth-error" role="alert">{passwordError}</p> : null}
           {passwordNote ? <p className="auth-notice" role="status">{passwordNote}</p> : null}
           <div className="modal-foot">
@@ -276,12 +280,12 @@ export function AccountPage() {
         </form>
       </div>
 
-      <form className="panel" onSubmit={saveEmail}>
-        <h3>Email address</h3>
+      <form className="panel" aria-labelledby="account-email-heading" onSubmit={saveEmail}>
+        <h4 id="account-email-heading">Email address</h4>
         <p className="account-note">Continue using your current email until you confirm the new address.</p>
         <div className="field">
           <label htmlFor="account-email">New email</label>
-          <input id="account-email" type="email" value={nextEmail} onChange={(event) => setNextEmail(event.target.value)} />
+          <input id="account-email" type="email" autoComplete="email" autoCapitalize="none" spellCheck={false} value={nextEmail} onChange={(event) => setNextEmail(event.target.value)} />
         </div>
         {emailError ? <p className="auth-error" role="alert">{emailError}</p> : null}
         {pendingVisible ? <p className="auth-notice" role="status">Confirmation sent. {pendingEmail}</p> : null}
@@ -293,18 +297,22 @@ export function AccountPage() {
       </form>
 
       <div className="panel account-danger">
-        <h3>Delete account</h3>
+        <h4>Delete account</h4>
         <p className="account-note">Permanently delete your account and all saved study data. You can register again with this email.</p>
         <div className="field">
           <label htmlFor="account-delete-email">Type your email</label>
           <input
             id="account-delete-email"
             type="email"
+            autoComplete="email"
+            autoCapitalize="none"
+            spellCheck={false}
+            aria-describedby={deleteEmail.trim() && !deleteReady ? 'account-delete-hint' : undefined}
             value={deleteEmail}
             onChange={(event) => setDeleteEmail(event.target.value)}
           />
         </div>
-        {deleteEmail.trim() && !deleteReady ? <p className="auth-error" role="alert">Type the email shown above.</p> : null}
+        {deleteEmail.trim() && !deleteReady ? <p id="account-delete-hint" className="account-delete-hint">Type the email shown above.</p> : null}
         {deleteError ? <p className="auth-error" role="alert">{deleteError}</p> : null}
         <div className="modal-foot">
           <button className="btn warn" type="button" onClick={() => void removeAccount()} disabled={!deleteReady || busy === 'delete'}>
@@ -315,7 +323,7 @@ export function AccountPage() {
 
       <div className="panel account-leave">
         <div>
-          <h3>Sign out</h3>
+          <h4>Sign out</h4>
           <p className="account-note">Your saved study data will remain in your account.</p>
           {signOutError ? <p className="auth-error" role="alert">{signOutError}</p> : null}
         </div>

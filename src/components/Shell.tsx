@@ -327,8 +327,8 @@ export function Shell() {
             </div>
           </header>
           <SaveFailure failed={fb.saveFailed} message={fb.saveFailureMessage || undefined} saving={fb.saveStatus === 'saving'} onRetry={() => void fb.persistNow()} />
-          {fb.loadError && fb.booted ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
-          {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
+          {fb.loadError && fb.booted ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button type="button" className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
+          {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button type="button" className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button type="button" className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
           {fb.loadError && !fb.booted ? <StateMessage kind="error" title="Your workspace could not load" message={<>Check your connection, then retry. Work you already saved is safe.{fb.loadError !== WORKSPACE_LOAD_ERROR ? <small className="async-state-detail">{fb.loadError}</small> : null}</>} onRetry={fb.retryLoad} retryLabel="Retry" /> : null}
           {!fb.booted && !fb.loadError ? <PageLoadingState title={ownHeading ? title : undefined} message="Loading your workspace…" variant={loadingLayout(location.pathname)} onRetry={fb.retryLoad} /> : null}
           <PageTransition transitionKey={transitionKey} focusKey={location.pathname} skipHeadingFocus={Boolean(location.hash)} scrollRestoration={scrollRestoration} key={module === 'settings' ? 'settings' : location.pathname}>

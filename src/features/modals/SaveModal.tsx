@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useId, useRef, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { ModalFrame } from '../../components/ModalFrame';
@@ -13,15 +12,16 @@ export function SaveModal() {
   const [errors, setErrors] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(''); const lock = useRef(false);
-  const save = async (exportForReview) => {
+  const save = async (exportForReview: boolean) => {
     if (lock.current) return;
     lock.current = true; setSaving(true); setError(''); let feedback = '';
-    try { if (await fb.saveAttempt(exportForReview, { focus, next, errors }, { onError: message => { feedback = message; } }) === false) setError(feedback || 'Practice could not be saved. Your work is still here. Retry saving.'); }
+    try { if (await fb.saveAttempt(exportForReview, { focus, next, errors }, { onError: (message: string) => { feedback = message; } }) === false) setError(feedback || 'Practice could not be saved. Your work is still here. Retry saving.'); }
     catch { setError('Practice could not be saved. Your work is still here. Retry saving.'); }
     finally { lock.current = false; setSaving(false); }
   };
-  const speaking = fb.pendingAttempt?.skill === 'speaking';
-  const focused = ['overview', 'outline', 'compare', 'body'].includes(fb.pendingAttempt?.practiceMode);
+  const pending = fb.pendingAttempt as { skill?: string; practiceMode?: string } | null;
+  const speaking = pending?.skill === 'speaking';
+  const focused = ['overview', 'outline', 'compare', 'body'].includes(pending?.practiceMode || '');
   const description = focused ? 'Save your exercise, or export it for feedback and import the marked file when it is ready.' : speaking
     ? 'Save your transcript, or export it for feedback. The export does not include your recording. Import the marked file when it is ready.'
     : 'Save your response, or export it for feedback and import the marked file when it is ready.';

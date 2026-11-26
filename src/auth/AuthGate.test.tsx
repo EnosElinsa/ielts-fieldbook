@@ -227,3 +227,13 @@ test('a stalled sign-in request times out and releases the busy button', async (
   expect(screen.getByRole('alert')).toHaveTextContent(/took too long/i);
   expect(screen.getByRole('button', { name: /^Sign in$/ })).toBeEnabled();
 });
+
+test('password toggle exposes aria-pressed and signup links the password requirement hint', async () => {
+  await renderGate();
+  const toggle = screen.getByRole('button', { name: 'Show password' });
+  expect(toggle).toHaveAttribute('aria-pressed', 'false');
+  await userEvent.click(toggle);
+  expect(screen.getByRole('button', { name: 'Hide password' })).toHaveAttribute('aria-pressed', 'true');
+  await userEvent.click(screen.getByRole('button', { name: 'Create an account' }));
+  expect(screen.getByLabelText('Password')).toHaveAccessibleDescription(/At least 6 characters/);
+});

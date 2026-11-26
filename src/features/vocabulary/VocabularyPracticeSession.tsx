@@ -187,7 +187,7 @@ export function VocabularyPracticeSession({ controller, session }: {
   }
 
   return (
-    <div className="practice-workspace" tabIndex={-1} aria-label="Practice workbench"
+    <div className="practice-workspace" role="region" tabIndex={-1} aria-label="Practice workbench"
       onKeyDownCapture={handleWorkbenchKeyDown}>
       <div className="practice-session-toolbar">
         <div>
@@ -199,7 +199,7 @@ export function VocabularyPracticeSession({ controller, session }: {
           </span>
         </div>
         <div className="practice-audio-controls">
-          <button className="btn line" disabled={locked} onClick={pauseSession}><Pause size={15} />Pause session</button>
+          <button className="btn line" type="button" disabled={locked} onClick={pauseSession}><Pause size={15} />Pause session</button>
           <span className="practice-accent">
             {preferences.accent.toUpperCase()} · {preferences.speechRate}×
           </span>

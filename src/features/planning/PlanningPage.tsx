@@ -88,12 +88,15 @@ function PlanningCalendar(){
       const newWords=tasks.filter(plan=>plan.status!=='skipped'&&plan.target?.mode==='learning-batch').reduce((sum,plan)=>sum+(plan.target.cards?.length||plan.target.entryIds?.length||plan.quantity||plan.target.batchSize||0),0);
       const completed=tasks.filter(plan=>plan.status==='completed').reduce((sum,plan)=>sum+Number(plan.estimatedMinutes||0),0);
       const goal=dayBudget.planning.newWordsPerDay;
-      const heading=<h3>{day===today?'Today':new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{weekday:'long'})}<span>{new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{day:'numeric',month:'short'})}</span></h3>;
+      const dayTitle=day===today?'Today':new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{weekday:'long'});
+      const dayDate=new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+      const heading=<h3>{dayTitle}<span>{dayDate}</span></h3>;
+      const toggleHeading=<span className="study-day-toggle-title">{dayTitle}<span>{dayDate}</span></span>;
       const addTask=<button type="button" className="btn line study-add-task" disabled={schedule.saving} onClick={()=>setEditor({mode:'add',dateKey:day})}><Plus size={15}/><span className="study-add-label">Add task</span></button>;
       if(!tasks.length&&!(schedule.saving&&budget&&day>=today&&day<=horizon))return <section className={`study-day is-empty${budget?'':' is-rest'}${day===today?' is-today':''}`} key={day}>
         <header className="study-day-header">{heading}<p className="study-day-empty">{!budget?'Rest day':day>horizon?'Outside the current planning window':`No tasks yet · ${budget} min available${goal>0?` · ${goal} new words goal`:''}`}</p>{addTask}</header>
       </section>;
-      return <ScheduleDay className={`study-day${day===today?' is-today':''}`} key={day} current={day===today} forceOpen={tasks.some(plan=>plan.id===targetId||plan.status==='in_progress')} heading={heading} summary={`${tasks.length} ${tasks.length===1?'task':'tasks'} · ${used} min`}>
+      return <ScheduleDay className={`study-day${day===today?' is-today':''}`} key={day} current={day===today} forceOpen={tasks.some(plan=>plan.id===targetId||plan.status==='in_progress')} heading={toggleHeading} summary={`${tasks.length} ${tasks.length===1?'task':'tasks'} · ${used} min`}>
         <div className="study-day-content"><header className="study-day-header">
           {heading}
           <div className="study-day-summary" role="group" aria-label="Daily plan summary"><dl className="study-day-stats">

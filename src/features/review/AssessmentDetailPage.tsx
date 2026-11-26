@@ -119,13 +119,14 @@ export function AssessmentDetailPage() {
                 {assessment.editRows && assessment.editRows.length ? (
                   <div className="edit-table-wrap" tabIndex={0} role="region" aria-label="Line-by-line edits">
                     <table className="edit-table">
+                      <caption className="sr-only">Line-by-line edits</caption>
                       <thead>
                         <tr>
-                          <th>Original</th>
-                          <th>Revision</th>
-                          <th>Why</th>
-                          <th>Tag</th>
-                          <th>Save</th>
+                          <th scope="col">Original</th>
+                          <th scope="col">Revision</th>
+                          <th scope="col">Why</th>
+                          <th scope="col">Tag</th>
+                          <th scope="col">Save</th>
                         </tr>
                       </thead>
                       <tbody>

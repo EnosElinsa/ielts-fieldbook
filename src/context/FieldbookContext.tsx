@@ -144,9 +144,9 @@ function useFieldbookValue() {
   const [vocabularyDueOnly, setVocabularyDueOnly] = useState(false);
   const [vocabularyDueAtVisit, setVocabularyDueAtVisit] = useState(0);
   const [revealedVocabulary, setRevealedVocabulary] = useState<Record<string, boolean>>({});
-  const [pendingAttempt, setPendingAttempt] = useState(null);
-  const [pendingBackup, setPendingBackup] = useState(null);
-  const [viewedSession, setViewedSession] = useState(null);
+  const [pendingAttempt, setPendingAttempt] = useState<any>(null);
+  const [pendingBackup, setPendingBackup] = useState<any>(null);
+  const [viewedSession, setViewedSession] = useState<any>(null);
   const [editingVocabularyId, setEditingVocabularyId] = useState(null);
   const [vocabularySeed, setVocabularySeed] = useState<(Partial<VocabularyEntry> & { skill?: VocabularySkill; sourceId?: string; sourceType?: VocabularySource['type']; context?: string; sessionId?: string; source?: string }) | null>(null);
   const [editingStoryId, setEditingStoryId] = useState(null);

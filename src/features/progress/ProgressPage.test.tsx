@@ -182,3 +182,15 @@ test.each(['reading', 'listening'] as const)('direct %s progress loads historica
   expect(screen.getByRole('heading', { level: 3, name: 'Study plans' })).toBeInTheDocument();
   expect(mock.state.plans).toEqual([]);
 });
+
+test('score history table uses column scopes and associates View feedback links with their attempt dates', () => {
+  vi.useFakeTimers(); vi.setSystemTime(new Date(2026, 9, 14, 12));
+  mock.state.sessions = [{ id: 's1', skill: 'writing', type: '2', date: '2026-10-01', practiceMode: 'timed' }];
+  mock.state.assessments = [{ id: 'a1', sessionId: 's1', date: new Date(2026, 9, 13, 11).toISOString(), overall: '7.0' }];
+  const { container } = render(<MemoryRouter initialEntries={['/progress?category=writing&range=30']}><ProgressPage /></MemoryRouter>);
+  const headers = Array.from(container.querySelectorAll('.progress-score-table th'));
+  expect(headers).toHaveLength(3);
+  headers.forEach(th => expect(th).toHaveAttribute('scope', 'col'));
+  const link = screen.getByRole('link', { name: 'View feedback' });
+  expect(link).toHaveAccessibleDescription(/13 Oct/);
+});

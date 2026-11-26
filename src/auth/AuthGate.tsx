@@ -258,7 +258,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
             required
             onChange={(event) => setConfirmPassword(event.target.value)}
           />
-          <button className="btn text" type="button" onClick={() => setShowPassword((current) => !current)}>
+          <button className="btn text" type="button" aria-pressed={showPassword} onClick={() => setShowPassword((current) => !current)}>
             {showPassword ? 'Hide password' : 'Show password'}
           </button>
           {error ? <p className="auth-error" role="alert">{error}</p> : null}
@@ -333,7 +333,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
         {mode === 'signup' ? <p>You will need to confirm your email before signing in.</p> : null}
         {mode === 'reset' ? <p>Enter your account email to request a password reset link.</p> : null}
         <label htmlFor="auth-email">Email</label>
-        <input id="auth-email" type="email" autoComplete="email" value={email} required onChange={(event) => setEmail(event.target.value)} />
+        <input id="auth-email" type="email" autoComplete="email" autoCapitalize="none" spellCheck={false} value={email} required onChange={(event) => setEmail(event.target.value)} />
         {mode === 'reset' ? null : (
           <>
             <label htmlFor="auth-password">Password</label>
@@ -341,15 +341,16 @@ export function AuthGate({ children }: { children: ReactNode }) {
               id="auth-password"
               type={showPassword ? 'text' : 'password'}
               autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
+              aria-describedby={mode === 'signup' ? 'auth-password-hint' : undefined}
               minLength={6}
               value={password}
               required
               onChange={(event) => setPassword(event.target.value)}
             />
-            <button className="btn text" type="button" onClick={() => setShowPassword((current) => !current)}>
+            <button className="btn text" type="button" aria-pressed={showPassword} onClick={() => setShowPassword((current) => !current)}>
               {showPassword ? 'Hide password' : 'Show password'}
             </button>
-            {mode === 'signup' ? <p className="auth-hint">At least 6 characters. You can change it later from Account.</p> : null}
+            {mode === 'signup' ? <p id="auth-password-hint" className="auth-hint">At least 6 characters. You can change it later from Account.</p> : null}
           </>
         )}
         {error ? <p className="auth-error" role="alert">{error}</p> : null}
