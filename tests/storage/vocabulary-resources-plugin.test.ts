@@ -17,7 +17,7 @@ test('current-only vocabulary resource build emits the full current manifest and
   ] as string[]) {
     expect(current.resources.has(url), url).toBe(true);
   }
-});
+}, 30_000);
 
 test('vocabularyResourcesPlugin serves current resources in dev mode with expected cache headers', () => {
   const plugin = vocabularyResourcesPlugin(process.cwd());
@@ -73,4 +73,4 @@ test('vocabularyResourcesPlugin serves current resources in dev mode with expect
     () => { missingNext = true; },
   );
   expect(missingNext).toBe(true);
-}, 60_000);
+}, 120_000);

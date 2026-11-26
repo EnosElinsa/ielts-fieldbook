@@ -365,6 +365,13 @@
   border-bottom: 1px solid var(--rule);
   margin: 0 -8px;
   transition: background 100ms ease;
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 4.75rem;
+}
+@supports not (content-visibility: auto) {
+  .practice-answer-row {
+    contain: layout style paint;
+  }
 }
 .practice-answer-row.is-current {
   background: color-mix(in srgb, var(--soft-blue) 38%, transparent);

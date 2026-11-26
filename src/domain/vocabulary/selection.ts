@@ -6,8 +6,17 @@ import type { ReviewCard, VocabularyEntry, VocabularyMode, VocabularyStore } fro
 import { VOCABULARY_PRACTICE_MODES, isSpecialistVocabularyMode, type VocabularyPracticeMode } from './preferences';
 
 export function availableUnitPracticeModes(state: Partial<VocabularyStore>, bookId: string, unitId: string) {
-  return VOCABULARY_PRACTICE_MODES.map(item => ({...item, queue:buildUnitPracticeQueue(state,bookId,unitId,item.value)}))
-    .filter(item=>item.queue.eligibleWords > 0 && (isSpecialistVocabularyMode(item.value) || item.queue.unavailableWords === 0));
+  const prepared = prepareUnitPracticeEntries(state, bookId, unitId);
+  const byReviewMode = new Map<VocabularyMode, UnitPracticeQueue>();
+  return VOCABULARY_PRACTICE_MODES.map(item => {
+    const reviewMode: VocabularyMode = item.value === 'audio' ? 'dictation' : item.value;
+    let queue = byReviewMode.get(reviewMode);
+    if (!queue) {
+      queue = buildPreparedUnitPracticeQueue(state, prepared, reviewMode);
+      byReviewMode.set(reviewMode, queue);
+    }
+    return { ...item, queue };
+  }).filter(item => item.queue.eligibleWords > 0 && (isSpecialistVocabularyMode(item.value) || item.queue.unavailableWords === 0));
 }
 
 export type VocabularyLearningBatchSelection = {
@@ -55,8 +64,17 @@ export type UnitPracticeQueue = {
   unavailableWords: number; missingWords: number; complete: boolean;
 };
 
-/** Assemble a source-ordered, one-card-per-word queue without changing learner state. */
-export function buildUnitPracticeQueue(state: Partial<VocabularyStore>, bookId: string, unitId: string, mode: VocabularyPracticeMode): UnitPracticeQueue {
+type PreparedUnitPracticeEntries = {
+  bookId: string;
+  unitId: string;
+  entries: VocabularyEntry[];
+  totalWords: number;
+  archivedWords: number;
+  missingWords: number;
+  baseComplete: boolean;
+};
+
+function prepareUnitPracticeEntries(state: Partial<VocabularyStore>, bookId: string, unitId: string): PreparedUnitPracticeEntries {
   ({ bookId, unitId } = normalizeVocabularyScope({ bookId, unitId }));
   const memberships = VOCABULARY_CATALOG.memberships
     .filter(member => member.bookId === bookId && member.unitId === unitId)
@@ -65,10 +83,9 @@ export function buildUnitPracticeQueue(state: Partial<VocabularyStore>, bookId: 
   const declaredWords = Number(unit?.totalSourceWords || memberships.length);
   const byId = new Map((state.vocabulary || []).map(entry => [entry.id, entry]));
   const catalogById = new Map((VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]).map(entry => [entry.id, entry]));
-  const cards: ReviewCard[] = [];
   const seen = new Set<string>();
   const entries: VocabularyEntry[] = [];
-  let archivedWords = 0; let unavailableWords = 0; let missingWords = Math.max(0, declaredWords - memberships.length);
+  let archivedWords = 0; let missingWords = Math.max(0, declaredWords - memberships.length);
   for (const membership of memberships) {
     if (seen.has(membership.entryId)) continue;
     seen.add(membership.entryId);
@@ -83,15 +100,28 @@ export function buildUnitPracticeQueue(state: Partial<VocabularyStore>, bookId: 
     if (!merged.sources.some(source => source.bookId === bookId && source.unitId === unitId && !source.senseId)) merged.sources.push({ type: 'wordbook', id: `${bookId}:${unitId}:${entry.id}:membership`, bookId, unitId });
     entries.push(merged);
   }
+  const baseComplete = Boolean(unit?.contentStatus === 'complete') && memberships.length >= declaredWords && missingWords === 0;
+  const totalWords = seen.size + Math.max(0, declaredWords - memberships.length);
+  return { bookId, unitId, entries, totalWords, archivedWords, missingWords, baseComplete };
+}
+
+function buildPreparedUnitPracticeQueue(state: Partial<VocabularyStore>, prepared: PreparedUnitPracticeEntries, reviewMode: VocabularyMode): UnitPracticeQueue {
+  const { bookId, unitId, entries, totalWords, archivedWords, missingWords, baseComplete } = prepared;
   const virtual = { ...state, vocabulary: entries } as Partial<VocabularyStore>;
-  const reviewMode: VocabularyMode = mode === 'audio' ? 'dictation' : mode;
   const byCardId = new Map(getVocabularyReviewQueue(virtual, { mode: reviewMode, dueOnly: false, bookId, unitId }).map(card => [card.id, card]));
+  const cards: ReviewCard[] = [];
+  let unavailableWords = 0;
   for (const entry of entries) {
     const candidate = entry.senses.map(sense => byCardId.get(`${entry.id}:${sense.id}:${reviewMode}`)).find((card): card is ReviewCard => Boolean(card));
     if (!candidate) { unavailableWords++; continue; }
     cards.push(candidate);
   }
-  const complete = Boolean(unit?.contentStatus === 'complete') && memberships.length >= declaredWords && missingWords === 0;
-  const totalWords = seen.size + Math.max(0, declaredWords - memberships.length);
-  return { cards, totalWords, eligibleWords: cards.length, archivedWords, unavailableWords, missingWords, complete };
+  return { cards, totalWords, eligibleWords: cards.length, archivedWords, unavailableWords, missingWords, complete: baseComplete };
+}
+
+/** Assemble a source-ordered, one-card-per-word queue without changing learner state. */
+export function buildUnitPracticeQueue(state: Partial<VocabularyStore>, bookId: string, unitId: string, mode: VocabularyPracticeMode): UnitPracticeQueue {
+  const prepared = prepareUnitPracticeEntries(state, bookId, unitId);
+  const reviewMode: VocabularyMode = mode === 'audio' ? 'dictation' : mode;
+  return buildPreparedUnitPracticeQueue(state, prepared, reviewMode);
 }

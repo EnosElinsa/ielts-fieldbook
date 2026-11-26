@@ -1,6 +1,6 @@
 import { VocabularyLink as Link, VocabularyBackLink, useVocabularyReturn } from './VocabularyRouteLink';
 import { useLocation, useNavigationType } from 'react-router-dom';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useMemo, useRef } from 'react';
 import { WorkspaceScrollRestoration } from '../../components/WorkspaceScrollRestoration';
 import { accountId } from '../../storage/remote';
 import { isRegionalSpellingDifference } from '../../domain/vocabulary/spelling';
@@ -65,12 +65,30 @@ export function VocabularyPracticeResults({ controller, results }: {
   const rememberPosition = (cardId: string) => {
     try { sessionStorage.setItem(positionKey, JSON.stringify({ y: window.scrollY, x: table.current?.scrollLeft || 0, tableY: table.current?.scrollTop || 0, cardId })); } catch { /* Navigation works without storage. */ }
   };
+  const snapshotByCardId = useMemo(
+    () => new Map((results.cardSnapshots || []).map(card => [card.id, card])),
+    [results.cardSnapshots],
+  );
+  const vocabById = useMemo(
+    () => new Map(((controller.state.vocabulary as VocabularyEntry[]) || []).map(entry => [entry.id, entry])),
+    [controller.state.vocabulary],
+  );
+  const catalogEntries = (VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]) || [];
+  const catalogEntryById = useMemo(
+    () => new Map(catalogEntries.map(entry => [entry.id, entry])),
+    [catalogEntries, catalogEntries.length],
+  );
+  const catalogMemberships = VOCABULARY_CATALOG.memberships || [];
+  const membershipKeys = useMemo(
+    () => new Set(catalogMemberships.map(member => `${member.bookId}\0${member.unitId}\0${member.entryId}`)),
+    [catalogMemberships, catalogMemberships.length],
+  );
   const currentRow = (row: VocabularySessionResult) => {
-    const snapshot = results.cardSnapshots?.find(card => card.id === row.cardId);
-    const raw = (controller.state.vocabulary as VocabularyEntry[])?.find(entry => entry.id === row.entryId) || (VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]).find(entry => entry.id === row.entryId) || snapshot?.entry || ({ id: row.entryId, term: row.term, category: 'word', meaning: row.definition, example: row.example, tags: [], sources: [], senses: [{ id: row.senseId, definition: row.definition, example: row.example, pos: 'word' }], createdAt: '', updatedAt: '' } as VocabularyEntry);
+    const snapshot = snapshotByCardId.get(row.cardId);
+    const raw = vocabById.get(row.entryId) || catalogEntryById.get(row.entryId) || snapshot?.entry || ({ id: row.entryId, term: row.term, category: 'word', meaning: row.definition, example: row.example, tags: [], sources: [], senses: [{ id: row.senseId, definition: row.definition, example: row.example, pos: 'word' }], createdAt: '', updatedAt: '' } as VocabularyEntry);
     const bookId = row.context?.bookId || (results.selection && 'bookId' in results.selection ? results.selection.bookId : results.filter.bookId);
     const unitId = row.context?.unitId || (results.selection && 'unitId' in results.selection ? results.selection.unitId : results.filter.unitId);
-    const valid = Boolean(raw && bookId && unitId && (VOCABULARY_CATALOG.memberships.some(member => member.entryId === row.entryId && member.bookId === bookId && member.unitId === unitId) || raw.sources.some(source => source.bookId === bookId && source.unitId === unitId)));
+    const valid = Boolean(raw && bookId && unitId && (membershipKeys.has(`${bookId}\0${unitId}\0${row.entryId}`) || raw.sources.some(source => source.bookId === bookId && source.unitId === unitId)));
     const context = valid ? {bookId,unitId} : {};
     const exact = resolveVocabularyLearningContext(raw, {...context, senseId:row.senseId}).sense;
     // Without a frozen card, only a sense that still carries the tested definition can
@@ -82,10 +100,14 @@ export function VocabularyPracticeResults({ controller, results }: {
   const hasMistakes = results.mode !== "audio" && results.results.some(row => row.result === "failure" || row.result === "partial");
   const recoveryMode = results.mode === 'audio' ? undefined : results.mode;
   const learningStates = controller.state.vocabularyStates as VocabularyState[];
+  const learningStateByKey = useMemo(
+    () => new Map((learningStates || []).map(item => [`${item.entryId}\0${item.senseId}`, item])),
+    [learningStates],
+  );
   const followUp=(()=>{
     for(const row of resultRows){
       if(row.result!=='failure')continue;
-      const learning=learningStates?.find(learning=>learning.entryId===row.entryId&&learning.senseId===row.senseId);
+      const learning=learningStateByKey.get(`${row.entryId}\0${row.senseId}`);
       if(results.mode==='audio' || !learning?.wrong?.modes?.[results.mode]?.active)continue;
       const current=currentRow(row);
       const recommendation=getVocabularyNextPractice(controller.state,current.raw,{...current.context,senseId:row.senseId});
@@ -94,9 +116,11 @@ export function VocabularyPracticeResults({ controller, results }: {
         return {row,current,recommendation};
     }
   })();
-  const recoveringWords = new Set(results.results.filter(row => row.result === 'success' && recoveryMode && learningStates?.some(learning =>
-    learning.entryId === row.entryId && learning.senseId === row.senseId && learning.wrong?.modes?.[recoveryMode]?.active,
-  )).map(row => `${row.entryId}:${row.senseId}`)).size;
+  const recoveringWords = new Set(results.results.filter(row => {
+    if (row.result !== 'success' || !recoveryMode) return false;
+    const learning = learningStateByKey.get(`${row.entryId}\0${row.senseId}`);
+    return Boolean(learning?.wrong?.modes?.[recoveryMode]?.active);
+  }).map(row => `${row.entryId}:${row.senseId}`)).size;
   const taskOutcome=controller.submissionOutcome||vocabularyTaskSubmissionOutcome(controller.state,results);
   const planStatus=controller.resultsPlanStatus||'ready';
   const taskMessage=planStatus==='loading'?'Checking the linked task…':planStatus==='error'?'The linked task could not be loaded, so its status is unknown. Your learning was saved.':taskOutcome.message;
@@ -188,10 +212,10 @@ export function VocabularyPracticeResults({ controller, results }: {
               const partOfSpeech = vocabularyPartOfSpeech(current.saved?.pos);
               const learningPos = vocabularyPartOfSpeech(current.resolved?.pos);
               const changed = learning?.definition && (learning.definition !== savedDefinition || learning.example !== savedExample || Boolean(partOfSpeech && learningPos !== partOfSpeech));
-              const frozen = results.cardSnapshots?.find(card => card.id === row.cardId);
+              const frozen = snapshotByCardId.get(row.cardId);
               const frozenAudio = frozen?.pronunciation !== undefined && frozen.pronunciation !== 'legacy';
               const audioEntry = frozenAudio ? frozen!.entry : {...current.raw,term:row.term};
-              const expected = closestAcceptedAnswer(row.response,row.expectedAnswer,results.cardSnapshots?.find(card => card.id === row.cardId)?.task?.acceptedAnswers);
+              const expected = closestAcceptedAnswer(row.response,row.expectedAnswer,frozen?.task?.acceptedAnswers);
               const diff = !['production','audio'].includes(results.mode) && row.result === 'failure' && Boolean(row.response.trim()) && !isRegionalSpellingDifference(expected,row.response) && row.response.normalize('NFKC').toLocaleLowerCase() !== expected.normalize('NFKC').toLocaleLowerCase();
               return (
               <tr key={`${row.cardId}:${index}`} id={`session-row-${row.cardId}`}>
@@ -244,7 +268,7 @@ export function VocabularyPracticeResults({ controller, results }: {
                     Details
                     <ArrowRight size={12} />
                   </Link>
-                  <VocabularySourceLinks sources={results.cardSnapshots?.find(card => card.id === row.cardId)?.sources || current.raw.sources} senseId={row.senseId} filter={results.filter} />
+                  <VocabularySourceLinks sources={frozen?.sources || current.raw.sources} senseId={row.senseId} filter={results.filter} />
                 </td>
               </tr>
             );})}
