@@ -91,7 +91,10 @@ export function AuthGate({ children }: { children: ReactNode }) {
       const previousOwner = previousOwnerRef.current;
       previousOwnerRef.current = nextOwner;
       if (previousOwner && previousOwner !== nextOwner) {
-        void import('../storage/accountCleanup').then(({ clearAccountTabState }) => clearAccountTabState(previousOwner)).catch(() => {});
+        const stillInactive = () => !cancelled && previousOwnerRef.current !== previousOwner;
+        void import('../storage/accountCleanup')
+          .then(({ clearAccountTabState }) => clearAccountTabState(previousOwner, stillInactive))
+          .catch(() => {});
       }
       setSessionOwner(nextOwner);
       setSessionState(session ? 'in' : 'out');

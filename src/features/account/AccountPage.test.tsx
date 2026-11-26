@@ -185,10 +185,17 @@ describe('AccountPage identity', () => {
     updateUser.mockImplementationOnce(() => new Promise(resolve => { resolveName = resolve; }));
     renderPage();
     await userEvent.click(screen.getByRole('button', { name: 'Save name' }));
+    expect(screen.getByRole('button', { name: 'Saving…' })).toBeDisabled();
+    expect(screen.getByRole('form', { name: 'Name' })).toHaveAttribute('aria-busy', 'true');
+    expect(screen.getByRole('button', { name: 'Update password' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Save email' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Sign out' })).toBeDisabled();
     await userEvent.click(screen.getByRole('button', { name: 'Sign out' }));
     expect(signOut).not.toHaveBeenCalled();
     resolveName({ error: null });
     expect(await screen.findByText('Name saved.')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Save name' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Sign out' })).toBeEnabled();
   });
 
   test('exposes accessible form labels, level-4 headings, password visibility toggle and non-live delete hint', async () => {
@@ -198,6 +205,9 @@ describe('AccountPage identity', () => {
     expect(screen.getByRole('form', { name: 'Name' })).toBeInTheDocument();
     expect(screen.getByRole('form', { name: 'Password' })).toBeInTheDocument();
     expect(screen.getByRole('form', { name: 'Email address' })).toBeInTheDocument();
+    expect(screen.getByRole('form', { name: 'Delete account' })).toBeInTheDocument();
+    expect(container.querySelector('section.account-leave')).not.toBeNull();
+    expect(screen.queryByRole('region', { name: 'Sign out' })).not.toBeInTheDocument();
 
     const toggle = screen.getByRole('button', { name: 'Show password' });
     expect(toggle).toHaveAttribute('aria-pressed', 'false');

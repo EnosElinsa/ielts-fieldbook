@@ -187,6 +187,10 @@ test('search respects IME confirmation and real Enter still navigates', async ({
   await expect(search).toBeVisible();
   await search.dispatchEvent('keydown', { key: 'Enter', code: 'Enter', keyCode: 229 });
   await expect(search).toBeVisible();
+  await search.dispatchEvent('keydown', { key: 'Escape', code: 'Escape', isComposing: true });
+  await expect(search).toBeVisible();
+  await search.dispatchEvent('keydown', { key: 'Escape', code: 'Escape', keyCode: 229 });
+  await expect(search).toBeVisible();
   await search.press('Enter');
   await expect(page).toHaveURL(/\/write\/questions/);
 });
@@ -266,6 +270,7 @@ test('account settings, speaking, and stories keep single current nav state, con
     const rail = page.locator('.rail');
     await expect(rail.getByRole('link', { name: 'Account' })).toHaveAttribute('aria-current', 'page');
     await expect(rail.getByRole('link', { name: 'Settings' })).not.toHaveAttribute('aria-current', 'page');
+    await expect(page.getByRole('form', { name: 'Delete account' })).toBeVisible();
     const a11y = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
     expect(a11y.violations.filter(v => v.impact === 'serious' || v.impact === 'critical')).toEqual([]);
   }

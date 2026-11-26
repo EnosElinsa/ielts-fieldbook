@@ -265,3 +265,22 @@ test('cross-tab SIGNED_OUT clears previous owner tab session storage and resets 
   expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-b"')).not.toBeNull();
   sessionStorage.clear();
 });
+
+test('cross-tab cleanup does not wipe tab storage or store if the same account signs back in before async cleanup runs', async () => {
+  sessionStorage.clear();
+  remoteOwner.current = 'account-a';
+  sessionStorage.setItem('fieldbook:module-memory:v1:"account-a"', '{"version":1}');
+  getSession.mockResolvedValueOnce({ data: { session: { user: { id: 'account-a' } } }, error: null } as never);
+  render(<AuthGate><p>Notebook</p></AuthGate>);
+  expect(await screen.findByText('Notebook')).toBeInTheDocument();
+  const listener = onAuthStateChange.mock.calls[0][0];
+  await act(async () => {
+    listener('SIGNED_OUT', null);
+    listener('SIGNED_IN', { user: { id: 'account-a' } });
+    await new Promise(resolve => setTimeout(resolve, 20));
+  });
+  expect(screen.getByText('Notebook')).toBeInTheDocument();
+  expect(resetAccountStore).not.toHaveBeenCalled();
+  expect(sessionStorage.getItem('fieldbook:module-memory:v1:"account-a"')).toBe('{"version":1}');
+  sessionStorage.clear();
+});

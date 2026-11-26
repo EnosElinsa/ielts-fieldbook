@@ -31,6 +31,7 @@ export function AccountPage() {
   const [deleteError, setDeleteError] = useState('');
   const [signOutError, setSignOutError] = useState('');
   const [busy, setBusy] = useState<'name' | 'password' | 'out' | 'resend' | 'email' | 'delete' | null>(null);
+  const actionBusy = Boolean(busy);
   const confirmed = Boolean(user?.email_confirmed_at);
   const deleteReady = emailsMatch(deleteEmail, user?.email);
   const pendingVisible = Boolean(pendingEmail) && !emailsMatch(user?.email, pendingEmail);
@@ -158,7 +159,8 @@ export function AccountPage() {
     }
   }
 
-  async function removeAccount() {
+  async function removeAccount(event: FormEvent) {
+    event.preventDefault();
     if (!deleteReady || busy) return;
     setBusy('delete');
     setDeleteError('');
@@ -212,9 +214,9 @@ export function AccountPage() {
                   className="account-resend"
                   type="button"
                   onClick={() => void resendConfirmation()}
-                  disabled={busy === 'resend'}
+                  disabled={actionBusy}
                 >
-                  Resend
+                  {busy === 'resend' ? 'Sending…' : 'Resend'}
                 </button>
               )
             ) : null}
@@ -232,7 +234,7 @@ export function AccountPage() {
       </div>
 
       <div className="split">
-        <form className="panel" aria-labelledby="account-name-heading" onSubmit={saveName}>
+        <form className="panel" aria-labelledby="account-name-heading" aria-busy={busy === 'name' || undefined} onSubmit={saveName}>
           <h4 id="account-name-heading">Name</h4>
           <p className="account-note">Your display name does not change your sign-in email.</p>
           <div className="field">
@@ -242,13 +244,13 @@ export function AccountPage() {
           {nameError ? <p className="auth-error" role="alert">{nameError}</p> : null}
           {nameNote ? <p className="auth-notice" role="status">{nameNote}</p> : null}
           <div className="modal-foot">
-            <button className="btn primary" type="submit" disabled={busy === 'name'}>
-              Save name
+            <button className="btn primary" type="submit" disabled={actionBusy}>
+              {busy === 'name' ? 'Saving…' : 'Save name'}
             </button>
           </div>
         </form>
 
-        <form className="panel" aria-labelledby="account-password-heading" onSubmit={savePassword}>
+        <form className="panel" aria-labelledby="account-password-heading" aria-busy={busy === 'password' || undefined} onSubmit={savePassword}>
           <h4 id="account-password-heading">Password</h4>
           <p className="account-note">You stay signed in on this browser.</p>
           <div className="field">
@@ -279,14 +281,14 @@ export function AccountPage() {
           {passwordError ? <p className="auth-error" role="alert">{passwordError}</p> : null}
           {passwordNote ? <p className="auth-notice" role="status">{passwordNote}</p> : null}
           <div className="modal-foot">
-            <button className="btn primary" type="submit" disabled={busy === 'password'}>
-              Update password
+            <button className="btn primary" type="submit" disabled={actionBusy}>
+              {busy === 'password' ? 'Updating…' : 'Update password'}
             </button>
           </div>
         </form>
       </div>
 
-      <form className="panel" aria-labelledby="account-email-heading" onSubmit={saveEmail}>
+      <form className="panel" aria-labelledby="account-email-heading" aria-busy={busy === 'email' || undefined} onSubmit={saveEmail}>
         <h4 id="account-email-heading">Email address</h4>
         <p className="account-note">Continue using your current email until you confirm the new address.</p>
         <div className="field">
@@ -296,14 +298,14 @@ export function AccountPage() {
         {emailError ? <p className="auth-error" role="alert">{emailError}</p> : null}
         {pendingVisible ? <p className="auth-notice" role="status">Confirmation sent. {pendingEmail}</p> : null}
         <div className="modal-foot">
-          <button className="btn primary" type="submit" disabled={busy === 'email'}>
-            Save email
+          <button className="btn primary" type="submit" disabled={actionBusy}>
+            {busy === 'email' ? 'Saving…' : 'Save email'}
           </button>
         </div>
       </form>
 
-      <div className="panel account-danger">
-        <h4>Delete account</h4>
+      <form className="panel account-danger" aria-labelledby="account-delete-heading" aria-busy={busy === 'delete' || undefined} onSubmit={removeAccount}>
+        <h4 id="account-delete-heading">Delete account</h4>
         <p className="account-note">Permanently delete your account and all saved study data. You can register again with this email.</p>
         <div className="field">
           <label htmlFor="account-delete-email">Type your email</label>
@@ -321,22 +323,22 @@ export function AccountPage() {
         {deleteEmail.trim() && !deleteReady ? <p id="account-delete-hint" className="account-delete-hint">Type the email shown above.</p> : null}
         {deleteError ? <p className="auth-error" role="alert">{deleteError}</p> : null}
         <div className="modal-foot">
-          <button className="btn warn" type="button" onClick={() => void removeAccount()} disabled={!deleteReady || busy === 'delete'}>
-            Delete account
+          <button className="btn warn" type="submit" disabled={!deleteReady || actionBusy}>
+            {busy === 'delete' ? 'Deleting…' : 'Delete account'}
           </button>
         </div>
-      </div>
+      </form>
 
-      <div className="panel account-leave">
+      <section className="panel account-leave" aria-busy={busy === 'out' || undefined}>
         <div>
           <h4>Sign out</h4>
           <p className="account-note">Your saved study data will remain in your account.</p>
           {signOutError ? <p className="auth-error" role="alert">{signOutError}</p> : null}
         </div>
-        <button className="btn warn" type="button" onClick={() => void leave()} disabled={busy === 'out'}>
-          Sign out
+        <button className="btn warn" type="button" onClick={() => void leave()} disabled={actionBusy}>
+          {busy === 'out' ? 'Signing out…' : 'Sign out'}
         </button>
-      </div>
+      </section>
     </div>
   );
 }
